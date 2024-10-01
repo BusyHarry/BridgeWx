@@ -1,0 +1,81 @@
+/////////////////////////////////////////////////////////////////////////////
+// Name:        BridgeWx.rc
+// Purpose:     a standard MSW .rc file for the wxWidgets samples
+// Author:      Vadim Zeitlin
+// Modified by: hle 20230906
+// Created:     04.08.03
+// Copyright:   (c) 2003 Vadim Zeitlin <vadim@wxwidgets.org>
+// Licence:     wxWindows licence
+/////////////////////////////////////////////////////////////////////////////
+
+// note that the icon used by the Explorer (i.e. the programs icon) is the
+// first icon in the executable and the icons are sorted both by their order
+// and alphabetically (!), so put this icon first and give it a name
+// starting with "a"
+aaaaaaaa ICON "wxwin.ico"
+
+BRIDGE_JPG_X0   JPG     "resource\bridge_x0.jpg"
+BRIDGE_JPG_X1   JPG     "resource\bridge_x1.jpg"
+BRIDGE_JPG_X2   JPG     "resource\bridge_x2.jpg"
+BRIDGE_JPG_X3   JPG     "resource\bridge_x3.jpg"
+BRIDGE_JPG_X4   JPG     "resource\bridge_x4.jpg"
+BRIDGE_JPG_X5   JPG     "resource\bridge_x5.jpg"
+
+// this icon is used with wxFrame::SetIcon()
+wxwin_standard_icon ICON "resource\wxwin.ico"
+
+// set this to 1 if you don't want to use manifest resource provided by wxWidgets.
+// An aplication manifest is needed for the application UI to look properly and other
+// things - see docs/msw/winxp.md for more information)
+#define wxUSE_NO_MANIFEST 0
+
+// to enable full High DPI suppport, we need to opt in into Per-Monitor (V2) DPI awareness,
+// see section Issues/MSW in programming guide High DPI Support in wxWidgets
+#ifndef wxUSE_DPI_AWARE_MANIFEST
+#define wxUSE_DPI_AWARE_MANIFEST 2
+#endif
+
+// this file contains the standard icons, cursors etc. and also includes the application
+// manifest mentioned above
+#include "wx/msw/wx.rc"
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NLD)
+LANGUAGE LANG_DUTCH, SUBLANG_DUTCH
+#pragma code_page(1252)
+#endif    // Dutch (Netherlands) resources
+
+#include "src\version.h"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION         __VERSION_NR__
+PRODUCTVERSION      __PRODUCT_VERSION__
+FILEFLAGSMASK       0xffL
+#ifdef _DEBUG
+FILEFLAGS           VS_FF_DEBUG
+#else
+FILEFLAGS           0x0L
+#endif
+FILEOS              VOS_NT_WINDOWS32
+FILETYPE            VFT_APP
+FILESUBTYPE         0x0L
+{
+    BLOCK "StringFileInfo"
+    {
+        BLOCK "040904b0"
+        {
+            VALUE "Comments"            , "geen kommentaar!"
+                VALUE "CompanyName"     , "hle"
+                VALUE "FileDescription" , "bridge uitslag berekening"
+                VALUE "FileVersion"     , __VERSION__
+                VALUE "InternalName"    , __PRG_NAME__
+                VALUE "LegalCopyright"  , "(c)hl/tc"
+                VALUE "OriginalFilename", __PRG_NAME__ ".exe"
+                VALUE "ProductName"     , __PRG_NAME__
+                VALUE "ProductVersion"  , __VERSION_MAIN__
+        }
+    }
+    BLOCK "VarFileInfo"
+    {
+        VALUE "Translation", 0x0413, 1200   // dutch, unicode
+    }
+}

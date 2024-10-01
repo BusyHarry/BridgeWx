@@ -1,0 +1,9 @@
+files_autotest.txt
+auto.ahk
+compareDb.bat
+compareList.bat
+InitTest.ahk
+initTest.bat
+ref_autoTest01.db
+ref_list
+runTest.bat

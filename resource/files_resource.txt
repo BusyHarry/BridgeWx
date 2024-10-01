@@ -1,0 +1,9 @@
+files_resource.txt
+BridgeWx.rc
+bridge_x0.jpg
+bridge_x1.jpg
+bridge_x2.jpg
+bridge_x3.jpg
+bridge_x4.jpg
+bridge_x5.jpg
+wxwin.ico

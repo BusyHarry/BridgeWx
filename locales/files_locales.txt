@@ -1,0 +1,3 @@
+files_locales.txt
+en.po
+getTxt.bat

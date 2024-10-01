@@ -1,0 +1,17 @@
+files_tools.txt
+BuildDate.cpp
+BuildDate.sln
+BuildDate.vcxproj
+BuildDate.vcxproj.filters
+BuildDate.exe
+msgbox.cpp
+msgbox.sln
+msgbox.vcxproj
+msgbox.vcxproj.filters
+msgbox.exe
+cleanpo.cpp
+cleanpo.sln
+cleanpo.vcxproj
+cleanpo.vcxproj.filters
+cleanpo.exe
+zip.exe

@@ -1,0 +1,14 @@
+files_main.txt
+.gitignore
+readme.md.txt
+CompareAll.bat
+CompareCommon.bat
+delCompareLogs.bat
+BridgeWx.sln
+BridgeWx.vcxproj
+BridgeWx.vcxproj.filters
+makeSource.bat
+prebuild.bat
+release\makeRelease.bat
+release\releasenotes.md
+release\SetWxwin.bat

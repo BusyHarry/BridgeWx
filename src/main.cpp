@@ -407,14 +407,10 @@ void MyApp::ReInitLanguage()
     // So to be sure, just restart the app!
 
     // recreate the mainframe with the new language
-    wxWindow* pTopwindow = m_pMainFrame;   // GetTopWindow(); // SHOULD give m_pMainframe
-    if (pTopwindow)
-    {
-        SetTopWindow(nullptr);
-        pTopwindow->Close();
-        pTopwindow->Destroy();  // system will delete it when idle....
-    }
-
+    //wxWindow* pTopwindow = m_pMainFrame;   // GetTopWindow(); // SHOULD give m_pMainframe
+    SetTopWindow(nullptr);
+    m_pMainFrame->Close();
+    m_pMainFrame->Destroy();  // system will delete it when idle....
     auto previousMenuId = m_pMainFrame->GetCurrentMenuId();
     m_pMainFrame = new MyFrame(*this);
     if (previousMenuId != m_pMainFrame->GetCurrentMenuId())

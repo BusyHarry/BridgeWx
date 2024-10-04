@@ -171,6 +171,7 @@ ChoiceMC::ChoiceMC(wxWindow* a_pParent, const wxString& a_textCtrlTitle) : wxCom
     m_bAutoSize = true; //size of choice-entries determine column-size and editctrl-size
 
     m_pTxtctrl = GetTextCtrl();
+    ResetTextctrlSize();
     m_pTxtctrl->Clear();   // remove label-text from entry...
     m_pPopup->SetFont(m_pTxtctrl->GetFont());       // at least in windows, the wxListView does NOT use its parent fontsize! But some(?) global defined one.
     m_pTxtctrl->Bind(wxEVT_LEFT_DOWN , [this](wxMouseEvent&)
@@ -300,6 +301,7 @@ void ChoiceMC::Clear()
     m_popupWidth        = 0;
     m_currentColumnWidth= 0;
     m_nrOfColumns       = 0;
+    ResetTextctrlSize(); // Clear() SHOULD reset, but screen-layout could change.....
 }   // Clear()
 
 UINT ChoiceMC::GetCount()
@@ -384,3 +386,11 @@ void ChoiceMC::SetPopupWidth(int a_size)
 {
     m_popupMaxWidth = a_maxWidth;
 }   // SetMaxPopupWidth()
+
+void ChoiceMC::ResetTextctrlSize()
+{
+    wxSize width(5 * GetCharWidth(), -1);
+    SetMinSize(width);
+    SetMaxSize(width);
+    SetPopupWidth(m_textMinSize);
+}   // ResetTextctrlSize()

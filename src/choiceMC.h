@@ -42,6 +42,7 @@ protected:
     virtual bool AnimateShow( const wxRect& rect, int flags ) wxOVERRIDE;
 
 private:
+    void ResetTextctrlSize();   // set max-size of combo if empty
     #define MC_DEFAULT_NR_OF_ROWS 4
     PopupChoiceMC*  m_pPopup;
     wxTextCtrl*     m_pTxtctrl;

@@ -57,6 +57,7 @@ private:
     void OnSelectPair           (wxCommandEvent&);
     void OnPrint                (wxCommandEvent&);
     void OnExample              (wxCommandEvent&);
+    void PrintOrExample();
     void SetFocusAfter          (wxCommandEvent&);  // set focus back to console-window
     void InitGuideStuff         ();
     void PrintScoreSlips        (UINT setSize, UINT firstSet, UINT nrOfSets, UINT repeatCount, const wxString& extra);

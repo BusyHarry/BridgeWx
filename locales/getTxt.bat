@@ -3,6 +3,11 @@
 :: Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
 :: extract translatable texts from the .cpp and .h sources to a .pot file
+
+:: check if running 4dos, if so, restart batchfile in cmd.exe
+set test_4dos=%@EVAL[1]
+if [1] == [%test_4dos%] echo 4dos running, re-starting cmd & set test_4dos=& cmd.exe /c %0 %* & exit /b
+
 pushd .
 cd %~dp0
 
@@ -12,7 +17,6 @@ set drive=
 
 set all_drives=C:,D:,E:,F:
 for %%a in (%all_drives%) do (
-  ::echo testing drive: '%%a'
   if exist "%%a\%base%\%pExe%" (echo Poedit     found on drive: '%%a' & set drive=%%a& goto found)
   echo Poedit not found on drive: '%%a'
 )
@@ -60,6 +64,12 @@ if not exist %potfile% goto error
 
 :end
 del >nul 2>&1 %errorlog%
-set errorlog=
-set  potfile=
+set         gt=
+set       base=
+set       pExe=
+set      drive=
+set    potfile=
+set   errorlog=
+set  all_drives=
+set  test_4dos=
 popd

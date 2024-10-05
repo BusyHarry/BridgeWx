@@ -295,7 +295,7 @@ public:
     ~MyFrame();
     void UpdateStatusbarInfo(wxCommandEvent& event=s_dummy);
     void UpdateStatusbarText(wxCommandEvent& a_event);
-
+    UINT GetCurrentMenuId() {return m_oldId;}
     void SetClock(wxCommandEvent& event=s_dummy);
     wxMenuBar* m_pMenuBar;
 
@@ -407,15 +407,18 @@ void MyApp::ReInitLanguage()
     // So to be sure, just restart the app!
 
     // recreate the mainframe with the new language
-    wxWindow* pTopwindow = m_pMainFrame;   // GetTopWindow(); // SHOULD give m_pMainframe
-    if (pTopwindow)
+    //wxWindow* pTopwindow = m_pMainFrame;   // GetTopWindow(); // SHOULD give m_pMainframe
+    SetTopWindow(nullptr);
+    m_pMainFrame->Close();
+    m_pMainFrame->Destroy();  // system will delete it when idle....
+    auto previousMenuId = m_pMainFrame->GetCurrentMenuId();
+    m_pMainFrame = new MyFrame(*this);
+    if (previousMenuId != m_pMainFrame->GetCurrentMenuId())
     {
-        SetTopWindow(nullptr);
-        pTopwindow->Close();
-        pTopwindow->Destroy();  // system will delete it when idle....
+        wxCommandEvent event(wxEVT_MENU, previousMenuId);
+        m_pMainFrame->GetEventHandler()->AddPendingEvent(event);
     }
 
-    m_pMainFrame = new MyFrame(*this);
     m_pMainFrame->Show(true);
     SetTopWindow(m_pMainFrame);
 #endif

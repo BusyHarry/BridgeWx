@@ -112,8 +112,8 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
     wxBoxSizer* groupInfoSizer = new wxBoxSizer(wxHORIZONTAL);
     groupInfoSizer->Add(groupChars, 0, wxALIGN_CENTER_VERTICAL); groupInfoSizer->Add  (m_pTxtCtrlGroupChars, 0); groupInfoSizer->AddSpacer( 30 );
     groupInfoSizer->Add(pairs     , 0, wxALIGN_CENTER_VERTICAL); groupInfoSizer->Add  (m_pTxtCtrlPairs     , 0); groupInfoSizer->AddSpacer( 30 );
-                                                                 groupInfoSizer->MyAdd(m_pChoiceBoxSchemas , 1); groupInfoSizer->AddSpacer( 30 );
-    groupInfoSizer->Add(absent    , 0, wxALIGN_CENTER_VERTICAL); groupInfoSizer->Add  (m_pTxtCtrlAbsent    , 0);
+    groupInfoSizer->Add(absent    , 0, wxALIGN_CENTER_VERTICAL); groupInfoSizer->Add  (m_pTxtCtrlAbsent    , 0); groupInfoSizer->AddSpacer(30);
+    groupInfoSizer->MyAdd(m_pChoiceBoxSchemas, 1);
 
 // action buttons: keep/undo
     auto okCancel = CreateOkCancelButtons();
@@ -277,6 +277,7 @@ void SetupSchema::RefreshInfoGroup(int a_index)
     m_pTxtCtrlGroupChars->SetValue( m_groupData[a_index].groupChars);
     m_pTxtCtrlPairs     ->SetValue( U2String(m_groupData[a_index].pairs));
     m_pTxtCtrlAbsent    ->SetValue( U2String(m_groupData[a_index].absent));
+    Layout();
 }   // RefreshInfoGroup()
 
 void SetupSchema::OnLostFocusGroupChars(wxFocusEvent& a_event )

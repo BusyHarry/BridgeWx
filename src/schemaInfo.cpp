@@ -93,6 +93,7 @@ bool SchemaInfo::SetId(int a_schemaId)
 
 bool SchemaInfo::GetTableRoundInfo(UINT a_table, UINT a_round, schema::GameInfo& info) const
 {
+    if (!IsOk()) return false;
     assert(a_round > 0 && a_round <= m_rounds);
     assert(a_table > 0 && a_table <= m_tables);
 
@@ -112,8 +113,9 @@ bool SchemaInfo::GetTableRoundInfo(UINT a_table, UINT a_round, schema::GameInfo&
 
 void SchemaInfo::GetRoundInfo( UINT a_round, bool a_bGameOrder,  schema::vGameInfo& a_info)
 {
-    assert(a_round > 0 && a_round <= m_rounds);
     a_info.clear();
+    if (!IsOk()) return;    // no valid schema
+    assert(a_round > 0 && a_round <= m_rounds);
     schema::GameInfo gi;
     for (UINT table = 1; table <= m_tables; ++table)
     {
@@ -210,7 +212,8 @@ schema::NS_EW SchemaInfo::GetPairs(UINT a_round, UINT a_table) const
 
 UINT SchemaInfo::GetSet( UINT table, UINT round) const
 {
-    if ( table == 0 ) return 0;     // rest-table at uneven number of pairs!!
+    if ( (table == 0) || !IsOk() ) return 0;     // no schema or rest-table at uneven number of pairs!!
+ 
     assert(table <= m_tables);
     assert(round && round <= m_rounds);
     int set = SET(round, table);
@@ -220,7 +223,7 @@ UINT SchemaInfo::GetSet( UINT table, UINT round) const
 
 UINT SchemaInfo::GetBorrowTable(UINT table, UINT round) const
 {
-    if (table == 0) return 0;   // no play at when table == 0
+    if ( (table == 0) || !IsOk() ) return 0;    // no schema or no play at when table == 0
     assert(         table <= m_tables);
     assert(round && round <= m_rounds);
 
@@ -231,6 +234,7 @@ UINT SchemaInfo::GetBorrowTable(UINT table, UINT round) const
 
 UINT SchemaInfo::GetTable( UINT pair, UINT round) const
 {
+    if (!IsOk()) return 0;
     assert(pair  && pair  <= m_pairs );
     assert(round && round <= m_rounds);
 
@@ -239,6 +243,7 @@ UINT SchemaInfo::GetTable( UINT pair, UINT round) const
 
 bool SchemaInfo::IsNs( UINT pair, UINT round) const
 {
+    if (!IsOk()) return false;
     assert(pair  && pair  <= m_pairs );
     assert(round && round <= m_rounds);
 

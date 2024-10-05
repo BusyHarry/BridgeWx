@@ -497,72 +497,66 @@ void Debug::OnSelectPair(wxCommandEvent&)
     // do nothing: action on button example/print, only set focus
 }   // OnSelectPair()
 
-void Debug::OnPrint(wxCommandEvent&)
+void Debug::PrintOrExample()
 {
-    m_bPrintNext = true;
-    if ( m_debugType == ScoreSlips)
+    if (m_debugType == ScoreSlips)
     {
-        //LogMessage("Debug::OnPrintSlips()");
-        UINT setSize        = m_pSetSize->GetSelection()+1;
-        UINT firstSet       = m_pFirstSet->GetSelection()+1;
-        UINT nrOfSets       = m_pNrOfSets->GetSelection()+1;
-        UINT repeatCount    = m_pRepeatCount->GetSelection()+1;
+        //LogMessage("Debug::OnShowSlips()");
+        UINT setSize        = m_pSetSize->GetSelection() + 1;
+        UINT firstSet       = m_pFirstSet->GetSelection() + 1;
+        UINT nrOfSets       = m_pNrOfSets->GetSelection() + 1;
+        UINT repeatCount    = m_pRepeatCount->GetSelection() + 1;
         wxString extra      = m_pTxtCtrlExtra->GetValue();
 
-        PrintScoreSlips( setSize, firstSet, nrOfSets, repeatCount, extra );
+        PrintScoreSlips(setSize, firstSet, nrOfSets, repeatCount, extra);
     }
     else
     {
-        if (m_bSchema)
+        if (!m_schema.IsOk())
         {
-            //LogMessage("Debug::OnPrintSchema()");
-            PrintSchemaOverviewNew();
+            m_consoleOutput.Clear();
+            m_consoleOutput.push_back(_("Geen schema voorhanden"));
+            m_bPrintNext = false;       // force console output
         }
         else
         {
-            //LogMessage("Debug::OnPrintGuide()");
-            PrintGuideNew (m_pPairChoice->GetSelection());
+            if (m_bSchema)
+            {
+                //LogMessage("Debug::OnShowSchema()");
+                PrintSchemaOverviewNew();
+            }
+            else
+            {
+                //LogMessage("Debug::OnShowPair()");
+                PrintGuideNew(m_pPairChoice->GetSelection());
+            }
         }
     }
+
+    if (!m_bPrintNext)
+    {
+        m_pConsole->Freeze();           // stop update of display to prevent flicker (well, get less flicker!)
+        m_pConsole->freezeCount++;
+        m_pConsole->Clear(false);
+        for (const auto& it : m_consoleOutput) OUTPUT_TEXT(it + '\n');  // insert generated output
+        m_pConsole->Thaw();             // now you may update the console-window!
+        m_pConsole->thawCount++;
+        m_pConsole->AsyncTextOutEnd();  //    and display prompt at end of output: MUST be AFTER Thaw(), else begin of window is showed
+        //LogMessage("example: freeze=%i, thaw=%i)", m_pConsole->freezeCount, m_pConsole->thawCount);
+    }
     m_bPrintNext = false;
+}   // PrintOrExample()
+
+void Debug::OnPrint(wxCommandEvent&)
+{
+    m_bPrintNext = true;
+    PrintOrExample();
 }   // end OnPrint()
 
 void Debug::OnExample(wxCommandEvent&)
 {
     m_bPrintNext = false;       // prevent output to printer
-    if (m_debugType == ScoreSlips)
-    {
-        //LogMessage("Debug::OnShowSlips()");
-        UINT setSize        = m_pSetSize->GetSelection()+1;
-        UINT firstSet       = m_pFirstSet->GetSelection()+1;
-        UINT nrOfSets       = m_pNrOfSets->GetSelection()+1;
-        UINT repeatCount    = m_pRepeatCount->GetSelection()+1;
-        wxString extra      = m_pTxtCtrlExtra->GetValue();
-
-        PrintScoreSlips( setSize, firstSet, nrOfSets, repeatCount, extra);
-    }
-    else
-    {
-        if (m_bSchema)
-        {
-            //LogMessage("Debug::OnShowSchema()");
-            PrintSchemaOverviewNew();
-        }
-        else
-        {
-            //LogMessage("Debug::OnShowPair()");
-            PrintGuideNew(m_pPairChoice->GetSelection());
-        }
-    }
-
-    m_pConsole->Freeze();           // stop update of display to prevent flicker (well, get less flicker!)
-    m_pConsole->freezeCount++;
-    m_pConsole->Clear(false);
-    for (const auto& it : m_consoleOutput) OUTPUT_TEXT(it+'\n');  // insert generated output
-    m_pConsole->Thaw();             // now you may update the console-window!
-    m_pConsole->thawCount++;
-    m_pConsole->AsyncTextOutEnd();  //    and display prompt at end of output: MUST be AFTER Thaw(), else begin of window is showed
-    //LogMessage("example: freeze=%i, thaw=%i)", m_pConsole->freezeCount, m_pConsole->thawCount);
+    PrintOrExample();
 }   // OnExample()
 
 void Debug::OutputText(const wxString& msg)
@@ -1202,6 +1196,12 @@ void Debug::List(const wxChar* pBuf)
         SkipDigits(pBuf);
     }
 
+    if (!m_schema.IsOk())
+    {
+        OUTPUT_TEXT(_("Geen schema voorhanden"));
+        return;
+    }
+
     switch (mode)
     {
         case PAIR:
@@ -1648,6 +1648,12 @@ void Debug::InitGroupData()
 
 void Debug::GroupOverview()
 {   // 'old' method, don't translate!
+    if (!m_schema.IsOk())
+    {
+        OUTPUT_TEXT(_("Geen schema voorhanden"));
+        return;
+    }
+
     if (m_bPrintNext) prn::BeginPrint();
 
     UINT    round;

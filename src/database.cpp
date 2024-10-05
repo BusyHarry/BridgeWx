@@ -440,8 +440,12 @@ bool SchemaRead(cfg::SessionInfo& a_info, UINT a_session)
     if (info.IsEmpty()) info = default;
     auto count = wxSscanf(info, " {%u ,%u ,%u }", &a_info.nrOfGames, &a_info.setSize, &a_info.firstGame);
     if ( count != 3)
-    {
+    {   // on error, we just take a default value
         MyLogError(_("Fout bij inlezen schema <%s>"), info);
+        info             = default;
+        a_info.nrOfGames = 24;
+        a_info.setSize   = 4;
+        a_info.firstGame = 1;
     }
     auto split = wxSplit(info, theSeparator);
     split.erase(split.begin()); // now we have only schema descriptions
@@ -452,11 +456,18 @@ bool SchemaRead(cfg::SessionInfo& a_info, UINT a_session)
     {
         char schema    [20]={0};
         char groupChars[20]={0};
+        groupData.pairs = 0;
+        groupData.absent = 0;
         count = wxSscanf(it, " {%u ,%u , \"%19[^\"]\" , \"%19[^\"]\" }", &groupData.pairs, &groupData.absent, schema, groupChars);
+        // count == 2 -> empty schema
+        // count == 3 -> empty groupchars
+        if (count == 2)
+        {   // no schema, but perhaps groupchars
+            count = wxSscanf(it, " {%u ,%u , \"\" , \"%19[^\"]\" }", &groupData.pairs, &groupData.absent,  groupChars);
+        }
         if ( count < 3)
-        {   // if groupchars empty, count = 3
+        {   // schema and groupchars empty
             MyLogError(_("Fout bij inlezen schema <%s>"), info);
-            continue;
         }
         if ((groupChars[0] == ' ') && (groupChars[1] == 0) ) groupChars[0] = 0; // remove single space
         groupData.schema        = schema;

@@ -5,6 +5,9 @@
 /buildDate.h
 work/
 readme.md.txt
+diffiles*.log
+logall.log
+DifMissing.log
 
 # Build results
 vc_x64_mswu/

@@ -30,7 +30,7 @@ public:
     void        Init                (const wxArrayString& choices, const wxString& selection );
     void        Set                 (const wxArrayString& choices);
     long        InsertItem          (long index, const wxString& choice);
-    void        SetNumberOfRows     (UINT numberOfRows);    // nr of rows in choice
+    void        SetMaxNumberOfRows  (UINT numberOfRows);    // nr of rows in choice
     void        SetColumnWidthInChars(UINT chars);
     void        SetAutoColumnWidth  (bool bAuto);
     void        CheckAutoSize       (const wxString& choice);
@@ -42,7 +42,8 @@ protected:
     virtual bool AnimateShow( const wxRect& rect, int flags ) wxOVERRIDE;
 
 private:
-    void ResetTextctrlSize();   // set max-size of combo if empty
+    void ResetTextctrlSize();               // set max-size of combo if empty
+    void ExpandNrOfRows(UINT itemNumber, bool bInit=false); // expand nr of rows if itemNumber > current rowcount
     #define MC_DEFAULT_NR_OF_ROWS 4
     PopupChoiceMC*  m_pPopup;
     wxTextCtrl*     m_pTxtctrl;
@@ -52,6 +53,7 @@ private:
     bool            m_bAutoSize;
     int             m_currentColumnWidth;
     UINT            m_numberOfRows;
+    UINT            m_maxNumberOfRows;
     int             m_popupWidth;
     int             m_textMinSize;      // size of borders and button of combo-editbox
     UINT            m_nrOfColumns;

@@ -15,7 +15,7 @@ class PopupChoiceMC : public wxListView, public wxComboPopup
 {
 public:
     explicit            PopupChoiceMC       (wxWindow* a_pParent);
-    virtual void        Init                () wxOVERRIDE;
+    void                InitPopupMc         ();
     virtual bool        Create              (wxWindow* parent) wxOVERRIDE;
     virtual wxWindow*   GetControl          () wxOVERRIDE;
     virtual void        SetStringValue      (const wxString& sel) wxOVERRIDE;
@@ -44,14 +44,14 @@ PopupChoiceMC::PopupChoiceMC(wxWindow* a_pParent) : wxListView(), wxComboPopup()
 {
     m_pTargetWindow = a_pParent;
     m_mainWinId     = a_pParent->GetId();
-    Init();
+    InitPopupMc();
 }   // PopupChoiceMC()
 
-void PopupChoiceMC::Init()
+void PopupChoiceMC::InitPopupMc()
 {
     m_value         = -1;
     m_itemHere      = -1; // hot item in list
-}   // Init()
+}   // InitPopupMc()
 
 bool PopupChoiceMC::Create( wxWindow* parent )
 {
@@ -194,16 +194,18 @@ ChoiceMC::ChoiceMC(wxWindow* a_pParent, const wxString& a_textCtrlTitle) : wxCom
     //SetBackgroundColour({220,220,220});               // doesn't work for button to set background of mainwindow
     m_currentColumnWidth    = 0;
     m_nrOfColumns           = 0;
+    m_maxNumberOfRows       = 0;    // will be set in SetMaxNumberOfRows()
+    m_numberOfRows          = 0;
     m_popupCharWidth        = m_pPopup->GetCharWidth();
     m_popupCharHeight       = m_pPopup->GetCharHeight();
     m_popupMaxWidth         = 27*m_popupCharWidth;      // arbitrary, but we allow atleast 2 columns before scrolling...
 
     m_pPopup->SetColumnWidth(0, m_popupCharWidth*6);    // default 6 chars wide
-    SetNumberOfRows(MC_DEFAULT_NR_OF_ROWS);
     m_textMinSize = GetMargins().x + GetButtonSize().GetX();    // minimum size of combobox if no text in it
     m_pPopup->Bind(wxEVT_KILL_FOCUS, [this](wxFocusEvent&){m_timerPopupKillFocus.StartOnce(35);});
     
     IF_TEST MyLogDebug(_("ChoiceMC() comboMinSize=%i, charWidth=%i"), m_textMinSize, m_popupCharWidth);
+    SetMaxNumberOfRows(MC_DEFAULT_NR_OF_ROWS);
     ResetTextctrlSize();
     ShowSizes(0);
 }   // ChoiceMC()
@@ -268,6 +270,7 @@ void ChoiceMC::CheckAutoSize(const wxString& a_choice)
 
 void ChoiceMC::Append(const wxString& a_newChoice)
 {
+    ExpandNrOfRows(1+GetCount());
     CheckAutoSize(a_newChoice);
     m_pPopup->Append(a_newChoice);
 }   // Append()
@@ -297,10 +300,11 @@ int ChoiceMC::GetSelection() const
 void ChoiceMC::Clear()
 {
     m_pPopup->DeleteAllItems();
-    m_pPopup->Init();
+    m_pPopup->InitPopupMc();
     m_popupWidth        = 0;
     m_currentColumnWidth= 0;
     m_nrOfColumns       = 0;
+    m_numberOfRows      = 0;
     ResetTextctrlSize(); // Clear() SHOULD reset, but screen-layout could change.....
 }   // Clear()
 
@@ -311,6 +315,7 @@ UINT ChoiceMC::GetCount()
 
 void ChoiceMC::Init(UINT a_count, UINT a_selection, UINT a_offset)
 {
+    ExpandNrOfRows(a_count, true);  // preset needed nr of rows
     Clear();
     for (unsigned int count = 1; count <= a_count; ++count)
     {
@@ -322,6 +327,7 @@ void ChoiceMC::Init(UINT a_count, UINT a_selection, UINT a_offset)
 
 void ChoiceMC::Set(const wxArrayString& a_items)
 {
+    ExpandNrOfRows(a_items.size(), true);   // preset needed nr of rows
     Clear();
     for (const auto& it : a_items)
         Append(it);
@@ -341,19 +347,29 @@ void ChoiceMC::Init(const wxArrayString& a_choices, const wxString& a_selection)
 
 long ChoiceMC::InsertItem(long a_index, const wxString& a_choice)
 {
+    ExpandNrOfRows(1+GetCount());    // expand nr of rows, if needed
     CheckAutoSize(a_choice);
     return m_pPopup->InsertItem(a_index, a_choice);
 }   // InsertItem()
 
-void ChoiceMC::SetNumberOfRows(UINT a_numberOfRows)
-{ 
-//    m_pPopup->SetScrollbar();
-    int borderSizeY     = wxSystemSettings::GetMetric( wxSYS_BORDER_Y , m_pPopup );
-    int scrollBarHeight = wxSystemSettings::GetMetric( wxSYS_HSCROLL_Y, m_pPopup );
+void ChoiceMC::SetMaxNumberOfRows(UINT a_numberOfRows)
+{   // requested maximum number of rows in a popup
+    m_maxNumberOfRows = a_numberOfRows;
+    ExpandNrOfRows(GetCount(), true);
+}   // SetMaxNumberOfRows()
 
-    SetPopupMaxHeight((1+m_popupCharHeight)*a_numberOfRows + scrollBarHeight + 2*borderSizeY);
-    m_numberOfRows = a_numberOfRows;
-}   // SetNumberOfRows()
+void ChoiceMC::ExpandNrOfRows(UINT a_itemNumber, bool a_bInit)
+{
+    UINT rows = std::min(a_itemNumber, m_maxNumberOfRows);
+    if ( !a_bInit && rows <= m_numberOfRows ) return;
+
+    int borderSizeY = wxSystemSettings::GetMetric(wxSYS_BORDER_Y, m_pPopup);
+    int scrollBarHeight = wxSystemSettings::GetMetric(wxSYS_HSCROLL_Y, m_pPopup);
+
+    SetPopupMaxHeight((1 + m_popupCharHeight) * rows + scrollBarHeight + 2 * borderSizeY);
+    m_numberOfRows = rows;
+}   // ExpandNrOfRows()
+
 
 [[maybe_unused]] void ChoiceMC::SetColumnWidthInChars(UINT a_chars)
 {

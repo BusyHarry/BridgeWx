@@ -217,6 +217,8 @@ public:
     */
     void PrintTable(const table::TableInfo& table);
 
+    bool IsPrintToFile() { return m_bPrint2File; }  // true, if we are printing to a file (not a printer)
+
 private:
 
     /*
@@ -327,10 +329,16 @@ bool MyLinePrinter::OpenDiskfile4Print()
 {
     if (m_bPrint2File && m_fp == nullptr)
     {
-        wxString fileName = cfg::GetActiveMatchPath()+cfg::GetFilePrinterName();
-        m_fp = fopen(fileName.char_str(), "a");
-        if(m_fp == nullptr)
+        wxString fileName  = cfg::GetActiveMatchPath()+cfg::GetFilePrinterName();
+        bool     bWriteBom = !wxFileExists(fileName);
+        m_fp               = fopen(fileName.char_str(), "a");
+        if (m_fp == nullptr)
             m_bPrint2File = false;
+        else if (bWriteBom)
+        {
+            const unsigned char bom[] = { 0xEF, 0xBB, 0xBF };    // utf8
+            (void)fwrite(bom, 1, sizeof(bom), m_fp);
+        }
     }
     return m_bPrint2File;
 }   // OpenDiskfile4Print()
@@ -782,23 +790,24 @@ bool MyLinePrinter::PrintCharacter(wxChar a_char)
 {
     if (m_bPrint2File && OpenDiskfile4Print())
     {
-        char result[3]={0};
-        if (( (a_char < ' ') || (a_char > '{')) && (a_char != '\n') )
+        // utf8 text
+        size_t      length;
+        const void* pBuf;
+        if (a_char < 0x80)
         {
-            wxString cnv = a_char;
-            int len = Unicode2Ascii(cnv, result, sizeof(result));
-            if (len != 2)
-            {   // 2: char + '\0'
-                LogWarning(_("MyLinePrinter::PrintCharacter(%c) heeft onverwachte lengte: %d"), a_char, len-1);
-            }
+            length  = 1;
+            pBuf    = &a_char;
         }
         else
-            result[0] = a_char;
-
-        int len = fwrite(result, 1, 1, m_fp);
-        return 1 == len;
+        {
+            wxString cnv(a_char);
+            pBuf   = cnv.ToUTF8();
+            length = strlen((const char*)pBuf);
+        }
+        return length == fwrite(pBuf, 1, length, m_fp);
     }
 
+    //if m_bPrint2File but OpenDiskfile4Print() failes, then next test will return false...
     if (!m_bPrinting)
     {
         return false;		// no open printer yet
@@ -831,7 +840,15 @@ bool MyLinePrinter::PrintCharacter(wxChar a_char)
 
 bool MyLinePrinter::PrintLine(const wxString& a_line)
 {
-//  return std::all_of(a_line.begin(), a_line.end(), prn::PrintCharacter); //  <-- remark this is the global PrintCharacter.....
+    if (m_bPrint2File)
+    {
+        if (!OpenDiskfile4Print())
+            return false;
+        const char* pBuf   = a_line.ToUTF8();
+        auto        length = strlen(pBuf);
+        return length == fwrite(pBuf, 1, length, m_fp);
+    }
+
     return std::all_of(a_line.begin(), a_line.end(), [this]( wxChar chr ){ return this->PrintCharacter(chr);});
 }   // PrintLine()
 
@@ -1018,6 +1035,12 @@ unsigned int GetCharsPerLine()
 {
     return thePrintclass.GetCharsPerLine();
 }   // GetCharsPerLine()
+
+bool IsPrintToFile()
+{
+    return thePrintclass.IsPrintToFile();
+}  // IsPrintToFile()
+
 
 #if 0
 ///////////// test stuff

@@ -24,6 +24,7 @@ bool        SelectPrinter   ();                                 // selects a pri
 void        SelectFont      ();                                 // selects a font through the windows fontselect dialog
 UINT        GetLinesPerPage ();                                 // gets the actual maxLines/page
 UINT        GetCharsPerLine ();                                 // gets actual max chars on a line
+bool        IsPrintToFile   ();                                 // true, if we are printing to a file (not a printer)
 
 namespace table
 {   //simple table-printing: texts and horizontal/vertical lines

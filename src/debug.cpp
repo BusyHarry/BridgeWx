@@ -499,6 +499,10 @@ void Debug::OnSelectPair(wxCommandEvent&)
 
 void Debug::PrintOrExample()
 {
+    bool bPrintToFile = m_bPrintNext && prn::IsPrintToFile();
+    if (bPrintToFile)
+        m_bPrintNext = false;   // printer can't print linechars to a text-file, so we do it here
+
     if (m_debugType == ScoreSlips)
     {
         //LogMessage("Debug::OnShowSlips()");
@@ -533,7 +537,16 @@ void Debug::PrintOrExample()
         }
     }
 
-    if (!m_bPrintNext)
+    if (bPrintToFile)
+    {
+        for (const auto& it : m_consoleOutput)
+        {
+            prn::PrintLine(it);
+            prn::PrintCharacter('\n');
+        }
+        prn::EndPrint();    // force flush
+    }
+    else if (!m_bPrintNext)
     {
         m_pConsole->Freeze();           // stop update of display to prevent flicker (well, get less flicker!)
         m_pConsole->freezeCount++;
@@ -1481,7 +1494,7 @@ void Debug::CalcScore(const wxChar* pBuf)
             if (tricks == 0) { Usage(); return;}    // '-0' ????
             SkipDigits(++pBuf);
             if (*pBuf == '*'){++doubled; SkipWhite(++pBuf);}
-            if (*pBuf == '*'){++doubled; ++pBuf;}
+            if (*pBuf == '*'){++doubled; /*++pBuf;*/ }
         }
         else
         {

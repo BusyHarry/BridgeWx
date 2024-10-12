@@ -786,25 +786,25 @@ void  MyLinePrinter::PrintPage()
     (void)EndPage(m_hPrinter);
 }   // PrintPage()
 
+static bool PrintString2File(const wxString& a_string, FILE* a_fp)
+{
+    const wxScopedCharBuffer buf(a_string.ToUTF8());
+    auto length = buf.length();
+    return length == fwrite(buf, 1, length, a_fp);
+}   // PrintString2File()
+
 bool MyLinePrinter::PrintCharacter(wxChar a_char)
 {
     if (m_bPrint2File && OpenDiskfile4Print())
     {
         // utf8 text
-        size_t      length;
-        const void* pBuf;
         if (a_char < 0x80)
-        {
-            length  = 1;
-            pBuf    = &a_char;
+        {   // assume no conversion
+            return 1 == fwrite(&a_char, 1, 1, m_fp);
         }
-        else
-        {
-            wxString cnv(a_char);
-            pBuf   = cnv.ToUTF8();
-            length = strlen((const char*)pBuf);
-        }
-        return length == fwrite(pBuf, 1, length, m_fp);
+
+        //convert the single character
+        return PrintString2File(a_char, m_fp);
     }
 
     //if m_bPrint2File but OpenDiskfile4Print() failes, then next test will return false...
@@ -812,8 +812,6 @@ bool MyLinePrinter::PrintCharacter(wxChar a_char)
     {
         return false;		// no open printer yet
     }
-
-    bool result = true;
 
     switch (a_char)
     {
@@ -835,7 +833,7 @@ bool MyLinePrinter::PrintCharacter(wxChar a_char)
             break;
     }
 
-    return result;
+    return true;
 }   // PrintCharacter()
 
 bool MyLinePrinter::PrintLine(const wxString& a_line)
@@ -844,9 +842,7 @@ bool MyLinePrinter::PrintLine(const wxString& a_line)
     {
         if (!OpenDiskfile4Print())
             return false;
-        const char* pBuf   = a_line.ToUTF8();
-        auto        length = strlen(pBuf);
-        return length == fwrite(pBuf, 1, length, m_fp);
+        return PrintString2File(a_line, m_fp);
     }
 
     return std::all_of(a_line.begin(), a_line.end(), [this]( wxChar chr ){ return this->PrintCharacter(chr);});

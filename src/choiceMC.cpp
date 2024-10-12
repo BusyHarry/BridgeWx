@@ -33,7 +33,7 @@ private:
     void OnMouseClick(wxMouseEvent& event);
     void ItemActivated();           // actions when item activated by mouse or ENTER key
 
-    int         m_value;            // current item index
+    int         m_selection;        // current item index
     int         m_itemHere;         // hot item in popup: mouse-over
     wxWindow*   m_pTargetWindow;    // event target
     wxWindowID  m_mainWinId;        // windows id of main control, needed for choice-event
@@ -49,8 +49,8 @@ PopupChoiceMC::PopupChoiceMC(wxWindow* a_pParent) : wxListView(), wxComboPopup()
 
 void PopupChoiceMC::InitPopupMc()
 {
-    m_value         = -1;
-    m_itemHere      = -1; // hot item in list
+    m_selection = wxNOT_FOUND;
+    m_itemHere  = wxNOT_FOUND;  // hot item in list
 }   // InitPopupMc()
 
 bool PopupChoiceMC::Create( wxWindow* parent )
@@ -89,10 +89,10 @@ bool PopupChoiceMC::Create( wxWindow* parent )
 bool PopupChoiceMC::SetStringSelection(const wxString& sel)
 {
     int index = wxListView::FindItem(-1,sel);
-    if ( index >= 0 && index < GetItemCount() )
+    if ( index != wxNOT_FOUND && index < GetItemCount() )
     {
         wxListView::Select(index);
-        m_value = index;
+        m_selection = index;
         return true;
     }
     return false;
@@ -100,13 +100,13 @@ bool PopupChoiceMC::SetStringSelection(const wxString& sel)
 
 wxString PopupChoiceMC::GetStringValue() const
 {
-    if ( m_value >= 0 )
-        return wxListView::GetItemText(m_value);
+    if ( m_selection != wxNOT_FOUND )
+        return wxListView::GetItemText(m_selection);
     return wxEmptyString;
 }   // GetStringValue()
 
 wxString PopupChoiceMC::GetStringSelection() const {return GetStringValue();}
-int PopupChoiceMC::GetSelection() const {return m_value;}
+int PopupChoiceMC::GetSelection() const {return m_selection;}
 
 //
 // Utilities for item manipulation
@@ -120,7 +120,7 @@ bool PopupChoiceMC::SetSelection(int a_selection)  // return true if new selecti
 {
     if ( a_selection >= 0 && a_selection < GetItemCount())
     {
-        m_value = a_selection;
+        m_selection = a_selection;
         return true;
     }
     return false;
@@ -131,11 +131,11 @@ void PopupChoiceMC::OnMouseMove(wxMouseEvent& event)
     // Move selection to cursor if it is inside the popup
     int resFlags;
     int itemHere = HitTest(event.GetPosition(),resFlags);
-    if ( itemHere >= 0 && itemHere != m_itemHere)
+    if ( itemHere != wxNOT_FOUND && itemHere != m_itemHere)
     {   // prevent multiple events for same selection
         wxListView::Select(itemHere, true);
-        m_itemHere = itemHere;
     }
+    m_itemHere = itemHere;  // ALWAYS save last item, certainly if not found (no visable selection)
     event.Skip();
 }   // OnMouseMove()
 
@@ -146,13 +146,14 @@ void PopupChoiceMC::OnMouseClick(wxMouseEvent& WXUNUSED(event))
 
 void PopupChoiceMC::ItemActivated()
 { // On mouse left/ENTER, set the value, send event and close the popup
-    m_value = m_itemHere;   // result from mousemove/ENTER
+    if (m_itemHere == wxNOT_FOUND) return;      //nothing choosen yet, perhaps click on ruler
+    m_selection = m_itemHere;                   // result from mousemove/ENTER
     wxCommandEvent event(wxEVT_CHOICE, m_mainWinId);
-    event.SetInt(m_value);
+    event.SetInt(m_selection);
     event.SetString(GetStringValue());
     m_pTargetWindow->HandleWindowEvent(event);  // now send event to our creator
     Dismiss();                                  // and remove popup
-    MyLogDebug(_("ChoiceMC: item %i geactiveerd"), m_value);
+    MyLogDebug(_("ChoiceMC: item %i geactiveerd"), m_selection);
 }   // ItemActivated()
 
 ChoiceMC::ChoiceMC(wxWindow* a_pParent, const wxString& a_textCtrlTitle) : wxComboCtrl()
@@ -196,6 +197,7 @@ ChoiceMC::ChoiceMC(wxWindow* a_pParent, const wxString& a_textCtrlTitle) : wxCom
     m_nrOfColumns           = 0;
     m_maxNumberOfRows       = 0;    // will be set in SetMaxNumberOfRows()
     m_numberOfRows          = 0;
+    m_popupWidth            = 0;
     m_popupCharWidth        = m_pPopup->GetCharWidth();
     m_popupCharHeight       = m_pPopup->GetCharHeight();
     m_popupMaxWidth         = 27*m_popupCharWidth;      // arbitrary, but we allow atleast 2 columns before scrolling...
@@ -287,6 +289,7 @@ int ChoiceMC::GetSelection() const
 
 [[maybe_unused]] bool ChoiceMC::AnimateShow( const wxRect& rect, int WXUNUSED(flags) )
 {
+    if (m_numberOfRows == 0) return false;    // nothing to show...
     // Customize(wxCC_NO_TEXT_AUTO_SELECT);   // DOES prevent selectAll, but still cursor present
     wxWindow* win = GetPopupWindow();
 //    wxRect& pRect = (wxRect&)rect; pRect.x=100; pRect.y=100; // repos window....

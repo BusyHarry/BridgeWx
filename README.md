@@ -65,7 +65,7 @@ You may use the './locales/gettxt.bat' to
 
 To use this (or your own) translation you must do the following:
 
-To get the text from wxWidgets itself in your language
+To get the text from wxWidgets itself in your language:
  - copy '\<wxBase\>/locale/\<language\>.mo' to '\<exeDir\>/locales/\<language\>/wxstd.mo'
 
 To get your BridgeWx translation:
@@ -77,7 +77,7 @@ To get your BridgeWx translation:
  - the gui is based on wxWidgets V3.2.6 (V3.2.5 is also ok)
  - I only used the x64 version (also for wxWidgets)
  - apply the change/addition from 'BridgeWx\wxWidgetsChanges\v3.2.6\'
- - copy the tools from the release BridgeWxBin_v*zip[BridgeWx/tools/*.exe] to the '\<BridgeWxBase\>/tools' folder 
+ - copy the tools from the release BridgeWxBin_v\*.zip[BridgeWx/tools/*.exe] to the '\<BridgeWxBase\>/tools' folder 
  - add a global env-variable '\<wxwin\>' or
  - from a cmd-prompt: set environment variable '\<wxwin\>' to wxWidgets basefolder:
  	- set wxwin=d:\wxWidgets_3.2.6  ( == \<wxBase\> )
@@ -87,8 +87,8 @@ To get your BridgeWx translation:
      - create the folder(s) for the Dutch/English language (automaticaly done when building in VS):
        - '\<BridgeWxBase\>vc_x64_mswu[d]/locales/en' and
        - '\<BridgeWxBase\>vc_x64_mswu[d]/locales/nl'
-   and copy the *mo files from the BridgeWxBin_v*.zip to there corresponding locations
-
+   and copy the *mo files from the BridgeWxBin_v\*.zip to there corresponding locations
+\
 
 # Licence
 

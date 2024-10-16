@@ -22,8 +22,8 @@ For this test I used 'AutoHotkey2' and for this, I have buildin some synchronisa
 When setting keydelay/duration to minimum, some chars are lost/arrive at wrong window: you will get some (still unhandled) asserts.
 To run the autotest:
  - AutoHotkey64.exe MUST exist, reachable through the 'path' environment-variable, or be present in the tools folder
- - run once: initTest.bat (it will create a file with mouse-positions/labels used in the actual test)
- - run the test: runTest.bat
+ - run once initTest.bat (it will create some needed files)
+ - run: runTest.bat
  - afterwoods, you may run 'compareDb.bat' and 'compareList.bat' to check the results against a 'correct' reference (for Dutch present in the autotest folder)
 
 I used SciTE4AutoHotkey ( https://www.autohotkey.com/scite4ahk/ ) to edit/debug the testscript.
@@ -36,9 +36,8 @@ If you run WxBridge for the first time from the binairy on a clean win10 install
   - missing VCRUNTIME140.dll
   - missing MSVCP140.dll
   - missing VCRUNTIME140_1.dll
-
-These .dll's are needed when running BridgeWx (compiled with VS2019/VS2022). 
-Download/install the redistributable package from: https://aka.ms/vs/17/release/vc_redist.x64.exe
+These .dll's are needed when running BridgeWx (compiled with VS2019/VS2022)
+Download/install redistributable package from: https://aka.ms/vs/17/release/vc_redist.x64.exe
 (for x86: https://aka.ms/vs/17/release/vc_redist.x86.exe )
 
 ## Language
@@ -66,7 +65,7 @@ You may use the './locales/gettxt.bat' to
 
 To use this (or your own) translation you must do the following:
 
-To get the text from wxWidgets itself in your language:
+To get the text from wxWidgets itself in your language
  - copy '\<wxBase\>/locale/\<language\>.mo' to '\<exeDir\>/locales/\<language\>/wxstd.mo'
 
 To get your BridgeWx translation:
@@ -78,7 +77,7 @@ To get your BridgeWx translation:
  - the gui is based on wxWidgets V3.2.6 (V3.2.5 is also ok)
  - I only used the x64 version (also for wxWidgets)
  - apply the change/addition from 'BridgeWx\wxWidgetsChanges\v3.2.6\'
- - copy the tools from the release BridgeWxBin_v\*.zip[BridgeWx/tools/*.exe] to the '\<BridgeWxBase\>/tools' folder 
+ - copy the tools from the release BridgeWxBin_v*zip[BridgeWx/tools/*.exe] to the '\<BridgeWxBase\>/tools' folder 
  - add a global env-variable '\<wxwin\>' or
  - from a cmd-prompt: set environment variable '\<wxwin\>' to wxWidgets basefolder:
  	- set wxwin=d:\wxWidgets_3.2.6  ( == \<wxBase\> )
@@ -88,7 +87,8 @@ To get your BridgeWx translation:
      - create the folder(s) for the Dutch/English language (automaticaly done when building in VS):
        - '\<BridgeWxBase\>vc_x64_mswu[d]/locales/en' and
        - '\<BridgeWxBase\>vc_x64_mswu[d]/locales/nl'
-   and copy the *mo files from the BridgeWxBin_v\*.zip to there corresponding locations
+   and copy the *mo files from the BridgeWxBin_v*.zip to there corresponding locations
+
 
 # Licence
 

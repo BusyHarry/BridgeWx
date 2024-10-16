@@ -169,7 +169,7 @@ ChoiceMC::ChoiceMC(wxWindow* a_pParent, const wxString& a_textCtrlTitle) : wxCom
     m_pPopup->InsertColumn(0, "", wxLIST_FORMAT_LEFT, -1);
 
     SetPopupControl(m_pPopup);
-    m_bAutoSize = true; //size of choice-entries determine column-size and editctrl-size
+    SetAutoColumnWidth(true);   //size of choice-entries determine column-size and editctrl-size
 
     m_pTxtctrl = GetTextCtrl();
     m_pTxtctrl->Clear();   // remove label-text from entry...
@@ -202,7 +202,7 @@ ChoiceMC::ChoiceMC(wxWindow* a_pParent, const wxString& a_textCtrlTitle) : wxCom
     m_popupCharHeight       = m_pPopup->GetCharHeight();
     m_popupMaxWidth         = 27*m_popupCharWidth;      // arbitrary, but we allow atleast 2 columns before scrolling...
 
-    m_pPopup->SetColumnWidth(0, m_popupCharWidth*6);    // default 6 chars wide
+    SetColumnWidthInChars(6);                           // default 6 chars wide
     m_textMinSize = GetMargins().x + GetButtonSize().GetX();    // minimum size of combobox if no text in it
     m_pPopup->Bind(wxEVT_KILL_FOCUS, [this](wxFocusEvent&){m_timerPopupKillFocus.StartOnce(35);});
     
@@ -227,7 +227,7 @@ bool ChoiceMC::SetStringSelection(const wxString& a_sel)
 {   // setting size of combocontrol only gets active AFTER/DURING the next idle loop.
     // So we need a 'CallAfter' to be sure the text will fit...
     bool bResult = m_pPopup->SetStringSelection(a_sel);
-    SetValueByUser(bResult ? a_sel : "");   // show in editctrl
+    CallAfter([this, bResult, a_sel] {SetValueByUser(bResult ? a_sel : "");});   // show in editctrl
     CallAfter([this]{ShowSizes(4);});
     return bResult;
 }   // SetStringSelection()
@@ -374,12 +374,12 @@ void ChoiceMC::ExpandNrOfRows(UINT a_itemNumber, bool a_bInit)
 }   // ExpandNrOfRows()
 
 
-[[maybe_unused]] void ChoiceMC::SetColumnWidthInChars(UINT a_chars)
+void ChoiceMC::SetColumnWidthInChars(UINT a_chars)
 {
     m_pPopup->SetColumnWidth(0, m_popupCharWidth*a_chars);
 }   // ChoiceMC()
 
-[[maybe_unused]] void ChoiceMC::SetAutoColumnWidth(bool a_bAuto)
+void ChoiceMC::SetAutoColumnWidth(bool a_bAuto)
 {
     m_bAutoSize = a_bAuto;
 }   // SetAutoColumnWidth()

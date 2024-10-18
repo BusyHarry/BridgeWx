@@ -216,7 +216,7 @@ ChoiceMC::~ChoiceMC() {}
 bool ChoiceMC::SetSelection(int a_selection)
 { 
     /*
-    * remark: this was in begin 2023, now Oct 2024 it seems to be solved with (sic!) a new windows
+    * remark: this was in begin 2024, now Oct 2024 it seems to be solved with (sic!) a new windows
     * redistributable package for VS.
     * Setting size of combocontrol only gets active AFTER/DURING the next idle loop.
     * So we need a 'CallAfter' for SetValueByUser() to be sure the text will fit...

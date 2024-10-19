@@ -36,7 +36,6 @@ public:
     void        CheckAutoSize       (const wxString& choice);
     void        SetPopupWidth       (int size);
     void        SetMaxPopupWidth    (int maxWidth);
-    void        ShowSizes           (UINT id);  //show sizes from combo/text
     UINT        GetCount            ();         // nr of items in popup
 protected:
     virtual bool AnimateShow( const wxRect& rect, int flags ) wxOVERRIDE;

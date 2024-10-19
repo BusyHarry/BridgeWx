@@ -200,65 +200,50 @@ ChoiceMC::ChoiceMC(wxWindow* a_pParent, const wxString& a_textCtrlTitle) : wxCom
     m_popupWidth            = 0;
     m_popupCharWidth        = m_pPopup->GetCharWidth();
     m_popupCharHeight       = m_pPopup->GetCharHeight();
-    m_popupMaxWidth         = 27*m_popupCharWidth;      // arbitrary, but we allow atleast 2 columns before scrolling...
 
-    SetColumnWidthInChars(6);                           // default 6 chars wide
+    SetMaxPopupWidth(27*m_popupCharWidth);                      // arbitrary, but we allow atleast 2 columns before scrolling...
+    SetColumnWidthInChars(6);                                   // default 6 chars wide
     m_textMinSize = GetMargins().x + GetButtonSize().GetX();    // minimum size of combobox if no text in it
     m_pPopup->Bind(wxEVT_KILL_FOCUS, [this](wxFocusEvent&){m_timerPopupKillFocus.StartOnce(35);});
     
     IF_TEST MyLogDebug(_("ChoiceMC() comboMinSize=%i, charWidth=%i"), m_textMinSize, m_popupCharWidth);
     SetMaxNumberOfRows(MC_DEFAULT_NR_OF_ROWS);
     ResetTextctrlSize();
-    ShowSizes(0);
 }   // ChoiceMC()
 
 ChoiceMC::~ChoiceMC() {}
 
 bool ChoiceMC::SetSelection(int a_selection)
-{   // setting size of combocontrol only gets active AFTER/DURING the next idle loop.
-    // So we need a 'CallAfter' to be sure the text will fit...
+{ 
+    /*
+    * remark: this was in begin 2024, now Oct 2024 it seems to be solved with (sic!) a new windows
+    * redistributable package for VS.
+    * Setting size of combocontrol only gets active AFTER/DURING the next idle loop.
+    * So we need a 'CallAfter' for SetValueByUser() to be sure the text will fit...
+    */
     bool bResult = m_pPopup->SetSelection(a_selection);
-    CallAfter([this, bResult]{SetValueByUser(bResult ? GetStringSelection() : ""); });    // show in editctrl
-    CallAfter([this]{ShowSizes(3);});
+    SetValueByUser(bResult ? GetStringSelection() : "");    // show in editctrl
     return bResult;
 }   // SetSelection()
 
 bool ChoiceMC::SetStringSelection(const wxString& a_sel)
-{   // setting size of combocontrol only gets active AFTER/DURING the next idle loop.
-    // So we need a 'CallAfter' to be sure the text will fit...
+{
     bool bResult = m_pPopup->SetStringSelection(a_sel);
-    CallAfter([this, bResult, a_sel] {SetValueByUser(bResult ? a_sel : "");});   // show in editctrl
-    CallAfter([this]{ShowSizes(4);});
+    SetValueByUser(bResult ? a_sel : "");   // show in editctrl
     return bResult;
 }   // SetStringSelection()
-
-void ChoiceMC::ShowSizes(UINT a_id)
-{
-#if TEST == 1
-    wxSize  s1      = GetSize();
-    wxRect  txtRect = GetTextRect();
-    wxSize  s2      = m_pTxtctrl->GetSize();
-//    int     wi      = m_pTxtctrl->GetMaxWidth();
-
-    MyLogDebug(_("ShowSizes(%i,%u): GetSize=%i, TxtCtlGetSize=%i, GetTextRect=%i")
-                   , GetId(), a_id, s1.x      , s2.x            , txtRect.GetWidth());
-#else
-    (void)a_id;
-#endif
-}   // ShowSizes()
 
 void ChoiceMC::CheckAutoSize(const wxString& a_choice)
 {   // should be called BEFORE an item is added/inserted
     if (m_bAutoSize)
     {
-        ShowSizes(1);
         int width = m_pPopup->GetTextExtent(a_choice).GetWidth() + MIN_SIZE_COLUMN;
         if (width > m_currentColumnWidth)
         {   // update size of txtctrl in combo and columnwidth in popup
             m_currentColumnWidth = width;
             m_pPopup->SetColumnWidth(0, m_currentColumnWidth);
             int txtSize = std::min(m_currentColumnWidth + m_textMinSize, MAX_SIZE_COMBO);
-            m_pTxtctrl->SetSize({width  ,-1});  // NOW text WILL fit....
+////        m_pTxtctrl->SetSize({width  ,-1});  // NOW text WILL fit....
             SetMinSize         ({txtSize,-1});  // will only take effect AFTER next idle....
             IF_TEST MyLogDebug(_("CheckAutoSize(%i): SetMinSize: txt+offset=%i, minsize=%i"), GetId(), width, txtSize);
         }
@@ -266,7 +251,6 @@ void ChoiceMC::CheckAutoSize(const wxString& a_choice)
         int actualWidth = m_nrOfColumns*m_currentColumnWidth;
         if ( actualWidth > m_popupWidth )
             SetPopupWidth(actualWidth);
-        ShowSizes(2); CallAfter([this]{ShowSizes(20);});
     }
 }   // CheckAutoSize()
 
@@ -401,7 +385,7 @@ void ChoiceMC::SetPopupWidth(int a_size)
     }
 }   // SetPopupWidth()
 
-[[maybe_unused]] void ChoiceMC::SetMaxPopupWidth(int a_maxWidth)
+void ChoiceMC::SetMaxPopupWidth(int a_maxWidth)
 {
     m_popupMaxWidth = a_maxWidth;
 }   // SetMaxPopupWidth()

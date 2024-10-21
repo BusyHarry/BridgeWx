@@ -1,8 +1,15 @@
 # Releasenotes
 
-#V10.0.0  September 30, 2024: first release of BridgeWx
+V10.1.0  October 25, 2024: bugfixes/extensions/cleanup
 
-A simple (windows-only) 'bridge' calculation program
+- on language change, switch to 'old' page
+- better handling of unexpected data when reading schemadata
+- don't display schemadata and prevent unneeded assert's when there is no active schema
+- don't show empty rows for ChoiceMc()
+- don't send selection event for ChoiceMc if clicked on scrollbar-area 
+- print guides/scoreslips also to file 'list'
+- 'list' is now coded in utf-8 with BOM (was DOS-cp437)
+- adaptation to dpi-changes
 
 Choose language: menu->extra/taal or menu->tools/language
 

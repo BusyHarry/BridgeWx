@@ -425,7 +425,7 @@ void MyApp::ReInitLanguage()
 
     const wxLanguageInfo* const langInfo = wxUILocale::GetLanguageInfo(wxLANGUAGE_DEFAULT);
     if (langInfo)
-        MyLogMessage(_("Systeemtaal: %d, %s"), langInfo->Language, langInfo->Description);
+        MyLogMessage(_("Systeemtaal: id=%d, %s"), langInfo->Language, langInfo->Description);
     else
         MyLogMessage(_("Systeemtaal: de default systeem taal"));
 

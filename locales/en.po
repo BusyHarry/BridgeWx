@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-21 14:32+0200\n"
-"PO-Revision-Date: 2024-10-21 14:34+0200\n"
+"POT-Creation-Date: 2024-10-24 16:18+0200\n"
+"PO-Revision-Date: 2024-10-24 16:20+0200\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -408,11 +408,11 @@ msgstr "Game %2u: "
 msgid " niet gespeeld"
 msgstr " not played"
 
-#: ..\src\calcScore.cpp:1228 ..\src\debug.cpp:1020 ..\src\debug.cpp:1854
+#: ..\src\calcScore.cpp:1228 ..\src\debug.cpp:1021 ..\src\debug.cpp:1855
 msgid "NZ"
 msgstr "NS"
 
-#: ..\src\calcScore.cpp:1228 ..\src\debug.cpp:1020 ..\src\debug.cpp:1854
+#: ..\src\calcScore.cpp:1228 ..\src\debug.cpp:1021 ..\src\debug.cpp:1855
 msgid "OW"
 msgstr "EW"
 
@@ -557,7 +557,7 @@ msgstr "score"
 msgid "bonus"
 msgstr "bonus"
 
-#: ..\src\correctionsEnd.cpp:39 ..\src\debug.cpp:2092 ..\src\debug.cpp:2224
+#: ..\src\correctionsEnd.cpp:39 ..\src\debug.cpp:2079 ..\src\debug.cpp:2211
 msgid "spellen"
 msgstr "games"
 
@@ -799,7 +799,7 @@ msgstr "Debug console"
 msgid "Aanmaak/printen van gidsbriefjes"
 msgstr "Creation/print of guides"
 
-#: ..\src\debug.cpp:424 ..\src\debug.cpp:2112
+#: ..\src\debug.cpp:424 ..\src\debug.cpp:2099
 msgid "Gidsbriefjes"
 msgstr "Guides"
 
@@ -807,11 +807,11 @@ msgstr "Guides"
 msgid "Aanmaak/printen van scoreslips"
 msgstr "Creation/print of scoreslips"
 
-#: ..\src\debug.cpp:437 ..\src\debug.cpp:1984 ..\src\debug.cpp:1991
+#: ..\src\debug.cpp:437 ..\src\debug.cpp:1870 ..\src\debug.cpp:1978
 msgid "Scoreslips"
 msgstr "Scoreslips"
 
-#: ..\src\debug.cpp:522 ..\src\debug.cpp:1214 ..\src\debug.cpp:1666
+#: ..\src\debug.cpp:522 ..\src\debug.cpp:1215 ..\src\debug.cpp:1667
 msgid "Geen schema voorhanden"
 msgstr "No schema available for these data"
 
@@ -819,31 +819,31 @@ msgstr "No schema available for these data"
 msgid "debug window van "
 msgstr "debug window of "
 
-#: ..\src\debug.cpp:866
+#: ..\src\debug.cpp:867
 msgid "     ----> ronde fout <---, default ronde 1\n"
 msgstr "     ----> round error <---, default round 1\n"
 
-#: ..\src\debug.cpp:879
+#: ..\src\debug.cpp:880
 msgid "     ----> paar fout <---, default paar 1\n"
 msgstr "     ----> pair error <---, default pair 1\n"
 
-#: ..\src\debug.cpp:890 ..\src\debug.cpp:1371
+#: ..\src\debug.cpp:891 ..\src\debug.cpp:1372
 msgid "     ----> groep fout <---, default groep 1\n"
 msgstr "     ----> group error <---, default group 1\n"
 
-#: ..\src\debug.cpp:901
+#: ..\src\debug.cpp:902
 msgid "     ----> tafel fout <---\n"
 msgstr "     ----> table error <---\n"
 
-#: ..\src\debug.cpp:912
+#: ..\src\debug.cpp:913
 msgid "     ----> spel fout <---, default spel 1\n"
 msgstr "     ----> game error <---, default game 1\n"
 
-#: ..\src\debug.cpp:921
+#: ..\src\debug.cpp:922
 msgid "groep "
 msgstr "group "
 
-#: ..\src\debug.cpp:932
+#: ..\src\debug.cpp:933
 #, c-format
 msgid ""
 "\n"
@@ -852,165 +852,165 @@ msgstr ""
 "\n"
 "test-mode, group %u (%u)\n"
 
-#: ..\src\debug.cpp:977
+#: ..\src\debug.cpp:978
 msgid "alle"
 msgstr "all"
 
 #. TRANSLATORS: L: table to Borrow games from (same games on different tables)
-#: ..\src\debug.cpp:1052
+#: ..\src\debug.cpp:1053
 #, c-format
 msgid "L%u"
 msgstr "B%u"
 
-#: ..\src\debug.cpp:1086
+#: ..\src\debug.cpp:1087
 msgid "eventuele tekst boven ieder schema:"
 msgstr "any text above each schema:"
 
-#: ..\src\debug.cpp:1225
+#: ..\src\debug.cpp:1226
 #, c-format
 msgid "paar %u, ronde %u, tafel %u, richting %s, spellen %s, tegenpaar %u\n"
 msgstr "pair %u, round %u, table %u, direction %s, games %s, opponent %u\n"
 
-#: ..\src\debug.cpp:1233
+#: ..\src\debug.cpp:1234
 #, c-format
 msgid "paar %u, spel %u:\n"
 msgstr "pair %u, game %u:\n"
 
-#: ..\src\debug.cpp:1239
+#: ..\src\debug.cpp:1240
 #, c-format
 msgid "paar %u, spellen %s, tafel %u, richting %s, ronde %u, tegenpaar %u\n"
 msgstr "pair %u, games %s, table %u, direction %s, round %u, opponent %u\n"
 
-#: ..\src\debug.cpp:1247
+#: ..\src\debug.cpp:1248
 #, c-format
 msgid "paar %u, tafel %u:\n"
 msgstr "pair %u, table %u:\n"
 
-#: ..\src\debug.cpp:1251
+#: ..\src\debug.cpp:1252
 #, c-format
 msgid "paar %u, tafel %u, ronde %u, richting %s, spellen %s, tegenpaar %u\n"
 msgstr "pair %u, table %u, round %u, direction %s, games %s, opponent %u\n"
 
-#: ..\src\debug.cpp:1259
+#: ..\src\debug.cpp:1260
 #, c-format
 msgid "Ronde %u:\n"
 msgstr "Round %u:\n"
 
-#: ..\src\debug.cpp:1263
+#: ..\src\debug.cpp:1264
 #, c-format
 msgid "paar %2u, richting %s, tafel %2u, spellen %s\n"
 msgstr "pair %2u, direction %s, table %2u, games %s\n"
 
-#: ..\src\debug.cpp:1270
+#: ..\src\debug.cpp:1271
 #, c-format
 msgid "Ronde %u, spel %u:\n"
 msgstr "Round %u, game %u:\n"
 
-#: ..\src\debug.cpp:1281
+#: ..\src\debug.cpp:1282
 #, c-format
 msgid "ronde %u, spellen %s, paar %2u, richting %s, tafel %u\n"
 msgstr "round %u, games %s, pair %2u, direction %s, table %u\n"
 
-#: ..\src\debug.cpp:1290
+#: ..\src\debug.cpp:1291
 #, c-format
 msgid "spellen %s worden in ronde %u niet gespeeld\n"
 msgstr "games %s are not played in round %u\n"
 
-#: ..\src\debug.cpp:1295
+#: ..\src\debug.cpp:1296
 #, c-format
 msgid "Ronde %u, tafel %u:\n"
 msgstr "Round %u, table %u:\n"
 
-#: ..\src\debug.cpp:1299
+#: ..\src\debug.cpp:1300
 #, c-format
 msgid "ronde %u, tafel %u, spellen %s, paren %u (NZ) + %u (OW)\n"
 msgstr "round %u, table %u, games %s, pairs %u (NS) + %u (EW)\n"
 
-#: ..\src\debug.cpp:1306
+#: ..\src\debug.cpp:1307
 #, c-format
 msgid "Spel %u:\n"
 msgstr "Game %u:\n"
 
-#: ..\src\debug.cpp:1315
+#: ..\src\debug.cpp:1316
 #, c-format
 msgid "ronde %u, tafel %u, paren %2u (NZ) + %2u (OW)\n"
 msgstr "round %u, table %u, pairs %2u (NS) + %2u (EW)\n"
 
-#: ..\src\debug.cpp:1323
+#: ..\src\debug.cpp:1324
 #, c-format
 msgid "Tafel %u:\n"
 msgstr "Table %u:\n"
 
-#: ..\src\debug.cpp:1329
+#: ..\src\debug.cpp:1330
 #, c-format
 msgid "ronde %u, spellen %s, paren %2u (NZ) + %2u (OW)  %s\n"
 msgstr "round %u, games %s, pairs %2u (NS) + %2u (EW)  %s\n"
 
-#: ..\src\debug.cpp:1383
+#: ..\src\debug.cpp:1384
 #, c-format
 msgid "Huidige groep zit in wedstrijd schema, neem groep > %u\n"
 msgstr "Current group is within match-schema, take group > %u\n"
 
-#: ..\src\debug.cpp:1391
+#: ..\src\debug.cpp:1392
 msgid " initgidsdata mislukt\n"
 msgstr " init of guidedata failed\n"
 
-#: ..\src\debug.cpp:1395
+#: ..\src\debug.cpp:1396
 msgid "kies een schema"
 msgstr "choose a schema"
 
-#: ..\src\debug.cpp:1419
+#: ..\src\debug.cpp:1420
 msgid "aan"
 msgstr "on"
 
-#: ..\src\debug.cpp:1419
+#: ..\src\debug.cpp:1420
 #, c-format
 msgid "testen staat nu %s voor TestRSP()\n"
 msgstr "testen is now %s for TestRSP()\n"
 
-#: ..\src\debug.cpp:1419
+#: ..\src\debug.cpp:1420
 msgid "uit"
 msgstr "off"
 
-#: ..\src\debug.cpp:1440
+#: ..\src\debug.cpp:1441
 msgid " gedubbeld"
 msgstr " doubled"
 
-#: ..\src\debug.cpp:1440
+#: ..\src\debug.cpp:1441
 msgid " geredubbeld"
 msgstr " re-doubled"
 
-#: ..\src\debug.cpp:1441
+#: ..\src\debug.cpp:1442
 msgid "harten/schoppen"
 msgstr "hearts/spades"
 
-#: ..\src\debug.cpp:1441
+#: ..\src\debug.cpp:1442
 msgid "klaveren/ruiten"
 msgstr "clubs/diamonts"
 
-#: ..\src\debug.cpp:1441
+#: ..\src\debug.cpp:1442
 msgid "sans atout"
 msgstr "no trump"
 
-#: ..\src\debug.cpp:1512
+#: ..\src\debug.cpp:1513
 msgid "meer down dan te behalen aantal slagen??\n"
 msgstr "more down then contract-tricks??\n"
 
-#: ..\src\debug.cpp:1516
+#: ..\src\debug.cpp:1517
 #, c-format
 msgid "%d down %s, "
 msgstr "%d down %s, "
 
-#: ..\src\debug.cpp:1542
+#: ..\src\debug.cpp:1543
 msgid "meer slagen dan er in een spel zijn??\n"
 msgstr "more tricks then possible in a game??\n"
 
-#: ..\src\debug.cpp:1610
+#: ..\src\debug.cpp:1611
 #, c-format
 msgid "score kwetsbaar: %d, niet kwetsbaar: %d\n"
 msgstr "score vulnerable: %d, not vulnerable: %d\n"
 
-#: ..\src\debug.cpp:1617
+#: ..\src\debug.cpp:1618
 msgid ""
 "^-- onbekend kommando\n"
 "   [l]Rx[@]PySzTq = list [Ronde x] [Paar y] [Spel z] [Tafel q]\n"
@@ -1033,156 +1033,156 @@ msgstr ""
 "               with 'y' up/down-tricks [[re]doubled]\n"
 "   o         = overview active schema\n"
 
-#: ..\src\debug.cpp:1643
+#: ..\src\debug.cpp:1644
 msgid "deze groep is (nog) niet geinitialiseerd, defaults:\n"
 msgstr "this group is not initialized (yet), defaults:\n"
 
-#: ..\src\debug.cpp:1652
+#: ..\src\debug.cpp:1653
 #, c-format
 msgid "rondes %u, paren %u, tafels %u (%s)\n"
 msgstr "rounds %u, pairs %u, tables %u (%s)\n"
 
-#: ..\src\debug.cpp:1797
+#: ..\src\debug.cpp:1798
 #, c-format
 msgid "schema voor %2u tafels, %2u rondes, %2u paren (%s)\n"
 msgstr "schema for %2u tables, %2u rounds, %2u pairs (%s)\n"
 
-#: ..\src\debug.cpp:1809
+#: ..\src\debug.cpp:1810
 #, c-format
 msgid "paar %u heeft geen tegenpaar in ronde %u\n"
 msgstr "pair %u has no opponent in round %u\n"
 
-#: ..\src\debug.cpp:1814
+#: ..\src\debug.cpp:1815
 #, c-format
 msgid "paar %u heeft te groot tegenpaar %u in ronde %u\n"
 msgstr "pair %u has too high opponent %u in round %u\n"
 
-#: ..\src\debug.cpp:1819
+#: ..\src\debug.cpp:1820
 #, c-format
 msgid "paar %u speelt %u keer tegen paar %u\n"
 msgstr "pair %u plays %u times against pair %u\n"
 
-#: ..\src\debug.cpp:1823
+#: ..\src\debug.cpp:1824
 #, c-format
 msgid "paar %u heeft te grote spelset %u in ronde %u\n"
 msgstr "pair %u has a too large gameset %u in round %u\n"
 
-#: ..\src\debug.cpp:1828
+#: ..\src\debug.cpp:1829
 #, c-format
 msgid "paar %u heeft onbekende spelset %u in ronde %u\n"
 msgstr "pair %u has unknown gameset %u in round %u\n"
 
-#: ..\src\debug.cpp:1833
+#: ..\src\debug.cpp:1834
 #, c-format
 msgid "paar %u speelt %u keer set %u\n"
 msgstr "pair %u playes %u times set %u\n"
 
-#: ..\src\debug.cpp:1836
+#: ..\src\debug.cpp:1837
 #, c-format
 msgid "paar %u speelt maar %u keer\n"
 msgstr "pair %u playes only %u times\n"
 
-#: ..\src\debug.cpp:1853
+#: ..\src\debug.cpp:1854
 #, c-format
 msgid "in ronde %u, tafel %u zitten paar %u en %u in dezelfde richting (%s)\n"
 msgstr ""
 "in round %u, table %u pair %u and %u are playing in the same direction (%s)\n"
 
-#: ..\src\debug.cpp:1948
-msgid "RONDE :"
-msgstr "ROUND :"
-
-#: ..\src\debug.cpp:1949
-msgid "TAFEL :"
-msgstr "TABLE :"
-
-#: ..\src\debug.cpp:1950
-msgid "   NZ :"
-msgstr "   NS :"
-
-#: ..\src\debug.cpp:1951
-msgid "   OW :"
-msgstr "   EW :"
-
-#: ..\src\debug.cpp:1952
-msgid "par.NZ"
-msgstr "ini.NS"
-
-#: ..\src\debug.cpp:1953
-msgid "par.OW"
-msgstr "ini.EW"
-
-#: ..\src\debug.cpp:1954
-msgid "Spel"
-msgstr "Game"
-
-#: ..\src\debug.cpp:1955
-msgid "Kontrakt"
-msgstr "Contract"
-
-#: ..\src\debug.cpp:1956
-msgid "NZ       OW"
-msgstr "NS       EW"
-
-#: ..\src\debug.cpp:1957
-msgid "Res."
-msgstr "Res."
-
-#: ..\src\debug.cpp:1958
-msgid "Score NZ + of -"
-msgstr "Score NS + or -"
-
-#: ..\src\debug.cpp:1983
+#: ..\src\debug.cpp:1869
 #, c-format
 msgid ""
 "Set-grootte(%u) is te hoog,\n"
-"maximum is 4"
+"maximum is 6"
 msgstr ""
 "Set-size(%u) too large,\n"
-"maximum is 4"
+"maximum is 6"
 
-#: ..\src\debug.cpp:2089
+#: ..\src\debug.cpp:1941
+msgid "RONDE :"
+msgstr "ROUND :"
+
+#: ..\src\debug.cpp:1942
+msgid "TAFEL :"
+msgstr "TABLE :"
+
+#: ..\src\debug.cpp:1943
+msgid "   NZ :"
+msgstr "   NS :"
+
+#: ..\src\debug.cpp:1944
+msgid "   OW :"
+msgstr "   EW :"
+
+#: ..\src\debug.cpp:1945
+msgid "par.NZ"
+msgstr "ini.NS"
+
+#: ..\src\debug.cpp:1946
+msgid "par.OW"
+msgstr "ini.EW"
+
+#: ..\src\debug.cpp:1947
+msgid "Spel"
+msgstr "Game"
+
+#: ..\src\debug.cpp:1948
+msgid "Kontrakt"
+msgstr "Contract"
+
+#: ..\src\debug.cpp:1949
+msgid "NZ       OW"
+msgstr "NS       EW"
+
+#: ..\src\debug.cpp:1950
+msgid "Resultaat"
+msgstr " Result"
+
+#: ..\src\debug.cpp:1951
+msgid "Score NZ + of -"
+msgstr "Score NS + or -"
+
+#: ..\src\debug.cpp:2076
 msgid "ronde"
 msgstr "round"
 
-#: ..\src\debug.cpp:2090
+#: ..\src\debug.cpp:2077
 msgid "tafel"
 msgstr "table"
 
 # no error
-#: ..\src\debug.cpp:2091
+#: ..\src\debug.cpp:2078
 msgid "tegen"
 msgstr "opp."
 
-#: ..\src\debug.cpp:2094
+#: ..\src\debug.cpp:2081
 #, c-format
 msgid "schema: %22s"
 msgstr "schema: %22s"
 
-#: ..\src\debug.cpp:2120
+#: ..\src\debug.cpp:2107
 #, c-format
 msgid "Paar %-2u               %2u paren"
 msgstr "Pair %-2u               %2u pairs"
 
-#: ..\src\debug.cpp:2223
+#: ..\src\debug.cpp:2210
 msgid "ronde ->"
 msgstr "round ->"
 
-#: ..\src\debug.cpp:2225
+#: ..\src\debug.cpp:2212
 msgid "tfl"
 msgstr "tbl"
 
-#: ..\src\debug.cpp:2226
+#: ..\src\debug.cpp:2213
 #, c-format
 msgid "%u paren, %u rondes, %u spellen"
 msgstr "%u pairs, %u rounds, %u games"
 
-#: ..\src\debug.cpp:2227
+#: ..\src\debug.cpp:2214
 #, c-format
 msgid "Schema: %s"
 msgstr "Schema: %s"
 
-#: ..\src\debug.cpp:2281
+#: ..\src\debug.cpp:2268
 msgid "Schemaoverzicht"
 msgstr "Schemaoverview"
 
@@ -1234,8 +1234,8 @@ msgstr "Search for languages, folder found: '%s'"
 
 #: ..\src\main.cpp:428
 #, c-format
-msgid "Systeemtaal: %d, %s"
-msgstr "Systemlanguage: %d, %s"
+msgid "Systeemtaal: id=%d, %s"
+msgstr "Systemlanguage: id=%d, %s"
 
 #: ..\src\main.cpp:430
 msgid "Systeemtaal: de default systeem taal"

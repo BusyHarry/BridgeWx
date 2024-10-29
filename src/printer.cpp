@@ -924,12 +924,14 @@ void MyLinePrinter::PrintTable(const table::TableInfo& table)
     {   // print all the texts in the textarray
         wxPoint  pos  = table.texts[index].begin + table.origin;
         wxString text = table.texts[index].text;
+        if (text.IsEmpty()) continue;
         (void)TextOut(m_hPrinter, X(pos.x), Y(pos.y), text.c_str(), text.Len());
     }
     for (const auto& textIt : table.textsV)
     {   // print all the texts in the textvector
         wxPoint  pos  = textIt.begin + table.origin;
         wxString text = textIt.text;
+        if (text.IsEmpty()) continue;
         (void)TextOut(m_hPrinter, X(pos.x), Y(pos.y), text.c_str(), text.Len());
     }
 

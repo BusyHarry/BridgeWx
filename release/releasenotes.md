@@ -1,5 +1,21 @@
 # Releasenotes
 
+#V10.1.0  October 25, 2024: bugfixes/extensions/cleanup
+
+#New Features
+- on language change, switch to 'old' page
+- print guides/scoreslips also to file 'list'
+- 'list' is now coded in utf-8 with BOM (was DOS-cp437)
+- adaptation to dpi-changes
+- scoreslips now can have upto 6 games/slip
+
+#Bug fixes
+- better handling of unexpected data when reading schemadata
+- don't display schemadata and prevent unneeded assert's when there is no active schema
+- don't show empty rows for ChoiceMc()
+- don't send selection event for ChoiceMc if clicked on scrollbar-area 
+
+
 #V10.0.0  September 30, 2024: first release of BridgeWx
 
 A simple (windows-only) 'bridge' calculation program

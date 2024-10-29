@@ -427,7 +427,7 @@ Debug::Debug(wxWindow* a_pParent, UINT a_pageId, DebugType a_type) :Baseframe(a_
             AUTOTEST_ADD_WINDOW(m_pGroupChoice, GROUP_CHOICE);
             break;
         case ScoreSlips:
-            m_pTxtCtrlExtra->SetMaxLength(20);
+            m_pTxtCtrlExtra->SetMaxLength(24);
             m_pConsole          ->HideHSizer();
             m_pHsizerGuides     ->Show(false);
             m_pHsizerScoreSlips ->Show(true);
@@ -678,6 +678,7 @@ void MyPrint::EndPage()
 
 void MyPrint::PrintText( const wxPoint& position, const wxString& text)
 {
+    if (text.IsEmpty()) return;
     if (position.y < MY_LINES)
     {
         if (position.y < 0 || position.y >= MY_LINES) return;
@@ -952,7 +953,7 @@ void Debug::RefreshInfo()
 void Debug::InitSlips()
 {
     if (m_debugType != ScoreSlips) return;
-    m_pSetSize      ->Init(4,3,0);      // setsizes from 1-4, default: 4 games/set
+    m_pSetSize      ->Init(6,3,0);      // setsizes from 1-6, default: 4 games/set
     m_pFirstSet     ->Init(24,0,0);     // first set to print from 1-24, default: 1
     m_pNrOfSets     ->Init(24,5,0);     // nr of sets to print from 1-24, default 6
     m_pRepeatCount  ->Init(10,0,0);     // how many times to print all from 1-10, default 1
@@ -1862,156 +1863,142 @@ void Debug::TestSchemas(void)
 
 void Debug::PrintScoreSlips(UINT a_setSize, UINT a_firstSet, UINT a_nrOfSets, UINT a_repeatCount, const wxString& a_extra)
 {
-
+#if 0
+    if (a_setSize > 6)
+    {
+        wxString errorMsg = FMT(_("Set-grootte(%u) is te hoog,\nmaximum is 6"), a_setSize);
+        MyMessageBox(errorMsg,_("Scoreslips"));
+        return;
+    }
+#endif
 /* score slips
                 10   15   20   25   30   35   40   45   50   55   60   65   70   75
-       .1...5....0....5....0....5....0....5....0....5....0....5....0....5....0....5.. V1 V2 V3 V4 V5
-     0 ==============================================================================  |  |  |  |  |
-     1 |                       |      |    Kontrakt     |         |                 |  |  |  |  |  |
-     2 | RONDE :               | Spel |   NZ       OW   |   Res.  | Score NZ + of - |  |  |  |  |  |
-     3 |=======================|======|===========================|=================|  =  |  |  |  | 
-     4 | TAFEL :               |  XX  |*       |*       |         |                 |  3  |  |  |  |
-     5 |=======================|======|========|========|=========|=================|     =  |  |  |
-     6 |    NZ :               |  XX  |*       |*       |         |                 |     5  |  |  |
-     7 |=======================|======|========|========|=========|=================|        =  |  |
-     8 |    OW :               |  XX  |*       |*       |         |                 |        7  |  |
-     9 |=======================|======|========|========|=========|=================|           =  |
-    10 |par.NZ     |par.OW     |  XX  |*       |*       |         |                 |           9  |
-    11 ==============================================================================              =
-       -----H1----->12                                                                            11
-       -----H2----------------->24
-       -----H3------------------------>31
-       -----H4--------------------------------->40
-       -----H5------------------------------------------>49
-       -----H6---------------------------------------------------->59
-       -----H7---------------------------------------------------------------------->77
+       .1...5....0....5....0....5....0....5....0....5....0....5....0....5....0....5.... V1 V2 V3 V4 V5
+     0 ================================================================================  |  |  |  |  |
+     1 |                         |      |    Contract     |         |                 |  |  |  |  |  |
+     2 | ROUND :                 | Game |   NS       EW   |Resultaat| Score NS + or - |  |  |  |  |  |
+     3 |=========================|======|===========================|=================|  =  |  |  |  | 
+     4 | TABLE :                 |  X   |*       |*       |         |                 |  3  |  |  |  |
+     5 |=========================|======|========|========|=========|=================|     =  |  |  |
+     6 |    NS :                 |  X+1 |*       |*       |         |                 |     5  |  |  |
+     7 |=========================|======|========|========|=========|=================|        =  |  |
+     8 |    EW :                 |  X+2 |*       |*       |         |                 |        7  |  |
+     9 |=========================|======|========|========|=========|=================|           =  |
+       ~                         ~      ~        ~        ~         ~                 ~           9  |
+    10 |ini.NS      |ini.EW      | X+N-1|*       |*       |         |                 |              |
+    11 ================================================================================              =
+       -----H1----->13                                                                              11
+       -----H2----------------->26
+       -----H3------------------------>33
+       -----H4--------------------------------->42
+       -----H5------------------------------------------>51
+       -----H6---------------------------------------------------->61
+       -----H7---------------------------------------------------------------------->79
 */
 
     #define ARRAY_LEN(x) (sizeof(x)/sizeof((x)[0]))
 
     #define SL_H0  0    /* SLip position/size H0 etc*/
-    #define SL_H1 12
-    #define SL_H2 24
-    #define SL_H3 31
-    #define SL_H4 40
-    #define SL_H5 49
-    #define SL_H6 59
-    #define SL_H7 77
+    #define SL_H1 13
+    #define SL_H2 26
+    #define SL_H3 33
+    #define SL_H4 42
+    #define SL_H5 51
+    #define SL_H6 61
+    #define SL_H7 79
 
     #define SL_V0 0
     #define SL_V1 3
     #define SL_V2 5
     #define SL_V3 7
     #define SL_V4 9
-    #define SL_V5 11
-
-    prn::table::Line lines[]=
-    {
-          {{SL_H0,SL_V0}, {SL_H7,SL_V0}}    // horizontal lines
-        , {{SL_H0,SL_V1}, {SL_H7,SL_V1}}
-        , {{SL_H0,SL_V2}, {SL_H7,SL_V2}}
-        , {{SL_H0,SL_V3}, {SL_H7,SL_V3}}
-        , {{SL_H0,SL_V4}, {SL_H7,SL_V4}}
-        , {{SL_H0,SL_V5}, {SL_H7,SL_V5}}
-
-        , {{SL_H0,SL_V0}, {SL_H0,SL_V5}}    // vertical lines
-        , {{SL_H2,SL_V0}, {SL_H2,SL_V5}}
-        , {{SL_H3,SL_V0}, {SL_H3,SL_V5}}
-        , {{SL_H5,SL_V0}, {SL_H5,SL_V5}}
-        , {{SL_H6,SL_V0}, {SL_H6,SL_V5}}
-        , {{SL_H7,SL_V0}, {SL_H7,SL_V5}}
-        , {{SL_H1,SL_V4}, {SL_H1,SL_V5}}
-        , {{SL_H4,SL_V1}, {SL_H4,SL_V5}}
-
-    };
-    size_t lineCount = ARRAY_LEN(lines);
-
-    prn::table::Text texts[] =
-    {
-          {{SL_H2+3, SL_V1+1}, ES    }   // 1' game of set  TXT_OFFSET_GAMENR = 0
-        , {{SL_H2+3, SL_V2+1}, ES    }   // 2' game of set
-        , {{SL_H2+3, SL_V3+1}, ES    }   // 3' game of set
-        , {{SL_H2+3, SL_V4+1}, ES    }   // 4' game of set
-
-        , {{SL_H3+1, SL_V1+1}, ES    }   // 1' game vulnerable NS   TXT_OFFSET_VULNERABLE_NS = 4
-        , {{SL_H3+1, SL_V2+1}, ES    }   // 2' game vulnerable NS
-        , {{SL_H3+1, SL_V3+1}, ES    }   // 3' game vulnerable NS
-        , {{SL_H3+1, SL_V4+1}, ES    }   // 4' game vulnerable NS
-
-        , {{SL_H4+1, SL_V1+1}, ES    }   // 1' game vulnerable EW   TXT_OFFSET_VULNERABLE_EW = 8
-        , {{SL_H4+1, SL_V2+1}, ES    }   // 2' game vulnerable EW
-        , {{SL_H4+1, SL_V3+1}, ES    }   // 3' game vulnerable EW
-        , {{SL_H4+1, SL_V4+1}, ES    }   // 4' game vulnerable EW
-
-        , {{SL_H0+2, SL_V0+1}, ES    }   // extra text              TXT_OFFSET_EXTRA
-
-        , {{SL_H0+2, SL_V0+2}, _("RONDE :"    )}
-        , {{SL_H0+2, SL_V1+1}, _("TAFEL :"    )}
-        , {{SL_H0+2, SL_V2+1}, _("   NZ :"    )}
-        , {{SL_H0+2, SL_V3+1}, _("   OW :"    )}
-        , {{SL_H0+1, SL_V4+1}, _("par.NZ"     )}
-        , {{SL_H1+1, SL_V4+1}, _("par.OW"     )}
-        , {{SL_H2+2, SL_V0+2}, _("Spel"       )}
-        , {{SL_H3+4, SL_V0+1}, _("Kontrakt"   )}
-        , {{SL_H3+3, SL_V0+2}, _("NZ       OW")}
-        , {{SL_H5+3, SL_V0+2}, _("Res."       )}
-        , {{SL_H6+2, SL_V0+2}, _("Score NZ + of -")}
-    };
-    size_t textCount = ARRAY_LEN(texts);
-    #define TXT_OFFSET_GAMENR           0   /* index in texts: MUST be correct! */
-    #define TXT_OFFSET_VULNERABLE_NS    4   /* index in texts: MUST be correct! */
-    #define TXT_OFFSET_VULNERABLE_EW    8   /* index in texts: MUST be correct! */
-    #define TXT_OFFSET_EXTRA            12  /* index in texts: MUST be correct  */
-
-    prn::table::TableInfo table =
-    {
-        {2,0},      // start at 2 chars from left-side and first line of page
-        lines,      // set of horizontal lines to draw
-        texts,      // set of texts to print
-        lineCount,  // number of horizontal lines
-        textCount   // number of texts
-    };
+    #define SL_V5 11    /* if 4 or less games else 11 + (games-4)*2  */
 
     UINT firstSet       = a_firstSet;       // input param
     UINT setSize        = a_setSize;        // input param
     UINT nrOfSets       = a_nrOfSets;       // input param
     UINT repeatCount    = a_repeatCount;    // input param
     wxString extra      = a_extra;          // input param
+    
+    int maxVPos         = SL_V5 + (setSize > 4 ? (setSize - 4)*2 : 0);
 
-    if (setSize > 4)
+    prn::table::Line lines[]=
     {
-        wxString errorMsg = FMT(_("Set-grootte(%u) is te hoog,\nmaximum is 4"), setSize);
-        MyMessageBox(errorMsg,_("Scoreslips"));
-        return;
+       {{SL_H0,SL_V0    }, {SL_H0,maxVPos}}
+     , {{SL_H2,SL_V0    }, {SL_H2,maxVPos}}
+     , {{SL_H3,SL_V0    }, {SL_H3,maxVPos}}
+     , {{SL_H5,SL_V0    }, {SL_H5,maxVPos}}
+     , {{SL_H6,SL_V0    }, {SL_H6,maxVPos}}
+     , {{SL_H7,SL_V0    }, {SL_H7,maxVPos}}
+     , {{SL_H4,SL_V1    }, {SL_H4,maxVPos}}
+     , {{SL_H1,maxVPos-2}, {SL_H1,maxVPos}} // last line with initials
+    };
+    size_t lineCount = ARRAY_LEN(lines);
+
+    prn::table::Text texts[] =
+    {
+          {{SL_H0+2, SL_V0+1}  , extra           }    // extra text
+        , {{SL_H0+2, SL_V0+2}  , _("RONDE :"    )}
+        , {{SL_H0+2, SL_V1+1}  , _("TAFEL :"    )}
+        , {{SL_H0+2, SL_V2+1}  , _("   NZ :"    )}
+        , {{SL_H0+2, SL_V3+1}  , _("   OW :"    )}
+        , {{SL_H0+1, maxVPos-1}, _("par.NZ"     )}
+        , {{SL_H1+1, maxVPos-1}, _("par.OW"     )}
+        , {{SL_H2+2, SL_V0+2}  , _("Spel"       )}
+        , {{SL_H3+4, SL_V0+1}  , _("Kontrakt"   )}
+        , {{SL_H3+3, SL_V0+2}  , _("NZ       OW")}
+        , {{SL_H5+1, SL_V0+2}  , _("Resultaat"  )}
+        , {{SL_H6+2, SL_V0+2}  , _("Score NZ + of -")}
+    };
+    size_t textCount = ARRAY_LEN(texts);
+
+    prn::table::TableInfo table =
+    {
+        {2,0},      // start at 2 chars from left-side and first line of page
+        lines,      // set of (static) H+V Lines to draw
+        texts,      // set of texts to print
+        lineCount,  // number of (static) lines
+        textCount   // number of (static) texts
+    };
+
+    UINT nrOfHLines = 6 + (a_setSize > 4 ? a_setSize - 4 : 0);
+    table.linesV.reserve(nrOfHLines);
+    table.textsV.reserve(setSize*(size_t)3);
+    int vPos = SL_V0;
+    for (UINT hLine = 0; hLine < nrOfHLines; ++hLine)
+    {
+        table.linesV.push_back({ {SL_H0,vPos} , {SL_H7,vPos} });
+        vPos += (vPos == SL_V0) ? 3 : 2;
     }
-    int originY = table.origin.y;   // needed(?) when starting new-page
+
+    int originY = table.origin.y;   // needed when starting new-page
 
     MyPrint myPrint(m_bPrintNext ? nullptr : &m_consoleOutput); // zero: no screen output, only real print, non-zero: only output to wxArrayString a_pTextOutput
 
     myPrint.BeginPrint(_("Scoreslips"));
-
     for (; repeatCount; --repeatCount)
     {
         UINT firstGame    = (firstSet - 1)*setSize + 1;
         UINT linesPrinted = 0;
         for (UINT slips = 1 ; slips <= nrOfSets; ++slips)
         {
-            texts[TXT_OFFSET_EXTRA].text = extra;
-            for (UINT game = 0; game < setSize ; ++game)
+            table.textsV.clear();
+            vPos = SL_V1+1;
+            for (UINT game = 0; game < setSize ; ++game, vPos += 2)
             {
-                texts[TXT_OFFSET_GAMENR        + game].text = FMT("%2u", game + firstGame);
-                texts[TXT_OFFSET_VULNERABLE_NS + game].text = score::VulnerableChar(game + firstGame, true );
-                texts[TXT_OFFSET_VULNERABLE_EW + game].text = score::VulnerableChar(game + firstGame, false);
+                table.textsV.push_back( {{SL_H2+3, vPos}, FMT("%2u", game + firstGame)                   } );
+                table.textsV.push_back( {{SL_H3+1, vPos}, score::VulnerableChar(game + firstGame, true ) } );
+                table.textsV.push_back( {{SL_H4+1, vPos}, score::VulnerableChar(game + firstGame, false) } );
             }
-            if (linesPrinted + SL_V5 >= prn::GetLinesPerPage())
+            if (linesPrinted + maxVPos >= prn::GetLinesPerPage())
             {
                 linesPrinted   = 0;
                 table.origin.y = originY;
                 myPrint.EndPage();              // force new page
             }
             myPrint.PrintTable(table);          // 1 slip
-            table.origin.y += SL_V5+3;
-            linesPrinted   += SL_V5+3;
+            table.origin.y += maxVPos+3;
+            linesPrinted   += maxVPos+3;
             firstGame      += setSize;
         }   // end slips
         table.origin.y = originY;
@@ -2036,15 +2023,15 @@ void Debug::PrintGuideNew(UINT a_pair)
       0 ds Janssen - Pietersen                    |  |  |  |
       1 extra info................extra      .    |  |  |  |
       2 ==================================   .    =  |  |  |
-      3 | Paar 13               14 paren |   .    2  |  |  |
+      3 | Pair 13               14 pairs |   .    2  |  |  |
       4 | schema:               4stayr14 |   .       |  |  |
       5 |================================|   .       =  |  |
-      6 |ronde| tafel |tegen|  spellen   |   .       5  |  |
+      6 |round| table |opp. |  games     |   .       5  |  |
       7 |================================|   .          =  |
-      8 |  1  |  7 NZ |   6 |  9 - 12  L3|   .          7  |
-      . |  2  |  2 OW |   8 |  5 - 8     |   .             |
+      8 |  1  |  7 NS |   6 |  9 - 12  B3|   .          7  |
+      . |  2  |  2 EW |   8 |  5 - 8     |   .             |
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                 |
-      . |  N  |  7 NZ |   2 | 13 - 16  L4|   .             |
+      . |  N  |  7 NS |   2 | 13 - 16  B4|   .             |
       . ==================================   .             =
                                                          7+N+1  where N = number of rounds
       . .   .   .   .   .   .   .   .   .   .
@@ -2182,14 +2169,14 @@ void Debug::PrintSchemaOverviewNew()
                  5   10   15   20   25   30   35   40   45   50   55   60
             0....5....0....5....0....5....0....5....0....5....0....5....0.        V1 V2 V3  Vn
             ╔════════════════════════════════════════════════════════════╗  0      |  |  |   |
-            ║14 paren, 6 rondes, 24 spellen                              ║  1      |  |  |   |
+            ║14 pairs, 6 rounds, 24 games                                ║  1      |  |  |   |
             ║Schema: 6multi14                                            ║  2      |  |  |   |
             ╠════════════╦═══════════════════════════════════════════════╣  3      =  |  |   |
-            ║            ║ ronde ->                                      ║  4      3  |  |   |
+            ║            ║ round ->                                      ║  4      3  |  |   |
             ╠════════╦═══╬═══════╦═══════╦═══════╦═══════╦═══════╦═══════╣  5         =  |   |
-            ║spellen ║tfl║   1   ║   2   ║   3   ║   4   ║   5   ║   6   ║  6 DV      5  |   |
+            ║games   ║tbl║   1   ║   2   ║   3   ║   4   ║   5   ║   6   ║  6 DV      5  |   |
             ╠════════╬═══╬═══════╬═══════╬═══════╬═══════╬═══════╬═══════╣  7  =         =   |
-            ║A:  1-4 ║ 1 ║   1-2)║   6-11║   8-3 ║   5-4 ║D: 5-12║   9-12║  8  |         7   |
+            ║A:  1-4 ║ 1 ║   1-2 ║   6-11║   8-3 ║   5-4 ║D: 5-12║   9-12║  8  |         7   |
             ╠════════╬═══╬═══════╬═══════╬═══════╬═══════╬═══════╬═══════╣  9  =             |
             ║B:  5-8 ║ 2 ║   3-4 ║  12-7 ║   6-9 ║  11-13║   1-8 ║   5-2 ║     2             |
                                                                                              .

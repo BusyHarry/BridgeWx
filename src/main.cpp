@@ -425,7 +425,7 @@ void MyApp::ReInitLanguage()
 
     const wxLanguageInfo* const langInfo = wxUILocale::GetLanguageInfo(wxLANGUAGE_DEFAULT);
     if (langInfo)
-        MyLogMessage(_("Systeemtaal: %d, %s"), langInfo->Language, langInfo->Description);
+        MyLogMessage(_("Systeemtaal: id=%d, %s"), langInfo->Language, langInfo->Description);
     else
         MyLogMessage(_("Systeemtaal: de default systeem taal"));
 
@@ -530,9 +530,9 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("B
         vSize = (vSize *(100+fontIncrease)+50)/100;
         vSize = std::min(vSize,maxY);
 
-     hSize = HSIZE_WANTED;
-     vSize = VSIZE_WANTED;
-     SetSize({hSize,vSize});
+    hSize = FromDIP(HSIZE_WANTED);
+    vSize = FromDIP(VSIZE_WANTED);
+    SetSize({hSize,vSize});
 
     static wxPoint pos{ {0,0} };
     if (pos == wxPoint({0, 0})) pos = GetPosition();    // use same position after language change
@@ -591,13 +591,10 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("B
     otherDb->AppendRadioItem(ID_MENU_OLD_DBASE, _("&Oud bestandstype (.ini)"    ), _("Gebruik van 'oude' .ini/data bestanden voor opslag"     ));
     otherDb->AppendRadioItem(ID_MENU_NEW_DBASE, _("&Nieuw bestandstype (.db)"   ), _("Gebruik van nieuw .db bestand voor opslag"         ));
     menuExtra->AppendSubMenu(otherDb          , _("&Wissel van bestandstype"    ), _("omschakelen van het ene opslagtype naar het andere"));
-
     menuExtra->Append(ID_MENU_LANGUAGE        , _("&Taal"                       ), _("taal van de gebruikers interface"));
 
-
-
     wxMenu *menuHelp = new wxMenu;
-    menuHelp->Append(ID_SYSTEM_INFO         , _("&Systeem info"                 ), _("Info over versie van WXwIDGETS"));
+    menuHelp->Append(ID_SYSTEM_INFO         , _("&Systeem info"                 ), _("Info over versie van wxWidgets"));
     menuHelp->Append(ID_ABOUT               , _("&Over ") + __PRG_NAME__ );
  
     m_pMenuBar = new wxMenuBar;

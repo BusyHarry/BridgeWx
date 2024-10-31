@@ -9,7 +9,7 @@ if [%cmpTarget%] == [] set cmpTarget=D:\gitTestBase\BridgeWx
 
 cd %~dp0
 call delCompareLogs.bat  ::remove old logs to prevent confusion
-set        logall=.\logall.log
+set     logall=.\logall.log
 set DifMissing=.\DifMissing.log
 
 for %%a in (autotest,locales,main,resource,src,tools) do (

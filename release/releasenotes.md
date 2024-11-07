@@ -2,6 +2,7 @@
 
 #V10.2.0  November 8, 2024:
 - all texts in sources now in english
+- translation for english removed
 - translation for dutch added
 - changes in batch-files to cover the language-change
 - autotest:

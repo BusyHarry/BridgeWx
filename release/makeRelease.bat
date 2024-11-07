@@ -24,8 +24,8 @@ set zipfile=%zipfile%%version%.zip
 :: create needed folders
 
 if not exist .\BridgeWx\locales\nl mkdir .\BridgeWx\locales\nl
-if not exist .\BridgeWx\locales\en mkdir .\BridgeWx\locales\en
 if not exist .\BridgeWx\tools      mkdir .\BridgeWx\tools
+
 
 :: delete old files, if there
 echo Y | del /s .\BridgeWx\* >nul 2>&1
@@ -34,13 +34,15 @@ echo Y | del /s .\BridgeWx\* >nul 2>&1
 copy ..\vc_x64_mswu\BridgeWx.exe .\BridgeWx\
 
 :: copy translations for each language
-:: Dutch, remark: only wx locale needed, program has Dutch texts
+:: English, remark: no wx locale needed, default is English, rest of texts: buildin
+
+:: Dutch
 if not [%wxwin%] == [] copy %wxwin%\locale\nl.mo .\BridgeWx\locales\nl\wxstd.mo
+copy ..\locales\nl.mo .\BridgeWx\locales\nl\BridgeWx.mo
 
-:: English, remark: no wx locale needed, default is English
-copy ..\locales\en.mo .\BridgeWx\locales\en\BridgeWx.mo
 
-copy ..\tools\*.exe BridgeWx\tools\
+set tools=AutoHotkey64,BuildDate,cleanpo,msgbox,zip
+for %%a in (%tools%) copy ..\tools\%%a.exe BridgeWx\tools\
 
 :: update release notes
 notepad .\releasenotes.md

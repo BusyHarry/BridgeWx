@@ -48,7 +48,8 @@ On first use, I try to select the current systemlanguage.
 
 # Translations
 
-BridgeWx has internal texts in Dutch (used from the original program).
+- As of version V10.2.0, internal texts are in English (was Dutch)
+
 Used names:
 - \<wxBase\>		: the folder where you installed/unzipped the wxWidgets source
 - \<BridgeWxBase\>	: the folder where the BridgeWx files are

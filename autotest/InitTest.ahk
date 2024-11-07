@@ -29,9 +29,9 @@ if !DirExist(AutoTestPath)
 FileDelete(AutoTestPath "\*")
 ProcessClose(Exename)  ; kill process if running: we don't know if its params are correct
 run StartBridgeWx
-sleep(2000)
+sleep(1200)
 SendEvent "!+a"	; hotkey for generating mouse-positions/labels of edit-targets
-sleep(3000)   	; give it time to produce wanted file
+sleep(1500)   	; give it time to produce wanted file
 ProcessClose(Exename)
 FileDelete(AutoTestPath AutoTestMatch ".*")
 ExitApp(0)

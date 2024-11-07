@@ -266,8 +266,8 @@ void ReadPairNames()
     {
         bool bOrg = io::DatabaseTypeGet() == io::DB_ORG;
         wxString msg = bOrg
-            ? _("Probleem met paarnamenbestand: ") + cfg::ConstructFilename(cfg::EXT_NAMES)
-            : FMT(_("Probleem met database '%s' bij lezen namen."), io::GetDbFileName());
+            ? _("Problem with the pairname file: ") + cfg::ConstructFilename(cfg::EXT_NAMES)
+            : FMT(_("Problem with database '%s' at reading names."), io::GetDbFileName());
         MyMessageBox(msg);
     }
 }   //  ReadPairNames()
@@ -297,7 +297,7 @@ const std::vector<PairInfo>& GetGlobalPairInfo()
 PairInfo GetGlobalPairInfo(int a_index)
 {
     if (a_index <= 0 || (static_cast<size_t>(a_index) >= svGlobalPairInfo.size()))
-        return PairInfo (_("foute index"));
+        return PairInfo (_("bad index"));
 
     return svGlobalPairInfo[a_index];
 }   // GetGlobalPairInfo()
@@ -341,7 +341,7 @@ bool ExistGlobalPairnr(int a_index)
 wxString GetClubName(int a_index)
 {   // 0 returns an empty string for conveniance...
     if ( (a_index < 0) || (static_cast<size_t>(a_index) >= svClubNames.size()))
-        return _("foute index");
+        return _("bad index");
 
     return svClubNames[a_index];
 }   // GetClubName()
@@ -474,7 +474,7 @@ bool WriteSession2GlobalIds()
 
 wxString PairnrSession2GlobalText(UINT a_sessionPair)
 {
-    if (a_sessionPair >= svuPairnrSession2Global.size()) return _("nog geen paarnamen toegekend");
+    if (a_sessionPair >= svuPairnrSession2Global.size()) return _("no names assigned yet");
     return svGlobalPairInfo[svuPairnrSession2Global[a_sessionPair]].pairName;
 }   // PairnrSession2GlobalText()
 

@@ -112,7 +112,7 @@ namespace cfg
     static constexpr auto FILE_PRINTER_NAME     = "list";
     static constexpr auto WINPRINT_PREFIX       = "WinP ";  // for config: prefix if printer is windows-printer
 
-    #define  DEFAULT_DESCRIPTION                  _("<nog geen beschrijving>") /*NO static -> translation!*/
+    #define  DEFAULT_DESCRIPTION                  _("<no description yet>") /*NO static -> translation!*/
     static void HashIncrement();
 
     static bool     sbIsBackuped = false;
@@ -311,9 +311,9 @@ namespace cfg
     wxString GetVersion()            // return string to current version
     {
         if (IsScriptTesting())
-            return FMT(_("\"%s\" versie %s, %s"), __PRG_NAME__, __VERSION__AUTO, __DATE__AUTO);
+            return FMT(_("\"%s\" version %s, %s"), __PRG_NAME__, __VERSION__AUTO, __DATE__AUTO);
         else
-            return FMT(_("\"%s\" versie %s, %s"), __PRG_NAME__, __VERSION__    , __DATE__);
+            return FMT(_("\"%s\" version %s, %s"), __PRG_NAME__, __VERSION__    , __DATE__);
     }   // GetVersion()
 
     wxString GetCopyrightDateTime()
@@ -376,7 +376,7 @@ namespace cfg
     {   // for statusbar display
         if ( suSession == 0 )
             return ssActiveMatch;
-        return ssActiveMatch + FMT(_(":Z%u"), suSession);
+        return ssActiveMatch + FMT(_(":S%u"), suSession);
     }   // GetActiveMatchAndSession()
 
     void SetActiveSession(UINT a_activeSession)
@@ -860,32 +860,33 @@ namespace cfg
                 sbIsScripttest = true;
                 break;
             default:
-                std::cout << FMT(_("Onbekende/foute/ontbrekende parameter <%s>\n"), pErrorString);
+                std::cout << FMT(_("Unknown/faulty/missing parameter <%s>\n"), pErrorString);
                 bError = true;
             }
         }
 
         if (bError)
         {
-            std::cout << _("Fout in parameter: ") << wxString(pErrorString) << "\n";
+            std::cout << _("Error in parameter: ") << wxString(pErrorString) << "\n";
             std::cout << FMT("%s%s%s\n",
-                "\n" __PRG_NAME__ + _(", versie ") + __VERSION__ + _(" van ") + __DATE__ ",",
+                "\n" __PRG_NAME__ + _(", version ") + __VERSION__ + _(" of ") + __DATE__ ",",
                 GetCopyright(),
-                _("\n  aanroep: BridgeWx [-ax] [-bx] [-gx] [-kx] [-lx] [-nx] [-rx] [-wx] [-fx] [-qx] [-d] [-u]"
-                    "\n  ax: maximum toegestaan aantal keren Afwezig = x"
-                    //                "\n  bx: video via bios (x=1), of rechtstreeks (x=0)"
-                    "\n  d:  zet debug aan tbv extra info"
-                    "\n  gx: display Groepuitslag wel (x=1), niet (x=0)"
-                    "\n  kx: Klok op display (x=1), geen Klok (x=0)"
-                    "\n  lx: aantal regeLs op een bladzijde papier bij printen = x (50<x<100)"
-                    "\n  mx: Maximum gemiddelde voor niet aanwezige zittingen = x"
-                    "\n  nx: wel Neuberg-telling (x=1) bij arbitrale scores, geen (x=0)"
-                    "\n  sx: nummer eerste Spel, default 1 (bedoeld voor gidsbriefjes 2' zitting)"
-                    "\n  zx: Zitting 'x' (x= 1, 2, ... 15)"
-                    "\n  wx: Wedstrijdnaam 'x'"
-                    "\n  fx: gegevensmap 'x' voor actieve wedstrijd"
-                    "\n  qx: verhoog fontgrootte met x%"
-                    "\n  u : Unittest/Autotest"
+                  _("\n"
+                    "  activation: BridgeWx [-ax] [-bx] [-gx] [-kx] [-lx] [-nx] [-rx] [-wx] [-fx] [-qx] [-d] [-u]\n"
+                    "  ax: maximum allowed Absent count = x\n"
+  //                "  bx: video via bios (x=1), of rechtstreeks (x=0)\n"
+                    "  d:  enable Debug for extra info\n"
+                    "  gx: display Groupresult yes (x=1), no (x=0)\n"
+                    "  kx: Clock on display (x=1), no Clock (x=0)\n"
+                    "  lx: nr of Lines per page during print = x (50<x<100)\n"
+                    "  mx: Maximum average for non-present sessions = x\n"
+                    "  nx: do Neuberg-calculation (x=1) on arbitrary scores, no (x=0)\n"
+                    "  sx: number of first game, default 1 (meant for guides 2' session)\n"
+                    "  zx: Session 'x' (x= 1, 2, ... 15)\n"
+                    "  wx: matchname 'x'\n"
+                    "  fx: datafolder 'x' for current match\n"
+                    "  qx: enlarge fontsize with x%\n"
+                    "  u : Unittest/Autotest\n"
                 )
             );
             return CFG_ERROR;

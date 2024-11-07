@@ -41,13 +41,13 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     #define SIZE_PAIRNR     (6 * sizeOne)                       /* "AB12 *"             */
     #define SIZE_ID         (5 * sizeOne)                       /* just numbers 1-120   */
     #define SIZE_SCORE      (8 * sizeOne)                       /* 'score nz' / 'R-9999'*/
-    m_theGrid->SetColSize(COL_GAME      , SIZE_ID       ); m_theGrid->SetColLabelValue(COL_GAME     , _("spel"    ));
-    m_theGrid->SetColSize(COL_NS        , SIZE_PAIRNR   ); m_theGrid->SetColLabelValue(COL_NS       , _("nz"      ));
-    m_theGrid->SetColSize(COL_EW        , SIZE_PAIRNR   ); m_theGrid->SetColLabelValue(COL_EW       , _("ow"      ));
-    m_theGrid->SetColSize(COL_SCORE_NS  , SIZE_SCORE    ); m_theGrid->SetColLabelValue(COL_SCORE_NS , _("score nz"));
-    m_theGrid->SetColSize(COL_SCORE_EW  , SIZE_SCORE    ); m_theGrid->SetColLabelValue(COL_SCORE_EW , _("score ow"));
-    m_theGrid->SetColSize(COL_NAME_NS   , SIZE_PAIRNAME ); m_theGrid->SetColLabelValue(COL_NAME_NS  , _("naam nz" ));
-    m_theGrid->SetColSize(COL_NAME_EW   , SIZE_PAIRNAME ); m_theGrid->SetColLabelValue(COL_NAME_EW  , _("naam ow" ));
+    m_theGrid->SetColSize(COL_GAME      , SIZE_ID       ); m_theGrid->SetColLabelValue(COL_GAME     , _("game"    ));
+    m_theGrid->SetColSize(COL_NS        , SIZE_PAIRNR   ); m_theGrid->SetColLabelValue(COL_NS       , _("ns"      ));
+    m_theGrid->SetColSize(COL_EW        , SIZE_PAIRNR   ); m_theGrid->SetColLabelValue(COL_EW       , _("ew"      ));
+    m_theGrid->SetColSize(COL_SCORE_NS  , SIZE_SCORE    ); m_theGrid->SetColLabelValue(COL_SCORE_NS , _("score ns"));
+    m_theGrid->SetColSize(COL_SCORE_EW  , SIZE_SCORE    ); m_theGrid->SetColLabelValue(COL_SCORE_EW , _("score ew"));
+    m_theGrid->SetColSize(COL_NAME_NS   , SIZE_PAIRNAME ); m_theGrid->SetColLabelValue(COL_NAME_NS  , _("name ns" ));
+    m_theGrid->SetColSize(COL_NAME_EW   , SIZE_PAIRNAME ); m_theGrid->SetColLabelValue(COL_NAME_EW  , _("name ew" ));
 
     wxGridCellAttr* pAttr = new wxGridCellAttr;
     // apparently can be used only once
@@ -69,33 +69,33 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     m_pSizerAllChoices = new wxBoxSizer(wxHORIZONTAL);
     wxArrayString choices;
     choices.push_back(_("Score slip"));            // score entry method
-    choices.push_back(_("Spel nummer "));          // NB: extra space to have different string for autotest, see 4 lines down
-    m_pRadioBoxSlipGame = CreateRadioBox(_("Ingave volgorde:"), choices, EVT_CMD_HANDLER( &ScoreEntry::OnRbSlipGame),"InputOrder");
+    choices.push_back(_("Game number "));          // NB: extra space to have different string for autotest, see 4 lines down
+    m_pRadioBoxSlipGame = CreateRadioBox(_("Entry order:"), choices, EVT_CMD_HANDLER( &ScoreEntry::OnRbSlipGame),"InputOrder");
     m_pSizerAllChoices->Add(m_pRadioBoxSlipGame, 0, wxBOTH | wxALL, MY_BORDERSIZE); // CHOICE_ID_SLIP slip/game added FIRST to this sizer
     choices.clear();
-    choices.push_back(_("Spel nummer"));           // if slip, then entry order based on game-nr or pair-nr
-    choices.push_back(Unique(_("NZ nummer")));
-    m_pRadioBoxGameNs = CreateRadioBox(_("Score slip volgorde:"), choices, EVT_CMD_HANDLER(&ScoreEntry::OnRbGameNS),"SlipOrder");
+    choices.push_back(_("Game number"));           // if slip, then entry order based on game-nr or pair-nr
+    choices.push_back(Unique(_("NS number")));
+    m_pRadioBoxGameNs = CreateRadioBox(_("Score slip order:"), choices, EVT_CMD_HANDLER(&ScoreEntry::OnRbGameNS),"SlipOrder");
     m_pSizerAllChoices->Add(m_pRadioBoxGameNs, 0, wxBOTH | wxALL, MY_BORDERSIZE); // CHOICE_ID_GAME_NS game/ns added SECOND to this sizer
 
-    m_pChoiceRound = new MY_CHOICE(this, _("Ronde:"), _("Scores voor deze ronde"),Unique(CHOICE_ROUND));
+    m_pChoiceRound = new MY_CHOICE(this, _("Round:"), _("Scores for this round"),Unique(CHOICE_ROUND));
     m_pChoiceRound->Bind(wxEVT_CHOICE, &ScoreEntry::OnSelectRound, this);
     m_pSizerAllChoices->MyAdd(m_pChoiceRound, 0, wxBOTH | wxALL | wxALIGN_CENTER_VERTICAL, MY_BORDERSIZE);
 
-    m_pChoiceGame = new MyChoiceMC(this, _("Spel:") , _("Scores voor dit spel"), Unique(CHOICE_GAME));
+    m_pChoiceGame = new MyChoiceMC(this, _("Game:") , _("Scores for this game"), Unique(CHOICE_GAME));
     m_pChoiceGame->Bind(wxEVT_CHOICE, &ScoreEntry::OnSelectGame, this);
     m_pSizerAllChoices->MyAdd(m_pChoiceGame, 0, wxBOTH | wxALL | wxALIGN_CENTER_VERTICAL, MY_BORDERSIZE);
 
     // CHOICE_ID_ROUND  choice round added THIRD to this sizer
     // CHOICE_ID_GAME   choice round added FOURTH to this sizer
 
-    auto pButtonNextEmptyScore = new wxButton(this, wxID_ANY , _("++lege score") );
+    auto pButtonNextEmptyScore = new wxButton(this, wxID_ANY , _("++empty score") );
     pButtonNextEmptyScore->Bind(wxEVT_BUTTON,&ScoreEntry::OnNextEmptyScore, this);
-    pButtonNextEmptyScore->SetToolTip(_("gaat naar volgende lege score"));
+    pButtonNextEmptyScore->SetToolTip(_("jumps to next empty score"));
 
-    auto pButtonSwitchNsEw = new wxButton(this, wxID_ANY , _("nz<-->ow") );
+    auto pButtonSwitchNsEw = new wxButton(this, wxID_ANY , _("ns<-->ew") );
     pButtonSwitchNsEw->Bind(wxEVT_BUTTON,&ScoreEntry::OnSwitchNsEw, this);
-    pButtonSwitchNsEw->SetToolTip(_("wissel NZ paar met OW paar: draaitafel"));
+    pButtonSwitchNsEw->SetToolTip(_("switch NS pair with EW pair: wrong direction"));
 
     auto search   = CreateSearchBox();
     auto okCancel = CreateOkCancelButtons();
@@ -110,7 +110,7 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     hBoxSearchOk->Add(vBoxOk                , 0, wxBOTH | wxALL, MY_BORDERSIZE);
 
     // add to layout
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Ingave/Wijzigen scores"));
+    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Entry/Change scores"));
     vBox->Add(m_theGrid         , 1, wxEXPAND | wxALL, MY_BORDERSIZE);
     vBox->Add(m_pSizerAllChoices     , 0);
     vBox->Add(hBoxSearchOk      , 0);
@@ -157,7 +157,7 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
     if (m_bIsScriptTesting)
     {
         wxString msg;
-        msg.Printf(_("ScoreEntry:: rij %2d, colom %d verandert van <%s> naar <%s>")
+        msg.Printf(_("ScoreEntry:: row %2d, column %d changing from <%s> to <%s>")
             , a_cellInfo.row
             , a_cellInfo.column
             , a_cellInfo.oldData.c_str()
@@ -189,7 +189,7 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
             // grid shows old data during msgbox, so put new data in...
             m_theGrid->SetCellValue(row, col, newData);
             m_theGrid->Refresh();
-            bool bNo = (wxNO == wxMessageBox(_("ongeldige score, toch opslaan?"), "???", wxYES_NO | wxICON_INFORMATION));
+            bool bNo = (wxNO == wxMessageBox(_("invalid score, store anyway?"), "???", wxYES_NO | wxICON_INFORMATION));
             m_theGrid->SetCellBackgroundColour(row, col, org );
             m_theGrid->Refresh();
             if (bNo)
@@ -335,7 +335,7 @@ bool ScoreEntry::FindEmptyScore()
 
     } while (count != maxRow );
 
-//    MyLogInfo(_("NextEmpty(%i,%i): %s"), row, col, bFoundEmpty ? _("ja") : _("nee"));
+//    MyLogInfo(_("NextEmpty(%i,%i): %s"), row, col, bFoundEmpty ? _("yes") : _("no"));
      return bFoundEmpty;
 }   // FindEmptyScore()
 
@@ -475,7 +475,7 @@ void ScoreEntry::RefreshInfo()
 
     Layout();
     static wxString explanation;    // MUST be initialized dynamically: translation
-    explanation = _("Ingave scores: normaal: <score>, arbitraal: '%'<score> of 'r'<score> of 'ng'=niet gespeeld");
+    explanation = _("Scoreentry: normal: <score>, arbitrary: '%'<score> or 'r'<score> or 'np'=not played");
     SendEvent2Mainframe(this, ID_STATUSBAR_SETTEXT, &explanation);
 }   // RefreshInfo()
 
@@ -534,8 +534,8 @@ void ScoreEntry::OnSwitchNsEw(wxCommandEvent& )
     m_theGrid->SetCellBackgroundColour(row, COL_NS, *wxRED );
     m_theGrid->SetCellBackgroundColour(row, COL_EW, *wxRED );
     m_theGrid->Refresh();
-    wxString msg = FMT(_("'%s-%s' wisselen met '%s-%s', zeker weten?\n\n "), ns, ew, nsNew, ewNew);
-    bool bNo = (wxNO == wxMessageBox( msg, _("draaihand"), wxYES_NO |wxICON_QUESTION ));// wxICON_INFORMATION));
+    wxString msg = FMT(_("'%s-%s' exchange with '%s-%s', are you sure?\n\n "), ns, ew, nsNew, ewNew);
+    bool bNo = (wxNO == wxMessageBox( msg, _("wrong direction"), wxYES_NO |wxICON_QUESTION ));// wxICON_INFORMATION));
     m_theGrid->SetCellBackgroundColour(row, COL_NS, org);
     m_theGrid->SetCellBackgroundColour(row, COL_EW, org);
     m_theGrid->Refresh();
@@ -590,9 +590,9 @@ void ScoreEntry::AutotestRequestMousePositions(MyTextFile* a_pFile)
 void ScoreEntry::PrintPage()
 {
     UINT session = cfg::GetActiveSession();
-    wxString sSession = session == 0 ? "" : FMT(_(" van zitting %u"), session);
-    wxString sRoundGame = m_bSlipOrder ? FMT(_("ronde %u"), m_uActiveRound) : FMT(_("spel %u"), m_uActiveGame);
-    wxString title = FMT(_("Overzicht van de scores%s voor '%s', %s"), sSession, cfg::GetDescription(), sRoundGame);
+    wxString sSession = session == 0 ? "" : FMT(_(" of session %u"), session);
+    wxString sRoundGame = m_bSlipOrder ? FMT(_("round %u"), m_uActiveRound) : FMT(_("game %u"), m_uActiveGame);
+    wxString title = FMT(_("Overview of the scores%s for '%s', %s"), sSession, cfg::GetDescription(), sRoundGame);
     m_theGrid->PrintGrid(title, m_theGrid->GetNumberCols());
 }   // PrintPage()
 

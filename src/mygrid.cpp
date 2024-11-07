@@ -163,7 +163,7 @@ void MyGrid::SetRowBackground(int a_row, const wxColour& a_colour)
 void MyGrid::OnLeftClickLabel(wxGridEvent& a_event)
 {   // eat it, if its a column label: no whole column selection
     int col = a_event.GetCol();
-    LogMessage(_("MyGrid::OnLeftClickLabel(kolom: %i)"), col);
+    LogMessage(_("MyGrid::OnLeftClickLabel(column: %i)"), col);
     if ( col == wxNOT_FOUND)
         a_event.Skip(); // passtrough if its not a column header
 }   // OnLeftClickLabel()
@@ -276,7 +276,7 @@ bool MyGrid::AppendRows(int a_numRows, bool a_updateLabels)
 
 void MyGrid::SortOnLeftClickLabel(wxGridEvent& a_event)
 {
-    LogMessage(_("MyGrid::SortOnLeftClickLabel(kolom: %i)"), a_event.GetCol());
+    LogMessage(_("MyGrid::SortOnLeftClickLabel(column: %i)"), a_event.GetCol());
     a_event.Skip(); // passthrough
 }   // SortOnLeftClickLabel()
 
@@ -354,7 +354,7 @@ bool MyCompare(const wxString& s1, const wxString& s2, MyGrid::SortMethod a_sort
 
 void MyGrid::OnSortColumn(wxGridEvent& a_event)
 {
-    LogMessage(_("MyGrid::OnSortColumn(kolom: %i)"), a_event.GetCol());
+    LogMessage(_("MyGrid::OnSortColumn(column: %i)"), a_event.GetCol());
 
     int rows    = GetNumberRows();
     int sortCol = a_event.GetCol();

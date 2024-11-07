@@ -347,7 +347,7 @@ bool MyLinePrinter::PrintAFile(const wxString& a_fileName, const wxString& a_tit
 {
     if (m_bPrint2File)
     {
-        wxString msg = _("Kan geen bestand naar bestand printen!");
+        wxString msg = _("Cant print a file to a file!");
         LogMessage(msg);
         wxMessageBox(msg);
         return false;
@@ -758,7 +758,7 @@ void  MyLinePrinter::Line2Printer()
 
         if (m_iLinesOnPage == 0 && !m_sPageTitle.IsEmpty())
         {   // print header, if available
-            wxString header = FMT(_("              blz %d: "), 1+m_iPagesPrinted) + m_sPageTitle;
+            wxString header = FMT(_("              page %d: "), 1+m_iPagesPrinted) + m_sPageTitle;
             (void)TextOut(m_hPrinter, X(0), Y(m_iLinesOnPage), header.c_str(), header.Len());
             ++m_iLinesOnPage;
         }

@@ -116,20 +116,20 @@ Console::Console(wxWindow* parent, const wxString& a_label, const wxString& a_pr
     Bind(wxEVT_CHAR, &Console::OnChar, this);   // we need this to only allow chars AFTER the prompt
     SetPrompt(a_prompt);                        // default prompt
     CallAfter([this]{ if(m_bFirstPrompt) ShowPrompt();});  // After userinit, we show the prompt if user hasn't done it yet
-    m_pButtonSave = new wxButton(parent, wxID_ANY, _("Opslaan"));
-    m_pButtonSave->SetToolTip(_("inhoud van venster opslaan"));
+    m_pButtonSave = new wxButton(parent, wxID_ANY, _("Save"));
+    m_pButtonSave->SetToolTip(_("save window-content"));
     m_pButtonSave->Bind(wxEVT_BUTTON, [this](wxCommandEvent&)
         {
             AUTOTEST_BUSY("save");
-            wxString filename = wxFileSelector(_("Kies een bestand om de tekst op te slaan")
+            wxString filename = wxFileSelector(_("Choose a file to save the text to")
                 , wxEmptyString, "debug.txt");
             if (!filename.IsEmpty()) this->SaveFile(filename);
             SetInsertionPoint(GetLastPosition());
             CallAfter([this]{this->SetFocus();});
         } );
 
-    m_pButtonClear = new wxButton(parent, wxID_ANY, _("Wissen"));
-    m_pButtonClear->SetToolTip(_("inhoud van venster wissen"));
+    m_pButtonClear = new wxButton(parent, wxID_ANY, _("Clear"));
+    m_pButtonClear->SetToolTip(_("clear window-content"));
     m_pButtonClear->Bind(wxEVT_BUTTON, [this](wxCommandEvent&) { this->Clear();} );
 
     int size = GetFont().GetPointSize();
@@ -343,36 +343,36 @@ Debug::Debug(wxWindow* a_pParent, UINT a_pageId, DebugType a_type) :Baseframe(a_
     m_pConsole = new Console(this, Unique("Console"));
     m_pConsole->Bind(wxEVT_TEXT_ENTER,[this](wxCommandEvent&){HandleCommandLine(m_pConsole->GetCommand()); });
 
-    m_pCheckBoxPrintNext = new wxCheckBox(this, wxID_ANY, _("print volgende output"));
-    m_pCheckBoxPrintNext->SetToolTip(_("Output van volgend commando wordt (ook) geprint"));
+    m_pCheckBoxPrintNext = new wxCheckBox(this, wxID_ANY, _("print next output"));
+    m_pCheckBoxPrintNext->SetToolTip(_("Output of next command will (also) be printed"));
     m_pCheckBoxPrintNext->Bind(wxEVT_CHECKBOX,[this](wxCommandEvent&){ m_pConsole->SetFocus();m_bPrintNext = m_pCheckBoxPrintNext->IsChecked();});
 
     //setup for guides
     m_pHsizerGuides = new wxBoxSizer(wxHORIZONTAL);
-    m_pGroupChoice = new MY_CHOICE(this, _("Groep:  "), _("Gidsbriefjes voor deze groep"), Unique(GROUP_CHOICE));
+    m_pGroupChoice = new MY_CHOICE(this, _("Group:  "), _("Guides for this group"), Unique(GROUP_CHOICE));
     m_pGroupChoice->Bind(wxEVT_CHOICE, &Debug::OnSelectGroup    , this );
     m_pHsizerGuides->MyAdd(m_pGroupChoice, 0, wxALIGN_CENTER_VERTICAL);  m_pHsizerGuides->AddSpacer( 30 );
-    m_pPairChoice = new MyChoiceMC(this,_("Paar: "), _("Gidsbriefje voor gekozen paar/alle paren"), Unique(PAIR_CHOICE));
+    m_pPairChoice = new MyChoiceMC(this,_("Pair: "), _("Guides for choosen pair/all pairs"), Unique(PAIR_CHOICE));
     m_pPairChoice->Bind(wxEVT_CHOICE, &Debug::OnSelectPair, this);
     m_pHsizerGuides->MyAdd(m_pPairChoice, 0, wxALIGN_CENTER_VERTICAL);  m_pHsizerGuides->AddSpacer( 60 );
 
     m_pChkBoxGuide = new wxCheckBox(this, wxID_ANY, _("Schema"));
-    m_pChkBoxGuide->SetToolTip(_("toon/print schema-overzicht"));
+    m_pChkBoxGuide->SetToolTip(_("show/print schema-overview"));
     m_pChkBoxGuide->Bind(wxEVT_CHECKBOX,[this](wxCommandEvent&){m_pConsole->SetFocus(); m_bSchema = m_pChkBoxGuide->IsChecked(); });
     m_pHsizerGuides->Add(m_pChkBoxGuide, 0, wxALIGN_CENTER_VERTICAL);
 
     //setup for scoreslips
     m_pHsizerScoreSlips = new wxBoxSizer(wxHORIZONTAL);
-    m_pSetSize = new MY_CHOICE(this, _("Setgrootte:"), _("Aantal spellen/tafel"), Unique(SET_SIZE));
+    m_pSetSize = new MY_CHOICE(this, _("Setsize:"), _("Number of games per table"), Unique(SET_SIZE));
     m_pSetSize->Bind(wxEVT_CHOICE, &Debug::SetFocusAfter, this);
     m_pHsizerScoreSlips->MyAdd(m_pSetSize, 0, wxALIGN_CENTER_VERTICAL);  m_pHsizerScoreSlips->AddSpacer( 20 );
-    m_pFirstSet = new MyChoiceMC(this,_("Eerste set:"), _("Vanaf deze set worden de scoreslips afgedrukt"),FIRST_SET);
+    m_pFirstSet = new MyChoiceMC(this,_("First set:"), _("Starting with this set, scoreslips will be printed"),FIRST_SET);
     m_pFirstSet->Bind(wxEVT_CHOICE, &Debug::SetFocusAfter, this);
     m_pHsizerScoreSlips->MyAdd(m_pFirstSet, 0, wxALIGN_CENTER_VERTICAL);  m_pHsizerScoreSlips->AddSpacer( 20 );
-    m_pNrOfSets = new MyChoiceMC(this,_("Aantal sets:"), _("Aantal opeenvolgende sets die afgedrukt worden"), NUMBER_OF_SETS);
+    m_pNrOfSets = new MyChoiceMC(this,_("Number of sets:"), _("Number of sets that will be printed"), NUMBER_OF_SETS);
     m_pNrOfSets->Bind(wxEVT_CHOICE, &Debug::SetFocusAfter, this);
     m_pHsizerScoreSlips->MyAdd(m_pNrOfSets, 0, wxALIGN_CENTER_VERTICAL);  m_pHsizerScoreSlips->AddSpacer( 20 );
-    m_pRepeatCount = new MyChoiceMC(this,_("Exemplaren:"), _("Aantal keer dat gekozen selectie afgedrukt moet worden"), PRINT_COUNT);
+    m_pRepeatCount = new MyChoiceMC(this,_("Count:"), _("Number of times the selection should be printed"), PRINT_COUNT);
     m_pRepeatCount->Bind(wxEVT_CHOICE, &Debug::SetFocusAfter, this);
     m_pHsizerScoreSlips->MyAdd(m_pRepeatCount, 0, wxALIGN_CENTER_VERTICAL);  m_pHsizerScoreSlips->AddSpacer( 100 );
 
@@ -380,18 +380,18 @@ Debug::Debug(wxWindow* a_pParent, UINT a_pageId, DebugType a_type) :Baseframe(a_
     m_pTxtCtrlExtra = new wxTextCtrl(this, wxID_ANY, Unique("Extra_text"));
     m_pTxtCtrlExtra->Clear();   // remove 'label'-text
     m_pTxtCtrlExtra->SetMaxLength(cfg::MAX_NAME_SIZE);
-    m_pTxtCtrlExtra->SetToolTip(_("Eventuele extra text zoals 'groene groep'"));
+    m_pTxtCtrlExtra->SetToolTip(_("Any additional text such as 'green group'"));
     m_pTxtCtrlExtra->SetMinSize({(int)cfg::MAX_NAME_SIZE*m_pTxtCtrlExtra->GetCharWidth(),-1});
-    m_pHsizerSlipsExtra->Add(new wxStaticText(this, wxID_ANY,_("Extra text:")),0,wxRIGHT|wxALIGN_CENTER_VERTICAL,MY_BORDERSIZE);
+    m_pHsizerSlipsExtra->Add(new wxStaticText(this, wxID_ANY,_("Additional text:")),0,wxRIGHT|wxALIGN_CENTER_VERTICAL,MY_BORDERSIZE);
     m_pHsizerSlipsExtra->Add(m_pTxtCtrlExtra , 0, wxRIGHT | wxALIGN_CENTER_VERTICAL,MY_BORDERSIZE);
 
-    auto pButtonExample = new wxButton(this, wxID_ANY, Unique(_("Voorbeeld")));
-    pButtonExample->SetToolTip(_("toon gekozen selectie"));
+    auto pButtonExample = new wxButton(this, wxID_ANY, Unique(_("Example")));
+    pButtonExample->SetToolTip(_("show choosen selection"));
     pButtonExample->Bind(wxEVT_BUTTON,&Debug::OnExample, this);
     m_pHsizerSlipsExtra->Add(pButtonExample);// , 0, wxRIGHT | wxALIGN_CENTER_VERTICAL,MY_BORDERSIZE);
 
-    auto pButtonPrint = new wxButton(this, wxID_ANY, Unique(_("Afdrukken")));
-    pButtonPrint->SetToolTip(_("druk gekozen selectie af"));
+    auto pButtonPrint = new wxButton(this, wxID_ANY, Unique(_("Print")));
+    pButtonPrint->SetToolTip(_("print choosen selection"));
     pButtonPrint->Bind(wxEVT_BUTTON,&Debug::OnPrint, this);
 
     m_pHsizerSlipsExtra->AddStretchSpacer(100);
@@ -407,7 +407,7 @@ Debug::Debug(wxWindow* a_pParent, UINT a_pageId, DebugType a_type) :Baseframe(a_
             m_pHsizerScoreSlips ->Show(false);
             m_pCheckBoxPrintNext->Show(true);
             m_pHsizerSlipsExtra ->Show(false);
-            m_pStatusBarInfo = _("Gidsbriefjes via cmd: '[@]px', waarbij 'x' het (eerste) paar is. '@' : alle paren vanaf");
+            m_pStatusBarInfo = _("Guides via cmd: '[@]px', where 'x' is the (first) pair. '@' : all pairs starting with 'x'");
             windowText       = _("Debug console");
             m_description    = "DebugConsole";
             AUTOTEST_ADD_WINDOW(m_pCheckBoxPrintNext        , "PrintNext" );
@@ -420,8 +420,8 @@ Debug::Debug(wxWindow* a_pParent, UINT a_pageId, DebugType a_type) :Baseframe(a_
             m_pHsizerScoreSlips ->Show(false);
             m_pCheckBoxPrintNext->Show(false);
             m_pHsizerSlipsExtra ->Show(true);
-            m_pStatusBarInfo = _("Aanmaak/printen van gidsbriefjes");
-            windowText       = _("Gidsbriefjes");
+            m_pStatusBarInfo = _("Creation/print of guides");
+            windowText       = _("Guides");
             m_description    = "DebugGuides";
             AUTOTEST_ADD_WINDOW(m_pPairChoice , PAIR_CHOICE );
             AUTOTEST_ADD_WINDOW(m_pGroupChoice, GROUP_CHOICE);
@@ -433,7 +433,7 @@ Debug::Debug(wxWindow* a_pParent, UINT a_pageId, DebugType a_type) :Baseframe(a_
             m_pHsizerScoreSlips ->Show(true);
             m_pCheckBoxPrintNext->Show(false);
             m_pHsizerSlipsExtra ->Show(true);
-            m_pStatusBarInfo = _("Aanmaak/printen van scoreslips");
+            m_pStatusBarInfo = _("Creation/print of scoreslips");
             windowText       = _("Scoreslips");
             m_description    = "DebugSlips";
             AUTOTEST_ADD_WINDOW(m_pFirstSet     , FIRST_SET     );
@@ -519,7 +519,7 @@ void Debug::PrintOrExample()
         if (!m_schema.IsOk())
         {
             m_consoleOutput.Clear();
-            m_consoleOutput.push_back(_("Geen schema voorhanden"));
+            m_consoleOutput.push_back(_("No schema available for these data"));
             m_bPrintNext = false;       // force console output
         }
         else
@@ -584,7 +584,7 @@ void Debug::OutputText(const wxString& msg)
 
 void Debug::PrintPage()
 {
-    wxString title = _("debug window van ") + cfg::GetDescription();
+    wxString title = _("debug window of ") + cfg::GetDescription();
     int nrOfLines = m_pConsole->GetNumberOfLines();
 
     prn::BeginPrint(title);
@@ -864,7 +864,7 @@ UINT Debug::AtoiRound(const wxChar * pBuf)
     if ((round < 1) || (round > m_rounds))
     {
         round = 1;
-        OUTPUT_TEXT(_("     ----> ronde fout <---, default ronde 1\n"));
+        OUTPUT_TEXT(_("     ----> round error <---, default round 1\n"));
     }
     return round;
 }   // atoironde()
@@ -877,7 +877,7 @@ UINT Debug::AtoiPair(const wxChar * pBuf)
     if ((pair < 1) || (pair > m_pairs))
     {
         pair = 1;
-        OUTPUT_TEXT(_("     ----> paar fout <---, default paar 1\n"));
+        OUTPUT_TEXT(_("     ----> pair error <---, default pair 1\n"));
     }
     return pair;
 }   // AtoiPair()
@@ -888,7 +888,7 @@ UINT Debug::AtoiPair(const wxChar * pBuf)
     if ((group < 1) || (group >= m_groupData.size()))
     {
         group = 1;
-        OUTPUT_TEXT(_("     ----> groep fout <---, default groep 1\n"));
+        OUTPUT_TEXT(_("     ----> group error <---, default group 1\n"));
     }
     return group;
 }   // AtoiGroup()
@@ -899,7 +899,7 @@ UINT Debug::AtoiTable(const wxChar * pBuf)
     if ((table < 1) || (table > m_tables))
     {
         table = 1;
-        OUTPUT_TEXT(_("     ----> tafel fout <---\n"));
+        OUTPUT_TEXT(_("     ----> table error <---\n"));
     }
     return table;
 }   // atoitable()
@@ -910,7 +910,7 @@ UINT Debug::AtoiGame2Set(const wxChar* pBuf)
     if ((game < 1) || (game > m_setSize*m_rounds))
     {
         game = 1;
-        OUTPUT_TEXT(_("     ----> spel fout <---, default spel 1\n"));
+        OUTPUT_TEXT(_("     ----> game error <---, default game 1\n"));
     }
     return (game-1)/m_setSize+1;
 }   // AtoiGame2Set()
@@ -919,7 +919,7 @@ static wxString prompt=ssDbg;
 
 void Debug::SetPrompt()
 {
-    prompt = _("groep ");
+    prompt = _("group ");
     prompt += m_groupData[m_group-1].groupChars.IsEmpty() ? U2String(m_group) : m_groupData[m_group-1].groupChars;
     prompt += '>';
 
@@ -930,7 +930,7 @@ void Debug::SetPrompt()
 void Debug::RefreshInfo()
 {
     names::InitializePairNames();
-    OUTPUT_TEXT_FORMATTED(_("\ntest-mode, groep %u (%u)\n"), m_group, cfg::MAX_GROUPS);
+    OUTPUT_TEXT_FORMATTED(_("\ntest-mode, group %u (%u)\n"), m_group, cfg::MAX_GROUPS);
     auto pTmp = cfg::GetGroupData();
     if ( pTmp->size() >= m_groupData.size())
         m_groupData = *pTmp;                            // get active groupdata
@@ -975,7 +975,7 @@ void Debug::InitGuideStuff()
     m_pGroupChoice->Init(choices, m_group-1);
 
     m_pPairChoice->Init(m_pairs, 1);    // set selection to second item: first one will be 'all'
-    m_pPairChoice->InsertItem(0, _("alle"));
+    m_pPairChoice->InsertItem(0, _("all"));
     m_pConsole->Clear(false);
 }   // InitGuideStuff()
 
@@ -1018,7 +1018,7 @@ void Debug::StringDoubler(const wxString& msg, UINT pair)
 
 wxString Debug::GetNsEwString(UINT pair, UINT round)
 {
-    return m_schema.IsNs( pair, round) ? _("NZ") : _("OW");
+    return m_schema.IsNs( pair, round) ? _("NS") : _("EW");
 }   // GetNsEwString()
 
 wxString Debug::SetToGamesAsString(UINT set, bool bWide)
@@ -1050,7 +1050,7 @@ wxString Debug::GetBorrowTableAsString(UINT a_table, UINT a_round)
     UINT table = m_schema.GetBorrowTable( a_table, a_round);
     if (table == 0) return "  ";    // no borrowing
     //xgettext:TRANSLATORS: L: table to Borrow games from (same games on different tables)
-    return FMT(_("L%u"), table);
+    return FMT(_("B%u"), table);
 }   // GetBorrowTableAsString()
 
 /* example guide-card:
@@ -1084,7 +1084,7 @@ void Debug::GuideCard( UINT pair, bool a_bAskExtra )
     {   // ask for special text on guide
         m_pConsole->AsyncTextOutBegin();    // delay prompt till ready (printing)
         #define SCHEMA_WIDTH 34
-        m_explanation = a_bAskExtra ? wxGetTextFromUser(_("eventuele tekst boven ieder schema:"),ES,m_explanation).Left(SCHEMA_WIDTH)
+        m_explanation = a_bAskExtra ? wxGetTextFromUser(_("any text above each schema:"),ES,m_explanation).Left(SCHEMA_WIDTH)
                                     : m_pTxtCtrlExtra->GetValue();
         explanation   = FMT("  %-*s  .",SCHEMA_WIDTH, m_explanation);
         prn::BeginPrint();
@@ -1212,7 +1212,7 @@ void Debug::List(const wxChar* pBuf)
 
     if (!m_schema.IsOk())
     {
-        OUTPUT_TEXT(_("Geen schema voorhanden"));
+        OUTPUT_TEXT(_("No schema available for these data"));
         return;
     }
 
@@ -1223,7 +1223,7 @@ void Debug::List(const wxChar* pBuf)
             break;
         case PAIR + ROUND:
             table = m_schema.GetTable(pair,round);
-            OUTPUT_TEXT_FORMATTED (_("paar %u, ronde %u, tafel %u, richting %s, spellen %s, tegenpaar %u\n"),
+            OUTPUT_TEXT_FORMATTED (_("pair %u, round %u, table %u, direction %s, games %s, opponent %u\n"),
                         pair,round,table,
                         GetNsEwString(pair,round),
                         SetToGamesAsString(m_schema.GetSet(table,round)),
@@ -1231,13 +1231,13 @@ void Debug::List(const wxChar* pBuf)
                     );
             break;
         case PAIR + SET:
-            OUTPUT_TEXT_FORMATTED(_("paar %u, spel %u:\n"), pair, game);
+            OUTPUT_TEXT_FORMATTED(_("pair %u, game %u:\n"), pair, game);
             for (round = 1; round <= m_rounds; ++round)
             {
                 table = m_schema.GetTable(pair,round);
                 if (m_schema.GetSet(table, round) == set)
                 {
-                    OUTPUT_TEXT_FORMATTED(_("paar %u, spellen %s, tafel %u, richting %s, ronde %u, tegenpaar %u\n"),
+                    OUTPUT_TEXT_FORMATTED(_("pair %u, games %s, table %u, direction %s, round %u, opponent %u\n"),
                                         pair, SetToGamesAsString(set), table, GetNsEwString(pair, round), round,
                                         m_schema.GetOpponent(pair,round)
                                     );
@@ -1245,11 +1245,11 @@ void Debug::List(const wxChar* pBuf)
             }
             break;
         case PAIR+TABLE:
-            OUTPUT_TEXT_FORMATTED(_("paar %u, tafel %u:\n"), pair, table);
+            OUTPUT_TEXT_FORMATTED(_("pair %u, table %u:\n"), pair, table);
             for (round = 1; round <= m_rounds; ++round)
             {
                 if (m_schema.GetTable(pair,round) == table)
-                    OUTPUT_TEXT_FORMATTED(_("paar %u, tafel %u, ronde %u, richting %s, spellen %s, tegenpaar %u\n"),
+                    OUTPUT_TEXT_FORMATTED(_("pair %u, table %u, round %u, direction %s, games %s, opponent %u\n"),
                                     pair, table, round, GetNsEwString(pair,round),
                                     SetToGamesAsString(m_schema.GetSet(table,round)),
                                     m_schema.GetOpponent(pair, round)
@@ -1257,18 +1257,18 @@ void Debug::List(const wxChar* pBuf)
             }
             break;
         case ROUND:
-            OUTPUT_TEXT_FORMATTED(_("Ronde %u:\n"), round);
+            OUTPUT_TEXT_FORMATTED(_("Round %u:\n"), round);
             for (pair = 1; pair <= m_pairs; ++pair)
             {
                 table = m_schema.GetTable(pair,round);
-                OUTPUT_TEXT_FORMATTED(_("paar %2u, richting %s, tafel %2u, spellen %s\n"),
+                OUTPUT_TEXT_FORMATTED(_("pair %2u, direction %s, table %2u, games %s\n"),
                                         pair,GetNsEwString(pair,round),
                                         table, SetToGamesAsString(m_schema.GetSet(table,round))
                                     );
             }
             break;
         case ROUND + SET:
-            OUTPUT_TEXT_FORMATTED(_("Ronde %u, spel %u:\n"), round, game);
+            OUTPUT_TEXT_FORMATTED(_("Round %u, game %u:\n"), round, game);
             bFound = false;
             for (table = 1; table <= m_tables; ++table)
             {
@@ -1279,7 +1279,7 @@ void Debug::List(const wxChar* pBuf)
                         if (m_schema.GetTable(pair,round) == table)
                         {
                             bFound = true;
-                            OUTPUT_TEXT_FORMATTED(_("ronde %u, spellen %s, paar %2u, richting %s, tafel %u\n"),
+                            OUTPUT_TEXT_FORMATTED(_("round %u, games %s, pair %2u, direction %s, table %u\n"),
                                                     round,SetToGamesAsString(set),pair,
                                                     GetNsEwString(pair,round),table
                                                 );
@@ -1288,23 +1288,23 @@ void Debug::List(const wxChar* pBuf)
                 }
             }
             if (!bFound)
-                OUTPUT_TEXT_FORMATTED(_("spellen %s worden in ronde %u niet gespeeld\n"),
+                OUTPUT_TEXT_FORMATTED(_("games %s are not played in round %u\n"),
                                         SetToGamesAsString(set),round
                                     );
             break;
         case ROUND + TABLE:
-            OUTPUT_TEXT_FORMATTED(_("Ronde %u, tafel %u:\n"), round, table);
+            OUTPUT_TEXT_FORMATTED(_("Round %u, table %u:\n"), round, table);
             for (pair = 1; pair <= m_pairs; ++pair)
             {
                 if ((m_schema.GetTable(pair,round) == table) && m_schema.IsNs(pair,round) )
-                    OUTPUT_TEXT_FORMATTED(_("ronde %u, tafel %u, spellen %s, paren %u (NZ) + %u (OW)\n"),
+                    OUTPUT_TEXT_FORMATTED(_("round %u, table %u, games %s, pairs %u (NS) + %u (EW)\n"),
                                             round,table,SetToGamesAsString(m_schema.GetSet(table,round)),
                                             pair, m_schema.GetOpponent(pair,round)
                                         );
             }
             break;
         case SET:
-            OUTPUT_TEXT_FORMATTED(_("Spel %u:\n"), game);
+            OUTPUT_TEXT_FORMATTED(_("Game %u:\n"), game);
             for (round = 1; round <= m_rounds; ++round)
             {
                 for (pair = 1; pair <= m_pairs; ++pair)
@@ -1313,7 +1313,7 @@ void Debug::List(const wxChar* pBuf)
                     {
                         table = m_schema.GetTable(pair,round);
                         if (m_schema.GetSet(table,round) == set)
-                            OUTPUT_TEXT_FORMATTED(_("ronde %u, tafel %u, paren %2u (NZ) + %2u (OW)\n"),
+                            OUTPUT_TEXT_FORMATTED(_("round %u, table %u, pairs %2u (NS) + %2u (EW)\n"),
                                 round,table,pair,m_schema.GetOpponent(pair,round)
                             );
                     }
@@ -1321,13 +1321,13 @@ void Debug::List(const wxChar* pBuf)
             }
             break;
         case TABLE:
-            OUTPUT_TEXT_FORMATTED(_("Tafel %u:\n"), table);
+            OUTPUT_TEXT_FORMATTED(_("Table %u:\n"), table);
             for (round = 1; round <= m_rounds; ++round)
             {
                 for (pair = 1; pair <= m_pairs; ++pair)
                 {
                     if ( (m_schema.GetTable(pair,round) == table) && m_schema.IsNs(pair,round) ) 
-                        OUTPUT_TEXT_FORMATTED(_("ronde %u, spellen %s, paren %2u (NZ) + %2u (OW)  %s\n"),
+                        OUTPUT_TEXT_FORMATTED(_("round %u, games %s, pairs %2u (NS) + %2u (EW)  %s\n"),
                                                 round,SetToGamesAsString(m_schema.GetSet(table,round)),
                                                 pair,m_schema.GetOpponent(pair,round),
                                                 GetBorrowTableAsString(table,round)
@@ -1369,7 +1369,7 @@ void Debug::DoCommand(const wxString& a_cmd)
                 if ( (m_group > cfg::MAX_GROUPS) || (m_group == 0) )
                 {
                     m_group = 1;
-                    OUTPUT_TEXT(_("     ----> groep fout <---, default groep 1\n"));
+                    OUTPUT_TEXT(_("     ----> group error <---, default group 1\n"));
                 }
 
                 InitGroupData();
@@ -1381,7 +1381,7 @@ void Debug::DoCommand(const wxString& a_cmd)
                 UINT    maxGroup = cfg::GetGroupData()->size();
                 if (m_group <= maxGroup)    // don't touch!
                 {
-                    OUTPUT_TEXT_FORMATTED(_("Huidige groep zit in wedstrijd schema, neem groep > %u\n"), maxGroup);
+                    OUTPUT_TEXT_FORMATTED(_("Current group is within match-schema, take group > %u\n"), maxGroup);
                     break;
                 }
                 rounds = wxAtoi(pBuf); SkipDigits(pBuf);
@@ -1389,11 +1389,11 @@ void Debug::DoCommand(const wxString& a_cmd)
                 wxArrayString schemas;
                 INT_VECTOR nameIds = schema::FindSchema(rounds, pairs, &schemas);
                 if (nameIds.size() == 0)
-                    OUTPUT_TEXT(_(" initgidsdata mislukt\n"));
+                    OUTPUT_TEXT(_(" init of guidedata failed\n"));
                 else
                 {
                     int id=0;
-                    wxSingleChoiceDialog sc(this,_("kies een schema"), ES, schemas);
+                    wxSingleChoiceDialog sc(this,_("choose a schema"), ES, schemas);
                     m_pConsole->AsyncTextOutBegin();  // pause the prompt
                     if ( wxID_OK == sc.ShowModal() )
                         id = sc.GetSelection();
@@ -1417,7 +1417,7 @@ void Debug::DoCommand(const wxString& a_cmd)
             break;
         case 'N':               // do/do-not test in testrsp(): not used anymore, can't go wrong!
             m_bDontTest = !m_bDontTest;
-            OUTPUT_TEXT_FORMATTED(_("testen staat nu %s voor TestRSP()\n"), m_bDontTest ? _("uit") : _("aan"));
+            OUTPUT_TEXT_FORMATTED(_("testing is now %s for TestRSP()\n"), m_bDontTest ? _("off") : _("on"));
             break;
         default:
             --pBuf;         // get first char back
@@ -1438,8 +1438,8 @@ void Debug::CalcScore(const wxChar* pBuf)
       , NO_TRUMP    = 2
     };
 
-    const char*  doubledStrings [] = {"", _(" gedubbeld"), _(" geredubbeld")};
-    const char*  contractType   [] = {_("klaveren/ruiten"), _("harten/schoppen"), _("sans atout")};
+    const char*  doubledStrings [] = {"", _(" doubled"), _(" re-doubled")};
+    const char*  contractType   [] = {_("clubs/diamonts"), _("hearts/spades"), _("no trump")};
     static int const   typeValue[] = { 20                 , 30                  , 30 };
     int     type        = 0;    // clubs/diamonds = 0, hearts/spades=1,no-trump=2
     int     doubled     = 0;
@@ -1510,7 +1510,7 @@ void Debug::CalcScore(const wxChar* pBuf)
     {
         if (contract + 6 + tricks < 0)
         {
-            OUTPUT_TEXT(_("meer down dan te behalen aantal slagen??\n"));
+            OUTPUT_TEXT(_("more down then contract-tricks??\n"));
             return;
         }
         tricks = -tricks;
@@ -1540,7 +1540,7 @@ void Debug::CalcScore(const wxChar* pBuf)
     {
         if (contract + 6 + tricks > 13)
         {
-            OUTPUT_TEXT(_("meer slagen dan er in een spel zijn??\n"));
+            OUTPUT_TEXT(_("more tricks then possible in a game??\n"));
             return;
         }
         OUTPUT_TEXT_FORMATTED("%d %s%+d%s, ",
@@ -1608,23 +1608,23 @@ void Debug::CalcScore(const wxChar* pBuf)
         vulnerableScore    += trickValue;
         nonVulnerableScore += trickValue;
     }   // end not down
-    OUTPUT_TEXT_FORMATTED(_("score kwetsbaar: %d, niet kwetsbaar: %d\n"), vulnerableScore, nonVulnerableScore);
+    OUTPUT_TEXT_FORMATTED(_("score vulnerable: %d, not vulnerable: %d\n"), vulnerableScore, nonVulnerableScore);
 }   // CalcScore()
 
 void Debug::Usage()
 {
     wxString sp(' ', prompt.size());
     sp += _(
-            "^-- onbekend kommando\n"
-            "   [l]Rx[@]PySzTq = list [Ronde x] [Paar y] [Spel z] [Tafel q]\n"
-            "   i x y     = initialiseer nieuwe groep met x Rondes, y Paren\n"
-            "   gx        = ga naar groep x\n"
-            "   n         = wel<->niet testen van setingave\n"
+            "^-- unknown command\n"
+            "   [l]Rx[@]PySzTq = list [Round x] [Pair y] [Game z] [Table q]\n"
+            "   i x y     = initialize new group with x Rounds, y Pairs\n"
+            "   gx        = go to group x\n"
+            "   n         = yes<->no testing of setentry\n"
             "   d         = debug: test schema's\n"
-            "   x k|r|h|s|z [*[*]] [[+|-]y]: bereken score voor 'x' kl/ru/ha/sc/sa\n"
-            "               met 'y' over/down-slagen [ge[re]dubbeld]\n"
-            "   o         = overzicht aktief schema\n"
-           );
+            "   x k|r|h|s|z [*[*]] [[+|-]y]: calculate score for 'x' clubs/diamonds/hearts/spades/no-trump\n"
+            "               with 'y' up/down-tricks [[re]doubled]\n"
+            "   o         = overview active schema\n"
+    );
 
     OUTPUT_TEXT(sp);
 }   // Usage()
@@ -1641,7 +1641,7 @@ void Debug::InitGroupData()
         }
 
         m_groupData[m_group-1].groupChars = U2String(m_group);
-        OUTPUT_TEXT(_("deze groep is (nog) niet geinitialiseerd, defaults:\n"));
+        OUTPUT_TEXT(_("this group is not initialized (yet), defaults:\n"));
     }
 
     m_pActiveGroupInfo = &m_groupData[m_group-1];   // ptr to active group
@@ -1650,7 +1650,7 @@ void Debug::InitGroupData()
     m_pairs     = m_pActiveGroupInfo->pairs;
     m_tables    = m_schema.GetNumberOfTables();
     m_setSize   = cfg::GetSetSize();
-    OUTPUT_TEXT_FORMATTED(_("rondes %u, paren %u, tafels %u (%s)\n")
+    OUTPUT_TEXT_FORMATTED(_("rounds %u, pairs %u, tables %u (%s)\n")
                             , m_rounds
                             , m_pActiveGroupInfo->pairs
                             , m_tables
@@ -1664,7 +1664,7 @@ void Debug::GroupOverview()
 {   // 'old' method, don't translate!
     if (!m_schema.IsOk())
     {
-        OUTPUT_TEXT(_("Geen schema voorhanden"));
+        OUTPUT_TEXT(_("No schema available for these data"));
         return;
     }
 
@@ -1795,7 +1795,7 @@ void Debug::TestSchemas(void)
         UINT rounds = schema.Rounds();
         UINT pairs  = schema.Pairs();
 
-        OUTPUT_TEXT_FORMATTED(_("schema voor %2u tafels, %2u rondes, %2u paren (%s)\n"),
+        OUTPUT_TEXT_FORMATTED(_("schema for %2u tables, %2u rounds, %2u pairs (%s)\n"),
                     tables, rounds, pairs, schema.GetName());
 
         for (UINT pair = 1; pair <= pairs; ++pair)
@@ -1807,34 +1807,34 @@ void Debug::TestSchemas(void)
             {
                 UINT tp = schema.GetOpponent(pair,round);
                 if (tp == 0)
-                    OUTPUT_TEXT_FORMATTED(_("paar %u heeft geen tegenpaar in ronde %u\n"), pair, round);
+                    OUTPUT_TEXT_FORMATTED(_("pair %u has no opponent in round %u\n"), pair, round);
                 else
                     ++opponent;
                 if (tp >= opponents.size())
                 {
-                    OUTPUT_TEXT_FORMATTED(_("paar %u heeft te groot tegenpaar %u in ronde %u\n"), pair, tp, round);
+                    OUTPUT_TEXT_FORMATTED(_("pair %u has too high opponent %u in round %u\n"), pair, tp, round);
                     tp = 0;
                 }
                 ++opponents[tp];
                 if (opponents[tp] > 1)
-                    OUTPUT_TEXT_FORMATTED(_("paar %u speelt %u keer tegen paar %u\n"), pair, opponents[tp], tp);
+                    OUTPUT_TEXT_FORMATTED(_("pair %u plays %u times against pair %u\n"), pair, opponents[tp], tp);
                 UINT set = schema.GetSet(schema.GetTable(pair,round),round);
                 if (set >= sets.size())
                 {
-                    OUTPUT_TEXT_FORMATTED(_("paar %u heeft te grote spelset %u in ronde %u\n"), pair, set, round);
+                    OUTPUT_TEXT_FORMATTED(_("pair %u has a too large gameset %u in round %u\n"), pair, set, round);
                     set = 0;
                 }
                 if (set > rounds)
                 {
-                    OUTPUT_TEXT_FORMATTED(_("paar %u heeft onbekende spelset %u in ronde %u\n"), pair, set, round);
+                    OUTPUT_TEXT_FORMATTED(_("pair %u has unknown gameset %u in round %u\n"), pair, set, round);
                     set = 0;
                 }
                 ++sets[set];
                 if (sets[set] > 1)
-                    OUTPUT_TEXT_FORMATTED(_("paar %u speelt %u keer set %u\n"), pair, sets[set], set);
+                    OUTPUT_TEXT_FORMATTED(_("pair %u playes %u times set %u\n"), pair, sets[set], set);
             }   /* end for (rounds) */
             if (opponent != rounds)
-                OUTPUT_TEXT_FORMATTED(_("paar %u speelt maar %u keer\n"), pair, opponent);
+                OUTPUT_TEXT_FORMATTED(_("pair %u playes only %u times\n"), pair, opponent);
         }       /* end for (paren) */
 
         for (UINT round = 1; round <= rounds; ++round)
@@ -1851,8 +1851,8 @@ void Debug::TestSchemas(void)
                         bool bPair2Ns = schema.IsNs(pair2, round);
                         if ( bPair1Ns == bPair2Ns || !bPair1Ns == !bPair2Ns)
                         {
-                            OUTPUT_TEXT_FORMATTED(_("in ronde %u, tafel %u zitten paar %u en %u in dezelfde richting (%s)\n"),
-                            round, table1, pair1, pair2, bPair1Ns ? _("NZ") : _("OW"));
+                            OUTPUT_TEXT_FORMATTED(_("in round %u, table %u pair %u and %u are playing in the same direction (%s)\n"),
+                            round, table1, pair1, pair2, bPair1Ns ? _("NS") : _("EW"));
                         }
                     }
                 }
@@ -1866,7 +1866,7 @@ void Debug::PrintScoreSlips(UINT a_setSize, UINT a_firstSet, UINT a_nrOfSets, UI
 #if 0
     if (a_setSize > 6)
     {
-        wxString errorMsg = FMT(_("Set-grootte(%u) is te hoog,\nmaximum is 6"), a_setSize);
+        wxString errorMsg = FMT(_("Set-size(%u) too large,\nmaximum is 6"), a_setSize);
         MyMessageBox(errorMsg,_("Scoreslips"));
         return;
     }
@@ -1938,17 +1938,17 @@ void Debug::PrintScoreSlips(UINT a_setSize, UINT a_firstSet, UINT a_nrOfSets, UI
     prn::table::Text texts[] =
     {
           {{SL_H0+2, SL_V0+1}  , extra           }    // extra text
-        , {{SL_H0+2, SL_V0+2}  , _("RONDE :"    )}
-        , {{SL_H0+2, SL_V1+1}  , _("TAFEL :"    )}
-        , {{SL_H0+2, SL_V2+1}  , _("   NZ :"    )}
-        , {{SL_H0+2, SL_V3+1}  , _("   OW :"    )}
-        , {{SL_H0+1, maxVPos-1}, _("par.NZ"     )}
-        , {{SL_H1+1, maxVPos-1}, _("par.OW"     )}
-        , {{SL_H2+2, SL_V0+2}  , _("Spel"       )}
-        , {{SL_H3+4, SL_V0+1}  , _("Kontrakt"   )}
-        , {{SL_H3+3, SL_V0+2}  , _("NZ       OW")}
-        , {{SL_H5+1, SL_V0+2}  , _("Resultaat"  )}
-        , {{SL_H6+2, SL_V0+2}  , _("Score NZ + of -")}
+        , {{SL_H0+2, SL_V0+2}  , _("ROUND :"    )}
+        , {{SL_H0+2, SL_V1+1}  , _("TABLE :"    )}
+        , {{SL_H0+2, SL_V2+1}  , _("   NS :"    )}
+        , {{SL_H0+2, SL_V3+1}  , _("   EW :"    )}
+        , {{SL_H0+1, maxVPos-1}, _("ini.NS"     )}
+        , {{SL_H1+1, maxVPos-1}, _("ini.EW"     )}
+        , {{SL_H2+2, SL_V0+2}  , _("Game"       )}
+        , {{SL_H3+4, SL_V0+1}  , _("Contract"   )}
+        , {{SL_H3+3, SL_V0+2}  , _("NS       EW")}
+        , {{SL_H5+1, SL_V0+2}  , _(" Result"  )}
+        , {{SL_H6+2, SL_V0+2}  , _("Score NS + or -")}
     };
     size_t textCount = ARRAY_LEN(texts);
 
@@ -2073,10 +2073,10 @@ void Debug::PrintGuideNew(UINT a_pair)
 
     prn::table::Text texts[]=
     {
-          {{G_H0+1,G_V2+1}, _("ronde")}
-        , {{G_H1+2,G_V2+1}, _("tafel")}
-        , {{G_H2+1,G_V2+1}, _("tegen")}
-        , {{G_H3+3,G_V2+1}, _("spellen")}
+          {{G_H0+1,G_V2+1}, _("round")}
+        , {{G_H1+2,G_V2+1}, _("table")}
+        , {{G_H2+1,G_V2+1}, _("opp.")}
+        , {{G_H3+3,G_V2+1}, _("games")}
         , {{G_H0+0,G_V0+1}, m_pTxtCtrlExtra->GetValue()}
         , {{G_H0+2,G_V1+2}, FMT(_("schema: %22s"), m_pActiveGroupInfo->schema)}
     };
@@ -2096,7 +2096,7 @@ void Debug::PrintGuideNew(UINT a_pair)
 
     MyPrint myPrint(m_bPrintNext ? nullptr : &m_consoleOutput); // zero: no screen output, only real print, non-zero: only output to wxArrayString a_pTextOutput
 
-    myPrint.BeginPrint(_("Gidsbriefjes"));
+    myPrint.BeginPrint(_("Guides"));
     UINT linesPrinted = 0;
     for ( ; pair <= m_pairs; ++pair)
     {   // act, asif all cards must be printed. Conditions are checked at the end of the loop.
@@ -2104,7 +2104,7 @@ void Debug::PrintGuideNew(UINT a_pair)
         tableInfo.textsV.clear();   // only dynamic texts change per pair, so clear them
         // now build the dynamic parts
         tableInfo.textsV.push_back({{G_H0+0,G_V0+0}, names::PairnrSession2GlobalText(pair+m_pActiveGroupInfo->groupOffset)});
-        tableInfo.textsV.push_back({{G_H0+2,G_V1+1}, FMT(_("Paar %-2u               %2u paren"), pair, m_pairs)});
+        tableInfo.textsV.push_back({{G_H0+2,G_V1+1}, FMT(_("Pair %-2u               %2u pairs"), pair, m_pairs)});
         for (UINT round = 1; round <= m_rounds; ++round)
         {
             tableInfo.textsV.push_back({{G_H0+1,G_V3+(int)round}, FMT("%2u", round)});  //ronde
@@ -2207,10 +2207,10 @@ void Debug::PrintSchemaOverviewNew()
 
     prn::table::Text texts[]=
     {
-          {PNT(O_H2+2, O_V1+1), _("ronde ->")}
-        , {PNT(O_H0+1, O_V2+1), _("spellen")}
-        , {PNT(O_H1+1, O_V2+1), _("tfl")}
-        , {PNT(O_H0+1, O_V0+1), FMT(_("%u paren, %u rondes, %u spellen"), m_pairs, m_rounds, m_rounds*cfg::GetSetSize())}
+          {PNT(O_H2+2, O_V1+1), _("round ->")}
+        , {PNT(O_H0+1, O_V2+1), _("games")}
+        , {PNT(O_H1+1, O_V2+1), _("tbl")}
+        , {PNT(O_H0+1, O_V0+1), FMT(_("%u pairs, %u rounds, %u games"), m_pairs, m_rounds, m_rounds*cfg::GetSetSize())}
         , {PNT(O_H0+1, O_V0+2), FMT(_("Schema: %s"), m_pActiveGroupInfo->schema)}
     };
     size_t textCount = ARRAY_LEN(texts);
@@ -2265,7 +2265,7 @@ void Debug::PrintSchemaOverviewNew()
     }
 
     MyPrint myPrint(m_bPrintNext ? nullptr : &m_consoleOutput); // zero: no screen output, only real print, non-zero: only output to wxArrayString a_pTextOutput
-    myPrint.BeginPrint(_("Schemaoverzicht"));
+    myPrint.BeginPrint(_("Schemaoverview"));
     myPrint.PrintTable(tableInfo);      // print current guide
     myPrint.EndPrint();
 }   // PrintSchemaOverviewNew()

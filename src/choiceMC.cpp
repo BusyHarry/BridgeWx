@@ -153,7 +153,7 @@ void PopupChoiceMC::ItemActivated()
     event.SetString(GetStringValue());
     m_pTargetWindow->HandleWindowEvent(event);  // now send event to our creator
     Dismiss();                                  // and remove popup
-    MyLogDebug(_("ChoiceMC: item %i geactiveerd"), m_selection);
+    MyLogDebug(_("ChoiceMC: item %i activated"), m_selection);
 }   // ItemActivated()
 
 ChoiceMC::ChoiceMC(wxWindow* a_pParent, const wxString& a_textCtrlTitle) : wxComboCtrl()

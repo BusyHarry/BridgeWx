@@ -32,11 +32,11 @@ CorrectionsEnd::CorrectionsEnd(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_
     #define SIZE_PROCENT      (7 * sizeOne)                       /* -100.00 - 100.00  */
     #define SIZE_GAMES        (6 * sizeOne)                       /* like 32             */
     m_theGrid->SetRowLabelSize(SIZE_PAIRNR_SES);
-    m_theGrid->SetColSize(COL_PAIRNAME_SESSION, SIZE_PAIRNAME_SES ); m_theGrid->SetColLabelValue(COL_PAIRNAME_SESSION, _("paar"));
-    m_theGrid->SetColSize(COL_PAIRNAME_GLOBAL , SIZE_PAIRNAME     ); m_theGrid->SetColLabelValue(COL_PAIRNAME_GLOBAL , _("paarnaam"));
-    m_theGrid->SetColSize(COL_COR_SCORE       , SIZE_PROCENT      ); m_theGrid->SetColLabelValue(COL_COR_SCORE       , _("score"));
-    m_theGrid->SetColSize(COL_COR_BONUS       , SIZE_PROCENT      ); m_theGrid->SetColLabelValue(COL_COR_BONUS       , _("bonus"));
-    m_theGrid->SetColSize(COL_COR_GAMES       , SIZE_GAMES        ); m_theGrid->SetColLabelValue(COL_COR_GAMES       , _("spellen"));
+    m_theGrid->SetColSize(COL_PAIRNAME_SESSION, SIZE_PAIRNAME_SES ); m_theGrid->SetColLabelValue(COL_PAIRNAME_SESSION, _("pair"    ));
+    m_theGrid->SetColSize(COL_PAIRNAME_GLOBAL , SIZE_PAIRNAME     ); m_theGrid->SetColLabelValue(COL_PAIRNAME_GLOBAL , _("pairname"));
+    m_theGrid->SetColSize(COL_COR_SCORE       , SIZE_PROCENT      ); m_theGrid->SetColLabelValue(COL_COR_SCORE       , _("score"   ));
+    m_theGrid->SetColSize(COL_COR_BONUS       , SIZE_PROCENT      ); m_theGrid->SetColLabelValue(COL_COR_BONUS       , _("bonus"   ));
+    m_theGrid->SetColSize(COL_COR_GAMES       , SIZE_GAMES        ); m_theGrid->SetColLabelValue(COL_COR_GAMES       , _("games"   ));
 
     wxGridCellAttr* pAttr = new wxGridCellAttr; pAttr->SetAlignment(wxALIGN_LEFT, wxALIGN_CENTER_VERTICAL);
                       m_theGrid->SetColAttr(COL_PAIRNAME_SESSION, pAttr);
@@ -52,7 +52,7 @@ CorrectionsEnd::CorrectionsEnd(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_
     hBoxSearchOk->Add(okCancel  , 1, wxBOTH | wxALL, MY_BORDERSIZE);
 
     // add to layout
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Ingave zitting correcties tbv einduitslag"));
+    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Entry of sessioncorrections for endresult"));
     vBox->Add(m_theGrid         , 1, wxEXPAND | wxALL, MY_BORDERSIZE);
     vBox->Add(hBoxSearchOk      , 0);
     SetSizer(vBox);     // add to panel
@@ -208,7 +208,7 @@ void CorrectionsEnd::RefreshInfo()
 
     Layout();
     static wxString explanation;    // MUST be initialized dynamically: translation
-    explanation = _("EIND KORREKTIES: 0%: zittingscore telt niet mee in einduitslag, <0 of >100: verwijder korrektie");
+    explanation = _("END CORRECTIONS: 0%: sessionsscore is ignored for total result, <0 or >100: remove correction");
     SendEvent2Mainframe(this, ID_STATUSBAR_SETTEXT, &explanation);
 }   // RefreshInfo()
 
@@ -231,7 +231,7 @@ void CorrectionsEnd::DoSearch(wxString& a_string)
 void CorrectionsEnd::PrintPage()
 {
     UINT session = cfg::GetActiveSession();
-    wxString sSession = session == 0 ? "" : FMT(_(", zitting %u"), session);
-    wxString title = FMT(_("Overzicht van de eindcorrecties voor '%s'%s"), cfg::GetDescription(), sSession);
+    wxString sSession = session == 0 ? "" : FMT(_(", session %u"), session);
+    wxString title = FMT(_("Overview of endcorrections for '%s'%s"), cfg::GetDescription(), sSession);
     m_theGrid->PrintGrid(title, m_theGrid->GetNumberCols(), COL_COR_SCORE);
 }   // PrintPage()

@@ -6,49 +6,78 @@
 :: param 1 = $(Configuration) == '[DLL ]Debug' or '[DLL ]Release'
 :: param 2 = $(OutDir)        == directory for executable
 :: param 3 = $(wxwin)         == path to wxWidgets installation, SHOULD NOT be empty
-echo PreBuild.bat: Debug/Release = '%1', outdir = '%2', wxwin = '%3'
+echo PreBuild.bat: Debug/Release = '%~1', outdir = '%~2', wxwin = '%~3'
 
 SETLOCAL EnableExtensions
 
-if not [%3] == [] if exist %3\locale goto OkWxwin
-  .\tools\msgbox.exe ERROR! "environment var wxwin '%3' is empty or does not exist" "" "its needed for building!"
+if not [%3] == [] if exist "%~3\locale" goto OkWxwin
+  .\tools\msgbox.exe ERROR! "environment var wxwin '%~3' is empty or does not exist" "" "its needed for building!"
   exit /B 1
 :OkWxwin
 
-::echo creating folders
-if not exist %2\locales    mkdir %2\locales
-if not exist %2\locales\nl mkdir %2\locales\nl
-if not exist %2\locales\en mkdir %2\locales\en
+:: remove double quotes around params
+set p1=%~1
+set p2=%~2
+set p3=%~3
 
 set msgbox=.\tools\msgbox.exe
-set srcEnMo=.\locales\en.mo
-set dstEnMo=%2\locales\en\BridgeWx.mo
-if exist %dstEnMo% goto OkEnMo
-  echo copying '%srcEnMo%' to '%dstEnMo%'
-  if not exist %srcEnMo% %msgbox% Message "please compile %srcEnMo:.mo=.po%" "or copy en\BridgeWx.mo from BridgeWxBin_v*.zip to %dstEnMo%" & goto OkEnMo
-  echo F|xcopy /D /Y %srcEnMo% %dstEnMo% >nul
-:OkEnMo
+set language=nl
+call :setupLanguage
 
-set srcNlMo=%3\locale\nl.mo
-set dstNlMo=%2\locales\nl\wxstd.mo
-if not exist %dstNlMo% echo copying '%srcNlMo%' to '%dstNlMo%'
-  if not exist %srcNlMo% %msgbox% Warning "Strange, '%srcNlMo%' does not exist!" & goto OkNlMo
-  echo F|xcopy /D /Y %srcNlMo% %dstNlMo% >nul
-:OkNlMo
+::handle more languages, if wanted/needed
+::english is buildin in BridgeWx and wxWidgets itself
+::set language=xy
+::call :setupLanguage
 
+goto builddate
+
+:setupLanguage
+  :: input = %language%, %p1%, %p2% and %p3%
+  :: create needed folders and copy translation files
+
+  if not exist "%p2%\locales"            mkdir "%p2%\locales"
+  if not exist "%p2%\locales\%language%" mkdir "%p2%\locales\%language%"
+
+  ::copy translation file
+  set srcMo=".\locales\%language%.mo"
+  set dstMo="%p2%\locales\%language%\BridgeWx.mo"
+  if not exist %srcMo% (
+     %msgbox% Message "please compile %srcMo:.mo=.po%" "or copy %language%\BridgeWx.mo from BridgeWxBin_v*.zip to %dstMo%"
+     exit /b
+  )
+  if not exist %dstMo% echo copying %srcMo% to %dstMo%
+  echo F|xcopy /D /Y %srcMo% %dstMo% >nul
+
+  :: now copy wxstd if present
+  set srcStdMo="%p3%\locale\%language%.mo"
+  if not exist %srcStdMo% (
+    %msgbox% Warning "Strange, %srcStdMo% does not exist!"
+    exit /b
+  )
+  set dstStdMo="%p2%\locales\%language%\wxstd.mo"
+  if not exist %dstStdMo% echo copying %srcStdMo% to %dstStdMo%
+  echo F|xcopy /D /Y %srcStdMo% %dstStdMo% >nul
+  exit /b
+::end of :setupLanguage()
+
+:builddate
 :: now create the builddate.h if we have a release version
 
-if /I [%1] == [Debug]     goto OkBuildDate
-if /I [%1] == [DLL Debug] goto OkBuildDate
+if /I [%p1%] == [Debug]     goto DoneBuildDate
+if /I [%p1%] == [DLL Debug] goto DoneBuildDate
   echo creating .\src\builddate.h
   .\tools\builddate.exe > .\src\buildDate.h
-:OkBuildDate
+:DoneBuildDate
 
-set srcEnMo=
-set dstEnMo=
-set srcNlMo=
-set dstNlMo=
-set  msgbox=
+set       p1=
+set       p2=
+set       p3=
+set    dstMo=
+set    srcMo=
+set   msgbox=
+set dstStdMo=
+set srcStdMo=
+set language=
 
 echo prebuild done!
 exit /B 0

@@ -33,11 +33,11 @@ AssignNames::AssignNames(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParen
     #define SIZE_PAIRNAME_PIX (SIZE_PAIRNAME_CHARS* charSize)
     #define SIZE_PAIRNR_PIX   (SIZE_PAIRNR_CHARS  * charSize)
     #define SIZE_ID_PIX       (SIZE_ID_CHARS      * charSize)
-    m_theGrid->SetColSize(COL_PAIRNAME             , SIZE_PAIRNAME_PIX); m_theGrid->SetColLabelValue(COL_PAIRNAME           , _("paarnaam"));
-    m_theGrid->SetColSize(COL_PAIRNR_SESSION       , SIZE_PAIRNR_PIX  ); m_theGrid->SetColLabelValue(COL_PAIRNR_SESSION     , _("paar nr" ));
-    m_theGrid->SetColSize(COL_PAIRNR_SESSION_PREV  , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_PAIRNR_SESSION_PREV, _("paar Z-1"));
-    m_theGrid->SetColSize(COL_RANK_TOTAL_PREV      , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_RANK_TOTAL_PREV    , _("rang"    ));
-    m_theGrid->SetColSize(COL_RANK_SESSION_PREV    , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_RANK_SESSION_PREV  , _("rang Z-1"));
+    m_theGrid->SetColSize(COL_PAIRNAME             , SIZE_PAIRNAME_PIX); m_theGrid->SetColLabelValue(COL_PAIRNAME           , _("pairname"));
+    m_theGrid->SetColSize(COL_PAIRNR_SESSION       , SIZE_PAIRNR_PIX  ); m_theGrid->SetColLabelValue(COL_PAIRNR_SESSION     , _("pair no" ));
+    m_theGrid->SetColSize(COL_PAIRNR_SESSION_PREV  , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_PAIRNR_SESSION_PREV, _("pair S-1"));
+    m_theGrid->SetColSize(COL_RANK_TOTAL_PREV      , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_RANK_TOTAL_PREV    , _("rank"    ));
+    m_theGrid->SetColSize(COL_RANK_SESSION_PREV    , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_RANK_SESSION_PREV  , _("rank S-1"));
 
     std::vector<MyGrid::SortMethod> methods;
     methods.push_back(MyGrid::SORT_STRING);
@@ -47,11 +47,11 @@ AssignNames::AssignNames(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParen
     methods.push_back(MyGrid::SORT_INTNUMBER);
     m_theGrid->SetSortMethod(methods);          // set sort hints: without this, plain string compare is done
 
-    auto pStaticText    = new wxStaticText(this, wxID_ANY, _("Paarnamen toekennen op basis van:  "));
-    auto pButtonOrg     = new wxButton    (this, wxID_ANY, _("Origineel nr"));
-    m_pButtonRankTotal  = new wxButton    (this, wxID_ANY, _("Rang totaal" ));
-    m_pButtonRankPrev   = new wxButton    (this, wxID_ANY, _("Rang Z-1"    ));
-    auto pButtonClear   = new wxButton    (this, wxID_ANY, Unique(_("Wissen")));
+    auto pStaticText    = new wxStaticText(this, wxID_ANY, _("Assign pairnames on base of:  "));
+    auto pButtonOrg     = new wxButton    (this, wxID_ANY, _("Original nr"));
+    m_pButtonRankTotal  = new wxButton    (this, wxID_ANY, _("Rank total" ));
+    m_pButtonRankPrev   = new wxButton    (this, wxID_ANY, _("Rank S-1"   ));
+    auto pButtonClear   = new wxButton    (this, wxID_ANY, Unique(_("Clear")));
     wxBoxSizer* hBox    = new wxBoxSizer  (wxHORIZONTAL);
     hBox->Add(pStaticText       , 1, wxBOTH | wxALL | wxALIGN_CENTER_VERTICAL, MY_BORDERSIZE);
     hBox->Add(pButtonOrg        , 0, wxBOTH | wxALL | wxALIGN_CENTER_VERTICAL, MY_BORDERSIZE);
@@ -67,7 +67,7 @@ AssignNames::AssignNames(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParen
     hBoxSearchOk->Add(okCancel , 0, wxBOTH | wxALL, MY_BORDERSIZE);
 
     // add to layout
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Toekennen paarnamen"));
+    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Assign pairnames"));
     vBox->Add(m_theGrid         , 1, wxEXPAND | wxALL, MY_BORDERSIZE);
     vBox->Add(hBox              , 0);
     vBox->Add(hBoxSearchOk      , 0);
@@ -318,9 +318,9 @@ void AssignNames::PrintPage()
 {
     UINT nrOfPairs = cfg::GetNrOfSessionPairs();
     UINT session   = cfg::GetActiveSession();
-    wxString sessionString = session > 0 ? FMT(_(", zitting %u"), session) : "";
+    wxString sessionString = session > 0 ? FMT(_(", session %u"), session) : "";
 
-    wxString title = FMT(_("Paarnaam toekenning voor '%s'%s\n\nPaar naam"), cfg::GetDescription(), sessionString );
+    wxString title = FMT(_("Pairname assignment for '%s'%s\n\nPair name"), cfg::GetDescription(), sessionString );
     for (UINT index = 1; index <= nrOfPairs; ++index)
     {
         title+=FMT("\n%4s %s", names::PairnrSession2SessionText(index), names::PairnrSession2GlobalText(index));

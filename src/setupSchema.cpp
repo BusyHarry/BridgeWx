@@ -22,20 +22,20 @@
 SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, a_pageId)
 {
 //rounds and nr of games for this match: 2*wxStaticText+wxTextCtrl
-    auto nrOfRounds = new wxStaticText(this, wxID_ANY, _("Rondes:"), MY_SIZE_STATIC_TEXT);
+    auto nrOfRounds = new wxStaticText(this, wxID_ANY, _("Rounds:"), MY_SIZE_STATIC_TEXT);
     m_pTxtCtrlNrOfRounds = new MyTextCtrl  (this, wxID_ANY, "Rounds",MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
-    m_pTxtCtrlNrOfRounds->SetToolTip(_("Aantal rondes in deze zitting"));
+    m_pTxtCtrlNrOfRounds->SetToolTip(_("Number of rounds in this session"));
     m_pTxtCtrlNrOfRounds->SetMinMax(1, schema::GetMaxRound());
     m_pTxtCtrlNrOfRounds->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusRoundsSetSize, this);
     m_pTxtCtrlNrOfRounds->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterRoundsSetSize,     this);
 
-    auto nrOfGames = new wxStaticText(this, wxID_ANY, _("Spellen:  "));
+    auto nrOfGames = new wxStaticText(this, wxID_ANY, _("Games:  "));
     m_pTxtCtrlNrOfGames = new wxTextCtrl  (this, wxID_ANY, "NrOfGames", MY_SIZE_TXTCTRL_NUM(3), wxTE_READONLY);
-    m_pTxtCtrlNrOfGames->SetToolTip(FMT(_("Aantal te spelen spellen voor deze zitting (max=%u)"),cfg::MAX_GAMES));
+    m_pTxtCtrlNrOfGames->SetToolTip(FMT(_("Number of games to play in this session (max=%u)"),cfg::MAX_GAMES));
 
-    auto firstGame = new wxStaticText(this, wxID_ANY, _("Eerste spel:  "));
+    auto firstGame = new wxStaticText(this, wxID_ANY, _("First game:  "));
     m_pTxtCtrlFirstGame = new MyTextCtrl(this, wxID_ANY, "FirstGame", MY_SIZE_TXTCTRL_NUM(2));
-    m_pTxtCtrlFirstGame->SetToolTip(_("Nummer van het eerste spel (1, of bijv 17 voor zitting 2)"));
+    m_pTxtCtrlFirstGame->SetToolTip(_("Number of the first game (1, or f.e. 17 for session 2)"));
     m_pTxtCtrlFirstGame->SetMinMax(1, cfg::MAX_GAMES);
     m_pTxtCtrlFirstGame->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusRoundsSetSize, this);
     m_pTxtCtrlFirstGame->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterRoundsSetSize,     this);
@@ -50,9 +50,9 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
 
 
 //nr of games per table = setSize:  wxStaticText + wxTextCtrl
-    auto setSize = new wxStaticText(this, wxID_ANY, _("Spellen per tafel:"), MY_SIZE_STATIC_TEXT);
+    auto setSize = new wxStaticText(this, wxID_ANY, _("Games per table:"), MY_SIZE_STATIC_TEXT);
     m_pTxtCtrlSetSize = new MyTextCtrl(this, wxID_ANY, "GamesPerTable", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
-    m_pTxtCtrlSetSize->SetToolTip(_("Aantal spellen per tafel"));
+    m_pTxtCtrlSetSize->SetToolTip(_("Number of games per table"));
     m_pTxtCtrlSetSize->SetMinMax(1, cfg::MAX_GAMES);
 
     m_pTxtCtrlSetSize->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusRoundsSetSize, this);
@@ -63,9 +63,9 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
     SetSizeSizer->Add(m_pTxtCtrlSetSize, 0);
 
 //nr of groups:  wxStaticText + wxTextCtrl
-    auto nrOfGroups = new wxStaticText(this, wxID_ANY, _("Groepen: "), MY_SIZE_STATIC_TEXT);
+    auto nrOfGroups = new wxStaticText(this, wxID_ANY, _("Groups: "), MY_SIZE_STATIC_TEXT);
     m_pTxtCtrlNrOfGroups = new MyTextCtrl(this, wxID_ANY,"Groups", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
-    m_pTxtCtrlNrOfGroups->SetToolTip(_("Aantal groepen die dezelfde spellen spelen"));
+    m_pTxtCtrlNrOfGroups->SetToolTip(_("Number of groups that play the same games"));
     m_pTxtCtrlNrOfGroups->SetMinMax(1, cfg::MAX_GROUPS);
     m_pTxtCtrlNrOfGroups->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusNrOfGroups, this);
     m_pTxtCtrlNrOfGroups->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterNrOfGroups    , this);
@@ -76,11 +76,11 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
 
 // groupinfo
 //1) wxStaticText+wxChoice(group)   wxButton(nextgroup) 
-    m_pChoiceBoxGroup = new MY_CHOICE(this, _("Groep:"), _("Info van de verschillende groepen"), Unique(CHOICE_GROUP));
+    m_pChoiceBoxGroup = new MY_CHOICE(this, _("Group:"), _("Info of the different groups"), Unique(CHOICE_GROUP));
     m_pChoiceBoxGroup->Bind(wxEVT_CHOICE, &SetupSchema::OnSelectGroup, this );
 
-    auto nextGroup = new wxButton(this, wxID_ANY, _("++groep"));
-    nextGroup->SetToolTip(_("Info voor volgende groep"));
+    auto nextGroup = new wxButton(this, wxID_ANY, _("++group"));
+    nextGroup->SetToolTip(_("Info for the next group"));
     Bind(wxEVT_BUTTON, &SetupSchema::OnNextGroup, this, nextGroup->GetId() );
 
     wxBoxSizer* groupCountSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -88,22 +88,22 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
     groupCountSizer->Add(nextGroup);
 
 //2)wxStaticText+wxTextCtrl(groupletters) + wxStaticText+wxTextCtrl(nr of pairs) + wxStaticText+wxChoice(schema) +  wxStaticText+wxTextCtrl(absent pair)
-    wxStaticText* groupChars = new wxStaticText(this, wxID_ANY, _("Groep letters:  "));
+    wxStaticText* groupChars = new wxStaticText(this, wxID_ANY, _("Group characters:  "));
     m_pTxtCtrlGroupChars     = new wxTextCtrl  (this, wxID_ANY, "GroupChars", MY_SIZE_TXTCTRL_NUM(3), wxTE_PROCESS_ENTER, wxTextValidator(wxFILTER_ALPHA));
     m_pTxtCtrlGroupChars->SetMaxLength(2);
     m_pTxtCtrlGroupChars->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusGroupChars, this );
     m_pTxtCtrlGroupChars->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterGroupChars    , this );
 
-    auto pairs = new wxStaticText(this, wxID_ANY, _("Aantal paren:  "));
+    auto pairs = new wxStaticText(this, wxID_ANY, _("Number of pairs:  "));
     m_pTxtCtrlPairs = new MyTextCtrl(this, wxID_ANY,"NrOfPairs", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
     m_pTxtCtrlPairs->SetMinMax(1, cfg::MAX_PAIRS_PER_GROUP);
     m_pTxtCtrlPairs->Bind(wxEVT_KILL_FOCUS,         &SetupSchema::OnLostFocusNrOfPairs, this );
     m_pTxtCtrlPairs->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterPairs        , this );
 
-    m_pChoiceBoxSchemas = new MyChoiceMC(this, _("Schema:"), _("Schema voor deze groep"), Unique(CHOICE_SCHEMA));
+    m_pChoiceBoxSchemas = new MyChoiceMC(this, _("Schema:"), _("Schema for this group"), Unique(CHOICE_SCHEMA));
     m_pChoiceBoxSchemas->Bind(wxEVT_CHOICE, &SetupSchema::OnSelectSchema, this );
 
-    auto absent = new wxStaticText(this, wxID_ANY, _("Afwezig paar:  "));
+    auto absent = new wxStaticText(this, wxID_ANY, _("Absent pair:  "));
     m_pTxtCtrlAbsent = new MyTextCtrl(this, wxID_ANY, "AbsentPair", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
     m_pTxtCtrlAbsent->SetMinMax(0, cfg::MAX_PAIRS_PER_GROUP);
     m_pTxtCtrlAbsent->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusAbsent, this );
@@ -119,7 +119,7 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
     auto okCancel = CreateOkCancelButtons();
 
     // add all sizers to vertical sizer
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Ingave schema voor deze zitting"));
+    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Schema entry for this session"));
     vBox->AddSpacer( 30 );  vBox->Add(nrOfGamesSizer        , 0, wxALIGN_LEFT   );
     vBox->AddSpacer( 30 );  vBox->Add(SetSizeSizer          , 0, wxALIGN_LEFT   );
     vBox->AddSpacer( 30 );  vBox->Add(nrOfGroupsSizer       , 0, wxALIGN_LEFT   );
@@ -211,19 +211,19 @@ void SetupSchema::BackupData()
 
 void SetupSchema::PrintPage()
 {
-    bool bResult = prn::BeginPrint(_("Opzettenschema pagina:\n")); MY_UNUSED(bResult);
+    bool bResult = prn::BeginPrint(_("Schemasetup page:\n")); MY_UNUSED(bResult);
     wxString info;
     info = FMT(_(
-                    "Rondes       :%2s    Spellen : %s    Eerste spel: %s\n"
-                    "Spellen/tafel:%2s\n"
-                    "Groepen      :%2s\n\n"
+                    "Rounds       :%2s    Games: %s    First game: %s\n"
+                    "Games/table  :%2s\n"
+                    "Groups       :%2s\n\n"
                 ),
                 m_pTxtCtrlNrOfRounds->GetValue(), m_pTxtCtrlNrOfGames->GetValue(), m_pTxtCtrlFirstGame->GetValue(),
                 m_pTxtCtrlSetSize   ->GetValue(),
                 m_pTxtCtrlNrOfGroups->GetValue()
             );
     prn::PrintLine(info);
-    prn::PrintLine(_("groep groepletters paren schema          afwezig paar\n"));
+    prn::PrintLine(_("group groupchars   pairs schema          absent pair\n"));
     //m_groupData;
     for (UINT group = 0; group < m_groupData.size(); ++group)
     {
@@ -461,7 +461,7 @@ void SetupSchema::HandleGroupChars()
         if (ii == grp) continue;
         if (m_groupData[ii].groupChars == grpChars)
         {
-            MyLogError(_("Gelijke groepletters voor groep %u en %u"), ii+1, grp+1);
+            MyLogError(_("Equal groupcharacters for group %u and %u"), ii+1, grp+1);
             wxBell();
             m_pTxtCtrlGroupChars->SetValue(m_groupData[grp].groupChars);    //restore original value
             return;

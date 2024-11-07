@@ -360,13 +360,13 @@ static void GetInstalledLanguages(wxArrayString & a_descriptions, wxArrayInt & a
 {
     a_descriptions.Clear();
     a_identifiers.Clear();
-    a_descriptions.Add(_("Gebruik default taal: 'Dutch/Nederlands'"));  // buildin language
-    a_identifiers.Add(wxLANGUAGE_DUTCH_NETHERLANDS);
+    a_descriptions.Add(_("Use buildin language: 'English'"));
+    a_identifiers.Add(wxLANGUAGE_ENGLISH);
     wxDir       dir(GetCatalogPath());
     wxString    filename;
     for (bool bFound = dir.GetFirst(&filename, "*.*", wxDIR_DIRS); bFound; bFound = dir.GetNext(&filename))
     {
-        MyLogMessage(_("Zoeken naar talen, folder gevonden: '%s'"), dir.GetNameWithSep() + filename);
+        MyLogMessage(_("Search for languages, folder found: '%s'"), dir.GetNameWithSep() + filename);
         auto langinfo = wxLocale::FindLanguageInfo(filename);
         if (langinfo != nullptr)
         {
@@ -425,9 +425,9 @@ void MyApp::ReInitLanguage()
 
     const wxLanguageInfo* const langInfo = wxUILocale::GetLanguageInfo(wxLANGUAGE_DEFAULT);
     if (langInfo)
-        MyLogMessage(_("Systeemtaal: id=%d, %s"), langInfo->Language, langInfo->Description);
+        MyLogMessage(_("Systemlanguage: id=%d, %s"), langInfo->Language, langInfo->Description);
     else
-        MyLogMessage(_("Systeemtaal: de default systeem taal"));
+        MyLogMessage(_("Systemlanguage: the default system language"));
 
 }   // ReInitLanguage()
 
@@ -476,7 +476,7 @@ bool MyApp::OnInit()
     return true;
 }   //  OnInit()
 
-MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("Bridge rekenprogramma")) // ssWinTitle: init here because of translation for new frame!
+MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'Bridge' calculation program")) // ssWinTitle: init here because of translation for new frame!
     , m_pActivePage { 0 }
     , m_theApp      { a_theApp }
     , m_oldId       { 0 }
@@ -556,53 +556,53 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("B
     spMainframe = this;    // for clients to reach us
 
     wxMenu *menuFile = new wxMenu;
-    menuFile->Append(ID_MENU_SETUPNEWMATCH  , _("&Nieuwe wedstrijd/zitting"  ), _("Wedstrijd/zitting ingave"            ));
-    menuFile->Append(ID_MENU_SETUPPRINTER   , _("&Printerkeuze"              ), _("Printer keuze en instellingen"       ));
-    menuFile->Append(ID_MENU_PRINTPAGE      , _("print pa&Gina"              ), _("Print huidige pagina"                ));
-    menuFile->Append(ID_MENU_PRINTFILE      , _("print &Bestand"             ), _("Print een bestand"                   ));
+    menuFile->Append(ID_MENU_SETUPNEWMATCH  , _("&New match/session"  ), _("Match/session entry"            ));
+    menuFile->Append(ID_MENU_SETUPPRINTER   , _("&Printer choice"     ), _("Printer choice and setup"       ));
+    menuFile->Append(ID_MENU_PRINTPAGE      , _("print pa&Ge"         ), _("Print current page"             ));
+    menuFile->Append(ID_MENU_PRINTFILE      , _("print &File"         ), _("Print a file"                   ));
 
     menuFile->AppendSeparator();
-    menuFile->Append(ID_EXIT                , _("&Afsluiten"                 ), _("Dit zal het programma beeindigen"    ));
+    menuFile->Append(ID_EXIT                , _("&Exit"               ), _("This will end the program"      ));
  
     wxMenu *menuSettings = new wxMenu;
-    menuSettings->Append(ID_MENU_SETUPGAME  , _("&Wedstrijd instellingen"    ), _("Instellingen tbv de aktieve wedstrijd"           ));
-    menuSettings->Append(ID_MENU_SETUPSCHEMA, _("opzetten &Schema"           ), _("Ingave/wijzigen van schema"                      ));
-    menuSettings->Append(ID_MENU_NAMEEDITOR , _("paarnamen &Ingeven/wijzigen"), _("Ingave/wijzigen van paar/clubnamen"              ));
-    menuSettings->Append(ID_MENU_ASSIGNNAMES, _("paarnamen &Toekennen"       ), _("Paarnaam koppelen aan paarnummer van zitting"    ));
+    menuSettings->Append(ID_MENU_SETUPGAME  , _("setup &Match"           ), _("Setup for the active match"                      ));
+    menuSettings->Append(ID_MENU_SETUPSCHEMA, _("setup &Schema"          ), _("Entry/change of schema"                          ));
+    menuSettings->Append(ID_MENU_NAMEEDITOR , _("pairnames &Entry/change"), _("Entry/change of pair/clubnames"                  ));
+    menuSettings->Append(ID_MENU_ASSIGNNAMES, _("pairnames &Assigment"   ), _("Connect a global pairname to a sessionpairnumber"));
     
     
     wxMenu *menuScores = new wxMenu;
-    menuScores->Append(ID_MENU_SCORE_ENTRY      , _("ingave &Scores"            ), _("Ingeven/aanpassen scores"                        ));
-    menuScores->Append(ID_MENU_COR_ENTRY_SESSION, _("ingave &Zitting correcties"), _("Ingeven/aanpassen correcties tbv een zitting"    ));
-    menuScores->Append(ID_MENU_COR_ENTRY_END    , _("ingave &Eind correcties"   ), _("Ingeven/aanpassen correcties voor de einduitslag"));
-    menuScores->Append(ID_MENU_CALC_SCORES      , _("berekenen &Uitslag"        ), _("Berekenen van de zitting/eind uitslag"           ));
+    menuScores->Append(ID_MENU_SCORE_ENTRY      , _("s&Core-entry"             ), _("Entry/change of scores"             ));
+    menuScores->Append(ID_MENU_COR_ENTRY_SESSION, _("entry &Sessioncorrections"), _("Entry/change of session corrections"));
+    menuScores->Append(ID_MENU_COR_ENTRY_END    , _("entry &Endcorrections"    ), _("Entry/change of end corrections"    ));
+    menuScores->Append(ID_MENU_CALC_SCORES      , _("calculation &Result"      ), _("Calculation of session/end result"  ));
     
     wxMenu *menuExtra = new wxMenu;
-    menuExtra->AppendCheckItem(ID_MENU_LOG      , _("&Log window"               ), _("Aan / uitzetten van log window"                  ));
-    menuExtra->Append(ID_MENU_DEBUG             , _("&Debug window"             ), _("Debug window voor allerlei zaken"                ));
-    menuExtra->Append(ID_MENU_DEBUG_GUIDES      , _("&Gidsbriefjes"             ), _("Aanmaak van gidsbriefjes"                        ));
-    menuExtra->Append(ID_MENU_DEBUG_SCORE_SLIPS , _("&Scoreslips"               ), _("Aanmaak van scoreslips"                          ));
+    menuExtra->AppendCheckItem(ID_MENU_LOG      , _("&Log window"               ), _("Enable/disable logging window"     ));
+    menuExtra->Append(ID_MENU_DEBUG             , _("&Debug window"             ), _("Debug window for all kind of stuff"));
+    menuExtra->Append(ID_MENU_DEBUG_GUIDES      , _("&Guides"                   ), _("Creation of guides"                ));
+    menuExtra->Append(ID_MENU_DEBUG_SCORE_SLIPS , _("&Scoreslips"               ), _("Creation of scoreslips"            ));
 
     auto convertData = new wxMenu;
-    convertData->Append(ID_MENU_OLD_TO_DBASE  , _("&Oud -> database"           ), _("Omzetten van 'oude' .ini/data bestanden naar een enkel .db bestand" ));
-    convertData->Append(ID_MENU_DBASE_TO_OLD  , _("&Database -> oud"           ), _("Omzetten van .db bestand naar 'oude' .ini/data bestanden"        ));
-    menuExtra->AppendSubMenu(convertData      , _("&Converteren data"          ), _("wedstrijdgegevens omzetten van het ene type naar het andere"));
+    convertData->Append(ID_MENU_OLD_TO_DBASE  , _("&Old -> database"           ), _("Convert 'old' .ini/data files to single new .db file" ));
+    convertData->Append(ID_MENU_DBASE_TO_OLD  , _("&Database -> old"           ), _("Convert .db file to 'old' .ini/data files"            ));
+    menuExtra->AppendSubMenu(convertData      , _("&Convert data"              ), _("convert match-data between old/new types"             ));
     auto otherDb = new wxMenu;
-    otherDb->AppendRadioItem(ID_MENU_OLD_DBASE, _("&Oud bestandstype (.ini)"    ), _("Gebruik van 'oude' .ini/data bestanden voor opslag"     ));
-    otherDb->AppendRadioItem(ID_MENU_NEW_DBASE, _("&Nieuw bestandstype (.db)"   ), _("Gebruik van nieuw .db bestand voor opslag"         ));
-    menuExtra->AppendSubMenu(otherDb          , _("&Wissel van bestandstype"    ), _("omschakelen van het ene opslagtype naar het andere"));
-    menuExtra->Append(ID_MENU_LANGUAGE        , _("&Taal"                       ), _("taal van de gebruikers interface"));
+    otherDb->AppendRadioItem(ID_MENU_OLD_DBASE, _("&Old datatype (.ini)"       ), _("Use 'old' .ini/data files for data storage"           ));
+    otherDb->AppendRadioItem(ID_MENU_NEW_DBASE, _("&New datatype (.db)"        ), _("Use new .db file for data storage"                    ));
+    menuExtra->AppendSubMenu(otherDb          , _("s&Witch between datatypes"  ), _("switch between the two datatypes"                     ));
+    menuExtra->Append(ID_MENU_LANGUAGE        , _("&Language"                  ), _("language of the userinterface"                        ));
 
     wxMenu *menuHelp = new wxMenu;
-    menuHelp->Append(ID_SYSTEM_INFO         , _("&Systeem info"                 ), _("Info over versie van wxWidgets"));
-    menuHelp->Append(ID_ABOUT               , _("&Over ") + __PRG_NAME__ );
+    menuHelp->Append(ID_SYSTEM_INFO         , _("&System info"                 ), _("Info about the version of wxWidgets"));
+    menuHelp->Append(ID_ABOUT               , _("&About ") + __PRG_NAME__ );
  
     m_pMenuBar = new wxMenuBar;
-    m_pMenuBar->Append(menuFile,    _("&Bestand"      ));
-    m_pMenuBar->Append(menuSettings,_("&Instellingen" ));
-    m_pMenuBar->Append(menuScores,  _("&Scores"       ));
-    m_pMenuBar->Append(menuExtra,   _("&Extra"        ));
-    m_pMenuBar->Append(menuHelp,    _("&Help"         ));
+    m_pMenuBar->Append(menuFile,    _("&File"     ));
+    m_pMenuBar->Append(menuSettings,_("&Settings" ));
+    m_pMenuBar->Append(menuScores,  _("s&Cores"   ));
+    m_pMenuBar->Append(menuExtra,   _("&Tools"    ));
+    m_pMenuBar->Append(menuHelp,    _("&Help"     ));
  
     SetMenuBar( m_pMenuBar );
 
@@ -611,7 +611,7 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("B
  
     m_pStatusbar = new MyStatusBar(this);
     SetStatusBar(m_pStatusbar);
-    SetStatusText(_("Welkom bij ") +  __PRG_NAME__);
+    SetStatusText(_("Welcome at ") +  __PRG_NAME__);
     UpdateStatusbarInfo();
 
     Bind(wxEVT_MENU, &MyFrame::OnSystemInfo,this, ID_SYSTEM_INFO);
@@ -632,7 +632,7 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("B
 
     if ( cfg::IsDebug() )
     {
-        std::cout << _("\nhallo in de console!") << std::endl;
+        std::cout << '\n' << _("hello in the console!") << std::endl;
 
         // default logging goes to a logger window
         LogDebug(_("Debug active"));
@@ -660,15 +660,15 @@ void MyFrame::OnAbout(wxCommandEvent& )
 #include "buildDate.h"
   
     wxString about;
-    about.Printf(   __PRG_NAME__ + _(", versie ") + __VERSION__ + _(", uit ") + __YEAR__ +
-                    _("\nDit is het bridge rekenprogramma van Harrie/Tinus"
-                      "\nop basis van WxWidgets"
-                      "\n\nBouw datum: %s\n%s"
-                      "\n\n(c) wxSystemInformationFrame, PB: https://github.com/PBfordev"
+    about.Printf(   __PRG_NAME__ + _(", version ") + __VERSION__ + _(", from ") + __YEAR__ +
+                    _("\nThis is the 'bridge' calculationprogram of Harrie/Tinus\n"
+                      "on base of wxWidgets\n\n"
+                      "Build date: %s\n%s\n\n"
+                      "(c) wxSystemInformationFrame, PB: https://github.com/PBfordev"
                     ),  wxString::FromUTF8(buildDate), cfg::GetCopyright()
                 );
 
-    MyMessageBox( about, _("Over ") + __PRG_NAME__ , wxOK | wxICON_INFORMATION);
+    MyMessageBox( about, _("About ") + __PRG_NAME__ , wxOK | wxICON_INFORMATION);
 }   // OnAbout()
  
 #include "wxsysinfoframe.h"
@@ -712,21 +712,21 @@ void MyFrame::AutotestCreatePositions()
     positionsFile.AddLine(    "SystemComBoxMC := \"" + ssCheckBoxBusyMC + "\" ;name of the checkbox for communication between autohotkey and the program for ChoiceMC");
     positionsFile.AddLine(    "HotkeyPos      := \""  HOTKEY  "\" ;hotkey to request mouse-positions to be generated");
     positionsFile.AddLine(    "; menu-definitions");
-    positionsFile.AddLine(    _("MenuNewMatch      := \"bn\"       ; Bestand: Nieuw"             ));
-    positionsFile.AddLine(    _("MenuShutdown      := \"ba\"       ; Bestand: Afsluiten"         ));
-    positionsFile.AddLine(    _("MenuPrinter       := \"bp\"       ; Bestand: Printer"           ));
-    positionsFile.AddLine(    _("MenuPrintPage     := \"bg\"       ; Bestand: printpaGina"       ));
-    positionsFile.AddLine(    _("MenuSetupMatch    := \"iw\"       ; Instellingen: Wedstrijd"    ));
-    positionsFile.AddLine(    _("MenuSetupSchema   := \"is\"       ; Instellingen: Schema"       ));
-    positionsFile.AddLine(    _("MenuNamesInit     := \"ii\"       ; Instellingen: Ingeven"      ));
-    positionsFile.AddLine(    _("MenuNamesAssign   := \"it\"       ; Instellingen: Toekennen"    ));
-    positionsFile.AddLine(    _("MenuScoreEntry    := \"ss\"       ; Scores: Scores"             ));
-    positionsFile.AddLine(    _("MenuCorSession    := \"sz\"       ; Scores: Zittingcorrecties"  ));
-    positionsFile.AddLine(    _("MenuCorEnd        := \"se\"       ; Scores: Eindcorrecties"     ));
-    positionsFile.AddLine(    _("MenuResult        := \"su\"       ; Scores: Uitslag"            ));
-    positionsFile.AddLine(    _("MenuDbType        := \"ewn\"      ; Extra: Wissel Nieuw"        ));
-    positionsFile.AddLine(    _("MenuOldType       := \"ewo\"      ; Extra: Wissel Oud"          ));
-    positionsFile.AddLine(    _("AllMenus          := [\"bn\",\"bp\",\"bg\",\"iw\",\"is\",\"ii\",\"it\",\"ss\",\"sz\",\"se\",\"su\",\"ewo\",\"ewn\"]"));
+    positionsFile.AddLine(    _("MenuNewMatch      := \"fn\"       ; File: New match/session"             ));
+    positionsFile.AddLine(    _("MenuShutdown      := \"fe\"       ; File: Exit"         ));
+    positionsFile.AddLine(    _("MenuPrinter       := \"fp\"       ; File: Printer choice"           ));
+    positionsFile.AddLine(    _("MenuPrintPage     := \"fg\"       ; File: print paGe"       ));
+    positionsFile.AddLine(    _("MenuSetupMatch    := \"sm\"       ; Settings: setup Match"    ));
+    positionsFile.AddLine(    _("MenuSetupSchema   := \"ss\"       ; Settings: setup Schema"       ));
+    positionsFile.AddLine(    _("MenuNamesInit     := \"se\"       ; Settings: pairnames Entry/change"      ));
+    positionsFile.AddLine(    _("MenuNamesAssign   := \"sa\"       ; Settings: pairnames Assignment"    ));
+    positionsFile.AddLine(    _("MenuScoreEntry    := \"cc\"       ; sCores: sCoreentry"             ));
+    positionsFile.AddLine(    _("MenuCorSession    := \"cs\"       ; sCores: entry Sesssioncorrections"  ));
+    positionsFile.AddLine(    _("MenuCorEnd        := \"ce\"       ; sCores: entry Endcorrections"     ));
+    positionsFile.AddLine(    _("MenuResult        := \"cr\"       ; sCores: calculation Result"            ));
+    positionsFile.AddLine(    _("MenuDbType        := \"twn\"      ; Tools: sWitch between datatypes: New datatype"        ));
+    positionsFile.AddLine(    _("MenuOldType       := \"two\"      ; Tools: sWitch between datatypes: Old datatype"          ));
+    positionsFile.AddLine(    _("AllMenus          := [\"fn\",\"fp\",\"fg\",\"sm\",\"ss\",\"se\",\"sa\",\"cc\",\"cs\",\"ce\",\"cr\",\"two\",\"twn\"]"));
     positionsFile.AddLine(    ";\n;windowrelative-positions");
     positionsFile.AddLine(    ";s* vars are screen-coordinates, TL=TopLeft, TR=TopRight, BR=BottomRight\n;");
   
@@ -867,7 +867,7 @@ void MyFrame::OnLanguage(wxCommandEvent&)
     wxArrayString   names;
     wxArrayInt      identifiers;
     GetInstalledLanguages(names, identifiers);
-    int index = wxGetSingleChoiceIndex(_("Kies een taal (en start opnieuw op)"), _("Taalselectie"), names);
+    int index = wxGetSingleChoiceIndex(_("Choose a language (and restart)"), _("Language selection"), names);
     if (index < 0) return;  // cancel pressed
 
 
@@ -877,18 +877,18 @@ void MyFrame::OnLanguage(wxCommandEvent&)
         if (m_pActivePage) m_pActivePage->BackupData();
         cfg::SetLanguage(language, names[index]);
         m_theApp.ReInitLanguage();  // can result in automatic restart!
-        MyLogMessage(_("Taalkeuze: id=%d, naam=%s"), identifiers[index], names[index]); // will be shown in new logwindow, if restarted!
+        MyLogMessage(_("Languagechoice: id=%d, name=%s"), identifiers[index], names[index]); // will be shown in new logwindow, if restarted!
     }
 }   // OnLanguage()
 
 void MyFrame::OnPrintFile(wxCommandEvent& )
 {
     AUTOTEST_BUSY("printFile");
-    wxString filename = wxFileSelector(_("Kies een bestand om te printen"));
+    wxString filename = wxFileSelector(_("Choose a file for printing"));
 
     if ( !filename.IsEmpty() )
     {
-        LogMessage(_("Afdrukken van bestand <%s>"), filename);
+        LogMessage(_("Printing file <%s>"), filename);
         prn::PrintAFile(filename);
     }
 }   // OnPrintFile()

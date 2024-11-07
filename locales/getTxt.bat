@@ -12,10 +12,17 @@ pushd .
 cd %~dp0
 
 set base=Program Files (x86)\Poedit
+set base64=Program Files\Poedit
 set pExe=Poedit.exe
 set drive=
 
 set all_drives=C:,D:,E:,F:
+
+::test first if x64 version of Poedit exists
+for %%a in (%all_drives%) do (
+  if exist "%%a\%base64%\%pExe%" set base=%base64%
+)
+
 for %%a in (%all_drives%) do (
   if exist "%%a\%base%\%pExe%" (echo Poedit     found on drive: '%%a' & set drive=%%a& goto found)
   echo Poedit not found on drive: '%%a'
@@ -40,7 +47,7 @@ echo Getting translatable text through %gt%
 :: the generated file is called '%potFile%' and is located in the current folder
 
 set errorlog=error.log
-%gt% 2>%errorlog% --sort-by-file --from-code=UTF-8 --default-domain=BridgeWx --keyword=_ --output=%potfile% --add-comments=TRANSLATORS ..\src\*.cpp ..\src\*.h
+%gt% 2>%errorlog% --no-wrap --sort-by-file --from-code=UTF-8 --default-domain=BridgeWx --keyword=_ --output=%potfile% --add-comments=TRANSLATORS ..\src\*.cpp ..\src\*.h
 if not exist %potfile% goto error
   echo %potfile% generated, starting Poedit
   call "%drive%\%base%\%pExe%"
@@ -68,8 +75,9 @@ set         gt=
 set       base=
 set       pExe=
 set      drive=
+set     base64=
 set    potfile=
 set   errorlog=
-set  all_drives=
 set  test_4dos=
+set all_drives=
 popd

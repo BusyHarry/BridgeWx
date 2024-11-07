@@ -212,8 +212,8 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Bscmake>
     <PreBuildEvent>
-      <Command>prebuild.bat $(Configuration) $(OutDir) $(wxwin)</Command>
-      <Message>create builddate.h for release and, if possible/needed, copy nl.mo and en.mo to target</Message>
+      <Command>prebuild.bat "$(Configuration)" "$(OutDir)" "$(wxwin)"</Command>
+      <Message>create builddate.h for release and, if possible/needed, copy requested *.mo to target</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -257,8 +257,8 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Bscmake>
     <PreBuildEvent>
-      <Command>prebuild.bat $(Configuration) $(OutDir) $(wxwin)</Command>
-      <Message>create builddate.h for release and, if possible/needed, copy nl.mo and en.mo to target</Message>
+      <Command>prebuild.bat "$(Configuration)" "$(OutDir)" "$(wxwin)"</Command>
+      <Message>create builddate.h for release and, if possible/needed, copy requested *.mo to target</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DLL Debug|Win32'">
@@ -302,8 +302,8 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Bscmake>
     <PreBuildEvent>
-      <Command>prebuild.bat $(Configuration) $(OutDir) $(wxwin)</Command>
-      <Message>create builddate.h for release and, if possible/needed, copy nl.mo and en.mo to target</Message>
+      <Command>prebuild.bat "$(Configuration)" "$(OutDir)" "$(wxwin)"</Command>
+      <Message>create builddate.h for release and, if possible/needed, copy requested *.mo to target</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DLL Release|Win32'">
@@ -347,8 +347,8 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Bscmake>
     <PreBuildEvent>
-      <Command>prebuild.bat $(Configuration) $(OutDir) $(wxwin)</Command>
-      <Message>create builddate.h for release and, if possible/needed, copy nl.mo and en.mo to target</Message>
+      <Command>prebuild.bat "$(Configuration)" "$(OutDir)" "$(wxwin)"</Command>
+      <Message>create builddate.h for release and, if possible/needed, copy requested *.mo to target</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -395,8 +395,8 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Bscmake>
     <PreBuildEvent>
-      <Command>prebuild.bat $(Configuration) $(OutDir) $(wxwin)</Command>
-      <Message>create builddate.h for release and, if possible/needed, copy nl.mo and en.mo to target</Message>
+      <Command>prebuild.bat "$(Configuration)" "$(OutDir)" "$(wxwin)"</Command>
+      <Message>create builddate.h for release and, if possible/needed, copy requested *.mo to target</Message>
     </PreBuildEvent>
     <Manifest>
       <EnableDpiAwareness>true</EnableDpiAwareness>
@@ -445,8 +445,8 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Bscmake>
     <PreBuildEvent>
-      <Command>prebuild.bat $(Configuration) $(OutDir) $(wxwin)</Command>
-      <Message>create builddate.h for release and, if possible/needed, copy nl.mo and en.mo to target</Message>
+      <Command>prebuild.bat "$(Configuration)" "$(OutDir)" "$(wxwin)"</Command>
+      <Message>create builddate.h for release and, if possible/needed, copy requested *.mo to target</Message>
     </PreBuildEvent>
     <Manifest>
       <EnableDpiAwareness>true</EnableDpiAwareness>
@@ -495,8 +495,8 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Bscmake>
     <PreBuildEvent>
-      <Command>prebuild.bat $(Configuration) $(OutDir) $(wxwin)</Command>
-      <Message>create builddate.h for release and, if possible/needed, copy nl.mo and en.mo to target</Message>
+      <Command>prebuild.bat "$(Configuration)" "$(OutDir)" "$(wxwin)"</Command>
+      <Message>create builddate.h for release and, if possible/needed, copy requested *.mo to target</Message>
     </PreBuildEvent>
     <Manifest>
       <EnableDpiAwareness>true</EnableDpiAwareness>
@@ -545,8 +545,8 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Bscmake>
     <PreBuildEvent>
-      <Command>prebuild.bat $(Configuration) $(OutDir) $(wxwin)</Command>
-      <Message>create builddate.h for release and, if possible/needed, copy nl.mo and en.mo to target</Message>
+      <Command>prebuild.bat "$(Configuration)" "$(OutDir)" "$(wxwin)"</Command>
+      <Message>create builddate.h for release and, if possible/needed, copy requested *.mo to target</Message>
     </PreBuildEvent>
     <Manifest>
       <EnableDpiAwareness>true</EnableDpiAwareness>

@@ -27,9 +27,9 @@ NameEditor::NameEditor(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     #define PAIR_SIZE_PIX (PAIR_SIZE_CHARS * charSize)
     #define CLUB_SIZE_PIX (CLUB_SIZE_CHARS * charSize)
     #define ID_SIZE_PIX   (ID_SIZE_CHARS   * charSize)
-    m_theGrid->SetColSize(COL_PAIRNAME, PAIR_SIZE_PIX); m_theGrid->SetColLabelValue(COL_PAIRNAME, _("paarnaam"));
-    m_theGrid->SetColSize(COL_CLUBNAME, CLUB_SIZE_PIX); m_theGrid->SetColLabelValue(COL_CLUBNAME, _("clubnaam"));
-    m_theGrid->SetColSize(COL_CLUBID  , ID_SIZE_PIX  ); m_theGrid->SetColLabelValue(COL_CLUBID,   _("club id"));
+    m_theGrid->SetColSize(COL_PAIRNAME, PAIR_SIZE_PIX); m_theGrid->SetColLabelValue(COL_PAIRNAME, _("pairname"));
+    m_theGrid->SetColSize(COL_CLUBNAME, CLUB_SIZE_PIX); m_theGrid->SetColLabelValue(COL_CLUBNAME, _("clubname"));
+    m_theGrid->SetColSize(COL_CLUBID  , ID_SIZE_PIX  ); m_theGrid->SetColLabelValue(COL_CLUBID,   _("club id" ));
 //    m_theGrid->SetColFormatNumber(COL_CLUBID);  // what does this implicate?????
 
     std::vector<MyGrid::SortMethod> methods;
@@ -39,7 +39,7 @@ NameEditor::NameEditor(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     m_theGrid->SetSortMethod(methods);          // set sort hints,  without, plain string compare is done
 
     // create command buttons
-    auto        pButtonAdd  = new wxButton(this, ID_NAMEEDIT_ADD, _("Naam toevoegen"));
+    auto        pButtonAdd  = new wxButton(this, ID_NAMEEDIT_ADD, _("Add name"));
     auto        okCancel    = CreateOkCancelButtons();
     auto        search      = CreateSearchBox();
     wxBoxSizer* hBox        = new wxBoxSizer(wxHORIZONTAL);
@@ -48,7 +48,7 @@ NameEditor::NameEditor(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     hBox->Add(okCancel  , 0, wxBOTH | wxALL, MY_BORDERSIZE);
     
     // add to layout
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Ingave/wijzigen paarnamen"));
+    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Entry/change of pair/clubnames"));
     vBox->Add(m_theGrid, 1, wxEXPAND | wxALL, MY_BORDERSIZE);
     vBox->Add(hBox,      0);   //no borders/align: already done in hBox!
     SetSizer(vBox);     // add to panel
@@ -85,7 +85,7 @@ bool NameEditor::OnCellChanging(const CellInfo& a_cellInfo)
     if (m_bIsScriptTesting)
     {
         wxString msg;
-        msg.Printf(_("NameEditor:: row %d, column %d changes from <%s> to <%s>")
+        msg.Printf(_("NameEditor: row %d, column %d changes from <%s> to <%s>")
             , a_cellInfo.row
             , a_cellInfo.column
             , a_cellInfo.oldData.c_str()
@@ -215,7 +215,7 @@ void NameEditor::AddName(const wxString& a_pairName, const wxString& a_clubName,
         m_theGrid->AppendRows(1);
         if ( a_pairName.empty() )
         {
-            m_theGrid->SetCellValue(count, COL_PAIRNAME, FMT(_("paar %d"), count + 1     ));
+            m_theGrid->SetCellValue(count, COL_PAIRNAME, FMT(_("pair %d"), count + 1     ));
         }
         else
         {
@@ -285,7 +285,7 @@ void NameEditor::DoSearch(wxString& a_theString)
 
 void NameEditor::PrintPage()
 {   // assume m_theGrid->m_vColumnSizes is initialized in constructor
-    wxString    title       = _("deelnemers lijst van ") + cfg::GetDescription();
+    wxString    title       = _("playerlist of ") + cfg::GetDescription();
     UINT        nrOfColumns = COL_NR_OF;
     m_theGrid->PrintGrid(title, nrOfColumns);
 }   // PrintPage()

@@ -75,7 +75,7 @@ bool Baseframe::OnCellChanging(const CellInfo& a_cellInfo)
     if (a_cellInfo.oldData != a_cellInfo.newData)
     {
         wxString msg;
-        msg.Printf(_("Baseframe:: rij %d, kolom %d verandert van <%s> in <%s>")
+        msg.Printf(_("Baseframe:: row %d, column %d changes from <%s> to <%s>")
                             , a_cellInfo.row
                             , a_cellInfo.column
                             , a_cellInfo.oldData
@@ -90,10 +90,10 @@ bool Baseframe::OnCellChanging(const CellInfo& a_cellInfo)
 wxBoxSizer* Baseframe::CreateOkCancelButtons()
 {
     // action buttons: keep/cancel for derived classes to use
-    auto ok = new wxButton(this, wxID_ANY, Unique(_("Overnemen")));
-    ok->SetToolTip(_("gewijzigde data opslaan"));
-    auto cancel = new wxButton(this, wxID_ANY, Unique(_("Herstel")));
-    cancel->SetToolTip(_("wijzigingen terugdraaien"));
+    auto ok = new wxButton(this, wxID_ANY, Unique(_("Save")));
+    ok->SetToolTip(_("save changed data"));
+    auto cancel = new wxButton(this, wxID_ANY, Unique(_("Undo")));
+    cancel->SetToolTip(_("undo changes"));
 
     // sizer for the default implementation of the Ok/Cancel buttons
     wxBoxSizer* pButtonOkCancelSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -153,8 +153,8 @@ wxBoxSizer* Baseframe::CreateSearchBox()
     auto hSearchBox     = new wxBoxSizer  (wxHORIZONTAL);
     m_pTxtCtrlSearchBox = new wxTextCtrl  (this, ID_BASEFRAME_SEARCH, Unique("SearchEntry"  ), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
     m_pTxtCtrlSearchBox->Clear();   // remove label-text from entry, but keep window-title for autotest...
-    auto pButton        = new wxButton    (this, ID_BASEFRAME_SEARCH, Unique(_("Zoek"     )));
-    hSearchBox->Add(      new wxStaticText(this, wxID_ANY           , _("Te zoeken tekst:")), TXT_CTRL_SIZER);
+    auto pButton        = new wxButton    (this, ID_BASEFRAME_SEARCH, Unique(_("Search"     )));
+    hSearchBox->Add(      new wxStaticText(this, wxID_ANY           , _("Text to search:")), TXT_CTRL_SIZER);
     hSearchBox->Add(m_pTxtCtrlSearchBox , 0, wxRIGHT, 20);
     hSearchBox->Add(pButton             , 0);
 
@@ -742,9 +742,9 @@ int MyMessageBox(const wxString& message, const wxString& caption, long style, c
 
     auto hButtonSizer = new wxBoxSizer( wxHORIZONTAL );             // add wanted buttons
     ADD_BUTTON_TO_MSGBOX(style, wxOK    ,_("Ok"      ), hButtonSizer, dialog)
-    ADD_BUTTON_TO_MSGBOX(style, wxYES   ,_("Ja"      ), hButtonSizer, dialog)
-    ADD_BUTTON_TO_MSGBOX(style, wxNO    ,_("Nee"     ), hButtonSizer, dialog)
-    ADD_BUTTON_TO_MSGBOX(style, wxCANCEL,_("Afbreken"), hButtonSizer, dialog)
+    ADD_BUTTON_TO_MSGBOX(style, wxYES   ,_("Yes"     ), hButtonSizer, dialog)
+    ADD_BUTTON_TO_MSGBOX(style, wxNO    ,_("No"      ), hButtonSizer, dialog)
+    ADD_BUTTON_TO_MSGBOX(style, wxCANCEL,_("Cancel"  ), hButtonSizer, dialog)
 
     wxBoxSizer *vBox = new wxBoxSizer( wxVERTICAL );
     vBox->Add(pEditSizer  , 1, wxEXPAND);

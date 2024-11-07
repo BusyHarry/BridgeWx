@@ -10,6 +10,6 @@
 
 #define __VERSION__AUTO         "x9.99"             /* simulated version in autotest: less differences in output files */
 #define __YEAR__AUTO            "2024"              /* simulated year in autotest: less differences in output files */
-#define __DATE__AUTO            _("1 januari 2024") /* simulated date in autotest: less differences in output files */
+#define __DATE__AUTO            _("januari 1 2024") /* simulated date in autotest: less differences in output files */
 #define __TIME__AUTO            "12:00:00"          /* simulated time*/
-#define __DAY__AUTO             _("maandag")        /* simulated day */
+#define __DAY__AUTO             _("monday")        /* simulated day */

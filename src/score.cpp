@@ -129,7 +129,7 @@ wxString ScoreToString(int a_score)
 
     if (a_score == SCORE_NP)
     {                 
-        return _("NG");                // not played
+        return _("NP");                // not played
     }
 
     if (abs(a_score) > MAX_REAL)
@@ -169,7 +169,7 @@ int ScoreFromString(const wxString& a_score)
     if ( 1 == wxSscanf(tmp," %i %c"  , &score , &chr)) return FORCE_INRANGE(score);                     // 'normal' score
     if ( 1 == wxSscanf(tmp," %%%u %c", &uScore, &chr)) return std::min(uScore,101U)+OFFSET_PROCENT;     // % score
     if ( 1 == wxSscanf(tmp," R%i %c" , &score , &chr)) return FORCE_INRANGE(score)+OFFSET_REAL;         // 'real' aribitrary score
-    if ( (tmp == _("NG")) || (tmp == _("NP")) )
+    if ( (tmp == _("NP")) || (tmp == ("NP")) )  // remark: one fixed "NP" and one translatable
         return SCORE_NP;
     return BAD_SCORE;   // bad score, rangecheck will get it
 }   // ScoreFromString()
@@ -268,7 +268,7 @@ static bool FindScore(int a_score, bool a_bVulnerable, bool a_bSpecial)
     bool bFound = std::binary_search(scoreInfo[index].table, scoreInfo[index].table + scoreInfo[index].count, a_score);
     if (bFound && a_bSpecial)
     {
-        wxString score = FMT(_("onverwachte/bijzondere score: %i\n\ntoch accepteren?"), a_score);
+        wxString score = FMT(_("unexpected/special score: %i\n\naccept anyway?"), a_score);
         // ^== first line 'blue' and fontsize 2* larger as second line????
         if ( wxNO == MyMessageBox( score, "???", wxYES_NO | wxICON_INFORMATION))
         {

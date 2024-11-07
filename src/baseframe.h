@@ -242,7 +242,7 @@ private:    // for validator
 // wxMessageBox has quirks: different fontsize/color if you have more lines
 int MyMessageBox(const wxString& message, const wxString& caption = ES, long style=wxOK|wxCENTER, const wxPoint& position = wxDefaultPosition);
 
-void  BusyBox(const wxString& message = _("Bezig..."), int milisecondsShow = 800, const wxPoint& position = wxDefaultPosition);
+void  BusyBox(const wxString& message = _("Busy..."), int milisecondsShow = 800, const wxPoint& position = wxDefaultPosition);
 
 class MyTextFile : public wxTextFile
 {   // wrapper around wxTextFile with buildin CP437 conversion for read/write

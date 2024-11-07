@@ -41,8 +41,8 @@ CorrectionsSession::CorrectionsSession(wxWindow* a_pParent, UINT a_pageId) :Base
     #define SIZE_PROCENT    (4 * sizeOne)                       /* just numbers 1-120   */
     #define SIZE_MP         (5 * sizeOne)                       /* like -2200           */
     m_theGrid->SetRowLabelSize(SIZE_PAIRNR_SES);
-    m_theGrid->SetColSize(COL_PAIRNAME_SESSION, SIZE_PAIR_SES   ); m_theGrid->SetColLabelValue(COL_PAIRNAME_SESSION, _("paar"     ));
-    m_theGrid->SetColSize(COL_PAIRNAME_GLOBAL , SIZE_PAIRNAME   ); m_theGrid->SetColLabelValue(COL_PAIRNAME_GLOBAL , _("paarnaam" ));
+    m_theGrid->SetColSize(COL_PAIRNAME_SESSION, SIZE_PAIR_SES   ); m_theGrid->SetColLabelValue(COL_PAIRNAME_SESSION, _("pair"     ));
+    m_theGrid->SetColSize(COL_PAIRNAME_GLOBAL , SIZE_PAIRNAME   ); m_theGrid->SetColLabelValue(COL_PAIRNAME_GLOBAL , _("pairname" ));
     m_theGrid->SetColSize(COL_COR_PROCENT     , SIZE_PROCENT    ); m_theGrid->SetColLabelValue(COL_COR_PROCENT     ,   "%"         );
     m_theGrid->SetColSize(COL_COR_MP          , SIZE_MP         ); m_theGrid->SetColLabelValue(COL_COR_MP          , _("mp"       ));
     m_theGrid->SetColSize(COL_COR_MAX         , SIZE_MP         ); m_theGrid->SetColLabelValue(COL_COR_MAX         , _("max"      ));
@@ -64,7 +64,7 @@ CorrectionsSession::CorrectionsSession(wxWindow* a_pParent, UINT a_pageId) :Base
     hBoxSearchOk->Add(okCancel  , 1, wxBOTH | wxALL, MY_BORDERSIZE);
 
     // add to layout
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Ingave zitting correcties"));
+    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Entry of session corrections"));
     vBox->Add(m_theGrid         , 1, wxEXPAND | wxALL, MY_BORDERSIZE);
     vBox->Add(hBoxSearchOk      , 0);
     SetSizer(vBox);     // add to panel
@@ -218,7 +218,7 @@ void CorrectionsSession::RefreshInfo()
     UINT sessionPairs = cfg::GetNrOfSessionPairs();
     if (sessionPairs == 0)
     {
-        MyMessageBox(_("Nog geen sessie gegevens.."));
+        MyMessageBox(_("No session data yet.."));
         return;
     }
 
@@ -256,7 +256,7 @@ void CorrectionsSession::RefreshInfo()
 
     Layout();
     static wxString explanation;    // MUST be initialized dynamically: translation
-    explanation = _("ZITTING KORREKTIES in hele % of mp (matchpunten), 0 of leeg: verwijder korrektie");
+    explanation = _("SESSION CORRECTIONS in full % or mp (matchpoints), 0 or empty: remove correction");
     SendEvent2Mainframe(this, ID_STATUSBAR_SETTEXT, &explanation);
 }   // RefreshInfo()
 
@@ -279,7 +279,7 @@ void CorrectionsSession::DoSearch(wxString& a_string)
 void CorrectionsSession::PrintPage()
 {
     UINT session = cfg::GetActiveSession();
-    wxString sSession = session == 0 ? "" : FMT(_(", zitting %u"), session);
-    wxString title = FMT(_("Overzicht van de zittingcorrecties voor '%s'%s"), cfg::GetDescription(), sSession);
+    wxString sSession = session == 0 ? "" : FMT(_(", session %u"), session);
+    wxString title = FMT(_("Overview of the sessioncorrections for '%s'%s"), cfg::GetDescription(), sSession);
     m_theGrid->PrintGrid(title, m_theGrid->GetNumberCols(), COL_COR_PROCENT);
 }   // PrintPage()

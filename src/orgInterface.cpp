@@ -301,8 +301,8 @@ namespace  org
 
         if (bError)
         {
-            LogError(_("groepaantal: %u, schema: <%s>"), (UINT)groupData.size(), a_schemaString);
-            MyMessageBox(a_schemaString, _("fout in schema/groepletters"), wxOK | wxICON_INFORMATION);
+            LogError(_("groupcount: %u, schema: <%s>"), (UINT)groupData.size(), a_schemaString);
+            MyMessageBox(a_schemaString, _("error in schema/groupchars"), wxOK | wxICON_INFORMATION);
         }
         else
         {   //takeover data if all ok
@@ -375,7 +375,7 @@ namespace  org
         fn.Open( pairNames, "wb");
         if (!fn.IsOpened())
         {
-            MyMessageBox(_("Kan bestand niet openen om te schrijven: ") + pairNames);
+            MyMessageBox(_("Cannot open file for write: ") + pairNames);
             return false;
         }
 
@@ -411,7 +411,7 @@ namespace  org
 
         if (iErrors)
         {
-            MyMessageBox(_("Fout(en) bij schrijven naar bestand: ") + pairNames);
+            MyMessageBox(_("Error(s) at writing to file: ") + pairNames);
         }
 
         fn.Close();
@@ -576,7 +576,7 @@ namespace  org
             int count = wxSscanf(buf, format.wx_str(), &id, &name);
             if ( (count != 2) || (id < 1) || (id > MAX_CLUBNAMES3) || (name[0] == 0) )
             {
-                MyMessageBox(FMT(_("foute syntax clubnaam: <%s>"),buf));
+                MyMessageBox(FMT(_("wrong syntax clubname: <%s>"),buf));
                 continue;    // ignore this entry
             }
 
@@ -595,9 +595,9 @@ namespace  org
         tf.Open(fileName, wxCSConv(wxFONTENCODING_CP437));
 
         wxString formatOfFile = FMT(
-            _( "; definitie van de clubnamen en hun nummer.\n"
-               "; syntax: <club nr> , <clubnaam>\n"
-               "; lengte clubnaam maximaal %u karakters."
+            _( "; definition of the clubnames and there id.\n"
+               "; syntax: <club nr> , <clubname>\n"
+               "; length of clubname maximum %u characters."
             )
             , MAX_CLUB_SIZE3);
         tf.AddLine(formatOfFile);
@@ -662,7 +662,7 @@ namespace  org
         score::Scores      gamesetdata[MAX_PAIRS3/2+1];
         wxString    scoreFile   = _ConstructFilename( cfg::EXT_SESSION_SCORE );
         bool        bError      = false;
-        wxString    errorMsg    = _(": leesfout");
+        wxString    errorMsg    = _(": readerror");
 
         a_scoreData.clear();                    // remove old data
         a_scoreData.resize(MAX_GAMES3+1);       //  and assure room voor all games. We depend on the entries of this vector!
@@ -700,7 +700,7 @@ namespace  org
                     }
                 }
                 break;
-                default: bError = true; errorMsg = _(": onbekend type");
+                default: bError = true; errorMsg = _(": unknown type");
             }
 
         error:
@@ -709,7 +709,7 @@ namespace  org
                 // on error: keep what we could read.
                 // svGameSetData.clear();
                 // svGameSetData.resize(MAX_GAMES3+1); //  and assure room voor all games. We depend on the entries of this vector!
-                MyMessageBox(scoreFile+errorMsg, _("Probleem bij inlezen score-file"));
+                MyMessageBox(scoreFile+errorMsg, _("Problem reading score-file"));
             }
 
             if (fp) (void)fclose(fp);
@@ -725,7 +725,7 @@ namespace  org
         FILE* fp = fopen(scoreFile, "wb");
         if (fp == nullptr)
         {
-            MyMessageBox(scoreFile + _(": openfout"), _("Probleem bij openen score-file"));
+            MyMessageBox(scoreFile + _(": open error"), _("Problem opening score-file"));
             return false;
         }
 
@@ -766,7 +766,7 @@ namespace  org
         (void)fclose(fp);
         if (bError)
         {
-            MyMessageBox(scoreFile + _(": schrijffout"), _("Probleem bij wegschrijven score-file"));
+            MyMessageBox(scoreFile + _(": write error"), _("Problem writing score-file"));
         }
 
         return !bError;
@@ -838,13 +838,13 @@ namespace  org
 
         if (!file.IsOk())
         {
-            wxString msg = FMT(_("Kan korrecties niet wegschrijven naar: %s"), correctionFile);
+            wxString msg = FMT(_("Unable to write corrections to: %s"), correctionFile);
             MyLogError(msg);
             MyMessageBox(msg);
             return false;
         }
 
-        file.AddLine(_(";score.2 glbpaar bonus.2 spellen paarnaam"));    // content description/spec
+        file.AddLine(_(";score.2 glbpair bonus.2 games   pairname"));    // content description/spec
         for (const auto& it : a_correctionsEnd)
         {
             wxString correction = FMT("%+6s   %3d     %5s   s%-4u   %-s"
@@ -940,13 +940,13 @@ namespace  org
 
         if (!file.IsOk())
         {
-            wxString msg = FMT(_("Kan korrecties niet wegschrijven naar: %s"), correctionFile);
+            wxString msg = FMT(_("Unable to write corrections to: %s"), correctionFile);
             MyLogError(msg);
             MyMessageBox(msg);
             return false;
         }
 
-        file.AddLine(_(";<correctie><type> <sessie paarnr> <extra.1> <max extra> <paarnaam>"));    // content description/spec
+        file.AddLine(_(";<correction><type> <session pairnr> <extra.1> <max extra> <pairname>"));    // content description/spec
         for (const auto& it : a_correctionsSession)
         {
             wxString correction = FMT("%+5i%c%20u%15s%12i     %s"
@@ -1010,7 +1010,7 @@ namespace  org
     {   // write and read: different params!
         MyTextFile file(_ConstructFilename(cfg::EXT_SESSION_RESULT), MyTextFile::WRITE);
         if (!file.IsOk()) return false;
-        file.AddLine(_(";score 'glb paar' s<spellen> naam"));
+        file.AddLine(_(";score 'glb pair' s<games>   name"));
         for (const auto& it : a_mSessionResult)              // save score of all pairs
         {
             wxString tmp;

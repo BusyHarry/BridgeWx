@@ -1,7 +1,10 @@
 @echo off
 ::you may use any other compare-tool!
-
-set src="%~dp0\ref_list"
+:: if a parameter is present, its interpreted as a language-type
+:: default: en
+set language=en
+if not [%1] == [] set language=%1
+set src="%~dp0\ref_list.%language%"
 set dst="%~dp0\work\list"
 
 where winmerge >nul 2>&1
@@ -14,3 +17,4 @@ fc %src% %dst% & goto end
 :end
 set src=
 set dst=
+set language=

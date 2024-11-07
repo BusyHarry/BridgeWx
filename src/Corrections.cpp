@@ -70,7 +70,7 @@ namespace cor
             || (a_correctionSession.correction > MAX_CORRECTION)
            )
         {
-            wxString msg = FMT(_("Ongeldige zitting-correctie data <%s>, wordt niet meegenomen."), a_input);
+            wxString msg = FMT(_("Invalid session-correction data <%s>, will be ignored."), a_input);
             MyLogError("%s",a_input);
             MyMessageBox(msg);
             return false;
@@ -104,11 +104,11 @@ namespace cor
             || (a_ce.games > cfg:: MAX_GAMES ) //cfg::GetNrOfGames())
            )
         {
-            wxString msg  = FMT(_("Ongeldige totaal-correctie/uitslag data <%s> wordt niet meegenomen.\n"), a_input);
+            wxString msg  = FMT(_("Invalid total-correction/end data <%s> will be ignored.\n"), a_input);
                      msg += FMT(_(" score  : %ld\n"), a_ce.score);
                      msg += FMT(_(" bonus  : %ld\n"), a_ce.bonus);
-                     msg += FMT(_(" GlPaar : %u\n") , a_globalPair);
-                     msg += FMT(_(" spellen: %u, cfg::max: %u"), a_ce.games, cfg::MAX_GAMES); //cfg::GetNrOfGames());
+                     msg += FMT(_(" GlPair : %u\n" ), a_globalPair);
+                     msg += FMT(_(" games: %u, cfg::max: %u"), a_ce.games, cfg::MAX_GAMES); //cfg::GetNrOfGames());
                      MyLogError("%s", msg);
             MyMessageBox(msg);
             return false;

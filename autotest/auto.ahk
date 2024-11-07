@@ -32,7 +32,7 @@ if (!FileExist(BridgeWxExe))
 ;generated mousepositions/variables/labels
 #Include ".\work\AutoTest.pos"      ;include relative to script-location and can NOT be a variable!
 
-BridgewxTitle     := WinTitle   ;"Bridge rekenprogramma"
+BridgewxTitle     := WinTitle   ;"'Bridge' calculation program"
 ListFile          := AutoTestPath "list"
 VS_DEBUG          := false ;true   ; run under debugger: does not restart app
 
@@ -562,8 +562,8 @@ InitMatchS1()
     ;ControlSetText("1", Match_Session_L)  ; session 1
     PrintPage()
   MenuSelect(MenuSetupMatch)
-    SetText_L(SetupGame_Description_L, "<auto-test, zitting 1>")
-    ;ControlSetText("<auto-test, zitting 1>", SetupGame_Description_L)
+    SetText_L(SetupGame_Description_L, "<auto-test, session 1>")
+    ;ControlSetText("<auto-test, session 1>", SetupGame_Description_L)
     SetCheckBoxValue_L(SetupGame_Neuberg_L,1)
     PrintPage()
 } ; InitMatchS1()
@@ -573,7 +573,7 @@ InitMatchS2()
   MenuSelect(MenuNewMatch)
     SetText_L(Match_Session_L,"2")  ; session 2
   MenuSelect(MenuSetupMatch)
-    SetText_L(SetupGame_Description_L, "<auto-test, zitting 2>")
+    SetText_L(SetupGame_Description_L, "<auto-test, session 2>")
     SetCheckBoxValue_L(SetupGame_Neuberg_L,0) ; second session: NO neuberg
 } ; InitMatchS2()
 
@@ -582,7 +582,7 @@ InitMatchS3()
   MenuSelect(MenuNewMatch)
     SetText_L(Match_Session_L,"3")  ; session 3
   MenuSelect(MenuSetupMatch)
-    SetText_L(SetupGame_Description_L, "<auto-test, zitting 3>")
+    SetText_L(SetupGame_Description_L, "<auto-test, session 3>")
     SetCheckBoxValue_L(SetupGame_Neuberg_L,0) ; second session: NO neuberg
 } ; InitMatchS3()
 
@@ -617,7 +617,7 @@ InitNamesS1()
   MenuSelect(MenuNamesInit)
     AddName(NrOfPairs+1)
     GridPosition(NameEditor_Grid_L,5,1)
-    AddText_EW("gewijzigd paar 5") ;SendEvent "gewijzigd paar 5{ENTER}" ; change name of pair 5
+    AddText_EW("changed pair 5") ;SendEvent "changed pair 5{ENTER}" ; change name of pair 5
     PrintPage()
   MenuSelect(MenuNamesAssign)
     ButtonClick_L(AssignNames_OnOriginal_L)

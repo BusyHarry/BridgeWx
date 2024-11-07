@@ -1,5 +1,13 @@
 # Releasenotes
 
+#V10.2.0  November 8, 2024:
+- all texts in sources now in english
+- translation for dutch added
+- changes in batch-files to cover the language-change
+- autotest:
+  - scripts now also have texts in english
+  - reference files now for english and dutch
+
 #V10.1.0  October 25, 2024: bugfixes/extensions/cleanup
 
 #New Features

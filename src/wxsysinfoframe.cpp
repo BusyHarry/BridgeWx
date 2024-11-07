@@ -139,7 +139,7 @@ long SysInfoListView::AppendItemWithData(const wxString& label, long data)
     const long itemIndex = InsertItem(GetItemCount(), label);
 
     if ( itemIndex == -1 )
-        wxLogError(_("Could not insert item with label '%s'"), label);
+        wxLogError("Could not insert item with label '%s'", label);
     else
         SetItemData(itemIndex, data);
 
@@ -156,7 +156,7 @@ wxArrayString SysInfoListView::GetNameAndValueValues(int nameColumnIndex, int va
 
     int nameWidth = COLUMN_WIDTH(nameColumnIndex);
     // column headings
-    values.push_back(wxString::Format(wxS("%-*s%*s%s"), nameWidth, _("Name"), (int)separator.Len() ,"", _("Value")));
+    values.push_back(wxString::Format(wxS("%-*s%*s%s"), nameWidth, "Name", (int)separator.Len() ,"", "Value"));
 
     // dump values
     for ( int i = 0; i < itemCount; ++i )
@@ -225,9 +225,9 @@ protected:
 SystemSettingView::SystemSettingView(wxWindow* parent)
     : SysInfoListView(parent)
 {
-    InsertColumn(Column_Name, _("Name"));
-    InsertColumn(Column_Value, _("Value"));
-    InsertColumn(Column_Description, _("Description"));
+    InsertColumn(Column_Name, "Name");
+    InsertColumn(Column_Value, "Value");
+    InsertColumn(Column_Description, "Description");
 }
 
 
@@ -393,14 +393,14 @@ void SystemColourView::DoUpdateValues()
     {
          const wxColour colour = wxSystemSettings::GetColour(s_colourInfoArray[GetItemData(i)].index);
          const int imageIndex = m_imageList->Add(CreateColourBitmap(colour.IsOk() ? colour : GetColourBitmapOutlineColour(), size));
-         wxString colourValue = _("<Invalid>");
+         wxString colourValue = "<Invalid>";
 
          if ( colour.IsOk() )
          {
              colourValue = colour.GetAsString(wxC2S_CSS_SYNTAX);
 
              if ( !colour.IsSolid() )
-                 colourValue += _(", not solid");
+                 colourValue += ", not solid";
          }
 
          SetItem(i, Column_Value, colourValue, imageIndex);
@@ -415,7 +415,7 @@ void SystemColourView::DoShowDetailedInformation(long listItemIndex) const
 
     if ( !colour.IsOk() )
     {
-        wxLogError(_("Invalid colour for \"%s\"."), valueName);
+        wxLogError("Invalid colour for \"%s\".", valueName);
         return;
     }
 
@@ -423,7 +423,7 @@ void SystemColourView::DoShowDetailedInformation(long listItemIndex) const
 
     colourData.SetCustomColour(0, colour);
 
-    wxGetColourFromUser(GetParent(), colour, wxString::Format(_("Viewing %s"), valueName), &colourData);
+    wxGetColourFromUser(GetParent(), colour, wxString::Format("Viewing %s", valueName), &colourData);
 }
 
 wxBitmap SystemColourView::CreateColourBitmap(const wxColour& colour, const wxSize& size)
@@ -559,7 +559,7 @@ void SystemFontView::DoUpdateValues()
     for ( int i = 0; i < itemCount; ++i )
     {
          const wxFont font = wxSystemSettings::GetFont(s_fontInfoArray[GetItemData(i)].index);
-         wxString fontValue = _("<Invalid>");
+         wxString fontValue = "<Invalid>";
 
          if ( font.IsOk() )
               fontValue = font.GetNativeFontInfoUserDesc();
@@ -577,11 +577,11 @@ void SystemFontView::DoShowDetailedInformation(long listItemIndex) const
 
     if ( !font.IsOk() )
     {
-        wxLogError(_("Invalid font for \"%s\"."), valueName);
+        wxLogError("Invalid font for \"%s\".", valueName);
         return;
     }
 
-    wxGetFontFromUser(GetParent(), font, wxString::Format(_("Viewing %s"), valueName));
+    wxGetFontFromUser(GetParent(), font, wxString::Format("Viewing %s", valueName));
 }
 
 
@@ -787,22 +787,22 @@ private:
 DisplaysView::DisplaysView(wxWindow* parent)
     : SysInfoListView(parent)
 {
-    AppendColumn(_("Parameter"));
+    AppendColumn("Parameter");
 
-    AppendItemWithData(_("Name"), Param_Name);
+    AppendItemWithData("Name", Param_Name);
 #ifdef __WXMSW__
-    AppendItemWithData(_("Friendly Name"), Param_FriendlyName);
+    AppendItemWithData("Friendly Name", Param_FriendlyName);
 #endif
-    AppendItemWithData(_("Is Primary"), Param_IsPrimary);
-    AppendItemWithData(_("Resolution"), Param_Resolution);
-    AppendItemWithData(_("Bits Per Pixel"), Param_BPP);
-    AppendItemWithData(_("Refresh Frequency (Hz)"), Param_Frequency);
-    AppendItemWithData(_("Geometry Coordinates (left, top; right, bottom)"), Param_GeometryCoords);
-    AppendItemWithData(_("Geometry Size"), Param_GeometrySize);
-    AppendItemWithData(_("Client Area Coordinates (left, top; right, bottom)"), Param_ClientAreaCoords);
-    AppendItemWithData(_("Client Area Size"), Param_ClientAreaSize);
-    AppendItemWithData(_("Pixels Per Inch"), Param_PPI);
-    AppendItemWithData(_("Has This Window"), Param_HasThisWindow);
+    AppendItemWithData("Is Primary", Param_IsPrimary);
+    AppendItemWithData("Resolution", Param_Resolution);
+    AppendItemWithData("Bits Per Pixel", Param_BPP);
+    AppendItemWithData("Refresh Frequency (Hz)", Param_Frequency);
+    AppendItemWithData("Geometry Coordinates (left, top; right, bottom)", Param_GeometryCoords);
+    AppendItemWithData("Geometry Size", Param_GeometrySize);
+    AppendItemWithData("Client Area Coordinates (left, top; right, bottom)", Param_ClientAreaCoords);
+    AppendItemWithData("Client Area Size", Param_ClientAreaSize);
+    AppendItemWithData("Pixels Per Inch", Param_PPI);
+    AppendItemWithData("Has This Window", Param_HasThisWindow);
 
     UpdateValues();
 }
@@ -883,11 +883,11 @@ void DisplaysView::DoUpdateValues()
                     if ( friendlyNames.size() == displayCount )
                         value = friendlyNames[displayIndex];
                     else
-                        value = _("N/A");
+                        value = "N/A";
                     break;
 #endif // #ifdef __WXMSW__
                 case Param_IsPrimary:
-                    value =  display.IsPrimary() ? _("Yes") : _("No");
+                    value =  display.IsPrimary() ? "Yes" : "No";
                     break;
                 case Param_Resolution:
                     value = wxSizeTowxString(wxSize(videoMode.GetWidth(), videoMode.GetHeight()));
@@ -914,7 +914,7 @@ void DisplaysView::DoUpdateValues()
                     value = wxSizeTowxString(display.GetPPI());
                     break;
                 case Param_HasThisWindow:
-                    value = static_cast<size_t>(displayForThisWindow) == displayIndex ? _("Yes") : _("No");
+                    value = static_cast<size_t>(displayForThisWindow) == displayIndex ? "Yes" : "No";
                     break;
                 default:
                     wxFAIL;
@@ -983,8 +983,8 @@ private:
 SystemOptionsView::SystemOptionsView(wxWindow* parent)
     : SysInfoListView(parent)
 {
-    InsertColumn(Column_Name, _("Name"));
-    InsertColumn(Column_Value, _("Value"));
+    InsertColumn(Column_Name, "Name");
+    InsertColumn(Column_Value, "Value");
 
     AppendItemWithData(wxS("exit-on-assert"), Param_ExitOnAssert);
 
@@ -1021,7 +1021,7 @@ wxString SysOptToString(const wxString& name)
     if ( wxSystemOptions::HasOption(name) )
         return wxSystemOptions::GetOption(name);
 
-    return _("<Not Set>");
+    return "<Not Set>";
 }
 
 void SystemOptionsView::DoUpdateValues()
@@ -1175,8 +1175,8 @@ private:
 StandardPathsView::StandardPathsView(wxWindow* parent)
     : SysInfoListView(parent)
 {
-    InsertColumn(Column_Name, _("Name"));
-    InsertColumn(Column_Value, _("Value"));
+    InsertColumn(Column_Name, "Name");
+    InsertColumn(Column_Value, "Value");
 
     AppendItemWithData("ExecutablePath", Param_ExecutablePath);
     AppendItemWithData("AppDocumentsDir", Param_AppDocumentsDir);
@@ -1408,8 +1408,8 @@ private:
 EnvironmentVariablesView::EnvironmentVariablesView(wxWindow* parent)
     : SysInfoListView(parent)
 {
-    InsertColumn(Column_Name, _("Name"));
-    InsertColumn(Column_Value, _("Value"));
+    InsertColumn(Column_Name, "Name");
+    InsertColumn(Column_Value, "Value");
 
     UpdateValues();
 }
@@ -1422,7 +1422,7 @@ void EnvironmentVariablesView::DoUpdateValues()
 
     if ( !wxGetEnvMap(&variables) )
     {
-        wxLogError(_("Could not retrieve system environment variables."));
+        wxLogError("Could not retrieve system environment variables.");
         return;
     }
 
@@ -1627,16 +1627,16 @@ wxString MSWDPIAwarenessHelper::GetThisProcessDPIAwarenessStr()
     switch ( awareness )
     {
         case ProcessDPIUnaware:
-            result = _("DPI Unaware");
+            result = "DPI Unaware";
             break;
         case ProcessSystemDPIAware:
-            result = _("System DPI Aware");
+            result = "System DPI Aware";
             break;
         case ProcessPerMonitorDPIAware:
-            result = _("Per Monitor DPI Aware");
+            result = "Per Monitor DPI Aware";
             break;
         default:
-            result = _("<Not Applicable / Unknown>");
+            result = "<Not Applicable / Unknown>";
     }
 
     return result;
@@ -1746,22 +1746,22 @@ wxString MSWDPIAwarenessHelper::GetThreadDPIAwarenessContextStr()
     switch ( context )
     {
         case DPIAwarenessContextUnaware:
-            result = _("DPI Unaware");
+            result = "DPI Unaware";
             break;
         case DPIAwarenessContextSystemAware:
-            result = _("System DPI Aware");
+            result = "System DPI Aware";
             break;
         case DPIAwarenessContextPerMonitorAware:
-            result = _("Per Monitor DPI Aware");
+            result = "Per Monitor DPI Aware";
             break;
         case DPIAwarenessContextPerMonitorAwareV2:
-            result = _("Per Monitor DPI Aware V2");
+            result = "Per Monitor DPI Aware V2";
             break;
         case DPIAwarenessContextUnawareGdiscaled:
-            result = _("DPI Unaware GDI Scaled");
+            result = "DPI Unaware GDI Scaled";
             break;
         default:
-            result = _("<Not Applicable / Unknown>");
+            result = "<Not Applicable / Unknown>";
     }
 
     return result;
@@ -1814,7 +1814,7 @@ wxString GetThemeName()
             if ( ::SystemParametersInfo(SPI_GETHIGHCONTRAST, sizeof(hc), &hc, 0) )
             {
                 if ( (hc.dwFlags & HCF_HIGHCONTRASTON) == HCF_HIGHCONTRASTON )
-                    name += _(" (High Contrast)");
+                    name += " (High Contrast)";
             }
         }
     }
@@ -1840,67 +1840,67 @@ MiscellaneousView::~MiscellaneousView()
 MiscellaneousView::MiscellaneousView(wxWindow* parent)
     : SysInfoListView(parent)
 {
-    InsertColumn(Column_Name, _("Name"));
-    InsertColumn(Column_Value, _("Value"));
+    InsertColumn(Column_Name, "Name");
+    InsertColumn(Column_Value, "Value");
 
-    AppendItemWithData(_("App Name"), Param_AppName);
-    AppendItemWithData(_("App Display Name"), Param_AppDisplayName);
-    AppendItemWithData(_("App Vendor Name"), Param_AppVendorName);
-    AppendItemWithData(_("App Vendor Display Name"), Param_AppVendorDisplayName);
-    AppendItemWithData(_("App Class Name"), Param_AppClassName);
-    AppendItemWithData(_("App HasStderr"), Param_AppHasStderr);
-    AppendItemWithData(_("64-bit Process"), Param_IsProcess64bit);
+    AppendItemWithData("App Name", Param_AppName);
+    AppendItemWithData("App Display Name", Param_AppDisplayName);
+    AppendItemWithData("App Vendor Name", Param_AppVendorName);
+    AppendItemWithData("App Vendor Display Name", Param_AppVendorDisplayName);
+    AppendItemWithData("App Class Name", Param_AppClassName);
+    AppendItemWithData("App HasStderr", Param_AppHasStderr);
+    AppendItemWithData("64-bit Process", Param_IsProcess64bit);
 #ifdef __WXMSW__
-    AppendItemWithData(_("Is <wx/wx.rc> Embedded"), Param_wxRCEmbedded);
+    AppendItemWithData("Is <wx/wx.rc> Embedded", Param_wxRCEmbedded);
 #endif // #ifdef __WXMSW__
 #ifdef __UNIX__
-    AppendItemWithData(_("Unix Desktop Environment"), Param_UnixDesktopEnvironment);
+    AppendItemWithData("Unix Desktop Environment", Param_UnixDesktopEnvironment);
 #endif // #ifdef __UNIX__
-    AppendItemWithData(_("Theme Name"), Param_ThemeName);
+    AppendItemWithData("Theme Name", Param_ThemeName);
 #if wxCHECK_VERSION(3, 1, 3)
-    AppendItemWithData(_("System Appearance Name"), Param_SystemAppearanceName);
-    AppendItemWithData(_("System Appearance IsDark"), Param_SystemAppearanceIsDark);
+    AppendItemWithData("System Appearance Name", Param_SystemAppearanceName);
+    AppendItemWithData("System Appearance IsDark", Param_SystemAppearanceIsDark);
 #endif
 
 #if defined(__WXMSW__) && wxCHECK_VERSION(3, 3, 0)
-    AppendItemWithData(_("System Appearance IsSystemDark"), Param_SystemAppearanceIsSystemDark);
-    AppendItemWithData(_("System Appearance AreAppsDark"), Param_SystemAppearanceAreAppsDark);
+    AppendItemWithData("System Appearance IsSystemDark", Param_SystemAppearanceIsSystemDark);
+    AppendItemWithData("System Appearance AreAppsDark", Param_SystemAppearanceAreAppsDark);
 #endif //#if defined(__WXMSW__) && wxCHECK_VERSION(3, 3, 0)
 
 #ifdef __WXMSW__
-    AppendItemWithData(_("ComCtl32.dll Version"), Param_ComCtl32Version);
-    AppendItemWithData(_("GDI Object Count"), Param_GDIObjectCount);
-    AppendItemWithData(_("User Object Count"), Param_UserObjectCount);
-    AppendItemWithData(_("Is Process DPI Aware"), Param_IsProcessDPIAware);
-    AppendItemWithData(_("Process DPI Awareness"), Param_ProcessDPIAwareness);
-    AppendItemWithData(_("Thread DPI Awareness Context"), Param_ThreadDPIAwarenessContext);
-    AppendItemWithData(_("System DPI for Process"), Param_ProcessSystemDPI);
-    AppendItemWithData(_("DPI for This Window"), Param_WindowDPI);
+    AppendItemWithData("ComCtl32.dll Version", Param_ComCtl32Version);
+    AppendItemWithData("GDI Object Count", Param_GDIObjectCount);
+    AppendItemWithData("User Object Count", Param_UserObjectCount);
+    AppendItemWithData("Is Process DPI Aware", Param_IsProcessDPIAware);
+    AppendItemWithData("Process DPI Awareness", Param_ProcessDPIAwareness);
+    AppendItemWithData("Thread DPI Awareness Context", Param_ThreadDPIAwarenessContext);
+    AppendItemWithData("System DPI for Process", Param_ProcessSystemDPI);
+    AppendItemWithData("DPI for This Window", Param_WindowDPI);
 #endif // #ifdef __WXMSW__
 
-    AppendItemWithData(_("Window Content Scale Factor"), Param_WindowContentScaleFactor);
-    AppendItemWithData(_("Path Separator"), Param_PathSeparator);
-    AppendItemWithData(_("User Id"), Param_UserId);
-    AppendItemWithData(_("User Name"), Param_UserName);
-    AppendItemWithData(_("System Encoding"), Param_SystemEncodingName);
-    AppendItemWithData(_("System Language"), Param_SystemLanguage);
+    AppendItemWithData("Window Content Scale Factor", Param_WindowContentScaleFactor);
+    AppendItemWithData("Path Separator", Param_PathSeparator);
+    AppendItemWithData("User Id", Param_UserId);
+    AppendItemWithData("User Name", Param_UserName);
+    AppendItemWithData("System Encoding", Param_SystemEncodingName);
+    AppendItemWithData("System Language", Param_SystemLanguage);
 #if wxCHECK_VERSION(3, 1, 6)
-    AppendItemWithData(_("UI Locale Name"), Param_UILocaleName);
+    AppendItemWithData("UI Locale Name", Param_UILocaleName);
 #endif
-    AppendItemWithData(_("Host Name"), Param_HostName);
-    AppendItemWithData(_("Full Host Name"), Param_FullHostName);
-    AppendItemWithData(_("OS Description"), Param_OSDescription);
-    AppendItemWithData(_("OS Version"), Param_OSVersion);
+    AppendItemWithData("Host Name", Param_HostName);
+    AppendItemWithData("Full Host Name", Param_FullHostName);
+    AppendItemWithData("OS Description", Param_OSDescription);
+    AppendItemWithData("OS Version", Param_OSVersion);
 #ifdef __LINUX__
-    AppendItemWithData(_("Linux Distribution Info"), Param_LinuxDistributionInfo);
+    AppendItemWithData("Linux Distribution Info", Param_LinuxDistributionInfo);
 #endif // #ifdef __LINUX__
-    AppendItemWithData(_("OS Directory"), Param_OSDirectory);
+    AppendItemWithData("OS Directory", Param_OSDirectory);
 #if wxCHECK_VERSION(3, 1, 5)
-    AppendItemWithData(_("CPU Architecture Name"), Param_CPUArchitectureName);
+    AppendItemWithData("CPU Architecture Name", Param_CPUArchitectureName);
 #endif
-    AppendItemWithData(_("64-bit Platform"), Param_IsPlatform64Bit);
-    AppendItemWithData(_("CPU Count"), Param_CPUCount);
-    AppendItemWithData(_("Little Endian"), Param_IsPlatformLittleEndian);
+    AppendItemWithData("64-bit Platform", Param_IsPlatform64Bit);
+    AppendItemWithData("CPU Count", Param_CPUCount);
+    AppendItemWithData("Little Endian", Param_IsPlatformLittleEndian);
 
     Bind(wxEVT_THREAD, &MiscellaneousView::OnObtainFullHostNameThread, this);
 
@@ -1951,10 +1951,10 @@ void MiscellaneousView::DoUpdateValues()
             case Param_AppVendorName:             value = appInstance->GetVendorName(); break;
             case Param_AppVendorDisplayName:      value = appInstance->GetVendorDisplayName(); break;
             case Param_AppClassName:              value = appInstance->GetClassName(); break;
-            case Param_AppHasStderr:              value = appTraits->HasStderr() ? _("Yes") : _("No"); break;
-            case Param_IsProcess64bit:            value = sizeof(void*) == 8 ? _("Yes") : _("No"); break;
+            case Param_AppHasStderr:              value = appTraits->HasStderr() ? "Yes" : "No"; break;
+            case Param_IsProcess64bit:            value = sizeof(void*) == 8 ? "Yes" : "No"; break;
 #ifdef __WXMSW__
-            case Param_wxRCEmbedded:              value = wxRCEmbedded ? _("Yes") : _("No"); break;
+            case Param_wxRCEmbedded:              value = wxRCEmbedded ? "Yes" : "No"; break;
 #endif // #ifdef __WXMSW__
 #ifdef __UNIX__
             case Param_UnixDesktopEnvironment:    value = appTraits->GetDesktopEnvironment(); break;
@@ -1963,19 +1963,19 @@ void MiscellaneousView::DoUpdateValues()
             case Param_ThemeName:                 value = GetThemeName(); break;
 #if wxCHECK_VERSION(3, 1, 3)
             case Param_SystemAppearanceName:      value = systemAppearance.GetName(); break;
-            case Param_SystemAppearanceIsDark:    value = systemAppearance.IsDark() ? _("Yes") : _("No"); break;
+            case Param_SystemAppearanceIsDark:    value = systemAppearance.IsDark() ? "Yes" : "No"; break;
 #endif
 
 #if defined(__WXMSW__) && wxCHECK_VERSION(3, 3, 0)
-            case Param_SystemAppearanceIsSystemDark: value = systemAppearance.IsSystemDark() ? _("Yes") : _("No"); break;
-            case Param_SystemAppearanceAreAppsDark:  value = systemAppearance.AreAppsDark() ? _("Yes") : _("No"); break;
+            case Param_SystemAppearanceIsSystemDark: value = systemAppearance.IsSystemDark() ? "Yes" : "No"; break;
+            case Param_SystemAppearanceAreAppsDark:  value = systemAppearance.AreAppsDark() ? "Yes" : "No"; break;
 #endif //#if defined(__WXMSW__) && wxCHECK_VERSION(3, 3, 0)
 
 #ifdef __WXMSW__
             case Param_ComCtl32Version:           value.Printf("%d", wxApp::GetComCtl32Version()); break;
-            case Param_GDIObjectCount:            value = GDIObjectCount ? wxString::Format("%lu", GDIObjectCount) : _("N/A"); break;
-            case Param_UserObjectCount:           value = UserObjectCount ? wxString::Format("%lu", UserObjectCount) : _("N/A"); break;
-            case Param_IsProcessDPIAware:         value = MSWDPIAwarenessHelper::IsThisProcessDPIAware() ? _("Yes") : _("No"); break;
+            case Param_GDIObjectCount:            value = GDIObjectCount ? wxString::Format("%lu", GDIObjectCount) : "N/A"; break;
+            case Param_UserObjectCount:           value = UserObjectCount ? wxString::Format("%lu", UserObjectCount) : "N/A"; break;
+            case Param_IsProcessDPIAware:         value = MSWDPIAwarenessHelper::IsThisProcessDPIAware() ? "Yes" : "No"; break;
             case Param_ProcessDPIAwareness:       value = MSWDPIAwarenessHelper::GetThisProcessDPIAwarenessStr(); break;
             case Param_ThreadDPIAwarenessContext: value = MSWDPIAwarenessHelper::GetThreadDPIAwarenessContextStr(); break;
             case Param_ProcessSystemDPI:          value.Printf("%u", MSWDPIAwarenessHelper::GetSystemDpiForThisProcess()); break;
@@ -1992,9 +1992,9 @@ void MiscellaneousView::DoUpdateValues()
             case Param_UILocaleName:              value =  wxUILocale::GetCurrent().GetName(); break;
 #endif
             case Param_HostName:                  value = wxGetHostName(); break;
-            case Param_FullHostName:              value = _("<Evaluating...>"); break;
+            case Param_FullHostName:              value = "<Evaluating...>"; break;
             case Param_OSDescription:             value =  wxGetOsDescription(); break;
-            case Param_OSVersion:                 value.Printf(_("%d.%d.%d"), verMajor, verMinor, verMicro); break;
+            case Param_OSVersion:                 value.Printf("%d.%d.%d", verMajor, verMinor, verMicro); break;
 #ifdef __LINUX__
             case Param_LinuxDistributionInfo:     value.Printf("%s (%s)", linuxDistributionInfo.Description, linuxDistributionInfo.CodeName); break;
 #endif // #ifdef __LINUX__
@@ -2002,9 +2002,9 @@ void MiscellaneousView::DoUpdateValues()
 #if wxCHECK_VERSION(3, 1, 5)
             case  Param_CPUArchitectureName:      value = wxGetCpuArchitectureName(); break;
 #endif
-            case Param_IsPlatform64Bit:           value = wxIsPlatform64Bit() ? _("Yes") : _("No"); break;
+            case Param_IsPlatform64Bit:           value = wxIsPlatform64Bit() ? "Yes" : "No"; break;
             case Param_CPUCount:                  value.Printf("%d", wxThread::GetCPUCount()); break;
-            case Param_IsPlatformLittleEndian:    value =  wxIsPlatformLittleEndian() ? _("Yes") : _("No"); break;
+            case Param_IsPlatformLittleEndian:    value =  wxIsPlatformLittleEndian() ? "Yes" : "No"; break;
 
             default:
                 wxFAIL;
@@ -2031,7 +2031,7 @@ void MiscellaneousView::StartObtainFullHostNameThread()
     {
         delete m_obtainFullHostNameThread;
         m_obtainFullHostNameThread= nullptr;
-        wxLogError(_("Could not create the thread needed to obtain the full host name."));
+        wxLogError("Could not create the thread needed to obtain the full host name.");
     }
 }
 
@@ -2074,8 +2074,8 @@ private:
 PreprocessorDefinesView::PreprocessorDefinesView(wxWindow* parent)
     : SysInfoListView(parent)
 {
-    InsertColumn(Column_Name, _("Name"));
-    InsertColumn(Column_Value, _("Value"));
+    InsertColumn(Column_Name, "Name");
+    InsertColumn(Column_Value, "Value");
 
     UpdateValues();
 }
@@ -2083,10 +2083,10 @@ PreprocessorDefinesView::PreprocessorDefinesView(wxWindow* parent)
 wxString DefineValueToText(const wxString& name, const wxString& value)
 {
     if ( name == value )
-        return _("<Is Not Defined>");
+        return "<Is Not Defined>";
 
     if ( value.empty() )
-        return _("<Is Defined>");
+        return "<Is Defined>";
 
     return value;
 }
@@ -2097,7 +2097,7 @@ wxString DefineValueToText(const wxString& name, const wxString& value)
 
 #define APPEND_HAS_FEATURE_ITEM(name, value) \
     itemIndex = InsertItem(GetItemCount(), name); \
-    SetItem(itemIndex, Column_Value, hasDefine ? _("Yes") : _("No")); \
+    SetItem(itemIndex, Column_Value, hasDefine ? "Yes" : "No"); \
     hasDefine = false;
 
 void PreprocessorDefinesView::DoUpdateValues()
@@ -2652,30 +2652,30 @@ bool wxSystemInformationFrame::Create(wxWindow *parent, wxWindowID id, const wxS
 
     wxBoxSizer* buttonSizer = new wxBoxSizer(wxHORIZONTAL);
 
-    wxButton* refreshButton = new wxButton(mainPanel, wxID_ANY, _("Refresh"));
+    wxButton* refreshButton = new wxButton(mainPanel, wxID_ANY, "Refresh");
     refreshButton->Bind(wxEVT_BUTTON, &wxSystemInformationFrame::OnRefresh, this);
     buttonSizer->Add(refreshButton, wxSizerFlags().Border(wxRIGHT));
 
     wxButton* detailsButton = nullptr;
     if ( createFlags & (ViewSystemColours | ViewSystemFonts) )
     {
-        detailsButton = new wxButton(mainPanel, wxID_ANY, _("wxSYS Colour or Font Details..."));
+        detailsButton = new wxButton(mainPanel, wxID_ANY, "wxSYS Colour or Font Details...");
         detailsButton->Bind(wxEVT_BUTTON, &wxSystemInformationFrame::OnShowDetailedInformation, this);
         buttonSizer->Add(detailsButton, wxSizerFlags().Border(wxRIGHT));
     }
 
-    wxButton* wxInfoButton = new wxButton(mainPanel, wxID_ANY, _("wxInfoMessageBox..."));
+    wxButton* wxInfoButton = new wxButton(mainPanel, wxID_ANY, "wxInfoMessageBox...");
     wxInfoButton->Bind(wxEVT_BUTTON, &wxSystemInformationFrame::OnShowwxInfoMessageBox, this);
     buttonSizer->Add(wxInfoButton, wxSizerFlags().Border(wxRIGHT));
 
-    wxButton* saveButton = new wxButton(mainPanel, wxID_ANY, _("Save..."));
+    wxButton* saveButton = new wxButton(mainPanel, wxID_ANY, "Save...");
     saveButton ->Bind(wxEVT_BUTTON, &wxSystemInformationFrame::OnSave, this);
     buttonSizer->Add(saveButton , wxSizerFlags().Border(wxRIGHT));
 
     // to move the button after it to the very right
     buttonSizer->AddStretchSpacer(1);
 
-    wxButton* clearLogButton = new wxButton(mainPanel, wxID_ANY, _("Clear log"));
+    wxButton* clearLogButton = new wxButton(mainPanel, wxID_ANY, "Clear log");
     clearLogButton->Bind(wxEVT_BUTTON, &wxSystemInformationFrame::OnClearLog, this);
     buttonSizer->Add(clearLogButton, wxSizerFlags().Border(wxRIGHT));
 
@@ -2686,31 +2686,31 @@ bool wxSystemInformationFrame::Create(wxWindow *parent, wxWindowID id, const wxS
     m_pages = new wxNotebook(mainPanel, wxID_ANY);
 
     if ( createFlags & ViewSystemColours )
-        m_pages->AddPage(new SystemColourView(m_pages), _("wxSYS Colours"), true);
+        m_pages->AddPage(new SystemColourView(m_pages), "wxSYS Colours", true);
 
     if ( createFlags & ViewSystemFonts )
-        m_pages->AddPage(new SystemFontView(m_pages), _("wxSYS Fonts"));
+        m_pages->AddPage(new SystemFontView(m_pages), "wxSYS Fonts");
 
     if ( createFlags & ViewSystemMetrics )
-        m_pages->AddPage(new SystemMetricView(m_pages), _("wxSYS Metrics"));
+        m_pages->AddPage(new SystemMetricView(m_pages), "wxSYS Metrics");
 
     if ( createFlags & ViewDisplays )
-        m_pages->AddPage(new DisplaysView(m_pages), _("Displays"));
+        m_pages->AddPage(new DisplaysView(m_pages), "Displays");
 
     if ( createFlags & ViewStandardPaths )
-        m_pages->AddPage(new StandardPathsView(m_pages), _("Standard Paths"));
+        m_pages->AddPage(new StandardPathsView(m_pages), "Standard Paths");
 
     if ( createFlags & ViewSystemOptions )
-        m_pages->AddPage(new SystemOptionsView(m_pages), _("System Options"));
+        m_pages->AddPage(new SystemOptionsView(m_pages), "System Options");
 
     if ( createFlags & ViewEnvironmentVariables )
-        m_pages->AddPage(new EnvironmentVariablesView(m_pages), _("Environment Variables"));
+        m_pages->AddPage(new EnvironmentVariablesView(m_pages), "Environment Variables");
 
     if ( createFlags & ViewMiscellaneous )
-        m_pages->AddPage(new MiscellaneousView(m_pages), _("Miscellaneous"));
+        m_pages->AddPage(new MiscellaneousView(m_pages), "Miscellaneous");
 
     if ( createFlags & ViewPreprocessorDefines )
-        m_pages->AddPage(new PreprocessorDefinesView(m_pages), _("Preprocessor Defines"));
+        m_pages->AddPage(new PreprocessorDefinesView(m_pages), "Preprocessor Defines");
 
     wxASSERT_MSG(m_pages->GetPageCount() > 0, "Invalid createFlags: no View value specified");
 
@@ -2838,7 +2838,7 @@ void wxSystemInformationFrame::UpdateValues()
         }
     }
 
-    LogInformation(_("System values were refreshed."));
+    LogInformation("System values were refreshed.");
 }
 
 void wxSystemInformationFrame::OnRefresh(wxCommandEvent&)
@@ -2861,8 +2861,8 @@ void wxSystemInformationFrame::OnShowwxInfoMessageBox(wxCommandEvent&)
 
 void wxSystemInformationFrame::OnSave(wxCommandEvent&)
 {
-    const wxString fileName = wxFileSelector(_("Choose File Name"), "", "", "",
-                                             _("Text Files (*.txt)|*.txt"),
+    const wxString fileName = wxFileSelector("Choose File Name", "", "", "",
+                                             "Text Files (*.txt)|*.txt",
                                              wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
 
     if ( fileName.empty() )
@@ -2908,14 +2908,14 @@ void wxSystemInformationFrame::OnUpdateValuesTimer(wxTimerEvent&)
 void wxSystemInformationFrame::OnSysColourChanged(wxSysColourChangedEvent& event)
 {
     event.Skip();
-    LogInformation(_("wxSysColourChangedEvent received."));
+    LogInformation("wxSysColourChangedEvent received.");
     TriggerValuesUpdate();
 }
 
 void wxSystemInformationFrame::OnDisplayChanged(wxDisplayChangedEvent& event)
 {
     event.Skip();
-    LogInformation(_("wxDisplayChangedEvent received."));
+    LogInformation("wxDisplayChangedEvent received.");
     TriggerValuesUpdate();
 }
 
@@ -2923,7 +2923,7 @@ void wxSystemInformationFrame::OnDisplayChanged(wxDisplayChangedEvent& event)
 void wxSystemInformationFrame::OnDPIChanged(wxDPIChangedEvent& event)
 {
     event.Skip();
-    LogInformation(wxString::Format(_("wxDPIChangedEvent received: old DPI = %s, new DPI = %s."),
+    LogInformation(wxString::Format("wxDPIChangedEvent received: old DPI = %s, new DPI = %s.",
         wxSizeTowxString(event.GetOldDPI()), wxSizeTowxString(event.GetNewDPI())));
     TriggerValuesUpdate();
 }

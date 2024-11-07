@@ -17,7 +17,7 @@
 SetupPrinter::SetupPrinter(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, a_pageId)
 {
     //printer setup
-    m_choiceBoxPrn          = new MY_CHOICE (this, "", _("Printer keuze, 'list' betekent 'print naar bestand'"), CHOICE_PRINTER);
+    m_choiceBoxPrn          = new MY_CHOICE (this, "", _("Printer choice, 'list' means 'print to file' with name list"), CHOICE_PRINTER);
     m_pTxtCtrlLinesPP       = new MyTextCtrl(this, wxID_ANY, "LinesPP", MY_SIZE_TXTCTRL_NUM(3));
     m_choiceBoxPrn->Bind(wxEVT_CHOICE, [this](auto&){AUTOTEST_BUSY("selectPrinter");});
 
@@ -25,13 +25,13 @@ SetupPrinter::SetupPrinter(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPa
     // now add all of the above in sets of 2 to a flexgridsizer
     wxFlexGridSizer* fgs = new wxFlexGridSizer(2 /*rows*/, 2 /*columns*/, 9 /*v-gap*/, 25 /*h-gap*/);
     fgs->Add( new wxStaticText(this, wxID_ANY, _("Printer: "       )), 0, wxALIGN_CENTER_VERTICAL );   fgs->MyAdd( m_choiceBoxPrn    );
-    fgs->Add( new wxStaticText(this, wxID_ANY, _("Regels per blz: ")), 0, wxALIGN_CENTER_VERTICAL );   fgs->  Add( m_pTxtCtrlLinesPP );
+    fgs->Add( new wxStaticText(this, wxID_ANY, _("Lines per page: ")), 0, wxALIGN_CENTER_VERTICAL );   fgs->  Add( m_pTxtCtrlLinesPP );
 
-    m_pChkBoxFF = new wxCheckBox(this, wxID_ANY, _("FormFeed na elke print"));
-    m_pChkBoxFF->SetToolTip(_("FF na elke losse printopdracht ipv wanneer de pagina vol is"));
+    m_pChkBoxFF = new wxCheckBox(this, wxID_ANY, _("FormFeed after each print command"));
+    m_pChkBoxFF->SetToolTip(_("FF after each single printcommand i.s.o when the page is full"));
 
-    m_pChkBoxRemote = new wxCheckBox(this, wxID_ANY, _("Netwerk printers"));
-    m_pChkBoxRemote->SetToolTip(_("Laat ook printers in het netwerk zien\n\nLET OP: SYSTEEM KAN GAAN HANGEN!"));
+    m_pChkBoxRemote = new wxCheckBox(this, wxID_ANY, _("Network printers"));
+    m_pChkBoxRemote->SetToolTip(_("Also show printers in the network\n\nBE CAREFULL: SYSTEEM CAN HANG!"));
 
     // put all of above below each other in a sizer: all occupying just the space they need
     wxBoxSizer* vBoxSettings= new wxBoxSizer(wxVERTICAL);
@@ -40,8 +40,8 @@ SetupPrinter::SetupPrinter(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPa
     vBoxSettings->Add(m_pChkBoxRemote,0 , wxALL                 , MY_BORDERSIZE );
 
     // button for font-selection
-    m_pBtnFont = new wxButton(this, wxID_ANY, _("Font keuze"));
-    m_pBtnFont->SetToolTip(_("kiezen van ander/groter/kleiner font tbv printer output"));
+    m_pBtnFont = new wxButton(this, wxID_ANY, _("Font choice"));
+    m_pBtnFont->SetToolTip(_("choice of another/larger/smaller font for the printer output"));
     m_pBtnFont->Bind(wxEVT_BUTTON, [](wxCommandEvent&){prn::SelectFont();});
 
     // action buttons: keep/cancel
@@ -52,7 +52,7 @@ SetupPrinter::SetupPrinter(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPa
     hButtonSizer->Add(m_mOkCancel, 0, wxALL, MY_BORDERSIZE);
 
     // add all sizers to vertical sizer
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this,_("Instellingen printer"));
+    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this,_("Printer settings"));
     vBox->AddSpacer( 30 );
     vBox->Add(vBoxSettings, 1                                       );  // take as much space as there is, so ok/cancel is at the bottom
     vBox->Add(hButtonSizer, 0, wxALL | wxALIGN_CENTER, MY_BORDERSIZE);
@@ -98,7 +98,7 @@ void SetupPrinter::BackupData()
 
 void SetupPrinter::OnOk()
 {
-    LogMessage(_("SetupPrinter::Overnemen()"));
+    LogMessage(_("SetupPrinter::OnOk()"));
     BackupData();
     cfg::FLushConfigs();    // update diskfiles
     RefreshInfo();
@@ -107,7 +107,7 @@ void SetupPrinter::OnOk()
 
 void SetupPrinter::OnCancel()
 {
-    LogMessage(_("SetupPrinter::Afbreken()"));
+    LogMessage(_("SetupPrinter::OnCancel()"));
     RefreshInfo();  // restore original content
 }   // OnCancel()
 
@@ -118,13 +118,13 @@ void SetupPrinter::AutotestRequestMousePositions(MyTextFile* a_pFile)
 
 void SetupPrinter::PrintPage()
 {
-    bool bResult = prn::BeginPrint(_("Printerinstellingen pagina:\n")); MY_UNUSED(bResult);
+    bool bResult = prn::BeginPrint(_("Printersettings page:\n")); MY_UNUSED(bResult);
     wxString info;
     info = FMT(_(
                 "Printer         : %s\n"
-                "Regels/bladzijde: %s\n"
+                "Lines/page      : %s\n"
                 "Formfeed        : %s\n"
-                "Netwerkprinter  : %s\n"),
+                "Networkprinter  : %s\n"),
                 m_choiceBoxPrn   ->GetStringSelection(),
                 m_pTxtCtrlLinesPP->GetValue(),
                 BoolToString(m_pChkBoxFF      ->GetValue()),

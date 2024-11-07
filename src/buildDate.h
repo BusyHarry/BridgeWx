@@ -1,1 +1,1 @@
-static const char* buildDate = "donderdag 24 oktober 2024 @ 16:52:58";
+static const char* buildDate = "donderdag  7 november 2024 @ 15:58:43";

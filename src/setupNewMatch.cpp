@@ -17,7 +17,7 @@
 
 SetupNewMatch::SetupNewMatch(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, a_pageId)
 {
-    wxStaticText* txtDir = new wxStaticText(this, wxID_ANY, _("Map voor wedstrijddata:   "));
+    wxStaticText* txtDir = new wxStaticText(this, wxID_ANY, _("Folder for matchdata:   "));
     long style = 0;
 
     style |= wxDIRP_USE_TEXTCTRL;   // manual enter directory here, or use the 'browse' button
@@ -26,23 +26,23 @@ SetupNewMatch::SetupNewMatch(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_p
                                     //      style |= wxDIRP_SMALL;
 
     m_pDirPicker = new wxDirPickerCtrl(this, wxID_ANY,
-        ES, _("Kies map om wedstrijddata in op te slaan."),
+        ES, _("Choose folder to save matchdata."),
         wxDefaultPosition, wxDefaultSize,
         style, wxDefaultValidator, "MatchFolder");  // name is for AHK2
     m_pDirPicker->Bind(wxEVT_DIRPICKER_CHANGED, [this](wxFileDirPickerEvent&){UpdateSelection();});
 
-    txtDir->SetToolTip(_("Kies hier de map waar je de wedstrijddata wilt opslaan."));
+    txtDir->SetToolTip(_("Choose here the folder where you want to store the matchdata."));
 // the name of the match
-    auto txtMatch = new wxStaticText(this, wxID_ANY, _("Wedstrijd naam:"));
+    auto txtMatch = new wxStaticText(this, wxID_ANY, _("Matchname:"));
     m_pComboBoxMatch = new MywxComboBox(this, wxID_ANY, "MatchName", wxDefaultPosition, {15 * GetCharWidth(),-1}, 0, NULL, wxCB_SORT);
-    m_pComboBoxMatch->SetToolTip(_("Naam van de (nieuwe) wedstrijd"));
+    m_pComboBoxMatch->SetToolTip(_("Name of the (new) match"));
 // the session of the match
-    auto txtSession = new wxStaticText(this, wxID_ANY, _("Zitting:"));
+    auto txtSession = new wxStaticText(this, wxID_ANY, _("Session:"));
     m_pTxtCtrlSession = new MyTextCtrl(this, wxID_ANY, "Session", MY_SIZE_TXTCTRL_NUM(2));
-    m_pTxtCtrlSession->SetToolTip(_("Het nummer van de zitting, 0 als de wedstrijd uit één zitting bestaat"));
+    m_pTxtCtrlSession->SetToolTip(_("The number of the session, 0 if the match exist of one session"));
     m_pTxtCtrlSession->SetMinMax(0, cfg::MAX_SESSIONS);
 // database type
-    auto txtDbType = new wxStaticText(this, wxID_ANY, _("Bestands type:"));
+    auto txtDbType = new wxStaticText(this, wxID_ANY, _("Database type:"));
     m_pTxtCtrlDbType = new MyTextCtrl(this, wxID_ANY, "DbaseType",MY_SIZE_TXTCTRL_NUM(4), wxTE_READONLY);
 
     // now add all of the above in sets of 2 to a flexgridsizer
@@ -58,7 +58,7 @@ SetupNewMatch::SetupNewMatch(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_p
     auto okCancel = CreateOkCancelButtons();
 
 // add all sizers to vertical sizer
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Instellen van de aktieve wedstrijd:"));
+    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Setup for the active match:"));
     vBox->AddSpacer( 30 );
     vBox->Add(fgs,         1, wxALL | wxEXPAND         , MY_BORDERSIZE);
     vBox->Add(okCancel,    0, wxALL | wxALIGN_CENTER   , MY_BORDERSIZE);
@@ -141,17 +141,17 @@ void SetupNewMatch::OnOk()
 void SetupNewMatch::OnCancel()
 {
     RefreshInfo();  // restore original content
-    LogMessage(_("SetupNewMatch::Afbreken()"));
+    LogMessage(_("SetupNewMatch::Cancel()"));
 }   // OnCancel()
 
 void SetupNewMatch::PrintPage()
 {
-    bool bResult = prn::BeginPrint(_("Nieuwewedstrijd pagina:\n")); MY_UNUSED(bResult);
+    bool bResult = prn::BeginPrint(_("New match page:\n")); MY_UNUSED(bResult);
     wxString info;
-    info = FMT(_("Wedstrijdmap: %s\n"
-                 "Wedstrijd   : %s\n"
-                 "Zitting     : %s\n"
-                 "Opslagtype  : %s\n"),
+    info = FMT(_("Matchfolder  : %s\n"
+                 "Match        : %s\n"
+                 "Session      : %s\n"
+                 "Databasetype : %s\n"),
                 m_pDirPicker     ->GetTextCtrlValue(),
                 m_pComboBoxMatch ->GetValue(),
                 m_pTxtCtrlSession->GetValue(),

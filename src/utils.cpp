@@ -202,7 +202,7 @@ wxString GetDateTime()
 {
     if (cfg::IsScriptTesting()) return __DAY__AUTO + " " + __DATE__AUTO + " "  __TIME__AUTO;
     //xgettext:TRANSLATORS: Set order of types to your country order 
-    return wxDateTime::Now().Format(_("%A %d %B %G %X"));    //zaterdag 12 augustus 2023 16:44:03
+    return wxDateTime::Now().Format(_("%A %B %d, %G %X"));    //zaterdag 12 augustus 2023 16:44:03
 }   // GetDateTime()
 
 UINT MyGetFilesize(const wxString& a_file)
@@ -233,7 +233,7 @@ bool WriteFileBinairy(const wxString& a_file, void* a_buffer, UINT a_bufSize)
     if (a_bufSize != fn.Write(a_buffer, a_bufSize))
     {
         bOk = false;
-        sError = _(": schrijffout");
+        sError = _(": write error");
     }
 
     fn.Close();
@@ -241,7 +241,7 @@ bool WriteFileBinairy(const wxString& a_file, void* a_buffer, UINT a_bufSize)
     if (!bOk)
     {
         LogMessage(a_file+sError);
-        wxMessageBox(a_file+_(": fout bij schrijven bestand"));
+        wxMessageBox(a_file+_(": error wrting to file"));
     }
 
     return bOk;
@@ -262,7 +262,7 @@ bool ReadFileBinairy(const wxString& a_file, void* a_buffer, UINT a_bufSize)
         if (a_bufSize != fn.Write(a_buffer, a_bufSize))
         {
             bOk = false;
-            sError = _(": schrijffout");
+            sError = _(": write error");
         }
 
         fn.Close();
@@ -280,14 +280,14 @@ bool ReadFileBinairy(const wxString& a_file, void* a_buffer, UINT a_bufSize)
         if (fileSize != a_bufSize)
         {
             bOk = false;
-            sError = _(": foute grootte");
+            sError = _(": wrong size");
         }
         else
         {
             if (a_bufSize != fn.Read(a_buffer, a_bufSize))
             {
                 bOk = false;
-                sError = _(": leesfout");
+                sError = _(": readerror");
             }
         }
     }
@@ -295,12 +295,12 @@ bool ReadFileBinairy(const wxString& a_file, void* a_buffer, UINT a_bufSize)
     if (!bOk)
     {
         LogError(a_file+sError);
-        wxMessageBox(a_file+_(": fout bij lezen bestand"));
+        wxMessageBox(a_file+_(": error reading file"));
     }
     return bOk;
 }   // ReadFileBinairy()
 
 wxString BoolToString(bool a_bValue)
 {
-    return a_bValue ? _("ja") : _("nee");
+    return a_bValue ? _("yes") : _("no");
 }   // BoolToString()

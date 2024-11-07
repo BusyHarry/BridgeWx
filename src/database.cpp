@@ -150,7 +150,7 @@ CfgFileEnum DatabaseOpen(io::GlbDbType /*dbType*/, CfgFileEnum a_how2Open)
     if (!db.IsDirWritable())
     {
         // if not writable, select "C:\\Users\\<me>\\AppData\\Local\\BridgeWx" dir
-        wxString err = db.GetFullPath() + _(": is niet toegankelijk!");
+        wxString err = db.GetFullPath() + _(": is not accessable!");
         MyLogError( err );      // wxLogError will stop the programm with a pop-up...
         MyMessageBox(err);
         wxString dir = cfg::GetBaseFolder();
@@ -213,13 +213,13 @@ bool PairnamesRead(names::PairInfoData& pairInfo)
     while (rd.GetNextEntry(key, value))
     {
         UINT pair = wxAtoi(key);
-        if (pair > maxPair ) { MyLogError(_("Inlezen paarnamen: paarnr <%s> te groot!"), key); continue; }
+        if (pair > maxPair ) { MyLogError(_("Reading pairnames: pairnr <%s> too high!"), key); continue; }
         names::PairInfo info;
         char name[2*cfg::MAX_NAME_SIZE+1]={0};
         auto count = wxSscanf(value," { \"%50[^\"]\" , %u }", name, &info.clubIndex);   // hardcoded maxsize == 50!
         if (count != 2)
         {
-            MyLogError(_("Inlezen paarnamen: <%s = %s> ongeldig!"), key, value);
+            MyLogError(_("Reading pairnames: <%s = %s> invalid!"), key, value);
             continue;
         }
         info.pairName = name;
@@ -243,12 +243,12 @@ bool ClubnamesRead(std::vector<wxString>& clubNames, UINT& uMaxId)
     while (rd.GetNextEntry(key, value))
     {
         UINT club = wxAtoi(key);
-        if (club > cfg::MAX_CLUBNAMES ) { MyLogError(_("Inlezen clubnamen: clubnr <%u> te groot!"), club); continue; }
+        if (club > cfg::MAX_CLUBNAMES ) { MyLogError(_("Reading clubnames: clubnr <%u> too high!"), club); continue; }
         char name[2*cfg::MAX_CLUB_SIZE+1]={0};
         auto count = wxSscanf(value, " \"%50[^\"]\" ", name);   // hardcoded maxsize == 50!
         if (count != 1)
         {
-            MyLogError(_("Inlezen clubnamen: <%s = %s> ongeldig!"), key, value);
+            MyLogError(_("Rading clubnames: <%s = %s> invalid!"), key, value);
             continue;
         }
         clubNames[club]=name;
@@ -291,7 +291,7 @@ bool ScoresRead(vvScoreData& scoreData, UINT session)
     while (rd.GetNextEntry(key, value))
     {
         UINT game = wxAtoi(key);
-        if (game > cfg::MAX_GAMES ) { MyLogError(_("Inlezen scores: spelnr <%s> te groot!"), key); continue; }
+        if (game > cfg::MAX_GAMES ) { MyLogError(_("Reading scores: gamenr <%s> too high!"), key); continue; }
         auto splitValues = wxSplit(value, theSeparator);
         std::vector<score::GameSetData> gameData;
         score::GameSetData setData;
@@ -302,7 +302,7 @@ bool ScoresRead(vvScoreData& scoreData, UINT session)
             auto count = wxSscanf(it," { %u , %u, %9[^, ] , %9[^} ] }", &setData.pairNS, &setData.pairEW, nsScore, ewScore);
             if (count != 4)
             {
-                MyLogError(_("Inlezen scores: spel %u: <%s> ongeldig!"), game, it);
+                MyLogError(_("Reading scores: game %u: <%s> invalid!"), game, it);
                 continue;
             }
             setData.scoreNS = score::ScoreFromString(nsScore);
@@ -441,7 +441,7 @@ bool SchemaRead(cfg::SessionInfo& a_info, UINT a_session)
     auto count = wxSscanf(info, " {%u ,%u ,%u }", &a_info.nrOfGames, &a_info.setSize, &a_info.firstGame);
     if ( count != 3)
     {   // on error, we just take a default value
-        MyLogError(_("Fout bij inlezen schema <%s>"), info);
+        MyLogError(_("Error while reading schema <%s>"), info);
         info             = default;
         a_info.nrOfGames = 24;
         a_info.setSize   = 4;
@@ -467,7 +467,7 @@ bool SchemaRead(cfg::SessionInfo& a_info, UINT a_session)
         }
         if ( count < 3)
         {   // schema and groupchars empty
-            MyLogError(_("Fout bij inlezen schema <%s>"), info);
+            MyLogError(_("Error while reading schema <%s>"), info);
         }
         if ((groupChars[0] == ' ') && (groupChars[1] == 0) ) groupChars[0] = 0; // remove single space
         groupData.schema        = schema;
@@ -748,11 +748,11 @@ bool UintVectorRead(UINT_VECTOR& a_vUint, UINT a_session, keyId a_id)
         UINT value = (UINT)wxAtoi(it);
         if (value > max)
         {
-            wxString err=FMT(_(" Fout in database <%s> waarde in sleutel '%s': '%i' groter dan max '%u'\nWordt genegeerd.")
+            wxString err=FMT(_(" Error in database <%s> value in key <%s>: <%i> higher then max <%u>\nWill be ignored.")
                                 , sDbFile, MakePath(a_id, a_session)
                                 , (int)value, max);
             MyLogError("%s",err);
-            MyMessageBox(err, _("database fout"));
+            MyMessageBox(err, _("database error"));
             bOk = false;
             continue;
         }

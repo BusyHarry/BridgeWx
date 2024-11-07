@@ -48,9 +48,9 @@ public:
 
     struct GridInfo
     {   // for autotest mouse positions
-        wxWindow*   pGridWindow;
-        int         rowLabelSize;
-        int         colLabelSize;
+        wxWindow*   pGridWindow = nullptr;
+        int         rowLabelSize= -1;
+        int         colLabelSize= -1;
         std::vector<wxRect> collumnInfo;
     };
     const GridInfo& GetGridInfo();

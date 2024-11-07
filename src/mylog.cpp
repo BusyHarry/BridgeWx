@@ -99,13 +99,13 @@ void MyLog::Create( )
 {
     spLogFrame = new MyLogFrame();
     wxMenu *pMenu = new wxMenu;
-    pMenu->Append(ID_MENU_MYLOG_SAVE , _("opslaan &Als..."), _("Sla log op in een bestand"   ));
-    pMenu->Append(ID_MENU_MYLOG_CLEAR, _("&Wissen")        , _("Wis het logwindow"           ));
+    pMenu->Append(ID_MENU_MYLOG_SAVE , _("save &As..."), _("Save in logfile"           ));
+    pMenu->Append(ID_MENU_MYLOG_CLEAR, _("&Clear")     , _("Clear logwindow"           ));
     pMenu->AppendSeparator();
-    pMenu->Append(ID_MENU_MYLOG_HIDE,  _("&Sluiten")       , _("Sluit het logwindow"         ));
+    pMenu->Append(ID_MENU_MYLOG_HIDE,  _("&Close")     , _("Close (hide) the logwindow"));
 
     wxMenuBar *pMenuBar = new wxMenuBar;
-    pMenuBar->Append(pMenu, _("&Bestand"));
+    pMenuBar->Append(pMenu, _("&File"));
     spLogFrame->SetMenuBar(pMenuBar);
 
     spLogFrame->Bind(wxEVT_MENU         , &MyLogFrame::OnSave , spLogFrame, ID_MENU_MYLOG_SAVE );

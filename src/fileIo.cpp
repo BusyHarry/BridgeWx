@@ -18,7 +18,7 @@ namespace io
         if (seTheType == a_type) return;
         DatabaseClose(DB_ALL);  // close all open databases.
         seTheType = a_type;
-        if (!a_bQuiet && !cfg::IsScriptTesting()) MyMessageBox(_("Aktuele wedstrijd afgesloten.\nOpen nieuwe wedstrijd"));
+        if (!a_bQuiet && !cfg::IsScriptTesting()) MyMessageBox(_("Active match closed.\nSetup new match"));
     }   // DatabaseTypeSet()
 
     ActiveDbType DatabaseTypeGet()
@@ -108,7 +108,7 @@ namespace io
     static bool CanContinue(const wxString& a_targetFile)
     {
         if (!wxFile::Exists(a_targetFile)) return true;
-        if (wxCANCEL == MyMessageBox(FMT(_("Doelbestand <%s> bestaat al.\nVerwijderen?"), a_targetFile), _("Controle"),  wxYES|wxCANCEL))
+        if (wxCANCEL == MyMessageBox(FMT(_("Target file <%s> exists.\nRemove?"), a_targetFile), _("Check"),  wxYES|wxCANCEL))
             return false;
         wxRemoveFile(a_targetFile);
         return true;
@@ -116,8 +116,8 @@ namespace io
 
     void ConvertDataBase(ConvertFromTo a_how)
     {
-        wxString fileTypes = (a_how == FromOldToDb ) ? _("ini bestanden (*.ini)|*.ini") : _("db bestanden (*.db)|*.db");
-        wxFileDialog dialog(nullptr, _("Bridge Databestanden"), cfg::GetActiveMatchPath(), "", fileTypes, wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+        wxString fileTypes = (a_how == FromOldToDb ) ? _("ini files (*.ini)|*.ini") : _("db files (*.db)|*.db");
+        wxFileDialog dialog(nullptr, _("'Bridge' Datafiles"), cfg::GetActiveMatchPath(), "", fileTypes, wxFD_OPEN|wxFD_FILE_MUST_EXIST);
         if (dialog.ShowModal() == wxID_CANCEL) return;
         wxFileName fileName = dialog.GetPath();
         wxString folder     = fileName.GetPath();

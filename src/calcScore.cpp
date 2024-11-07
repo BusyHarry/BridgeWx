@@ -109,17 +109,17 @@ CalcScore::CalcScore(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, 
     m_pListBox->SetFont(celFont);
     m_pListBox->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED,[this](const wxListEvent & evt){m_findPos = evt.GetIndex();});
 
-    auto pButtonPrint = new wxButton(this, wxID_ANY, _("Afdrukken"));
-    pButtonPrint->SetToolTip(_("druk huidige inhoud van het venster af"));
+    auto pButtonPrint = new wxButton(this, wxID_ANY, _("Print"));
+    pButtonPrint->SetToolTip(_("print current window content"));
     pButtonPrint->Bind(wxEVT_BUTTON,&CalcScore::OnPrint, this);
 
-    m_pChoices = new MY_CHOICE(this, _("Resultaat:"), _("toon het resultaat van de berekeningen"), Unique("ChoiceResult"));
+    m_pChoices = new MY_CHOICE(this, _("Result:"), _("show result of the calculations"), Unique("ChoiceResult"));
     m_pChoices->Bind(wxEVT_CHOICE,[this](const auto&){ AUTOTEST_BUSY("resultType");m_choiceResult = m_vChoices[m_pChoices->GetSelection()]; ShowChoice();});
 
-    m_pPairSelect = new MyChoiceMC(this, _("Paar:"), _("Uitslag per paar"), Unique(CHOICE_PAIR));
+    m_pPairSelect = new MyChoiceMC(this, _("Pair:"), _("Result per pair"), Unique(CHOICE_PAIR));
     m_pPairSelect->Bind(wxEVT_CHOICE, &CalcScore::OnCalcResultPair,this);
 
-    m_pGameSelect = new MyChoiceMC(this, _("Spel:"), _("Uitslag per spel"), Unique(CHOICE_GAME));
+    m_pGameSelect = new MyChoiceMC(this, _("Game:"), _("Result per game"), Unique(CHOICE_GAME));
     m_pGameSelect->Bind(wxEVT_CHOICE, &CalcScore::OnCalcResultGame,this);
 
 
@@ -132,7 +132,7 @@ CalcScore::CalcScore(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, 
     hBoxSearchOk->MyAdd(m_pGameSelect       , 0, wxBOTH | wxALL, MY_BORDERSIZE);
 
     // add to layout
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Score berekeningen"));
+    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Score calculations"));
     vBox->Add(m_pListBox      , 1, wxEXPAND | wxALL, MY_BORDERSIZE);
     vBox->Add(hBoxSearchOk    , 0,            wxALL, MY_BORDERSIZE);
     SetSizer(vBox);     // add to panel
@@ -169,44 +169,44 @@ void CalcScore::ShowChoice()
     switch (m_choiceResult)
     {
         case ResultSession:
-            title = _("Zitting uitslag");
+            title = _("Session result");
             pTextFile = &m_txtFileResultSession;
             break;
         case ResultSessionName:
-            title = _("Zitting uitslag op naam");
+            title = _("Session result on name");
             pTextFile = &m_txtFileResultOnName;
             break;
         case ResultTotal:
-            title = _("Totaal uitslag");
+            title = _("Total result");
             pTextFile = &m_txtFileResultTotal;
             break;
         case ResultFrqTable:
-            title = _("Frequentie staten");
+            title = _("Frequency states");
             pTextFile = &m_txtFileFrqTable;
             break;
         case ResultGroup:
-            title = _("Groep uitslag");
+            title = _("Group result");
             pTextFile = &m_txtFileResultGroup;
             break;
         case ResultClubTotal:
-            title = _("Club uitslag totaal");
+            title = _("Club result total");
             pTextFile = &m_txtFileResultClubTotal;
             break;
         case ResultClubSession:
-            title = _("Club uitslag zitting");
+            title = _("Club result session");
             pTextFile = &m_txtFileResultClubSession;
             break;
         case ResultPair:
-            title = _("Uitslag per paar");
+            title = _("Result per pair");
             pTextFile = &m_txtFileResultPair;
             break;
         case ResultGame:
-            title = _("Uitslag per spel");
+            title = _("Result per game");
             pTextFile = &m_txtFileResultGame;
             break;
 
         default:
-            title = _("Onbekend type");
+            title = _("Unknown type");
             pTextFile = &m_txtFileResultSession;
             break;
     }
@@ -226,7 +226,7 @@ void CalcScore::RefreshInfo()
 {
     InitializeAndCalcScores();
     // initalize the result-choices
-    wxArrayString choices = {_("zitting"), _("zitting op naam"), _("frequentiestaten"), _("groep")};
+    wxArrayString choices = {_("session"), _("session on name"), _("frequencystates"), _("group")};
     m_vChoices.clear(); // indexes must match choice-array
     m_vChoices.push_back(ResultSession);
     m_vChoices.push_back(ResultSessionName);
@@ -235,17 +235,17 @@ void CalcScore::RefreshInfo()
     // now add dynamic parts
     if ( cfg::GetActiveSession() != 0)
     {
-        choices.push_back(_("totaal"));
+        choices.push_back(_("total"));
         m_vChoices.push_back(ResultTotal);
     }
     // club related parts
     if (names::ExistSessionPairWithClub())
     {
-        choices.push_back(_("club zitting"));
+        choices.push_back(_("club session"));
         m_vChoices.push_back(ResultClubSession);
         if ( cfg::GetActiveSession() != 0)
         {
-            choices.push_back(_("club totaal"));
+            choices.push_back(_("club total"));
             m_vChoices.push_back(ResultClubTotal);
         }
     }
@@ -542,16 +542,16 @@ void CalcScore::SaveGroupResult()
     m_txtFileResultGroup.AddLine(ES);
 
     wxString tmp;
-    if (session) tmp.Printf(_(", zitting %u"), session);
-    tmp = FMT(_("Groep-uitslag van wedstrijd '%s'%s"), cfg::GetDescription(),  tmp);
+    if (session) tmp.Printf(_(", session %u"), session);
+    tmp = FMT(_("Group-result of match '%s'%s"), cfg::GetDescription(),  tmp);
     m_txtFileResultGroup.AddLine(tmp);
     m_txtFileResultGroup.AddLine(ES);
 
-    tmp.Printf("    %*s", cfg::MAX_NAME_SIZE, _("spellen :"));
+    tmp.Printf("    %*s", cfg::MAX_NAME_SIZE, _("games :"));
     for (UINT ii = 0; ii < sets; ++ii)
         tmp += FMT("%2u-%-2u ", offsetFirstGame+setSize*ii+1, offsetFirstGame+setSize*ii+setSize);
     if (spmCorSession->size())
-        tmp += _(" extra  kor  kor.");
+        tmp += _(" extra  cor  cor.");
     tmp += _("  tot   score");
     m_txtFileResultGroup.AddLine(tmp);
 
@@ -559,7 +559,7 @@ void CalcScore::SaveGroupResult()
     {
         if (svSessionResult[pair].maxScore == 0)
         {
-            tmp.Printf(_("%3u  STIL-ZIT?? afwezig??"), pair);  //???? kan niet, is "paar heeft niet gespeeld: afwezig..."
+            tmp.Printf(_("%3u  NOT PLAYED?? absent??"), pair);  //???? kan niet, is "paar heeft niet gespeeld: afwezig..."
             m_txtFileResultGroup.AddLine(tmp);
             continue;                   // pair didn't play
         }
@@ -606,9 +606,9 @@ void CalcScore::SaveSessionResults()
     m_txtFileResultSession.AddLine(ES); m_txtFileResultOnName.AddLine(ES);
 
     wxString tmp;
-    tmp.Printf(_("rang paar %-*s  tot.    max  score  %s  %s"),
-        cfg::MAX_NAME_SIZE,_("paarnaam"),
-        m_bSomeCorrection ? _("korr.  ") : "",
+    tmp.Printf(_("rank pair %-*s  tot.    max  score  %s  %s"),
+        cfg::MAX_NAME_SIZE,_("pairname"),
+        m_bSomeCorrection ? _("corr.  ") : "",
         GetGroupResultString(0, &svSessionRankToPair, true));
     m_txtFileResultSession.AddLine(tmp);m_txtFileResultOnName.AddLine(tmp);
     UINT startLine = m_txtFileResultSession.GetLineCount();    //from here the pairinfo is addded
@@ -722,9 +722,9 @@ void CalcScore::MakeFrequenceTable(UINT a_game, std::vector<wxString>& a_stringT
 {
     a_stringTable.clear();
     wxString tmp;
-    tmp.Printf(_("    spel %-3u       "), a_game + cfg::GetFirstGame() - 1);
+    tmp.Printf(_("    game %-3u       "), a_game + cfg::GetFirstGame() - 1);
     a_stringTable.push_back(tmp);
-    a_stringTable.push_back(_("scoreNZ NZ    OW   "));
+    a_stringTable.push_back(_("scoreNS NS    EW   "));
     a_stringTable.push_back(FMT(_("   top: %-5u %-5u"), svGameTops[a_game].topNS, svGameTops[a_game].topEW));
     const auto& frqInfo = svFrequencyInfo[a_game];
     for (auto it : frqInfo)
@@ -791,9 +791,9 @@ void AddHeader(MyTextFile& a_file)
 
     wxString tmp;
     if (cfg::GetActiveSession() >= 1)
-        tmp.Printf(_("uitslag van zitting %u"), cfg::GetActiveSession());
+        tmp.Printf(_("result of session %u"), cfg::GetActiveSession());
     else
-        tmp = _("uitslag");
+        tmp = _("result");
     a_file.AddLine(tmp);
 }   // AddHeader()
 
@@ -889,7 +889,7 @@ void CalcScore::CalcTotal()
     if (maxPair == 0)
     {
         if (!m_bIsScriptTesting)
-            MyMessageBox(_("Nog geen namen ingevoerd!"));
+            MyMessageBox(_("No names entered yet!"));
         return;  // no names yet
     }
     UINT session;
@@ -1003,14 +1003,14 @@ void CalcScore::CalcTotal()
 
     m_txtFileResultTotal.MyCreate(cfg::ConstructFilename(cfg::EXT_RESULT_TOTAL), MyTextFile::WRITE);
     m_txtFileResultTotal.AddLine(cfg::GetDescription());
-    m_txtFileResultTotal.AddLine(FMT(_("Totaal uitslag%s"), bWeightedAvg ? _(" (gewogen gemiddelde)") : ""));
+    m_txtFileResultTotal.AddLine(FMT(_("Total result%s"), bWeightedAvg ? _(" (weighted average)") : ""));
     m_txtFileResultTotal.AddLine(ES);
-    wxString tmp = _("rang paarnaam                       ");
+    wxString tmp = _("rank pairname                       ");
     for (session=1; session <= maxSession; ++session)
     {
-        tmp += FMT(_("  Z%-4u"),session);
+        tmp += FMT(_("  S%-4u"),session);
     }
-    tmp += FMT(_("  %s  %sgem. %s"), bWeightedAvg ? " " : _("totaal "), bBonus ? _("bonus  ") : "", GetGroupResultString(0, &indexSessionPairnr, false));
+    tmp += FMT(_("  %s  %savg. %s"), bWeightedAvg ? " " : _("total "), bBonus ? _("bonus  ") : "", GetGroupResultString(0, &indexSessionPairnr, false));
     m_txtFileResultTotal.AddLine(tmp);
 
     for (UINT rank = 1; rank < svTotalRankToPair.size(); ++rank)
@@ -1093,7 +1093,7 @@ void CalcScore::CalcClub( bool a_bTotal)
     MyTextFile&         txtFile     = a_bTotal ? m_txtFileResultClubTotal : m_txtFileResultClubSession;
     UINT                session     = cfg::GetActiveSession();
     UINT                maxSession  = a_bTotal ? session : 1;
-    wxString            header      = a_bTotal ? _("Totaal uitslag") : session ? FMT(_("Uitslag van zitting %u"), session): _("Zitting uitslag");
+    wxString            header      = a_bTotal ? _("Total result") : session ? FMT(_("Result of session %u"), session): _("Session result");
     wxString            fileName    = cfg::ConstructFilename(a_bTotal ? cfg::EXT_CLUB_TOTAL : cfg::EXT_SESSION_CLUB);
 
     std::vector<CLUB_DATA> club;
@@ -1132,17 +1132,17 @@ void CalcScore::CalcClub( bool a_bTotal)
     txtFile.MyCreate(fileName, MyTextFile::WRITE);
     txtFile.AddLine(ES);
 
-    wxString tmp = FMT(_("%s van de clubs voor '%s'"), header, cfg::GetDescription());
+    wxString tmp = FMT(_("%s of the clubs for '%s'"), header, cfg::GetDescription());
     txtFile.AddLine(tmp);
 
-    tmp = FMT(_("minimum aantal paren : %u"),minClubCount);
+    tmp = FMT(_("minimum number of pairs : %u"),minClubCount);
     txtFile.AddLine(tmp);
 
-    tmp = FMT(_("maksimum aantal paren: %u"),maxClubCount);
+    tmp = FMT(_("maxsimum number of pairs: %u"),maxClubCount);
     txtFile.AddLine(tmp);
     txtFile.AddLine(ES);
 
-    tmp = FMT(_("rang aantal %-*s   score     gem.  totaalscore"), cfg::MAX_CLUB_SIZE, _("club-naam"));
+    tmp = FMT(_("rank count  %-*s   score     avg.  totalscore"), cfg::MAX_CLUB_SIZE, _("club-name"));
     txtFile.AddLine(tmp);
 
     UINT rank = 1;
@@ -1170,7 +1170,7 @@ void CalcScore::CalcClub( bool a_bTotal)
     if (club[0].clubCount)
     {   // pairs, not a member of a club
         txtFile.AddLine(ES);
-        tmp = FMT(_("individuele paren: %u, score: %6s%% (%5s)"),
+        tmp = FMT(_("individual pairs: %u, score: %6s%% (%5s)"),
             club[0].clubCount,
             LongToAscii2(club[0].totalScore),
             LongToAscii2(RoundLong(club[0].totalScore,club[0].clubCount*maxSession))
@@ -1189,19 +1189,19 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
     UINT        maxGame         = score::GetNumberOfGames();
     UINT        setSize         = cfg::GetSetSize();
     UINT        firstGame       = cfg::GetFirstGame()-1;
-    wxString    sessionString   = session >= 1 ? FMT(_(", zitting %u"), session) : "" ;
+    wxString    sessionString   = session >= 1 ? FMT(_(", session %u"), session) : "" ;
     wxString    tmp;
 
     m_txtFileResultPair.Clear();
 #undef ADDLINE
 #define ADDLINE m_txtFileResultPair.AddLine
     ADDLINE(ES);
-    ADDLINE(FMT(_("Uitslag van paar %s '%s' voor '%s'%s"), names::PairnrSession2SessionText(pair), names::PairnrSession2GlobalText(pair), cfg::GetDescription(), sessionString ));
+    ADDLINE(FMT(_("Result of pair %s '%s' for '%s'%s"), names::PairnrSession2SessionText(pair), names::PairnrSession2GlobalText(pair), cfg::GetDescription(), sessionString ));
     ADDLINE(ES);
 
     if (svSessionResult[pair].maxScore == 0)
     {
-        ADDLINE(_("Paar heeft (nog) niet gespeeld"));
+        ADDLINE(_("Pair has not played (yet)"));
         m_choiceResult = ResultPair;
         ShowChoice();
         return;
@@ -1210,11 +1210,11 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
     UINT sumTops    = 0;
     for (UINT game = 1; game <= maxGame; ++game)
     {
-        tmp.Printf(_("Spel %2u: "), game+firstGame);
+        tmp.Printf(_("Game %2u: "), game+firstGame);
         PlayerInfo playerInfo;
         if (!GetPlayerInfo(pair, game, playerInfo))
         {
-            ADDLINE(tmp + _(" niet gespeeld"));
+            ADDLINE(tmp + _(" not played"));
             if ((game % setSize) == 0)
                 ADDLINE(ES);
             continue;
@@ -1225,13 +1225,13 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
         long points = GetSetResult(pair, game, 1);
         sumPoints  += points;
         sumTops    += top;
-        tmp        += playerInfo.bIsNS ? _("NZ") : _("OW");
+        tmp        += playerInfo.bIsNS ? _("NS") : _("EW");
         tmp        += FMT(_(", score: %5s"), score::ScoreToString(score)  );
-        tmp        += FMT(_(", punten%6s" ), LongToAscii1(points)         );
+        tmp        += FMT(_(", points%6s" ), LongToAscii1(points)         );
         tmp        += FMT(  " %3ld%%"      , (points*10+top/2)/top        );
 
         if ((game % setSize) == 1)  // first game of set, show opponent
-            tmp += FMT(_(" Tegenpaar (%s): %s"), names::PairnrSession2SessionText(playerInfo.opponent), names::PairnrSession2GlobalText(playerInfo.opponent));
+            tmp += FMT(_(" Played against (%s): %s"), names::PairnrSession2SessionText(playerInfo.opponent), names::PairnrSession2GlobalText(playerInfo.opponent));
         if ((game % setSize) != 0)
         {
             ADDLINE(tmp);   // output info about this game
@@ -1249,7 +1249,7 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
     wxString    corrections = GetSessionCorrectionString(pair);
     corrections.Replace(" ", ES, true);
     if (!corrections.empty()) corrections = ' ' + corrections;
-    ADDLINE(FMT(_("aantal punten: %s (%i), eindscore: %s%%%s, rang: %u"),
+    ADDLINE(FMT(_("points: %s (%i), endscore: %s%%%s, rank: %u"),
         LongToAscii1(svSessionResult[pair].points),
                         svSessionResult[pair].maxScore,
         LongToAscii2(score),
@@ -1267,13 +1267,13 @@ void CalcScore::OnCalcResultGame(const wxCommandEvent& a_evt)
     AUTOTEST_BUSY("resultGame");
     UINT        game            = 1U + a_evt.GetInt();
     auto        session         = cfg::GetActiveSession();
-    wxString    sessionString   = session >= 1 ? FMT(_(", zitting %u"), session) : "" ;
+    wxString    sessionString   = session >= 1 ? FMT(_(", session %u"), session) : "" ;
 
     m_txtFileResultGame.Clear();
 #undef ADDLINE
 #define ADDLINE m_txtFileResultGame.AddLine
     ADDLINE(ES);
-    ADDLINE(FMT(_("Uitslag van spel %u voor '%s'%s"), game, cfg::GetDescription(), sessionString ));
+    ADDLINE(FMT(_("Result of game %u for '%s'%s"), game, cfg::GetDescription(), sessionString ));
     ADDLINE(ES);
 
     for (auto& frq : svFrqstringTable[game])
@@ -1288,7 +1288,7 @@ void CalcScore::OnCalcResultGame(const wxCommandEvent& a_evt)
 
     for (int count = 1; count <= setsPerLine; ++count)
     {
-        tmp += FMT(_("  NZ   OW  SCORE       "));
+        tmp += FMT(_("  NS   EW  SCORE       "));
     }
     ADDLINE(tmp);
     tmp.clear();

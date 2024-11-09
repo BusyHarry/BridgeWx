@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 15:47+0100\n"
-"PO-Revision-Date: 2024-11-07 15:48+0100\n"
+"POT-Creation-Date: 2024-11-09 13:16+0100\n"
+"PO-Revision-Date: 2024-11-09 13:21+0100\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -247,7 +247,7 @@ msgstr "frequentiestaten"
 msgid "group"
 msgstr "groep"
 
-#: ..\src\calcScore.cpp:229
+#: ..\src\calcScore.cpp:229 ..\src\main.cpp:734
 msgid "session"
 msgstr "zitting"
 
@@ -544,6 +544,7 @@ msgid "ChoiceMC::SetPopupWidth() size=%i, cols=%u, breedte=%i"
 msgstr "ChoiceMC::SetPopupWidth() size=%i, cols=%u, breedte=%i"
 
 #: ..\src\correctionsEnd.cpp:35 ..\src\correctionsSession.cpp:44
+#: ..\src\main.cpp:735
 msgid "pair"
 msgstr "paar"
 
@@ -1275,20 +1276,20 @@ msgid "This will end the program"
 msgstr "Dit zal het programma beeindigen"
 
 #: ..\src\main.cpp:568
+msgid "&Match"
+msgstr "&Wedstrijd"
+
+#: ..\src\main.cpp:568
 msgid "Setup for the active match"
 msgstr "Instellingen tbv de aktieve wedstrijd"
 
-#: ..\src\main.cpp:568
-msgid "setup &Match"
-msgstr "&Wedstrijd instellingen"
+#: ..\src\main.cpp:569
+msgid "&Schema"
+msgstr "Schema"
 
 #: ..\src\main.cpp:569
 msgid "Entry/change of schema"
 msgstr "Ingave/wijzigen van schema"
-
-#: ..\src\main.cpp:569
-msgid "setup &Schema"
-msgstr "opzetten &Schema"
 
 #: ..\src\main.cpp:570 ..\src\nameEditor.cpp:51
 msgid "Entry/change of pair/clubnames"
@@ -1310,33 +1311,33 @@ msgstr "paarnamen &Toekennen"
 msgid "Entry/change of scores"
 msgstr "Ingeven/aanpassen scores"
 
-#: ..\src\main.cpp:575
-msgid "s&Core-entry"
-msgstr "ingave &Scores"
+#: ..\src\main.cpp:575 ..\src\main.cpp:603
+msgid "s&Cores"
+msgstr "&Scores"
+
+#: ..\src\main.cpp:576
+msgid "&Sessioncorrections"
+msgstr "&Zitting correcties"
 
 #: ..\src\main.cpp:576
 msgid "Entry/change of session corrections"
 msgstr "Ingeven/aanpassen correcties tbv een zitting"
 
-#: ..\src\main.cpp:576
-msgid "entry &Sessioncorrections"
-msgstr "ingave &Zitting correcties"
+#: ..\src\main.cpp:577
+msgid "&Endcorrections"
+msgstr "&Eind correcties"
 
 #: ..\src\main.cpp:577
 msgid "Entry/change of end corrections"
 msgstr "Ingeven/aanpassen correcties voor de einduitslag"
 
-#: ..\src\main.cpp:577
-msgid "entry &Endcorrections"
-msgstr "ingave &Eind correcties"
+#: ..\src\main.cpp:578
+msgid "&Results"
+msgstr "&Uitslag"
 
 #: ..\src\main.cpp:578
 msgid "Calculation of session/end result"
 msgstr "Berekenen van de zitting/eind uitslag"
-
-#: ..\src\main.cpp:578
-msgid "calculation &Result"
-msgstr "berekenen &Uitslag"
 
 #: ..\src\main.cpp:581
 msgid "&Log window"
@@ -1445,10 +1446,6 @@ msgstr "&Bestand"
 #: ..\src\main.cpp:602
 msgid "&Settings"
 msgstr "&Instellingen"
-
-#: ..\src\main.cpp:603
-msgid "s&Cores"
-msgstr "&Scores"
 
 #: ..\src\main.cpp:604
 msgid "&Tools"
@@ -1563,54 +1560,58 @@ msgstr "MenuOldType       := \"ewo\"      ; Extra: Wissel Oud"
 msgid "AllMenus          := [\"fn\",\"fp\",\"fg\",\"sm\",\"ss\",\"se\",\"sa\",\"cc\",\"cs\",\"ce\",\"cr\",\"two\",\"twn\"]"
 msgstr "AllMenus          := [\"bn\",\"bp\",\"bg\",\"iw\",\"is\",\"ii\",\"it\",\"ss\",\"sz\",\"se\",\"su\",\"ewo\",\"ewn\"]"
 
-#: ..\src\main.cpp:769
+#: ..\src\main.cpp:733
+msgid "changed"
+msgstr "gewijzigd"
+
+#: ..\src\main.cpp:774
 #, c-format
 msgid "Menu backup current(%u: %s)"
 msgstr "Menu backup current(%u: %s)"
 
-#: ..\src\main.cpp:780
+#: ..\src\main.cpp:785
 #, c-format
 msgid "Menu old page(%u: %s)"
 msgstr "Menu old page(%u: %s)"
 
-#: ..\src\main.cpp:788
+#: ..\src\main.cpp:793
 #, c-format
 msgid "Menu old show(%u)"
 msgstr "Menu old show(%u)"
 
-#: ..\src\main.cpp:794
+#: ..\src\main.cpp:799
 #, c-format
 msgid "Menu new page(%u)"
 msgstr "Menu new page(%u)"
 
-#: ..\src\main.cpp:837
+#: ..\src\main.cpp:842
 #, c-format
 msgid "OnMenu(%u), id unknown!"
 msgstr "OnMenu(%u), id unknown!"
 
-#: ..\src\main.cpp:841
+#: ..\src\main.cpp:846
 #, c-format
 msgid "Menu new show(%u: %s)"
 msgstr "Menu new show(%u: %s)"
 
-#: ..\src\main.cpp:870
+#: ..\src\main.cpp:875
 msgid "Choose a language (and restart)"
 msgstr "Kies een taal (en start opnieuw op)"
 
-#: ..\src\main.cpp:870
+#: ..\src\main.cpp:875
 msgid "Language selection"
 msgstr "Taalselectie"
 
-#: ..\src\main.cpp:880
+#: ..\src\main.cpp:885
 #, c-format
 msgid "Languagechoice: id=%d, name=%s"
 msgstr "Taalkeuze: id=%d, naam=%s"
 
-#: ..\src\main.cpp:887
+#: ..\src\main.cpp:892
 msgid "Choose a file for printing"
 msgstr "Kies een bestand om te printen"
 
-#: ..\src\main.cpp:891
+#: ..\src\main.cpp:896
 #, c-format
 msgid "Printing file <%s>"
 msgstr "Afdrukken van bestand <%s>"
@@ -2343,3 +2344,12 @@ msgstr "1 januari 2024"
 #: ..\src\version.h:15
 msgid "monday"
 msgstr "maandag"
+
+#~ msgid "setup &Schema"
+#~ msgstr "opzetten &Schema"
+
+#~ msgid "s&Core-entry"
+#~ msgstr "ingave &Scores"
+
+#~ msgid "calculation &Result"
+#~ msgstr "berekenen &Uitslag"

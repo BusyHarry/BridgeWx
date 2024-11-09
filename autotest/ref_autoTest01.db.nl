@@ -19,7 +19,7 @@
 databaseVersion=100
 programVersion="BridgeWx" versie x9.99, 1 januari 2024
 comment=(c)opyright 1991-2024 hl/tc
-description=<auto-test, session 1>
+description=<auto-test, zitting 1>
 session=3
 printer=list
 maxAbsent=3
@@ -38,7 +38,7 @@ centralNames=0
 2={"paar 2",0}
 3={"paar 3",0}
 4={"paar 4",0}
-5={"changed pair 5",0}
+5={"gewijzigd paar 5",0}
 6={"paar 6",0}
 7={"paar 7",0}
 8={"paar 8",0}
@@ -54,7 +54,7 @@ centralNames=0
 18={"paar 18",0}
 19={"paar 19",0}
 [1]
-description=<auto-test, session 1>
+description=<auto-test, zitting 1>
 schema={28,4,1}@{8,0,"7multi08","A"}@{10,8,"7multi10","B"}
 assignments= 1@2@3@4@5@6@7@8@9@10@11@12@13@14@15@0@17@18
 assignmentsName= A1@A2@A3@A4@A5@A6@A7@A8@B1@B2@B3@B4@B5@B6@B7@???@B9@B10
@@ -93,7 +93,7 @@ totalrank= 15@4@3@11@7@13@8@18@2@5@17@1@9@14@12@6@10@0@19
 27= {3,8,120,-120}@{5,4,-250,250}@{6,2,130,-130}@{7,1,-130,130}@{11,10,160,-160}@{13,9,150,-150}@{15,14,170,-170}@{18,12,140,-140}
 28= {3,8,120,-120}@{5,4,-260,260}@{6,2,140,-140}@{7,1,-130,130}@{11,10,170,-170}@{13,9,150,-150}@{15,14,170,-170}@{18,12,50,-50}
 [2]
-description=<auto-test, session 2>
+description=<auto-test, zitting 2>
 schema={28,4,1}@{8,0,"7multi08","A"}@{10,8,"7multi10","B"}
 assignments= 15@4@3@11@7@13@8@18@17@5@1@9@14@12@6@0@10@16
 assignmentsName= B3@???@A3@A2@B2@B7@A5@A7@B4@B9@A4@B6@A6@B5@A1@B10@B1@A8
@@ -132,7 +132,7 @@ totalrank= 3@15@11@6@8@18@1@16@7@14@2@4@17@13@9@12@5@10@19
 27= {3,8,120,-120}@{5,4,-250,250}@{6,2,130,-130}@{7,1,-130,130}@{11,10,160,-160}@{13,9,150,-150}@{15,14,170,-170}@{18,12,140,-140}
 28= {3,8,120,-120}@{5,4,-260,260}@{6,2,140,-140}@{7,1,-130,130}@{11,10,170,-170}@{13,9,150,-150}@{15,14,170,-170}@{18,12,50,-50}
 [3]
-description=<auto-test, session 3>
+description=<auto-test, zitting 3>
 schema={28,4,1}@{8,0,"7multi08","A"}@{10,8,"7multi10","B"}
 assignments= 3@15@11@6@8@18@1@16@7@14@2@4@17@13@9@0@5@10
 assignmentsName= A7@B3@A1@B4@B9@A4@B1@A5@B7@B10@A3@???@B6@B2@A2@A8@B5@A6

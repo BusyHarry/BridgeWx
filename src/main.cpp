@@ -565,17 +565,17 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     menuFile->Append(ID_EXIT                , _("&Exit"               ), _("This will end the program"      ));
  
     wxMenu *menuSettings = new wxMenu;
-    menuSettings->Append(ID_MENU_SETUPGAME  , _("setup &Match"           ), _("Setup for the active match"                      ));
-    menuSettings->Append(ID_MENU_SETUPSCHEMA, _("setup &Schema"          ), _("Entry/change of schema"                          ));
+    menuSettings->Append(ID_MENU_SETUPGAME  , _("&Match"                 ), _("Setup for the active match"                      ));
+    menuSettings->Append(ID_MENU_SETUPSCHEMA, _("&Schema"                ), _("Entry/change of schema"                          ));
     menuSettings->Append(ID_MENU_NAMEEDITOR , _("pairnames &Entry/change"), _("Entry/change of pair/clubnames"                  ));
     menuSettings->Append(ID_MENU_ASSIGNNAMES, _("pairnames &Assigment"   ), _("Connect a global pairname to a sessionpairnumber"));
     
     
     wxMenu *menuScores = new wxMenu;
-    menuScores->Append(ID_MENU_SCORE_ENTRY      , _("s&Core-entry"             ), _("Entry/change of scores"             ));
-    menuScores->Append(ID_MENU_COR_ENTRY_SESSION, _("entry &Sessioncorrections"), _("Entry/change of session corrections"));
-    menuScores->Append(ID_MENU_COR_ENTRY_END    , _("entry &Endcorrections"    ), _("Entry/change of end corrections"    ));
-    menuScores->Append(ID_MENU_CALC_SCORES      , _("calculation &Result"      ), _("Calculation of session/end result"  ));
+    menuScores->Append(ID_MENU_SCORE_ENTRY      , _("s&Cores"            ), _("Entry/change of scores"             ));
+    menuScores->Append(ID_MENU_COR_ENTRY_SESSION, _("&Sessioncorrections"), _("Entry/change of session corrections"));
+    menuScores->Append(ID_MENU_COR_ENTRY_END    , _("&Endcorrections"    ), _("Entry/change of end corrections"    ));
+    menuScores->Append(ID_MENU_CALC_SCORES      , _("&Results"           ), _("Calculation of session/end result"  ));
     
     wxMenu *menuExtra = new wxMenu;
     menuExtra->AppendCheckItem(ID_MENU_LOG      , _("&Log window"               ), _("Enable/disable logging window"     ));
@@ -729,6 +729,11 @@ void MyFrame::AutotestCreatePositions()
     positionsFile.AddLine(    _("AllMenus          := [\"fn\",\"fp\",\"fg\",\"sm\",\"ss\",\"se\",\"sa\",\"cc\",\"cs\",\"ce\",\"cr\",\"two\",\"twn\"]"));
     positionsFile.AddLine(    ";\n;windowrelative-positions");
     positionsFile.AddLine(    ";s* vars are screen-coordinates, TL=TopLeft, TR=TopRight, BR=BottomRight\n;");
+    positionsFile.AddLine(    ";some vars and there value in the current language");
+    positionsFile.AddLine(    "sChanged  := \"" + _("changed") + '"');
+    positionsFile.AddLine(    "sSession  := \"" + _("session") + '"');
+    positionsFile.AddLine(    "sPair     := \"" + _("pair"   ) + '"');
+
   
     wxCommandEvent event;
     for (auto menuId = ID_MENU_SETUP_FIRST + 1; menuId < ID_MENU_SETUP_LAST; ++menuId)

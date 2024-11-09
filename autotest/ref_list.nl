@@ -10,7 +10,7 @@ Opslagtype  : .db
 
 Wedstrijdinstellingen pagina:
 
-Beschrijving      : <auto-test, session 1>
+Beschrijving      : <auto-test, zitting 1>
 Max % afwezig     : 52.50
 MinMax clubparen  : 1-120
 Neuberg           : ja
@@ -33,14 +33,14 @@ groep groepletters paren schema          afwezig paar
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-deelnemers lijst van <auto-test, session 1>
+deelnemers lijst van <auto-test, zitting 1>
 
     paarnaam                        clubnaam                   club id
   1 paar 1
   2 paar 2
   3 paar 3
   4 paar 4
-  5 changed pair 5
+  5 gewijzigd paar 5
   6 paar 6
   7 paar 7
   8 paar 8
@@ -58,14 +58,14 @@ deelnemers lijst van <auto-test, session 1>
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Paarnaam toekenning voor '<auto-test, session 1>', zitting 1
+Paarnaam toekenning voor '<auto-test, zitting 1>', zitting 1
 
 Paar naam
   A1 paar 1
   A2 paar 2
   A3 paar 3
   A4 paar 4
-  A5 changed pair 5
+  A5 gewijzigd paar 5
   A6 paar 6
   A7 paar 7
   A8 paar 8
@@ -85,7 +85,7 @@ Paar naam
   2 paar 2                          A2
   3 paar 3                          A3
   4 paar 4                          A4
-  5 changed pair 5                  A5
+  5 gewijzigd paar 5                A5
   6 paar 6                          A6
   7 paar 7                          A7
   8 paar 8                          A8
@@ -103,7 +103,7 @@ Paar naam
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 1
+Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', ronde 1
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1   1    A1     A2    0                 paar 1                          paar 2
@@ -114,7 +114,7 @@ Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 1
   6   6    A3    *A4    100
   7   7   *A3    *A4    110
   8   8    A3     A4    120
-  9   9    A5    *A6    130               changed pair 5                  paar 6
+  9   9    A5    *A6    130               gewijzigd paar 5                paar 6
  10  10   *A5    *A6    140
  11  11    A5     A6    150
  12  12   *A5     A6    160
@@ -141,7 +141,7 @@ Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 1
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 2
+Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', ronde 2
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1  17    A1     A8    -140              paar 1                          paar 8
@@ -152,7 +152,7 @@ Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 2
   6  10   *A2    *A7    -190
   7  11    A2     A7    -200
   8  12   *A2     A7    -210
-  9  25    A5    *A4    -230              changed pair 5                  paar 4
+  9  25    A5    *A4    -230              gewijzigd paar 5                paar 4
  10  26   *A5    *A4    -240
  11  27    A5     A4    -250
  12  28   *A5     A4    -260
@@ -179,7 +179,7 @@ Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 2
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 3
+Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', ronde 3
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1  17    A3     A2    150               paar 3                          paar 2
@@ -190,7 +190,7 @@ Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 3
   6  14    A4     A1    300
   7  15   *A4     A1    -500
   8  16    A4    *A1    -500
-  9  21   *A5     A8    160               changed pair 5                  paar 8
+  9  21   *A5     A8    160               gewijzigd paar 5                paar 8
  10  22    A5    *A8    -160
  11  23   *A5    *A8    -160
  12  24    A5     A8    R150     R110
@@ -217,7 +217,7 @@ Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 3
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 4
+Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', ronde 4
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1  21   *A2     A4    50                paar 2                          paar 4
@@ -232,7 +232,7 @@ Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 4
  10   2   *A6     A8    80
  11   3    A6    *A8    90
  12   4   *A6    *A8    %80      R620
- 13  17    A7     A5    -420              paar 7                          changed pair 5
+ 13  17    A7     A5    -420              paar 7                          gewijzigd paar 5
  14  18   *A7     A5    -420
  15  19    A7    *A5    420
  16  20   *A7    *A5    620
@@ -255,14 +255,14 @@ Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 4
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 5
+Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', ronde 5
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1  21   *A1     A6    100               paar 1                          paar 6
   2  22    A1    *A6    100
   3  23   *A1    *A6    100
   4  24    A1     A6    100
-  5  13   *A2    *A5    110               paar 2                          changed pair 5
+  5  13   *A2    *A5    110               paar 2                          gewijzigd paar 5
   6  14    A2     A5    110
   7  15   *A2     A5    110
   8  16    A2    *A5    110
@@ -293,7 +293,7 @@ Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 5
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 6
+Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', ronde 6
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1   5   *A2     A8    -100              paar 2                          paar 8
@@ -304,7 +304,7 @@ Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 6
   6  18   *A4     A6    -110
   7  19    A4    *A6    -110
   8  20   *A4    *A6    -110
-  9   1    A5     A3    -120              changed pair 5                  paar 3
+  9   1    A5     A3    -120              gewijzigd paar 5                paar 3
  10   2   *A5     A3    -120
  11   3    A5    *A3    -120
  12   4   *A5    *A3    -120
@@ -331,10 +331,10 @@ Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 6
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 7
+Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', ronde 7
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1   5   *A1     A5    -100              paar 1                          changed pair 5
+  1   5   *A1     A5    -100              paar 1                          gewijzigd paar 5
   2   6    A1    *A5    100
   3   7   *A1    *A5    150
   4   8    A1     A5    200
@@ -369,13 +369,13 @@ Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', ronde 7
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', spel 17
+Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', spel 17
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1  17    A1     A8    -140              paar 1                          paar 8
   2  17    A3     A2    150               paar 3                          paar 2
   3  17    A4     A6    -110              paar 4                          paar 6
-  4  17    A7     A5    -420              paar 7                          changed pair 5
+  4  17    A7     A5    -420              paar 7                          gewijzigd paar 5
   5  17    B5     B4    -1200             paar 13                         paar 12
   6  17    B6     B1    -150              paar 14                         paar 9
   7  17    B7     B3    150               paar 15                         paar 11
@@ -383,12 +383,12 @@ Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', spel 17
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', spel 2
+Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', spel 2
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1   2   *A1     A2    70                paar 1                          paar 2
   2   2   *A4     A7                      paar 4                          paar 7
-  3   2   *A5     A3    -120              changed pair 5                  paar 3
+  3   2   *A5     A3    -120              gewijzigd paar 5                paar 3
   4   2   *A6     A8    80                paar 6                          paar 8
   5   2   *B1     B2    230               paar 9                          paar 10
   6   2   *B3     B9    140               paar 11                         paar 17
@@ -397,12 +397,12 @@ Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', spel 2
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', spel 2
+Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', spel 2
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1   2   *A1     A2    70                paar 1                          paar 2
   2   2   *A4     A7     130              paar 4                          paar 7
-  3   2   *A5     A3    -120              changed pair 5                  paar 3
+  3   2   *A5     A3    -120              gewijzigd paar 5                paar 3
   4   2   *A6     A8    80                paar 6                          paar 8
   5   2   *B1     B2    230               paar 9                          paar 10
   6   2   *B3     B9    140               paar 11                         paar 17
@@ -411,16 +411,16 @@ Overzicht van de scores van zitting 1 voor '<auto-test, session 1>', spel 2
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de zittingcorrecties voor '<auto-test, session 1>', zitting 1
+Overzicht van de zittingcorrecties voor '<auto-test, zitting 1>', zitting 1
 
     paar  paarnaam                        %    mp    max   extra
   1 A1    paar 1                                     2     1
   3 A3    paar 3                               10
-  5 A5    changed pair 5                  3
+  5 A5    gewijzigd paar 5                3
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de eindcorrecties voor '<auto-test, session 1>', zitting 1
+Overzicht van de eindcorrecties voor '<auto-test, zitting 1>', zitting 1
 
     paar  paarnaam                        score   bonus   spellen
   2 A2    paar 2                          50.00           28
@@ -428,7 +428,7 @@ Overzicht van de eindcorrecties voor '<auto-test, session 1>', zitting 1
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Zitting uitslag
-'<auto-test, session 1>'
+'<auto-test, zitting 1>'
 uitslag van zitting 1
 
 rang paar paarnaam                        tot.    max  score  korr.     A B
@@ -440,7 +440,7 @@ rang paar paarnaam                        tot.    max  score  korr.     A B
    6   B5 paar 13  . . . . . . . . . . .  215.7   392  55.03%           . 3
    7   A8 paar 8 . . . . . . . . . . . .  213.1   392  54.36%           4 .
    8  B10 paar 18  . . . . . . . . . . .  172.7   336  51.40%           . 4
-   9   A5 changed pair 5 . . . . . . . .  179.8   392  48.87% (  +3%)   5 .
+   9   A5 gewijzigd paar 5 . . . . . . .  179.8   392  48.87% (  +3%)   5 .
    9   B9 paar 17  . . . . . . . . . . .  164.2   336  48.87%           . 5
   11   A1 paar 1 . . . . . . . . . . . .  192.1   394  48.76% ( 0.50)   6 .
   12   B1 paar 9 . . . . . . . . . . . .  155.3   336  46.22%           . 6
@@ -453,7 +453,7 @@ rang paar paarnaam                        tot.    max  score  korr.     A B
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Zitting uitslag op naam
-'<auto-test, session 1>'
+'<auto-test, zitting 1>'
 uitslag van zitting 1
 
 rang paar paarnaam                        tot.    max  score  korr.     A B
@@ -461,7 +461,7 @@ rang paar paarnaam                        tot.    max  score  korr.     A B
   16   A2 paar 2 . . . . . . . . . . . .  127     392  32.40%           8 .
    3   A3 paar 3 . . . . . . . . . . . .  253.2   392  64.59% ( +10m)   2 .
    2   A4 paar 4 . . . . . . . . . . . .  254.3   392  64.87%           1 .
-   9   A5 changed pair 5 . . . . . . . .  179.8   392  48.87% (  +3%)   5 .
+   9   A5 gewijzigd paar 5 . . . . . . .  179.8   392  48.87% (  +3%)   5 .
   15   A6 paar 6 . . . . . . . . . . . .  150.1   392  38.29%           7 .
    5   A7 paar 7 . . . . . . . . . . . .  219.4   392  55.97%           3 .
    7   A8 paar 8 . . . . . . . . . . . .  213.1   392  54.36%           4 .
@@ -479,7 +479,7 @@ rang paar paarnaam                        tot.    max  score  korr.     A B
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Frequentie staten
-'<auto-test, session 1>'
+'<auto-test, zitting 1>'
 uitslag van zitting 1
 
 
@@ -581,14 +581,14 @@ scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW
 
 Groep uitslag
 
-Groep-uitslag van wedstrijd '<auto-test, session 1>', zitting 1
+Groep-uitslag van wedstrijd '<auto-test, zitting 1>', zitting 1
 
                          spellen : 1-4   5-8   9-12 13-16 17-20 21-24 25-28  extra  kor  kor.  tot   score
   1 paar 1 . . . . . . . . . . . .  24    35.6   7.6  37.9  13    25    48    1/2    0%   0mp  192.1 48.76%
   2 paar 2 . . . . . . . . . . . .  31    21.7   0.3  12    20     9    33    0/0    0%   0mp  127   32.40%
   3 paar 3 . . . . . . . . . . . .  46    32    45.6  51.6  36    11    21    0/0    0%  10mp  253.2 64.59%
   4 paar 4 . . . . . . . . . . . .  39.3  24    41    18    29    47    56    0/0    0%   0mp  254.3 64.87%
-  5 changed pair 5 . . . . . . . .   8.4  20.4  51.7  43.3  24    32     0    0/0    3%   0mp  179.8 48.87%
+  5 gewijzigd paar 5 . . . . . . .   8.4  20.4  51.7  43.3  24    32     0    0/0    3%   0mp  179.8 48.87%
   6 paar 6 . . . . . . . . . . . .  35.2  27.8   4.1   4    27    29    23    0/0    0%   0mp  150.1 38.29%
   7 paar 7 . . . . . . . . . . . .  16    33.8  53.6  32    32    44     8    0/0    0%   0mp  219.4 55.97%
   8 paar 8 . . . . . . . . . . . .  18    34.3  14.4  22.4  43    22    35    0/0    0%   0mp  213.1 54.36%
@@ -606,7 +606,7 @@ Groep-uitslag van wedstrijd '<auto-test, session 1>', zitting 1
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Totaal uitslag
-<auto-test, session 1>
+<auto-test, zitting 1>
 Totaal uitslag
 
 rang paarnaam                         Z1     totaal   gem.  A B
@@ -619,7 +619,7 @@ rang paarnaam                         Z1     totaal   gem.  A B
    7 paar 8 . . . . . . . . . . . .  54.36    54.36% 54.36  4 .
    8 paar 18  . . . . . . . . . . .  51.40    51.40% 51.40  . 4
    9 paar 2 . . . . . . . . . . . .  50.00    50.00% 50.00  5 .
-  10 changed pair 5 . . . . . . . .  48.87    48.87% 48.87  6 .
+  10 gewijzigd paar 5 . . . . . . .  48.87    48.87% 48.87  6 .
   10 paar 17  . . . . . . . . . . .  48.87    48.87% 48.87  . 5
   12 paar 1 . . . . . . . . . . . .  48.76    48.76% 48.76  7 .
   13 paar 9 . . . . . . . . . . . .  46.22    46.22% 46.22  . 6
@@ -632,14 +632,14 @@ rang paarnaam                         Z1     totaal   gem.  A B
 
 Uitslag per paar
 
-Uitslag van paar A1 'paar 1' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar A1 'paar 1' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1: NZ, score:     0, punten   5    36% Tegenpaar (A2): paar 2
 Spel  2: NZ, score:    70, punten   6    43%
 Spel  3: NZ, score:    70, punten   6    43%
 Spel  4: NZ, score:    80, punten   7    50% set-score: 24  (43%)
 
-Spel  5: NZ, score:  -100, punten   5    36% Tegenpaar (A5): changed pair 5
+Spel  5: NZ, score:  -100, punten   5    36% Tegenpaar (A5): gewijzigd paar 5
 Spel  6: NZ, score:   100, punten   9    64%
 Spel  7: NZ, score:   150, punten  10    71%
 Spel  8: NZ, score:   200, punten  11.6  83% set-score: 35.6(64%)
@@ -675,7 +675,7 @@ aantal punten: 192.1 (394), eindscore: 48.76% (0.50), rang: 11
 
 Uitslag per paar
 
-Uitslag van paar A2 'paar 2' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar A2 'paar 2' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1: OW, score:     0, punten   9    64% Tegenpaar (A1): paar 1
 Spel  2: OW, score:   -70, punten   8    57%
@@ -692,7 +692,7 @@ Spel 10: NZ, score:  -190, punten   0     0%
 Spel 11: NZ, score:  -200, punten   0     0%
 Spel 12: NZ, score:  -210, punten   0.3   2% set-score: 0.3(1%)
 
-Spel 13: NZ, score:   110, punten   2    14% Tegenpaar (A5): changed pair 5
+Spel 13: NZ, score:   110, punten   2    14% Tegenpaar (A5): gewijzigd paar 5
 Spel 14: NZ, score:   110, punten   2    14%
 Spel 15: NZ, score:   110, punten   4    29%
 Spel 16: NZ, score:   110, punten   4    29% set-score: 12  (21%)
@@ -718,9 +718,9 @@ aantal punten: 127   (392), eindscore: 32.40%, rang: 16
 
 Uitslag per paar
 
-Uitslag van paar A3 'paar 3' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar A3 'paar 3' voor '<auto-test, zitting 1>', zitting 1
 
-Spel  1: OW, score:   120, punten  12    86% Tegenpaar (A5): changed pair 5
+Spel  1: OW, score:   120, punten  12    86% Tegenpaar (A5): gewijzigd paar 5
 Spel  2: OW, score:   120, punten  12    86%
 Spel  3: OW, score:   120, punten  12    86%
 Spel  4: OW, score:   120, punten  10    71% set-score: 46  (82%)
@@ -761,7 +761,7 @@ aantal punten: 253.2 (392), eindscore: 64.59% (+10m), rang: 3
 
 Uitslag per paar
 
-Uitslag van paar A4 'paar 4' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar A4 'paar 4' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1: NZ, score:   130, punten  10    71% Tegenpaar (A7): paar 7
 Spel  2: NZ, score:   130, punten  10    71%
@@ -793,7 +793,7 @@ Spel 22: OW, score:  -100, punten   7    50%
 Spel 23: OW, score:   200, punten  14   100%
 Spel 24: OW, score:   300, punten  14   100% set-score: 47  (84%)
 
-Spel 25: OW, score:   230, punten  14   100% Tegenpaar (A5): changed pair 5
+Spel 25: OW, score:   230, punten  14   100% Tegenpaar (A5): gewijzigd paar 5
 Spel 26: OW, score:   240, punten  14   100%
 Spel 27: OW, score:   250, punten  14   100%
 Spel 28: OW, score:   260, punten  14   100% set-score: 56  (100%)
@@ -804,7 +804,7 @@ aantal punten: 254.3 (392), eindscore: 64.87%, rang: 2
 
 Uitslag per paar
 
-Uitslag van paar A5 'changed pair 5' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar A5 'gewijzigd paar 5' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1: NZ, score:  -120, punten   2    14% Tegenpaar (A3): paar 3
 Spel  2: NZ, score:  -120, punten   2    14%
@@ -847,7 +847,7 @@ aantal punten: 179.8 (392), eindscore: 48.87% (+3%), rang: 9
 
 Uitslag per paar
 
-Uitslag van paar A6 'paar 6' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar A6 'paar 6' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1: NZ, score:    70, punten   8    57% Tegenpaar (A8): paar 8
 Spel  2: NZ, score:    80, punten   8    57%
@@ -859,7 +859,7 @@ Spel  6: NZ, score:  -600, punten   2    14%
 Spel  7: NZ, score:  -150, punten   2    14%
 Spel  8: NZ, score:   %70, punten   9.8  70% set-score: 27.8(50%)
 
-Spel  9: OW, score:  -130, punten   0     0% Tegenpaar (A5): changed pair 5
+Spel  9: OW, score:  -130, punten   0     0% Tegenpaar (A5): gewijzigd paar 5
 Spel 10: OW, score:  -140, punten   2    14%
 Spel 11: OW, score:  -150, punten   2    14%
 Spel 12: OW, score:  -160, punten   0.1   1% set-score: 4.1(7%)
@@ -890,7 +890,7 @@ aantal punten: 150.1 (392), eindscore: 38.29%, rang: 15
 
 Uitslag per paar
 
-Uitslag van paar A7 'paar 7' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar A7 'paar 7' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1: OW, score:  -130, punten   4    29% Tegenpaar (A4): paar 4
 Spel  2: OW, score:  -130, punten   4    29%
@@ -912,7 +912,7 @@ Spel 14: NZ, score:   180, punten   6    43%
 Spel 15: NZ, score:   190, punten  10    71%
 Spel 16: NZ, score:   200, punten  10    71% set-score: 32  (57%)
 
-Spel 17: NZ, score:  -420, punten   2    14% Tegenpaar (A5): changed pair 5
+Spel 17: NZ, score:  -420, punten   2    14% Tegenpaar (A5): gewijzigd paar 5
 Spel 18: NZ, score:  -420, punten   2    14%
 Spel 19: NZ, score:   420, punten  14   100%
 Spel 20: NZ, score:   620, punten  14   100% set-score: 32  (57%)
@@ -933,7 +933,7 @@ aantal punten: 219.4 (392), eindscore: 55.97%, rang: 5
 
 Uitslag per paar
 
-Uitslag van paar A8 'paar 8' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar A8 'paar 8' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1: OW, score:   -70, punten   6    43% Tegenpaar (A6): paar 6
 Spel  2: OW, score:   -80, punten   6    43%
@@ -960,7 +960,7 @@ Spel 18: OW, score:   150, punten  10    71%
 Spel 19: OW, score:   160, punten  12    86%
 Spel 20: OW, score:   170, punten  13    93% set-score: 43  (77%)
 
-Spel 21: OW, score:  -160, punten   0     0% Tegenpaar (A5): changed pair 5
+Spel 21: OW, score:  -160, punten   0     0% Tegenpaar (A5): gewijzigd paar 5
 Spel 22: OW, score:   160, punten  12    86%
 Spel 23: OW, score:   160, punten  10    71%
 Spel 24: OW, score:  R110, punten   0     0% set-score: 22  (39%)
@@ -976,7 +976,7 @@ aantal punten: 213.1 (392), eindscore: 54.36%, rang: 7
 
 Uitslag per paar
 
-Uitslag van paar B1 'paar 9' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar B1 'paar 9' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1: NZ, score:   210, punten  14   100% Tegenpaar (B2): paar 10
 Spel  2: NZ, score:   230, punten  14   100%
@@ -1019,7 +1019,7 @@ aantal punten: 155.3 (336), eindscore: 46.22%, rang: 12
 
 Uitslag per paar
 
-Uitslag van paar B2 'paar 10' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar B2 'paar 10' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1: OW, score:  -210, punten   0     0% Tegenpaar (B1): paar 9
 Spel  2: OW, score:  -230, punten   0     0%
@@ -1062,7 +1062,7 @@ aantal punten: 101.6 (336), eindscore: 30.24%, rang: 17
 
 Uitslag per paar
 
-Uitslag van paar B3 'paar 11' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar B3 'paar 11' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1: NZ, score:   140, punten  12    86% Tegenpaar (B9): paar 17
 Spel  2: NZ, score:   140, punten  12    86%
@@ -1105,7 +1105,7 @@ aantal punten: 188.5 (336), eindscore: 56.10%, rang: 4
 
 Uitslag per paar
 
-Uitslag van paar B4 'paar 12' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar B4 'paar 12' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1: NZ, score:  -160, punten   0     0% Tegenpaar (B6): paar 14
 Spel  2: NZ, score:  -160, punten   0     0%
@@ -1148,7 +1148,7 @@ aantal punten: 168.9 (392), eindscore: 43.09%, rang: 14
 
 Uitslag per paar
 
-Uitslag van paar B5 'paar 13' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar B5 'paar 13' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1: NZ, score:     0, punten   5    36% Tegenpaar (B7): paar 15
 Spel  2: NZ, score:     0, punten   4    29%
@@ -1191,7 +1191,7 @@ aantal punten: 215.7 (392), eindscore: 55.03%, rang: 6
 
 Uitslag per paar
 
-Uitslag van paar B6 'paar 14' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar B6 'paar 14' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1: OW, score:   160, punten  14   100% Tegenpaar (B4): paar 12
 Spel  2: OW, score:   160, punten  14   100%
@@ -1234,7 +1234,7 @@ aantal punten: 155   (336), eindscore: 46.13%, rang: 13
 
 Uitslag per paar
 
-Uitslag van paar B7 'paar 15' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar B7 'paar 15' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1: OW, score:     0, punten   9    64% Tegenpaar (B5): paar 13
 Spel  2: OW, score:     0, punten  10    71%
@@ -1277,7 +1277,7 @@ aantal punten: 244.5 (336), eindscore: 72.77%, rang: 1
 
 Uitslag per paar
 
-Uitslag van paar ??? '' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar ??? '' voor '<auto-test, zitting 1>', zitting 1
 
 Paar heeft (nog) niet gespeeld
 
@@ -1285,7 +1285,7 @@ Paar heeft (nog) niet gespeeld
 
 Uitslag per paar
 
-Uitslag van paar B9 'paar 17' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar B9 'paar 17' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1: OW, score:  -140, punten   2    14% Tegenpaar (B3): paar 11
 Spel  2: OW, score:  -140, punten   2    14%
@@ -1328,7 +1328,7 @@ aantal punten: 164.2 (336), eindscore: 48.87%, rang: 9
 
 Uitslag per paar
 
-Uitslag van paar B10 'paar 18' voor '<auto-test, session 1>', zitting 1
+Uitslag van paar B10 'paar 18' voor '<auto-test, zitting 1>', zitting 1
 
 Spel  1:  niet gespeeld
 Spel  2:  niet gespeeld
@@ -1371,7 +1371,7 @@ aantal punten: 172.7 (336), eindscore: 51.40%, rang: 8
 
 Uitslag per spel
 
-Uitslag van spel 1 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 1 voor '<auto-test, zitting 1>', zitting 1
 
     spel 1         
 scoreNZ NZ    OW   
@@ -1392,7 +1392,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 2 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 2 voor '<auto-test, zitting 1>', zitting 1
 
     spel 2         
 scoreNZ NZ    OW   
@@ -1414,7 +1414,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 3 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 3 voor '<auto-test, zitting 1>', zitting 1
 
     spel 3         
 scoreNZ NZ    OW   
@@ -1436,7 +1436,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 4 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 4 voor '<auto-test, zitting 1>', zitting 1
 
     spel 4         
 scoreNZ NZ    OW   
@@ -1459,7 +1459,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 5 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 5 voor '<auto-test, zitting 1>', zitting 1
 
     spel 5         
 scoreNZ NZ    OW   
@@ -1480,7 +1480,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 6 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 6 voor '<auto-test, zitting 1>', zitting 1
 
     spel 6         
 scoreNZ NZ    OW   
@@ -1501,7 +1501,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 7 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 7 voor '<auto-test, zitting 1>', zitting 1
 
     spel 7         
 scoreNZ NZ    OW   
@@ -1523,7 +1523,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 8 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 8 voor '<auto-test, zitting 1>', zitting 1
 
     spel 8         
 scoreNZ NZ    OW   
@@ -1546,7 +1546,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 9 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 9 voor '<auto-test, zitting 1>', zitting 1
 
     spel 9         
 scoreNZ NZ    OW   
@@ -1567,7 +1567,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 10 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 10 voor '<auto-test, zitting 1>', zitting 1
 
     spel 10        
 scoreNZ NZ    OW   
@@ -1588,7 +1588,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 11 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 11 voor '<auto-test, zitting 1>', zitting 1
 
     spel 11        
 scoreNZ NZ    OW   
@@ -1610,7 +1610,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 12 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 12 voor '<auto-test, zitting 1>', zitting 1
 
     spel 12        
 scoreNZ NZ    OW   
@@ -1633,7 +1633,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 13 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 13 voor '<auto-test, zitting 1>', zitting 1
 
     spel 13        
 scoreNZ NZ    OW   
@@ -1654,7 +1654,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 14 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 14 voor '<auto-test, zitting 1>', zitting 1
 
     spel 14        
 scoreNZ NZ    OW   
@@ -1676,7 +1676,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 15 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 15 voor '<auto-test, zitting 1>', zitting 1
 
     spel 15        
 scoreNZ NZ    OW   
@@ -1698,7 +1698,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 16 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 16 voor '<auto-test, zitting 1>', zitting 1
 
     spel 16        
 scoreNZ NZ    OW   
@@ -1720,7 +1720,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 17 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 17 voor '<auto-test, zitting 1>', zitting 1
 
     spel 17        
 scoreNZ NZ    OW   
@@ -1741,7 +1741,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 18 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 18 voor '<auto-test, zitting 1>', zitting 1
 
     spel 18        
 scoreNZ NZ    OW   
@@ -1762,7 +1762,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 19 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 19 voor '<auto-test, zitting 1>', zitting 1
 
     spel 19        
 scoreNZ NZ    OW   
@@ -1784,7 +1784,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 20 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 20 voor '<auto-test, zitting 1>', zitting 1
 
     spel 20        
 scoreNZ NZ    OW   
@@ -1805,7 +1805,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 21 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 21 voor '<auto-test, zitting 1>', zitting 1
 
     spel 21        
 scoreNZ NZ    OW   
@@ -1827,7 +1827,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 22 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 22 voor '<auto-test, zitting 1>', zitting 1
 
     spel 22        
 scoreNZ NZ    OW   
@@ -1848,7 +1848,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 23 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 23 voor '<auto-test, zitting 1>', zitting 1
 
     spel 23        
 scoreNZ NZ    OW   
@@ -1870,7 +1870,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 24 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 24 voor '<auto-test, zitting 1>', zitting 1
 
     spel 24        
 scoreNZ NZ    OW   
@@ -1889,7 +1889,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 25 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 25 voor '<auto-test, zitting 1>', zitting 1
 
     spel 25        
 scoreNZ NZ    OW   
@@ -1910,7 +1910,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 26 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 26 voor '<auto-test, zitting 1>', zitting 1
 
     spel 26        
 scoreNZ NZ    OW   
@@ -1930,7 +1930,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 27 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 27 voor '<auto-test, zitting 1>', zitting 1
 
     spel 27        
 scoreNZ NZ    OW   
@@ -1952,7 +1952,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 28 voor '<auto-test, session 1>', zitting 1
+Uitslag van spel 28 voor '<auto-test, zitting 1>', zitting 1
 
     spel 28        
 scoreNZ NZ    OW   
@@ -1983,7 +1983,7 @@ groep groepletters paren schema          afwezig paar
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Paarnaam toekenning voor '<auto-test, session 2>', zitting 2
+Paarnaam toekenning voor '<auto-test, zitting 2>', zitting 2
 
 Paar naam
   A1 paar 15
@@ -1995,7 +1995,7 @@ Paar naam
   A7 paar 8
   A8 paar 18
   B1 paar 17
-  B2 changed pair 5
+  B2 gewijzigd paar 5
   B3 paar 1
   B4 paar 9
   B5 paar 14
@@ -2010,7 +2010,7 @@ Paar naam
   2 paar 2                          ???     A2         9       16
   3 paar 3                          A3      A3         3        3
   4 paar 4                          A2      A4         2        2
-  5 changed pair 5                  B2      A5        10        9
+  5 gewijzigd paar 5                B2      A5        10        9
   6 paar 6                          B7      A6        16       15
   7 paar 7                          A5      A7         5        5
   8 paar 8                          A7      A8         7        7
@@ -2028,7 +2028,7 @@ Paar naam
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 1
+Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 1
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1   1    A1     A2    0                 paar 15                         paar 4
@@ -2047,7 +2047,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 1
  14  14    A7     A8    180
  15  15   *A7     A8    190
  16  16    A7    *A8    200
- 17   1    B1     B2    210               paar 17                         changed pair 5
+ 17   1    B1     B2    210               paar 17                         gewijzigd paar 5
  18   2   *B1     B2    230
  19   3    B1    *B2    240
  20   4   *B1    *B2    260
@@ -2066,7 +2066,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 1
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 2
+Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 2
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1  17    A1     A8    -140              paar 15                         paar 18
@@ -2085,7 +2085,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 2
  14  14    A6     A3    -280
  15  15   *A6     A3    -300
  16  16    A6    *A3    -340
- 17   5   *B2     B9    -600              changed pair 5                  paar 10
+ 17   5   *B2     B9    -600              gewijzigd paar 5                paar 10
  18   6    B2    *B9    -800
  19   7   *B2    *B9    -1000
  20   8    B2     B9    -1100
@@ -2104,7 +2104,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 2
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 3
+Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 3
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1  17    A3     A2    150               paar 3                          paar 4
@@ -2123,7 +2123,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 3
  14   6    A6    *A7    -600
  15   7   *A6    *A7    -150
  16   8    A6     A7    %70      %70
- 17   9    B2    *B7    -50               changed pair 5                  paar 6
+ 17   9    B2    *B7    -50               gewijzigd paar 5                paar 6
  18  10   *B2    *B7    0
  19  11    B2     B7    90
  20  12   *B2     B7    %60      R630
@@ -2142,7 +2142,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 3
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 4
+Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 4
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1  21   *A2     A4    50                paar 4                          paar 11
@@ -2161,7 +2161,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 4
  14  18   *A7     A5    -420
  15  19    A7    *A5    420
  16  20   *A7    *A5    620
- 17  13   *B4    *B2    800               paar 9                          changed pair 5
+ 17  13   *B4    *B2    800               paar 9                          gewijzigd paar 5
  18  14    B4     B2    200
  19  15   *B4     B2    300
  20  16    B4    *B2    300
@@ -2180,7 +2180,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 4
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 5
+Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 5
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1  21   *A1     A6    100               paar 15                         paar 13
@@ -2218,7 +2218,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 5
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 6
+Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 6
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1   5   *A2     A8    -100              paar 4                          paar 18
@@ -2249,14 +2249,14 @@ Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 6
  26   2   *B4     B6    -160
  27   3    B4    *B6    -160
  28   4   *B4    *B6    -160
- 29  21   *B5     B2    -170              paar 14                         changed pair 5
+ 29  21   *B5     B2    -170              paar 14                         gewijzigd paar 5
  30  22    B5    *B2    -170
  31  23   *B5    *B2    -170
  32  24    B5     B2    -170
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 7
+Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 7
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1   5   *A1     A5    -100              paar 15                         paar 7
@@ -2279,7 +2279,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 7
  18  14    B1     B10   140
  19  15   *B1     B10   150
  20  16    B1    *B10   160
- 21  25    B3    *B2    140               paar 1                          changed pair 5
+ 21  25    B3    *B2    140               paar 1                          gewijzigd paar 5
  22  26   *B3    *B2    150
  23  27    B3     B2    160
  24  28   *B3     B2    170
@@ -2295,7 +2295,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, session 2>', ronde 7
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Zitting uitslag
-'<auto-test, session 2>'
+'<auto-test, zitting 2>'
 uitslag van zitting 2
 
 rang paar paarnaam                        tot.    max  score  korr.     A B
@@ -2315,12 +2315,12 @@ rang paar paarnaam                        tot.    max  score  korr.     A B
   14   B4 paar 9 . . . . . . . . . . . .  171     392  43.62%           . 8
   15   A6 paar 13  . . . . . . . . . . .  151     392  38.52%           7 .
   16   A2 paar 4 . . . . . . . . . . . .  128     392  32.65%           8 .
-  17   B2 changed pair 5 . . . . . . . .  103     336  30.65%           . 9
+  17   B2 gewijzigd paar 5 . . . . . . .  103     336  30.65%           . 9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Zitting uitslag op naam
-'<auto-test, session 2>'
+'<auto-test, zitting 2>'
 uitslag van zitting 2
 
 rang paar paarnaam                        tot.    max  score  korr.     A B
@@ -2333,7 +2333,7 @@ rang paar paarnaam                        tot.    max  score  korr.     A B
    5   A7 paar 8 . . . . . . . . . . . .  219     392  55.87%           3 .
    7   A8 paar 18  . . . . . . . . . . .  214     392  54.59%           4 .
   11   B1 paar 17  . . . . . . . . . . .  155     336  46.13%           . 6
-  17   B2 changed pair 5 . . . . . . . .  103     336  30.65%           . 9
+  17   B2 gewijzigd paar 5 . . . . . . .  103     336  30.65%           . 9
    4   B3 paar 1 . . . . . . . . . . . .  189     336  56.25%           . 2
   14   B4 paar 9 . . . . . . . . . . . .  171     392  43.62%           . 8
    6   B5 paar 14  . . . . . . . . . . .  216     392  55.10%           . 3
@@ -2346,7 +2346,7 @@ rang paar paarnaam                        tot.    max  score  korr.     A B
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Frequentie staten
-'<auto-test, session 2>'
+'<auto-test, zitting 2>'
 uitslag van zitting 2
 
 
@@ -2448,7 +2448,7 @@ scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW
 
 Groep uitslag
 
-Groep-uitslag van wedstrijd '<auto-test, session 2>', zitting 2
+Groep-uitslag van wedstrijd '<auto-test, zitting 2>', zitting 2
 
                          spellen : 1-4   5-8   9-12 13-16 17-20 21-24 25-28   tot   score
   1 paar 15  . . . . . . . . . . .  24    35     8    37    13    25    48    190   48.47%
@@ -2460,7 +2460,7 @@ Groep-uitslag van wedstrijd '<auto-test, session 2>', zitting 2
   7 paar 8 . . . . . . . . . . . .  16    34    53    32    32    44     8    219   55.87%
   8 paar 18  . . . . . . . . . . .  18    34    15    23    43    22    35    214   54.59%
   9 paar 17  . . . . . . . . . . .  55    13     0    24    46     3    14    155   46.13%
- 10 changed pair 5 . . . . . . . .   0     1    28    10     0    52    12    103   30.65%
+ 10 gewijzigd paar 5 . . . . . . .   0     1    28    10     0    52    12    103   30.65%
  11 paar 1 . . . . . . . . . . . .  47    53    10    19    16     0    44    189   56.25%
  12 paar 9 . . . . . . . . . . . .   1     3    26    46    18    52    25    171   43.62%
  13 paar 14  . . . . . . . . . . .  18    43    19    52    38     4    42    216   55.10%
@@ -2473,7 +2473,7 @@ Groep-uitslag van wedstrijd '<auto-test, session 2>', zitting 2
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Totaal uitslag
-<auto-test, session 2>
+<auto-test, zitting 2>
 Totaal uitslag
 
 rang paarnaam                         Z1     Z2     totaal   gem.  A B
@@ -2493,14 +2493,14 @@ rang paarnaam                         Z1     Z2     totaal   gem.  A B
   14 paar 13  . . . . . . . . . . .  55.03  38.52    93.55% 46.78  8 .
   15 paar 9 . . . . . . . . . . . .  46.22  43.62    89.84% 44.92  . 6
   16 paar 12  . . . . . . . . . . .  43.09  46.13    89.22% 44.61  . 7
-  17 changed pair 5 . . . . . . . .  48.87  30.65    79.52% 39.76  . 8
+  17 gewijzigd paar 5 . . . . . . .  48.87  30.65    79.52% 39.76  . 8
   18 paar 10  . . . . . . . . . . .  30.24  48.51    78.75% 39.38  . 9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Uitslag per paar
 
-Uitslag van paar A1 'paar 15' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar A1 'paar 15' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: NZ, score:     0, punten   5    36% Tegenpaar (A2): paar 4
 Spel  2: NZ, score:    70, punten   6    43%
@@ -2543,7 +2543,7 @@ aantal punten: 190   (392), eindscore: 48.47%, rang: 10
 
 Uitslag per paar
 
-Uitslag van paar A2 'paar 4' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar A2 'paar 4' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: OW, score:     0, punten   9    64% Tegenpaar (A1): paar 15
 Spel  2: OW, score:   -70, punten   8    57%
@@ -2586,7 +2586,7 @@ aantal punten: 128   (392), eindscore: 32.65%, rang: 16
 
 Uitslag per paar
 
-Uitslag van paar A3 'paar 3' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar A3 'paar 3' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: OW, score:   120, punten  12    86% Tegenpaar (A5): paar 7
 Spel  2: OW, score:   120, punten  12    86%
@@ -2629,7 +2629,7 @@ aantal punten: 244   (392), eindscore: 62.24%, rang: 3
 
 Uitslag per paar
 
-Uitslag van paar A4 'paar 11' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar A4 'paar 11' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: NZ, score:   130, punten  10    71% Tegenpaar (A7): paar 8
 Spel  2: NZ, score:   130, punten  10    71%
@@ -2672,7 +2672,7 @@ aantal punten: 253   (392), eindscore: 64.54%, rang: 2
 
 Uitslag per paar
 
-Uitslag van paar A5 'paar 7' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar A5 'paar 7' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: NZ, score:  -120, punten   2    14% Tegenpaar (A3): paar 3
 Spel  2: NZ, score:  -120, punten   2    14%
@@ -2715,7 +2715,7 @@ aantal punten: 179   (392), eindscore: 45.66%, rang: 13
 
 Uitslag per paar
 
-Uitslag van paar A6 'paar 13' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar A6 'paar 13' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: NZ, score:    70, punten   8    57% Tegenpaar (A8): paar 18
 Spel  2: NZ, score:    80, punten   8    57%
@@ -2758,7 +2758,7 @@ aantal punten: 151   (392), eindscore: 38.52%, rang: 15
 
 Uitslag per paar
 
-Uitslag van paar A7 'paar 8' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar A7 'paar 8' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: OW, score:  -130, punten   4    29% Tegenpaar (A4): paar 11
 Spel  2: OW, score:  -130, punten   4    29%
@@ -2801,7 +2801,7 @@ aantal punten: 219   (392), eindscore: 55.87%, rang: 5
 
 Uitslag per paar
 
-Uitslag van paar A8 'paar 18' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar A8 'paar 18' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: OW, score:   -70, punten   6    43% Tegenpaar (A6): paar 13
 Spel  2: OW, score:   -80, punten   6    43%
@@ -2844,9 +2844,9 @@ aantal punten: 214   (392), eindscore: 54.59%, rang: 7
 
 Uitslag per paar
 
-Uitslag van paar B1 'paar 17' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar B1 'paar 17' voor '<auto-test, zitting 2>', zitting 2
 
-Spel  1: NZ, score:   210, punten  14   100% Tegenpaar (B2): changed pair 5
+Spel  1: NZ, score:   210, punten  14   100% Tegenpaar (B2): gewijzigd paar 5
 Spel  2: NZ, score:   230, punten  14   100%
 Spel  3: NZ, score:   240, punten  14   100%
 Spel  4: NZ, score:   260, punten  13    93% set-score: 55  (98%)
@@ -2887,7 +2887,7 @@ aantal punten: 155   (336), eindscore: 46.13%, rang: 11
 
 Uitslag per paar
 
-Uitslag van paar B2 'changed pair 5' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar B2 'gewijzigd paar 5' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: OW, score:  -210, punten   0     0% Tegenpaar (B1): paar 17
 Spel  2: OW, score:  -230, punten   0     0%
@@ -2930,7 +2930,7 @@ aantal punten: 103   (336), eindscore: 30.65%, rang: 17
 
 Uitslag per paar
 
-Uitslag van paar B3 'paar 1' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar B3 'paar 1' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: NZ, score:   140, punten  12    86% Tegenpaar (B9): paar 10
 Spel  2: NZ, score:   140, punten  12    86%
@@ -2962,7 +2962,7 @@ Spel 22:  niet gespeeld
 Spel 23:  niet gespeeld
 Spel 24:  niet gespeeld
 
-Spel 25: NZ, score:   140, punten   8    57% Tegenpaar (B2): changed pair 5
+Spel 25: NZ, score:   140, punten   8    57% Tegenpaar (B2): gewijzigd paar 5
 Spel 26: NZ, score:   150, punten  11    79%
 Spel 27: NZ, score:   160, punten  12    86%
 Spel 28: NZ, score:   170, punten  13    93% set-score: 44  (79%)
@@ -2973,7 +2973,7 @@ aantal punten: 189   (336), eindscore: 56.25%, rang: 4
 
 Uitslag per paar
 
-Uitslag van paar B4 'paar 9' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar B4 'paar 9' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: NZ, score:  -160, punten   0     0% Tegenpaar (B6): paar 12
 Spel  2: NZ, score:  -160, punten   0     0%
@@ -2990,7 +2990,7 @@ Spel 10: OW, score:     0, punten   7    50%
 Spel 11: OW, score:     0, punten   8    57%
 Spel 12: OW, score:     0, punten   5    36% set-score: 26  (46%)
 
-Spel 13: NZ, score:   800, punten  13    93% Tegenpaar (B2): changed pair 5
+Spel 13: NZ, score:   800, punten  13    93% Tegenpaar (B2): gewijzigd paar 5
 Spel 14: NZ, score:   200, punten   8    57%
 Spel 15: NZ, score:   300, punten  12    86%
 Spel 16: NZ, score:   300, punten  13    93% set-score: 46  (82%)
@@ -3016,7 +3016,7 @@ aantal punten: 171   (392), eindscore: 43.62%, rang: 14
 
 Uitslag per paar
 
-Uitslag van paar B5 'paar 14' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar B5 'paar 14' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: NZ, score:     0, punten   5    36% Tegenpaar (B7): paar 6
 Spel  2: NZ, score:     0, punten   4    29%
@@ -3043,7 +3043,7 @@ Spel 18: NZ, score:   300, punten  14   100%
 Spel 19: NZ, score:   400, punten  12    86%
 Spel 20: NZ, score:   500, punten  12    86% set-score: 38  (68%)
 
-Spel 21: NZ, score:  -170, punten   0     0% Tegenpaar (B2): changed pair 5
+Spel 21: NZ, score:  -170, punten   0     0% Tegenpaar (B2): gewijzigd paar 5
 Spel 22: NZ, score:  -170, punten   0     0%
 Spel 23: NZ, score:  -170, punten   2    14%
 Spel 24: NZ, score:  -170, punten   2    14% set-score: 4  (7%)
@@ -3059,7 +3059,7 @@ aantal punten: 216   (392), eindscore: 55.10%, rang: 6
 
 Uitslag per paar
 
-Uitslag van paar B6 'paar 12' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar B6 'paar 12' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: OW, score:   160, punten  14   100% Tegenpaar (B4): paar 9
 Spel  2: OW, score:   160, punten  14   100%
@@ -3102,7 +3102,7 @@ aantal punten: 155   (336), eindscore: 46.13%, rang: 11
 
 Uitslag per paar
 
-Uitslag van paar B7 'paar 6' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar B7 'paar 6' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: OW, score:     0, punten   9    64% Tegenpaar (B5): paar 14
 Spel  2: OW, score:     0, punten  10    71%
@@ -3114,7 +3114,7 @@ Spel  6: OW, score:   140, punten  10    71%
 Spel  7: OW, score:   140, punten  10    71%
 Spel  8: OW, score:   140, punten  11    79% set-score: 43  (77%)
 
-Spel  9: OW, score:    50, punten   9    64% Tegenpaar (B2): changed pair 5
+Spel  9: OW, score:    50, punten   9    64% Tegenpaar (B2): gewijzigd paar 5
 Spel 10: OW, score:     0, punten   7    50%
 Spel 11: OW, score:   -90, punten   6    43%
 Spel 12: OW, score:  R630, punten   0     0% set-score: 22  (39%)
@@ -3145,7 +3145,7 @@ aantal punten: 242   (336), eindscore: 72.02%, rang: 1
 
 Uitslag per paar
 
-Uitslag van paar ??? '' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar ??? '' voor '<auto-test, zitting 2>', zitting 2
 
 Paar heeft (nog) niet gespeeld
 
@@ -3153,14 +3153,14 @@ Paar heeft (nog) niet gespeeld
 
 Uitslag per paar
 
-Uitslag van paar B9 'paar 10' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar B9 'paar 10' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: OW, score:  -140, punten   2    14% Tegenpaar (B3): paar 1
 Spel  2: OW, score:  -140, punten   2    14%
 Spel  3: OW, score:  -140, punten   2    14%
 Spel  4: OW, score:  -140, punten   2    14% set-score: 8  (14%)
 
-Spel  5: OW, score:   600, punten  14   100% Tegenpaar (B2): changed pair 5
+Spel  5: OW, score:   600, punten  14   100% Tegenpaar (B2): gewijzigd paar 5
 Spel  6: OW, score:   800, punten  14   100%
 Spel  7: OW, score:  1000, punten  14   100%
 Spel  8: OW, score:  1100, punten  13    93% set-score: 55  (98%)
@@ -3196,7 +3196,7 @@ aantal punten: 163   (336), eindscore: 48.51%, rang: 9
 
 Uitslag per paar
 
-Uitslag van paar B10 'paar 16' voor '<auto-test, session 2>', zitting 2
+Uitslag van paar B10 'paar 16' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1:  niet gespeeld
 Spel  2:  niet gespeeld
@@ -3239,7 +3239,7 @@ aantal punten: 173   (336), eindscore: 51.49%, rang: 8
 
 Uitslag per spel
 
-Uitslag van spel 1 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 1 voor '<auto-test, zitting 2>', zitting 2
 
     spel 1         
 scoreNZ NZ    OW   
@@ -3260,7 +3260,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 2 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 2 voor '<auto-test, zitting 2>', zitting 2
 
     spel 2         
 scoreNZ NZ    OW   
@@ -3282,7 +3282,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 3 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 3 voor '<auto-test, zitting 2>', zitting 2
 
     spel 3         
 scoreNZ NZ    OW   
@@ -3304,7 +3304,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 4 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 4 voor '<auto-test, zitting 2>', zitting 2
 
     spel 4         
 scoreNZ NZ    OW   
@@ -3327,7 +3327,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 5 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 5 voor '<auto-test, zitting 2>', zitting 2
 
     spel 5         
 scoreNZ NZ    OW   
@@ -3348,7 +3348,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 6 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 6 voor '<auto-test, zitting 2>', zitting 2
 
     spel 6         
 scoreNZ NZ    OW   
@@ -3369,7 +3369,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 7 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 7 voor '<auto-test, zitting 2>', zitting 2
 
     spel 7         
 scoreNZ NZ    OW   
@@ -3391,7 +3391,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 8 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 8 voor '<auto-test, zitting 2>', zitting 2
 
     spel 8         
 scoreNZ NZ    OW   
@@ -3414,7 +3414,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 9 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 9 voor '<auto-test, zitting 2>', zitting 2
 
     spel 9         
 scoreNZ NZ    OW   
@@ -3435,7 +3435,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 10 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 10 voor '<auto-test, zitting 2>', zitting 2
 
     spel 10        
 scoreNZ NZ    OW   
@@ -3456,7 +3456,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 11 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 11 voor '<auto-test, zitting 2>', zitting 2
 
     spel 11        
 scoreNZ NZ    OW   
@@ -3478,7 +3478,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 12 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 12 voor '<auto-test, zitting 2>', zitting 2
 
     spel 12        
 scoreNZ NZ    OW   
@@ -3501,7 +3501,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 13 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 13 voor '<auto-test, zitting 2>', zitting 2
 
     spel 13        
 scoreNZ NZ    OW   
@@ -3522,7 +3522,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 14 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 14 voor '<auto-test, zitting 2>', zitting 2
 
     spel 14        
 scoreNZ NZ    OW   
@@ -3544,7 +3544,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 15 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 15 voor '<auto-test, zitting 2>', zitting 2
 
     spel 15        
 scoreNZ NZ    OW   
@@ -3566,7 +3566,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 16 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 16 voor '<auto-test, zitting 2>', zitting 2
 
     spel 16        
 scoreNZ NZ    OW   
@@ -3588,7 +3588,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 17 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 17 voor '<auto-test, zitting 2>', zitting 2
 
     spel 17        
 scoreNZ NZ    OW   
@@ -3610,7 +3610,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 18 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 18 voor '<auto-test, zitting 2>', zitting 2
 
     spel 18        
 scoreNZ NZ    OW   
@@ -3631,7 +3631,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 19 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 19 voor '<auto-test, zitting 2>', zitting 2
 
     spel 19        
 scoreNZ NZ    OW   
@@ -3653,7 +3653,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 20 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 20 voor '<auto-test, zitting 2>', zitting 2
 
     spel 20        
 scoreNZ NZ    OW   
@@ -3674,7 +3674,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 21 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 21 voor '<auto-test, zitting 2>', zitting 2
 
     spel 21        
 scoreNZ NZ    OW   
@@ -3696,7 +3696,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 22 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 22 voor '<auto-test, zitting 2>', zitting 2
 
     spel 22        
 scoreNZ NZ    OW   
@@ -3717,7 +3717,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 23 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 23 voor '<auto-test, zitting 2>', zitting 2
 
     spel 23        
 scoreNZ NZ    OW   
@@ -3739,7 +3739,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 24 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 24 voor '<auto-test, zitting 2>', zitting 2
 
     spel 24        
 scoreNZ NZ    OW   
@@ -3758,7 +3758,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 25 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 25 voor '<auto-test, zitting 2>', zitting 2
 
     spel 25        
 scoreNZ NZ    OW   
@@ -3779,7 +3779,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 26 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 26 voor '<auto-test, zitting 2>', zitting 2
 
     spel 26        
 scoreNZ NZ    OW   
@@ -3799,7 +3799,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 27 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 27 voor '<auto-test, zitting 2>', zitting 2
 
     spel 27        
 scoreNZ NZ    OW   
@@ -3821,7 +3821,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 28 voor '<auto-test, session 2>', zitting 2
+Uitslag van spel 28 voor '<auto-test, zitting 2>', zitting 2
 
     spel 28        
 scoreNZ NZ    OW   
@@ -3852,7 +3852,7 @@ groep groepletters paren schema          afwezig paar
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Paarnaam toekenning voor '<auto-test, session 3>', zitting 3
+Paarnaam toekenning voor '<auto-test, zitting 3>', zitting 3
 
 Paar naam
   A1 paar 3
@@ -3871,7 +3871,7 @@ Paar naam
   B6 paar 13
   B7 paar 9
  ??? 
-  B9 changed pair 5
+  B9 gewijzigd paar 5
  B10 paar 10
 
     paarnaam                        paar nr paar Z-1 rang     rang Z-1
@@ -3879,7 +3879,7 @@ Paar naam
   2 paar 2                          B3      ???       11       16
   3 paar 3                          A1      A3         1        3
   4 paar 4                          B4      A2        12        2
-  5 changed pair 5                  B9      B2        17       13
+  5 gewijzigd paar 5                B9      B2        17       13
   6 paar 6                          A4      B7         4       15
   7 paar 7                          B1      A5         9        5
   8 paar 8                          A5      A7         5        7
@@ -3897,7 +3897,7 @@ Paar naam
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 1
+Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 1
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1   1    A1     A2    0                 paar 3                          paar 15
@@ -3928,14 +3928,14 @@ Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 1
  26  10   *B5    *B6    -70
  27  11    B5     B6    -80
  28  12   *B5     B6    -90
- 29  17    B9     B10   -100              changed pair 5                  paar 10
+ 29  17    B9     B10   -100              gewijzigd paar 5                paar 10
  30  18   *B9     B10   -110
  31  19    B9    *B10   -120
  32  20   *B9    *B10   -130
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 2
+Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 2
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1  17    A1     A8    -140              paar 3                          paar 16
@@ -3954,7 +3954,7 @@ Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 2
  14  14    A6     A3    -280
  15  15   *A6     A3    -300
  16  16    A6    *A3    -340
- 17   5   *B2     B9    -600              paar 14                         changed pair 5
+ 17   5   *B2     B9    -600              paar 14                         gewijzigd paar 5
  18   6    B2    *B9    -800
  19   7   *B2    *B9    -1000
  20   8    B2     B9    -1100
@@ -3973,7 +3973,7 @@ Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 2
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 3
+Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 3
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1  17    A3     A2    150               paar 11                         paar 15
@@ -3996,7 +3996,7 @@ Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 3
  18  10   *B2    *B7    0
  19  11    B2     B7    90
  20  12   *B2     B7    %60      R630
- 21  13   *B5    *B9    800               paar 17                         changed pair 5
+ 21  13   *B5    *B9    800               paar 17                         gewijzigd paar 5
  22  14    B5     B9    600
  23  15   *B5     B9    500
  24  16    B5    *B9    R300     %50
@@ -4011,7 +4011,7 @@ Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 3
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 4
+Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 4
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1  21   *A2     A4    50                paar 15                         paar 6
@@ -4042,14 +4042,14 @@ Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 4
  26  18   *B7     B3    110
  27  19    B7    *B3    120
  28  20   *B7    *B3    130
- 29  21   *B9     B6    130               changed pair 5                  paar 13
+ 29  21   *B9     B6    130               gewijzigd paar 5                paar 13
  30  22    B9    *B6    120
  31  23   *B9    *B6    110
  32  24    B9     B6    100
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 5
+Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 5
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1  21   *A1     A6    100               paar 3                          paar 18
@@ -4068,7 +4068,7 @@ Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 5
  14   2   *A4     A7    130
  15   3    A4    *A7    130
  16   4   *A4    *A7    130
- 17   1    B3     B9    140               paar 2                          changed pair 5
+ 17   1    B3     B9    140               paar 2                          gewijzigd paar 5
  18   2   *B3     B9    140
  19   3    B3    *B9    140
  20   4   *B3    *B9    140
@@ -4087,7 +4087,7 @@ Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 5
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 6
+Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 6
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1   5   *A2     A8    -100              paar 15                         paar 16
@@ -4125,7 +4125,7 @@ Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 6
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
-Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 7
+Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 7
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
   1   5   *A1     A5    -100              paar 3                          paar 8
@@ -4156,7 +4156,7 @@ Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 7
  26   2   *B5     B7    0
  27   3    B5    *B7    0
  28   4   *B5    *B7    0
- 29   9    B9    *B4    0                 changed pair 5                  paar 4
+ 29   9    B9    *B4    0                 gewijzigd paar 5                paar 4
  30  10   *B9    *B4    0
  31  11    B9     B4    0
  32  12   *B9     B4    0
@@ -4164,7 +4164,7 @@ Overzicht van de scores van zitting 3 voor '<auto-test, session 3>', ronde 7
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Zitting uitslag
-'<auto-test, session 3>'
+'<auto-test, zitting 3>'
 uitslag van zitting 3
 
 rang paar paarnaam                        tot.    max  score  korr.     A B
@@ -4176,7 +4176,7 @@ rang paar paarnaam                        tot.    max  score  korr.     A B
    6   B5 paar 17  . . . . . . . . . . .  216     392  55.10%           . 3
    7   A8 paar 16  . . . . . . . . . . .  214     392  54.59%           4 .
    8  B10 paar 10  . . . . . . . . . . .  173     336  51.49%           . 4
-   9   B9 changed pair 5 . . . . . . . .  163     336  48.51%           . 5
+   9   B9 gewijzigd paar 5 . . . . . . .  163     336  48.51%           . 5
   10   A1 paar 3 . . . . . . . . . . . .  190     392  48.47%           5 .
   11   B1 paar 7 . . . . . . . . . . . .  155     336  46.13%           . 6
   11   B6 paar 13  . . . . . . . . . . .  155     336  46.13%           . 6
@@ -4189,7 +4189,7 @@ rang paar paarnaam                        tot.    max  score  korr.     A B
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Zitting uitslag op naam
-'<auto-test, session 3>'
+'<auto-test, zitting 3>'
 uitslag van zitting 3
 
 rang paar paarnaam                        tot.    max  score  korr.     A B
@@ -4209,13 +4209,13 @@ rang paar paarnaam                        tot.    max  score  korr.     A B
   11   B6 paar 13  . . . . . . . . . . .  155     336  46.13%           . 6
    1   B7 paar 9 . . . . . . . . . . . .  242     336  72.02%           . 1
 
-   9   B9 changed pair 5 . . . . . . . .  163     336  48.51%           . 5
+   9   B9 gewijzigd paar 5 . . . . . . .  163     336  48.51%           . 5
    8  B10 paar 10  . . . . . . . . . . .  173     336  51.49%           . 4
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Frequentie staten
-'<auto-test, session 3>'
+'<auto-test, zitting 3>'
 uitslag van zitting 3
 
 
@@ -4317,7 +4317,7 @@ scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW
 
 Groep uitslag
 
-Groep-uitslag van wedstrijd '<auto-test, session 3>', zitting 3
+Groep-uitslag van wedstrijd '<auto-test, zitting 3>', zitting 3
 
                          spellen : 1-4   5-8   9-12 13-16 17-20 21-24 25-28   tot   score
   1 paar 3 . . . . . . . . . . . .  24    35     8    37    13    25    48    190   48.47%
@@ -4336,13 +4336,13 @@ Groep-uitslag van wedstrijd '<auto-test, session 3>', zitting 3
  14 paar 13  . . . . . . . . . . .  54     0    36    36    10    18     1    155   46.13%
  15 paar 9 . . . . . . . . . . . .  37    43    22     0    40    32    55    242   72.02%
  16  STIL-ZIT?? afwezig??
- 17 changed pair 5 . . . . . . . .   8    55    29    10    25    36     0    163   48.51%
+ 17 gewijzigd paar 5 . . . . . . .   8    55    29    10    25    36     0    163   48.51%
  18 paar 10  . . . . . . . . . . .   0    13    45    31    31    22    31    173   51.49%
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Totaal uitslag
-<auto-test, session 3>
+<auto-test, zitting 3>
 Totaal uitslag
 
 rang paarnaam                         Z1     Z2     Z3     totaal   gem.  A B
@@ -4363,13 +4363,13 @@ rang paarnaam                         Z1     Z2     Z3     totaal   gem.  A B
   15 paar 12  . . . . . . . . . . .  43.09  46.13  44.61a  133.83% 44.61  . .
   16 paar 14  . . . . . . . . . . .  46.13  55.10  30.65   131.88% 43.96  . 7
   17 paar 10  . . . . . . . . . . .  30.24  48.51  51.49   130.24% 43.41  . 8
-  18 changed pair 5 . . . . . . . .  48.87  30.65  48.51   128.03% 42.68  . 9
+  18 gewijzigd paar 5 . . . . . . .  48.87  30.65  48.51   128.03% 42.68  . 9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Uitslag per paar
 
-Uitslag van paar A1 'paar 3' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar A1 'paar 3' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: NZ, score:     0, punten   5    36% Tegenpaar (A2): paar 15
 Spel  2: NZ, score:    70, punten   6    43%
@@ -4412,7 +4412,7 @@ aantal punten: 190   (392), eindscore: 48.47%, rang: 10
 
 Uitslag per paar
 
-Uitslag van paar A2 'paar 15' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar A2 'paar 15' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: OW, score:     0, punten   9    64% Tegenpaar (A1): paar 3
 Spel  2: OW, score:   -70, punten   8    57%
@@ -4455,7 +4455,7 @@ aantal punten: 128   (392), eindscore: 32.65%, rang: 16
 
 Uitslag per paar
 
-Uitslag van paar A3 'paar 11' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar A3 'paar 11' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: OW, score:   120, punten  12    86% Tegenpaar (A5): paar 8
 Spel  2: OW, score:   120, punten  12    86%
@@ -4498,7 +4498,7 @@ aantal punten: 244   (392), eindscore: 62.24%, rang: 3
 
 Uitslag per paar
 
-Uitslag van paar A4 'paar 6' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar A4 'paar 6' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: NZ, score:   130, punten  10    71% Tegenpaar (A7): paar 1
 Spel  2: NZ, score:   130, punten  10    71%
@@ -4541,7 +4541,7 @@ aantal punten: 253   (392), eindscore: 64.54%, rang: 2
 
 Uitslag per paar
 
-Uitslag van paar A5 'paar 8' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar A5 'paar 8' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: NZ, score:  -120, punten   2    14% Tegenpaar (A3): paar 11
 Spel  2: NZ, score:  -120, punten   2    14%
@@ -4584,7 +4584,7 @@ aantal punten: 179   (392), eindscore: 45.66%, rang: 13
 
 Uitslag per paar
 
-Uitslag van paar A6 'paar 18' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar A6 'paar 18' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: NZ, score:    70, punten   8    57% Tegenpaar (A8): paar 16
 Spel  2: NZ, score:    80, punten   8    57%
@@ -4627,7 +4627,7 @@ aantal punten: 151   (392), eindscore: 38.52%, rang: 15
 
 Uitslag per paar
 
-Uitslag van paar A7 'paar 1' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar A7 'paar 1' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: OW, score:  -130, punten   4    29% Tegenpaar (A4): paar 6
 Spel  2: OW, score:  -130, punten   4    29%
@@ -4670,7 +4670,7 @@ aantal punten: 219   (392), eindscore: 55.87%, rang: 5
 
 Uitslag per paar
 
-Uitslag van paar A8 'paar 16' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar A8 'paar 16' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: OW, score:   -70, punten   6    43% Tegenpaar (A6): paar 18
 Spel  2: OW, score:   -80, punten   6    43%
@@ -4713,7 +4713,7 @@ aantal punten: 214   (392), eindscore: 54.59%, rang: 7
 
 Uitslag per paar
 
-Uitslag van paar B1 'paar 7' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar B1 'paar 7' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: NZ, score:   210, punten  14   100% Tegenpaar (B2): paar 14
 Spel  2: NZ, score:   230, punten  14   100%
@@ -4756,14 +4756,14 @@ aantal punten: 155   (336), eindscore: 46.13%, rang: 11
 
 Uitslag per paar
 
-Uitslag van paar B2 'paar 14' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar B2 'paar 14' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: OW, score:  -210, punten   0     0% Tegenpaar (B1): paar 7
 Spel  2: OW, score:  -230, punten   0     0%
 Spel  3: OW, score:  -240, punten   0     0%
 Spel  4: OW, score:  -260, punten   0     0% set-score: 0  (0%)
 
-Spel  5: NZ, score:  -600, punten   0     0% Tegenpaar (B9): changed pair 5
+Spel  5: NZ, score:  -600, punten   0     0% Tegenpaar (B9): gewijzigd paar 5
 Spel  6: NZ, score:  -800, punten   0     0%
 Spel  7: NZ, score: -1000, punten   0     0%
 Spel  8: NZ, score: -1100, punten   1     7% set-score: 1  (2%)
@@ -4799,9 +4799,9 @@ aantal punten: 103   (336), eindscore: 30.65%, rang: 17
 
 Uitslag per paar
 
-Uitslag van paar B3 'paar 2' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar B3 'paar 2' voor '<auto-test, zitting 3>', zitting 3
 
-Spel  1: NZ, score:   140, punten  12    86% Tegenpaar (B9): changed pair 5
+Spel  1: NZ, score:   140, punten  12    86% Tegenpaar (B9): gewijzigd paar 5
 Spel  2: NZ, score:   140, punten  12    86%
 Spel  3: NZ, score:   140, punten  12    86%
 Spel  4: NZ, score:   140, punten  11    79% set-score: 47  (84%)
@@ -4842,7 +4842,7 @@ aantal punten: 189   (336), eindscore: 56.25%, rang: 4
 
 Uitslag per paar
 
-Uitslag van paar B4 'paar 4' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar B4 'paar 4' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: NZ, score:  -160, punten   0     0% Tegenpaar (B6): paar 13
 Spel  2: NZ, score:  -160, punten   0     0%
@@ -4854,7 +4854,7 @@ Spel  6: OW, score:  -340, punten   0     0%
 Spel  7: OW, score:  -300, punten   0     0%
 Spel  8: OW, score:  -340, punten   1     7% set-score: 3  (5%)
 
-Spel  9: OW, score:     0, punten   6    43% Tegenpaar (B9): changed pair 5
+Spel  9: OW, score:     0, punten   6    43% Tegenpaar (B9): gewijzigd paar 5
 Spel 10: OW, score:     0, punten   7    50%
 Spel 11: OW, score:     0, punten   8    57%
 Spel 12: OW, score:     0, punten   5    36% set-score: 26  (46%)
@@ -4885,7 +4885,7 @@ aantal punten: 171   (392), eindscore: 43.62%, rang: 14
 
 Uitslag per paar
 
-Uitslag van paar B5 'paar 17' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar B5 'paar 17' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: NZ, score:     0, punten   5    36% Tegenpaar (B7): paar 9
 Spel  2: NZ, score:     0, punten   4    29%
@@ -4902,7 +4902,7 @@ Spel 10: NZ, score:   -70, punten   4    29%
 Spel 11: NZ, score:   -80, punten   4    29%
 Spel 12: NZ, score:   -90, punten   6    43% set-score: 19  (34%)
 
-Spel 13: NZ, score:   800, punten  13    93% Tegenpaar (B9): changed pair 5
+Spel 13: NZ, score:   800, punten  13    93% Tegenpaar (B9): gewijzigd paar 5
 Spel 14: NZ, score:   600, punten  12    86%
 Spel 15: NZ, score:   500, punten  14   100%
 Spel 16: NZ, score:  R300, punten  13    93% set-score: 52  (93%)
@@ -4928,7 +4928,7 @@ aantal punten: 216   (392), eindscore: 55.10%, rang: 6
 
 Uitslag per paar
 
-Uitslag van paar B6 'paar 13' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar B6 'paar 13' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: OW, score:   160, punten  14   100% Tegenpaar (B4): paar 4
 Spel  2: OW, score:   160, punten  14   100%
@@ -4955,7 +4955,7 @@ Spel 18: NZ, score:  -800, punten   0     0%
 Spel 19: NZ, score:  -600, punten   0     0%
 Spel 20: NZ, score:  -120, punten   6    43% set-score: 10  (18%)
 
-Spel 21: OW, score:  -130, punten   4    29% Tegenpaar (B9): changed pair 5
+Spel 21: OW, score:  -130, punten   4    29% Tegenpaar (B9): gewijzigd paar 5
 Spel 22: OW, score:  -120, punten   4    29%
 Spel 23: OW, score:  -110, punten   4    29%
 Spel 24: OW, score:  -100, punten   6    43% set-score: 18  (32%)
@@ -4971,7 +4971,7 @@ aantal punten: 155   (336), eindscore: 46.13%, rang: 11
 
 Uitslag per paar
 
-Uitslag van paar B7 'paar 9' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar B7 'paar 9' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: OW, score:     0, punten   9    64% Tegenpaar (B5): paar 17
 Spel  2: OW, score:     0, punten  10    71%
@@ -5014,7 +5014,7 @@ aantal punten: 242   (336), eindscore: 72.02%, rang: 1
 
 Uitslag per paar
 
-Uitslag van paar ??? '' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar ??? '' voor '<auto-test, zitting 3>', zitting 3
 
 Paar heeft (nog) niet gespeeld
 
@@ -5022,7 +5022,7 @@ Paar heeft (nog) niet gespeeld
 
 Uitslag per paar
 
-Uitslag van paar B9 'changed pair 5' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar B9 'gewijzigd paar 5' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: OW, score:  -140, punten   2    14% Tegenpaar (B3): paar 2
 Spel  2: OW, score:  -140, punten   2    14%
@@ -5065,7 +5065,7 @@ aantal punten: 163   (336), eindscore: 48.51%, rang: 9
 
 Uitslag per paar
 
-Uitslag van paar B10 'paar 10' voor '<auto-test, session 3>', zitting 3
+Uitslag van paar B10 'paar 10' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1:  niet gespeeld
 Spel  2:  niet gespeeld
@@ -5087,7 +5087,7 @@ Spel 14: OW, score:  -140, punten  10    71%
 Spel 15: OW, score:  -150, punten   6    43%
 Spel 16: OW, score:  -160, punten   5    36% set-score: 31  (55%)
 
-Spel 17: OW, score:   100, punten   4    29% Tegenpaar (B9): changed pair 5
+Spel 17: OW, score:   100, punten   4    29% Tegenpaar (B9): gewijzigd paar 5
 Spel 18: OW, score:   110, punten   7    50%
 Spel 19: OW, score:   120, punten  10    71%
 Spel 20: OW, score:   130, punten  10    71% set-score: 31  (55%)
@@ -5108,7 +5108,7 @@ aantal punten: 173   (336), eindscore: 51.49%, rang: 8
 
 Uitslag per spel
 
-Uitslag van spel 1 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 1 voor '<auto-test, zitting 3>', zitting 3
 
     spel 1         
 scoreNZ NZ    OW   
@@ -5129,7 +5129,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 2 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 2 voor '<auto-test, zitting 3>', zitting 3
 
     spel 2         
 scoreNZ NZ    OW   
@@ -5151,7 +5151,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 3 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 3 voor '<auto-test, zitting 3>', zitting 3
 
     spel 3         
 scoreNZ NZ    OW   
@@ -5173,7 +5173,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 4 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 4 voor '<auto-test, zitting 3>', zitting 3
 
     spel 4         
 scoreNZ NZ    OW   
@@ -5196,7 +5196,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 5 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 5 voor '<auto-test, zitting 3>', zitting 3
 
     spel 5         
 scoreNZ NZ    OW   
@@ -5217,7 +5217,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 6 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 6 voor '<auto-test, zitting 3>', zitting 3
 
     spel 6         
 scoreNZ NZ    OW   
@@ -5238,7 +5238,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 7 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 7 voor '<auto-test, zitting 3>', zitting 3
 
     spel 7         
 scoreNZ NZ    OW   
@@ -5260,7 +5260,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 8 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 8 voor '<auto-test, zitting 3>', zitting 3
 
     spel 8         
 scoreNZ NZ    OW   
@@ -5283,7 +5283,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 9 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 9 voor '<auto-test, zitting 3>', zitting 3
 
     spel 9         
 scoreNZ NZ    OW   
@@ -5304,7 +5304,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 10 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 10 voor '<auto-test, zitting 3>', zitting 3
 
     spel 10        
 scoreNZ NZ    OW   
@@ -5325,7 +5325,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 11 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 11 voor '<auto-test, zitting 3>', zitting 3
 
     spel 11        
 scoreNZ NZ    OW   
@@ -5347,7 +5347,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 12 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 12 voor '<auto-test, zitting 3>', zitting 3
 
     spel 12        
 scoreNZ NZ    OW   
@@ -5370,7 +5370,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 13 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 13 voor '<auto-test, zitting 3>', zitting 3
 
     spel 13        
 scoreNZ NZ    OW   
@@ -5391,7 +5391,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 14 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 14 voor '<auto-test, zitting 3>', zitting 3
 
     spel 14        
 scoreNZ NZ    OW   
@@ -5413,7 +5413,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 15 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 15 voor '<auto-test, zitting 3>', zitting 3
 
     spel 15        
 scoreNZ NZ    OW   
@@ -5435,7 +5435,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 16 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 16 voor '<auto-test, zitting 3>', zitting 3
 
     spel 16        
 scoreNZ NZ    OW   
@@ -5457,7 +5457,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 17 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 17 voor '<auto-test, zitting 3>', zitting 3
 
     spel 17        
 scoreNZ NZ    OW   
@@ -5479,7 +5479,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 18 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 18 voor '<auto-test, zitting 3>', zitting 3
 
     spel 18        
 scoreNZ NZ    OW   
@@ -5500,7 +5500,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 19 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 19 voor '<auto-test, zitting 3>', zitting 3
 
     spel 19        
 scoreNZ NZ    OW   
@@ -5522,7 +5522,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 20 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 20 voor '<auto-test, zitting 3>', zitting 3
 
     spel 20        
 scoreNZ NZ    OW   
@@ -5543,7 +5543,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 21 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 21 voor '<auto-test, zitting 3>', zitting 3
 
     spel 21        
 scoreNZ NZ    OW   
@@ -5565,7 +5565,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 22 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 22 voor '<auto-test, zitting 3>', zitting 3
 
     spel 22        
 scoreNZ NZ    OW   
@@ -5586,7 +5586,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 23 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 23 voor '<auto-test, zitting 3>', zitting 3
 
     spel 23        
 scoreNZ NZ    OW   
@@ -5608,7 +5608,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 24 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 24 voor '<auto-test, zitting 3>', zitting 3
 
     spel 24        
 scoreNZ NZ    OW   
@@ -5627,7 +5627,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 25 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 25 voor '<auto-test, zitting 3>', zitting 3
 
     spel 25        
 scoreNZ NZ    OW   
@@ -5648,7 +5648,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 26 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 26 voor '<auto-test, zitting 3>', zitting 3
 
     spel 26        
 scoreNZ NZ    OW   
@@ -5668,7 +5668,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 27 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 27 voor '<auto-test, zitting 3>', zitting 3
 
     spel 27        
 scoreNZ NZ    OW   
@@ -5690,7 +5690,7 @@ scoreNZ NZ    OW
 
 Uitslag per spel
 
-Uitslag van spel 28 voor '<auto-test, session 3>', zitting 3
+Uitslag van spel 28 voor '<auto-test, zitting 3>', zitting 3
 
     spel 28        
 scoreNZ NZ    OW   

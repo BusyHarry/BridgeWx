@@ -15,6 +15,8 @@
 #include "utils.h"
 #include "cfg.h"
 
+const wxString ES;  // EmptyString
+
 int Unicode2Ascii(const wxString& a_inbuf, char* a_outbuf, int a_outsize, int a_codePage)
 {
     int len = ::WideCharToMultiByte(

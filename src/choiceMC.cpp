@@ -222,14 +222,14 @@ bool ChoiceMC::SetSelection(int a_selection)
     * So we need a 'CallAfter' for SetValueByUser() to be sure the text will fit...
     */
     bool bResult = m_pPopup->SetSelection(a_selection);
-    SetValueByUser(bResult ? GetStringSelection() : "");    // show in editctrl
+    SetValueByUser(bResult ? GetStringSelection() : ES);    // show in editctrl
     return bResult;
 }   // SetSelection()
 
 bool ChoiceMC::SetStringSelection(const wxString& a_sel)
 {
     bool bResult = m_pPopup->SetStringSelection(a_sel);
-    SetValueByUser(bResult ? a_sel : "");   // show in editctrl
+    SetValueByUser(bResult ? a_sel : ES);   // show in editctrl
     return bResult;
 }   // SetStringSelection()
 

@@ -384,28 +384,28 @@ void InitSdb()
 
 }  // InitSdb()
 
-wxString ReadValue(keyId id, const wxString& default, UINT session)
+wxString ReadValue(keyId id, const wxString& defaultValue, UINT session)
 {
-    if (!s_pConfig) return default;
-    return s_pConfig->Read(MakePath(id,session), default);
+    if (!s_pConfig) return defaultValue;
+    return s_pConfig->Read(MakePath(id,session), defaultValue);
 }   // ReadValue()
 
-bool ReadValueBool(keyId id, bool default, UINT session)
+bool ReadValueBool(keyId id, bool defaultValue, UINT session)
 {
-    if (!s_pConfig) return default;
-    return s_pConfig->ReadBool(MakePath(id,session), default);
+    if (!s_pConfig) return defaultValue;
+    return s_pConfig->ReadBool(MakePath(id,session), defaultValue);
 }   // ReadValueBool()
 
-long ReadValueLong(keyId id, long default, UINT session)
+long ReadValueLong(keyId id, long defaultValue, UINT session)
 {
-    if (!s_pConfig) return default;
-    return s_pConfig->ReadLong(MakePath(id,session), default);
+    if (!s_pConfig) return defaultValue;
+    return s_pConfig->ReadLong(MakePath(id,session), defaultValue);
 }   // ReadValueLong()
 
-UINT ReadValueUINT(keyId id, UINT default, UINT session)
+UINT ReadValueUINT(keyId id, UINT defaultValue, UINT session)
 {
-    if (!s_pConfig) return default;
-    return s_pConfig->ReadLong(MakePath(id,session), default);
+    if (!s_pConfig) return defaultValue;
+    return s_pConfig->ReadLong(MakePath(id,session), defaultValue);
 }   // ReadValueUINT()
 
 bool WriteValue(keyId id, const wxString& value, UINT session)
@@ -435,14 +435,14 @@ bool WriteValue(keyId id, UINT value, UINT session)
 bool SchemaRead(cfg::SessionInfo& a_info, UINT a_session)
 {
     if (!s_pConfig) return false;
-    wxString default = FMT("{24,4,1}%c{14,0,\"6multi14\",\"\"}", theSeparator);   // remark: cannot scan empty sets!
-    wxString info = s_pConfig->Read(MakePath(KEY_SESSION_SCHEMA, a_session), default);
-    if (info.IsEmpty()) info = default;
+    wxString defaultValue = FMT("{24,4,1}%c{14,0,\"6multi14\",\"\"}", theSeparator);   // remark: cannot scan empty sets!
+    wxString info = s_pConfig->Read(MakePath(KEY_SESSION_SCHEMA, a_session), defaultValue);
+    if (info.IsEmpty()) info = defaultValue;
     auto count = wxSscanf(info, " {%u ,%u ,%u }", &a_info.nrOfGames, &a_info.setSize, &a_info.firstGame);
     if ( count != 3)
     {   // on error, we just take a default value
         MyLogError(_("Error while reading schema <%s>"), info);
-        info             = default;
+        info             = defaultValue;
         a_info.nrOfGames = 24;
         a_info.setSize   = 4;
         a_info.firstGame = 1;
@@ -497,8 +497,8 @@ bool SchemaWrite(const cfg::SessionInfo& a_info, UINT a_session)
 bool MaxmeanRead(UINT& maxmean)
 {
     if (!s_pConfig) return false;
-    wxString default = FMT("%u.%02u", maxmean / 100, maxmean % 100);
-    wxString sMaxMean = s_pConfig->Read(MakePath(KEY_MATCH_MAXMEAN), default);
+    wxString defaultValue = FMT("%u.%02u", maxmean / 100, maxmean % 100);
+    wxString sMaxMean = s_pConfig->Read(MakePath(KEY_MATCH_MAXMEAN), defaultValue);
     maxmean = AsciiTolong(sMaxMean, ExpectedDecimalDigits::DIGITS_2);
     return true;
 }   // MaxmeanRead()
@@ -513,8 +513,8 @@ bool MaxmeanWrite(UINT maxmean)
 bool MinMaxClubRead(UINT& min, UINT& max)
 {
     if (!s_pConfig) return false;
-    wxString default = FMT("{%u,%u}", min, max);
-    wxString sMinMax = s_pConfig->Read(MakePath(KEY_MATCH_MMCLUB), default);
+    wxString defaultValue = FMT("{%u,%u}", min, max);
+    wxString sMinMax = s_pConfig->Read(MakePath(KEY_MATCH_MMCLUB), defaultValue);
     auto count = wxSscanf(sMinMax, " {%u ,%u }", &min, &max);
     return count == 2;
 } // MinMaxClubRead()

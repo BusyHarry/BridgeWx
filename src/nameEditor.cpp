@@ -43,13 +43,14 @@ NameEditor::NameEditor(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     auto        okCancel    = CreateOkCancelButtons();
     auto        search      = CreateSearchBox();
     wxBoxSizer* hBox        = new wxBoxSizer(wxHORIZONTAL);
-    hBox->Add(search    , 1, wxBOTH | wxALL, MY_BORDERSIZE);//    hBox->AddStretchSpacer(10);
-    hBox->Add(pButtonAdd, 0, wxBOTH | wxALL, MY_BORDERSIZE);    hBox->AddStretchSpacer(10);
-    hBox->Add(okCancel  , 0, wxBOTH | wxALL, MY_BORDERSIZE);
-    
+    hBox->Add(search    , wxSizerFlags(1).Border(wxALL, MY_BORDERSIZE));//    hBox->AddStretchSpacer(10);
+    hBox->Add(pButtonAdd, wxSizerFlags(0).Border(wxALL, MY_BORDERSIZE));    hBox->AddStretchSpacer(10);
+    hBox->Add(okCancel  , wxSizerFlags(0).Border(wxALL, MY_BORDERSIZE));
+
     // add to layout
     wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Entry/change of pair/clubnames"));
-    vBox->Add(m_theGrid, 1, wxEXPAND | wxALL, MY_BORDERSIZE);
+
+    vBox->Add(m_theGrid, wxSizerFlags(1).Expand().Border(wxALL, MY_BORDERSIZE));
     vBox->Add(hBox,      0);   //no borders/align: already done in hBox!
     SetSizer(vBox);     // add to panel
 

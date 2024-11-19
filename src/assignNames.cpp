@@ -53,22 +53,26 @@ AssignNames::AssignNames(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParen
     m_pButtonRankPrev   = new wxButton    (this, wxID_ANY, _("Rank S-1"   ));
     auto pButtonClear   = new wxButton    (this, wxID_ANY, Unique(_("Clear")));
     wxBoxSizer* hBox    = new wxBoxSizer  (wxHORIZONTAL);
-    hBox->Add(pStaticText       , 1, wxBOTH | wxALL | wxALIGN_CENTER_VERTICAL, MY_BORDERSIZE);
-    hBox->Add(pButtonOrg        , 0, wxBOTH | wxALL | wxALIGN_CENTER_VERTICAL, MY_BORDERSIZE);
-    hBox->Add(m_pButtonRankTotal, 0, wxBOTH | wxALL | wxALIGN_CENTER_VERTICAL, MY_BORDERSIZE);
-    hBox->Add(m_pButtonRankPrev , 0, wxBOTH | wxALL | wxALIGN_CENTER_VERTICAL, MY_BORDERSIZE);
+
+    wxSizerFlags defaultSF0(0); defaultSF0.Align(wxALIGN_CENTER_VERTICAL).Border(wxALL, MY_BORDERSIZE);
+    wxSizerFlags defaultSF1(1); defaultSF1.Align(wxALIGN_CENTER_VERTICAL).Border(wxALL, MY_BORDERSIZE);
+    hBox->Add(pStaticText       , defaultSF1);
+    hBox->Add(pButtonOrg        , defaultSF0);
+    hBox->Add(m_pButtonRankTotal, defaultSF0);
+    hBox->Add(m_pButtonRankPrev , defaultSF0);
     hBox->AddStretchSpacer(100);    // clear button ALWAYS at right end for fixed position!
-    hBox->Add(pButtonClear      , 0, wxBOTH | wxALL | wxALIGN_CENTER_VERTICAL, MY_BORDERSIZE);
+    hBox->Add(pButtonClear      , defaultSF0);
 
     auto search   = CreateSearchBox();
     auto okCancel = CreateOkCancelButtons();
     wxBoxSizer* hBoxSearchOk = new wxBoxSizer(wxHORIZONTAL);
-    hBoxSearchOk->Add(search   , 1, wxBOTH | wxALL, MY_BORDERSIZE);   hBoxSearchOk->AddStretchSpacer(1000);   // ok/cancel ALWAYS at right side
-    hBoxSearchOk->Add(okCancel , 0, wxBOTH | wxALL, MY_BORDERSIZE);
+    hBoxSearchOk->Add(search   , defaultSF1);
+    hBoxSearchOk->AddStretchSpacer(1000);       // ok/cancel ALWAYS at right side
+    hBoxSearchOk->Add(okCancel , defaultSF0);
 
     // add to layout
     wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Assign pairnames"));
-    vBox->Add(m_theGrid         , 1, wxEXPAND | wxALL, MY_BORDERSIZE);
+    vBox->Add(m_theGrid         , wxSizerFlags(1).Expand().Border(wxALL, MY_BORDERSIZE));
     vBox->Add(hBox              , 0);
     vBox->Add(hBoxSearchOk      , 0);
     SetSizer(vBox);     // add to panel
@@ -318,7 +322,7 @@ void AssignNames::PrintPage()
 {
     UINT nrOfPairs = cfg::GetNrOfSessionPairs();
     UINT session   = cfg::GetActiveSession();
-    wxString sessionString = session > 0 ? FMT(_(", session %u"), session) : "";
+    wxString sessionString = session > 0 ? FMT(_(", session %u"), session) : ES;
 
     wxString title = FMT(_("Pairname assignment for '%s'%s\n\nPair name"), cfg::GetDescription(), sessionString );
     for (UINT index = 1; index <= nrOfPairs; ++index)

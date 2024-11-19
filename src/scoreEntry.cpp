@@ -181,15 +181,18 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
     }
     else 
     {   // we have a non-empty score, now test if its a possible one
-        if ((score != SCORE_NP) && !score::IsScoreValid(score, game, bNS))
+        score::ScoreValidation result = score::IsScoreValid(score, game, bNS);
+        if ((score != SCORE_NP) && !result == score::ScoreValid)
         {
             wxColour org = m_theGrid->GetCellBackgroundColour(row, col);
             m_theGrid->SetCellBackgroundColour(row, col, *wxRED );
-
             // grid shows old data during msgbox, so put new data in...
             m_theGrid->SetCellValue(row, col, newData);
             m_theGrid->Refresh();
-            bool bNo = (wxNO == wxMessageBox(_("invalid score, store anyway?"), "???", wxYES_NO | wxICON_INFORMATION));
+            wxString msg = result == score::ScoreSpecial
+                ? _("unexpected/special score, accept anyway?")
+                : _("invalid score, accept anyway?");
+            bool bNo = (wxNO == MyMessageBox(msg, "???", wxYES_NO | wxICON_INFORMATION));
             m_theGrid->SetCellBackgroundColour(row, col, org );
             m_theGrid->Refresh();
             if (bNo)

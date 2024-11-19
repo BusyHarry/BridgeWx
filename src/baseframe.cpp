@@ -714,7 +714,7 @@ wxSize GetSize4EditBox(wxString& msg)   // remark: 'msg' will be adapted
 if (style & flag)                                           \
 {                                                           \
     auto pButton = new wxButton(&dialog, wxID_ANY, label);  \
-    pButton->SetFont(pButton->GetFont().Scale(0.5));        \
+    pButton->SetFont(pButton->GetFont().Scale(0.8f));       \
     pButton->Bind(wxEVT_BUTTON, [&dialog](const wxCommandEvent&){dialog.EndModal(flag);}); \
     pSizer->Add(pButton, 0, wxRIGHT, 5);                    \
     if (style & flag##_DEFAULT) pButton->SetFocus();        \

@@ -73,6 +73,12 @@ typedef std::vector< std::vector<score::GameSetData> > vvScoreData; // vv=vector
 
 namespace score
 {
+    enum ScoreValidation
+    {
+          ScoreValid    // a valid possible score
+        , ScoreInvalid  // incorrect score
+        , ScoreSpecial  // possible score, but highly unexpected like 6 down
+    };
     const vvScoreData*  GetScoreData        ();                     // get a ptr to the current scores
     void                SetScoreData        (const vvScoreData&);   // update the scores (write to disk)
     UINT                GetNumberOfGames    (const vvScoreData* a_scoreData = nullptr);                     // highest gamenr that is played in a session
@@ -82,7 +88,7 @@ namespace score
     int                 ScoreFromString     (const wxString& score);// convert string to (possible) score
     bool                IsVulnerable        (UINT game, bool bNS);  // checks for vulnerability
     char                VulnerableChar      (UINT game, bool bNS);  // returns '*' if vulnerable else ' '
-    bool                IsScoreValid        (int score, UINT game, bool bNS);   // checks if a score is valid
+    ScoreValidation     IsScoreValid        (int score, UINT game, bool bNS);   // checks if a score is valid
     int                 Score2Real          (int score);            // make arbitrary real score into real score
     int                 Procentscore2Procent(int score);            // convert aribitrairy score to 0<=value<=100
     UINT                GetNumberOfGamesPlayedByGlobalPair(UINT globalPairnr);

@@ -47,20 +47,22 @@ CorrectionsEnd::CorrectionsEnd(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_
     auto search   = CreateSearchBox();
     auto okCancel = CreateOkCancelButtons();
 
+    wxSizerFlags defaultSF1(1); defaultSF1.Border(wxALL, MY_BORDERSIZE);
+
     wxBoxSizer* hBoxSearchOk = new wxBoxSizer(wxHORIZONTAL);
-    hBoxSearchOk->Add(search    , 1, wxBOTH | wxALL, MY_BORDERSIZE);    hBoxSearchOk->AddStretchSpacer(1000);
-    hBoxSearchOk->Add(okCancel  , 1, wxBOTH | wxALL, MY_BORDERSIZE);
+    hBoxSearchOk->Add(search    , defaultSF1);
+    hBoxSearchOk->AddStretchSpacer(1000);
+    hBoxSearchOk->Add(okCancel  , defaultSF1);
 
     // add to layout
     wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Entry of sessioncorrections for endresult"));
-    vBox->Add(m_theGrid         , 1, wxEXPAND | wxALL, MY_BORDERSIZE);
+    vBox->Add(m_theGrid         , defaultSF1.Expand());
     vBox->Add(hBoxSearchOk      , 0);
-    SetSizer(vBox);     // add to panel
+    SetSizer(vBox);             // add to panel
 
-    m_bDataChanged  = false;     // no changes yet
+    m_bDataChanged  = false;    // no changes yet
 
-    RefreshInfo();                  // fill the grid with data
-
+    RefreshInfo();              // fill the grid with data
     m_description = "CorEnd";
 }   // CorrectionsEnd
 
@@ -231,7 +233,7 @@ void CorrectionsEnd::DoSearch(wxString& a_string)
 void CorrectionsEnd::PrintPage()
 {
     UINT session = cfg::GetActiveSession();
-    wxString sSession = session == 0 ? "" : FMT(_(", session %u"), session);
+    wxString sSession = session == 0 ? ES : FMT(_(", session %u"), session);
     wxString title = FMT(_("Overview of endcorrections for '%s'%s"), cfg::GetDescription(), sSession);
     m_theGrid->PrintGrid(title, m_theGrid->GetNumberCols(), COL_COR_SCORE);
 }   // PrintPage()

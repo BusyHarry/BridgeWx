@@ -200,8 +200,8 @@ namespace  org
     bool MaxmeanRead(UINT& a_maxmean)
     {
         const wxFileConfig* pCfg = GetpCfg(KEY_MATCH_MAXMEAN); if (pCfg == nullptr) return false;
-        wxString default = FMT("%u.%02u", a_maxmean / 100, a_maxmean % 100);
-        wxString sMaxMean = pCfg->Read(GetKeyName(KEY_MATCH_MAXMEAN), default);
+        wxString defaultValue = FMT("%u.%02u", a_maxmean / 100, a_maxmean % 100);
+        wxString sMaxMean = pCfg->Read(GetKeyName(KEY_MATCH_MAXMEAN), defaultValue);
         a_maxmean = AsciiTolong(sMaxMean, ExpectedDecimalDigits::DIGITS_2);
         return true;
     }   // MaxmeanRead()

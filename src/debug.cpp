@@ -673,7 +673,10 @@ void MyPrint::EndPrint()
 
 void MyPrint::EndPage()
 {
-    m_bUseRealPrinter ? prn::PrintCharacter('\f') /* force new page*/ : ScreenToBuffer();
+    if  (m_bUseRealPrinter)
+        prn::PrintCharacter('\f'); /* force new page*/
+    else
+        ScreenToBuffer();
 }   // EndPage()
 
 void MyPrint::PrintText( const wxPoint& position, const wxString& text)
@@ -1709,7 +1712,7 @@ void Debug::GroupOverview()
     wcscpy(buf+round, L"╗\n");
     OUTPUT_TEXT(buf);
     count = swprintf_s(buf, BUF_SIZE, L" ║%u paren, %u rondes, %u spellen", m_pairs, m_rounds, m_rounds*setSize);
-    swprintf_s(buf+count, BUF_SIZE-count, L" %*s║\n", width-count-2, ES);
+    swprintf_s(buf+count, BUF_SIZE-count, L" %*s║\n", width-count-2, L"");
     OUTPUT_TEXT(buf);
     OUTPUT_TEXT_FORMATTED(L" ║Schema: %-*s║\n", width-11, m_pActiveGroupInfo->schema);
 

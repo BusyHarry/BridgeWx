@@ -1973,8 +1973,8 @@ void MiscellaneousView::DoUpdateValues()
 
 #ifdef __WXMSW__
             case Param_ComCtl32Version:           value.Printf("%d", wxApp::GetComCtl32Version()); break;
-            case Param_GDIObjectCount:            value = GDIObjectCount ? wxString::Format("%lu", GDIObjectCount) : "N/A"; break;
-            case Param_UserObjectCount:           value = UserObjectCount ? wxString::Format("%lu", UserObjectCount) : "N/A"; break;
+            case Param_GDIObjectCount:            value = GDIObjectCount ? wxString::Format("%lu", GDIObjectCount) : wxString("N/A"); break;
+            case Param_UserObjectCount:           value = UserObjectCount ? wxString::Format("%lu", UserObjectCount) : wxString("N/A"); break;
             case Param_IsProcessDPIAware:         value = MSWDPIAwarenessHelper::IsThisProcessDPIAware() ? "Yes" : "No"; break;
             case Param_ProcessDPIAwareness:       value = MSWDPIAwarenessHelper::GetThisProcessDPIAwarenessStr(); break;
             case Param_ThreadDPIAwarenessContext: value = MSWDPIAwarenessHelper::GetThreadDPIAwarenessContextStr(); break;

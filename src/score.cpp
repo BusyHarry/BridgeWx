@@ -250,12 +250,12 @@ static const int scoresSpecialVulnerableYes[]=
     2720, 2760, 2840, 2880, 2940, 2980, 3120, 3160
 };
 
-static bool FindScore(int a_score, bool a_bVulnerable, bool a_bSpecial)
+static ScoreValidation FindScore(int a_score, bool a_bVulnerable, bool a_bSpecial)
 {
 #define elements(x) sizeof(x)/sizeof(x[0])
     static struct {const int* table; const size_t count;} const scoreInfo[4]=
     {
-        {scoresNormalVulnerableNo,   elements(scoresNormalVulnerableNo  )}
+          {scoresNormalVulnerableNo,   elements(scoresNormalVulnerableNo  )}
         , {scoresNormalVulnerableYes,  elements(scoresNormalVulnerableYes )}
         , {scoresSpecialVulnerableNo,  elements(scoresSpecialVulnerableNo )}
         , {scoresSpecialVulnerableYes, elements(scoresSpecialVulnerableYes)}
@@ -266,34 +266,34 @@ static bool FindScore(int a_score, bool a_bVulnerable, bool a_bSpecial)
     if (a_bVulnerable) index += 1;
 
     bool bFound = std::binary_search(scoreInfo[index].table, scoreInfo[index].table + scoreInfo[index].count, a_score);
-    if (bFound && a_bSpecial)
+    if (bFound)
     {
-        wxString score = FMT(_("unexpected/special score: %i\n\naccept anyway?"), a_score);
-        // ^== first line 'blue' and fontsize 2* larger as second line????
-        if ( wxNO == MyMessageBox( score, "???", wxYES_NO | wxICON_INFORMATION))
-        {
-            bFound = false;
-        }
+        if (a_bSpecial) return ScoreSpecial;
+        return ScoreValid;
     }
-
-    return bFound;
+    return ScoreInvalid;
 }   // FindScore()
 
-bool IsScoreValid(int a_score, UINT a_game, bool a_bNS)
+ScoreValidation IsScoreValid(int a_score, UINT a_game, bool a_bNS)
 {
-    if (cfg::IsScriptTesting()) return true;    // always ok!
+    if (cfg::IsScriptTesting()) return ScoreValid;    // always ok!
     if (!score::IsReal(a_score))
     {   // not a 'normal' score
-        if (score::IsProcent(a_score)) return true;
+        if (score::IsProcent(a_score)) return IsInRange(a_score, OFFSET_PROCENT, OFFSET_PROCENT+100) ? ScoreValid : ScoreInvalid;
         a_score -= OFFSET_REAL; // now we have a 'normal' score, check it below
     }
 
-    if (FindScore( a_score, score::IsVulnerable(a_game, a_bNS), false)) return true;   // check normal scores first, should happen more often
-    if (FindScore(-a_score, score::IsVulnerable(a_game,!a_bNS), false)) return true;   //  NS <->EW
-    if (FindScore( a_score, score::IsVulnerable(a_game, a_bNS), true )) return true;   // check special scores last, should happen less
-    if (FindScore(-a_score, score::IsVulnerable(a_game,!a_bNS), true )) return true;   //  NS <->EW
+    auto const SPECIAL{true};
+    auto const NORMAL {false};
 
-    return false;
+    ScoreValidation result;
+    result = FindScore( a_score, score::IsVulnerable(a_game, a_bNS), NORMAL );      // check normal NS scores first, should happen more often
+    if (result != ScoreInvalid) return result;
+    result = FindScore(-a_score, score::IsVulnerable(a_game,!a_bNS), NORMAL );      //  NS <->EW
+    if (result != ScoreInvalid) return result;
+    result = FindScore( a_score, score::IsVulnerable(a_game, a_bNS), SPECIAL);       // check special scores last, should happen less
+    if (result != ScoreInvalid) return result;
+    return FindScore(-a_score, score::IsVulnerable  (a_game,!a_bNS), SPECIAL);      //  NS <->EW
 }   // IsScoreValid()
 
 int Score2Real(int score)

@@ -66,25 +66,28 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
 //    methods.push_back(MyGrid::SORT_INTNUMBER);
 //    m_theGrid->SetSortMethod(methods);          // set sort hints,  without plain string compare is done
 
+    wxSizerFlags defaultSF0 (0); defaultSF0.Border(wxALL, MY_BORDERSIZE);
+    wxSizerFlags defaultSF1 (1); defaultSF1.Border(wxALL, MY_BORDERSIZE);
+
     m_pSizerAllChoices = new wxBoxSizer(wxHORIZONTAL);
     wxArrayString choices;
     choices.push_back(_("Score slip"));            // score entry method
     choices.push_back(_("Game number "));          // NB: extra space to have different string for autotest, see 4 lines down
     m_pRadioBoxSlipGame = CreateRadioBox(_("Entry order:"), choices, EVT_CMD_HANDLER( &ScoreEntry::OnRbSlipGame),"InputOrder");
-    m_pSizerAllChoices->Add(m_pRadioBoxSlipGame, 0, wxBOTH | wxALL, MY_BORDERSIZE); // CHOICE_ID_SLIP slip/game added FIRST to this sizer
+    m_pSizerAllChoices->Add(m_pRadioBoxSlipGame, defaultSF0);   // CHOICE_ID_SLIP slip/game added FIRST to this sizer
     choices.clear();
     choices.push_back(_("Game number"));           // if slip, then entry order based on game-nr or pair-nr
     choices.push_back(Unique(_("NS number")));
     m_pRadioBoxGameNs = CreateRadioBox(_("Score slip order:"), choices, EVT_CMD_HANDLER(&ScoreEntry::OnRbGameNS),"SlipOrder");
-    m_pSizerAllChoices->Add(m_pRadioBoxGameNs, 0, wxBOTH | wxALL, MY_BORDERSIZE); // CHOICE_ID_GAME_NS game/ns added SECOND to this sizer
+    m_pSizerAllChoices->Add(m_pRadioBoxGameNs, defaultSF0);     // CHOICE_ID_GAME_NS game/ns added SECOND to this sizer
 
     m_pChoiceRound = new MY_CHOICE(this, _("Round:"), _("Scores for this round"),Unique(CHOICE_ROUND));
     m_pChoiceRound->Bind(wxEVT_CHOICE, &ScoreEntry::OnSelectRound, this);
-    m_pSizerAllChoices->MyAdd(m_pChoiceRound, 0, wxBOTH | wxALL | wxALIGN_CENTER_VERTICAL, MY_BORDERSIZE);
+    m_pSizerAllChoices->MyAdd(m_pChoiceRound, defaultSF0);
 
     m_pChoiceGame = new MyChoiceMC(this, _("Game:") , _("Scores for this game"), Unique(CHOICE_GAME));
     m_pChoiceGame->Bind(wxEVT_CHOICE, &ScoreEntry::OnSelectGame, this);
-    m_pSizerAllChoices->MyAdd(m_pChoiceGame, 0, wxBOTH | wxALL | wxALIGN_CENTER_VERTICAL, MY_BORDERSIZE);
+    m_pSizerAllChoices->MyAdd(m_pChoiceGame, defaultSF0);
 
     // CHOICE_ID_ROUND  choice round added THIRD to this sizer
     // CHOICE_ID_GAME   choice round added FOURTH to this sizer
@@ -104,15 +107,15 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
 
     wxBoxSizer* hBoxSearchOk = new wxBoxSizer(wxHORIZONTAL);
 
-    hBoxSearchOk->Add(search                , 1, wxBOTH | wxALL, MY_BORDERSIZE);
-    hBoxSearchOk->Add(pButtonNextEmptyScore , 0, wxBOTH | wxALL, MY_BORDERSIZE);
-    hBoxSearchOk->Add(pButtonSwitchNsEw     , 0, wxBOTH | wxALL, MY_BORDERSIZE);    hBoxSearchOk->AddStretchSpacer(1000);
-    hBoxSearchOk->Add(vBoxOk                , 0, wxBOTH | wxALL, MY_BORDERSIZE);
-
+    hBoxSearchOk->Add(search                , defaultSF1);
+    hBoxSearchOk->Add(pButtonNextEmptyScore , defaultSF0);
+    hBoxSearchOk->Add(pButtonSwitchNsEw     , defaultSF0);
+    hBoxSearchOk->AddStretchSpacer(1000);
+    hBoxSearchOk->Add(vBoxOk                , defaultSF0);
     // add to layout
     wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Entry/Change scores"));
-    vBox->Add(m_theGrid         , 1, wxEXPAND | wxALL, MY_BORDERSIZE);
-    vBox->Add(m_pSizerAllChoices     , 0);
+    vBox->Add(m_theGrid         , defaultSF1.Expand());
+    vBox->Add(m_pSizerAllChoices, 0);
     vBox->Add(hBoxSearchOk      , 0);
     SetSizer(vBox);     // add to panel
 
@@ -181,15 +184,18 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
     }
     else 
     {   // we have a non-empty score, now test if its a possible one
-        if ((score != SCORE_NP) && !score::IsScoreValid(score, game, bNS))
+        score::ScoreValidation result = score::IsScoreValid(score, game, bNS);
+        if ((score != SCORE_NP) && !result == score::ScoreValid)
         {
             wxColour org = m_theGrid->GetCellBackgroundColour(row, col);
             m_theGrid->SetCellBackgroundColour(row, col, *wxRED );
-
             // grid shows old data during msgbox, so put new data in...
             m_theGrid->SetCellValue(row, col, newData);
             m_theGrid->Refresh();
-            bool bNo = (wxNO == wxMessageBox(_("invalid score, store anyway?"), "???", wxYES_NO | wxICON_INFORMATION));
+            wxString msg = result == score::ScoreSpecial
+                ? _("unexpected/special score, accept anyway?")
+                : _("invalid score, accept anyway?");
+            bool bNo = (wxNO == MyMessageBox(msg, "???", wxYES_NO | wxICON_INFORMATION));
             m_theGrid->SetCellBackgroundColour(row, col, org );
             m_theGrid->Refresh();
             if (bNo)
@@ -590,7 +596,7 @@ void ScoreEntry::AutotestRequestMousePositions(MyTextFile* a_pFile)
 void ScoreEntry::PrintPage()
 {
     UINT session = cfg::GetActiveSession();
-    wxString sSession = session == 0 ? "" : FMT(_(" of session %u"), session);
+    wxString sSession = session == 0 ? ES : FMT(_(" of session %u"), session);
     wxString sRoundGame = m_bSlipOrder ? FMT(_("round %u"), m_uActiveRound) : FMT(_("game %u"), m_uActiveGame);
     wxString title = FMT(_("Overview of the scores%s for '%s', %s"), sSession, cfg::GetDescription(), sRoundGame);
     m_theGrid->PrintGrid(title, m_theGrid->GetNumberCols());

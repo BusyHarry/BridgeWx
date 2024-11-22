@@ -47,10 +47,10 @@ namespace db
     bool        TotalRankRead           (      UINT_VECTOR& vuRank, UINT session);
     bool        TotalRankWrite          (const UINT_VECTOR& vuRank, UINT session);
 
-    wxString    ReadValue       (keyId id, const wxString& default, UINT session = DEFAULT_SESSION);
-    bool        ReadValueBool   (keyId id, bool            default, UINT session = DEFAULT_SESSION);
-    long        ReadValueLong   (keyId id, long            default, UINT session = DEFAULT_SESSION);
-    UINT        ReadValueUINT   (keyId id, UINT            default, UINT session = DEFAULT_SESSION);
+    wxString    ReadValue       (keyId id, const wxString& defaultValue, UINT session = DEFAULT_SESSION);
+    bool        ReadValueBool   (keyId id, bool            defaultValue, UINT session = DEFAULT_SESSION);
+    long        ReadValueLong   (keyId id, long            defaultValue, UINT session = DEFAULT_SESSION);
+    UINT        ReadValueUINT   (keyId id, UINT            defaultValue, UINT session = DEFAULT_SESSION);
 
     bool        WriteValue      (keyId id, const wxString& value,   UINT session = DEFAULT_SESSION);
     bool        WriteValue      (keyId id, bool            value,   UINT session = DEFAULT_SESSION);

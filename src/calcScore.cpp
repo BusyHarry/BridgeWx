@@ -122,19 +122,21 @@ CalcScore::CalcScore(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, 
     m_pGameSelect = new MyChoiceMC(this, _("Game:"), _("Result per game"), Unique(CHOICE_GAME));
     m_pGameSelect->Bind(wxEVT_CHOICE, &CalcScore::OnCalcResultGame,this);
 
+    wxSizerFlags defaultSF0(0); defaultSF0.Border(wxALL, MY_BORDERSIZE);
+    wxSizerFlags defaultSF1(1); defaultSF1.Border(wxALL, MY_BORDERSIZE);
 
     wxBoxSizer* hBoxSearchOk = new wxBoxSizer(wxHORIZONTAL);
-    hBoxSearchOk->Add(CreateSearchBox()     , 1, wxBOTH | wxALL, MY_BORDERSIZE);
-    hBoxSearchOk->Add(pButtonPrint          , 0, wxBOTH | wxALL, MY_BORDERSIZE);
+    hBoxSearchOk->Add(CreateSearchBox(), defaultSF1);
+    hBoxSearchOk->Add(pButtonPrint     , defaultSF0);
     hBoxSearchOk->AddSpacer(10);
-    hBoxSearchOk->MyAdd(m_pChoices          , 0, wxBOTH | wxALL, MY_BORDERSIZE);
-    hBoxSearchOk->MyAdd(m_pPairSelect       , 0, wxBOTH | wxALL, MY_BORDERSIZE);
-    hBoxSearchOk->MyAdd(m_pGameSelect       , 0, wxBOTH | wxALL, MY_BORDERSIZE);
+    hBoxSearchOk->MyAdd(m_pChoices     , defaultSF0);
+    hBoxSearchOk->MyAdd(m_pPairSelect  , defaultSF0);
+    hBoxSearchOk->MyAdd(m_pGameSelect  , defaultSF0);
 
     // add to layout
     wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Score calculations"));
-    vBox->Add(m_pListBox      , 1, wxEXPAND | wxALL, MY_BORDERSIZE);
-    vBox->Add(hBoxSearchOk    , 0,            wxALL, MY_BORDERSIZE);
+    vBox->Add(m_pListBox    , defaultSF1.Expand());
+    vBox->Add(hBoxSearchOk  , defaultSF0);
     SetSizer(vBox);     // add to panel
 
     RefreshInfo();                  // fill the grid with data
@@ -608,7 +610,7 @@ void CalcScore::SaveSessionResults()
     wxString tmp;
     tmp.Printf(_("rank pair %-*s  tot.    max  score  %s  %s"),
         cfg::MAX_NAME_SIZE,_("pairname"),
-        m_bSomeCorrection ? _("corr.  ") : "",
+        m_bSomeCorrection ? _("corr.  ") : ES,
         GetGroupResultString(0, &svSessionRankToPair, true));
     m_txtFileResultSession.AddLine(tmp);m_txtFileResultOnName.AddLine(tmp);
     UINT startLine = m_txtFileResultSession.GetLineCount();    //from here the pairinfo is addded
@@ -874,7 +876,7 @@ wxString CalcScore::GetGroupResultString(UINT a_sessionPair, const std::vector<U
         auto minPair = itGroup.groupOffset;
         auto maxPair = minPair + itGroup.pairs;
         result += ( (a_sessionPair > minPair) && (a_sessionPair <= maxPair) ) ?
-            FMT("%2u", svGroupRank[a_sessionPair]) : " .";
+            FMT("%2u", svGroupRank[a_sessionPair]) : wxString(" .");
     }
 
     return result;
@@ -1003,14 +1005,14 @@ void CalcScore::CalcTotal()
 
     m_txtFileResultTotal.MyCreate(cfg::ConstructFilename(cfg::EXT_RESULT_TOTAL), MyTextFile::WRITE);
     m_txtFileResultTotal.AddLine(cfg::GetDescription());
-    m_txtFileResultTotal.AddLine(FMT(_("Total result%s"), bWeightedAvg ? _(" (weighted average)") : ""));
+    m_txtFileResultTotal.AddLine(FMT(_("Total result%s"), bWeightedAvg ? _(" (weighted average)") : ES));
     m_txtFileResultTotal.AddLine(ES);
     wxString tmp = _("rank pairname                       ");
     for (session=1; session <= maxSession; ++session)
     {
         tmp += FMT(_("  S%-4u"),session);
     }
-    tmp += FMT(_("  %s  %savg. %s"), bWeightedAvg ? " " : _("total "), bBonus ? _("bonus  ") : "", GetGroupResultString(0, &indexSessionPairnr, false));
+    tmp += FMT(_("  %s  %savg. %s"), bWeightedAvg ? wxString(" ") : _("total "), bBonus ? _("bonus  ") : ES, GetGroupResultString(0, &indexSessionPairnr, false));
     m_txtFileResultTotal.AddLine(tmp);
 
     for (UINT rank = 1; rank < svTotalRankToPair.size(); ++rank)
@@ -1189,7 +1191,7 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
     UINT        maxGame         = score::GetNumberOfGames();
     UINT        setSize         = cfg::GetSetSize();
     UINT        firstGame       = cfg::GetFirstGame()-1;
-    wxString    sessionString   = session >= 1 ? FMT(_(", session %u"), session) : "" ;
+    wxString    sessionString   = session >= 1 ? FMT(_(", session %u"), session) : ES ;
     wxString    tmp;
 
     m_txtFileResultPair.Clear();
@@ -1267,7 +1269,7 @@ void CalcScore::OnCalcResultGame(const wxCommandEvent& a_evt)
     AUTOTEST_BUSY("resultGame");
     UINT        game            = 1U + a_evt.GetInt();
     auto        session         = cfg::GetActiveSession();
-    wxString    sessionString   = session >= 1 ? FMT(_(", session %u"), session) : "" ;
+    wxString    sessionString   = session >= 1 ? FMT(_(", session %u"), session) : ES ;
 
     m_txtFileResultGame.Clear();
 #undef ADDLINE
@@ -1301,7 +1303,7 @@ void CalcScore::OnCalcResultGame(const wxCommandEvent& a_evt)
                     , names::PairnrSession2SessionText(setData.pairEW)
                     , score::ScoreToString(scoreNs)
                     , score::IsReal(scoreNs)
-                                ? "       "
+                                ? wxString("       ")
                                 : FMT(",%-6s",score::ScoreToString(setData.scoreEW))
                  );
         if (++count > setsPerLine)

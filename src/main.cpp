@@ -620,7 +620,7 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     Bind(wxEVT_MENU, &MyFrame::OnPrintPage, this, ID_MENU_PRINTPAGE);
     Bind(wxEVT_MENU, &MyFrame::OnPrintFile, this, ID_MENU_PRINTFILE);
     Bind(wxEVT_MENU, &MyFrame::OnMenuChoice,this, ID_MENU_SETUP_FIRST, ID_MENU_SETUP_LAST);
-    Bind(wxEVT_MENU, &MyFrame::OnLogging            , this, ID_MENU_LOG);
+    Bind(wxEVT_MENU, &MyFrame::OnLogging,   this, ID_MENU_LOG);
     Bind(wxEVT_MENU, [this](wxCommandEvent&){AUTOTEST_BUSY("menu"); io::ConvertDataBase(io::FromOldToDb); }, ID_MENU_OLD_TO_DBASE);
     Bind(wxEVT_MENU, [this](wxCommandEvent&){AUTOTEST_BUSY("menu"); io::ConvertDataBase (io::FromDbToOld);}, ID_MENU_DBASE_TO_OLD);
     Bind(wxEVT_MENU, [this](wxCommandEvent&){AUTOTEST_BUSY("menu"); cfg::DatabaseTypeSet(io::DB_ORG)     ;}, ID_MENU_OLD_DBASE);

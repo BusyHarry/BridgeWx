@@ -9,10 +9,16 @@
 
 typedef unsigned int UINT;
 #define FMT wxString::Format
-#define ES  wxEmptyString
+extern const wxString ES;       // an Empty String
 #include "mylog.h"
 
 #define MY_UNUSED(x) do {} while(0 && (x) )
+
+template <typename T>
+bool IsInRange(const T& value, const T& low, const T& high)
+{
+    return (value >= low) && (high <= value);
+}
 
 struct StringBuf
 {   // buffer with a string and an index from where to start in the string

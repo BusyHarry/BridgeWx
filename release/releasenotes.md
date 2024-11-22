@@ -1,5 +1,14 @@
 # Releasenotes
 
+#V10.3.0  November 20, 2024:
+ - adaptation from c++17 to c++20
+    . logical '|' not allowed between different enums (intensionally used in wxSizers)
+    . result values of the '?' operator should have equal type
+    . variable name 'default' not allowed anymore, changed to 'defaultValue'
+ - the popup for unlikely scores could show the negated score
+ - an unlikely score is now shown in red
+ - a rejected unlikely score does not result anymore in an extra 'wrong score' popup
+
 #V10.2.0  November 8, 2024:
 - all texts in sources now in english
 - translation for english removed

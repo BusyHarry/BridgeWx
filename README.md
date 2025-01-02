@@ -24,7 +24,7 @@ To run the autotest:
  - AutoHotkey64.exe MUST exist, reachable through the 'path' environment-variable, or be present in the tools folder
  - run once: initTest.bat (it will create a file with mouse-positions/labels used in the actual test)
  - run the test: runTest.bat
- - afterwoods, you may run 'compareDb.bat' and 'compareList.bat' to check the results against a 'correct' reference (for Dutch present in the autotest folder)
+ - afterwoods, you may run 'compareDb.bat' and 'compareList.bat' to check the results against a 'correct' reference (for English and Dutch present in the autotest folder)
 
 I used SciTE4AutoHotkey ( https://www.autohotkey.com/scite4ahk/ ) to edit/debug the testscript.
 Another edit/debug tool: Visual Studio Code with extension AutoHotkey Plus Plus (AHK++) ( https://marketplace.visualstudio.com/items?itemName=mark-wiemer.vscode-autohotkey-plus-plus )

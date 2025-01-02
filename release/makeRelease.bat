@@ -44,6 +44,10 @@ copy ..\locales\nl.mo .\BridgeWx\locales\nl\BridgeWx.mo
 set tools=AutoHotkey64,BuildDate,cleanpo,msgbox,zip
 for %%a in (%tools%) copy ..\tools\%%a.exe BridgeWx\tools\
 
+:: copy vc-redist dll's
+set vc_redistribution=vc_redist
+if exist %vc_redistribution% copy %vc_redistribution%\*.dll BridgeWx
+
 :: update release notes
 notepad .\releasenotes.md
 copy    .\releasenotes.md BridgeWx\
@@ -53,5 +57,6 @@ copy    .\releasenotes.md BridgeWx\
 set version=
 set zipfile=
 set wxwin=
+set vc_redistribution=
 
 popd

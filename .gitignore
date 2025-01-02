@@ -34,3 +34,4 @@ BridgeWx_solution_suppressions.cfg
 #release folders
 /release/BridgeWx/
 /release/*.zip
+/release/vc_redist/

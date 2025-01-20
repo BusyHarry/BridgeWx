@@ -1,6 +1,8 @@
 # Releasenotes
 
-#V10.3.0  ....... :
+#V10.4.0 ....
+
+#V10.3.0  Januari 20, 2025:
  - adaptation from c++17 to c++20
    - logical '|' not allowed between different enums (intensionally used in wxSizers)
    - result values of the '?' operator should have equal type

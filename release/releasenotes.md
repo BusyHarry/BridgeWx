@@ -1,5 +1,7 @@
 # Releasenotes
 
+#V10.4.0 ......
+
 #V10.3.0  Monday Januari 20 2025:
  - adaptation from c++17 to c++20
    - logical '|' not allowed between different enums (intensionally used in wxSizers)

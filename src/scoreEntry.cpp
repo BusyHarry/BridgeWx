@@ -209,11 +209,11 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
         }
 
         // now we have valid score or accepted a for me unknown score...
-        // check if NS and arbitrary --> goto EW for arbitrary score
+        // check if NS and adjusted --> goto EW for adjusted score
         if (score::IsReal(score))
         {
             if (!bNS)
-            {   // EW should ALWAYS be arbitrary!
+            {   // EW should ALWAYS be adjusted!
                 wxBell();
                 m_theGrid->CallAfter([this,a_cellInfo](){this->m_theGrid->GoToCell(a_cellInfo.row, COL_SCORE_EW);});
                 return CELL_CHANGE_REJECTED;
@@ -235,7 +235,7 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
     // If there are 2 or more empty scores in the next lines, the 'enter' would work on the repositioning 
     CallAfter(&ScoreEntry::GotoNextEmptyScore);
 
-    // now we have a 'real' NS score, or a complete NS/EW arbitrary score, so save the data
+    // now we have a 'real' NS score, or a complete NS/EW adjusted score, so save the data
     m_iRowToSave = row;
     CallAfter(&ScoreEntry::SaveRowData);        // delayed, because new data is not copied yet to grid...
     return CELL_CHANGE_OK;  // accept change
@@ -443,13 +443,13 @@ void ScoreEntry::RefreshInfo()
                     std::swap(nsPair,ewPair);
                 }
                 m_theGrid->SetCellValue(currentRow, COL_SCORE_NS, scoreNS);
-                if ( data.scoreNS != -data.scoreEW) // only display EW-score if arbitrary
+                if ( data.scoreNS != -data.scoreEW) // only display EW-score if adjusted
                     m_theGrid->SetCellValue(currentRow, COL_SCORE_EW, scoreEW);
 
                 m_theGrid->SetReadOnly(currentRow, COL_GAME     );
                 m_theGrid->SetReadOnly(currentRow, COL_NS       );
                 m_theGrid->SetReadOnly(currentRow, COL_EW       );
-                m_theGrid->SetReadOnly(currentRow, COL_SCORE_EW );  // default: only for arbitrary NS score, set to edit
+                m_theGrid->SetReadOnly(currentRow, COL_SCORE_EW );  // default: only for adjusted NS score, set to edit
                 m_theGrid->SetReadOnly(currentRow, COL_NAME_NS  );
                 m_theGrid->SetReadOnly(currentRow, COL_NAME_EW  );
             }
@@ -481,7 +481,7 @@ void ScoreEntry::RefreshInfo()
 
     Layout();
     static wxString explanation;    // MUST be initialized dynamically: translation
-    explanation = _("Scoreentry: normal: <score>, arbitrary: '%'<score> or 'r'<score> or 'np'=not played");
+    explanation = _("Scoreentry: normal: <score>, adjusted: '%'<score> or 'r'<score> or 'np'=not played");
     SendEvent2Mainframe(this, ID_STATUSBAR_SETTEXT, &explanation);
 }   // RefreshInfo()
 

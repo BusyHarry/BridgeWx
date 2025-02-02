@@ -110,7 +110,7 @@ UINT GetNumberOfGames(const vvScoreData* a_scoreData)
 
 bool IsReal(int a_score)
 {   // remark: this is NOT a test if its a valid score, only the possible catagory is determined!
-    return (a_score < MAX_REAL) && (a_score != SCORE_NP);  // above MAXREAL we have % scores or 'normal' arbitrary scores
+    return (a_score < MAX_REAL) && (a_score != SCORE_NP);  // above MAXREAL we have % scores or 'normal' adjusted scores
 }   // IsReal()
 
 bool IsProcent(int a_score)
@@ -136,12 +136,12 @@ wxString ScoreToString(int a_score)
     {   // filter special cases
         if ((a_score >= OFFSET_REAL - MAX_REAL) && (a_score <= OFFSET_REAL + MAX_REAL))
         {
-            a_score -= OFFSET_REAL;     // a real arbitrary score
+            a_score -= OFFSET_REAL;     // a real adjusted score
             result = 'R';
         }
         else if (score::IsProcent(a_score))
         {
-            a_score -= OFFSET_PROCENT;  // an arbitrary % score
+            a_score -= OFFSET_PROCENT;  // an adjusted % score
             result = '%';
         }
         else

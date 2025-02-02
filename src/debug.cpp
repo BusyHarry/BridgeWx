@@ -19,20 +19,14 @@
 
 /*
 * according 'bard'/'gemini
-
-Gidsbriefje:
-    Convention card
-    Bidding card
-    Cue card
-Richting:
-    Direction, Side: We spelen in de Noord-Zuid richting." - "We are playing in the North-South direction."
-Ronde:
-    Round, deal, hand
-    Deal
-Tegenstander:
-    Opponent, Declarer's opponent
-    Adversary
+Systeemkaart: Convention card
+Gidsbriefje : Bidding card, Cue card, Movements card
+Richting    : Direction, Side: We spelen in de Noord-Zuid richting." - "We are playing in the North-South direction."
+Ronde       : Round, deal, hand Deal
+Tegenstander: Opponent, Declarer's opponent, Adversary
+Leider      : Declarer
 meer:
+    spel            : board (game?)
     Troefkleur      : Trump suit
     Bieden          : Bidding
     Spelverdeler    : Dealer
@@ -42,6 +36,10 @@ meer:
     sitlzit tafel   : Sit-out table or Dummy table
     Spellen lenen   : Borrow the cards from a table, Take the cards from a table
     frequentiestaat : frequency state or "hand distribution"
+    reken programma : scoring program
+    stilzit         : a bye
+    scoreslips      : result slips/scorecard
+    arbitrale score : referee/artificial score, adjusted score
 * 
 */
 static const wxString ssDbg = "dbg";

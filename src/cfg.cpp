@@ -66,7 +66,7 @@ namespace cfg
     static UINT             suMinClub;              // min nr of players used in club-result
     static bool             sbFormFeed;             // use ff after each printout
     static bool             sbGlobalNameUse;        // use a global name file i.s.o names per match
-    static bool             sbNeuberg;              // use neuberg calculation if not all decks played or when there are arbitrary results
+    static bool             sbNeuberg;              // use neuberg calculation if not all decks played or when there are adjusted score results
     static bool             sbGroupResult;          // show result in matrix of users and decks/sets
     static bool             sbClock;                // show clock
     static bool             sbWeightedAvg;          // use weighted avarage in end-result in more matches
@@ -880,7 +880,7 @@ namespace cfg
                     "  kx: Clock on display (x=1), no Clock (x=0)\n"
                     "  lx: nr of Lines per page during print = x (50<x<100)\n"
                     "  mx: Maximum average for non-present sessions = x\n"
-                    "  nx: do Neuberg-calculation (x=1) on arbitrary scores, no (x=0)\n"
+                    "  nx: do Neuberg-calculation (x=1) on adjusted scores, no (x=0)\n"
                     "  sx: number of first game, default 1 (meant for guides 2' session)\n"
                     "  zx: Session 'x' (x= 1, 2, ... 15)\n"
                     "  wx: matchname 'x'\n"

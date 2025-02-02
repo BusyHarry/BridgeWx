@@ -146,7 +146,7 @@ CalcScore::CalcScore(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, 
     AUTOTEST_ADD_WINDOW(m_pPairSelect, CHOICE_PAIR   );
     AUTOTEST_ADD_WINDOW(m_pGameSelect, CHOICE_GAME   );
     m_description = "CalcScore";
-    //LogMessage("CalcScore() aangemaakt");
+    //LogMessage("CalcScore() created");
 }   // CalcScore()
 
 CalcScore::~CalcScore()
@@ -368,7 +368,7 @@ void CalcScore::CalcSession()
     SaveFrequencyTable();
     score::WriteSessionRank(svSessionRankToPair);
     SaveSessionResultShort();
-    CalcClub(false);
+    CalcClub(false);        // club-result for this session
 }   // CalcSession()
 
 void CalcScore::InitializeAndCalcScores()
@@ -389,25 +389,25 @@ void CalcScore::CalcGame(UINT game, bool bNs, FS_INFO& fsInfo)
     UINT sets = (*spvGameSetData)[game].size();
     if (sets == 0) return;      // nothing to do, not played yet
     
-    UINT  arbitraryCount = 0;
+    UINT  adjustedScoreCount = 0;
     std::vector<int> tmpScores;
     for ( auto it : (*spvGameSetData)[game])
     {
         int score = bNs ? it.scoreNS : it.scoreEW;
         score = score::Score2Real(score);   //we only want/need real scores or %
         tmpScores.push_back(score);
-        if (score::IsProcent(score))      // determine arbitrary count
-            ++arbitraryCount;
+        if (score::IsProcent(score))      // determine adjustedscore count
+            ++adjustedScoreCount;
     }
 
     std::sort(tmpScores.begin(),tmpScores.end(), [](int a, int b){return a > b;});  // from high to low
     UINT normalTop      = (sets-1)*2;
-    UINT top            = normalTop-arbitraryCount;
+    UINT top            = normalTop-adjustedScoreCount;
     UINT neubergCount   = 0;
     if (cfg::GetNeuberg())
     {
-        neubergCount = sets-arbitraryCount;    // nr of comparable scores
-        top -= arbitraryCount;                 // == sets-1-arbitrarycount*2
+        neubergCount = sets-adjustedScoreCount;    // nr of comparable scores
+        top -= adjustedScoreCount;                 // == sets-1-adjustedScoreCount*2
     }
 
     if (bNs)
@@ -448,8 +448,8 @@ void CalcScore::CalcGame(UINT game, bool bNs, FS_INFO& fsInfo)
         }
         else
         {   points=1L+top-equalCount;
-            top-=equalCount*2;                       // new 'top'
-            if (arbitraryCount && cfg::GetNeuberg())       // recalc points with special formule
+            top-=equalCount*2;                          // new 'top'
+            if (adjustedScoreCount && cfg::GetNeuberg())    // recalc points with special formule
                 points = NeubergPoints(points,sets,neubergCount);
             else
                 points *=10;                // 1 decimal after dp!!

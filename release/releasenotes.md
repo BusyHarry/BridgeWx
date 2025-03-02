@@ -3,6 +3,10 @@
 #V10.4.0 ....
  - updated AutoHotkey64.exe from version 2.0.18 to 2.0.19
  - changed some bad-english words to 'better' ones (arbitrairy score -> adjusted score)
+ - refactored the MyLog class
+   - only dependend of wx-headerfiles
+   - all functions are now static methods, so no polluting of global namespace
+   - added scaling for the log-messages
 
 #V10.3.0  Januari 20, 2025:
  - adaptation from c++17 to c++20

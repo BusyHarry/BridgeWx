@@ -10,20 +10,20 @@
 
 #include "mylog.h"
 
-#define MYSELF 1        /* if its me*/
-#if MYSELF == 1
-    #include "cfg.h"
-#endif
-
 class MyLogFrame;
 
 static bool             sbLogger        {false};
 static MyLogFrame*      spLogFrame      {0};
 static wxWindowID       sFrameId        {0};
 static wxTextCtrl*      spTextCtrl      {0};
-static MyLogLevel       sLastRequested  {MyLogLevel::MyLOG_MIN};
-static MyLogLevel       sLevel          {MyLogLevel::MyLOG_Message};
+static MyLog::Level     sLastRequested  {MyLog::Level::LOG_MIN};
+static MyLog::Level     sLevel          {MyLog::Level::LOG_Message};
 static bool             sbPositioned    {false};
+static bool             sbAppDebug      {false};
+static bool             sbScriptTesting {false};
+static const wxWindow*  spMainframe     {nullptr};  //ptr to mainframe to position logging window alongside
+
+extern const wxString ES;       // an Empty String
 
 struct frameInfo
 {   // info for delayed destruction 
@@ -97,6 +97,12 @@ MyLog::~MyLog()
 
 void MyLog::Create( )
 {
+    enum MY_MENU_IDS
+    {
+          ID_MENU_MYLOG_SAVE= wxID_HIGHEST + 1
+        , ID_MENU_MYLOG_CLEAR
+        , ID_MENU_MYLOG_HIDE
+    };
     spLogFrame = new MyLogFrame();
     wxMenu *pMenu = new wxMenu;
     pMenu->Append(ID_MENU_MYLOG_SAVE , _("save &As..."), _("Save in logfile"           ));
@@ -115,14 +121,18 @@ void MyLog::Create( )
 
     spLogFrame->SetStatusBar(new wxStatusBar(spLogFrame));
 
-    spTextCtrl = new wxTextCtrl(spLogFrame, wxID_ANY, ES,
+    spTextCtrl = new wxTextCtrl(spLogFrame, wxID_ANY, wxEmptyString,
         wxDefaultPosition, DEFAULT_SIZE, wxTE_MULTILINE|wxTE_READONLY|wxHSCROLL);
+
+    int size = spTextCtrl->GetFont().GetPointSize();
+    wxFont  celFont (size, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
+    spTextCtrl->SetFont(celFont);               // fixed sized font, so tables look nice
 
     spLogFrame->Show(false);                    // start invisable
 
     sFrameId    = spLogFrame->GetId();          // in case it was wxID_ANY
     sbLogger    = true;                         // we have a logger
-    sLevel      = MyLogLevel::MyLOG_Message;    // default loglevel
+    sLevel      = MyLog::Level::LOG_Message;    // default loglevel
     sm_pLogFrames[this] = frameInfo(spLogFrame, sFrameId);  // dtor info
     sbPositioned= false;                        // first time position is next to app-window
 }   // Create()
@@ -148,7 +158,7 @@ void MyLogFrame::OnSave  (wxCommandEvent& )
     wxString filename = wxSaveFileSelector("log", "txt", "log.txt", spLogFrame);
     if (!filename.IsEmpty())
         spTextCtrl->SaveFile(filename);
-    LogMessage(_("Log saved to file '%s'."), filename);
+    MyLogMessage(_("Log saved to file '%s'."), filename);
 }   // OnSave()
 
 void MyLogFrame::OnClear (wxCommandEvent& )
@@ -163,20 +173,29 @@ void MyLogFrame::OnClose(wxCloseEvent& a_event)
     a_event.Veto();
 }   // OnClose()
 
-wxWindowID MyLogGetId()
+wxWindowID MyLog::GetId()
 {
     return sFrameId;
-}   // MyLogGetId()
+}   // GetId()
 
-void MyLogSetLevel(MyLogLevel a_level)
+void MyLog::SetLevel(MyLog::Level a_level)
 {
-    if (a_level >= MyLogLevel::MyLOG_MIN && a_level <= MyLogLevel::MyLOG_Max)
+    if (a_level >= MyLog::Level::LOG_MIN && a_level <= MyLog::Level::LOG_Max)
         sLevel = a_level;
     else
-        sLevel = MyLogLevel::MyLOG_Message;
-}   // MyLogSetLevel()
+        sLevel = MyLog::Level::LOG_Message;
+}   // SetLevel()
 
-void MyLogShow(bool a_bShow)
+void MyLog::FontScale(float a_scale)
+{
+    if (sbLogger && spLogFrame && spLogFrame->FindWindowById(sFrameId))
+    {
+        auto font = spTextCtrl->GetFont();
+        spTextCtrl->SetFont(font.Scale(a_scale));
+    }
+}   // FontScale()
+
+void MyLog::Show(bool a_bShow)
 {   // just check if window still exists....
     if (sbLogger && spLogFrame && spLogFrame->FindWindowById(sFrameId))
     {
@@ -185,9 +204,10 @@ void MyLogShow(bool a_bShow)
             sbPositioned = true;
             int x = wxSystemSettings::GetMetric(wxSYS_SCREEN_X);
             wxPoint pos = {0,50};
-            if (GetMainframe())
+
+            if (spMainframe)
             {
-                pos.x = GetMainframe()->GetPosition().x + GetMainframe()->GetSize().GetX();
+                pos.x = spMainframe->GetPosition().x + spMainframe->GetSize().GetX();
                 if (pos.x > x-100) pos.x = x-100;
             }
             else
@@ -196,7 +216,7 @@ void MyLogShow(bool a_bShow)
         }
         spLogFrame->Show(a_bShow);
     }
-}   // MyLogShow()
+}   // Show()
 
 static wxString theType[]=
 {
@@ -209,36 +229,47 @@ static wxString theType[]=
 
 static const unsigned int nrOfTypes = sizeof(theType)/sizeof(theType[0]);
 
-bool MyLogIsEnabled(MyLogLevel a_level)
+bool MyLog::IsEnabled(MyLog::Level a_level)
 {
-    if (!sbLogger || sLevel < a_level || a_level < MyLogLevel::MyLOG_MIN ) return false;
+    if (!sbLogger || sLevel < a_level || a_level < MyLog::Level::LOG_MIN ) return false;
     if ( (unsigned int)a_level >= nrOfTypes ) return false;
 #ifndef _DEBUG
-    if (a_level == MyLogLevel::MyLOG_Debug) return false;
+    if (a_level == MyLog::Level::LOG_Debug) return false;
 #endif
     sLastRequested = a_level;   // (was) needed for displaying the log-level
     return true;
-}   // MyLogIsEnabled()
+}   // IsEnabled()
 
-void MyLogGeneral(MyLogLevel a_level, const wxString& a_msg)
+void MyLog::DoLog(MyLog::Level a_level, const wxString& a_msg)
 {
     if (!sbLogger || sLevel < a_level ) return;
     if ( (unsigned int)a_level >= nrOfTypes ) return;
 
 #ifndef _DEBUG  // in releasemode only show errors. If debug set, also show debug msg
-    if (a_level != MyLogLevel::MyLOG_Error)
+    if (a_level != MyLog::Level::LOG_Error)
     {
-        if (a_level != MyLogLevel::MyLOG_Debug) return;
-        #if MYSELF == 1
-            if (!cfg::IsDebug()) return;
-        #endif
+        if (a_level != MyLog::Level::LOG_Debug && !sbAppDebug) return;
     }
 #endif
-    static bool bTesting = cfg::IsScriptTesting();
-    wxString result = bTesting
+    wxString result = sbScriptTesting
     ? wxDateTime::UNow().Format("%H:%M:%S:%l") + theType[(int)a_level] + a_msg
     : wxDateTime:: Now().Format("%H:%M:%S")    + theType[(int)a_level] + a_msg;
 
     result.Replace("\n", "\\n", true);
     spTextCtrl->AppendText(result + '\n');
-}   // MyLogGeneral()
+}   // DoLog()
+
+void MyLog::SetScriptTesting()
+{
+    sbScriptTesting = true;
+}   // SetScriptTesting()
+
+void MyLog::SetAppDebugging()
+{
+    sbAppDebug = true;
+}   // SetAppDebugging()
+
+void MyLog::SetMainFrame(const wxWindow* pMainframe)
+{
+    spMainframe = pMainframe;
+}   // SetMainFrame()

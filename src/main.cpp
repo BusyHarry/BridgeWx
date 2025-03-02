@@ -482,8 +482,9 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     , m_oldId       { 0 }
 {   // remark: wxFrame() MUST be initialized in constructor, not in its body: it will not be (for sure) the first toplevel window!
 
-    MyLogSetLevel(MyLogLevel::MyLOG_Max);
-    m_myLogger.SetCallbackOnHide(&UncheckLogMenu);
+    MyLog::SetLevel(MyLog::Level::LOG_Max);
+    MyLog::SetMainFrame(this);
+    MyLog::SetCallbackOnHide(&UncheckLogMenu);
     // autotest init
     m_pMyEventCatcher = nullptr;
     if (cfg::IsScriptTesting())
@@ -511,7 +512,9 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     if (fontIncrease)
     {
         float factor = 1.0 + fontIncrease/100.0;
-        this->SetFont(GetFont().Scale(factor));    // only sub-frames have adapted fonts, menu's don't change: system settings
+        this->SetFont(GetFont().Scale(factor));     // only sub-frames have adapted fonts, menu's don't change: system settings
+        MyLogDebug("Setting scalefactor to %3.1f", factor);
+        MyLog::FontScale(factor);                   // also scale logwindow: it was created earlier
     }
 
     // Set default size of mainwindow
@@ -863,7 +866,7 @@ void MyFrame::OnLogging(wxCommandEvent&)
 {   // show/hide a logwindow 
     AUTOTEST_BUSY("log");
     bool bShow = m_pMenuBar->IsChecked(ID_MENU_LOG);
-    MyLogShow(bShow);   // my own logger --> made this before I knew the wxLogWindow :(
+    MyLog::Show(bShow); // my own logger --> made this before I knew the wxLogWindow :(
     SetFocus();         // stay with me...
 }   // OnLogging()
 

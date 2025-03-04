@@ -7,9 +7,16 @@ DEBUG_EXE := false ; default value (false): use the release.exe
 ;
 if (A_Args.Length > 0)
   DEBUG_EXE := true
+
+;
+; maybe: title not needed on many cmnds: it wil use last active window, should be faster
+;
+;generated mousepositions/variables/labels
+#Include ".\work\AutoTest.pos"      ;include relative to script-location and can NOT be a variable!
 ;
 ;assume that InitTest.ahk/bat has been run: actual mousepositions/labels available
 ;
+butlerArg     := bButler ? " -b1 " : ""
 Exename       := "BridgeWx.exe"
 DEBUG         := DEBUG_EXE ? "d" : ""
 BridgeWxExe   := A_ScriptDir    "\..\vc_x64_mswu" DEBUG "\" ExeName
@@ -17,7 +24,7 @@ if 1 == InStr(a_ScriptDir, "f:\temp" , , 1, 1)
   BridgeWxExe := "D:\bridge\BridgeWx\vc_x64_mswu" DEBUG "\" ExeName  ; for local testing
 AutoTestPath  := A_ScriptDir "\work\"
 AutoTestMatch := "autoTest01"
-AutoTestCmd   := " -u -d -r1 -g1 -k0 -l61 -w " AutoTestMatch " -f " AutoTestPath
+AutoTestCmd   := " -u -d -r1 -g1 -k0 -l61 -w " AutoTestMatch " -f " AutoTestPath butlerArg
 StartBridgeWx := BridgeWxExe AutoTestCmd
 ;MsgBox(StartBridgeWx) ; show command and its params
 if (!FileExist(BridgeWxExe))
@@ -25,12 +32,6 @@ if (!FileExist(BridgeWxExe))
    MsgBox("Cannot find " BridgeWxExe)
    ExitApp(1)
 }
-
-;
-; maybe: title not needed on many cmnds: it wil use last active window, should be faster
-;
-;generated mousepositions/variables/labels
-#Include ".\work\AutoTest.pos"      ;include relative to script-location and can NOT be a variable!
 
 BridgewxTitle     := WinTitle   ;"'Bridge' calculation program"
 ListFile          := AutoTestPath "list"
@@ -634,6 +635,13 @@ InitNamesS2()
     AddText_EW("b2")            ;SendEvent("b2{ENTER}")            ; pair 5 -> B2
     AddText_EW("{ENTER 10}b10") ;SendEvent("{ENTER 10}b10{ENTER}") ; pair 16 -> B10
     AddText_EW("b1")            ;SendEvent("b1{ENTER}")            ; pair 17 -> B1
+    if (bButler)
+    {
+      GridPosition(AssignNames_Grid_L, 2, 2)
+        AddText_EW("a7")        ; pair 2 -> A7
+      GridPosition(AssignNames_Grid_L, 9, 2)
+        AddText_EW("b6")        ; pair 9 -> B6
+    }
     ButtonClick_L(AssignNames_Ok_L)
     PrintPage()
 } ; InitNamesS2()
@@ -791,14 +799,27 @@ ScoresCorS1()
 {
   MenuSelect(MenuCorSession)
   GridPosition(CorSession_Grid_L)      ; select the grid, goto first row/column
-  AddText_EW(  "{RIGHT 4}2{TAB}1") ; pair 1, max=2, extra=1
-  AddText_EW(  "^{HOME}{DOWN 2}{RIGHT 3}10" ) ; pair 3, +10m
-  AddText_EW(  "^{HOME}{DOWN 4}{RIGHT 2}3"  ) ; pair 5, +3%
+  if (bButler)
+  {
+    AddText_EW(  "{RIGHT 3} 2{TAB} 4"                 ) ; pair 1, combi: imps=2, games=4
+    AddText_EW(  "^{HOME}{DOWN 1}{RIGHT 3} -5{TAB} 4" ) ; pair 2, combi: imps-5, games 4
+    AddText_EW(  "^{HOME}{DOWN 2}{RIGHT 2} 10"        ) ; pair 3, +10imps
+    AddText_EW(  "^{HOME}{DOWN 4}{RIGHT 2} -3"        ) ; pair 5, -3imps
+  }
+  else
+  {
+    AddText_EW(  "{RIGHT 4}2{TAB}1")            ; pair 1, combi: max=2, extra=1
+    AddText_EW(  "^{HOME}{DOWN 2}{RIGHT 3}10" ) ; pair 3, +10m
+    AddText_EW(  "^{HOME}{DOWN 4}{RIGHT 2}3"  ) ; pair 5, +3%
+  }
   PrintPage()
   ;
   MenuSelect(MenuCorEnd)
   GridPosition(CorEnd_Grid_L)            ; select the grid, goto first row/column
-  AddText_EW(   "{DOWN}{RIGHT 2}50") ; pair 2 gets 50% for total result
+  if (bButler)
+    AddText_EW(   "{DOWN}{RIGHT 2}4") ; pair 2 gets 4 imps for total result
+  else
+    AddText_EW(   "{DOWN}{RIGHT 2}50") ; pair 2 gets 50% for total result
   PrintPage()
 } ; ScoresCorS1()
 

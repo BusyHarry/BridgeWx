@@ -15,7 +15,7 @@
 
 namespace db
 {
-static const long dbVersion = 100;
+static const long dbVersion = 100;  // assumed version (or smaller) for the code below
 static void InitSdb();
 
 #define TEST 0
@@ -112,7 +112,7 @@ static wxFileConfig* InitDatabase(const wxString& a_dbFile)
         file.AddLine(";info assignments        : '<global pairnr>[@...] -> array[<sessionpair>] = <global pairnr>'");
         file.AddLine(";info assignments names  : '<session name of global pair>[@...] -> array[<globalpair>] = <session name of global pair>'");
         file.AddLine(";info lines per page     : 'lines per page when printertype is <list>'");
-        file.AddLine(";info corrections session: '{<session pairnr>,<correction><type>,<extra.1>,<max extra>}[@...]'");
+        file.AddLine(";info corrections session: '{<session pairnr>,<correction><type>,<extra.1>,<max extra>,<games>}[@...]'");
         file.AddLine(";info corrections end    : '{<global pairnr>,<score.2>,<bonus.2>,<games>}[@...]'");
         file.AddLine(";info session result     : '{<global pairnr>,<score.2>,<games>}[@...]'");
         file.AddLine(";info session rank       : '<globalpair>[@...] array[<rank>]=<globalpair>'");
@@ -125,7 +125,9 @@ static wxFileConfig* InitDatabase(const wxString& a_dbFile)
     pCfg->SetRecordDefaults();   //write all requested entries to the file, if not present
     // set some info-records
     std::swap(s_pConfig, pCfg);       // have the correct value for the next two calls....
-    (void) ReadValueLong(KEY_DB_VERSION , dbVersion);
+    long version = ReadValueLong(KEY_DB_VERSION , dbVersion);
+    if (version > dbVersion)
+        MyMessageBox(wxString::Format(_("Database version error, expected <= %ld, found %ld"), dbVersion, version));
     (void) ReadValue    (KEY_PRG_VERSION, cfg::GetVersion());
     std::swap(s_pConfig, pCfg);       // back to how it was
     return pCfg;
@@ -370,6 +372,7 @@ void InitSdb()
     dbKeys[KEY_MATCH_FF]                 = "form_feed";     // filter out: old
     dbKeys[KEY_MATCH_VIDEO]              = "bios_video";    // filter out: old
     dbKeys[KEY_MATCH_DISCR]              = "description";
+    dbKeys[KEY_MATCH_BUTLER]             = "butler";
 
     dbKeys[KEY_SESSION_DISCR]            = "description";
     dbKeys[KEY_SESSION_SCHEMA]           = "schema";
@@ -583,9 +586,10 @@ bool CorrectionsSessionRead(cor::mCorrectionsSession& a_mCorrectionsSession, UIN
         cor::CORRECTION_SESSION cs;
         char extraBuf[10+1]= {0};
         // {<session pairnr>,<correction><type>,<extra.1>,<max extra>}
-        bool bErrorEntry = (5 != wxSscanf(it, " {%u ,%i %c , %10[^, ] ,%i }"
-                                , &sessionPairnr, &cs.correction, &cs.type, extraBuf, &cs.maxExtra)
-                            );
+        auto entries = wxSscanf(it, " {%u ,%i %c , %10[^, ] ,%i, %u }"
+                                , &sessionPairnr, &cs.correction, &cs.type, extraBuf, &cs.maxExtra, &cs.games
+                            );  // older db may NOT have games component
+        bool bErrorEntry = entries < 5;
         cs.extra = AsciiTolong(extraBuf);
         if (!IsValidCorrectionSession(sessionPairnr, cs, it, bErrorEntry))
         {
@@ -606,13 +610,14 @@ bool CorrectionsSessionWrite(const cor::mCorrectionsSession& a_m_correctionsSess
     wxChar separator = ' ';
     for (const auto& it : a_m_correctionsSession)
     {
-        correction += FMT("%c{%u,%+i%c,%s,%i}"
+        correction += FMT("%c{%u,%+i%c,%s,%i,%u}"
             , separator
             , it.first
             , it.second.correction
             , it.second.type
             , LongToAscii1(it.second.extra).Trim(TRIM_RIGHT)
             , it.second.maxExtra
+            , it.second.games
         );
         separator = theSeparator;
     }
@@ -640,8 +645,13 @@ bool CorrectionsEndRead(cor::mCorrectionsEnd& a_mCorrectionsEnd, UINT a_session,
             if ( a_bEdit || a_mCorrectionsEnd.find(pairNr) != a_mCorrectionsEnd.end())
             {
                 if (!a_bEdit && ce.score == SCORE_IGNORE)
-                    ce.score = a_mCorrectionsEnd[pairNr].score;
-                a_mCorrectionsEnd[pairNr] = ce;
+                {   // keep original score and nr of played games if bonus present
+                    ////ce.score = a_mCorrectionsEnd[pairNr].score;
+                    ////ce.games = a_mCorrectionsEnd[pairNr].games;
+                    a_mCorrectionsEnd[pairNr].bonus = ce.bonus;
+                }
+                else
+                    a_mCorrectionsEnd[pairNr] = ce;
             }
         }
         else bOk = false;

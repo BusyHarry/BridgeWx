@@ -9,3 +9,7 @@ ref_autoTest01.db.nl
 ref_autoTest01.db.en
 ref_list.nl
 ref_list.en
+ref_autoTest01.db.nl.butler
+ref_autoTest01.db.en.butler
+ref_list.nl.butler
+ref_list.en.butler

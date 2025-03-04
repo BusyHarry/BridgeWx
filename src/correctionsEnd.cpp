@@ -34,7 +34,7 @@ CorrectionsEnd::CorrectionsEnd(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_
     m_theGrid->SetRowLabelSize(SIZE_PAIRNR_SES);
     m_theGrid->SetColSize(COL_PAIRNAME_SESSION, SIZE_PAIRNAME_SES ); m_theGrid->SetColLabelValue(COL_PAIRNAME_SESSION, _("pair"    ));
     m_theGrid->SetColSize(COL_PAIRNAME_GLOBAL , SIZE_PAIRNAME     ); m_theGrid->SetColLabelValue(COL_PAIRNAME_GLOBAL , _("pairname"));
-    m_theGrid->SetColSize(COL_COR_SCORE       , SIZE_PROCENT      ); m_theGrid->SetColLabelValue(COL_COR_SCORE       , _("score"   ));
+    m_theGrid->SetColSize(COL_COR_SCORE       , SIZE_PROCENT      );// m_theGrid->SetColLabelValue(COL_COR_SCORE       , _("score"   ));
     m_theGrid->SetColSize(COL_COR_BONUS       , SIZE_PROCENT      ); m_theGrid->SetColLabelValue(COL_COR_BONUS       , _("bonus"   ));
     m_theGrid->SetColSize(COL_COR_GAMES       , SIZE_GAMES        ); m_theGrid->SetColLabelValue(COL_COR_GAMES       , _("games"   ));
 
@@ -85,13 +85,28 @@ void CorrectionsEnd::AutotestRequestMousePositions(MyTextFile* a_pFile)
     { 
         wxString score  = m_theGrid->GetCellValue(row, COL_COR_SCORE);
         wxString bonus  = m_theGrid->GetCellValue(row, COL_COR_BONUS);
-        wxString games  = m_theGrid->GetCellValue(row, COL_COR_GAMES);
         if (score.IsEmpty() && bonus.IsEmpty()) continue;
             
         cor::CORRECTION_END cor;
-        cor.score = score.empty() ? SCORE_IGNORE : AsciiTolong(score, ExpectedDecimalDigits::DIGITS_2);
-        cor.bonus = AsciiTolong(bonus, ExpectedDecimalDigits::DIGITS_2);
-        cor.games = wxAtoi(games);
+        if (score.empty())
+        {   // we only have a bonus
+            cor.score = SCORE_IGNORE;
+            cor.bonus = AsciiTolong(bonus, ExpectedDecimalDigits::DIGITS_2);
+        }
+        else
+        {
+            bool bNoTotal = score == '-' || score == '*';
+            if (bNoTotal)
+                cor.score = SCORE_NO_TOTAL;
+            else
+            {
+                cor.score = AsciiTolong(score, ExpectedDecimalDigits::DIGITS_2);
+                cor.games = wxAtoi(m_theGrid->GetCellValue(row, COL_COR_GAMES));
+                if (cor.games == 0)
+                    cor.games = cfg::GetNrOfGames();
+            }
+        }
+
         corrections[(UINT)row+1] = cor;     // row+1 equals global pairnr
     }
 
@@ -126,39 +141,48 @@ bool CorrectionsEnd::OnCellChanging(const CellInfo& a_cellInfo)
     int         col     = a_cellInfo.column;
     wxString    oldData = a_cellInfo.oldData;   (void)oldData;
     wxString    newData = a_cellInfo.newData;
-    long        minimum = 0L;
 
-    switch (col)
+    if (col == COL_COR_GAMES)
+    {   // only acceptable if we have a non-empty real score
+        wxString score = m_theGrid->GetCellValue(row, COL_COR_SCORE);
+        if (score.empty() || score[0] == '-' || score[0] == '*' )
+            return CELL_CHANGE_REJECTED;
+    }
+    else
     {
-        case COL_COR_BONUS:     // -99.99 <= bonus/minus <= +99.99
-            // to check: if new value == "" or '0', clear cell
-            minimum = -10000;   // -100%
-            [[fallthrough]];    // fallthrough is explicit
-        case COL_COR_SCORE:     // 0 <= score <= 100
+        if ( (col == COL_COR_SCORE) && (newData == '-' || newData == '*') )
+        {   // sessionresult of this pair will NOT be added to the end score
+            m_theGrid->SetCellValue(row, COL_COR_BONUS, ES);
+            m_theGrid->SetCellValue(row, COL_COR_GAMES, ES);
+        }
+        else
+            if ( (col == COL_COR_SCORE) && newData.empty() )
+            {   // only bonus column is needed
+                m_theGrid->SetCellValue(row, COL_COR_GAMES, ES);
+            }
+            else
             {
-                wxString formattedData;
+                long minimum = (col == COL_COR_BONUS || cfg::GetButler() ) ? -10000 : 0L;
+                wxString formattedData; // empty string, if value out of range
                 long value = AsciiTolong( newData, ExpectedDecimalDigits::DIGITS_2);
                 if ( (value >= minimum) && (value <= 10000) )
-                {   // if out of range --> remove it, a zero in COL_COR_SCORE means: ignore this round for this pair in the end-calculation
-                    if ( value != 0 || col != COL_COR_BONUS)
-                        formattedData = LongToAscii2(value);
-                    if ( col == COL_COR_SCORE) 
+                {   // if inrange, show data
+                    if (col == COL_COR_BONUS && (value == 0 || !m_theGrid->GetCellValue(row, COL_COR_SCORE).empty()))
                     {
-                        if (value == 0)
-                            m_theGrid->SetCellValue(row, COL_COR_GAMES, ES);
-                        else
+                        ;
+                    }
+                    else
+                    {
+                        formattedData = LongToAscii2(value);
+                        if (col == COL_COR_SCORE)
                         {
                             if (wxAtoi(m_theGrid->GetCellValue(row, COL_COR_GAMES)) == 0)
                                 m_theGrid->SetCellValue(row, COL_COR_GAMES, U2String(score::GetNumberOfGamesPlayedByGlobalPair(row+1)));
-                            //if (colgames== 0) colgames = aantalspellengespeelddoorpaar()
                         }
                     }
                 }
                 m_theGrid->CallAfter([this,row,col, formattedData](){this->m_theGrid->SetCellValue(row, col, formattedData); });
             }
-            break;
-        default:
-            break;
     }
 
     m_bDataChanged = true;
@@ -177,8 +201,6 @@ void CorrectionsEnd::RefreshInfo()
     {
         return;
     }
-    //    ;score.2 global pair bonus.2 games   pairname
-    //    100.00     1         11.00   s16     xxx - xxx
 
     m_theGrid->EmptyGrid();                     // remove all if we have 'old' data
     for (int row = 0; row < (int)globalPairs; ++row)  // first get all pairnames
@@ -189,7 +211,7 @@ void CorrectionsEnd::RefreshInfo()
         m_theGrid->SetReadOnly  (row, COL_PAIRNAME_SESSION);
         m_theGrid->SetReadOnly  (row, COL_PAIRNAME_GLOBAL);
 
-        m_theGrid->SetCellEditor(row, COL_COR_GAMES, new wxGridCellNumberEditor(0, cfg::GetNrOfGames() ));
+        m_theGrid->SetCellEditor(row, COL_COR_GAMES, new wxGridCellNumberEditor(1, cfg::GetNrOfGames() ));
     }
 
     auto corrections = cor::GetCorrectionsEnd();
@@ -197,20 +219,35 @@ void CorrectionsEnd::RefreshInfo()
     for (const auto& it : *corrections)
     {
         cor::CORRECTION_END cs = it.second;
-        bool bIgnore = cs.score == SCORE_IGNORE;
+        bool bIgnore  = cs.score == SCORE_IGNORE;
+        bool bNoTotal = cs.score == SCORE_NO_TOTAL;
         int row = it.first - 1;
-        if (!bIgnore) m_theGrid->SetCellValue(row, COL_COR_SCORE, LongToAscii2(cs.score));
-        if (cs.score != 0)  // zero means: this session does not add to the end-result: <games> not important
+        if (bIgnore)
+        {   // MUST have a bonus
+            if (cs.bonus)   // only show non-zero values: should be the case because bonus of 0 makes no sense!
+                m_theGrid->SetCellValue(row, COL_COR_BONUS, LongToAscii2(cs.bonus));
+        }
+        else
         {
-            if (cs.bonus)   // only show non-zero values
-            m_theGrid->SetCellValue(row, COL_COR_BONUS, LongToAscii2(cs.bonus));
-            m_theGrid->SetCellValue(row, COL_COR_GAMES, U2String    (cs.games));
+            m_theGrid->SetCellValue(row, COL_COR_SCORE, bNoTotal ? wxString('*') : LongToAscii2(cs.score));
+            if (!bNoTotal)
+                m_theGrid->SetCellValue(row, COL_COR_GAMES, U2String(cs.games));
         }
     }
 
-    Layout();
     static wxString explanation;    // MUST be initialized dynamically: translation
-    explanation = _("END CORRECTIONS: 0%: sessionsscore is ignored for total result, <0 or >100: remove correction");
+    if (cfg::GetButler())
+    {
+        m_theGrid->SetColLabelValue(COL_COR_SCORE, _("imps"));
+        explanation = _("END CORRECTIONS: '-' or '*' for 'imps': sessionsscore is ignored for total result");
+    }
+    else
+    {
+        m_theGrid->SetColLabelValue(COL_COR_SCORE, _("score"));
+        explanation = _("END CORRECTIONS: '-' or '*' for 'score': sessionsscore is ignored for total result");
+    }
+
+    Layout();
     SendEvent2Mainframe(this, ID_STATUSBAR_SETTEXT, &explanation);
 }   // RefreshInfo()
 

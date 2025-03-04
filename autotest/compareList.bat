@@ -1,10 +1,21 @@
 @echo off
 ::you may use any other compare-tool!
-:: if a parameter is present, its interpreted as a language-type
-:: default: en
+:: if first/second parameter == -b, then butler-score is set
+:: any other param is interpreted as a language-type
+:: default language   : en
+:: default calculation: %, i.e. non-butler
+
 set language=en
-if not [%1] == [] set language=%1
-set src="%~dp0\ref_list.%language%"
+set   butler=
+
+:handleArgs
+if [%1] == [] goto done
+  if [%1] == [-b] (set butler=.butler) else set language=%1
+  shift
+  goto handleArgs
+
+:done
+set src="%~dp0\ref_list.%language%%butler%"
 set dst="%~dp0\work\list"
 
 where winmerge >nul 2>&1
@@ -18,3 +29,4 @@ fc %src% %dst% & goto end
 set src=
 set dst=
 set language=
+set butler=

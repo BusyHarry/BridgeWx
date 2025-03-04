@@ -77,19 +77,34 @@ wxString I2String(int x)
 
 long RoundLong(long a,int b)    // rounding when deviding long by int
 {
-    if (a == 0) return 0;
-    return (a+b/2)/b;           // a/b +.5
+    if (b == 0)
+        return 0;
+
+    auto xx = (10*a)/b;
+    auto xxx= (xx + (xx < 0? -5:5))/10;
+    return xxx;
 }   // RoundLong()
 
 wxString LongToAscii2(long score)
 {      // return "float" string to score as xxx.yy
-   return FMT("%d.%02d",(int)(score/100),(int)(labs(score) % 100));
+    int beforeDp = (int)(score/100);
+    if (beforeDp == 0 && score < 0)
+        return FMT("-0.%02d",(int)(-score));
+   return FMT("%d.%02d",beforeDp, (int)(labs(score) % 100));
 }   // LongToAscii2()
 
 wxString LongToAscii1(long score)
 {      // return "float" string to score as xxx.y or xxx if input is multiple of 10
-    if (labs(score) % 10 != 0)
-        return FMT("%d.%d",(int)(score/10),(int)(labs(score) % 10));
+//    if (labs(score) % 10 != 0)
+    if ((score % 10) != 0)
+    {
+        long beforeDp = score/10;
+        if (beforeDp == 0 && score < 0)
+        {
+            return FMT("-0.%ld", -score);
+        }
+        return FMT("%ld.%ld", beforeDp, labs(score) % 10);
+    }
 
     return FMT("%ld  ", score/10);    // replace .0 with 2 spaces
 }   // LongToAscii1()

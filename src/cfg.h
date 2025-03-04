@@ -250,9 +250,12 @@ namespace cfg
     void        SetNetworkPrinting(bool bSet);              // set the search for a network printer
     bool        GetNetworkPrinting();                       // get the search for a network printer
     UINT        GetNrOfSessionPairs();                      // nr of pairs for current session
+    bool        IsSessionPairAbsent(UINT sessionPair);      // check if 'sessionPair' is absent
+
     wxString    GetCopyrightDateTime();                     // as said, with leading/ending '\n'
     wxString    GetBaseFolder();                            // main storage folder, fallback for non-writable folders 
-
+    bool        GetButler();                                // get the type of result-calculation
+    void        SetButler(bool bOn);                        // set the type of result-calculation
 
     const vGroupData* GetGroupData();                       // all the info of all groups
     const SessionInfo*GetSessionInfo();                     // all the sessioninfo, inclusive groupInfo

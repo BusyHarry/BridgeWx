@@ -685,13 +685,13 @@ MyChoiceMC::~MyChoiceMC()
     ;
 }   // ~MyChoiceMC()
 
-wxSize GetSize4EditBox(wxString& msg)   // remark: 'msg' will be adapted
+wxSize GetSize4EditBox(wxString& msg)    // remark: 'msg' will be adapted
 {
     // GetTextExtent()   gives size for text only: {0,0} if empty
     // GetSizeFromText() gives size for text AND margins
     // GetMargins()      gives {0,-1}
     // need a bit extra: 'x', else size is just a little bit too small: textwrap in textctrl
-    wxTextCtrl  txtCtrl;
+    wxTextCtrl  txtCtrl(GetMainframe(), wxID_ANY);  // txtCtrl uses fontsize from mainframe, this is already scaled to wanted value
     wxSize      size    = {0,0};
     wxSize      margin  = txtCtrl.GetSizeFromText("xx") - txtCtrl.GetTextExtent("x");
 
@@ -700,13 +700,14 @@ wxSize GetSize4EditBox(wxString& msg)   // remark: 'msg' will be adapted
     msg.clear();
     for (const auto& it : array)
     {
-        wxString tmp = "     " + it + "     ";  // bit extra space on left and right side
-        wxSize   sz  = txtCtrl.GetTextExtent(tmp);  // gives {0,0} if empty...
+        wxString tmp = "     " + it;  // bit extra space on left and right side
+        wxSize   sz  = txtCtrl.GetTextExtent(tmp +  "     ");  // gives {0,0} if empty...
         size.x = std::max(size.x, sz.x);
         size.y += sz.y;
+        tmp.Trim(true);
         msg += tmp + "\n";
     }
-
+    msg.RemoveLast();   // last '\n' would gives one line too many in textbox
     return size+margin;
 }   // GetSize4EditBox()
 
@@ -721,17 +722,27 @@ if (style & flag)                                           \
 }
 #include <wx/app.h>
 
+float GetScale()
+{   // calculate a scale from the fontsize of the mainframe and a default txtCtrl
+    auto pMain = GetMainframe();    // this guarantees MY main window
+    if (nullptr == pMain) return 1.0;
+    wxTextCtrl  txtCtrl;
+    auto        mainSize    = pMain-> GetFont().GetFractionalPointSize();
+    auto        defaultSize = txtCtrl.GetFont().GetFractionalPointSize();
+    return (float)(mainSize/defaultSize);
+}   // GetScale()
+
 int MyMessageBox(const wxString& message, const wxString& caption, long style, const wxPoint& position)
 {
-//    auto pMain = wxApp::GetMainTopWindow();
     auto pMain = GetMainframe();    // this guarantees MY main window
     if (pMain == nullptr)
     {
         return wxMessageBox(message, caption, style, 0, position.x, position.y);
     }
 
+    float scale = GetScale();
     wxDialog dialog(pMain, wxID_ANY, caption, position);    // no parent --> problems when BusyBox() closes...
-
+    dialog.SetFont(dialog.GetFont().Scale(scale));          // error? dialog does NOT take fontsize of parent...
     auto        pEditSizer  = new wxBoxSizer( wxHORIZONTAL );
     wxString    msg         = message;
     wxSize      size        = GetSize4EditBox(msg);
@@ -778,6 +789,8 @@ void BusyBox(const wxString& message, int milisecondsShow, const wxPoint& positi
         {
             auto    pTxtCtrl = new wxTextCtrl();
             wxSize  size     = pTxtCtrl->GetSizeFromText(message);
+            float   scale    = GetScale();
+            size            *= scale;
             size.x          += pTxtCtrl->GetCharWidth()/2;      // add 'half' char at end to get some symmetry!
             wxPoint pos      = position;
 
@@ -789,7 +802,9 @@ void BusyBox(const wxString& message, int milisecondsShow, const wxPoint& positi
             }
 
             m_pBusyFrame = new wxFrame(nullptr, wxID_ANY, ES, pos, size, 0);
-            pTxtCtrl    ->Create(m_pBusyFrame , wxID_ANY, message, wxDefaultPosition, size, wxTE_READONLY);
+            pTxtCtrl    ->Create(m_pBusyFrame , wxID_ANY, ES, wxDefaultPosition, size, wxTE_READONLY);
+            pTxtCtrl->SetFont(pTxtCtrl->GetFont().Scale(scale));    // use same fontscaling as my mainframe.
+            pTxtCtrl->AppendText(message);
             m_pBusyFrame->Show();                   // show popup msg and start timer
             wxApp::GetMainTopWindow()->SetFocus();  // focus back to mainframe: prevent crash on dtor
 
@@ -933,3 +948,13 @@ wxString MywxComboBox::GetLabel() const
 {
     return AHKHelper::GetStaticLabel();
 }   // GetLabel()
+
+#include <wx/choicdlg.h>
+int MyGetSingleChoiceIndex(const wxString& a_message, const wxString& a_caption, const wxArrayString& a_names, wxWindow* a_pParent, int a_selection)
+{   // replacement for wxGetSingleChoiceIndex() to get a fontsize equal to its parent
+    wxSingleChoiceDialog dialog;
+    if (a_pParent) dialog.SetFont(a_pParent->GetFont());    // get parent sized font in the dialog
+    dialog.Create(0, a_message, a_caption, a_names);
+    dialog.SetSelection(a_selection);
+    return dialog.ShowModal() == wxID_OK ? dialog.GetSelection() : -1;
+}   // MyGetSingleChoiceIndex()

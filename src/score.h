@@ -14,8 +14,8 @@ namespace score
     #define EW              1       /* index in data for E/W pair                               */
     #define SCORE_NONE      -1      /* empty score                                              */
     #define SCORE_NP        -2      /* N(ot)P(layed) score: game not played, perhaps no time... */
-    #define SCORE_IGNORE    1000000L    /* this value in endcorrrentions (10000.00%) means just ignore*/
-
+    #define SCORE_IGNORE    1000000L    /* this value in endcorrrections: just ignore if only bonus present */
+    #define SCORE_NO_TOTAL  2000000L    /* this value in endcorrrections: sessionScore NOT added to total score*/
     #ifdef _WIN32           // for vs 32/64bit we need 1 byte packing to read/write 'old' data
     #pragma pack(1)
     #endif
@@ -28,7 +28,7 @@ namespace score
 
     struct GameSetData
     {
-        UINT8   pairNS;
+        UINT8   pairNS;         // NB should be changed to UINT, but compatability with 'old' databases is compromised!
         UINT8   pairEW;
         INT16   scoreNS;
         INT16   scoreEW;

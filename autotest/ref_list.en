@@ -1,23 +1,24 @@
 ﻿
 New match page:
 
-Matchfolder  : F:\Temp\autotest\work
+Matchfolder  : D:\bridge\BridgeWx\AutoTest\work
 Match        : autoTest01
 Session      : 1
 Databasetype : .db
+Butler       : no
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
 Gamesettings page:
 
-Description     : <auto-test, session 1>
-Max % absent    : 52.50
-MinMax clubpairs: 1-120
-Neuberg         : yes
-Weighted average: no
-Groupresult     : yes
-Global names    : no
-Clock           : no
+Description         : <auto-test, session 1>
+Max % absent        : 52.50
+MinMax clubpairs    : 1-120
+Neuberg             : yes
+Weighted average    : no
+Groupresult         : yes
+Global names        : no
+Clock               : no
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -413,8 +414,8 @@ Overview of the scores of session 1 for '<auto-test, session 1>', game 2
 
 Overview of the sessioncorrections for '<auto-test, session 1>', session 1
 
-    pair  pairname                        %    mp    max   extra
-  1 A1    pair 1                                     2     1
+    pair  pairname                        %    mp    max   extra games  
+  1 A1    pair 1                                     2     1     4
   3 A3    pair 3                               10
   5 A5    changed pair 5                  3
 
@@ -478,7 +479,7 @@ rank pair pairname                        tot.    max  score  corr.     A B
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
-Frequency states
+Frequency tables
 '<auto-test, session 1>'
 result of session 1
 
@@ -583,25 +584,25 @@ Group result
 
 Group-result of match '<auto-test, session 1>', session 1
 
-                           games : 1-4   5-8   9-12 13-16 17-20 21-24 25-28  extra  cor  cor.  tot   score
-  1 pair 1 . . . . . . . . . . . .  24    35.6   7.6  37.9  13    25    48    1/2    0%   0mp  192.1 48.76%
-  2 pair 2 . . . . . . . . . . . .  31    21.7   0.3  12    20     9    33    0/0    0%   0mp  127   32.40%
-  3 pair 3 . . . . . . . . . . . .  46    32    45.6  51.6  36    11    21    0/0    0%  10mp  253.2 64.59%
-  4 pair 4 . . . . . . . . . . . .  39.3  24    41    18    29    47    56    0/0    0%   0mp  254.3 64.87%
-  5 changed pair 5 . . . . . . . .   8.4  20.4  51.7  43.3  24    32     0    0/0    3%   0mp  179.8 48.87%
-  6 pair 6 . . . . . . . . . . . .  35.2  27.8   4.1   4    27    29    23    0/0    0%   0mp  150.1 38.29%
-  7 pair 7 . . . . . . . . . . . .  16    33.8  53.6  32    32    44     8    0/0    0%   0mp  219.4 55.97%
-  8 pair 8 . . . . . . . . . . . .  18    34.3  14.4  22.4  43    22    35    0/0    0%   0mp  213.1 54.36%
-  9 pair 9 . . . . . . . . . . . .  55.9  12.4   0    24    46     3    14    0/0    0%   0mp  155.3 46.22%
- 10 pair 10  . . . . . . . . . . .   0     0.1  28.4   9.1   0    52    12    0/0    0%   0mp  101.6 30.24%
- 11 pair 11  . . . . . . . . . . .  47.6  53.9   9    19    15     0    44    0/0    0%   0mp  188.5 56.10%
- 12 pair 12  . . . . . . . . . . .   0.1   2.1  25.7  46    18    52    25    0/0    0%   0mp  168.9 43.09%
- 13 pair 13  . . . . . . . . . . .  17.7  43.3  18.7  52    38     4    42    0/0    0%   0mp  215.7 55.03%
- 14 pair 14  . . . . . . . . . . .  54     0    36    36    10    18     1    0/0    0%   0mp  155   46.13%
- 15 pair 15  . . . . . . . . . . .  37    43.6  22     0    41    32    55    0/0    0%   0mp  244.5 72.77%
- 16  NOT PLAYED?? absent??
- 17 pair 17  . . . . . . . . . . .   8    55.9  29.3  10    25    36     0    0/0    0%   0mp  164.2 48.87%
- 18 pair 18  . . . . . . . . . . .   0    12.7  45.3  30.7  31    22    31    0/0    0%   0mp  172.7 51.40%
+                           games : 1-4   5-8   9-12 13-16 17-20 21-24 25-28  extra  cor  cor   tot   score(%)
+  1 pair 1 . . . . . . . . . . . .  24    35.6   7.6  37.9  13    25    48    1/2              192.1 48.76
+  2 pair 2 . . . . . . . . . . . .  31    21.7   0.3  12    20     9    33                     127   32.40
+  3 pair 3 . . . . . . . . . . . .  46    32    45.6  51.6  36    11    21               10mp  253.2 64.59
+  4 pair 4 . . . . . . . . . . . .  39.3  24    41    18    29    47    56                     254.3 64.87
+  5 changed pair 5 . . . . . . . .   8.4  20.4  51.7  43.3  24    32     0           3%        179.8 48.87
+  6 pair 6 . . . . . . . . . . . .  35.2  27.8   4.1   4    27    29    23                     150.1 38.29
+  7 pair 7 . . . . . . . . . . . .  16    33.8  53.6  32    32    44     8                     219.4 55.97
+  8 pair 8 . . . . . . . . . . . .  18    34.3  14.4  22.4  43    22    35                     213.1 54.36
+  9 pair 9 . . . . . . . . . . . .  55.9  12.4 ---    24    46     3    14                     155.3 46.22
+ 10 pair 10  . . . . . . . . . . .   0     0.1  28.4   9.1 ---    52    12                     101.6 30.24
+ 11 pair 11  . . . . . . . . . . .  47.6  53.9   9    19    15   ---    44                     188.5 56.10
+ 12 pair 12  . . . . . . . . . . .   0.1   2.1  25.7  46    18    52    25                     168.9 43.09
+ 13 pair 13  . . . . . . . . . . .  17.7  43.3  18.7  52    38     4    42                     215.7 55.03
+ 14 pair 14  . . . . . . . . . . .  54   ---    36    36    10    18     1                     155   46.13
+ 15 pair 15  . . . . . . . . . . .  37    43.6  22   ---    41    32    55                     244.5 72.77
+ 16 --> absent
+ 17 pair 17  . . . . . . . . . . .   8    55.9  29.3  10    25    36   ---                     164.2 48.87
+ 18 pair 18  . . . . . . . . . . . ---    12.7  45.3  30.7  31    22    31                     172.7 51.40
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -609,24 +610,24 @@ Total result
 <auto-test, session 1>
 Total result
 
-rank pairname                         S1     total   avg.  A B
-   1 pair 15  . . . . . . . . . . .  72.77    72.77% 72.77  . 1
-   2 pair 4 . . . . . . . . . . . .  64.87    64.87% 64.87  1 .
-   3 pair 3 . . . . . . . . . . . .  64.59    64.59% 64.59  2 .
-   4 pair 11  . . . . . . . . . . .  56.10    56.10% 56.10  . 2
-   5 pair 7 . . . . . . . . . . . .  55.97    55.97% 55.97  3 .
-   6 pair 13  . . . . . . . . . . .  55.03    55.03% 55.03  . 3
-   7 pair 8 . . . . . . . . . . . .  54.36    54.36% 54.36  4 .
-   8 pair 18  . . . . . . . . . . .  51.40    51.40% 51.40  . 4
-   9 pair 2 . . . . . . . . . . . .  50.00    50.00% 50.00  5 .
-  10 changed pair 5 . . . . . . . .  48.87    48.87% 48.87  6 .
-  10 pair 17  . . . . . . . . . . .  48.87    48.87% 48.87  . 5
-  12 pair 1 . . . . . . . . . . . .  48.76    48.76% 48.76  7 .
-  13 pair 9 . . . . . . . . . . . .  46.22    46.22% 46.22  . 6
-  14 pair 14  . . . . . . . . . . .  46.13    46.13% 46.13  . 7
-  15 pair 12  . . . . . . . . . . .  43.09    43.09% 43.09  . 8
-  16 pair 6 . . . . . . . . . . . .  38.29    38.29% 38.29  8 .
-  17 pair 10  . . . . . . . . . . .  30.24    30.24% 30.24  . 9
+rank pairname                         S1      total   avg.  A B
+   1 pair 15  . . . . . . . . . . .  72.77    72.77  72.77  . 1
+   2 pair 4 . . . . . . . . . . . .  64.87    64.87  64.87  1 .
+   3 pair 3 . . . . . . . . . . . .  64.59    64.59  64.59  2 .
+   4 pair 11  . . . . . . . . . . .  56.10    56.10  56.10  . 2
+   5 pair 7 . . . . . . . . . . . .  55.97    55.97  55.97  3 .
+   6 pair 13  . . . . . . . . . . .  55.03    55.03  55.03  . 3
+   7 pair 8 . . . . . . . . . . . .  54.36    54.36  54.36  4 .
+   8 pair 18  . . . . . . . . . . .  51.40    51.40  51.40  . 4
+   9 pair 2 . . . . . . . . . . . .  50.00    50.00  50.00  5 .
+  10 changed pair 5 . . . . . . . .  48.87    48.87  48.87  6 .
+  10 pair 17  . . . . . . . . . . .  48.87    48.87  48.87  . 5
+  12 pair 1 . . . . . . . . . . . .  48.76    48.76  48.76  7 .
+  13 pair 9 . . . . . . . . . . . .  46.22    46.22  46.22  . 6
+  14 pair 14  . . . . . . . . . . .  46.13    46.13  46.13  . 7
+  15 pair 12  . . . . . . . . . . .  43.09    43.09  43.09  . 8
+  16 pair 6 . . . . . . . . . . . .  38.29    38.29  38.29  8 .
+  17 pair 10  . . . . . . . . . . .  30.24    30.24  30.24  . 9
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -669,7 +670,7 @@ Game 26: EW, score:   130, points  12    86%
 Game 27: EW, score:   130, points  12    86%
 Game 28: EW, score:   130, points  12    86% set-score: 48  (86%)
 
-points: 192.1 (394), endscore: 48.76% (0.50), rank: 11
+points: 192.1 (394), games: 32, sessionscore: 48.76% (0.50), rank: 11
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -712,7 +713,7 @@ Game 26: EW, score:  -120, points   9    64%
 Game 27: EW, score:  -130, points   8    57%
 Game 28: EW, score:  -140, points   6    43% set-score: 33  (59%)
 
-points: 127   (392), endscore: 32.40%, rank: 16
+points: 127   (392), games: 28, sessionscore: 32.40%, rank: 16
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -755,7 +756,7 @@ Game 26: NS, score:   120, points   5    36%
 Game 27: NS, score:   120, points   4    29%
 Game 28: NS, score:   120, points   6    43% set-score: 21  (38%)
 
-points: 253.2 (392), endscore: 64.59% (+10m), rank: 3
+points: 253.2 (392), games: 28, sessionscore: 64.59% (+10m), rank: 3
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -798,7 +799,7 @@ Game 26: EW, score:   240, points  14   100%
 Game 27: EW, score:   250, points  14   100%
 Game 28: EW, score:   260, points  14   100% set-score: 56  (100%)
 
-points: 254.3 (392), endscore: 64.87%, rank: 2
+points: 254.3 (392), games: 28, sessionscore: 64.87%, rank: 2
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -841,7 +842,7 @@ Game 26: NS, score:  -240, points   0     0%
 Game 27: NS, score:  -250, points   0     0%
 Game 28: NS, score:  -260, points   0     0% set-score: 0  (0%)
 
-points: 179.8 (392), endscore: 48.87% (+3%), rank: 9
+points: 179.8 (392), games: 28, sessionscore: 48.87% (+3%), rank: 9
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -884,7 +885,7 @@ Game 26: NS, score:   120, points   5    36%
 Game 27: NS, score:   130, points   6    43%
 Game 28: NS, score:   140, points   8    57% set-score: 23  (41%)
 
-points: 150.1 (392), endscore: 38.29%, rank: 15
+points: 150.1 (392), games: 28, sessionscore: 38.29%, rank: 15
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -927,7 +928,7 @@ Game 26: NS, score:  -130, points   2    14%
 Game 27: NS, score:  -130, points   2    14%
 Game 28: NS, score:  -130, points   2    14% set-score: 8  (14%)
 
-points: 219.4 (392), endscore: 55.97%, rank: 5
+points: 219.4 (392), games: 28, sessionscore: 55.97%, rank: 5
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -970,7 +971,7 @@ Game 26: EW, score:  -120, points   9    64%
 Game 27: EW, score:  -120, points  10    71%
 Game 28: EW, score:  -120, points   8    57% set-score: 35  (63%)
 
-points: 213.1 (392), endscore: 54.36%, rank: 7
+points: 213.1 (392), games: 28, sessionscore: 54.36%, rank: 7
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -988,10 +989,10 @@ Game  6: NS, score:  -140, points   4    29%
 Game  7: NS, score:  -140, points   4    29%
 Game  8: NS, score:  -140, points   2.4  17% set-score: 12.4(22%)
 
-Game  9:  not played
-Game 10:  not played
-Game 11:  not played
-Game 12:  not played
+Game  9: not played
+Game 10: not played
+Game 11: not played
+Game 12: not played
 
 Game 13: NS, score:   130, points   4    29% Played against (B10): pair 18
 Game 14: NS, score:   140, points   4    29%
@@ -1013,7 +1014,7 @@ Game 26: EW, score:  -150, points   3    21%
 Game 27: EW, score:  -150, points   4    29%
 Game 28: EW, score:  -150, points   4    29% set-score: 14  (25%)
 
-points: 155.3 (336), endscore: 46.22%, rank: 12
+points: 155.3 (336), games: 24, sessionscore: 46.22%, rank: 12
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -1041,10 +1042,10 @@ Game 14: EW, score:  -200, points   6    43%
 Game 15: EW, score:  -300, points   2    14%
 Game 16: EW, score:  -300, points   0.1   1% set-score: 9.1(16%)
 
-Game 17:  not played
-Game 18:  not played
-Game 19:  not played
-Game 20:  not played
+Game 17: not played
+Game 18: not played
+Game 19: not played
+Game 20: not played
 
 Game 21: EW, score:   170, points  14   100% Played against (B5): pair 13
 Game 22: EW, score:   170, points  14   100%
@@ -1056,7 +1057,7 @@ Game 26: EW, score:  -150, points   3    21%
 Game 27: EW, score:  -160, points   2    14%
 Game 28: EW, score:  -170, points   1     7% set-score: 12  (21%)
 
-points: 101.6 (336), endscore: 30.24%, rank: 17
+points: 101.6 (336), games: 24, sessionscore: 30.24%, rank: 17
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -1089,17 +1090,17 @@ Game 18: EW, score:  -110, points   4    29%
 Game 19: EW, score:  -120, points   6    43%
 Game 20: EW, score:  -130, points   4    29% set-score: 15  (27%)
 
-Game 21:  not played
-Game 22:  not played
-Game 23:  not played
-Game 24:  not played
+Game 21: not played
+Game 22: not played
+Game 23: not played
+Game 24: not played
 
 Game 25: NS, score:   140, points   8    57% Played against (B2): pair 10
 Game 26: NS, score:   150, points  11    79%
 Game 27: NS, score:   160, points  12    86%
 Game 28: NS, score:   170, points  13    93% set-score: 44  (79%)
 
-points: 188.5 (336), endscore: 56.10%, rank: 4
+points: 188.5 (336), games: 24, sessionscore: 56.10%, rank: 4
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -1142,7 +1143,7 @@ Game 26: EW, score:  -140, points   6    43%
 Game 27: EW, score:  -140, points   6    43%
 Game 28: EW, score:   -50, points  10    71% set-score: 25  (45%)
 
-points: 168.9 (392), endscore: 43.09%, rank: 14
+points: 168.9 (392), games: 28, sessionscore: 43.09%, rank: 14
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -1185,7 +1186,7 @@ Game 26: NS, score:   150, points  11    79%
 Game 27: NS, score:   150, points  10    71%
 Game 28: NS, score:   150, points  10    71% set-score: 42  (75%)
 
-points: 215.7 (392), endscore: 55.03%, rank: 6
+points: 215.7 (392), games: 28, sessionscore: 55.03%, rank: 6
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -1198,10 +1199,10 @@ Game  2: EW, score:   160, points  14   100%
 Game  3: EW, score:   160, points  14   100%
 Game  4: EW, score:   160, points  12    86% set-score: 54  (96%)
 
-Game  5:  not played
-Game  6:  not played
-Game  7:  not played
-Game  8:  not played
+Game  5: not played
+Game  6: not played
+Game  7: not played
+Game  8: not played
 
 Game  9: EW, score:    50, points   9    64% Played against (B5): pair 13
 Game 10: EW, score:    70, points  10    71%
@@ -1228,7 +1229,7 @@ Game 26: EW, score:  -170, points   0     0%
 Game 27: EW, score:  -170, points   0     0%
 Game 28: EW, score:  -170, points   1     7% set-score: 1  (2%)
 
-points: 155   (336), endscore: 46.13%, rank: 13
+points: 155   (336), games: 24, sessionscore: 46.13%, rank: 13
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -1251,10 +1252,10 @@ Game 10: EW, score:     0, points   7    50%
 Game 11: EW, score:   -90, points   6    43%
 Game 12: EW, score:  R630, points   0     0% set-score: 22  (39%)
 
-Game 13:  not played
-Game 14:  not played
-Game 15:  not played
-Game 16:  not played
+Game 13: not played
+Game 14: not played
+Game 15: not played
+Game 16: not played
 
 Game 17: NS, score:   150, points  13    93% Played against (B3): pair 11
 Game 18: NS, score:   110, points  10    71%
@@ -1271,7 +1272,7 @@ Game 26: NS, score:   170, points  14   100%
 Game 27: NS, score:   170, points  14   100%
 Game 28: NS, score:   170, points  13    93% set-score: 55  (98%)
 
-points: 244.5 (336), endscore: 72.77%, rank: 1
+points: 244.5 (336), games: 24, sessionscore: 72.77%, rank: 1
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -1279,7 +1280,7 @@ Result per pair
 
 Result of pair ??? '' for '<auto-test, session 1>', session 1
 
-Pair has not played (yet)
+absent
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -1317,12 +1318,12 @@ Game 22: NS, score:   120, points  10    71%
 Game 23: NS, score:   110, points  10    71%
 Game 24: NS, score:   100, points   6    43% set-score: 36  (64%)
 
-Game 25:  not played
-Game 26:  not played
-Game 27:  not played
-Game 28:  not played
+Game 25: not played
+Game 26: not played
+Game 27: not played
+Game 28: not played
 
-points: 164.2 (336), endscore: 48.87%, rank: 9
+points: 164.2 (336), games: 24, sessionscore: 48.87%, rank: 9
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -1330,10 +1331,10 @@ Result per pair
 
 Result of pair B10 'pair 18' for '<auto-test, session 1>', session 1
 
-Game  1:  not played
-Game  2:  not played
-Game  3:  not played
-Game  4:  not played
+Game  1: not played
+Game  2: not played
+Game  3: not played
+Game  4: not played
 
 Game  5: EW, score:  -160, points   4    29% Played against (B5): pair 13
 Game  6: EW, score:  -160, points   2    14%
@@ -1365,7 +1366,7 @@ Game 26: NS, score:   140, points   8    57%
 Game 27: NS, score:   140, points   8    57%
 Game 28: NS, score:    50, points   4    29% set-score: 31  (55%)
 
-points: 172.7 (336), endscore: 51.40%, rank: 8
+points: 172.7 (336), games: 24, sessionscore: 51.40%, rank: 8
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -1383,6 +1384,7 @@ scoreNS NS    EW
      0   5     9   
   -120   2    12   
   -160   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A2      0         A4   A7    130         A5   A3   -120       
   A6   A8     70         B1   B2    210         B3   B9    140       
@@ -1405,6 +1407,7 @@ scoreNS NS    EW
      0   4    10   
   -120   2    12   
   -160   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
   A6   A8     80         B1   B2    230         B3   B9    140       
@@ -1427,6 +1430,7 @@ scoreNS NS    EW
      0   4    10   
   -120   2    12   
   -160   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
   A6   A8     90         B1   B2    240         B3   B9    140       
@@ -1450,6 +1454,7 @@ scoreNS NS    EW
   -120   2.4  10   
   -160   0.1  12   
   -620   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A2     80         A4   A7    130         A5   A3   -120       
   A6   A8    %80,R620    B1   B2    260         B3   B9    140       
@@ -1471,6 +1476,7 @@ scoreNS NS    EW
   -100   5     9   
   -140   2    12   
   -600   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A5   -100         A2   A8   -100         A3   A4     90       
   A6   A7    300         B1   B7   -140         B2   B9   -600       
@@ -1492,6 +1498,7 @@ scoreNS NS    EW
   -140   4    10   
   -600   2    12   
   -800   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A5    100         A2   A8   -100         A3   A4    100       
   A6   A7   -600         B1   B7   -140         B2   B9   -800       
@@ -1514,6 +1521,7 @@ scoreNS NS    EW
   -140   4    10   
   -150   2    12   
  -1000   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A5    150         A2   A8   -100         A3   A4    110       
   A6   A7   -150         B1   B7   -140         B2   B9  -1000       
@@ -1537,6 +1545,7 @@ scoreNS NS    EW
   -100   4.7   9.3 
   -140   2.4  11.6 
  -1100   0.1  13.9 
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A5    200         A2   A8   -100         A3   A4    120       
   A6   A7    %70,%70     B1   B7   -140         B2   B9  -1100       
@@ -1558,6 +1567,7 @@ scoreNS NS    EW
    -50   5     9   
   -150   2    12   
   -180   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A7   -180         A3   A1    100         A4   A8     70       
   A5   A6    130         B2   B7    -50         B3  B10   -150       
@@ -1579,6 +1589,7 @@ scoreNS NS    EW
    -70   4    10   
   -150   2    12   
   -190   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A7   -190         A3   A1    200         A4   A8     90       
   A5   A6    140         B2   B7      0         B3  B10   -150       
@@ -1601,6 +1612,7 @@ scoreNS NS    EW
    -80   4    10   
   -150   2    12   
   -200   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A7   -200         A3   A1    300         A4   A8    100       
   A5   A6    150         B2   B7     90         B3  B10   -150       
@@ -1624,6 +1636,7 @@ scoreNS NS    EW
   -150   3     9.3 
   -210   0.3  11.6 
   -630   0    13.9 
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A7   -210         A3   A1    %40,%40     A4   A8    110       
   A5   A6    160         B2   B7    %60,R630    B3  B10   -150       
@@ -1645,6 +1658,7 @@ scoreNS NS    EW
    130   4    10   
    110   2    12   
   -270   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A5    110         A4   A1    200         A6   A3   -270       
   A7   A8    170         B1  B10    130         B4   B2    800       
@@ -1667,6 +1681,7 @@ scoreNS NS    EW
    140   4    10   
    110   2    12   
   -280   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A5    110         A4   A1    300         A6   A3   -280       
   A7   A8    180         B1  B10    140         B4   B2    200       
@@ -1689,6 +1704,7 @@ scoreNS NS    EW
    110   4    10   
   -300   2    12   
   -500   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -300       
   A7   A8    190         B1  B10    150         B4   B2    300       
@@ -1711,6 +1727,7 @@ scoreNS NS    EW
    110   4     9.3 
   -340   2    11.6 
   -500   0    13.9 
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -340       
   A7   A8    200         B1  B10    160         B4   B2    300       
@@ -1732,6 +1749,7 @@ scoreNS NS    EW
   -150   4    10   
   -420   2    12   
  -1200   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A8   -140         A3   A2    150         A4   A6   -110       
   A7   A5   -420         B5   B4  -1200         B6   B1   -150       
@@ -1753,6 +1771,7 @@ scoreNS NS    EW
   -150   4    10   
   -420   2    12   
   -800   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A8   -150         A3   A2    150         A4   A6   -110       
   A7   A5   -420         B5   B4    300         B6   B1   -800       
@@ -1775,6 +1794,7 @@ scoreNS NS    EW
   -120   4    10   
   -160   2    12   
   -600   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A8   -160         A3   A2    170         A4   A6   -110       
   A7   A5    420         B5   B4    400         B6   B1   -600       
@@ -1796,6 +1816,7 @@ scoreNS NS    EW
   -120   6     8   
   -130   4    10   
   -170   1    13   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A8   -170         A3   A2   -170         A4   A6   -110       
   A7   A5    620         B5   B4    500         B6   B1   -120       
@@ -1818,6 +1839,7 @@ scoreNS NS    EW
    100   4    10   
     50   2    12   
   -170   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A6    100         A2   A4     50         A5   A8    160       
   A7   A3    120         B4   B1    150         B5   B2   -170       
@@ -1839,6 +1861,7 @@ scoreNS NS    EW
   -120   4    10   
   -160   2    12   
   -170   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A6    100         A2   A4    100         A5   A8   -160       
   A7   A3    130         B4   B1    150         B5   B2   -170       
@@ -1861,6 +1884,7 @@ scoreNS NS    EW
   -160   4    10   
   -170   2    12   
   -200   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A6    100         A2   A4   -200         A5   A8   -160       
   A7   A3    140         B4   B1    150         B5   B2   -170       
@@ -1880,6 +1904,7 @@ scoreNS NS    EW
   -110   0    10   
   -170   2    12   
   -300   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A6    100         A2   A4   -300         A5   A8   R150,R110  
   A7   A3    150         B4   B1    150         B5   B2   -170       
@@ -1901,6 +1926,7 @@ scoreNS NS    EW
    110   4    10   
   -130   2    12   
   -230   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A3   A8    120         A5   A4   -230         A6   A2    110       
   A7   A1   -130         B3   B2    140         B5   B1    150       
@@ -1921,6 +1947,7 @@ scoreNS NS    EW
    120   5     9   
   -130   2    12   
   -240   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A3   A8    120         A5   A4   -240         A6   A2    120       
   A7   A1   -130         B3   B2    150         B5   B1    150       
@@ -1943,6 +1970,7 @@ scoreNS NS    EW
    120   4    10   
   -130   2    12   
   -250   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A3   A8    120         A5   A4   -250         A6   A2    130       
   A7   A1   -130         B3   B2    160         B5   B1    150       
@@ -1964,6 +1992,7 @@ scoreNS NS    EW
     50   4    10   
   -130   2    12   
   -260   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A3   A8    120         A5   A4   -260         A6   A2    140       
   A7   A1   -130         B3   B2    170         B5   B1    150       
@@ -2024,7 +2053,7 @@ Pair name
  16 pair 16                         B10     ???        0        0
  17 pair 17                         B1      B9        11       10
  18 pair 18                         A8      B10        8        8
- 19 pair 19                         ???     ???       19        0
+ 19 pair 19                         ???     ???        0        0
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2345,7 +2374,7 @@ rank pair pairname                        tot.    max  score  corr.     A B
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
-Frequency states
+Frequency tables
 '<auto-test, session 2>'
 result of session 2
 
@@ -2450,25 +2479,25 @@ Group result
 
 Group-result of match '<auto-test, session 2>', session 2
 
-                           games : 1-4   5-8   9-12 13-16 17-20 21-24 25-28   tot   score
-  1 pair 15  . . . . . . . . . . .  24    35     8    37    13    25    48    190   48.47%
-  2 pair 4 . . . . . . . . . . . .  31    22     2    12    19     9    33    128   32.65%
-  3 pair 3 . . . . . . . . . . . .  46    32    46    51    37    11    21    244   62.24%
-  4 pair 11  . . . . . . . . . . .  39    24    40    18    29    47    56    253   64.54%
-  5 pair 7 . . . . . . . . . . . .   9    21    50    43    24    32     0    179   45.66%
-  6 pair 13  . . . . . . . . . . .  35    28     5     4    27    29    23    151   38.52%
-  7 pair 8 . . . . . . . . . . . .  16    34    53    32    32    44     8    219   55.87%
-  8 pair 18  . . . . . . . . . . .  18    34    15    23    43    22    35    214   54.59%
-  9 pair 17  . . . . . . . . . . .  55    13     0    24    46     3    14    155   46.13%
- 10 changed pair 5 . . . . . . . .   0     1    28    10     0    52    12    103   30.65%
- 11 pair 1 . . . . . . . . . . . .  47    53    10    19    16     0    44    189   56.25%
- 12 pair 9 . . . . . . . . . . . .   1     3    26    46    18    52    25    171   43.62%
- 13 pair 14  . . . . . . . . . . .  18    43    19    52    38     4    42    216   55.10%
- 14 pair 12  . . . . . . . . . . .  54     0    36    36    10    18     1    155   46.13%
- 15 pair 6 . . . . . . . . . . . .  37    43    22     0    40    32    55    242   72.02%
- 16  NOT PLAYED?? absent??
- 17 pair 10  . . . . . . . . . . .   8    55    29    10    25    36     0    163   48.51%
- 18 pair 16  . . . . . . . . . . .   0    13    45    31    31    22    31    173   51.49%
+                           games : 1-4   5-8   9-12 13-16 17-20 21-24 25-28   tot   score(%)
+  1 pair 15  . . . . . . . . . . .  24    35     8    37    13    25    48    190   48.47
+  2 pair 4 . . . . . . . . . . . .  31    22     2    12    19     9    33    128   32.65
+  3 pair 3 . . . . . . . . . . . .  46    32    46    51    37    11    21    244   62.24
+  4 pair 11  . . . . . . . . . . .  39    24    40    18    29    47    56    253   64.54
+  5 pair 7 . . . . . . . . . . . .   9    21    50    43    24    32     0    179   45.66
+  6 pair 13  . . . . . . . . . . .  35    28     5     4    27    29    23    151   38.52
+  7 pair 8 . . . . . . . . . . . .  16    34    53    32    32    44     8    219   55.87
+  8 pair 18  . . . . . . . . . . .  18    34    15    23    43    22    35    214   54.59
+  9 pair 17  . . . . . . . . . . .  55    13   ---    24    46     3    14    155   46.13
+ 10 changed pair 5 . . . . . . . .   0     1    28    10   ---    52    12    103   30.65
+ 11 pair 1 . . . . . . . . . . . .  47    53    10    19    16   ---    44    189   56.25
+ 12 pair 9 . . . . . . . . . . . .   1     3    26    46    18    52    25    171   43.62
+ 13 pair 14  . . . . . . . . . . .  18    43    19    52    38     4    42    216   55.10
+ 14 pair 12  . . . . . . . . . . .  54   ---    36    36    10    18     1    155   46.13
+ 15 pair 6 . . . . . . . . . . . .  37    43    22   ---    40    32    55    242   72.02
+ 16 --> absent
+ 17 pair 10  . . . . . . . . . . .   8    55    29    10    25    36   ---    163   48.51
+ 18 pair 16  . . . . . . . . . . . ---    13    45    31    31    22    31    173   51.49
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2476,25 +2505,25 @@ Total result
 <auto-test, session 2>
 Total result
 
-rank pairname                         S1     S2     total   avg.  A B
-   1 pair 3 . . . . . . . . . . . .  64.59  62.24   126.83% 63.42  1 .
-   2 pair 15  . . . . . . . . . . .  72.77  48.47   121.24% 60.62  2 .
-   3 pair 11  . . . . . . . . . . .  56.10  64.54   120.64% 60.32  3 .
-   4 pair 6 . . . . . . . . . . . .  38.29  72.02   110.31% 55.16  . 1
-   5 pair 8 . . . . . . . . . . . .  54.36  55.87   110.23% 55.12  4 .
-   6 pair 18  . . . . . . . . . . .  51.40  54.59   105.99% 53.00  5 .
-   7 pair 1 . . . . . . . . . . . .  48.76  56.25   105.01% 52.51  . 2
-   8 pair 16  . . . . . . . . . . .  51.49a 51.49   102.98% 51.49  . 3
-   9 pair 7 . . . . . . . . . . . .  55.97  45.66   101.63% 50.82  6 .
-  10 pair 14  . . . . . . . . . . .  46.13  55.10   101.23% 50.62  . 4
-  11 pair 2 . . . . . . . . . . . .  50.00  50.00a  100.00% 50.00  . .
-  12 pair 4 . . . . . . . . . . . .  64.87  32.65    97.52% 48.76  7 .
-  13 pair 17  . . . . . . . . . . .  48.87  46.13    95.00% 47.50  . 5
-  14 pair 13  . . . . . . . . . . .  55.03  38.52    93.55% 46.78  8 .
-  15 pair 9 . . . . . . . . . . . .  46.22  43.62    89.84% 44.92  . 6
-  16 pair 12  . . . . . . . . . . .  43.09  46.13    89.22% 44.61  . 7
-  17 changed pair 5 . . . . . . . .  48.87  30.65    79.52% 39.76  . 8
-  18 pair 10  . . . . . . . . . . .  30.24  48.51    78.75% 39.38  . 9
+rank pairname                         S1     S2      total   avg.  A B
+   1 pair 3 . . . . . . . . . . . .  64.59  62.24   126.83  63.42  1 .
+   2 pair 15  . . . . . . . . . . .  72.77  48.47   121.24  60.62  2 .
+   3 pair 11  . . . . . . . . . . .  56.10  64.54   120.64  60.32  3 .
+   4 pair 6 . . . . . . . . . . . .  38.29  72.02   110.31  55.16  . 1
+   5 pair 8 . . . . . . . . . . . .  54.36  55.87   110.23  55.12  4 .
+   6 pair 18  . . . . . . . . . . .  51.40  54.59   105.99  53.00  5 .
+   7 pair 1 . . . . . . . . . . . .  48.76  56.25   105.01  52.51  . 2
+   8 pair 16  . . . . . . . . . . .  51.49a 51.49   102.98  51.49  . 3
+   9 pair 7 . . . . . . . . . . . .  55.97  45.66   101.63  50.82  6 .
+  10 pair 14  . . . . . . . . . . .  46.13  55.10   101.23  50.62  . 4
+  11 pair 2 . . . . . . . . . . . .  50.00  50.00a  100.00  50.00  . .
+  12 pair 4 . . . . . . . . . . . .  64.87  32.65    97.52  48.76  7 .
+  13 pair 17  . . . . . . . . . . .  48.87  46.13    95.00  47.50  . 5
+  14 pair 13  . . . . . . . . . . .  55.03  38.52    93.55  46.78  8 .
+  15 pair 9 . . . . . . . . . . . .  46.22  43.62    89.84  44.92  . 6
+  16 pair 12  . . . . . . . . . . .  43.09  46.13    89.22  44.61  . 7
+  17 changed pair 5 . . . . . . . .  48.87  30.65    79.52  39.76  . 8
+  18 pair 10  . . . . . . . . . . .  30.24  48.51    78.75  39.38  . 9
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2537,7 +2566,7 @@ Game 26: EW, score:   130, points  12    86%
 Game 27: EW, score:   130, points  12    86%
 Game 28: EW, score:   130, points  12    86% set-score: 48  (86%)
 
-points: 190   (392), endscore: 48.47%, rank: 10
+points: 190   (392), games: 28, sessionscore: 48.47%, rank: 10
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2580,7 +2609,7 @@ Game 26: EW, score:  -120, points   9    64%
 Game 27: EW, score:  -130, points   8    57%
 Game 28: EW, score:  -140, points   6    43% set-score: 33  (59%)
 
-points: 128   (392), endscore: 32.65%, rank: 16
+points: 128   (392), games: 28, sessionscore: 32.65%, rank: 16
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2623,7 +2652,7 @@ Game 26: NS, score:   120, points   5    36%
 Game 27: NS, score:   120, points   4    29%
 Game 28: NS, score:   120, points   6    43% set-score: 21  (38%)
 
-points: 244   (392), endscore: 62.24%, rank: 3
+points: 244   (392), games: 28, sessionscore: 62.24%, rank: 3
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2666,7 +2695,7 @@ Game 26: EW, score:   240, points  14   100%
 Game 27: EW, score:   250, points  14   100%
 Game 28: EW, score:   260, points  14   100% set-score: 56  (100%)
 
-points: 253   (392), endscore: 64.54%, rank: 2
+points: 253   (392), games: 28, sessionscore: 64.54%, rank: 2
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2709,7 +2738,7 @@ Game 26: NS, score:  -240, points   0     0%
 Game 27: NS, score:  -250, points   0     0%
 Game 28: NS, score:  -260, points   0     0% set-score: 0  (0%)
 
-points: 179   (392), endscore: 45.66%, rank: 13
+points: 179   (392), games: 28, sessionscore: 45.66%, rank: 13
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2752,7 +2781,7 @@ Game 26: NS, score:   120, points   5    36%
 Game 27: NS, score:   130, points   6    43%
 Game 28: NS, score:   140, points   8    57% set-score: 23  (41%)
 
-points: 151   (392), endscore: 38.52%, rank: 15
+points: 151   (392), games: 28, sessionscore: 38.52%, rank: 15
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2795,7 +2824,7 @@ Game 26: NS, score:  -130, points   2    14%
 Game 27: NS, score:  -130, points   2    14%
 Game 28: NS, score:  -130, points   2    14% set-score: 8  (14%)
 
-points: 219   (392), endscore: 55.87%, rank: 5
+points: 219   (392), games: 28, sessionscore: 55.87%, rank: 5
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2838,7 +2867,7 @@ Game 26: EW, score:  -120, points   9    64%
 Game 27: EW, score:  -120, points  10    71%
 Game 28: EW, score:  -120, points   8    57% set-score: 35  (63%)
 
-points: 214   (392), endscore: 54.59%, rank: 7
+points: 214   (392), games: 28, sessionscore: 54.59%, rank: 7
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2856,10 +2885,10 @@ Game  6: NS, score:  -140, points   4    29%
 Game  7: NS, score:  -140, points   4    29%
 Game  8: NS, score:  -140, points   3    21% set-score: 13  (23%)
 
-Game  9:  not played
-Game 10:  not played
-Game 11:  not played
-Game 12:  not played
+Game  9: not played
+Game 10: not played
+Game 11: not played
+Game 12: not played
 
 Game 13: NS, score:   130, points   4    29% Played against (B10): pair 16
 Game 14: NS, score:   140, points   4    29%
@@ -2881,7 +2910,7 @@ Game 26: EW, score:  -150, points   3    21%
 Game 27: EW, score:  -150, points   4    29%
 Game 28: EW, score:  -150, points   4    29% set-score: 14  (25%)
 
-points: 155   (336), endscore: 46.13%, rank: 11
+points: 155   (336), games: 24, sessionscore: 46.13%, rank: 11
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2909,10 +2938,10 @@ Game 14: EW, score:  -200, points   6    43%
 Game 15: EW, score:  -300, points   2    14%
 Game 16: EW, score:  -300, points   1     7% set-score: 10  (18%)
 
-Game 17:  not played
-Game 18:  not played
-Game 19:  not played
-Game 20:  not played
+Game 17: not played
+Game 18: not played
+Game 19: not played
+Game 20: not played
 
 Game 21: EW, score:   170, points  14   100% Played against (B5): pair 14
 Game 22: EW, score:   170, points  14   100%
@@ -2924,7 +2953,7 @@ Game 26: EW, score:  -150, points   3    21%
 Game 27: EW, score:  -160, points   2    14%
 Game 28: EW, score:  -170, points   1     7% set-score: 12  (21%)
 
-points: 103   (336), endscore: 30.65%, rank: 17
+points: 103   (336), games: 24, sessionscore: 30.65%, rank: 17
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2957,17 +2986,17 @@ Game 18: EW, score:  -110, points   4    29%
 Game 19: EW, score:  -120, points   6    43%
 Game 20: EW, score:  -130, points   4    29% set-score: 16  (29%)
 
-Game 21:  not played
-Game 22:  not played
-Game 23:  not played
-Game 24:  not played
+Game 21: not played
+Game 22: not played
+Game 23: not played
+Game 24: not played
 
 Game 25: NS, score:   140, points   8    57% Played against (B2): changed pair 5
 Game 26: NS, score:   150, points  11    79%
 Game 27: NS, score:   160, points  12    86%
 Game 28: NS, score:   170, points  13    93% set-score: 44  (79%)
 
-points: 189   (336), endscore: 56.25%, rank: 4
+points: 189   (336), games: 24, sessionscore: 56.25%, rank: 4
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -3010,7 +3039,7 @@ Game 26: EW, score:  -140, points   6    43%
 Game 27: EW, score:  -140, points   6    43%
 Game 28: EW, score:   -50, points  10    71% set-score: 25  (45%)
 
-points: 171   (392), endscore: 43.62%, rank: 14
+points: 171   (392), games: 28, sessionscore: 43.62%, rank: 14
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -3053,7 +3082,7 @@ Game 26: NS, score:   150, points  11    79%
 Game 27: NS, score:   150, points  10    71%
 Game 28: NS, score:   150, points  10    71% set-score: 42  (75%)
 
-points: 216   (392), endscore: 55.10%, rank: 6
+points: 216   (392), games: 28, sessionscore: 55.10%, rank: 6
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -3066,10 +3095,10 @@ Game  2: EW, score:   160, points  14   100%
 Game  3: EW, score:   160, points  14   100%
 Game  4: EW, score:   160, points  12    86% set-score: 54  (96%)
 
-Game  5:  not played
-Game  6:  not played
-Game  7:  not played
-Game  8:  not played
+Game  5: not played
+Game  6: not played
+Game  7: not played
+Game  8: not played
 
 Game  9: EW, score:    50, points   9    64% Played against (B5): pair 14
 Game 10: EW, score:    70, points  10    71%
@@ -3096,7 +3125,7 @@ Game 26: EW, score:  -170, points   0     0%
 Game 27: EW, score:  -170, points   0     0%
 Game 28: EW, score:  -170, points   1     7% set-score: 1  (2%)
 
-points: 155   (336), endscore: 46.13%, rank: 11
+points: 155   (336), games: 24, sessionscore: 46.13%, rank: 11
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -3119,10 +3148,10 @@ Game 10: EW, score:     0, points   7    50%
 Game 11: EW, score:   -90, points   6    43%
 Game 12: EW, score:  R630, points   0     0% set-score: 22  (39%)
 
-Game 13:  not played
-Game 14:  not played
-Game 15:  not played
-Game 16:  not played
+Game 13: not played
+Game 14: not played
+Game 15: not played
+Game 16: not played
 
 Game 17: NS, score:   100, points  12    86% Played against (B3): pair 1
 Game 18: NS, score:   110, points  10    71%
@@ -3139,7 +3168,7 @@ Game 26: NS, score:   170, points  14   100%
 Game 27: NS, score:   170, points  14   100%
 Game 28: NS, score:   170, points  13    93% set-score: 55  (98%)
 
-points: 242   (336), endscore: 72.02%, rank: 1
+points: 242   (336), games: 24, sessionscore: 72.02%, rank: 1
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -3147,7 +3176,7 @@ Result per pair
 
 Result of pair ??? '' for '<auto-test, session 2>', session 2
 
-Pair has not played (yet)
+absent
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -3185,12 +3214,12 @@ Game 22: NS, score:   120, points  10    71%
 Game 23: NS, score:   110, points  10    71%
 Game 24: NS, score:   100, points   6    43% set-score: 36  (64%)
 
-Game 25:  not played
-Game 26:  not played
-Game 27:  not played
-Game 28:  not played
+Game 25: not played
+Game 26: not played
+Game 27: not played
+Game 28: not played
 
-points: 163   (336), endscore: 48.51%, rank: 9
+points: 163   (336), games: 24, sessionscore: 48.51%, rank: 9
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -3198,10 +3227,10 @@ Result per pair
 
 Result of pair B10 'pair 16' for '<auto-test, session 2>', session 2
 
-Game  1:  not played
-Game  2:  not played
-Game  3:  not played
-Game  4:  not played
+Game  1: not played
+Game  2: not played
+Game  3: not played
+Game  4: not played
 
 Game  5: EW, score:  -160, points   4    29% Played against (B5): pair 14
 Game  6: EW, score:  -160, points   2    14%
@@ -3233,7 +3262,7 @@ Game 26: NS, score:   140, points   8    57%
 Game 27: NS, score:   140, points   8    57%
 Game 28: NS, score:    50, points   4    29% set-score: 31  (55%)
 
-points: 173   (336), endscore: 51.49%, rank: 8
+points: 173   (336), games: 24, sessionscore: 51.49%, rank: 8
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -3251,6 +3280,7 @@ scoreNS NS    EW
      0   5     9   
   -120   2    12   
   -160   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A2      0         A4   A7    130         A5   A3   -120       
   A6   A8     70         B1   B2    210         B3   B9    140       
@@ -3273,6 +3303,7 @@ scoreNS NS    EW
      0   4    10   
   -120   2    12   
   -160   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
   A6   A8     80         B1   B2    230         B3   B9    140       
@@ -3295,6 +3326,7 @@ scoreNS NS    EW
      0   4    10   
   -120   2    12   
   -160   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
   A6   A8     90         B1   B2    240         B3   B9    140       
@@ -3318,6 +3350,7 @@ scoreNS NS    EW
   -120   3    10   
   -160   1    12   
   -620   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A2     80         A4   A7    130         A5   A3   -120       
   A6   A8    %80,R620    B1   B2    260         B3   B9    140       
@@ -3339,6 +3372,7 @@ scoreNS NS    EW
   -100   5     9   
   -140   2    12   
   -600   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A5   -100         A2   A8   -100         A3   A4     90       
   A6   A7    300         B1   B7   -140         B2   B9   -600       
@@ -3360,6 +3394,7 @@ scoreNS NS    EW
   -140   4    10   
   -600   2    12   
   -800   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A5    100         A2   A8   -100         A3   A4    100       
   A6   A7   -600         B1   B7   -140         B2   B9   -800       
@@ -3382,6 +3417,7 @@ scoreNS NS    EW
   -140   4    10   
   -150   2    12   
  -1000   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A5    150         A2   A8   -100         A3   A4    110       
   A6   A7   -150         B1   B7   -140         B2   B9  -1000       
@@ -3405,6 +3441,7 @@ scoreNS NS    EW
   -100   5     9   
   -140   3    11   
  -1100   1    13   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A5    200         A2   A8   -100         A3   A4    120       
   A6   A7    %70,%70     B1   B7   -140         B2   B9  -1100       
@@ -3426,6 +3463,7 @@ scoreNS NS    EW
    -50   5     9   
   -150   2    12   
   -180   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A7   -180         A3   A1    100         A4   A8     70       
   A5   A6    130         B2   B7    -50         B3  B10   -150       
@@ -3447,6 +3485,7 @@ scoreNS NS    EW
    -70   4    10   
   -150   2    12   
   -190   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A7   -190         A3   A1    200         A4   A8     90       
   A5   A6    140         B2   B7      0         B3  B10   -150       
@@ -3469,6 +3508,7 @@ scoreNS NS    EW
    -80   4    10   
   -150   2    12   
   -200   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A7   -200         A3   A1    300         A4   A8    100       
   A5   A6    150         B2   B7     90         B3  B10   -150       
@@ -3492,6 +3532,7 @@ scoreNS NS    EW
   -150   4     9   
   -210   2    11   
   -630   0    13   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A7   -210         A3   A1    %40,%40     A4   A8    110       
   A5   A6    160         B2   B7    %60,R630    B3  B10   -150       
@@ -3513,6 +3554,7 @@ scoreNS NS    EW
    130   4    10   
    110   2    12   
   -270   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A5    110         A4   A1    200         A6   A3   -270       
   A7   A8    170         B1  B10    130         B4   B2    800       
@@ -3535,6 +3577,7 @@ scoreNS NS    EW
    140   4    10   
    110   2    12   
   -280   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A5    110         A4   A1    300         A6   A3   -280       
   A7   A8    180         B1  B10    140         B4   B2    200       
@@ -3557,6 +3600,7 @@ scoreNS NS    EW
    110   4    10   
   -300   2    12   
   -500   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -300       
   A7   A8    190         B1  B10    150         B4   B2    300       
@@ -3579,6 +3623,7 @@ scoreNS NS    EW
    110   4     9   
   -340   2    11   
   -500   0    13   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -340       
   A7   A8    200         B1  B10    160         B4   B2    300       
@@ -3601,6 +3646,7 @@ scoreNS NS    EW
   -150   4    10   
   -420   2    12   
  -1200   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A8   -140         A3   A2    150         A4   A6   -110       
   A7   A5   -420         B5   B4  -1200         B6   B1   -150       
@@ -3622,6 +3668,7 @@ scoreNS NS    EW
   -150   4    10   
   -420   2    12   
   -800   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A8   -150         A3   A2    150         A4   A6   -110       
   A7   A5   -420         B5   B4    300         B6   B1   -800       
@@ -3644,6 +3691,7 @@ scoreNS NS    EW
   -120   4    10   
   -160   2    12   
   -600   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A8   -160         A3   A2    170         A4   A6   -110       
   A7   A5    420         B5   B4    400         B6   B1   -600       
@@ -3665,6 +3713,7 @@ scoreNS NS    EW
   -120   6     8   
   -130   4    10   
   -170   1    13   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A8   -170         A3   A2   -170         A4   A6   -110       
   A7   A5    620         B5   B4    500         B6   B1   -120       
@@ -3687,6 +3736,7 @@ scoreNS NS    EW
    100   4    10   
     50   2    12   
   -170   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A6    100         A2   A4     50         A5   A8    160       
   A7   A3    120         B4   B1    150         B5   B2   -170       
@@ -3708,6 +3758,7 @@ scoreNS NS    EW
   -120   4    10   
   -160   2    12   
   -170   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A6    100         A2   A4    100         A5   A8   -160       
   A7   A3    130         B4   B1    150         B5   B2   -170       
@@ -3730,6 +3781,7 @@ scoreNS NS    EW
   -160   4    10   
   -170   2    12   
   -200   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A6    100         A2   A4   -200         A5   A8   -160       
   A7   A3    140         B4   B1    150         B5   B2   -170       
@@ -3749,6 +3801,7 @@ scoreNS NS    EW
   -110   0    10   
   -170   2    12   
   -300   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A6    100         A2   A4   -300         A5   A8   R150,R110  
   A7   A3    150         B4   B1    150         B5   B2   -170       
@@ -3770,6 +3823,7 @@ scoreNS NS    EW
    110   4    10   
   -130   2    12   
   -230   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A3   A8    120         A5   A4   -230         A6   A2    110       
   A7   A1   -130         B3   B2    140         B5   B1    150       
@@ -3790,6 +3844,7 @@ scoreNS NS    EW
    120   5     9   
   -130   2    12   
   -240   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A3   A8    120         A5   A4   -240         A6   A2    120       
   A7   A1   -130         B3   B2    150         B5   B1    150       
@@ -3812,6 +3867,7 @@ scoreNS NS    EW
    120   4    10   
   -130   2    12   
   -250   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A3   A8    120         A5   A4   -250         A6   A2    130       
   A7   A1   -130         B3   B2    160         B5   B1    150       
@@ -3833,6 +3889,7 @@ scoreNS NS    EW
     50   4    10   
   -130   2    12   
   -260   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A3   A8    120         A5   A4   -260         A6   A2    140       
   A7   A1   -130         B3   B2    170         B5   B1    150       
@@ -3893,7 +3950,7 @@ Pair name
  16 pair 16                         A8      B10        8        0
  17 pair 17                         B5      B1        13        9
  18 pair 18                         A6      A8         6        8
- 19 pair 19                         ???     ???       19        0
+ 19 pair 19                         ???     ???        0        0
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4214,7 +4271,7 @@ rank pair pairname                        tot.    max  score  corr.     A B
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
-Frequency states
+Frequency tables
 '<auto-test, session 3>'
 result of session 3
 
@@ -4319,25 +4376,25 @@ Group result
 
 Group-result of match '<auto-test, session 3>', session 3
 
-                           games : 1-4   5-8   9-12 13-16 17-20 21-24 25-28   tot   score
-  1 pair 3 . . . . . . . . . . . .  24    35     8    37    13    25    48    190   48.47%
-  2 pair 15  . . . . . . . . . . .  31    22     2    12    19     9    33    128   32.65%
-  3 pair 11  . . . . . . . . . . .  46    32    46    51    37    11    21    244   62.24%
-  4 pair 6 . . . . . . . . . . . .  39    24    40    18    29    47    56    253   64.54%
-  5 pair 8 . . . . . . . . . . . .   9    21    50    43    24    32     0    179   45.66%
-  6 pair 18  . . . . . . . . . . .  35    28     5     4    27    29    23    151   38.52%
-  7 pair 1 . . . . . . . . . . . .  16    34    53    32    32    44     8    219   55.87%
-  8 pair 16  . . . . . . . . . . .  18    34    15    23    43    22    35    214   54.59%
-  9 pair 7 . . . . . . . . . . . .  55    13     0    24    46     3    14    155   46.13%
- 10 pair 14  . . . . . . . . . . .   0     1    28    10     0    52    12    103   30.65%
- 11 pair 2 . . . . . . . . . . . .  47    53    10    19    16     0    44    189   56.25%
- 12 pair 4 . . . . . . . . . . . .   1     3    26    46    18    52    25    171   43.62%
- 13 pair 17  . . . . . . . . . . .  18    43    19    52    38     4    42    216   55.10%
- 14 pair 13  . . . . . . . . . . .  54     0    36    36    10    18     1    155   46.13%
- 15 pair 9 . . . . . . . . . . . .  37    43    22     0    40    32    55    242   72.02%
- 16  NOT PLAYED?? absent??
- 17 changed pair 5 . . . . . . . .   8    55    29    10    25    36     0    163   48.51%
- 18 pair 10  . . . . . . . . . . .   0    13    45    31    31    22    31    173   51.49%
+                           games : 1-4   5-8   9-12 13-16 17-20 21-24 25-28   tot   score(%)
+  1 pair 3 . . . . . . . . . . . .  24    35     8    37    13    25    48    190   48.47
+  2 pair 15  . . . . . . . . . . .  31    22     2    12    19     9    33    128   32.65
+  3 pair 11  . . . . . . . . . . .  46    32    46    51    37    11    21    244   62.24
+  4 pair 6 . . . . . . . . . . . .  39    24    40    18    29    47    56    253   64.54
+  5 pair 8 . . . . . . . . . . . .   9    21    50    43    24    32     0    179   45.66
+  6 pair 18  . . . . . . . . . . .  35    28     5     4    27    29    23    151   38.52
+  7 pair 1 . . . . . . . . . . . .  16    34    53    32    32    44     8    219   55.87
+  8 pair 16  . . . . . . . . . . .  18    34    15    23    43    22    35    214   54.59
+  9 pair 7 . . . . . . . . . . . .  55    13   ---    24    46     3    14    155   46.13
+ 10 pair 14  . . . . . . . . . . .   0     1    28    10   ---    52    12    103   30.65
+ 11 pair 2 . . . . . . . . . . . .  47    53    10    19    16   ---    44    189   56.25
+ 12 pair 4 . . . . . . . . . . . .   1     3    26    46    18    52    25    171   43.62
+ 13 pair 17  . . . . . . . . . . .  18    43    19    52    38     4    42    216   55.10
+ 14 pair 13  . . . . . . . . . . .  54   ---    36    36    10    18     1    155   46.13
+ 15 pair 9 . . . . . . . . . . . .  37    43    22   ---    40    32    55    242   72.02
+ 16 --> absent
+ 17 changed pair 5 . . . . . . . .   8    55    29    10    25    36   ---    163   48.51
+ 18 pair 10  . . . . . . . . . . . ---    13    45    31    31    22    31    173   51.49
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4345,25 +4402,25 @@ Total result
 <auto-test, session 3>
 Total result
 
-rank pairname                         S1     S2     S3     total   avg.  A B
-   1 pair 11  . . . . . . . . . . .  56.10  64.54  62.24   182.88% 60.96  1 .
-   2 pair 3 . . . . . . . . . . . .  64.59  62.24  48.47   175.30% 58.43  2 .
-   3 pair 6 . . . . . . . . . . . .  38.29  72.02  64.54   174.85% 58.28  3 .
-   4 pair 9 . . . . . . . . . . . .  46.22  43.62  72.02   161.86% 53.95  . 1
-   5 pair 1 . . . . . . . . . . . .  48.76  56.25  55.87   160.88% 53.63  4 .
-   6 pair 2 . . . . . . . . . . . .  50.00  52.50a 56.25   158.75% 52.92  . 2
-   7 pair 16  . . . . . . . . . . .  52.50a 51.49  54.59   158.58% 52.86  5 .
-   8 pair 8 . . . . . . . . . . . .  54.36  55.87  45.66   155.89% 51.96  6 .
-   9 pair 15  . . . . . . . . . . .  72.77  48.47  32.65   153.89% 51.30  7 .
-  10 pair 17  . . . . . . . . . . .  48.87  46.13  55.10   150.10% 50.03  . 3
-  11 pair 7 . . . . . . . . . . . .  55.97  45.66  46.13   147.76% 49.25  . 4
-  12 pair 18  . . . . . . . . . . .  51.40  54.59  38.52   144.51% 48.17  8 .
-  13 pair 4 . . . . . . . . . . . .  64.87  32.65  43.62   141.14% 47.05  . 5
-  14 pair 13  . . . . . . . . . . .  55.03  38.52  46.13   139.68% 46.56  . 6
-  15 pair 12  . . . . . . . . . . .  43.09  46.13  44.61a  133.83% 44.61  . .
-  16 pair 14  . . . . . . . . . . .  46.13  55.10  30.65   131.88% 43.96  . 7
-  17 pair 10  . . . . . . . . . . .  30.24  48.51  51.49   130.24% 43.41  . 8
-  18 changed pair 5 . . . . . . . .  48.87  30.65  48.51   128.03% 42.68  . 9
+rank pairname                         S1     S2     S3      total   avg.  A B
+   1 pair 11  . . . . . . . . . . .  56.10  64.54  62.24   182.88  60.96  1 .
+   2 pair 3 . . . . . . . . . . . .  64.59  62.24  48.47   175.30  58.43  2 .
+   3 pair 6 . . . . . . . . . . . .  38.29  72.02  64.54   174.85  58.28  3 .
+   4 pair 9 . . . . . . . . . . . .  46.22  43.62  72.02   161.86  53.95  . 1
+   5 pair 1 . . . . . . . . . . . .  48.76  56.25  55.87   160.88  53.63  4 .
+   6 pair 2 . . . . . . . . . . . .  50.00  52.50a 56.25   158.75  52.92  . 2
+   7 pair 16  . . . . . . . . . . .  52.50a 51.49  54.59   158.58  52.86  5 .
+   8 pair 8 . . . . . . . . . . . .  54.36  55.87  45.66   155.89  51.96  6 .
+   9 pair 15  . . . . . . . . . . .  72.77  48.47  32.65   153.89  51.30  7 .
+  10 pair 17  . . . . . . . . . . .  48.87  46.13  55.10   150.10  50.03  . 3
+  11 pair 7 . . . . . . . . . . . .  55.97  45.66  46.13   147.76  49.25  . 4
+  12 pair 18  . . . . . . . . . . .  51.40  54.59  38.52   144.51  48.17  8 .
+  13 pair 4 . . . . . . . . . . . .  64.87  32.65  43.62   141.14  47.05  . 5
+  14 pair 13  . . . . . . . . . . .  55.03  38.52  46.13   139.68  46.56  . 6
+  15 pair 12  . . . . . . . . . . .  43.09  46.13  44.61a  133.83  44.61  . .
+  16 pair 14  . . . . . . . . . . .  46.13  55.10  30.65   131.88  43.96  . 7
+  17 pair 10  . . . . . . . . . . .  30.24  48.51  51.49   130.24  43.41  . 8
+  18 changed pair 5 . . . . . . . .  48.87  30.65  48.51   128.03  42.68  . 9
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4406,7 +4463,7 @@ Game 26: EW, score:   130, points  12    86%
 Game 27: EW, score:   130, points  12    86%
 Game 28: EW, score:   130, points  12    86% set-score: 48  (86%)
 
-points: 190   (392), endscore: 48.47%, rank: 10
+points: 190   (392), games: 28, sessionscore: 48.47%, rank: 10
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4449,7 +4506,7 @@ Game 26: EW, score:  -120, points   9    64%
 Game 27: EW, score:  -130, points   8    57%
 Game 28: EW, score:  -140, points   6    43% set-score: 33  (59%)
 
-points: 128   (392), endscore: 32.65%, rank: 16
+points: 128   (392), games: 28, sessionscore: 32.65%, rank: 16
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4492,7 +4549,7 @@ Game 26: NS, score:   120, points   5    36%
 Game 27: NS, score:   120, points   4    29%
 Game 28: NS, score:   120, points   6    43% set-score: 21  (38%)
 
-points: 244   (392), endscore: 62.24%, rank: 3
+points: 244   (392), games: 28, sessionscore: 62.24%, rank: 3
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4535,7 +4592,7 @@ Game 26: EW, score:   240, points  14   100%
 Game 27: EW, score:   250, points  14   100%
 Game 28: EW, score:   260, points  14   100% set-score: 56  (100%)
 
-points: 253   (392), endscore: 64.54%, rank: 2
+points: 253   (392), games: 28, sessionscore: 64.54%, rank: 2
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4578,7 +4635,7 @@ Game 26: NS, score:  -240, points   0     0%
 Game 27: NS, score:  -250, points   0     0%
 Game 28: NS, score:  -260, points   0     0% set-score: 0  (0%)
 
-points: 179   (392), endscore: 45.66%, rank: 13
+points: 179   (392), games: 28, sessionscore: 45.66%, rank: 13
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4621,7 +4678,7 @@ Game 26: NS, score:   120, points   5    36%
 Game 27: NS, score:   130, points   6    43%
 Game 28: NS, score:   140, points   8    57% set-score: 23  (41%)
 
-points: 151   (392), endscore: 38.52%, rank: 15
+points: 151   (392), games: 28, sessionscore: 38.52%, rank: 15
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4664,7 +4721,7 @@ Game 26: NS, score:  -130, points   2    14%
 Game 27: NS, score:  -130, points   2    14%
 Game 28: NS, score:  -130, points   2    14% set-score: 8  (14%)
 
-points: 219   (392), endscore: 55.87%, rank: 5
+points: 219   (392), games: 28, sessionscore: 55.87%, rank: 5
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4707,7 +4764,7 @@ Game 26: EW, score:  -120, points   9    64%
 Game 27: EW, score:  -120, points  10    71%
 Game 28: EW, score:  -120, points   8    57% set-score: 35  (63%)
 
-points: 214   (392), endscore: 54.59%, rank: 7
+points: 214   (392), games: 28, sessionscore: 54.59%, rank: 7
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4725,10 +4782,10 @@ Game  6: NS, score:  -140, points   4    29%
 Game  7: NS, score:  -140, points   4    29%
 Game  8: NS, score:  -140, points   3    21% set-score: 13  (23%)
 
-Game  9:  not played
-Game 10:  not played
-Game 11:  not played
-Game 12:  not played
+Game  9: not played
+Game 10: not played
+Game 11: not played
+Game 12: not played
 
 Game 13: NS, score:   130, points   4    29% Played against (B10): pair 10
 Game 14: NS, score:   140, points   4    29%
@@ -4750,7 +4807,7 @@ Game 26: EW, score:  -150, points   3    21%
 Game 27: EW, score:  -150, points   4    29%
 Game 28: EW, score:  -150, points   4    29% set-score: 14  (25%)
 
-points: 155   (336), endscore: 46.13%, rank: 11
+points: 155   (336), games: 24, sessionscore: 46.13%, rank: 11
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4778,10 +4835,10 @@ Game 14: EW, score:  -200, points   6    43%
 Game 15: EW, score:  -300, points   2    14%
 Game 16: EW, score:  -300, points   1     7% set-score: 10  (18%)
 
-Game 17:  not played
-Game 18:  not played
-Game 19:  not played
-Game 20:  not played
+Game 17: not played
+Game 18: not played
+Game 19: not played
+Game 20: not played
 
 Game 21: EW, score:   170, points  14   100% Played against (B5): pair 17
 Game 22: EW, score:   170, points  14   100%
@@ -4793,7 +4850,7 @@ Game 26: EW, score:  -150, points   3    21%
 Game 27: EW, score:  -160, points   2    14%
 Game 28: EW, score:  -170, points   1     7% set-score: 12  (21%)
 
-points: 103   (336), endscore: 30.65%, rank: 17
+points: 103   (336), games: 24, sessionscore: 30.65%, rank: 17
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4826,17 +4883,17 @@ Game 18: EW, score:  -110, points   4    29%
 Game 19: EW, score:  -120, points   6    43%
 Game 20: EW, score:  -130, points   4    29% set-score: 16  (29%)
 
-Game 21:  not played
-Game 22:  not played
-Game 23:  not played
-Game 24:  not played
+Game 21: not played
+Game 22: not played
+Game 23: not played
+Game 24: not played
 
 Game 25: NS, score:   140, points   8    57% Played against (B2): pair 14
 Game 26: NS, score:   150, points  11    79%
 Game 27: NS, score:   160, points  12    86%
 Game 28: NS, score:   170, points  13    93% set-score: 44  (79%)
 
-points: 189   (336), endscore: 56.25%, rank: 4
+points: 189   (336), games: 24, sessionscore: 56.25%, rank: 4
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4879,7 +4936,7 @@ Game 26: EW, score:  -140, points   6    43%
 Game 27: EW, score:  -140, points   6    43%
 Game 28: EW, score:   -50, points  10    71% set-score: 25  (45%)
 
-points: 171   (392), endscore: 43.62%, rank: 14
+points: 171   (392), games: 28, sessionscore: 43.62%, rank: 14
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4922,7 +4979,7 @@ Game 26: NS, score:   150, points  11    79%
 Game 27: NS, score:   150, points  10    71%
 Game 28: NS, score:   150, points  10    71% set-score: 42  (75%)
 
-points: 216   (392), endscore: 55.10%, rank: 6
+points: 216   (392), games: 28, sessionscore: 55.10%, rank: 6
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4935,10 +4992,10 @@ Game  2: EW, score:   160, points  14   100%
 Game  3: EW, score:   160, points  14   100%
 Game  4: EW, score:   160, points  12    86% set-score: 54  (96%)
 
-Game  5:  not played
-Game  6:  not played
-Game  7:  not played
-Game  8:  not played
+Game  5: not played
+Game  6: not played
+Game  7: not played
+Game  8: not played
 
 Game  9: EW, score:    50, points   9    64% Played against (B5): pair 17
 Game 10: EW, score:    70, points  10    71%
@@ -4965,7 +5022,7 @@ Game 26: EW, score:  -170, points   0     0%
 Game 27: EW, score:  -170, points   0     0%
 Game 28: EW, score:  -170, points   1     7% set-score: 1  (2%)
 
-points: 155   (336), endscore: 46.13%, rank: 11
+points: 155   (336), games: 24, sessionscore: 46.13%, rank: 11
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4988,10 +5045,10 @@ Game 10: EW, score:     0, points   7    50%
 Game 11: EW, score:   -90, points   6    43%
 Game 12: EW, score:  R630, points   0     0% set-score: 22  (39%)
 
-Game 13:  not played
-Game 14:  not played
-Game 15:  not played
-Game 16:  not played
+Game 13: not played
+Game 14: not played
+Game 15: not played
+Game 16: not played
 
 Game 17: NS, score:   100, points  12    86% Played against (B3): pair 2
 Game 18: NS, score:   110, points  10    71%
@@ -5008,7 +5065,7 @@ Game 26: NS, score:   170, points  14   100%
 Game 27: NS, score:   170, points  14   100%
 Game 28: NS, score:   170, points  13    93% set-score: 55  (98%)
 
-points: 242   (336), endscore: 72.02%, rank: 1
+points: 242   (336), games: 24, sessionscore: 72.02%, rank: 1
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -5016,7 +5073,7 @@ Result per pair
 
 Result of pair ??? '' for '<auto-test, session 3>', session 3
 
-Pair has not played (yet)
+absent
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -5054,12 +5111,12 @@ Game 22: NS, score:   120, points  10    71%
 Game 23: NS, score:   110, points  10    71%
 Game 24: NS, score:   100, points   6    43% set-score: 36  (64%)
 
-Game 25:  not played
-Game 26:  not played
-Game 27:  not played
-Game 28:  not played
+Game 25: not played
+Game 26: not played
+Game 27: not played
+Game 28: not played
 
-points: 163   (336), endscore: 48.51%, rank: 9
+points: 163   (336), games: 24, sessionscore: 48.51%, rank: 9
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -5067,10 +5124,10 @@ Result per pair
 
 Result of pair B10 'pair 10' for '<auto-test, session 3>', session 3
 
-Game  1:  not played
-Game  2:  not played
-Game  3:  not played
-Game  4:  not played
+Game  1: not played
+Game  2: not played
+Game  3: not played
+Game  4: not played
 
 Game  5: EW, score:  -160, points   4    29% Played against (B5): pair 17
 Game  6: EW, score:  -160, points   2    14%
@@ -5102,7 +5159,7 @@ Game 26: NS, score:   140, points   8    57%
 Game 27: NS, score:   140, points   8    57%
 Game 28: NS, score:    50, points   4    29% set-score: 31  (55%)
 
-points: 173   (336), endscore: 51.49%, rank: 8
+points: 173   (336), games: 24, sessionscore: 51.49%, rank: 8
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -5120,6 +5177,7 @@ scoreNS NS    EW
      0   5     9   
   -120   2    12   
   -160   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A2      0         A4   A7    130         A5   A3   -120       
   A6   A8     70         B1   B2    210         B3   B9    140       
@@ -5142,6 +5200,7 @@ scoreNS NS    EW
      0   4    10   
   -120   2    12   
   -160   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
   A6   A8     80         B1   B2    230         B3   B9    140       
@@ -5164,6 +5223,7 @@ scoreNS NS    EW
      0   4    10   
   -120   2    12   
   -160   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
   A6   A8     90         B1   B2    240         B3   B9    140       
@@ -5187,6 +5247,7 @@ scoreNS NS    EW
   -120   3    10   
   -160   1    12   
   -620   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A2     80         A4   A7    130         A5   A3   -120       
   A6   A8    %80,R620    B1   B2    260         B3   B9    140       
@@ -5208,6 +5269,7 @@ scoreNS NS    EW
   -100   5     9   
   -140   2    12   
   -600   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A5   -100         A2   A8   -100         A3   A4     90       
   A6   A7    300         B1   B7   -140         B2   B9   -600       
@@ -5229,6 +5291,7 @@ scoreNS NS    EW
   -140   4    10   
   -600   2    12   
   -800   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A5    100         A2   A8   -100         A3   A4    100       
   A6   A7   -600         B1   B7   -140         B2   B9   -800       
@@ -5251,6 +5314,7 @@ scoreNS NS    EW
   -140   4    10   
   -150   2    12   
  -1000   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A5    150         A2   A8   -100         A3   A4    110       
   A6   A7   -150         B1   B7   -140         B2   B9  -1000       
@@ -5274,6 +5338,7 @@ scoreNS NS    EW
   -100   5     9   
   -140   3    11   
  -1100   1    13   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A5    200         A2   A8   -100         A3   A4    120       
   A6   A7    %70,%70     B1   B7   -140         B2   B9  -1100       
@@ -5295,6 +5360,7 @@ scoreNS NS    EW
    -50   5     9   
   -150   2    12   
   -180   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A7   -180         A3   A1    100         A4   A8     70       
   A5   A6    130         B2   B7    -50         B3  B10   -150       
@@ -5316,6 +5382,7 @@ scoreNS NS    EW
    -70   4    10   
   -150   2    12   
   -190   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A7   -190         A3   A1    200         A4   A8     90       
   A5   A6    140         B2   B7      0         B3  B10   -150       
@@ -5338,6 +5405,7 @@ scoreNS NS    EW
    -80   4    10   
   -150   2    12   
   -200   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A7   -200         A3   A1    300         A4   A8    100       
   A5   A6    150         B2   B7     90         B3  B10   -150       
@@ -5361,6 +5429,7 @@ scoreNS NS    EW
   -150   4     9   
   -210   2    11   
   -630   0    13   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A7   -210         A3   A1    %40,%40     A4   A8    110       
   A5   A6    160         B2   B7    %60,R630    B3  B10   -150       
@@ -5382,6 +5451,7 @@ scoreNS NS    EW
    130   4    10   
    110   2    12   
   -270   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A5    110         A4   A1    200         A6   A3   -270       
   A7   A8    170         B1  B10    130         B4   B2    800       
@@ -5404,6 +5474,7 @@ scoreNS NS    EW
    140   4    10   
    110   2    12   
   -280   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A5    110         A4   A1    300         A6   A3   -280       
   A7   A8    180         B1  B10    140         B4   B2    200       
@@ -5426,6 +5497,7 @@ scoreNS NS    EW
    110   4    10   
   -300   2    12   
   -500   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -300       
   A7   A8    190         B1  B10    150         B4   B2    300       
@@ -5448,6 +5520,7 @@ scoreNS NS    EW
    110   4     9   
   -340   2    11   
   -500   0    13   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -340       
   A7   A8    200         B1  B10    160         B4   B2    300       
@@ -5470,6 +5543,7 @@ scoreNS NS    EW
   -150   4    10   
   -420   2    12   
  -1200   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A8   -140         A3   A2    150         A4   A6   -110       
   A7   A5   -420         B5   B4  -1200         B6   B1   -150       
@@ -5491,6 +5565,7 @@ scoreNS NS    EW
   -150   4    10   
   -420   2    12   
   -800   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A8   -150         A3   A2    150         A4   A6   -110       
   A7   A5   -420         B5   B4    300         B6   B1   -800       
@@ -5513,6 +5588,7 @@ scoreNS NS    EW
   -120   4    10   
   -160   2    12   
   -600   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A8   -160         A3   A2    170         A4   A6   -110       
   A7   A5    420         B5   B4    400         B6   B1   -600       
@@ -5534,6 +5610,7 @@ scoreNS NS    EW
   -120   6     8   
   -130   4    10   
   -170   1    13   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A8   -170         A3   A2   -170         A4   A6   -110       
   A7   A5    620         B5   B4    500         B6   B1   -120       
@@ -5556,6 +5633,7 @@ scoreNS NS    EW
    100   4    10   
     50   2    12   
   -170   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A6    100         A2   A4     50         A5   A8    160       
   A7   A3    120         B4   B1    150         B5   B2   -170       
@@ -5577,6 +5655,7 @@ scoreNS NS    EW
   -120   4    10   
   -160   2    12   
   -170   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A6    100         A2   A4    100         A5   A8   -160       
   A7   A3    130         B4   B1    150         B5   B2   -170       
@@ -5599,6 +5678,7 @@ scoreNS NS    EW
   -160   4    10   
   -170   2    12   
   -200   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A6    100         A2   A4   -200         A5   A8   -160       
   A7   A3    140         B4   B1    150         B5   B2   -170       
@@ -5618,6 +5698,7 @@ scoreNS NS    EW
   -110   0    10   
   -170   2    12   
   -300   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A1   A6    100         A2   A4   -300         A5   A8   R150,R110  
   A7   A3    150         B4   B1    150         B5   B2   -170       
@@ -5639,6 +5720,7 @@ scoreNS NS    EW
    110   4    10   
   -130   2    12   
   -230   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A3   A8    120         A5   A4   -230         A6   A2    110       
   A7   A1   -130         B3   B2    140         B5   B1    150       
@@ -5659,6 +5741,7 @@ scoreNS NS    EW
    120   5     9   
   -130   2    12   
   -240   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A3   A8    120         A5   A4   -240         A6   A2    120       
   A7   A1   -130         B3   B2    150         B5   B1    150       
@@ -5681,6 +5764,7 @@ scoreNS NS    EW
    120   4    10   
   -130   2    12   
   -250   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A3   A8    120         A5   A4   -250         A6   A2    130       
   A7   A1   -130         B3   B2    160         B5   B1    150       
@@ -5702,6 +5786,7 @@ scoreNS NS    EW
     50   4    10   
   -130   2    12   
   -260   0    14   
+
   NS   EW  SCORE         NS   EW  SCORE         NS   EW  SCORE       
   A3   A8    120         A5   A4   -260         A6   A2    140       
   A7   A1   -130         B3   B2    170         B5   B1    150       

@@ -45,12 +45,17 @@ SetupNewMatch::SetupNewMatch(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_p
     auto txtDbType = new wxStaticText(this, wxID_ANY, _("Database type:"));
     m_pTxtCtrlDbType = new MyTextCtrl(this, wxID_ANY, "DbaseType",MY_SIZE_TXTCTRL_NUM(4), wxTE_READONLY);
 
+// butler or precent score
+    m_pChkBoxButler = new wxCheckBox(this, wxID_ANY, _("Butler"));
+    m_pChkBoxButler->SetToolTip(_("Type of calculation: percent or butler"));
+
     // now add all of the above in sets of 2 to a flexgridsizer
-    wxFlexGridSizer* fgs = new wxFlexGridSizer(4 /*rows*/, 2 /*columns*/, 9 /*v-gap*/, 25 /*h-gap*/);
+    wxFlexGridSizer* fgs = new wxFlexGridSizer(5 /*rows*/, 2 /*columns*/, 9 /*v-gap*/, 25 /*h-gap*/);
     fgs->Add(txtDir    , 0, wxALIGN_CENTER_VERTICAL);   fgs->Add(m_pDirPicker,      1, wxEXPAND);
     fgs->Add(txtMatch  , 0, wxALIGN_CENTER_VERTICAL);   fgs->Add(m_pComboBoxMatch,  1          );
     fgs->Add(txtSession, 0, wxALIGN_CENTER_VERTICAL);   fgs->Add(m_pTxtCtrlSession, 0          );
     fgs->Add(txtDbType , 0, wxALIGN_CENTER_VERTICAL);   fgs->Add(m_pTxtCtrlDbType , 0          );
+    fgs->Add(m_pChkBoxButler  , 0 );
 
     fgs->AddGrowableCol(1, 1);  // column 1 should grow horizontally if possible
 
@@ -75,6 +80,8 @@ SetupNewMatch::SetupNewMatch(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_p
     AUTOTEST_ADD_WINDOW(m_pDirPicker     , "Folder"    );
     AUTOTEST_ADD_WINDOW(m_pComboBoxMatch , "Name"      );
     AUTOTEST_ADD_WINDOW(m_pTxtCtrlSession, "Session"   );
+    AUTOTEST_ADD_WINDOW(m_pChkBoxButler  , "Butler"    );
+
     m_description = "Match";
 }   // SetupNewMatch()
 
@@ -83,6 +90,8 @@ SetupNewMatch:: ~SetupNewMatch(){}
 void SetupNewMatch::AutotestRequestMousePositions(MyTextFile* a_pFile)    // request to add usefull mousepositions for autotesting
 {
     AutoTestAddWindowsNames(a_pFile, m_description);
+    // now, we can be sure that the 'butler' checkbox has been saved into the configuration!
+    a_pFile->AddLine("bButler := " + wxString(m_pChkBoxButler->GetValue() ? "true" : "false") + " ; true, if butler calculation method is active");
 }   // AutotestRequestMousePositions()
 
 void SetupNewMatch::UpdateSelection()
@@ -116,6 +125,8 @@ void SetupNewMatch::RefreshInfo()
     cfg::FileExtension extension = io::DatabaseTypeGet() == io::DB_ORG ? cfg::EXT_MAIN_INI : cfg::EXT_DATABASE;
     wxFileName file = cfg:: ConstructFilename("", extension);
     m_pTxtCtrlDbType ->SetValue  (file.GetName());
+    m_pChkBoxButler->SetValue(cfg::GetButler());
+
     UpdateSelection();
     Layout();
 }   // RefreshInfo()
@@ -129,6 +140,8 @@ void SetupNewMatch::BackupData()
     argv.push_back("-z" + m_pTxtCtrlSession->GetValue());
 
     cfg::HandleCommandline( argv, false );
+    cfg::SetButler(m_pChkBoxButler->GetValue());
+
 }   // BackupData()
 
 void SetupNewMatch::OnOk()
@@ -147,18 +160,13 @@ void SetupNewMatch::OnCancel()
 void SetupNewMatch::PrintPage()
 {
     bool bResult = prn::BeginPrint(_("New match page:\n")); MY_UNUSED(bResult);
-    wxString info;
-    info = FMT(_("Matchfolder  : %s\n"
-                 "Match        : %s\n"
-                 "Session      : %s\n"
-                 "Databasetype : %s\n"),
-                m_pDirPicker     ->GetTextCtrlValue(),
-                m_pComboBoxMatch ->GetValue(),
-                m_pTxtCtrlSession->GetValue(),
-                m_pTxtCtrlDbType ->GetValue()
-              );
 
-    prn::PrintLine(info);
+    prn::PrintLine(FMT("%-13s: %s\n", _("Matchfolder" ), m_pDirPicker     ->GetTextCtrlValue()));
+    prn::PrintLine(FMT("%-13s: %s\n", _("Match"       ), m_pComboBoxMatch ->GetValue()));
+    prn::PrintLine(FMT("%-13s: %s\n", _("Session"     ), m_pTxtCtrlSession->GetValue()));
+    prn::PrintLine(FMT("%-13s: %s\n", _("Databasetype"), m_pTxtCtrlDbType ->GetValue()));
+    prn::PrintLine(FMT("%-13s: %s\n", _("Butler"      ), BoolToString(m_pChkBoxButler->GetValue())));
+
     prn::PrintLine(cfg::GetCopyrightDateTime());
     prn::EndPrint();
 }   // PrintPage()

@@ -40,6 +40,8 @@ private:
     wxTextCtrl*         m_pTxtCtrlLinesPP;
     wxCheckBox*         m_pChkBoxGroupResult;
     wxCheckBox*         m_pChkBoxGlobalNames;
+    bool                m_bButler;
+    wxStaticText*       m_pStaticTxtMaxMean;
 
     // vars to remember the original values
     wxString            m_sDirName;

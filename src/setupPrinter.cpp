@@ -119,19 +119,11 @@ void SetupPrinter::AutotestRequestMousePositions(MyTextFile* a_pFile)
 void SetupPrinter::PrintPage()
 {
     bool bResult = prn::BeginPrint(_("Printersettings page:\n")); MY_UNUSED(bResult);
-    wxString info;
-    info = FMT(_(
-                "Printer         : %s\n"
-                "Lines/page      : %s\n"
-                "Formfeed        : %s\n"
-                "Networkprinter  : %s\n"),
-                m_choiceBoxPrn   ->GetStringSelection(),
-                m_pTxtCtrlLinesPP->GetValue(),
-                BoolToString(m_pChkBoxFF      ->GetValue()),
-                BoolToString(m_pChkBoxRemote  ->GetValue())
-            );
+    prn::PrintLine(FMT("%-16s: %s\n", _("Printer"       ), m_choiceBoxPrn               ->GetStringSelection()));
+    prn::PrintLine(FMT("%-16s: %s\n", _("Lines/page"    ), m_pTxtCtrlLinesPP            ->GetValue()));
+    prn::PrintLine(FMT("%-16s: %s\n", _("Formfeed"      ), BoolToString(m_pChkBoxFF     ->GetValue())));
+    prn::PrintLine(FMT("%-16s: %s\n", _("Networkprinter"), BoolToString(m_pChkBoxRemote ->GetValue())));
 
-    prn::PrintLine(info);
     prn::PrintLine(cfg::GetCopyrightDateTime());
     prn::EndPrint();
 }   // PrintPage()

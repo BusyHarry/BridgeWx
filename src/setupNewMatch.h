@@ -30,6 +30,7 @@ private:
     MyTextCtrl*         m_pTxtCtrlSession;
     MywxComboBox*       m_pComboBoxMatch;
     MyTextCtrl*         m_pTxtCtrlDbType;
+    wxCheckBox*         m_pChkBoxButler;
 };
 
 #endif

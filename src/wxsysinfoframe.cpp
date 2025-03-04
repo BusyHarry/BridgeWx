@@ -2643,6 +2643,7 @@ bool wxSystemInformationFrame::Create(wxWindow *parent, wxWindowID id, const wxS
     if ( !wxFrame::Create(parent, id, title, pos, size, frameStyle) )
         return false;
 
+    if (parent) SetFont(parent->GetFont());
     m_autoRefresh = createFlags & AutoRefresh;
 
     wxPanel* mainPanel = new wxPanel(this);

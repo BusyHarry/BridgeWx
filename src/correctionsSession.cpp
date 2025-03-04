@@ -16,16 +16,27 @@
 #include "score.h"
 #include "corrections.h"
 
-static constexpr auto COR_MP_MIN    = -5000;
-static constexpr auto COR_MP_MAX    = +5000;
-static constexpr auto COR_EXTRA_MAX = +5000;
-static constexpr auto COR_EXTRA_MIN = 0;
+static constexpr auto COR_MP_MIN        = -5000;
+static constexpr auto COR_MP_MAX        = +5000;
+static constexpr auto COR_EXTRA_MAX     = +5000;
+static constexpr auto COR_EXTRA_MIN     = 0;
+static constexpr auto COR_PERCENT_MIN   = -100;
+static constexpr auto COR_PERCENT_MAX   = +100;
 /*
 * remarks: 'max' and 'extra' are meant for things like a combi-table.
 * max  : maximum mp's you can get at that table (for all games you play there)
 * extra: the mp's you really  got at that table (for all games....)
 * The 'max' is added to the total achievable mp's and the 'extra' is added to your total achieved mp's
 */
+#define sizeOne GetCharWidth()
+#define SIZE_PAIRNR_SES (4 * sizeOne)
+#define SIZE_PAIR_SES   (5 * sizeOne)
+#define SIZE_PAIRNAME   ((cfg::MAX_NAME_SIZE+1)* sizeOne)   /* original name        */
+#define SIZE_PAIRNR     (6 * sizeOne)                       /* "AB12 *"             */
+#define SIZE_PROCENT    (4 * sizeOne)                       /* just numbers 1-120   */
+#define SIZE_MP         (5 * sizeOne)                       /* like -2200           */
+#define SIZE_GAMES      (7 * sizeOne)
+
 CorrectionsSession::CorrectionsSession(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a_pageId), m_theGrid(0)
 {
     // create and populate grid
@@ -33,13 +44,6 @@ CorrectionsSession::CorrectionsSession(wxWindow* a_pParent, UINT a_pageId) :Base
     m_theGrid->CreateGrid(0, COL_NR_OF);
 //    m_theGrid->SetRowLabelSize( 4*GetCharWidth() );   // room for 3 digit numbers
 //    m_theGrid->HideRowLabels();                         // don't need 1 to N
-    int sizeOne = GetCharWidth();
-    #define SIZE_PAIRNR_SES (4 * sizeOne)
-    #define SIZE_PAIR_SES   (5 * sizeOne)
-    #define SIZE_PAIRNAME   ((cfg::MAX_NAME_SIZE+1)* sizeOne)   /* original name        */
-    #define SIZE_PAIRNR     (6 * sizeOne)                       /* "AB12 *"             */
-    #define SIZE_PROCENT    (4 * sizeOne)                       /* just numbers 1-120   */
-    #define SIZE_MP         (5 * sizeOne)                       /* like -2200           */
     m_theGrid->SetRowLabelSize(SIZE_PAIRNR_SES);
     m_theGrid->SetColSize(COL_PAIRNAME_SESSION, SIZE_PAIR_SES   ); m_theGrid->SetColLabelValue(COL_PAIRNAME_SESSION, _("pair"     ));
     m_theGrid->SetColSize(COL_PAIRNAME_GLOBAL , SIZE_PAIRNAME   ); m_theGrid->SetColLabelValue(COL_PAIRNAME_GLOBAL , _("pairname" ));
@@ -47,6 +51,7 @@ CorrectionsSession::CorrectionsSession(wxWindow* a_pParent, UINT a_pageId) :Base
     m_theGrid->SetColSize(COL_COR_MP          , SIZE_MP         ); m_theGrid->SetColLabelValue(COL_COR_MP          , _("mp"       ));
     m_theGrid->SetColSize(COL_COR_MAX         , SIZE_MP         ); m_theGrid->SetColLabelValue(COL_COR_MAX         , _("max"      ));
     m_theGrid->SetColSize(COL_COR_EXTRA       , SIZE_MP         ); m_theGrid->SetColLabelValue(COL_COR_EXTRA       , _("extra"    ));
+    m_theGrid->SetColSize(COL_COR_GAMES       , SIZE_GAMES      ); m_theGrid->SetColLabelValue(COL_COR_GAMES       , _("games"    ));
 
     wxGridCellAttr* pAttr = new wxGridCellAttr;
     pAttr->SetAlignment(wxALIGN_LEFT, wxALIGN_CENTER_VERTICAL);
@@ -55,6 +60,7 @@ CorrectionsSession::CorrectionsSession(wxWindow* a_pParent, UINT a_pageId) :Base
     pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_MP          , pAttr); 
     pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_MAX         , pAttr); 
     pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_EXTRA       , pAttr); 
+    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_GAMES       , pAttr); 
 
     auto search   = CreateSearchBox();
     auto okCancel = CreateOkCancelButtons();
@@ -71,6 +77,7 @@ CorrectionsSession::CorrectionsSession(wxWindow* a_pParent, UINT a_pageId) :Base
     vBox->Add(hBoxSearchOk      , 0);
     SetSizer(vBox);             // add to panel
     m_bDataChanged  = false;    // no changes yet
+    m_bButler = !cfg::GetButler();  // force first setup in RefreshInfo()
 
     RefreshInfo();              // fill the grid with data
     m_description = "CorSession";
@@ -93,12 +100,13 @@ void CorrectionsSession::AutotestRequestMousePositions(MyTextFile* a_pFile)
     int rows = m_theGrid->GetNumberRows();
     for (int row = 0; row < rows; ++row)
     { 
-        //        CORRECTION_SESSION() {type = '%'; correction = 0; extra = 0; maxExtra = 0; }
-        //         char type; int correction; long extra; int maxExtra;
+        //        CORRECTION_SESSION() {type = '%'; correction = 0; extra = 0; maxExtra = 0; games = 0;}
+        //         char type; int correction; long extra; int maxExtra; UINT games
         wxString procent = m_theGrid->GetCellValue(row, COL_COR_PROCENT);
         wxString mp      = m_theGrid->GetCellValue(row, COL_COR_MP     );
         wxString maxe    = m_theGrid->GetCellValue(row, COL_COR_MAX    );
         wxString extra   = m_theGrid->GetCellValue(row, COL_COR_EXTRA  );
+        wxString games   = m_theGrid->GetCellValue(row, COL_COR_GAMES  );
         if (procent.IsEmpty() && mp.IsEmpty() && maxe.IsEmpty() && extra.IsEmpty()) continue;
             
         cor::CORRECTION_SESSION cor;
@@ -113,8 +121,9 @@ void CorrectionsSession::AutotestRequestMousePositions(MyTextFile* a_pFile)
             cor.correction = wxAtoi(mp);
         }
 
-        cor.extra = AsciiTolong(extra);
-        cor.maxExtra = wxAtoi(maxe);
+        cor.extra       = AsciiTolong(extra);
+        cor.maxExtra    = wxAtoi(maxe);
+        cor.games       = wxAtoi(games);
         corrections[(UINT)row+1] = cor;     // row+1 equals sessionpairnr
     }
 
@@ -171,11 +180,18 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
     switch (col)
     {
         case COL_COR_PROCENT:
+            if (!newData.empty())
+            {
+                m_theGrid->SetCellValue(row, COL_COR_MP, ES);
+                if ( value == 0 || value == COR_PERCENT_MIN)    // you get minimum if there is rubbisch in the cell ....
+                    m_theGrid->CallAfter([this,row,col](){this->m_theGrid->SetCellValue(row, col, ES); });
+            }
+            break;
         case COL_COR_MP:
             if (!newData.empty())
             {
-                m_theGrid->SetCellValue(row, (col == COL_COR_PROCENT) ? COL_COR_MP : COL_COR_PROCENT , ES);
-                if ( value == 0 || value == -100)   // you get -100 (==min) if there is rubbisch in the cell ....
+                m_theGrid->SetCellValue(row, COL_COR_MP , ES);
+                if ( value == 0 || value == COR_MP_MIN)         // you get minimum if there is rubbisch in the cell ....
                     m_theGrid->CallAfter([this,row,col](){this->m_theGrid->SetCellValue(row, col, ES); });
             }
             break;
@@ -183,6 +199,7 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
             if (newData.empty() || 0 == value)
             {
                 m_theGrid->SetCellValue(row, COL_COR_EXTRA, ES);
+                m_theGrid->SetCellValue(row, COL_COR_GAMES, ES);
                 m_theGrid->CallAfter([this,row,col](){this->m_theGrid->SetCellValue(row, col, ES); });
             }
             else
@@ -190,16 +207,35 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
                 if ( value < COR_EXTRA_MIN) value = COR_EXTRA_MIN;
                 if ( value > COR_EXTRA_MAX) value = COR_EXTRA_MAX;
                 m_theGrid->SetCellValue(row, COL_COR_EXTRA, ForceInRange( m_theGrid->GetCellValue(row,COL_COR_EXTRA), COR_EXTRA_MIN, value*10));
+                if (m_theGrid->GetCellValue(row, COL_COR_GAMES).empty())
+                    m_theGrid->SetCellValue(row, COL_COR_GAMES, U2String(cfg::GetSetSize()));
             }
             break;
         case COL_COR_EXTRA:
+            if (m_bButler)
+            {
+                if (newData.empty())    // remove combi-table data
+                    m_theGrid->SetCellValue(row, COL_COR_GAMES, ES);
+                else
+                {
+                    wxString validated = ForceInRange(newData, -100, 100, true);
+                    m_theGrid->CallAfter([this,row,col,validated](){this->m_theGrid->SetCellValue(row, col, validated);});
+                    if (m_theGrid->GetCellValue(row, COL_COR_GAMES).empty())    // set default set-size
+                        m_theGrid->SetCellValue(row, COL_COR_GAMES, U2String(cfg::GetSetSize()));
+                }
+            }
+            else  // percent scoring
             if (!newData.empty())
             {
                 if (m_theGrid->GetCellValue(row,COL_COR_MAX).empty())
-                    return CELL_CHANGE_REJECTED;
+                    return CELL_CHANGE_REJECTED;        // only extra-data if we have a maximum inserted
                 wxString extra = ForceInRange(newData, COR_EXTRA_MIN, 10*wxAtoi(m_theGrid->GetCellValue(row,COL_COR_MAX)));
                 m_theGrid->CallAfter([this,row,col,extra](){this->m_theGrid->SetCellValue(row, col, extra);});
             }
+            break;
+        case COL_COR_GAMES:
+            if (m_theGrid->GetCellValue(row,COL_COR_MAX).empty() && m_theGrid->GetCellValue(row,COL_COR_EXTRA).empty())
+                return CELL_CHANGE_REJECTED;        // only games if extra/max data
             break;
         default:
             break;
@@ -209,9 +245,47 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
     return CELL_CHANGE_OK;   // accept change
 }   // OnCellChanging()
 
+void CorrectionsSession::InitButlerProcent()
+{
+    static wxString explanation;    // MUST be initialized dynamically: translation, static: must survive this function!
+    SendEvent2Mainframe(this, ID_STATUSBAR_SETTEXT, &explanation);
+    if (m_bButler == cfg::GetButler()) return;  // no change
+    m_bButler = !m_bButler;
+
+    wxString toolTip;
+    if (m_bButler)
+    {
+        toolTip = _(
+            "combi-table:"
+            "\nextra: the imp's earned"
+            "\ngames: the nr of games at that combi-table"
+        );
+        m_theGrid->SetColSize      (COL_COR_PROCENT, 0);
+        m_theGrid->SetColSize      (COL_COR_MAX    , 0);
+        m_theGrid->SetColLabelValue(COL_COR_MP     , _("imps"));
+        explanation = _("SESSION CORRECTIONS in imps and results from a combi-table");
+    }
+    else
+    {
+        toolTip = _(
+            "combi-table:"
+            "\nmax  : maximum mp's to get"
+            "\nextra: the mp's earned"
+            "\ngames: the nr of games at that combi-table"
+        );
+        m_theGrid->SetColSize      (COL_COR_PROCENT, SIZE_PROCENT);
+        m_theGrid->SetColSize      (COL_COR_MAX    , SIZE_MP     );
+        m_theGrid->SetColLabelValue(COL_COR_MP     , _("mp")     );
+        explanation = _("SESSION CORRECTIONS in full % or mp (matchpoints) and results from a combi-table");
+    }
+
+    m_theGrid->GetGridColLabelWindow()->SetToolTip(toolTip);
+}   // InitButlerProcent()
+
 void CorrectionsSession::RefreshInfo()
 {   // update grid with actual info
 
+    InitButlerProcent();                // init columns/tooltip for butler or percentage calculation
     names::InitializePairNames();
     cor::InitializeCorrections();
     m_bDataChanged = false;
@@ -231,9 +305,10 @@ void CorrectionsSession::RefreshInfo()
         m_theGrid->SetCellValue (row, COL_PAIRNAME_GLOBAL ,       names::PairnrSession2GlobalText (row+1));  // small separation with previous column
         m_theGrid->SetReadOnly  (row, COL_PAIRNAME_SESSION);
         m_theGrid->SetReadOnly  (row, COL_PAIRNAME_GLOBAL);
-        m_theGrid->SetCellEditor(row, COL_COR_PROCENT   , new wxGridCellNumberEditor(-100, 100));
-        m_theGrid->SetCellEditor(row, COL_COR_MP        , new wxGridCellNumberEditor(COR_MP_MIN    , COR_MP_MAX    ));
-        m_theGrid->SetCellEditor(row, COL_COR_MAX       , new wxGridCellNumberEditor(COR_EXTRA_MIN , COR_EXTRA_MAX ));
+        m_theGrid->SetCellEditor(row, COL_COR_PROCENT   , new wxGridCellNumberEditor(COR_PERCENT_MIN, COR_PERCENT_MAX   ));
+        m_theGrid->SetCellEditor(row, COL_COR_MP        , new wxGridCellNumberEditor(COR_MP_MIN     , COR_MP_MAX        ));
+        m_theGrid->SetCellEditor(row, COL_COR_MAX       , new wxGridCellNumberEditor(COR_EXTRA_MIN  , COR_EXTRA_MAX     ));
+        m_theGrid->SetCellEditor(row, COL_COR_GAMES     , new wxGridCellNumberEditor(1              , cfg::GetSetSize() ));
         // hm, floating point strings with space(s) at the end give debug assertions on editing celvalue....
         // m_theGrid->SetCellEditor(row, COL_COR_EXTRA  , new wxGridCellFloatEditor (6 ,1, wxGRID_FLOAT_FORMAT_FIXED ));
     }
@@ -248,17 +323,17 @@ void CorrectionsSession::RefreshInfo()
         int col = cs.type == '%' ? COL_COR_PROCENT : COL_COR_MP;
         if (cs.correction)  // zero means: not present
             m_theGrid->SetCellValue(row, col, I2String(cs.correction));
-        if (cs.extra || cs.maxExtra)
+        if (cs.maxExtra || (m_bButler && cs.games))
         {
-            m_theGrid->SetCellValue(row, COL_COR_MAX  , I2String      (cs.maxExtra));
+            UINT games = cs.games ? cs.games : cfg::GetSetSize();
+            if (!m_bButler)
+                m_theGrid->SetCellValue(row, COL_COR_MAX, I2String    (cs.maxExtra));
             m_theGrid->SetCellValue(row, COL_COR_EXTRA, Long12ToString(cs.extra   ));
+            m_theGrid->SetCellValue(row, COL_COR_GAMES, U2String      (games      ));
         }
     }
 
     Layout();
-    static wxString explanation;    // MUST be initialized dynamically: translation
-    explanation = _("SESSION CORRECTIONS in full % or mp (matchpoints), 0 or empty: remove correction");
-    SendEvent2Mainframe(this, ID_STATUSBAR_SETTEXT, &explanation);
 }   // RefreshInfo()
 
 void CorrectionsSession::OnOk()

@@ -267,4 +267,6 @@ private:
     bool            m_bOk;
 };
 
+int MyGetSingleChoiceIndex(const wxString& message, const wxString& caption, const wxArrayString& names, wxWindow* pParent = nullptr, int selection = 0);
+
 #endif

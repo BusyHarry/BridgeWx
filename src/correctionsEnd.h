@@ -31,7 +31,7 @@ private:
     MyGrid*     m_theGrid;
     bool        m_bDataChanged;     // 'something' changed in grid
 
-//    ;score.2 paar bonus.2 spellen paarnaam
+//    ;score.2 pair bonus.2 games   pairname
 //    100.00     1  11.00   s16     xxx-xxx
 
     enum

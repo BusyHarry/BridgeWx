@@ -11,12 +11,14 @@ class wxTextCtrl;
 class wxStyledTextCtrl;
 class wxListView;
 
-struct Total
+struct Total                    // session-results for a player
 {
-    int maxScore        = 0;
-    UINT nrOfGames      = 0;
-    long points         = 0;
-    long score          = 0;
+    int  maxScore       = 0;    // in MP for % calculation
+    UINT nrOfGames      = 0;    // total played games
+    long points         = 0;    // earned MP*10    (x.y)
+    long procentScore   = 0;    // score in %*100  (x.yy)
+    long butlerMp       = 0;    // butler: total of imps voor all games
+    long mpPerGame      = 0;    // butler: imps/game, used for session result (*100, to simulate 2 digits after decimal point)
 };
 
 class CalcScore: public Baseframe
@@ -49,20 +51,25 @@ private:
     void        CalcClub                (bool a_bTotal);     // results for clubs, if pairs have assigned clubs(total or session)
     void        InitializeAndCalcScores ();
     void        SaveSessionResults      ();
+    void        SaveSessionResultsProcent();
+    void        SaveSessionResultsButler();
     void        SaveGroupResult         ();
     void        ApplySessionCorrections (); // apply corrections to the session result
-    void        CalcGame                (UINT game, bool bNs, FS_INFO& fsInfo);
+    void        CalcGamePercent         (UINT game, bool bNs, FS_INFO& fsInfo);
+    void        CalcGameButler          (UINT game, bool bNs);
+    void        CalcButlerFkw           (UINT game);
     long        NeubergPoints           (long points, UINT gameCount, UINT comparableCount);
     void        MergeFrqTables          (FS_INFO& ns, const FS_INFO& ew);
-    int         ScoreEwToNs             (int score);    // convert ew-score to ns-score
     void        SaveFrequencyTable      ();
     void        MakeFrequenceTable      (UINT a_game, std::vector<wxString>& a_stringTable);
     void        SaveSessionResultShort  ();
     void        OnPrint                 (wxCommandEvent& );
     void        OnCalcResultPair        (const wxCommandEvent&);
+    void        CalcResultPairHelper    (long& sumPoints, UINT& sumTops, UINT& gamesPlayed, wxString& tmp);
+
     void        OnCalcResultGame        (const wxCommandEvent&);
     void        ShowChoice              ();
-    long        GetSetResult            (UINT pair, UINT firstGame, UINT nrOfGames);  // get earned match-points for wanted games
+    long        GetSetResult            (UINT pair, UINT firstGame, UINT nrOfGames, UINT* pGamesPlayed = nullptr);  // get earned match-points for wanted games
     wxString    GetGroupResultString    (UINT pair, const std::vector<UINT>* a_pIndex = nullptr, bool bSession = false);    // get groupstring or rank in group "BLYEGR" / " . 1 ."
 
 //    wxTextCtrl* m_pTextBox;
@@ -78,6 +85,7 @@ private:
     MyTextFile  m_txtFileResultPair;            // result for a pair
     MyTextFile  m_txtFileResultGame;            // result for a game
     bool        m_bSomeCorrection;
+    bool        m_bButler;
     UINT        m_maxPair;          // highest pairnr played in this session
     UINT        m_maxGame;          // highest gamenr
     long        m_findPos;          // start  searching in listbox from this line

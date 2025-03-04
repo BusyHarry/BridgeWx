@@ -7,6 +7,15 @@
    - only dependend of wx-headerfiles
    - all functions are now static methods, so no polluting of global namespace
    - added scaling for the log-messages
+ - when scaling is used, also MyMessageBox(), MyLog(), BusyBox() and wxSystemInformationFrame() are scaled
+   - apparently wxDialog and wxFrame do NOT inherit the fontsize of there parent
+ - added butler score calculation
+   - scaling added/updated in:
+     - language selection (wxGetSingleChoiceIndex --> MyGetSingleChoiceIndex)
+     - row/column lables of wxGrid
+     - MyMessageBox
+     - BusyBox
+     - size of mainframe
 
 #V10.3.0  Januari 20, 2025:
  - adaptation from c++17 to c++20

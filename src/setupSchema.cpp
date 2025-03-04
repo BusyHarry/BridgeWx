@@ -212,21 +212,27 @@ void SetupSchema::BackupData()
 void SetupSchema::PrintPage()
 {
     bool bResult = prn::BeginPrint(_("Schemasetup page:\n")); MY_UNUSED(bResult);
-    wxString info;
-    info = FMT(_(
-                    "Rounds       :%2s    Games: %s    First game: %s\n"
-                    "Games/table  :%2s\n"
-                    "Groups       :%2s\n\n"
-                ),
-                m_pTxtCtrlNrOfRounds->GetValue(), m_pTxtCtrlNrOfGames->GetValue(), m_pTxtCtrlFirstGame->GetValue(),
-                m_pTxtCtrlSetSize   ->GetValue(),
-                m_pTxtCtrlNrOfGroups->GetValue()
-            );
-    prn::PrintLine(info);
-    prn::PrintLine(_("group groupchars   pairs schema          absent pair\n"));
+    prn::PrintLine(FMT("%-13s:%2s    %s: %s    %s: %s\n"
+                        , _("Rounds"    ), m_pTxtCtrlNrOfRounds->GetValue()
+                        , _("Games"     ), m_pTxtCtrlNrOfGames ->GetValue()
+                        , _("First game"), m_pTxtCtrlFirstGame ->GetValue()
+                      )
+                  );
+    prn::PrintLine(FMT("%-13s:%2s\n"  , _("Games/table"), m_pTxtCtrlSetSize   ->GetValue() ));
+    prn::PrintLine(FMT("%-13s:%2s\n\n", _("Groups"     ), m_pTxtCtrlNrOfGroups->GetValue() ));
+
+    prn::PrintLine(FMT("%-6s%-13s%-6s%-16s%s\n"
+                        , _("group"      )
+                        , _("groupchars" )
+                        , _("pairs"      )
+                        , _("schema"     )
+                        , _("absent pair")
+                      )
+                  );
     //m_groupData;
     for (UINT group = 0; group < m_groupData.size(); ++group)
     {
+        wxString info;
         info = FMT("%2u    %-12s %-3u   %-15s %-u\n",
                     group+1,
                     m_groupData[group].groupChars,

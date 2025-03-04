@@ -12,6 +12,9 @@ There is a global name entry for participants and you can assign these names to 
 
 Corrections can be entered for a session and for the competition.
 
+Default, the calculation is done as % scoring.
+Since V10.4.0 scoring can also be done as Butler scoring.
+
 Results are shown in different formats for the session, competition, per player, per game.
 If you enter club-info for the players, you also can have club-rank as result.
 

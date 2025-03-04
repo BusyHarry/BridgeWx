@@ -63,7 +63,7 @@ namespace cor
     {   // validate data and show error if not ok
         if (    a_bHasError
             || ((a_correctionSession.type != 'm') && (a_correctionSession.type != 'M') && (a_correctionSession.type != '%'))
-            || (a_correctionSession.extra > a_correctionSession.maxExtra*10)
+            || (!cfg::GetButler() && a_correctionSession.extra > a_correctionSession.maxExtra*10)
             || (a_sessionPair > names::GetNumberOfGlobalPairs())
             || (a_sessionPair < 1)
             || (a_correctionSession.correction < MIN_CORRECTION)
@@ -97,8 +97,9 @@ namespace cor
 
     bool IsValidCorrectionEnd(UINT a_globalPair, const CORRECTION_END& a_ce, const wxString& a_input, bool a_bHasError)
     {
+        bool bError = !cfg::GetButler() && (a_ce.score < 0);
         if (   a_bHasError
-            || (a_ce.score < 0)      || ((a_ce.score > 10000) && (a_ce.score != SCORE_IGNORE))  // between 0 and 100%  :10000 = 100.00%
+            || (bError)              || ((a_ce.score > 10000) && (a_ce.score != SCORE_IGNORE && a_ce.score != SCORE_NO_TOTAL))  // between 0 and 100%  :10000 = 100.00%
             || (a_ce.bonus < -9999)  || (a_ce.bonus > 9999 )  // between -99.99% and +99.99%
             || (a_globalPair < 1 )   || (a_globalPair > names::GetNumberOfGlobalPairs())
             || (a_ce.games > cfg:: MAX_GAMES ) //cfg::GetNrOfGames())

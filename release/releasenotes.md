@@ -1,6 +1,20 @@
 # Releasenotes
-
-#V10.4.0 ......
+#V10.4.0 ....
+ - updated AutoHotkey64.exe from version 2.0.18 to 2.0.19
+ - changed some bad-english words to 'better' ones (arbitrairy score -> adjusted score)
+ - refactored the MyLog class
+   - only dependend of wx-headerfiles
+   - all functions are now static methods, so no polluting of global namespace
+   - added scaling for the log-messages
+ - when scaling is used, also MyMessageBox(), MyLog(), BusyBox() and wxSystemInformationFrame() are scaled
+   - apparently wxDialog and wxFrame do NOT inherit the fontsize of there parent
+ - added butler score calculation
+   - scaling added/updated in:
+     - language selection (wxGetSingleChoiceIndex --> MyGetSingleChoiceIndex)
+     - row/column lables of wxGrid
+     - MyMessageBox
+     - BusyBox
+     - size of mainframe
 
 #V10.3.0  Monday Januari 20 2025:
  - adaptation from c++17 to c++20
@@ -43,6 +57,9 @@ A simple (windows-only) 'bridge' calculation program
 
 Choose language: menu->extra/taal or menu->tools/language
 
-If you get errors 'missing dll' at startup (VCRUNTIME140.dll, MSVCP140.dll, VCRUNTIME140_1.dll): then download/install redistributable package from: https://aka.ms/vs/17/release/vc_redist.x64.exe or https://aka.ms/vs/17/release/vc_redist.x86.exe
+If you get errors 'missing dll' at startup (VCRUNTIME140.dll, MSVCP140.dll, VCRUNTIME140_1.dll): then download/install the redistributable package from: https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170
+
+ - https://aka.ms/vs/17/release/vc_redist.x64.exe   : for 64 bit BridgeWx
+ - https://aka.ms/vs/17/release/vc_redist.x86.exe   : for 32 bit BridgeWx
 
 See read.md for more info

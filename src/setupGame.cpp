@@ -33,16 +33,12 @@ SetupGame::SetupGame(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a
     fgs->Add(txtDescription, 0, wxALIGN_CENTER_VERTICAL);
     fgs->Add(m_pTxtCtrlDescr, 1, wxEXPAND);
 
-// max mean percentage for session you have not played (in result over all sessions)
-    //xgettext:no-c-format
-    wxStaticText* txtMaxMean = new wxStaticText(this, wxID_ANY, _("Maximum % when absent:"));
-    //xgettext:no-c-format
-    txtMaxMean->SetToolTip(_("Maximum % you get in the end/total result when not playing a session"));
+// max mean percentage/imps for session you have not played (in result over all sessions)
+    m_bButler = !cfg::GetButler();  // init inverse of current setting, so RefreshInfo() will do initial setup!
+    m_pStaticTxtMaxMean = new wxStaticText(this, wxID_ANY, "");
     m_pTxtCtrlMaxMean = new MyTextCtrl(this, wxID_ANY, "MaxMean", MY_SIZE_TXTCTRL_NUM(5));
     m_pTxtCtrlMaxMean->Clear(); // remove 'title' from input..
-    // Allow floating point numbers from 0 to 100 with 2 decimal digits only
-    m_pTxtCtrlMaxMean->SetMinMax(0, 100, 2);
-    fgs->Add(txtMaxMean, 0, wxALIGN_CENTER_VERTICAL);
+    fgs->Add(m_pStaticTxtMaxMean, 0, wxALIGN_CENTER_VERTICAL);
     fgs->Add(m_pTxtCtrlMaxMean, 0);
 
 // minmax count for club result
@@ -78,7 +74,7 @@ SetupGame::SetupGame(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a
 // Neuberg calculation for games not played bij all players or with some arbitration
     m_pChkBoxNeuberg = new wxCheckBox(this, wxID_ANY, _("Neuberg"));
 //    m_pChkBoxNeuberg = new wxCheckBox(this, wxID_ANY, "Neuberg");
-    m_pChkBoxNeuberg->SetToolTip(_("Neuberg calculation of sessionresult on arbitrary scores"));
+    m_pChkBoxNeuberg->SetToolTip(_("Neuberg calculation of sessionresult on adjusted scores"));
 
 // use 'weighted mean' of the result of each match when calculating result of N sessions
     m_pChkBoxWeightedMean = new wxCheckBox(this, wxID_ANY, _("Weighted average"));
@@ -94,10 +90,10 @@ SetupGame::SetupGame(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a
     m_pChkBoxClock->SetToolTip(_("Display a clock in the statusbar"));
 
     wxBoxSizer* checkerSizer = new wxBoxSizer(wxHORIZONTAL);
-    checkerSizer->Add( m_pChkBoxNeuberg      );
-    checkerSizer->Add( m_pChkBoxWeightedMean );
-    checkerSizer->Add( m_pChkBoxGroupResult  );
-    checkerSizer->Add( m_pChkBoxGlobalNames  );
+    checkerSizer->Add( m_pChkBoxNeuberg      ); checkerSizer->AddSpacer(20);
+    checkerSizer->Add( m_pChkBoxWeightedMean ); checkerSizer->AddSpacer(20);
+    checkerSizer->Add( m_pChkBoxGroupResult  ); checkerSizer->AddSpacer(20);
+    checkerSizer->Add( m_pChkBoxGlobalNames  ); checkerSizer->AddSpacer(20);
     checkerSizer->Add( m_pChkBoxClock        );
  
     fgs->AddGrowableCol(1, 1);
@@ -147,6 +143,33 @@ void SetupGame::RefreshInfo()
     m_bGroupResult  = cfg::GetGroupResult();
     m_bGlobalNames  = cfg::GetGlobalNameUse();
 
+    if (cfg::GetButler() != m_bButler)
+    {   // update/init butler dependent values
+        m_bButler = !m_bButler;
+
+        wxString    staticTxt;
+        wxString    tipTxt;
+        double      max;
+        if (m_bButler)
+        {
+            staticTxt   = _("Maximum imps/game when absent:");
+            tipTxt      = _("Maximum imps/game you get in the end/total result when not playing a session");
+            max         = 5;
+        }
+        else
+        {
+            //xgettext:no-c-format
+            staticTxt   = _("Maximum % when absent:");
+            tipTxt      = _("Maximum % you get in the end/total result when not playing a session");
+            max         = 100;
+        }
+
+        m_pStaticTxtMaxMean->SetLabel  (staticTxt);
+        m_pStaticTxtMaxMean->SetToolTip(tipTxt   );
+        // Allow floating point numbers from 0 to 100/5 with 2 decimal digits only
+        m_pTxtCtrlMaxMean->SetMinMax(0, max, 2);
+    }
+
     m_pTxtCtrlDescr         ->SetValue  ( m_sDescription       );
     m_pTxtCtrlMin           ->SetValue  ( U2String(m_iMinClub) );
     m_pTxtCtrlMax           ->SetValue  ( U2String(m_iMaxClub) );
@@ -190,27 +213,17 @@ void SetupGame::BackupData()
 
 void SetupGame::PrintPage()
 {
+    wxString maxAbsent = FMT(_("Max %s absent"), m_bButler ? _("imps") : wxString("%"));
     bool bResult = prn::BeginPrint(_("Gamesettings page:\n")); MY_UNUSED(bResult);
-    wxString info;
-    info = FMT(_( "Description     : %s\n"
-                  "Max %% absent    : %s\n"
-                  "MinMax clubpairs: %s-%s\n"
-                  "Neuberg         : %s\n"
-                  "Weighted average: %s\n"
-                  "Groupresult     : %s\n"
-                  "Global names    : %s\n"
-                  "Clock           : %s\n"),
-                m_pTxtCtrlDescr         ->GetValue(),
-                m_pTxtCtrlMaxMean       ->GetValue(),
-                m_pTxtCtrlMin           ->GetValue(), m_pTxtCtrlMax->GetValue(),
-                BoolToString(m_pChkBoxNeuberg        ->GetValue()),
-                BoolToString(m_pChkBoxWeightedMean   ->GetValue()),
-                BoolToString(m_pChkBoxGroupResult    ->GetValue()),
-                BoolToString(m_pChkBoxGlobalNames    ->GetValue()),
-                BoolToString(m_pChkBoxClock          ->GetValue())
-            );
+    prn::PrintLine(FMT("%-20s: %s\n"   , _("Description"     ), m_pTxtCtrlDescr                     ->GetValue()));
+    prn::PrintLine(FMT("%-20s: %s\n"   , maxAbsent            , m_pTxtCtrlMaxMean                   ->GetValue()));
+    prn::PrintLine(FMT("%-20s: %s-%s\n", _("MinMax clubpairs"), m_pTxtCtrlMin->GetValue(), m_pTxtCtrlMax->GetValue()));
+    prn::PrintLine(FMT("%-20s: %s\n"   , _("Neuberg"         ), BoolToString(m_pChkBoxNeuberg       ->GetValue())));
+    prn::PrintLine(FMT("%-20s: %s\n"   , _("Weighted average"), BoolToString(m_pChkBoxWeightedMean  ->GetValue())));
+    prn::PrintLine(FMT("%-20s: %s\n"   , _("Groupresult"     ), BoolToString(m_pChkBoxGroupResult   ->GetValue())));
+    prn::PrintLine(FMT("%-20s: %s\n"   , _("Global names"    ), BoolToString(m_pChkBoxGlobalNames   ->GetValue())));
+    prn::PrintLine(FMT("%-20s: %s\n"   , _("Clock"           ),BoolToString(m_pChkBoxClock          ->GetValue())));
 
-    prn::PrintLine(info);
     prn::PrintLine(cfg::GetCopyrightDateTime());
     prn::EndPrint();
 }   // PrintPage()

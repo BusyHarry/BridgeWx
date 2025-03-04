@@ -67,7 +67,7 @@ private:
         , COL_NS                            // NS session pair nr
         , COL_EW                            // EW session pair nr
         , COL_SCORE_NS                      // score NS
-        , COL_SCORE_EW                      // score EW (only if arbitrary score)
+        , COL_SCORE_EW                      // score EW (only if adjusted score)
         , COL_NAME_NS                       // pairname NS
         , COL_NAME_EW                       // pairname EW
         , COL_NR_OF                         // nr of columns in this grid

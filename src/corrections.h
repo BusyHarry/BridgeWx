@@ -18,13 +18,14 @@ namespace cor
 
     typedef struct CORRECTION_SESSION
     {
-        CORRECTION_SESSION(char a_type, int a_correction, long a_extra, int a_maxExtra)
-        {type = a_type;correction = a_correction;extra = a_extra; maxExtra = a_maxExtra;}
-        CORRECTION_SESSION() {type = '%'; correction = 0; extra = 0; maxExtra = 0; }
+        CORRECTION_SESSION(char a_type, int a_correction, long a_extra, int a_maxExtra, UINT a_games)
+        {type = a_type;correction = a_correction;extra = a_extra; maxExtra = a_maxExtra;games=a_games;}
+        CORRECTION_SESSION() {type = '%'; correction = 0; extra = 0; maxExtra = 0; games = 0;}
         char    type;
         int     correction;
         long    extra;          //  long.1:  xx.x
         int     maxExtra;
+        UINT    games;        // only valid for extra/maxExtra (i.e combi-table)
     } CORRECTION_SESSION;
 
     typedef struct CORRECTION_END

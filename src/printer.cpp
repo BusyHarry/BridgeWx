@@ -217,7 +217,7 @@ public:
     */
     void PrintTable(const table::TableInfo& table);
 
-    bool IsPrintToFile() { return m_bPrint2File; }  // true, if we are printing to a file (not a printer)
+    bool IsPrintToFile() const { return m_bPrint2File; }  // true, if we are printing to a file (not a printer)
 
 private:
 

@@ -66,13 +66,14 @@ namespace cfg
     static UINT             suMinClub;              // min nr of players used in club-result
     static bool             sbFormFeed;             // use ff after each printout
     static bool             sbGlobalNameUse;        // use a global name file i.s.o names per match
-    static bool             sbNeuberg;              // use neuberg calculation if not all decks played or when there are arbitrary results
+    static bool             sbNeuberg;              // use neuberg calculation if not all decks played or when there are adjusted score results
     static bool             sbGroupResult;          // show result in matrix of users and decks/sets
     static bool             sbClock;                // show clock
     static bool             sbWeightedAvg;          // use weighted avarage in end-result in more matches
     static bool             sbBiosVideo;            // not used anymore
     static bool             sbDebug          = false;
     static bool             sbIsScripttest   = false;
+    static bool             sbButler         = false;
     static bool             sbNetworkPrinting= false;// default: do not enumerate networkrinters: often hangup
     static UINT             suFontsizeIncrease=0;   // increase standard fontsize with 'suFontsizeIncrease' %
 
@@ -114,6 +115,8 @@ namespace cfg
 
     #define  DEFAULT_DESCRIPTION                  _("<no description yet>") /*NO static -> translation!*/
     static void HashIncrement();
+    static void MaxmeanWrite(UINT maxmean);
+
 
     static bool     sbIsBackuped = false;
     static wxString ssActiveMatchBackup;        // original name of active match
@@ -188,6 +191,19 @@ namespace cfg
         return 0;
     }   // GetNrOfSessionPairs()
 
+    bool IsSessionPairAbsent(UINT a_sessionPair)
+    {
+        UINT pair = 0;
+        for (const auto& it : sSessionInfo.groupData)
+        {
+            pair += it.groupOffset;
+            if (pair > a_sessionPair) break;
+            if (pair + it.absent == a_sessionPair)
+                return true;
+        }
+        return false;
+    }   // IsSessionPairAbsent()
+
     void HashIncrement()
     {
         // update config hash
@@ -231,6 +247,7 @@ namespace cfg
         if (a_type & INIT_MATCH)
         {
             sbBiosVideo     = false;    // compatability
+            sbButler        = false;
             sbClock         = true;
             sbFormFeed      = false;    // compatability
             sbGlobalNameUse = false;
@@ -240,7 +257,7 @@ namespace cfg
             suLinesPerPage  = 64;
             suMaxAbsent     = 3;
             suMaxClub       = MAX_PAIRS;
-            suMaxMean       = 5250;         //52.50%
+            suMaxMean       = 5250;         //52.50% or 1.00 imps/game
             suMinClub       = 1;
             suSession       = 0;
             ssPrinterAll    = FILE_PRINTER_NAME;
@@ -290,6 +307,8 @@ namespace cfg
     bool        IsDebug()               { return sbDebug;                   }
     bool        IsScriptTesting()       { return sbIsScripttest;            }
     void        UpdateConfigHash()      { ++siConfigHash;                   }
+    bool        GetButler()             { return sbButler;                  }
+
 
     int GetLanguage()
     {
@@ -338,6 +357,17 @@ namespace cfg
         sSessionInfo = a_info;
         SchemaWrite();
     }   // UpdateSessionInfo()
+
+    void  SetButler(bool a_bOn)
+    {
+        if ( a_bOn == sbButler) return;
+        sbButler = a_bOn;
+        suMaxMean = sbButler ? std::min(100U,suMaxMean) : std::max(5250U,suMaxMean);
+        MaxmeanWrite(suMaxMean);
+
+        io::WriteValue(KEY_MATCH_BUTLER, sbButler);
+        HashIncrement();
+    }   // SetButler()
 
     void SetActiveMatch(const wxString& a_sMatch, const wxString& a_sMatchPath)
     {
@@ -407,11 +437,13 @@ namespace cfg
         HashIncrement();
     }   // SetMaxAbsent()
 
+#if 0
     void SetBiosVideo(bool a_bBiosVideo)
     {
         sbBiosVideo = a_bBiosVideo;
         io::WriteValue(KEY_MATCH_VIDEO, sbBiosVideo);
     }   // SetBiosVideo()
+#endif
 
     void SetNeuberg(bool a_bNeuberg)
     {
@@ -700,6 +732,7 @@ namespace cfg
         MinMaxClubRead(suMinClub, suMaxClub);
         sbFormFeed      = io::ReadValueBool (KEY_MATCH_FF        , sbFormFeed        );
         sbGlobalNameUse = io::ReadValueBool (KEY_MATCH_GLOBALNAMES,sbGlobalNameUse   );
+        sbButler        = io::ReadValueBool (KEY_MATCH_BUTLER    , sbButler          );
 
         return CFG_OK;
     }   // UpdateConfigMatch()
@@ -770,7 +803,8 @@ namespace cfg
         // next l-variables are used to receive the commandline values
         // After the handling of the cmd-line, they will set the real values
         UINT    lsuMaxAbsent    = suMaxAbsent;
-        bool    lsbBiosVideo    = sbBiosVideo;
+//      bool    lsbBiosVideo    = sbBiosVideo;
+        bool    lsbButler       = sbButler;
         UINT    lsiMaxMean      = suMaxMean;
         bool    lsbGroupResult  = sbGroupResult;
         bool    lsbClock        = sbClock;
@@ -805,10 +839,12 @@ namespace cfg
                 lsuMaxAbsent = wxAtoi(pArgptr);
                 break;
             case 'b':
-                lsbBiosVideo = wxAtoi(pArgptr);
+//              lsbBiosVideo = wxAtoi(pArgptr);
+                lsbButler = wxAtoi(pArgptr);
                 break;
             case 'd':
-                sbDebug = 1; 
+                sbDebug = 1;
+                MyLog::SetAppDebugging();
                 break;
             case 'g':
                 lsbGroupResult = wxAtoi(pArgptr);
@@ -858,6 +894,7 @@ namespace cfg
             break;
             case 'u':
                 sbIsScripttest = true;
+                MyLog::SetScriptTesting();
                 break;
             default:
                 std::cout << FMT(_("Unknown/faulty/missing parameter <%s>\n"), pErrorString);
@@ -874,13 +911,14 @@ namespace cfg
                   _("\n"
                     "  activation: BridgeWx [-ax] [-bx] [-gx] [-kx] [-lx] [-nx] [-rx] [-wx] [-fx] [-qx] [-d] [-u]\n"
                     "  ax: maximum allowed Absent count = x\n"
-  //                "  bx: video via bios (x=1), of rechtstreeks (x=0)\n"
+  //                "  bx: video trough bios (x=1), or direct access (x=0)\n"
+                    "  bx: results are calculated according butler method (x=1), or as percentage (x=0)\n"
                     "  d:  enable Debug for extra info\n"
                     "  gx: display Groupresult yes (x=1), no (x=0)\n"
                     "  kx: Clock on display (x=1), no Clock (x=0)\n"
                     "  lx: nr of Lines per page during print = x (50<x<100)\n"
                     "  mx: Maximum average for non-present sessions = x\n"
-                    "  nx: do Neuberg-calculation (x=1) on arbitrary scores, no (x=0)\n"
+                    "  nx: do Neuberg-calculation (x=1) on adjusted scores, no (x=0)\n"
                     "  sx: number of first game, default 1 (meant for guides 2' session)\n"
                     "  zx: Session 'x' (x= 1, 2, ... 15)\n"
                     "  wx: matchname 'x'\n"
@@ -908,7 +946,8 @@ namespace cfg
         SetActiveSession(lsiSession);
         SetMaxAbsent    (lsuMaxAbsent);
         SetNeuberg      (lsbNeuberg);
-        SetBiosVideo    (lsbBiosVideo);
+//      SetBiosVideo    (lsbBiosVideo);
+        SetButler       (lsbButler);
         SetClock        (lsbClock);
         SetLinesPerPage (lsiLinesPerPage);
         SetGroupResult  (lsbGroupResult);

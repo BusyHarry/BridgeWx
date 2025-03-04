@@ -16,6 +16,7 @@ MyGrid::MyGrid(Baseframe* a_pParent, const wxString& a_ahkLabel) : wxGrid(a_pPar
     wxWANTS_CHARS | wxBORDER_SIMPLE, a_ahkLabel)
 {
     m_pParent    = a_pParent;
+    if (a_pParent) SetLabelFont(a_pParent->GetFont());  // just incase the parent font is NOT standard
     SetColLabelAlignment(wxALIGN_LEFT, wxALIGN_CENTER);
     SetTabBehaviour(Tab_Wrap);  // wrap to next/previous row: till end/begin
     Bind(wxEVT_GRID_CELL_CHANGING,    &MyGrid::OnCellChanging,   this, wxID_ANY);   // check for changes and signal owner
@@ -46,7 +47,10 @@ void MyGrid::PrintGrid( const wxString& a_title, UINT a_nrOfColumnsToPrint, UINT
     wxString header = "\n   ";  // 3 spaces: 3 digit rownumber
     for (UINT col = 0; col < a_nrOfColumnsToPrint; ++col)
     {
-        header += FMT(" %-*s", GetColSize(col)/cWidth, GetColLabelValue(col));
+        int size=GetColSize(col);
+        if (size <= 0) // ignore 'hidden' columns, they have a size of 0
+            continue;
+        header += FMT(" %-*s", size/cWidth, GetColLabelValue(col));
     }
     prn::PrintLine(header + "\n");
 
@@ -56,9 +60,12 @@ void MyGrid::PrintGrid( const wxString& a_title, UINT a_nrOfColumnsToPrint, UINT
         wxString info = FMT("%3d", row+1);
         for (UINT col = 0; col < a_nrOfColumnsToPrint; ++col)
         {
+            int size=GetColSize(col);
+            if (size <= 0)
+                continue;
             wxString columnValue = GetCellValue(row, col);
             if ( col >= a_notEmptyfrom && !columnValue.IsEmpty() ) bData = true;
-            info += FMT(" %-*s", GetColSize(col)/cWidth, columnValue);
+            info += FMT(" %-*s", size/cWidth, columnValue);
         }
         if (bData || a_nrOfColumnsToPrint < a_notEmptyfrom)
         {

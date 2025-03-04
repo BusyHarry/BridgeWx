@@ -2,7 +2,13 @@
 pushd .
 rem goto batch folder
 cd %~dp0
-rem if any param given, the debug version of BridgeWx.exe will be used
+rem -b as first argument sets butler-calculation
+rem if any (other) param given, the debug version of BridgeWx.exe will be used
+set butler=
+if [-b] == [%1] (
+   shift
+   set butler=-b
+)
 if not [%1] == [] echo Running the debug version of BridgeWx.exe
 if     [%1] == [] echo Running the release version of BridgeWx.exe
 
@@ -13,7 +19,7 @@ if not exist ..\tools\AutoHotkey64.exe goto error
 set ahkfolder=..\tools\
 
 :run_it
-  start /wait %ahkfolder%AutoHotkey64.exe InitTest.ahk %1
+  start /wait %ahkfolder%AutoHotkey64.exe InitTest.ahk %butler% %1
   if %errorlevel% == 0 ECHO mousepositions/labels generated
   goto end
 
@@ -23,3 +29,4 @@ set ahkfolder=..\tools\
 
 :end
 popd
+set butler=

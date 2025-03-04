@@ -1,23 +1,24 @@
 ﻿
 Nieuwewedstrijd pagina:
 
-Wedstrijdmap: F:\Temp\autotest\work
-Wedstrijd   : autoTest01
-Zitting     : 1
-Opslagtype  : .db
+Wedstrijdmap : D:\bridge\BridgeWx\AutoTest\work
+Wedstrijd    : autoTest01
+Zitting      : 1
+Opslagtype   : .db
+Butler       : nee
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Wedstrijdinstellingen pagina:
 
-Beschrijving      : <auto-test, zitting 1>
-Max % afwezig     : 52.50
-MinMax clubparen  : 1-120
-Neuberg           : ja
-Gewogen gemiddelde: nee
-Groepuitslag      : ja
-Centrale namen    : nee
-klok              : nee
+Beschrijving        : <auto-test, zitting 1>
+Max % afwezig       : 52.50
+MinMax clubparen    : 1-120
+Neuberg             : ja
+Gewogen gemiddelde  : nee
+Groepuitslag        : ja
+Centrale namen      : nee
+Klok                : nee
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -413,8 +414,8 @@ Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', spel 2
 
 Overzicht van de zittingcorrecties voor '<auto-test, zitting 1>', zitting 1
 
-    paar  paarnaam                        %    mp    max   extra
-  1 A1    paar 1                                     2     1
+    paar  paarnaam                        %    mp    max   extra spellen
+  1 A1    paar 1                                     2     1     4
   3 A3    paar 3                               10
   5 A5    gewijzigd paar 5                3
 
@@ -583,25 +584,25 @@ Groep uitslag
 
 Groep-uitslag van wedstrijd '<auto-test, zitting 1>', zitting 1
 
-                         spellen : 1-4   5-8   9-12 13-16 17-20 21-24 25-28  extra  kor  kor.  tot   score
-  1 paar 1 . . . . . . . . . . . .  24    35.6   7.6  37.9  13    25    48    1/2    0%   0mp  192.1 48.76%
-  2 paar 2 . . . . . . . . . . . .  31    21.7   0.3  12    20     9    33    0/0    0%   0mp  127   32.40%
-  3 paar 3 . . . . . . . . . . . .  46    32    45.6  51.6  36    11    21    0/0    0%  10mp  253.2 64.59%
-  4 paar 4 . . . . . . . . . . . .  39.3  24    41    18    29    47    56    0/0    0%   0mp  254.3 64.87%
-  5 gewijzigd paar 5 . . . . . . .   8.4  20.4  51.7  43.3  24    32     0    0/0    3%   0mp  179.8 48.87%
-  6 paar 6 . . . . . . . . . . . .  35.2  27.8   4.1   4    27    29    23    0/0    0%   0mp  150.1 38.29%
-  7 paar 7 . . . . . . . . . . . .  16    33.8  53.6  32    32    44     8    0/0    0%   0mp  219.4 55.97%
-  8 paar 8 . . . . . . . . . . . .  18    34.3  14.4  22.4  43    22    35    0/0    0%   0mp  213.1 54.36%
-  9 paar 9 . . . . . . . . . . . .  55.9  12.4   0    24    46     3    14    0/0    0%   0mp  155.3 46.22%
- 10 paar 10  . . . . . . . . . . .   0     0.1  28.4   9.1   0    52    12    0/0    0%   0mp  101.6 30.24%
- 11 paar 11  . . . . . . . . . . .  47.6  53.9   9    19    15     0    44    0/0    0%   0mp  188.5 56.10%
- 12 paar 12  . . . . . . . . . . .   0.1   2.1  25.7  46    18    52    25    0/0    0%   0mp  168.9 43.09%
- 13 paar 13  . . . . . . . . . . .  17.7  43.3  18.7  52    38     4    42    0/0    0%   0mp  215.7 55.03%
- 14 paar 14  . . . . . . . . . . .  54     0    36    36    10    18     1    0/0    0%   0mp  155   46.13%
- 15 paar 15  . . . . . . . . . . .  37    43.6  22     0    41    32    55    0/0    0%   0mp  244.5 72.77%
- 16  STIL-ZIT?? afwezig??
- 17 paar 17  . . . . . . . . . . .   8    55.9  29.3  10    25    36     0    0/0    0%   0mp  164.2 48.87%
- 18 paar 18  . . . . . . . . . . .   0    12.7  45.3  30.7  31    22    31    0/0    0%   0mp  172.7 51.40%
+                         spellen : 1-4   5-8   9-12 13-16 17-20 21-24 25-28  extra  kor  kor   tot   score(%)
+  1 paar 1 . . . . . . . . . . . .  24    35.6   7.6  37.9  13    25    48    1/2              192.1 48.76
+  2 paar 2 . . . . . . . . . . . .  31    21.7   0.3  12    20     9    33                     127   32.40
+  3 paar 3 . . . . . . . . . . . .  46    32    45.6  51.6  36    11    21               10mp  253.2 64.59
+  4 paar 4 . . . . . . . . . . . .  39.3  24    41    18    29    47    56                     254.3 64.87
+  5 gewijzigd paar 5 . . . . . . .   8.4  20.4  51.7  43.3  24    32     0           3%        179.8 48.87
+  6 paar 6 . . . . . . . . . . . .  35.2  27.8   4.1   4    27    29    23                     150.1 38.29
+  7 paar 7 . . . . . . . . . . . .  16    33.8  53.6  32    32    44     8                     219.4 55.97
+  8 paar 8 . . . . . . . . . . . .  18    34.3  14.4  22.4  43    22    35                     213.1 54.36
+  9 paar 9 . . . . . . . . . . . .  55.9  12.4 ---    24    46     3    14                     155.3 46.22
+ 10 paar 10  . . . . . . . . . . .   0     0.1  28.4   9.1 ---    52    12                     101.6 30.24
+ 11 paar 11  . . . . . . . . . . .  47.6  53.9   9    19    15   ---    44                     188.5 56.10
+ 12 paar 12  . . . . . . . . . . .   0.1   2.1  25.7  46    18    52    25                     168.9 43.09
+ 13 paar 13  . . . . . . . . . . .  17.7  43.3  18.7  52    38     4    42                     215.7 55.03
+ 14 paar 14  . . . . . . . . . . .  54   ---    36    36    10    18     1                     155   46.13
+ 15 paar 15  . . . . . . . . . . .  37    43.6  22   ---    41    32    55                     244.5 72.77
+ 16 --> afwezig paar
+ 17 paar 17  . . . . . . . . . . .   8    55.9  29.3  10    25    36   ---                     164.2 48.87
+ 18 paar 18  . . . . . . . . . . . ---    12.7  45.3  30.7  31    22    31                     172.7 51.40
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -610,23 +611,23 @@ Totaal uitslag
 Totaal uitslag
 
 rang paarnaam                         Z1     totaal   gem.  A B
-   1 paar 15  . . . . . . . . . . .  72.77    72.77% 72.77  . 1
-   2 paar 4 . . . . . . . . . . . .  64.87    64.87% 64.87  1 .
-   3 paar 3 . . . . . . . . . . . .  64.59    64.59% 64.59  2 .
-   4 paar 11  . . . . . . . . . . .  56.10    56.10% 56.10  . 2
-   5 paar 7 . . . . . . . . . . . .  55.97    55.97% 55.97  3 .
-   6 paar 13  . . . . . . . . . . .  55.03    55.03% 55.03  . 3
-   7 paar 8 . . . . . . . . . . . .  54.36    54.36% 54.36  4 .
-   8 paar 18  . . . . . . . . . . .  51.40    51.40% 51.40  . 4
-   9 paar 2 . . . . . . . . . . . .  50.00    50.00% 50.00  5 .
-  10 gewijzigd paar 5 . . . . . . .  48.87    48.87% 48.87  6 .
-  10 paar 17  . . . . . . . . . . .  48.87    48.87% 48.87  . 5
-  12 paar 1 . . . . . . . . . . . .  48.76    48.76% 48.76  7 .
-  13 paar 9 . . . . . . . . . . . .  46.22    46.22% 46.22  . 6
-  14 paar 14  . . . . . . . . . . .  46.13    46.13% 46.13  . 7
-  15 paar 12  . . . . . . . . . . .  43.09    43.09% 43.09  . 8
-  16 paar 6 . . . . . . . . . . . .  38.29    38.29% 38.29  8 .
-  17 paar 10  . . . . . . . . . . .  30.24    30.24% 30.24  . 9
+   1 paar 15  . . . . . . . . . . .  72.77    72.77  72.77  . 1
+   2 paar 4 . . . . . . . . . . . .  64.87    64.87  64.87  1 .
+   3 paar 3 . . . . . . . . . . . .  64.59    64.59  64.59  2 .
+   4 paar 11  . . . . . . . . . . .  56.10    56.10  56.10  . 2
+   5 paar 7 . . . . . . . . . . . .  55.97    55.97  55.97  3 .
+   6 paar 13  . . . . . . . . . . .  55.03    55.03  55.03  . 3
+   7 paar 8 . . . . . . . . . . . .  54.36    54.36  54.36  4 .
+   8 paar 18  . . . . . . . . . . .  51.40    51.40  51.40  . 4
+   9 paar 2 . . . . . . . . . . . .  50.00    50.00  50.00  5 .
+  10 gewijzigd paar 5 . . . . . . .  48.87    48.87  48.87  6 .
+  10 paar 17  . . . . . . . . . . .  48.87    48.87  48.87  . 5
+  12 paar 1 . . . . . . . . . . . .  48.76    48.76  48.76  7 .
+  13 paar 9 . . . . . . . . . . . .  46.22    46.22  46.22  . 6
+  14 paar 14  . . . . . . . . . . .  46.13    46.13  46.13  . 7
+  15 paar 12  . . . . . . . . . . .  43.09    43.09  43.09  . 8
+  16 paar 6 . . . . . . . . . . . .  38.29    38.29  38.29  8 .
+  17 paar 10  . . . . . . . . . . .  30.24    30.24  30.24  . 9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -669,7 +670,7 @@ Spel 26: OW, score:   130, punten  12    86%
 Spel 27: OW, score:   130, punten  12    86%
 Spel 28: OW, score:   130, punten  12    86% set-score: 48  (86%)
 
-aantal punten: 192.1 (394), eindscore: 48.76% (0.50), rang: 11
+aantal punten: 192.1 (394), spellen: 32, zittingscore: 48.76% (0.50), rang: 11
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -712,7 +713,7 @@ Spel 26: OW, score:  -120, punten   9    64%
 Spel 27: OW, score:  -130, punten   8    57%
 Spel 28: OW, score:  -140, punten   6    43% set-score: 33  (59%)
 
-aantal punten: 127   (392), eindscore: 32.40%, rang: 16
+aantal punten: 127   (392), spellen: 28, zittingscore: 32.40%, rang: 16
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -755,7 +756,7 @@ Spel 26: NZ, score:   120, punten   5    36%
 Spel 27: NZ, score:   120, punten   4    29%
 Spel 28: NZ, score:   120, punten   6    43% set-score: 21  (38%)
 
-aantal punten: 253.2 (392), eindscore: 64.59% (+10m), rang: 3
+aantal punten: 253.2 (392), spellen: 28, zittingscore: 64.59% (+10m), rang: 3
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -798,7 +799,7 @@ Spel 26: OW, score:   240, punten  14   100%
 Spel 27: OW, score:   250, punten  14   100%
 Spel 28: OW, score:   260, punten  14   100% set-score: 56  (100%)
 
-aantal punten: 254.3 (392), eindscore: 64.87%, rang: 2
+aantal punten: 254.3 (392), spellen: 28, zittingscore: 64.87%, rang: 2
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -841,7 +842,7 @@ Spel 26: NZ, score:  -240, punten   0     0%
 Spel 27: NZ, score:  -250, punten   0     0%
 Spel 28: NZ, score:  -260, punten   0     0% set-score: 0  (0%)
 
-aantal punten: 179.8 (392), eindscore: 48.87% (+3%), rang: 9
+aantal punten: 179.8 (392), spellen: 28, zittingscore: 48.87% (+3%), rang: 9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -884,7 +885,7 @@ Spel 26: NZ, score:   120, punten   5    36%
 Spel 27: NZ, score:   130, punten   6    43%
 Spel 28: NZ, score:   140, punten   8    57% set-score: 23  (41%)
 
-aantal punten: 150.1 (392), eindscore: 38.29%, rang: 15
+aantal punten: 150.1 (392), spellen: 28, zittingscore: 38.29%, rang: 15
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -927,7 +928,7 @@ Spel 26: NZ, score:  -130, punten   2    14%
 Spel 27: NZ, score:  -130, punten   2    14%
 Spel 28: NZ, score:  -130, punten   2    14% set-score: 8  (14%)
 
-aantal punten: 219.4 (392), eindscore: 55.97%, rang: 5
+aantal punten: 219.4 (392), spellen: 28, zittingscore: 55.97%, rang: 5
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -970,7 +971,7 @@ Spel 26: OW, score:  -120, punten   9    64%
 Spel 27: OW, score:  -120, punten  10    71%
 Spel 28: OW, score:  -120, punten   8    57% set-score: 35  (63%)
 
-aantal punten: 213.1 (392), eindscore: 54.36%, rang: 7
+aantal punten: 213.1 (392), spellen: 28, zittingscore: 54.36%, rang: 7
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -988,10 +989,10 @@ Spel  6: NZ, score:  -140, punten   4    29%
 Spel  7: NZ, score:  -140, punten   4    29%
 Spel  8: NZ, score:  -140, punten   2.4  17% set-score: 12.4(22%)
 
-Spel  9:  niet gespeeld
-Spel 10:  niet gespeeld
-Spel 11:  niet gespeeld
-Spel 12:  niet gespeeld
+Spel  9: niet gespeeld
+Spel 10: niet gespeeld
+Spel 11: niet gespeeld
+Spel 12: niet gespeeld
 
 Spel 13: NZ, score:   130, punten   4    29% Tegenpaar (B10): paar 18
 Spel 14: NZ, score:   140, punten   4    29%
@@ -1013,7 +1014,7 @@ Spel 26: OW, score:  -150, punten   3    21%
 Spel 27: OW, score:  -150, punten   4    29%
 Spel 28: OW, score:  -150, punten   4    29% set-score: 14  (25%)
 
-aantal punten: 155.3 (336), eindscore: 46.22%, rang: 12
+aantal punten: 155.3 (336), spellen: 24, zittingscore: 46.22%, rang: 12
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -1041,10 +1042,10 @@ Spel 14: OW, score:  -200, punten   6    43%
 Spel 15: OW, score:  -300, punten   2    14%
 Spel 16: OW, score:  -300, punten   0.1   1% set-score: 9.1(16%)
 
-Spel 17:  niet gespeeld
-Spel 18:  niet gespeeld
-Spel 19:  niet gespeeld
-Spel 20:  niet gespeeld
+Spel 17: niet gespeeld
+Spel 18: niet gespeeld
+Spel 19: niet gespeeld
+Spel 20: niet gespeeld
 
 Spel 21: OW, score:   170, punten  14   100% Tegenpaar (B5): paar 13
 Spel 22: OW, score:   170, punten  14   100%
@@ -1056,7 +1057,7 @@ Spel 26: OW, score:  -150, punten   3    21%
 Spel 27: OW, score:  -160, punten   2    14%
 Spel 28: OW, score:  -170, punten   1     7% set-score: 12  (21%)
 
-aantal punten: 101.6 (336), eindscore: 30.24%, rang: 17
+aantal punten: 101.6 (336), spellen: 24, zittingscore: 30.24%, rang: 17
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -1089,17 +1090,17 @@ Spel 18: OW, score:  -110, punten   4    29%
 Spel 19: OW, score:  -120, punten   6    43%
 Spel 20: OW, score:  -130, punten   4    29% set-score: 15  (27%)
 
-Spel 21:  niet gespeeld
-Spel 22:  niet gespeeld
-Spel 23:  niet gespeeld
-Spel 24:  niet gespeeld
+Spel 21: niet gespeeld
+Spel 22: niet gespeeld
+Spel 23: niet gespeeld
+Spel 24: niet gespeeld
 
 Spel 25: NZ, score:   140, punten   8    57% Tegenpaar (B2): paar 10
 Spel 26: NZ, score:   150, punten  11    79%
 Spel 27: NZ, score:   160, punten  12    86%
 Spel 28: NZ, score:   170, punten  13    93% set-score: 44  (79%)
 
-aantal punten: 188.5 (336), eindscore: 56.10%, rang: 4
+aantal punten: 188.5 (336), spellen: 24, zittingscore: 56.10%, rang: 4
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -1142,7 +1143,7 @@ Spel 26: OW, score:  -140, punten   6    43%
 Spel 27: OW, score:  -140, punten   6    43%
 Spel 28: OW, score:   -50, punten  10    71% set-score: 25  (45%)
 
-aantal punten: 168.9 (392), eindscore: 43.09%, rang: 14
+aantal punten: 168.9 (392), spellen: 28, zittingscore: 43.09%, rang: 14
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -1185,7 +1186,7 @@ Spel 26: NZ, score:   150, punten  11    79%
 Spel 27: NZ, score:   150, punten  10    71%
 Spel 28: NZ, score:   150, punten  10    71% set-score: 42  (75%)
 
-aantal punten: 215.7 (392), eindscore: 55.03%, rang: 6
+aantal punten: 215.7 (392), spellen: 28, zittingscore: 55.03%, rang: 6
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -1198,10 +1199,10 @@ Spel  2: OW, score:   160, punten  14   100%
 Spel  3: OW, score:   160, punten  14   100%
 Spel  4: OW, score:   160, punten  12    86% set-score: 54  (96%)
 
-Spel  5:  niet gespeeld
-Spel  6:  niet gespeeld
-Spel  7:  niet gespeeld
-Spel  8:  niet gespeeld
+Spel  5: niet gespeeld
+Spel  6: niet gespeeld
+Spel  7: niet gespeeld
+Spel  8: niet gespeeld
 
 Spel  9: OW, score:    50, punten   9    64% Tegenpaar (B5): paar 13
 Spel 10: OW, score:    70, punten  10    71%
@@ -1228,7 +1229,7 @@ Spel 26: OW, score:  -170, punten   0     0%
 Spel 27: OW, score:  -170, punten   0     0%
 Spel 28: OW, score:  -170, punten   1     7% set-score: 1  (2%)
 
-aantal punten: 155   (336), eindscore: 46.13%, rang: 13
+aantal punten: 155   (336), spellen: 24, zittingscore: 46.13%, rang: 13
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -1251,10 +1252,10 @@ Spel 10: OW, score:     0, punten   7    50%
 Spel 11: OW, score:   -90, punten   6    43%
 Spel 12: OW, score:  R630, punten   0     0% set-score: 22  (39%)
 
-Spel 13:  niet gespeeld
-Spel 14:  niet gespeeld
-Spel 15:  niet gespeeld
-Spel 16:  niet gespeeld
+Spel 13: niet gespeeld
+Spel 14: niet gespeeld
+Spel 15: niet gespeeld
+Spel 16: niet gespeeld
 
 Spel 17: NZ, score:   150, punten  13    93% Tegenpaar (B3): paar 11
 Spel 18: NZ, score:   110, punten  10    71%
@@ -1271,7 +1272,7 @@ Spel 26: NZ, score:   170, punten  14   100%
 Spel 27: NZ, score:   170, punten  14   100%
 Spel 28: NZ, score:   170, punten  13    93% set-score: 55  (98%)
 
-aantal punten: 244.5 (336), eindscore: 72.77%, rang: 1
+aantal punten: 244.5 (336), spellen: 24, zittingscore: 72.77%, rang: 1
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -1279,7 +1280,7 @@ Uitslag per paar
 
 Uitslag van paar ??? '' voor '<auto-test, zitting 1>', zitting 1
 
-Paar heeft (nog) niet gespeeld
+afwezig paar
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -1317,12 +1318,12 @@ Spel 22: NZ, score:   120, punten  10    71%
 Spel 23: NZ, score:   110, punten  10    71%
 Spel 24: NZ, score:   100, punten   6    43% set-score: 36  (64%)
 
-Spel 25:  niet gespeeld
-Spel 26:  niet gespeeld
-Spel 27:  niet gespeeld
-Spel 28:  niet gespeeld
+Spel 25: niet gespeeld
+Spel 26: niet gespeeld
+Spel 27: niet gespeeld
+Spel 28: niet gespeeld
 
-aantal punten: 164.2 (336), eindscore: 48.87%, rang: 9
+aantal punten: 164.2 (336), spellen: 24, zittingscore: 48.87%, rang: 9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -1330,10 +1331,10 @@ Uitslag per paar
 
 Uitslag van paar B10 'paar 18' voor '<auto-test, zitting 1>', zitting 1
 
-Spel  1:  niet gespeeld
-Spel  2:  niet gespeeld
-Spel  3:  niet gespeeld
-Spel  4:  niet gespeeld
+Spel  1: niet gespeeld
+Spel  2: niet gespeeld
+Spel  3: niet gespeeld
+Spel  4: niet gespeeld
 
 Spel  5: OW, score:  -160, punten   4    29% Tegenpaar (B5): paar 13
 Spel  6: OW, score:  -160, punten   2    14%
@@ -1365,7 +1366,7 @@ Spel 26: NZ, score:   140, punten   8    57%
 Spel 27: NZ, score:   140, punten   8    57%
 Spel 28: NZ, score:    50, punten   4    29% set-score: 31  (55%)
 
-aantal punten: 172.7 (336), eindscore: 51.40%, rang: 8
+aantal punten: 172.7 (336), spellen: 24, zittingscore: 51.40%, rang: 8
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -1383,6 +1384,7 @@ scoreNZ NZ    OW
      0   5     9   
   -120   2    12   
   -160   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2      0         A4   A7    130         A5   A3   -120       
   A6   A8     70         B1   B2    210         B3   B9    140       
@@ -1405,6 +1407,7 @@ scoreNZ NZ    OW
      0   4    10   
   -120   2    12   
   -160   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
   A6   A8     80         B1   B2    230         B3   B9    140       
@@ -1427,6 +1430,7 @@ scoreNZ NZ    OW
      0   4    10   
   -120   2    12   
   -160   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
   A6   A8     90         B1   B2    240         B3   B9    140       
@@ -1450,6 +1454,7 @@ scoreNZ NZ    OW
   -120   2.4  10   
   -160   0.1  12   
   -620   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     80         A4   A7    130         A5   A3   -120       
   A6   A8    %80,R620    B1   B2    260         B3   B9    140       
@@ -1471,6 +1476,7 @@ scoreNZ NZ    OW
   -100   5     9   
   -140   2    12   
   -600   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5   -100         A2   A8   -100         A3   A4     90       
   A6   A7    300         B1   B7   -140         B2   B9   -600       
@@ -1492,6 +1498,7 @@ scoreNZ NZ    OW
   -140   4    10   
   -600   2    12   
   -800   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    100         A2   A8   -100         A3   A4    100       
   A6   A7   -600         B1   B7   -140         B2   B9   -800       
@@ -1514,6 +1521,7 @@ scoreNZ NZ    OW
   -140   4    10   
   -150   2    12   
  -1000   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    150         A2   A8   -100         A3   A4    110       
   A6   A7   -150         B1   B7   -140         B2   B9  -1000       
@@ -1537,6 +1545,7 @@ scoreNZ NZ    OW
   -100   4.7   9.3 
   -140   2.4  11.6 
  -1100   0.1  13.9 
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    200         A2   A8   -100         A3   A4    120       
   A6   A7    %70,%70     B1   B7   -140         B2   B9  -1100       
@@ -1558,6 +1567,7 @@ scoreNZ NZ    OW
    -50   5     9   
   -150   2    12   
   -180   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -180         A3   A1    100         A4   A8     70       
   A5   A6    130         B2   B7    -50         B3  B10   -150       
@@ -1579,6 +1589,7 @@ scoreNZ NZ    OW
    -70   4    10   
   -150   2    12   
   -190   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -190         A3   A1    200         A4   A8     90       
   A5   A6    140         B2   B7      0         B3  B10   -150       
@@ -1601,6 +1612,7 @@ scoreNZ NZ    OW
    -80   4    10   
   -150   2    12   
   -200   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -200         A3   A1    300         A4   A8    100       
   A5   A6    150         B2   B7     90         B3  B10   -150       
@@ -1624,6 +1636,7 @@ scoreNZ NZ    OW
   -150   3     9.3 
   -210   0.3  11.6 
   -630   0    13.9 
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -210         A3   A1    %40,%40     A4   A8    110       
   A5   A6    160         B2   B7    %60,R630    B3  B10   -150       
@@ -1645,6 +1658,7 @@ scoreNZ NZ    OW
    130   4    10   
    110   2    12   
   -270   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1    200         A6   A3   -270       
   A7   A8    170         B1  B10    130         B4   B2    800       
@@ -1667,6 +1681,7 @@ scoreNZ NZ    OW
    140   4    10   
    110   2    12   
   -280   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1    300         A6   A3   -280       
   A7   A8    180         B1  B10    140         B4   B2    200       
@@ -1689,6 +1704,7 @@ scoreNZ NZ    OW
    110   4    10   
   -300   2    12   
   -500   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -300       
   A7   A8    190         B1  B10    150         B4   B2    300       
@@ -1711,6 +1727,7 @@ scoreNZ NZ    OW
    110   4     9.3 
   -340   2    11.6 
   -500   0    13.9 
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -340       
   A7   A8    200         B1  B10    160         B4   B2    300       
@@ -1732,6 +1749,7 @@ scoreNZ NZ    OW
   -150   4    10   
   -420   2    12   
  -1200   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -140         A3   A2    150         A4   A6   -110       
   A7   A5   -420         B5   B4  -1200         B6   B1   -150       
@@ -1753,6 +1771,7 @@ scoreNZ NZ    OW
   -150   4    10   
   -420   2    12   
   -800   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -150         A3   A2    150         A4   A6   -110       
   A7   A5   -420         B5   B4    300         B6   B1   -800       
@@ -1775,6 +1794,7 @@ scoreNZ NZ    OW
   -120   4    10   
   -160   2    12   
   -600   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -160         A3   A2    170         A4   A6   -110       
   A7   A5    420         B5   B4    400         B6   B1   -600       
@@ -1796,6 +1816,7 @@ scoreNZ NZ    OW
   -120   6     8   
   -130   4    10   
   -170   1    13   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -170         A3   A2   -170         A4   A6   -110       
   A7   A5    620         B5   B4    500         B6   B1   -120       
@@ -1818,6 +1839,7 @@ scoreNZ NZ    OW
    100   4    10   
     50   2    12   
   -170   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4     50         A5   A8    160       
   A7   A3    120         B4   B1    150         B5   B2   -170       
@@ -1839,6 +1861,7 @@ scoreNZ NZ    OW
   -120   4    10   
   -160   2    12   
   -170   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4    100         A5   A8   -160       
   A7   A3    130         B4   B1    150         B5   B2   -170       
@@ -1861,6 +1884,7 @@ scoreNZ NZ    OW
   -160   4    10   
   -170   2    12   
   -200   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4   -200         A5   A8   -160       
   A7   A3    140         B4   B1    150         B5   B2   -170       
@@ -1880,6 +1904,7 @@ scoreNZ NZ    OW
   -110   0    10   
   -170   2    12   
   -300   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4   -300         A5   A8   R150,R110  
   A7   A3    150         B4   B1    150         B5   B2   -170       
@@ -1901,6 +1926,7 @@ scoreNZ NZ    OW
    110   4    10   
   -130   2    12   
   -230   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -230         A6   A2    110       
   A7   A1   -130         B3   B2    140         B5   B1    150       
@@ -1921,6 +1947,7 @@ scoreNZ NZ    OW
    120   5     9   
   -130   2    12   
   -240   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -240         A6   A2    120       
   A7   A1   -130         B3   B2    150         B5   B1    150       
@@ -1943,6 +1970,7 @@ scoreNZ NZ    OW
    120   4    10   
   -130   2    12   
   -250   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -250         A6   A2    130       
   A7   A1   -130         B3   B2    160         B5   B1    150       
@@ -1964,6 +1992,7 @@ scoreNZ NZ    OW
     50   4    10   
   -130   2    12   
   -260   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -260         A6   A2    140       
   A7   A1   -130         B3   B2    170         B5   B1    150       
@@ -2024,7 +2053,7 @@ Paar naam
  16 paar 16                         B10     ???        0        0
  17 paar 17                         B1      B9        11       10
  18 paar 18                         A8      B10        8        8
- 19 paar 19                         ???     ???       19        0
+ 19 paar 19                         ???     ???        0        0
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2450,25 +2479,25 @@ Groep uitslag
 
 Groep-uitslag van wedstrijd '<auto-test, zitting 2>', zitting 2
 
-                         spellen : 1-4   5-8   9-12 13-16 17-20 21-24 25-28   tot   score
-  1 paar 15  . . . . . . . . . . .  24    35     8    37    13    25    48    190   48.47%
-  2 paar 4 . . . . . . . . . . . .  31    22     2    12    19     9    33    128   32.65%
-  3 paar 3 . . . . . . . . . . . .  46    32    46    51    37    11    21    244   62.24%
-  4 paar 11  . . . . . . . . . . .  39    24    40    18    29    47    56    253   64.54%
-  5 paar 7 . . . . . . . . . . . .   9    21    50    43    24    32     0    179   45.66%
-  6 paar 13  . . . . . . . . . . .  35    28     5     4    27    29    23    151   38.52%
-  7 paar 8 . . . . . . . . . . . .  16    34    53    32    32    44     8    219   55.87%
-  8 paar 18  . . . . . . . . . . .  18    34    15    23    43    22    35    214   54.59%
-  9 paar 17  . . . . . . . . . . .  55    13     0    24    46     3    14    155   46.13%
- 10 gewijzigd paar 5 . . . . . . .   0     1    28    10     0    52    12    103   30.65%
- 11 paar 1 . . . . . . . . . . . .  47    53    10    19    16     0    44    189   56.25%
- 12 paar 9 . . . . . . . . . . . .   1     3    26    46    18    52    25    171   43.62%
- 13 paar 14  . . . . . . . . . . .  18    43    19    52    38     4    42    216   55.10%
- 14 paar 12  . . . . . . . . . . .  54     0    36    36    10    18     1    155   46.13%
- 15 paar 6 . . . . . . . . . . . .  37    43    22     0    40    32    55    242   72.02%
- 16  STIL-ZIT?? afwezig??
- 17 paar 10  . . . . . . . . . . .   8    55    29    10    25    36     0    163   48.51%
- 18 paar 16  . . . . . . . . . . .   0    13    45    31    31    22    31    173   51.49%
+                         spellen : 1-4   5-8   9-12 13-16 17-20 21-24 25-28   tot   score(%)
+  1 paar 15  . . . . . . . . . . .  24    35     8    37    13    25    48    190   48.47
+  2 paar 4 . . . . . . . . . . . .  31    22     2    12    19     9    33    128   32.65
+  3 paar 3 . . . . . . . . . . . .  46    32    46    51    37    11    21    244   62.24
+  4 paar 11  . . . . . . . . . . .  39    24    40    18    29    47    56    253   64.54
+  5 paar 7 . . . . . . . . . . . .   9    21    50    43    24    32     0    179   45.66
+  6 paar 13  . . . . . . . . . . .  35    28     5     4    27    29    23    151   38.52
+  7 paar 8 . . . . . . . . . . . .  16    34    53    32    32    44     8    219   55.87
+  8 paar 18  . . . . . . . . . . .  18    34    15    23    43    22    35    214   54.59
+  9 paar 17  . . . . . . . . . . .  55    13   ---    24    46     3    14    155   46.13
+ 10 gewijzigd paar 5 . . . . . . .   0     1    28    10   ---    52    12    103   30.65
+ 11 paar 1 . . . . . . . . . . . .  47    53    10    19    16   ---    44    189   56.25
+ 12 paar 9 . . . . . . . . . . . .   1     3    26    46    18    52    25    171   43.62
+ 13 paar 14  . . . . . . . . . . .  18    43    19    52    38     4    42    216   55.10
+ 14 paar 12  . . . . . . . . . . .  54   ---    36    36    10    18     1    155   46.13
+ 15 paar 6 . . . . . . . . . . . .  37    43    22   ---    40    32    55    242   72.02
+ 16 --> afwezig paar
+ 17 paar 10  . . . . . . . . . . .   8    55    29    10    25    36   ---    163   48.51
+ 18 paar 16  . . . . . . . . . . . ---    13    45    31    31    22    31    173   51.49
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2477,24 +2506,24 @@ Totaal uitslag
 Totaal uitslag
 
 rang paarnaam                         Z1     Z2     totaal   gem.  A B
-   1 paar 3 . . . . . . . . . . . .  64.59  62.24   126.83% 63.42  1 .
-   2 paar 15  . . . . . . . . . . .  72.77  48.47   121.24% 60.62  2 .
-   3 paar 11  . . . . . . . . . . .  56.10  64.54   120.64% 60.32  3 .
-   4 paar 6 . . . . . . . . . . . .  38.29  72.02   110.31% 55.16  . 1
-   5 paar 8 . . . . . . . . . . . .  54.36  55.87   110.23% 55.12  4 .
-   6 paar 18  . . . . . . . . . . .  51.40  54.59   105.99% 53.00  5 .
-   7 paar 1 . . . . . . . . . . . .  48.76  56.25   105.01% 52.51  . 2
-   8 paar 16  . . . . . . . . . . .  51.49a 51.49   102.98% 51.49  . 3
-   9 paar 7 . . . . . . . . . . . .  55.97  45.66   101.63% 50.82  6 .
-  10 paar 14  . . . . . . . . . . .  46.13  55.10   101.23% 50.62  . 4
-  11 paar 2 . . . . . . . . . . . .  50.00  50.00a  100.00% 50.00  . .
-  12 paar 4 . . . . . . . . . . . .  64.87  32.65    97.52% 48.76  7 .
-  13 paar 17  . . . . . . . . . . .  48.87  46.13    95.00% 47.50  . 5
-  14 paar 13  . . . . . . . . . . .  55.03  38.52    93.55% 46.78  8 .
-  15 paar 9 . . . . . . . . . . . .  46.22  43.62    89.84% 44.92  . 6
-  16 paar 12  . . . . . . . . . . .  43.09  46.13    89.22% 44.61  . 7
-  17 gewijzigd paar 5 . . . . . . .  48.87  30.65    79.52% 39.76  . 8
-  18 paar 10  . . . . . . . . . . .  30.24  48.51    78.75% 39.38  . 9
+   1 paar 3 . . . . . . . . . . . .  64.59  62.24   126.83  63.42  1 .
+   2 paar 15  . . . . . . . . . . .  72.77  48.47   121.24  60.62  2 .
+   3 paar 11  . . . . . . . . . . .  56.10  64.54   120.64  60.32  3 .
+   4 paar 6 . . . . . . . . . . . .  38.29  72.02   110.31  55.16  . 1
+   5 paar 8 . . . . . . . . . . . .  54.36  55.87   110.23  55.12  4 .
+   6 paar 18  . . . . . . . . . . .  51.40  54.59   105.99  53.00  5 .
+   7 paar 1 . . . . . . . . . . . .  48.76  56.25   105.01  52.51  . 2
+   8 paar 16  . . . . . . . . . . .  51.49a 51.49   102.98  51.49  . 3
+   9 paar 7 . . . . . . . . . . . .  55.97  45.66   101.63  50.82  6 .
+  10 paar 14  . . . . . . . . . . .  46.13  55.10   101.23  50.62  . 4
+  11 paar 2 . . . . . . . . . . . .  50.00  50.00a  100.00  50.00  . .
+  12 paar 4 . . . . . . . . . . . .  64.87  32.65    97.52  48.76  7 .
+  13 paar 17  . . . . . . . . . . .  48.87  46.13    95.00  47.50  . 5
+  14 paar 13  . . . . . . . . . . .  55.03  38.52    93.55  46.78  8 .
+  15 paar 9 . . . . . . . . . . . .  46.22  43.62    89.84  44.92  . 6
+  16 paar 12  . . . . . . . . . . .  43.09  46.13    89.22  44.61  . 7
+  17 gewijzigd paar 5 . . . . . . .  48.87  30.65    79.52  39.76  . 8
+  18 paar 10  . . . . . . . . . . .  30.24  48.51    78.75  39.38  . 9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2537,7 +2566,7 @@ Spel 26: OW, score:   130, punten  12    86%
 Spel 27: OW, score:   130, punten  12    86%
 Spel 28: OW, score:   130, punten  12    86% set-score: 48  (86%)
 
-aantal punten: 190   (392), eindscore: 48.47%, rang: 10
+aantal punten: 190   (392), spellen: 28, zittingscore: 48.47%, rang: 10
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2580,7 +2609,7 @@ Spel 26: OW, score:  -120, punten   9    64%
 Spel 27: OW, score:  -130, punten   8    57%
 Spel 28: OW, score:  -140, punten   6    43% set-score: 33  (59%)
 
-aantal punten: 128   (392), eindscore: 32.65%, rang: 16
+aantal punten: 128   (392), spellen: 28, zittingscore: 32.65%, rang: 16
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2623,7 +2652,7 @@ Spel 26: NZ, score:   120, punten   5    36%
 Spel 27: NZ, score:   120, punten   4    29%
 Spel 28: NZ, score:   120, punten   6    43% set-score: 21  (38%)
 
-aantal punten: 244   (392), eindscore: 62.24%, rang: 3
+aantal punten: 244   (392), spellen: 28, zittingscore: 62.24%, rang: 3
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2666,7 +2695,7 @@ Spel 26: OW, score:   240, punten  14   100%
 Spel 27: OW, score:   250, punten  14   100%
 Spel 28: OW, score:   260, punten  14   100% set-score: 56  (100%)
 
-aantal punten: 253   (392), eindscore: 64.54%, rang: 2
+aantal punten: 253   (392), spellen: 28, zittingscore: 64.54%, rang: 2
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2709,7 +2738,7 @@ Spel 26: NZ, score:  -240, punten   0     0%
 Spel 27: NZ, score:  -250, punten   0     0%
 Spel 28: NZ, score:  -260, punten   0     0% set-score: 0  (0%)
 
-aantal punten: 179   (392), eindscore: 45.66%, rang: 13
+aantal punten: 179   (392), spellen: 28, zittingscore: 45.66%, rang: 13
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2752,7 +2781,7 @@ Spel 26: NZ, score:   120, punten   5    36%
 Spel 27: NZ, score:   130, punten   6    43%
 Spel 28: NZ, score:   140, punten   8    57% set-score: 23  (41%)
 
-aantal punten: 151   (392), eindscore: 38.52%, rang: 15
+aantal punten: 151   (392), spellen: 28, zittingscore: 38.52%, rang: 15
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2795,7 +2824,7 @@ Spel 26: NZ, score:  -130, punten   2    14%
 Spel 27: NZ, score:  -130, punten   2    14%
 Spel 28: NZ, score:  -130, punten   2    14% set-score: 8  (14%)
 
-aantal punten: 219   (392), eindscore: 55.87%, rang: 5
+aantal punten: 219   (392), spellen: 28, zittingscore: 55.87%, rang: 5
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2838,7 +2867,7 @@ Spel 26: OW, score:  -120, punten   9    64%
 Spel 27: OW, score:  -120, punten  10    71%
 Spel 28: OW, score:  -120, punten   8    57% set-score: 35  (63%)
 
-aantal punten: 214   (392), eindscore: 54.59%, rang: 7
+aantal punten: 214   (392), spellen: 28, zittingscore: 54.59%, rang: 7
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2856,10 +2885,10 @@ Spel  6: NZ, score:  -140, punten   4    29%
 Spel  7: NZ, score:  -140, punten   4    29%
 Spel  8: NZ, score:  -140, punten   3    21% set-score: 13  (23%)
 
-Spel  9:  niet gespeeld
-Spel 10:  niet gespeeld
-Spel 11:  niet gespeeld
-Spel 12:  niet gespeeld
+Spel  9: niet gespeeld
+Spel 10: niet gespeeld
+Spel 11: niet gespeeld
+Spel 12: niet gespeeld
 
 Spel 13: NZ, score:   130, punten   4    29% Tegenpaar (B10): paar 16
 Spel 14: NZ, score:   140, punten   4    29%
@@ -2881,7 +2910,7 @@ Spel 26: OW, score:  -150, punten   3    21%
 Spel 27: OW, score:  -150, punten   4    29%
 Spel 28: OW, score:  -150, punten   4    29% set-score: 14  (25%)
 
-aantal punten: 155   (336), eindscore: 46.13%, rang: 11
+aantal punten: 155   (336), spellen: 24, zittingscore: 46.13%, rang: 11
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2909,10 +2938,10 @@ Spel 14: OW, score:  -200, punten   6    43%
 Spel 15: OW, score:  -300, punten   2    14%
 Spel 16: OW, score:  -300, punten   1     7% set-score: 10  (18%)
 
-Spel 17:  niet gespeeld
-Spel 18:  niet gespeeld
-Spel 19:  niet gespeeld
-Spel 20:  niet gespeeld
+Spel 17: niet gespeeld
+Spel 18: niet gespeeld
+Spel 19: niet gespeeld
+Spel 20: niet gespeeld
 
 Spel 21: OW, score:   170, punten  14   100% Tegenpaar (B5): paar 14
 Spel 22: OW, score:   170, punten  14   100%
@@ -2924,7 +2953,7 @@ Spel 26: OW, score:  -150, punten   3    21%
 Spel 27: OW, score:  -160, punten   2    14%
 Spel 28: OW, score:  -170, punten   1     7% set-score: 12  (21%)
 
-aantal punten: 103   (336), eindscore: 30.65%, rang: 17
+aantal punten: 103   (336), spellen: 24, zittingscore: 30.65%, rang: 17
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2957,17 +2986,17 @@ Spel 18: OW, score:  -110, punten   4    29%
 Spel 19: OW, score:  -120, punten   6    43%
 Spel 20: OW, score:  -130, punten   4    29% set-score: 16  (29%)
 
-Spel 21:  niet gespeeld
-Spel 22:  niet gespeeld
-Spel 23:  niet gespeeld
-Spel 24:  niet gespeeld
+Spel 21: niet gespeeld
+Spel 22: niet gespeeld
+Spel 23: niet gespeeld
+Spel 24: niet gespeeld
 
 Spel 25: NZ, score:   140, punten   8    57% Tegenpaar (B2): gewijzigd paar 5
 Spel 26: NZ, score:   150, punten  11    79%
 Spel 27: NZ, score:   160, punten  12    86%
 Spel 28: NZ, score:   170, punten  13    93% set-score: 44  (79%)
 
-aantal punten: 189   (336), eindscore: 56.25%, rang: 4
+aantal punten: 189   (336), spellen: 24, zittingscore: 56.25%, rang: 4
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -3010,7 +3039,7 @@ Spel 26: OW, score:  -140, punten   6    43%
 Spel 27: OW, score:  -140, punten   6    43%
 Spel 28: OW, score:   -50, punten  10    71% set-score: 25  (45%)
 
-aantal punten: 171   (392), eindscore: 43.62%, rang: 14
+aantal punten: 171   (392), spellen: 28, zittingscore: 43.62%, rang: 14
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -3053,7 +3082,7 @@ Spel 26: NZ, score:   150, punten  11    79%
 Spel 27: NZ, score:   150, punten  10    71%
 Spel 28: NZ, score:   150, punten  10    71% set-score: 42  (75%)
 
-aantal punten: 216   (392), eindscore: 55.10%, rang: 6
+aantal punten: 216   (392), spellen: 28, zittingscore: 55.10%, rang: 6
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -3066,10 +3095,10 @@ Spel  2: OW, score:   160, punten  14   100%
 Spel  3: OW, score:   160, punten  14   100%
 Spel  4: OW, score:   160, punten  12    86% set-score: 54  (96%)
 
-Spel  5:  niet gespeeld
-Spel  6:  niet gespeeld
-Spel  7:  niet gespeeld
-Spel  8:  niet gespeeld
+Spel  5: niet gespeeld
+Spel  6: niet gespeeld
+Spel  7: niet gespeeld
+Spel  8: niet gespeeld
 
 Spel  9: OW, score:    50, punten   9    64% Tegenpaar (B5): paar 14
 Spel 10: OW, score:    70, punten  10    71%
@@ -3096,7 +3125,7 @@ Spel 26: OW, score:  -170, punten   0     0%
 Spel 27: OW, score:  -170, punten   0     0%
 Spel 28: OW, score:  -170, punten   1     7% set-score: 1  (2%)
 
-aantal punten: 155   (336), eindscore: 46.13%, rang: 11
+aantal punten: 155   (336), spellen: 24, zittingscore: 46.13%, rang: 11
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -3119,10 +3148,10 @@ Spel 10: OW, score:     0, punten   7    50%
 Spel 11: OW, score:   -90, punten   6    43%
 Spel 12: OW, score:  R630, punten   0     0% set-score: 22  (39%)
 
-Spel 13:  niet gespeeld
-Spel 14:  niet gespeeld
-Spel 15:  niet gespeeld
-Spel 16:  niet gespeeld
+Spel 13: niet gespeeld
+Spel 14: niet gespeeld
+Spel 15: niet gespeeld
+Spel 16: niet gespeeld
 
 Spel 17: NZ, score:   100, punten  12    86% Tegenpaar (B3): paar 1
 Spel 18: NZ, score:   110, punten  10    71%
@@ -3139,7 +3168,7 @@ Spel 26: NZ, score:   170, punten  14   100%
 Spel 27: NZ, score:   170, punten  14   100%
 Spel 28: NZ, score:   170, punten  13    93% set-score: 55  (98%)
 
-aantal punten: 242   (336), eindscore: 72.02%, rang: 1
+aantal punten: 242   (336), spellen: 24, zittingscore: 72.02%, rang: 1
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -3147,7 +3176,7 @@ Uitslag per paar
 
 Uitslag van paar ??? '' voor '<auto-test, zitting 2>', zitting 2
 
-Paar heeft (nog) niet gespeeld
+afwezig paar
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -3185,12 +3214,12 @@ Spel 22: NZ, score:   120, punten  10    71%
 Spel 23: NZ, score:   110, punten  10    71%
 Spel 24: NZ, score:   100, punten   6    43% set-score: 36  (64%)
 
-Spel 25:  niet gespeeld
-Spel 26:  niet gespeeld
-Spel 27:  niet gespeeld
-Spel 28:  niet gespeeld
+Spel 25: niet gespeeld
+Spel 26: niet gespeeld
+Spel 27: niet gespeeld
+Spel 28: niet gespeeld
 
-aantal punten: 163   (336), eindscore: 48.51%, rang: 9
+aantal punten: 163   (336), spellen: 24, zittingscore: 48.51%, rang: 9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -3198,10 +3227,10 @@ Uitslag per paar
 
 Uitslag van paar B10 'paar 16' voor '<auto-test, zitting 2>', zitting 2
 
-Spel  1:  niet gespeeld
-Spel  2:  niet gespeeld
-Spel  3:  niet gespeeld
-Spel  4:  niet gespeeld
+Spel  1: niet gespeeld
+Spel  2: niet gespeeld
+Spel  3: niet gespeeld
+Spel  4: niet gespeeld
 
 Spel  5: OW, score:  -160, punten   4    29% Tegenpaar (B5): paar 14
 Spel  6: OW, score:  -160, punten   2    14%
@@ -3233,7 +3262,7 @@ Spel 26: NZ, score:   140, punten   8    57%
 Spel 27: NZ, score:   140, punten   8    57%
 Spel 28: NZ, score:    50, punten   4    29% set-score: 31  (55%)
 
-aantal punten: 173   (336), eindscore: 51.49%, rang: 8
+aantal punten: 173   (336), spellen: 24, zittingscore: 51.49%, rang: 8
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -3251,6 +3280,7 @@ scoreNZ NZ    OW
      0   5     9   
   -120   2    12   
   -160   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2      0         A4   A7    130         A5   A3   -120       
   A6   A8     70         B1   B2    210         B3   B9    140       
@@ -3273,6 +3303,7 @@ scoreNZ NZ    OW
      0   4    10   
   -120   2    12   
   -160   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
   A6   A8     80         B1   B2    230         B3   B9    140       
@@ -3295,6 +3326,7 @@ scoreNZ NZ    OW
      0   4    10   
   -120   2    12   
   -160   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
   A6   A8     90         B1   B2    240         B3   B9    140       
@@ -3318,6 +3350,7 @@ scoreNZ NZ    OW
   -120   3    10   
   -160   1    12   
   -620   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     80         A4   A7    130         A5   A3   -120       
   A6   A8    %80,R620    B1   B2    260         B3   B9    140       
@@ -3339,6 +3372,7 @@ scoreNZ NZ    OW
   -100   5     9   
   -140   2    12   
   -600   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5   -100         A2   A8   -100         A3   A4     90       
   A6   A7    300         B1   B7   -140         B2   B9   -600       
@@ -3360,6 +3394,7 @@ scoreNZ NZ    OW
   -140   4    10   
   -600   2    12   
   -800   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    100         A2   A8   -100         A3   A4    100       
   A6   A7   -600         B1   B7   -140         B2   B9   -800       
@@ -3382,6 +3417,7 @@ scoreNZ NZ    OW
   -140   4    10   
   -150   2    12   
  -1000   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    150         A2   A8   -100         A3   A4    110       
   A6   A7   -150         B1   B7   -140         B2   B9  -1000       
@@ -3405,6 +3441,7 @@ scoreNZ NZ    OW
   -100   5     9   
   -140   3    11   
  -1100   1    13   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    200         A2   A8   -100         A3   A4    120       
   A6   A7    %70,%70     B1   B7   -140         B2   B9  -1100       
@@ -3426,6 +3463,7 @@ scoreNZ NZ    OW
    -50   5     9   
   -150   2    12   
   -180   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -180         A3   A1    100         A4   A8     70       
   A5   A6    130         B2   B7    -50         B3  B10   -150       
@@ -3447,6 +3485,7 @@ scoreNZ NZ    OW
    -70   4    10   
   -150   2    12   
   -190   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -190         A3   A1    200         A4   A8     90       
   A5   A6    140         B2   B7      0         B3  B10   -150       
@@ -3469,6 +3508,7 @@ scoreNZ NZ    OW
    -80   4    10   
   -150   2    12   
   -200   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -200         A3   A1    300         A4   A8    100       
   A5   A6    150         B2   B7     90         B3  B10   -150       
@@ -3492,6 +3532,7 @@ scoreNZ NZ    OW
   -150   4     9   
   -210   2    11   
   -630   0    13   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -210         A3   A1    %40,%40     A4   A8    110       
   A5   A6    160         B2   B7    %60,R630    B3  B10   -150       
@@ -3513,6 +3554,7 @@ scoreNZ NZ    OW
    130   4    10   
    110   2    12   
   -270   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1    200         A6   A3   -270       
   A7   A8    170         B1  B10    130         B4   B2    800       
@@ -3535,6 +3577,7 @@ scoreNZ NZ    OW
    140   4    10   
    110   2    12   
   -280   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1    300         A6   A3   -280       
   A7   A8    180         B1  B10    140         B4   B2    200       
@@ -3557,6 +3600,7 @@ scoreNZ NZ    OW
    110   4    10   
   -300   2    12   
   -500   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -300       
   A7   A8    190         B1  B10    150         B4   B2    300       
@@ -3579,6 +3623,7 @@ scoreNZ NZ    OW
    110   4     9   
   -340   2    11   
   -500   0    13   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -340       
   A7   A8    200         B1  B10    160         B4   B2    300       
@@ -3601,6 +3646,7 @@ scoreNZ NZ    OW
   -150   4    10   
   -420   2    12   
  -1200   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -140         A3   A2    150         A4   A6   -110       
   A7   A5   -420         B5   B4  -1200         B6   B1   -150       
@@ -3622,6 +3668,7 @@ scoreNZ NZ    OW
   -150   4    10   
   -420   2    12   
   -800   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -150         A3   A2    150         A4   A6   -110       
   A7   A5   -420         B5   B4    300         B6   B1   -800       
@@ -3644,6 +3691,7 @@ scoreNZ NZ    OW
   -120   4    10   
   -160   2    12   
   -600   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -160         A3   A2    170         A4   A6   -110       
   A7   A5    420         B5   B4    400         B6   B1   -600       
@@ -3665,6 +3713,7 @@ scoreNZ NZ    OW
   -120   6     8   
   -130   4    10   
   -170   1    13   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -170         A3   A2   -170         A4   A6   -110       
   A7   A5    620         B5   B4    500         B6   B1   -120       
@@ -3687,6 +3736,7 @@ scoreNZ NZ    OW
    100   4    10   
     50   2    12   
   -170   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4     50         A5   A8    160       
   A7   A3    120         B4   B1    150         B5   B2   -170       
@@ -3708,6 +3758,7 @@ scoreNZ NZ    OW
   -120   4    10   
   -160   2    12   
   -170   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4    100         A5   A8   -160       
   A7   A3    130         B4   B1    150         B5   B2   -170       
@@ -3730,6 +3781,7 @@ scoreNZ NZ    OW
   -160   4    10   
   -170   2    12   
   -200   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4   -200         A5   A8   -160       
   A7   A3    140         B4   B1    150         B5   B2   -170       
@@ -3749,6 +3801,7 @@ scoreNZ NZ    OW
   -110   0    10   
   -170   2    12   
   -300   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4   -300         A5   A8   R150,R110  
   A7   A3    150         B4   B1    150         B5   B2   -170       
@@ -3770,6 +3823,7 @@ scoreNZ NZ    OW
    110   4    10   
   -130   2    12   
   -230   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -230         A6   A2    110       
   A7   A1   -130         B3   B2    140         B5   B1    150       
@@ -3790,6 +3844,7 @@ scoreNZ NZ    OW
    120   5     9   
   -130   2    12   
   -240   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -240         A6   A2    120       
   A7   A1   -130         B3   B2    150         B5   B1    150       
@@ -3812,6 +3867,7 @@ scoreNZ NZ    OW
    120   4    10   
   -130   2    12   
   -250   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -250         A6   A2    130       
   A7   A1   -130         B3   B2    160         B5   B1    150       
@@ -3833,6 +3889,7 @@ scoreNZ NZ    OW
     50   4    10   
   -130   2    12   
   -260   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -260         A6   A2    140       
   A7   A1   -130         B3   B2    170         B5   B1    150       
@@ -3893,7 +3950,7 @@ Paar naam
  16 paar 16                         A8      B10        8        0
  17 paar 17                         B5      B1        13        9
  18 paar 18                         A6      A8         6        8
- 19 paar 19                         ???     ???       19        0
+ 19 paar 19                         ???     ???        0        0
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4319,25 +4376,25 @@ Groep uitslag
 
 Groep-uitslag van wedstrijd '<auto-test, zitting 3>', zitting 3
 
-                         spellen : 1-4   5-8   9-12 13-16 17-20 21-24 25-28   tot   score
-  1 paar 3 . . . . . . . . . . . .  24    35     8    37    13    25    48    190   48.47%
-  2 paar 15  . . . . . . . . . . .  31    22     2    12    19     9    33    128   32.65%
-  3 paar 11  . . . . . . . . . . .  46    32    46    51    37    11    21    244   62.24%
-  4 paar 6 . . . . . . . . . . . .  39    24    40    18    29    47    56    253   64.54%
-  5 paar 8 . . . . . . . . . . . .   9    21    50    43    24    32     0    179   45.66%
-  6 paar 18  . . . . . . . . . . .  35    28     5     4    27    29    23    151   38.52%
-  7 paar 1 . . . . . . . . . . . .  16    34    53    32    32    44     8    219   55.87%
-  8 paar 16  . . . . . . . . . . .  18    34    15    23    43    22    35    214   54.59%
-  9 paar 7 . . . . . . . . . . . .  55    13     0    24    46     3    14    155   46.13%
- 10 paar 14  . . . . . . . . . . .   0     1    28    10     0    52    12    103   30.65%
- 11 paar 2 . . . . . . . . . . . .  47    53    10    19    16     0    44    189   56.25%
- 12 paar 4 . . . . . . . . . . . .   1     3    26    46    18    52    25    171   43.62%
- 13 paar 17  . . . . . . . . . . .  18    43    19    52    38     4    42    216   55.10%
- 14 paar 13  . . . . . . . . . . .  54     0    36    36    10    18     1    155   46.13%
- 15 paar 9 . . . . . . . . . . . .  37    43    22     0    40    32    55    242   72.02%
- 16  STIL-ZIT?? afwezig??
- 17 gewijzigd paar 5 . . . . . . .   8    55    29    10    25    36     0    163   48.51%
- 18 paar 10  . . . . . . . . . . .   0    13    45    31    31    22    31    173   51.49%
+                         spellen : 1-4   5-8   9-12 13-16 17-20 21-24 25-28   tot   score(%)
+  1 paar 3 . . . . . . . . . . . .  24    35     8    37    13    25    48    190   48.47
+  2 paar 15  . . . . . . . . . . .  31    22     2    12    19     9    33    128   32.65
+  3 paar 11  . . . . . . . . . . .  46    32    46    51    37    11    21    244   62.24
+  4 paar 6 . . . . . . . . . . . .  39    24    40    18    29    47    56    253   64.54
+  5 paar 8 . . . . . . . . . . . .   9    21    50    43    24    32     0    179   45.66
+  6 paar 18  . . . . . . . . . . .  35    28     5     4    27    29    23    151   38.52
+  7 paar 1 . . . . . . . . . . . .  16    34    53    32    32    44     8    219   55.87
+  8 paar 16  . . . . . . . . . . .  18    34    15    23    43    22    35    214   54.59
+  9 paar 7 . . . . . . . . . . . .  55    13   ---    24    46     3    14    155   46.13
+ 10 paar 14  . . . . . . . . . . .   0     1    28    10   ---    52    12    103   30.65
+ 11 paar 2 . . . . . . . . . . . .  47    53    10    19    16   ---    44    189   56.25
+ 12 paar 4 . . . . . . . . . . . .   1     3    26    46    18    52    25    171   43.62
+ 13 paar 17  . . . . . . . . . . .  18    43    19    52    38     4    42    216   55.10
+ 14 paar 13  . . . . . . . . . . .  54   ---    36    36    10    18     1    155   46.13
+ 15 paar 9 . . . . . . . . . . . .  37    43    22   ---    40    32    55    242   72.02
+ 16 --> afwezig paar
+ 17 gewijzigd paar 5 . . . . . . .   8    55    29    10    25    36   ---    163   48.51
+ 18 paar 10  . . . . . . . . . . . ---    13    45    31    31    22    31    173   51.49
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4346,24 +4403,24 @@ Totaal uitslag
 Totaal uitslag
 
 rang paarnaam                         Z1     Z2     Z3     totaal   gem.  A B
-   1 paar 11  . . . . . . . . . . .  56.10  64.54  62.24   182.88% 60.96  1 .
-   2 paar 3 . . . . . . . . . . . .  64.59  62.24  48.47   175.30% 58.43  2 .
-   3 paar 6 . . . . . . . . . . . .  38.29  72.02  64.54   174.85% 58.28  3 .
-   4 paar 9 . . . . . . . . . . . .  46.22  43.62  72.02   161.86% 53.95  . 1
-   5 paar 1 . . . . . . . . . . . .  48.76  56.25  55.87   160.88% 53.63  4 .
-   6 paar 2 . . . . . . . . . . . .  50.00  52.50a 56.25   158.75% 52.92  . 2
-   7 paar 16  . . . . . . . . . . .  52.50a 51.49  54.59   158.58% 52.86  5 .
-   8 paar 8 . . . . . . . . . . . .  54.36  55.87  45.66   155.89% 51.96  6 .
-   9 paar 15  . . . . . . . . . . .  72.77  48.47  32.65   153.89% 51.30  7 .
-  10 paar 17  . . . . . . . . . . .  48.87  46.13  55.10   150.10% 50.03  . 3
-  11 paar 7 . . . . . . . . . . . .  55.97  45.66  46.13   147.76% 49.25  . 4
-  12 paar 18  . . . . . . . . . . .  51.40  54.59  38.52   144.51% 48.17  8 .
-  13 paar 4 . . . . . . . . . . . .  64.87  32.65  43.62   141.14% 47.05  . 5
-  14 paar 13  . . . . . . . . . . .  55.03  38.52  46.13   139.68% 46.56  . 6
-  15 paar 12  . . . . . . . . . . .  43.09  46.13  44.61a  133.83% 44.61  . .
-  16 paar 14  . . . . . . . . . . .  46.13  55.10  30.65   131.88% 43.96  . 7
-  17 paar 10  . . . . . . . . . . .  30.24  48.51  51.49   130.24% 43.41  . 8
-  18 gewijzigd paar 5 . . . . . . .  48.87  30.65  48.51   128.03% 42.68  . 9
+   1 paar 11  . . . . . . . . . . .  56.10  64.54  62.24   182.88  60.96  1 .
+   2 paar 3 . . . . . . . . . . . .  64.59  62.24  48.47   175.30  58.43  2 .
+   3 paar 6 . . . . . . . . . . . .  38.29  72.02  64.54   174.85  58.28  3 .
+   4 paar 9 . . . . . . . . . . . .  46.22  43.62  72.02   161.86  53.95  . 1
+   5 paar 1 . . . . . . . . . . . .  48.76  56.25  55.87   160.88  53.63  4 .
+   6 paar 2 . . . . . . . . . . . .  50.00  52.50a 56.25   158.75  52.92  . 2
+   7 paar 16  . . . . . . . . . . .  52.50a 51.49  54.59   158.58  52.86  5 .
+   8 paar 8 . . . . . . . . . . . .  54.36  55.87  45.66   155.89  51.96  6 .
+   9 paar 15  . . . . . . . . . . .  72.77  48.47  32.65   153.89  51.30  7 .
+  10 paar 17  . . . . . . . . . . .  48.87  46.13  55.10   150.10  50.03  . 3
+  11 paar 7 . . . . . . . . . . . .  55.97  45.66  46.13   147.76  49.25  . 4
+  12 paar 18  . . . . . . . . . . .  51.40  54.59  38.52   144.51  48.17  8 .
+  13 paar 4 . . . . . . . . . . . .  64.87  32.65  43.62   141.14  47.05  . 5
+  14 paar 13  . . . . . . . . . . .  55.03  38.52  46.13   139.68  46.56  . 6
+  15 paar 12  . . . . . . . . . . .  43.09  46.13  44.61a  133.83  44.61  . .
+  16 paar 14  . . . . . . . . . . .  46.13  55.10  30.65   131.88  43.96  . 7
+  17 paar 10  . . . . . . . . . . .  30.24  48.51  51.49   130.24  43.41  . 8
+  18 gewijzigd paar 5 . . . . . . .  48.87  30.65  48.51   128.03  42.68  . 9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4406,7 +4463,7 @@ Spel 26: OW, score:   130, punten  12    86%
 Spel 27: OW, score:   130, punten  12    86%
 Spel 28: OW, score:   130, punten  12    86% set-score: 48  (86%)
 
-aantal punten: 190   (392), eindscore: 48.47%, rang: 10
+aantal punten: 190   (392), spellen: 28, zittingscore: 48.47%, rang: 10
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4449,7 +4506,7 @@ Spel 26: OW, score:  -120, punten   9    64%
 Spel 27: OW, score:  -130, punten   8    57%
 Spel 28: OW, score:  -140, punten   6    43% set-score: 33  (59%)
 
-aantal punten: 128   (392), eindscore: 32.65%, rang: 16
+aantal punten: 128   (392), spellen: 28, zittingscore: 32.65%, rang: 16
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4492,7 +4549,7 @@ Spel 26: NZ, score:   120, punten   5    36%
 Spel 27: NZ, score:   120, punten   4    29%
 Spel 28: NZ, score:   120, punten   6    43% set-score: 21  (38%)
 
-aantal punten: 244   (392), eindscore: 62.24%, rang: 3
+aantal punten: 244   (392), spellen: 28, zittingscore: 62.24%, rang: 3
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4535,7 +4592,7 @@ Spel 26: OW, score:   240, punten  14   100%
 Spel 27: OW, score:   250, punten  14   100%
 Spel 28: OW, score:   260, punten  14   100% set-score: 56  (100%)
 
-aantal punten: 253   (392), eindscore: 64.54%, rang: 2
+aantal punten: 253   (392), spellen: 28, zittingscore: 64.54%, rang: 2
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4578,7 +4635,7 @@ Spel 26: NZ, score:  -240, punten   0     0%
 Spel 27: NZ, score:  -250, punten   0     0%
 Spel 28: NZ, score:  -260, punten   0     0% set-score: 0  (0%)
 
-aantal punten: 179   (392), eindscore: 45.66%, rang: 13
+aantal punten: 179   (392), spellen: 28, zittingscore: 45.66%, rang: 13
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4621,7 +4678,7 @@ Spel 26: NZ, score:   120, punten   5    36%
 Spel 27: NZ, score:   130, punten   6    43%
 Spel 28: NZ, score:   140, punten   8    57% set-score: 23  (41%)
 
-aantal punten: 151   (392), eindscore: 38.52%, rang: 15
+aantal punten: 151   (392), spellen: 28, zittingscore: 38.52%, rang: 15
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4664,7 +4721,7 @@ Spel 26: NZ, score:  -130, punten   2    14%
 Spel 27: NZ, score:  -130, punten   2    14%
 Spel 28: NZ, score:  -130, punten   2    14% set-score: 8  (14%)
 
-aantal punten: 219   (392), eindscore: 55.87%, rang: 5
+aantal punten: 219   (392), spellen: 28, zittingscore: 55.87%, rang: 5
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4707,7 +4764,7 @@ Spel 26: OW, score:  -120, punten   9    64%
 Spel 27: OW, score:  -120, punten  10    71%
 Spel 28: OW, score:  -120, punten   8    57% set-score: 35  (63%)
 
-aantal punten: 214   (392), eindscore: 54.59%, rang: 7
+aantal punten: 214   (392), spellen: 28, zittingscore: 54.59%, rang: 7
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4725,10 +4782,10 @@ Spel  6: NZ, score:  -140, punten   4    29%
 Spel  7: NZ, score:  -140, punten   4    29%
 Spel  8: NZ, score:  -140, punten   3    21% set-score: 13  (23%)
 
-Spel  9:  niet gespeeld
-Spel 10:  niet gespeeld
-Spel 11:  niet gespeeld
-Spel 12:  niet gespeeld
+Spel  9: niet gespeeld
+Spel 10: niet gespeeld
+Spel 11: niet gespeeld
+Spel 12: niet gespeeld
 
 Spel 13: NZ, score:   130, punten   4    29% Tegenpaar (B10): paar 10
 Spel 14: NZ, score:   140, punten   4    29%
@@ -4750,7 +4807,7 @@ Spel 26: OW, score:  -150, punten   3    21%
 Spel 27: OW, score:  -150, punten   4    29%
 Spel 28: OW, score:  -150, punten   4    29% set-score: 14  (25%)
 
-aantal punten: 155   (336), eindscore: 46.13%, rang: 11
+aantal punten: 155   (336), spellen: 24, zittingscore: 46.13%, rang: 11
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4778,10 +4835,10 @@ Spel 14: OW, score:  -200, punten   6    43%
 Spel 15: OW, score:  -300, punten   2    14%
 Spel 16: OW, score:  -300, punten   1     7% set-score: 10  (18%)
 
-Spel 17:  niet gespeeld
-Spel 18:  niet gespeeld
-Spel 19:  niet gespeeld
-Spel 20:  niet gespeeld
+Spel 17: niet gespeeld
+Spel 18: niet gespeeld
+Spel 19: niet gespeeld
+Spel 20: niet gespeeld
 
 Spel 21: OW, score:   170, punten  14   100% Tegenpaar (B5): paar 17
 Spel 22: OW, score:   170, punten  14   100%
@@ -4793,7 +4850,7 @@ Spel 26: OW, score:  -150, punten   3    21%
 Spel 27: OW, score:  -160, punten   2    14%
 Spel 28: OW, score:  -170, punten   1     7% set-score: 12  (21%)
 
-aantal punten: 103   (336), eindscore: 30.65%, rang: 17
+aantal punten: 103   (336), spellen: 24, zittingscore: 30.65%, rang: 17
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4826,17 +4883,17 @@ Spel 18: OW, score:  -110, punten   4    29%
 Spel 19: OW, score:  -120, punten   6    43%
 Spel 20: OW, score:  -130, punten   4    29% set-score: 16  (29%)
 
-Spel 21:  niet gespeeld
-Spel 22:  niet gespeeld
-Spel 23:  niet gespeeld
-Spel 24:  niet gespeeld
+Spel 21: niet gespeeld
+Spel 22: niet gespeeld
+Spel 23: niet gespeeld
+Spel 24: niet gespeeld
 
 Spel 25: NZ, score:   140, punten   8    57% Tegenpaar (B2): paar 14
 Spel 26: NZ, score:   150, punten  11    79%
 Spel 27: NZ, score:   160, punten  12    86%
 Spel 28: NZ, score:   170, punten  13    93% set-score: 44  (79%)
 
-aantal punten: 189   (336), eindscore: 56.25%, rang: 4
+aantal punten: 189   (336), spellen: 24, zittingscore: 56.25%, rang: 4
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4879,7 +4936,7 @@ Spel 26: OW, score:  -140, punten   6    43%
 Spel 27: OW, score:  -140, punten   6    43%
 Spel 28: OW, score:   -50, punten  10    71% set-score: 25  (45%)
 
-aantal punten: 171   (392), eindscore: 43.62%, rang: 14
+aantal punten: 171   (392), spellen: 28, zittingscore: 43.62%, rang: 14
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4922,7 +4979,7 @@ Spel 26: NZ, score:   150, punten  11    79%
 Spel 27: NZ, score:   150, punten  10    71%
 Spel 28: NZ, score:   150, punten  10    71% set-score: 42  (75%)
 
-aantal punten: 216   (392), eindscore: 55.10%, rang: 6
+aantal punten: 216   (392), spellen: 28, zittingscore: 55.10%, rang: 6
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4935,10 +4992,10 @@ Spel  2: OW, score:   160, punten  14   100%
 Spel  3: OW, score:   160, punten  14   100%
 Spel  4: OW, score:   160, punten  12    86% set-score: 54  (96%)
 
-Spel  5:  niet gespeeld
-Spel  6:  niet gespeeld
-Spel  7:  niet gespeeld
-Spel  8:  niet gespeeld
+Spel  5: niet gespeeld
+Spel  6: niet gespeeld
+Spel  7: niet gespeeld
+Spel  8: niet gespeeld
 
 Spel  9: OW, score:    50, punten   9    64% Tegenpaar (B5): paar 17
 Spel 10: OW, score:    70, punten  10    71%
@@ -4965,7 +5022,7 @@ Spel 26: OW, score:  -170, punten   0     0%
 Spel 27: OW, score:  -170, punten   0     0%
 Spel 28: OW, score:  -170, punten   1     7% set-score: 1  (2%)
 
-aantal punten: 155   (336), eindscore: 46.13%, rang: 11
+aantal punten: 155   (336), spellen: 24, zittingscore: 46.13%, rang: 11
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4988,10 +5045,10 @@ Spel 10: OW, score:     0, punten   7    50%
 Spel 11: OW, score:   -90, punten   6    43%
 Spel 12: OW, score:  R630, punten   0     0% set-score: 22  (39%)
 
-Spel 13:  niet gespeeld
-Spel 14:  niet gespeeld
-Spel 15:  niet gespeeld
-Spel 16:  niet gespeeld
+Spel 13: niet gespeeld
+Spel 14: niet gespeeld
+Spel 15: niet gespeeld
+Spel 16: niet gespeeld
 
 Spel 17: NZ, score:   100, punten  12    86% Tegenpaar (B3): paar 2
 Spel 18: NZ, score:   110, punten  10    71%
@@ -5008,7 +5065,7 @@ Spel 26: NZ, score:   170, punten  14   100%
 Spel 27: NZ, score:   170, punten  14   100%
 Spel 28: NZ, score:   170, punten  13    93% set-score: 55  (98%)
 
-aantal punten: 242   (336), eindscore: 72.02%, rang: 1
+aantal punten: 242   (336), spellen: 24, zittingscore: 72.02%, rang: 1
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -5016,7 +5073,7 @@ Uitslag per paar
 
 Uitslag van paar ??? '' voor '<auto-test, zitting 3>', zitting 3
 
-Paar heeft (nog) niet gespeeld
+afwezig paar
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -5054,12 +5111,12 @@ Spel 22: NZ, score:   120, punten  10    71%
 Spel 23: NZ, score:   110, punten  10    71%
 Spel 24: NZ, score:   100, punten   6    43% set-score: 36  (64%)
 
-Spel 25:  niet gespeeld
-Spel 26:  niet gespeeld
-Spel 27:  niet gespeeld
-Spel 28:  niet gespeeld
+Spel 25: niet gespeeld
+Spel 26: niet gespeeld
+Spel 27: niet gespeeld
+Spel 28: niet gespeeld
 
-aantal punten: 163   (336), eindscore: 48.51%, rang: 9
+aantal punten: 163   (336), spellen: 24, zittingscore: 48.51%, rang: 9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -5067,10 +5124,10 @@ Uitslag per paar
 
 Uitslag van paar B10 'paar 10' voor '<auto-test, zitting 3>', zitting 3
 
-Spel  1:  niet gespeeld
-Spel  2:  niet gespeeld
-Spel  3:  niet gespeeld
-Spel  4:  niet gespeeld
+Spel  1: niet gespeeld
+Spel  2: niet gespeeld
+Spel  3: niet gespeeld
+Spel  4: niet gespeeld
 
 Spel  5: OW, score:  -160, punten   4    29% Tegenpaar (B5): paar 17
 Spel  6: OW, score:  -160, punten   2    14%
@@ -5102,7 +5159,7 @@ Spel 26: NZ, score:   140, punten   8    57%
 Spel 27: NZ, score:   140, punten   8    57%
 Spel 28: NZ, score:    50, punten   4    29% set-score: 31  (55%)
 
-aantal punten: 173   (336), eindscore: 51.49%, rang: 8
+aantal punten: 173   (336), spellen: 24, zittingscore: 51.49%, rang: 8
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -5120,6 +5177,7 @@ scoreNZ NZ    OW
      0   5     9   
   -120   2    12   
   -160   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2      0         A4   A7    130         A5   A3   -120       
   A6   A8     70         B1   B2    210         B3   B9    140       
@@ -5142,6 +5200,7 @@ scoreNZ NZ    OW
      0   4    10   
   -120   2    12   
   -160   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
   A6   A8     80         B1   B2    230         B3   B9    140       
@@ -5164,6 +5223,7 @@ scoreNZ NZ    OW
      0   4    10   
   -120   2    12   
   -160   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
   A6   A8     90         B1   B2    240         B3   B9    140       
@@ -5187,6 +5247,7 @@ scoreNZ NZ    OW
   -120   3    10   
   -160   1    12   
   -620   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     80         A4   A7    130         A5   A3   -120       
   A6   A8    %80,R620    B1   B2    260         B3   B9    140       
@@ -5208,6 +5269,7 @@ scoreNZ NZ    OW
   -100   5     9   
   -140   2    12   
   -600   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5   -100         A2   A8   -100         A3   A4     90       
   A6   A7    300         B1   B7   -140         B2   B9   -600       
@@ -5229,6 +5291,7 @@ scoreNZ NZ    OW
   -140   4    10   
   -600   2    12   
   -800   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    100         A2   A8   -100         A3   A4    100       
   A6   A7   -600         B1   B7   -140         B2   B9   -800       
@@ -5251,6 +5314,7 @@ scoreNZ NZ    OW
   -140   4    10   
   -150   2    12   
  -1000   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    150         A2   A8   -100         A3   A4    110       
   A6   A7   -150         B1   B7   -140         B2   B9  -1000       
@@ -5274,6 +5338,7 @@ scoreNZ NZ    OW
   -100   5     9   
   -140   3    11   
  -1100   1    13   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    200         A2   A8   -100         A3   A4    120       
   A6   A7    %70,%70     B1   B7   -140         B2   B9  -1100       
@@ -5295,6 +5360,7 @@ scoreNZ NZ    OW
    -50   5     9   
   -150   2    12   
   -180   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -180         A3   A1    100         A4   A8     70       
   A5   A6    130         B2   B7    -50         B3  B10   -150       
@@ -5316,6 +5382,7 @@ scoreNZ NZ    OW
    -70   4    10   
   -150   2    12   
   -190   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -190         A3   A1    200         A4   A8     90       
   A5   A6    140         B2   B7      0         B3  B10   -150       
@@ -5338,6 +5405,7 @@ scoreNZ NZ    OW
    -80   4    10   
   -150   2    12   
   -200   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -200         A3   A1    300         A4   A8    100       
   A5   A6    150         B2   B7     90         B3  B10   -150       
@@ -5361,6 +5429,7 @@ scoreNZ NZ    OW
   -150   4     9   
   -210   2    11   
   -630   0    13   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -210         A3   A1    %40,%40     A4   A8    110       
   A5   A6    160         B2   B7    %60,R630    B3  B10   -150       
@@ -5382,6 +5451,7 @@ scoreNZ NZ    OW
    130   4    10   
    110   2    12   
   -270   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1    200         A6   A3   -270       
   A7   A8    170         B1  B10    130         B4   B2    800       
@@ -5404,6 +5474,7 @@ scoreNZ NZ    OW
    140   4    10   
    110   2    12   
   -280   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1    300         A6   A3   -280       
   A7   A8    180         B1  B10    140         B4   B2    200       
@@ -5426,6 +5497,7 @@ scoreNZ NZ    OW
    110   4    10   
   -300   2    12   
   -500   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -300       
   A7   A8    190         B1  B10    150         B4   B2    300       
@@ -5448,6 +5520,7 @@ scoreNZ NZ    OW
    110   4     9   
   -340   2    11   
   -500   0    13   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -340       
   A7   A8    200         B1  B10    160         B4   B2    300       
@@ -5470,6 +5543,7 @@ scoreNZ NZ    OW
   -150   4    10   
   -420   2    12   
  -1200   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -140         A3   A2    150         A4   A6   -110       
   A7   A5   -420         B5   B4  -1200         B6   B1   -150       
@@ -5491,6 +5565,7 @@ scoreNZ NZ    OW
   -150   4    10   
   -420   2    12   
   -800   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -150         A3   A2    150         A4   A6   -110       
   A7   A5   -420         B5   B4    300         B6   B1   -800       
@@ -5513,6 +5588,7 @@ scoreNZ NZ    OW
   -120   4    10   
   -160   2    12   
   -600   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -160         A3   A2    170         A4   A6   -110       
   A7   A5    420         B5   B4    400         B6   B1   -600       
@@ -5534,6 +5610,7 @@ scoreNZ NZ    OW
   -120   6     8   
   -130   4    10   
   -170   1    13   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -170         A3   A2   -170         A4   A6   -110       
   A7   A5    620         B5   B4    500         B6   B1   -120       
@@ -5556,6 +5633,7 @@ scoreNZ NZ    OW
    100   4    10   
     50   2    12   
   -170   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4     50         A5   A8    160       
   A7   A3    120         B4   B1    150         B5   B2   -170       
@@ -5577,6 +5655,7 @@ scoreNZ NZ    OW
   -120   4    10   
   -160   2    12   
   -170   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4    100         A5   A8   -160       
   A7   A3    130         B4   B1    150         B5   B2   -170       
@@ -5599,6 +5678,7 @@ scoreNZ NZ    OW
   -160   4    10   
   -170   2    12   
   -200   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4   -200         A5   A8   -160       
   A7   A3    140         B4   B1    150         B5   B2   -170       
@@ -5618,6 +5698,7 @@ scoreNZ NZ    OW
   -110   0    10   
   -170   2    12   
   -300   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4   -300         A5   A8   R150,R110  
   A7   A3    150         B4   B1    150         B5   B2   -170       
@@ -5639,6 +5720,7 @@ scoreNZ NZ    OW
    110   4    10   
   -130   2    12   
   -230   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -230         A6   A2    110       
   A7   A1   -130         B3   B2    140         B5   B1    150       
@@ -5659,6 +5741,7 @@ scoreNZ NZ    OW
    120   5     9   
   -130   2    12   
   -240   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -240         A6   A2    120       
   A7   A1   -130         B3   B2    150         B5   B1    150       
@@ -5681,6 +5764,7 @@ scoreNZ NZ    OW
    120   4    10   
   -130   2    12   
   -250   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -250         A6   A2    130       
   A7   A1   -130         B3   B2    160         B5   B1    150       
@@ -5702,6 +5786,7 @@ scoreNZ NZ    OW
     50   4    10   
   -130   2    12   
   -260   0    14   
+
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -260         A6   A2    140       
   A7   A1   -130         B3   B2    170         B5   B1    150       

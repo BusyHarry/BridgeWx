@@ -83,6 +83,7 @@ namespace  org
             smKeyToString[KEY_MATCH_GLOBALNAMES]    = "centrale_namen";         //??
             smKeyToString[KEY_SESSION_DISCR]        = "beschrijving";
             smKeyToString[KEY_MATCH_DISCR]          = "beschrijving";
+            smKeyToString[KEY_MATCH_BUTLER]         = "butler";
             smKeyToString[KEY_SESSION_SCHEMA]       = "schema";
             smKeyToString[KEY_SESSION_GROUPLETTERS] = "groepletters";           //??
             smKeyToString[KEY_SESSION_FIRSTGAME]    = "eerste_spel";            //??
@@ -946,6 +947,7 @@ namespace  org
             return false;
         }
 
+        // newer versions have also a <games> value, used for butler calculation. We ignore this in an old config!
         file.AddLine(_(";<correction><type> <session pairnr> <extra.1> <max extra> <pairname>"));    // content description/spec
         for (const auto& it : a_correctionsSession)
         {
@@ -995,6 +997,7 @@ namespace  org
             cs.extra = AsciiTolong(extraBuf);
             if (IsValidCorrectionSession(sessionPairnr, cs, str, bEntryError))
             {   // add info to map
+                cs.games = cs.maxExtra ? 4 : 0;  // we need/use this for butler. Assume a default setsize of 4
                 a_correctionsSession[sessionPairnr] = cs;
             }
             else

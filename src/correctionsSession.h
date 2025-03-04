@@ -25,10 +25,12 @@ protected:
     void        DoSearch        (wxString&       string  ) override final;
     bool        OnCellChanging  (const CellInfo& cellInfo) override final;
     virtual void BackupData     () override final;  // called if active panel is about to be hidden. You may save changed data!
+    void        InitButlerProcent();    // init columns for butler or percentage calculation
 
 private:
 
     MyGrid*     m_theGrid;
+    bool        m_bButler;          // true, if columns are setup for butler calculation
     bool        m_bDataChanged;     // 'something' changed in grid
 
     enum
@@ -40,6 +42,7 @@ private:
         , COL_COR_MP                        // correctionin MP
         , COL_COR_MAX                       // maximum correction ....
         , COL_COR_EXTRA                     // extra corrrection.....
+        , COL_COR_GAMES                     // nr of games for max/extra
         , COL_NR_OF                         // nr of columns in this grid
     };
 };

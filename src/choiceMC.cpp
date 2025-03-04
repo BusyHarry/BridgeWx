@@ -381,7 +381,7 @@ void ChoiceMC::SetPopupWidth(int a_size)
     {
         m_popupWidth = a_size;
         SetPopupMinWidth(m_popupWidth);
-        IF_TEST MyLogDebug(_("ChoiceMC::SetPopupWidth() size=%i, cols=%u, breedte=%i"),a_size,m_nrOfColumns, m_currentColumnWidth);
+        IF_TEST MyLogDebug(_("ChoiceMC::SetPopupWidth() size=%i, columns=%u, width=%i"),a_size,m_nrOfColumns, m_currentColumnWidth);
     }
 }   // SetPopupWidth()
 

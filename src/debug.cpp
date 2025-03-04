@@ -19,20 +19,14 @@
 
 /*
 * according 'bard'/'gemini
-
-Gidsbriefje:
-    Convention card
-    Bidding card
-    Cue card
-Richting:
-    Direction, Side: We spelen in de Noord-Zuid richting." - "We are playing in the North-South direction."
-Ronde:
-    Round, deal, hand
-    Deal
-Tegenstander:
-    Opponent, Declarer's opponent
-    Adversary
+Systeemkaart: Convention card
+Gidsbriefje : Bidding card, Cue card, Movements card
+Richting    : Direction, Side: We spelen in de Noord-Zuid richting." - "We are playing in the North-South direction."
+Ronde       : Round, deal, hand Deal
+Tegenstander: Opponent, Declarer's opponent, Adversary
+Leider      : Declarer
 meer:
+    spel            : board (game?)
     Troefkleur      : Trump suit
     Bieden          : Bidding
     Spelverdeler    : Dealer
@@ -42,6 +36,17 @@ meer:
     sitlzit tafel   : Sit-out table or Dummy table
     Spellen lenen   : Borrow the cards from a table, Take the cards from a table
     frequentiestaat : frequency state or "hand distribution"
+    reken programma : scoring program
+    stilzit         : a bye
+    scoreslips      : result slips/scorecard, traveler(s)
+    arbitrale score : referee/artificial score, adjusted score
+    totaal-uitslag  : end score, total score, final score, competition result
+
+Board: https://en.wikipedia.org/wiki/Glossary_of_contract_bridge_terms
+ 1- One particular allocation of 52 cards to the four players including the bidding, the play of the cards and the scoring based on those cards. Also called deal or hand.
+ 2- A device that keeps each player's cards separate for duplicate bridge.
+ 3- The dummy's hand. For example, "You're on the board" means "The lead is in the dummy".
+
 * 
 */
 static const wxString ssDbg = "dbg";
@@ -977,8 +982,9 @@ void Debug::InitGuideStuff()
     if (choices.size() == 1 && choices[0].IsEmpty()) choices[0] = "1";  // 'just' show group "1" for the one and only group!
     m_pGroupChoice->Init(choices, m_group-1);
 
-    m_pPairChoice->Init(m_pairs, 1);    // set selection to second item: first one will be 'all'
+    m_pPairChoice->Init(m_pairs, 0);
     m_pPairChoice->InsertItem(0, _("all"));
+    m_pPairChoice->SetSelection(1);     // set selection to second item: first one will be 'all'
     m_pConsole->Clear(false);
 }   // InitGuideStuff()
 
@@ -1030,7 +1036,7 @@ wxString Debug::SetToGamesAsString(UINT set, bool bWide)
 
     UINT offset = cfg::GetFirstGame()-1;
     UINT setSize = cfg::GetSetSize();
-    return FMT(bWide ? "%2u - %-2u" : "%2u-%2u", offset + (set - 1) * setSize + 1, offset + set * setSize);
+    return FMT(bWide ? "%2u - %-2u" : "%2u-%-2u", offset + (set - 1) * setSize + 1, offset + set * setSize);
 }   // SetToGamesAsString()
 
 UINT Debug::GetOpponent(UINT pair, UINT round)
@@ -1052,7 +1058,7 @@ wxString Debug::GetBorrowTableAsString(UINT a_table, UINT a_round)
 {
     UINT table = m_schema.GetBorrowTable( a_table, a_round);
     if (table == 0) return "  ";    // no borrowing
-    //xgettext:TRANSLATORS: L: table to Borrow games from (same games on different tables)
+    //xgettext:TRANSLATORS: 'B' -> table to 'B'orrow games from (same games on different tables)
     return FMT(_("B%u"), table);
 }   // GetBorrowTableAsString()
 
@@ -1950,8 +1956,9 @@ void Debug::PrintScoreSlips(UINT a_setSize, UINT a_firstSet, UINT a_nrOfSets, UI
         , {{SL_H2+2, SL_V0+2}  , _("Game"       )}
         , {{SL_H3+4, SL_V0+1}  , _("Contract"   )}
         , {{SL_H3+3, SL_V0+2}  , _("NS       EW")}
-        , {{SL_H5+1, SL_V0+2}  , _(" Result"  )}
-        , {{SL_H6+2, SL_V0+2}  , _("Score NS + or -")}
+        //xgettext:TRANSLATORS: text centered in 9 characters
+        , {{SL_H5+1, SL_V0+2}  , _(" Result  "  )}
+        , {{SL_H6+2, SL_V0+2}  , _("NS score + or -")}
     };
     size_t textCount = ARRAY_LEN(texts);
 
@@ -2107,7 +2114,7 @@ void Debug::PrintGuideNew(UINT a_pair)
         tableInfo.textsV.clear();   // only dynamic texts change per pair, so clear them
         // now build the dynamic parts
         tableInfo.textsV.push_back({{G_H0+0,G_V0+0}, names::PairnrSession2GlobalText(pair+m_pActiveGroupInfo->groupOffset)});
-        tableInfo.textsV.push_back({{G_H0+2,G_V1+1}, FMT(_("Pair %-2u               %2u pairs"), pair, m_pairs)});
+        tableInfo.textsV.push_back({{G_H0+2,G_V1+1}, FMT(_("Pair %2s%-2u             %2u pairs"), m_pActiveGroupInfo->groupChars, pair, m_pairs)});
         for (UINT round = 1; round <= m_rounds; ++round)
         {
             tableInfo.textsV.push_back({{G_H0+1,G_V3+(int)round}, FMT("%2u", round)});  //ronde

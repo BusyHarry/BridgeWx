@@ -101,7 +101,6 @@ public:
     virtual int OnExit();
     void InitLanguage();        // setup the language
     void ReInitLanguage();      // re-setup the language AND the mainframe/topwindow
-    MyFrame* GetMainFrame(){return m_pMainFrame;}
 private:
     MyFrame*  m_pMainFrame;
     wxLocale* m_pLocale;
@@ -482,8 +481,9 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     , m_oldId       { 0 }
 {   // remark: wxFrame() MUST be initialized in constructor, not in its body: it will not be (for sure) the first toplevel window!
 
-    MyLogSetLevel(MyLogLevel::MyLOG_Max);
-    m_myLogger.SetCallbackOnHide(&UncheckLogMenu);
+    MyLog::SetLevel(MyLog::Level::LOG_Max);
+    MyLog::SetMainFrame(this);
+    MyLog::SetCallbackOnHide(&UncheckLogMenu);
     // autotest init
     m_pMyEventCatcher = nullptr;
     if (cfg::IsScriptTesting())
@@ -507,11 +507,14 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     }
 
     // check if cmdline has fontscaling setting 'q'
+    float scale = 1.0;
     UINT fontIncrease = cfg::GetFontsizeIncrease();
     if (fontIncrease)
     {
-        float factor = 1.0 + fontIncrease/100.0;
-        this->SetFont(GetFont().Scale(factor));    // only sub-frames have adapted fonts, menu's don't change: system settings
+        scale = 1.0 + fontIncrease/100.0;
+        this->SetFont(GetFont().Scale(scale));      // only sub-frames have adapted fonts, menu's don't change: system settings
+        MyLogDebug("Setting scalefactor to %3.1f", scale);
+        MyLog::FontScale(scale);                    // also scale logwindow: it was created earlier
     }
 
     // Set default size of mainwindow
@@ -524,14 +527,14 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     int maxX = displayRect.width;
     int maxY = displayRect.height;
     int hSize = (maxX * HSIZE_WANTED + 1536/2)/1536;
-        hSize = (hSize *(100+fontIncrease)+50)/100;
+        hSize = hSize * scale;
         hSize = std::min(hSize,maxX);
     int vSize = (maxY * VSIZE_WANTED +  821/2)/ 821;
-        vSize = (vSize *(100+fontIncrease)+50)/100;
+        vSize = vSize * scale;
         vSize = std::min(vSize,maxY);
 
-    hSize = FromDIP(HSIZE_WANTED);
-    vSize = FromDIP(VSIZE_WANTED);
+    hSize = std::min(FromDIP(HSIZE_WANTED*scale), maxX-20);
+    vSize = std::min(FromDIP(VSIZE_WANTED*scale), maxY-20);
     SetSize({hSize,vSize});
 
     static wxPoint pos{ {0,0} };
@@ -572,7 +575,7 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     
     
     wxMenu *menuScores = new wxMenu;
-    menuScores->Append(ID_MENU_SCORE_ENTRY      , _("s&Cores"            ), _("Entry/change of scores"             ));
+    menuScores->Append(ID_MENU_SCORE_ENTRY      , _("s&Core-entry"       ), _("Entry/change of scores"             ));
     menuScores->Append(ID_MENU_COR_ENTRY_SESSION, _("&Sessioncorrections"), _("Entry/change of session corrections"));
     menuScores->Append(ID_MENU_COR_ENTRY_END    , _("&Endcorrections"    ), _("Entry/change of end corrections"    ));
     menuScores->Append(ID_MENU_CALC_SCORES      , _("&Results"           ), _("Calculation of session/end result"  ));
@@ -863,7 +866,7 @@ void MyFrame::OnLogging(wxCommandEvent&)
 {   // show/hide a logwindow 
     AUTOTEST_BUSY("log");
     bool bShow = m_pMenuBar->IsChecked(ID_MENU_LOG);
-    MyLogShow(bShow);   // my own logger --> made this before I knew the wxLogWindow :(
+    MyLog::Show(bShow); // my own logger --> made this before I knew the wxLogWindow :(
     SetFocus();         // stay with me...
 }   // OnLogging()
 
@@ -872,7 +875,7 @@ void MyFrame::OnLanguage(wxCommandEvent&)
     wxArrayString   names;
     wxArrayInt      identifiers;
     GetInstalledLanguages(names, identifiers);
-    int index = wxGetSingleChoiceIndex(_("Choose a language (and restart)"), _("Language selection"), names);
+    int index = MyGetSingleChoiceIndex(_("Choose a language (and restart)"), _("Language selection"), names, this);
     if (index < 0) return;  // cancel pressed
 
 

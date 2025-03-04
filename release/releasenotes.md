@@ -1,5 +1,4 @@
 # Releasenotes
-
 #V10.4.0 ....
  - updated AutoHotkey64.exe from version 2.0.18 to 2.0.19
  - changed some bad-english words to 'better' ones (arbitrairy score -> adjusted score)
@@ -17,7 +16,7 @@
      - BusyBox
      - size of mainframe
 
-#V10.3.0  Januari 20, 2025:
+#V10.3.0  Monday Januari 20 2025:
  - adaptation from c++17 to c++20
    - logical '|' not allowed between different enums (intensionally used in wxSizers)
    - result values of the '?' operator should have equal type

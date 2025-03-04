@@ -1,5 +1,6 @@
 # Releasenotes
-#V10.4.0 ....
+
+#V10.4.0 Tuesday 4 March 2025
  - updated AutoHotkey64.exe from version 2.0.18 to 2.0.19
  - changed some bad-english words to 'better' ones (arbitrairy score -> adjusted score)
  - refactored the MyLog class

@@ -16,9 +16,6 @@ namespace score
 
 static constexpr int    CURRENT_TYPE    = 1;        // version of datastorage
 
-static void ReadScoresFromDisk();
-static void WriteScoresToDisk();
-
 UINT GetNumberOfGamesPlayedByGlobalPair(UINT a_globalPairnr)
 {
     ReadScoresFromDisk();
@@ -307,4 +304,58 @@ int Procentscore2Procent(int score)
 {
     return score - OFFSET_PROCENT;
 }   // Procentscore2Procent()
+
+bool ExistGameData()
+{
+    for (const auto& gamesData : svGameSetData)
+    {   // for all games
+        if (gamesData.size())
+            return true;
+    }
+
+    return false;
+}   // ExistGameData()
+
+bool AdjustPairNrs(UINT a_fromPair, int a_delta)
+{
+    bool bChanged = false;
+    for (auto& gamesData : svGameSetData)
+    {   // for all games
+        for (auto& score : gamesData)
+        {   // for all scores
+            if (score.pairNS >= a_fromPair)
+            {
+                score.pairNS += a_delta;
+                bChanged = true;
+            }
+            if (score.pairEW >= a_fromPair)
+            {
+                score.pairEW += a_delta;
+                bChanged = true;
+            }
+        }
+    }
+
+    return bChanged;
+}   // AdjustPairnr()
+
+bool DeleteScoresFromPair(UINT a_pair)
+{
+    bool bDeleted = false;
+    for (auto& gamesData : svGameSetData)
+    {   // for all games
+        for ( auto score = gamesData.begin(); score!= gamesData.end(); ++score)
+        {   // for all scores in this game
+            if ((score->pairNS == a_pair) || (score->pairEW == a_pair))
+            {
+                gamesData.erase(score);
+                bDeleted = true;
+                break;  // pair can only be found once for a certain game...
+            }
+        }
+    }
+
+    return bDeleted;
+}   // DeleteScoresFromPair()
+
 }   // end namespace score

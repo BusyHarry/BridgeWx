@@ -71,6 +71,7 @@ private:
     void        ShowChoice              ();
     long        GetSetResult            (UINT pair, UINT firstGame, UINT nrOfGames, UINT* pGamesPlayed = nullptr);  // get earned match-points for wanted games
     wxString    GetGroupResultString    (UINT pair, const std::vector<UINT>* a_pIndex = nullptr, bool bSession = false);    // get groupstring or rank in group "BLYEGR" / " . 1 ."
+    bool        FindBadGameData         (); // return true if invalid pairnrs found in gamedata
 
 //    wxTextCtrl* m_pTextBox;
     wxListView* m_pListBox;
@@ -84,8 +85,12 @@ private:
     MyTextFile  m_txtFileResultClubSession;
     MyTextFile  m_txtFileResultPair;            // result for a pair
     MyTextFile  m_txtFileResultGame;            // result for a game
+    wxString    m_txtBadGameData;               // info on bad gamedata
+    UINT        m_numberOfSessionPairs;         // sum of pairs in all groups
+
     bool        m_bSomeCorrection;
     bool        m_bButler;
+    bool        m_bBadGameData;     // some bad pairnrs in gamedata
     UINT        m_maxPair;          // highest pairnr played in this session
     UINT        m_maxGame;          // highest gamenr
     long        m_findPos;          // start  searching in listbox from this line

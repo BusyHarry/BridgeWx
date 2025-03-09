@@ -283,6 +283,7 @@ void CalcScore::ShowChoice()
 void CalcScore::RefreshInfo()
 {
     m_bButler = cfg::GetButler();   // update flag
+    m_numberOfSessionPairs = cfg::GetNrOfSessionPairs();
     InitializeAndCalcScores();
     // initalize the result-choices
     wxArrayString choices = {_("session"), _("session on name"), _("frequencytables"), _("group")};
@@ -328,6 +329,10 @@ void CalcScore::RefreshInfo()
     m_pGameSelect->Init(score::GetNumberOfGames(), (0U-1U));
     cfg::FLushConfigs();            // write all to disk
     Layout();
+    if (FindBadGameData())
+    {   // show messagebox on top of the result
+        CallAfter([this] {MyMessageBox(m_txtBadGameData, _("ERROR")); });
+    }
 }   // RefreshInfo()
 
 void CalcScore::PrintPage()
@@ -408,7 +413,7 @@ void CalcScore::CalcSession()
     svFrequencyInfo.clear();
     svFrequencyInfo.resize(m_maxGame+1ULL);                        
     svSessionResult.clear();
-    svSessionResult.resize(cfg::GetNrOfSessionPairs()+1ULL);
+    svSessionResult.resize(m_numberOfSessionPairs+1ULL);
     svGameTops.resize(m_maxGame+1ULL);
     if (m_bButler)
     {
@@ -465,6 +470,9 @@ void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
     std::vector<int> tmpScores;
     for ( auto it : (*spvGameSetData)[game])
     {
+        if (it.pairNS > m_numberOfSessionPairs || it.pairEW > m_numberOfSessionPairs)
+            continue;   // just ignore scores with a bad pair involved
+
         int score = bNs ? it.scoreNS : it.scoreEW;
         score = score::Score2Real(score);   //we only want/need real scores or %
         tmpScores.push_back(score);
@@ -534,8 +542,10 @@ void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
 
     // now update scores for pairs
 
-    for ( auto it : (*spvGameSetData)[game])
+    for ( const auto& it : (*spvGameSetData)[game])
     {   // update totals for each pair that played this game
+        if (it.pairNS > m_numberOfSessionPairs || it.pairEW > m_numberOfSessionPairs)
+            continue;   // just ignore scores with a bad pair involved
         UINT pair = bNs ? it.pairNS  : it.pairEW;
         int score = bNs ? it.scoreNS : it.scoreEW;
         score = score::Score2Real(score);   //we only want/need real scores or %
@@ -552,13 +562,11 @@ void CalcScore::CalcGameButler(UINT a_game, bool a_bNs)
     UINT sets = (*spvGameSetData)[a_game].size();
     if (sets == 0) return;      // nothing to do, not played yet
 
-    UINT8 maxPair = 0;
     std::vector<int> tmpScores;
     for ( auto it : (*spvGameSetData)[a_game])
     {
-        maxPair = std::max(maxPair, it.pairNS);
-        maxPair = std::max(maxPair, it.pairEW);
-
+        if (it.pairNS > m_numberOfSessionPairs || it.pairEW > m_numberOfSessionPairs)
+            continue;   // just ignore scores with a bad pair involved
         int score = a_bNs ? it.scoreNS : it.scoreEW;
         if (!score::IsProcent(score))
         {   //we only want/need real scores, percent-scores will be converted to imps lateron
@@ -598,6 +606,8 @@ void CalcScore::CalcGameButler(UINT a_game, bool a_bNs)
     // now determine the mps for all boards/players
     for (auto it : (*spvGameSetData)[a_game])
     {
+        if (it.pairNS > m_numberOfSessionPairs || it.pairEW > m_numberOfSessionPairs)
+            continue;   // just ignore scores with a bad pair involved
         auto pair = a_bNs ? it.pairNS  : it.pairEW;
         auto score= a_bNs ? it.scoreNS : it.scoreEW;
 
@@ -939,7 +949,7 @@ void CalcScore::ApplySessionCorrections(void)
         else
             svSessionResult[pair].procentScore = correctionProcent + RoundLong(1000L*svSessionResult[pair].points, svSessionResult[pair].maxScore);
     }
-    m_maxPair = std::min(m_maxPair, cfg::GetNrOfSessionPairs());    // no more then we have active players!
+    m_maxPair = std::min(m_maxPair, m_numberOfSessionPairs);    // no more then we have active players!
     svSessionRankToPair.resize(m_maxPair+1ULL);
     std::iota (svSessionRankToPair.begin(), svSessionRankToPair.end(), 0); // Fill with 0, 1, ..., i.e. non-sorted! 0->0, 1->1 etc
     std::sort(svSessionRankToPair.begin()+1, svSessionRankToPair.begin()+m_maxPair+1,
@@ -1076,7 +1086,7 @@ void CalcScore::SaveSessionResultShort()
                 // remark: no scoring-data lost!
                 wxString infoMsg = wxString::Format(_("Pair '%s' has played, but was NOT assigned to a global name"), names::PairnrSession2SessionText(pair));
                 MyLogError("%s", infoMsg);  // log as error!
-                MyMessageBox(infoMsg, _("Warning"));
+                CallAfter([infoMsg] {MyMessageBox(infoMsg, _("Warning")); });
                 continue;
             }
             cor::CORRECTION_END ce;
@@ -1717,3 +1727,37 @@ void CalcScore::CalcButlerFkw(UINT a_game)
         );
 
 }   //CalcButlerFkw()
+
+bool CalcScore::FindBadGameData()
+{   // check if there are pair numbers greater then max number of players according schema
+    // calculation of the results would assert (invalid array-index)
+    bool bBadGameData= false;
+    m_txtBadGameData = _("In game results:\n\n");
+    std::vector<UINT> badPairs;
+#define CHECK_PAIR(pair) \
+        if ( (pair > m_numberOfSessionPairs) && badPairs.end() == std::find(badPairs.begin(), badPairs.end(), pair )) \
+        {\
+            m_txtBadGameData += FMT(_("Pairnr out of range:%3u, score(s) found for this pair.\n"), pair);\
+            badPairs.push_back(pair);\
+            bBadGameData = true;\
+        }
+
+    for (const auto& gamesData : (*spvGameSetData))
+    {   // for all games
+        for (const auto& result : gamesData)
+        {   // for all gameresults
+            CHECK_PAIR(result.pairNS);
+            CHECK_PAIR(result.pairEW);
+        }
+    }
+
+    if (bBadGameData)
+    {
+        m_txtBadGameData +=     _("\nDid you lower the number of players in any group?");
+        m_txtBadGameData += FMT(_("\nMaximum pair nr: %u (== sum of pairs in all groups)."), m_numberOfSessionPairs);
+        m_txtBadGameData +=     _("\nBetter remove scores of pairs you want to remove.");
+        m_txtBadGameData +=     _("\nResults are NOT reliable!");
+    }
+    return bBadGameData;
+#undef CHECK_PAIR
+}   // CheckGameData()

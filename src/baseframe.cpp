@@ -81,7 +81,7 @@ bool Baseframe::OnCellChanging(const CellInfo& a_cellInfo)
                             , a_cellInfo.oldData
                             , a_cellInfo.newData
                 );
-        wxMessageBox(msg);
+        MyMessageBox(msg);
     }
 
     return CELL_CHANGE_OK;   // ok, by default we accept the change

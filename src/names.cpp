@@ -115,15 +115,19 @@ static void XformPairnrFromSession2GlobleVicaVersa(const UINT_VECTOR& a_src, UIN
     if (size) a_dst[0] = 0; // for un-assigned pairs
 }   // XformPairnrFromSession2GlobleVicaVersa()
 
-void WriteAssignmentsToDisk(const UINT_VECTOR& a_newGlobalAssignments)
+void WriteAssignmentsToDisk()
 {
-    if (svuPairnrGlobal2Session == a_newGlobalAssignments) return;
-
     (void)ConfigChanged(true);  // refresh config
-    svuPairnrGlobal2Session = a_newGlobalAssignments;
     XformPairnrFromSession2GlobleVicaVersa(svuPairnrGlobal2Session, svuPairnrSession2Global);
     WriteSession2GlobalIds();
     SessionNamesWrite();
+}   // WriteAssignmentsToDisk()
+
+void WriteAssignmentsToDisk(const UINT_VECTOR& a_newGlobalAssignments)
+{
+    if (svuPairnrGlobal2Session == a_newGlobalAssignments) return;
+    svuPairnrGlobal2Session = a_newGlobalAssignments;
+    WriteAssignmentsToDisk();
 }   // WriteAssignmentsToDisk()
 
 void SetRestorePoint()
@@ -490,5 +494,44 @@ void InitializePairNames()
     ReadPairNames();
     ReadSession2GlobalIds();
 }   // InitializePairNames()
+
+bool AdjustAssignments(UINT a_fromPair, int a_delta)
+{
+    bool bChange = false;
+    for (UINT pair = 1; pair < svuPairnrGlobal2Session.size(); ++pair)
+    {
+        UINT sessionPair = svuPairnrGlobal2Session[pair];
+        if (sessionPair >= a_fromPair)
+        {
+            svuPairnrGlobal2Session[pair] = sessionPair + a_delta;
+            bChange = true;
+        }
+    }
+    return bChange;
+}   // AdjustAssignments()
+
+bool DeleteAssignmentFromPair(UINT a_sessionPair)
+{
+    if (a_sessionPair < svuPairnrSession2Global.size())
+    {
+        UINT globalPair = svuPairnrSession2Global[a_sessionPair];   // can be 0
+        if (svuPairnrGlobal2Session[globalPair])
+        {
+            svuPairnrGlobal2Session[globalPair] = 0;
+            return true;
+        }
+    }
+    return false;
+}   // DeleteAssignmentFromPair()
+
+bool ExistAssignments()
+{
+    for (auto sessionPair : svuPairnrGlobal2Session)
+    {
+        if (sessionPair)
+            return true;
+    }
+    return false;
+}   // ExistAssignments()
 
 }   //  end namespace names

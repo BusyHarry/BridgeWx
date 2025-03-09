@@ -79,6 +79,8 @@ namespace score
         , ScoreInvalid  // incorrect score
         , ScoreSpecial  // possible score, but highly unexpected like 6 down
     };
+    void                ReadScoresFromDisk  ();
+    void                WriteScoresToDisk   ();
     const vvScoreData*  GetScoreData        ();                     // get a ptr to the current scores
     void                SetScoreData        (const vvScoreData&);   // update the scores (write to disk)
     UINT                GetNumberOfGames    (const vvScoreData* a_scoreData = nullptr);                     // highest gamenr that is played in a session
@@ -92,6 +94,9 @@ namespace score
     int                 Score2Real          (int score);            // make adjusted real score into real score
     int                 Procentscore2Procent(int score);            // convert aribitrairy score to 0<=value<=100
     UINT                GetNumberOfGamesPlayedByGlobalPair(UINT globalPairnr);
+    bool                ExistGameData       ();                     // true, if there is atleast one score entered
+    bool                AdjustPairNrs       (UINT fromPair, int delta); // adjust all pairnrs in the scoredata starting from 'frompair' with 'delta', return true if one or more changes
+    bool                DeleteScoresFromPair(UINT sessionPair);     // delete all scores for 'pair', return true if anything deleted
 
 }      // end of namespace score
 #endif

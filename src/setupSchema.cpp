@@ -13,6 +13,8 @@
 #include "schemaInfo.h"
 #include "setupSchema.h"
 #include "printer.h"
+#include "score.h"
+#include "names.h"
 
 //#define MY_SIZE_STATIC_TEXT wxDefaultPosition, {150,-1}
 #define MY_SIZE_STATIC_TEXT wxDefaultPosition, {16*GetCharWidth(),-1}
@@ -199,6 +201,73 @@ void SetupSchema::BackupData()
         {
             if (it.groupChars == ES) it.groupChars = grp;
             ++grp;
+        }
+    }
+
+    // If the schema has changed, probably the best thing to do is clear all entered data and start clean.
+    // But we are stubborn, so we try to 'rescue' as much data as possible!
+    // now check if we already have scores and/or assignments. If so, try to adjust the data to be consistent
+    score::ReadScoresFromDisk();
+    names::InitializePairNames();
+    if (score::ExistGameData() || names::ExistAssignments())
+    {   // check if number of players has changed in any group, if so, update data
+        bool        bDataChanged = false;
+        const auto& oldGroupData = cfg::GetSessionInfo()->groupData;
+        UINT        oldSize      = oldGroupData.size();
+        UINT        newSize      = m_groupData.size();
+
+        for (UINT index = newSize; index < oldSize; ++index)
+        {   // group(s) removed, so remove all scores/assignments for the pairs in these groups
+            auto oldOffset = oldGroupData[index].groupOffset;
+            auto oldPairs  = oldGroupData[index].pairs;
+            for (UINT pair = 1; pair <= oldPairs; ++pair)
+            {
+                bDataChanged |= score::DeleteScoresFromPair    (pair + oldOffset);
+                bDataChanged |= names::DeleteAssignmentFromPair(pair + oldOffset);
+            }
+        }
+
+        UINT minSize = std::min(newSize, oldSize);
+        for (UINT index = 0; index < minSize; ++index)
+        {   // only need to check as many groups as the smallest item contains
+            auto    oldPairs    = oldGroupData[index].pairs;
+            auto    newOffset   = m_groupData[index].groupOffset;
+            auto    newPairs    = m_groupData[index].pairs;
+            int     deltaPairs  = newPairs - oldPairs;
+
+            if (deltaPairs < 0)
+            {   // less pairs in new group: remove scores/assignments of the removed pairs
+                for (UINT pair = oldPairs; pair > newPairs; --pair)
+                {
+                    bDataChanged |= score::DeleteScoresFromPair    (pair + newOffset);
+                    bDataChanged |= names::DeleteAssignmentFromPair(pair + newOffset);
+                }
+            }
+            if (deltaPairs)
+            {   // more/less pairs in group: adjust pairnrs in scores/assignments for next group(s)
+                UINT pair = newOffset + oldPairs + 1;   // first pairnr to change
+                bDataChanged |= score::AdjustPairNrs    (pair, deltaPairs);
+                bDataChanged |= names::AdjustAssignments(pair, deltaPairs);
+            }
+        }
+        if (bDataChanged)
+        {
+            wxString msg = _("scores/assignments adapted as result of changes in schema");
+            MyLogDebug("%s", msg);
+            //MyMessageBox(msg, _("schema"));
+            score::WriteScoresToDisk();
+            names::WriteAssignmentsToDisk();
+        }
+    }   // changed scores/assignments
+
+    for (const auto& group : m_groupData)
+    {
+        if (group.schemaId == schema::ID_NONE)
+        {
+            wxString msg = _("not all groups have a valid schema");
+            MyLogDebug("SetupSchema: %s", msg);
+            MyMessageBox( msg, _("Warning"));
+            break;
         }
     }
     cfg::SessionInfo si;

@@ -382,8 +382,10 @@ void ScoreEntry::RefreshInfo()
     if ( (m_uActiveGame < firstGame) || (m_uActiveGame >= nrOfGames + firstGame) )
         m_uActiveGame = firstGame;  // force inrange if firstgame was changed inbetween...
 
+    bool bMissingSchema = false;
     for (auto itGrp = pGrp->begin(); itGrp != pGrp->end(); ++itGrp)
     {   //GameInfo{UINT round=0; UINT set=0; NS_EW pairs;};
+        if (itGrp->schemaId == schema::ID_NONE) bMissingSchema = true;
         UINT pairBase   = itGrp->groupOffset;
         UINT pairAbsent = itGrp->absent+pairBase;
         if (m_bSlipOrder)
@@ -394,6 +396,7 @@ void ScoreEntry::RefreshInfo()
         {
             schema::GetSetInfo(itGrp->schemaId, 1+(m_uActiveGame-firstGame)/setSize, info);
         }
+
         for ( auto itSet = info.begin(); itSet != info.end(); ++itSet)
         {
             UINT        nsPair      = itSet->pairs.ns+pairBase;
@@ -483,6 +486,12 @@ void ScoreEntry::RefreshInfo()
     static wxString explanation;    // MUST be initialized dynamically: translation
     explanation = _("Scoreentry: normal: <score>, adjusted: '%'<score> or 'r'<score> or 'np'=not played");
     SendEvent2Mainframe(this, ID_STATUSBAR_SETTEXT, &explanation);
+    if (bMissingSchema)
+    {
+        wxString msg = _("not all groups have a valid schema");
+        MyLogDebug("ScoreEntry: %s", msg);
+        CallAfter([msg] {MyMessageBox(msg, _("Warning")); });   // show on top of entry screen
+    }
 }   // RefreshInfo()
 
 void ScoreEntry::OnOk()
@@ -541,7 +550,7 @@ void ScoreEntry::OnSwitchNsEw(wxCommandEvent& )
     m_theGrid->SetCellBackgroundColour(row, COL_EW, *wxRED );
     m_theGrid->Refresh();
     wxString msg = FMT(_("'%s-%s' exchange with '%s-%s', are you sure?\n\n "), ns, ew, nsNew, ewNew);
-    bool bNo = (wxNO == wxMessageBox( msg, _("wrong direction"), wxYES_NO |wxICON_QUESTION ));// wxICON_INFORMATION));
+    bool bNo = (wxNO == MyMessageBox( msg, _("wrong direction"), wxYES_NO |wxICON_QUESTION ));// wxICON_INFORMATION));
     m_theGrid->SetCellBackgroundColour(row, COL_NS, org);
     m_theGrid->SetCellBackgroundColour(row, COL_EW, org);
     m_theGrid->Refresh();

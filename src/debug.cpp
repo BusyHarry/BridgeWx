@@ -1780,7 +1780,8 @@ void Debug::GroupOverview()
     OUTPUT_TEXT(buf);
     if (m_tables < m_rounds)                        // only game definitions
     {
-        count = 0;
+        buf[0] = buf[1] = ' ';                      // 2 spaces offset for this line
+        count = 2;
         for (table = m_tables+1; table <= m_rounds; ++table)
             count += swprintf_s(buf+count, BUF_SIZE-count, L"%c: %2u-%-2u   ",
                 'A'-1+table, cfg::GetFirstGame()+(table-1)*setSize, cfg::GetFirstGame()+table*setSize -1);

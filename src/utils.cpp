@@ -14,6 +14,7 @@
 
 #include "utils.h"
 #include "cfg.h"
+#include "baseframe.h"
 
 const wxString ES;  // EmptyString
 
@@ -258,7 +259,7 @@ bool WriteFileBinairy(const wxString& a_file, void* a_buffer, UINT a_bufSize)
     if (!bOk)
     {
         LogMessage(a_file+sError);
-        wxMessageBox(a_file+_(": error wrting to file"));
+        MyMessageBox(a_file+_(": error writing to file"));
     }
 
     return bOk;
@@ -312,7 +313,7 @@ bool ReadFileBinairy(const wxString& a_file, void* a_buffer, UINT a_bufSize)
     if (!bOk)
     {
         LogError(a_file+sError);
-        wxMessageBox(a_file+_(": error reading file"));
+        MyMessageBox(a_file+_(": error reading file"));
     }
     return bOk;
 }   // ReadFileBinairy()

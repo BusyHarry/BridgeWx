@@ -62,8 +62,12 @@ namespace names
     bool                ValidateSessionPairName (wxString& name, UINT& sessionPair);        // validates a session pairname and returns the sessionpairnr
     void                GetSessionAssignmentsPrevious(wxArrayString& a_vPreviousAssignments); // get name-assignments of previous session
     void                WriteAssignmentsToDisk  (const UINT_VECTOR& newGlobalAssignments);  // update new assignments for this session
+    void                WriteAssignmentsToDisk  ();                                         // update new assignments for this session
     bool                ExistSessionPairWithClub();                                         // check if club involved in current session
     UINT                DetermineClubIndex(const wxString& club);                           // get clubindex for clubname
+    bool                AdjustAssignments(UINT fromPair, int delta); // adjust all pairnrs in the assignment table, starting from 'frompair' with 'delta', return true if one or more changes
+    bool                DeleteAssignmentFromPair(UINT sessionPair);  // remove assignment 'pair', return true if removed
+    bool                ExistAssignments();                          // true, if there is atleast one assignment
 
 }   // end namespace names
 

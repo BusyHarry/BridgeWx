@@ -6,6 +6,8 @@
 
 #include "schemaData.h"
 #include "schemaInfo.h"
+#include "MyLog.h"
+#include "importExportSchema.h"
 
 #define   SET(round,table) m_pSetData[((table)-1)*(m_rounds)+round-1]
 #define TABLE(round,pair)  m_pPairData[((pair)-1)*(m_rounds)+round-1]
@@ -20,7 +22,7 @@ namespace schema
         INT_VECTOR result;
 
         if (a_names) a_names->clear();
-        for (int ii = 0; schemaTable[ii]; ++ii)
+        for (int ii = 0; ii < schemaTable.size(); ++ii)
         {
             if ( (a_rounds == schemaTable[ii]->rounds) && (a_pairs == schemaTable[ii]->pairs) )
             {
@@ -34,7 +36,7 @@ namespace schema
 
     int GetId(const wxString& a_name)
     {
-        for (int ii = 0; schemaTable[ii]; ++ii)
+        for (int ii = 0; ii < schemaTable.size(); ++ii)
         {
             if ( a_name == schemaTable[ii]->name)
                 return ii;
@@ -45,7 +47,7 @@ namespace schema
 
     wxString GetName(int a_id)
     {
-        if (a_id < SCHEMA_NUM_ENTRIES)
+        if (a_id >= 0 && a_id < schemaTable.size())
             return schemaTable[a_id]->name;
 
         return wxEmptyString;
@@ -54,7 +56,7 @@ namespace schema
     UINT GetMaxRound()
     {
         UINT maxRound = 0;
-        for (int ii = 0; schemaTable[ii]; ++ii)
+        for (int ii = 0; ii < schemaTable.size(); ++ii)
         {
             if ( maxRound < schemaTable[ii]->rounds )
             {
@@ -77,6 +79,69 @@ namespace schema
         si.GetRoundInfo( a_round, a_bGameOrder, a_info);
     }   // GetRoundInfo()
 
+
+static class ImportCleanup
+{
+public:
+    ~ImportCleanup(){for (auto it : m_toClean){delete[] it;}}
+    void Add(char* pToClean){m_toClean.push_back(pToClean);}
+private:
+    std::vector<char*> m_toClean;
+} myCleanup;
+
+bool ImportSchema(const wxString& a_file, bool a_bDeleteDup)
+{
+    std::string     errorLine;
+    import::Schema  importSchema;
+    bool bResult = import::ReadFileSchemaDataNBB(a_file.ToStdString(), importSchema, errorLine);
+    if (!bResult)
+    {
+        wxString errorL(errorLine);
+        MyLogError("Error reading schema '%s' in line: '%s'", a_file, errorL);
+//        MyMessageBox(errorL, _("Error"));
+        return false;
+    }
+    // All ok, transform importdata to local data
+    // All tables/pairs/sets are within limits!
+    auto sSize= sizeof(SCHEMA_DATA) + sizeof(SchemaDataType)*importSchema.rounds*((size_t)importSchema.pairs+importSchema.tables);
+    char* tmp = new char [sSize]();
+    myCleanup.Add(tmp); // free data at program-exit
+    SCHEMA_DATA* schema = reinterpret_cast<SCHEMA_DATA*>(tmp);
+    schema->pairs = importSchema.pairs;
+    auto m_rounds = schema->rounds = importSchema.rounds;
+    auto tables   = schema->tables = importSchema.tables;
+    // having trouble with unfreed memory when using std::string for a name...
+    strncpy(schema->name, importSchema.schemaName.c_str(), SCHEMA_NAME_SIZE-1);
+    schema->name[SCHEMA_NAME_SIZE-1] = 0;
+    auto* m_pSetData    = schema->data;
+    auto* m_pPairData   = m_pSetData + (size_t)m_rounds*tables;
+
+    for ( UINT round = 1; round <= m_rounds; ++round)
+    {   // round 0 is a dummy
+        for (UINT table = 1; table <= tables; ++table)
+        {   // pair 0 is a dummy
+            const auto& info = importSchema.info[round][table];
+//            auto setOffset          = ((table)-1)*(m_rounds)+round-1; setOffset;
+//            auto tableNsOffset      = ((info.pairNS)-1)*(m_rounds)+round-1;tableNsOffset;
+//            auto tableEwOffset      = ((info.pairEW)-1)*(m_rounds)+round-1;tableEwOffset;
+            if (info.pairNS == 0)  continue;    // this table has no players this round
+            SET  (round,table)      = info.set;
+            TABLE(round,info.pairNS)= table;
+            TABLE(round,info.pairEW)= -(int)table;
+            // TODO: check if 'set' is in use on a lower table -> make it 'borrow from'
+        }   // table
+    }   // round
+
+    if (a_bDeleteDup)
+    {   // delete duplicates when importing manually
+        auto duplicate = std::find_if(schemaTable.begin(), schemaTable.end(), [schema](const auto left) {return 0 == strcmp(left->name, schema->name);});
+        if (duplicate != schemaTable.end())
+            schemaTable.erase(duplicate);
+    }
+    schemaTable.push_back(schema);  // we have a new schema!
+    return true;
+}   // ImportSchema()
+
 }   // end namespace schema
 
 SchemaInfo::SchemaInfo()
@@ -98,7 +163,7 @@ bool SchemaInfo::GetTableRoundInfo(UINT a_table, UINT a_round, schema::GameInfo&
     assert(a_table > 0 && a_table <= m_tables);
 
     bool         bResult = true;
-    signed char  set;
+    SchemaDataType  set;
 
     set = SET(a_round, a_table);
     if (set < 0) set = SET(a_round, -set);
@@ -141,12 +206,12 @@ void SchemaInfo::GetRoundInfo( UINT a_round, bool a_bGameOrder,  schema::vGameIn
 void SchemaInfo::GetSetInfo(UINT a_set, schema::vGameInfo& a_info) const
 {
     a_info.clear();
-    signed char theSet = static_cast<signed char> (a_set);
+    SchemaDataType theSet = static_cast<SchemaDataType> (a_set);
     for (UINT round = 1; round <= m_rounds; ++round)
     {
         for (UINT table = 1; table <= m_tables; ++table)
         {
-            signed char  set = SET(round, table);
+            SchemaDataType  set = SET(round, table);
             if (set < 0) set = SET(round, -set);
             if (set == theSet)
             {   // found requested set, store data
@@ -175,7 +240,7 @@ SchemaInfo::SchemaInfo(const wxString& name)
 
 void SchemaInfo::Init()
 {
-    if ((m_id < 0) || (m_id >= SCHEMA_NUM_ENTRIES))
+    if ((m_id < 0) || (m_id >= schemaTable.size()))
     {
         m_rounds        = m_tables = m_pairs = 0;
         m_pSetData      = m_pPairData = nullptr;
@@ -188,7 +253,7 @@ void SchemaInfo::Init()
         m_pairs         = schemaTable[m_id]->pairs;
         m_tables        = schemaTable[m_id]->tables;  
         m_pSetData      = schemaTable[m_id]->data;
-        m_pPairData     = m_pSetData + (unsigned long long)m_rounds*m_tables;
+        m_pPairData     = m_pSetData + (size_t)m_rounds*m_tables;
         m_name          = schemaTable[m_id]->name;
         m_bSchemaInitOk = true;
     }

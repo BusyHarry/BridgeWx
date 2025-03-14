@@ -7,16 +7,19 @@
 #include "utils.h"
 #pragma warning( push )
 #pragma warning( disable : 4200 )   // zero/unsized array
+typedef signed char SchemaDataType;
+//typedef signed short SchemaDataType;  // use this if the schema's have pairnrs > 127
 typedef struct SCHEMA_DATA
 {
+    #define SCHEMA_NAME_SIZE 28
     UINT rounds;     UINT pairs;
-    UINT tables;     const char* name;
-    signed char data[];
+    UINT tables;     char name[SCHEMA_NAME_SIZE]; // having trouble with unfreed memory when using std::string for 'name'
+   // todo: perhaps change 'data' to vector< vector<> > setdata [table][round]; vector< vector<> > pairdata [pair][round]
+    SchemaDataType data[];
 } SCHEMA_DATA;
 
 #pragma warning( pop )
 
-extern const struct SCHEMA_DATA* const schemaTable[];   // zero terminated table of pointers to schema's
-extern const int SCHEMA_NUM_ENTRIES;
+extern std::vector<const SCHEMA_DATA*> schemaTable;   // vector of pointers to schema's
 
 #endif

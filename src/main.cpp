@@ -306,8 +306,10 @@ private:
     void OnMenuChoice   (wxCommandEvent& event);
     void OnLogging      (wxCommandEvent& event);
     void OnPrintFile    (wxCommandEvent& event);
+    void OnImportSchema (wxCommandEvent& event);
     void OnLanguage     (wxCommandEvent& event);
     void AutotestCreatePositions();
+    void LoadExistingSchemaFiles();
 
     Cleanup         m_theCleaner;   // clean wx-stuff before app exits to prevent crashes
     MyStatusBar*    m_pStatusbar;
@@ -585,7 +587,7 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     menuExtra->Append(ID_MENU_DEBUG             , _("&Debug window"             ), _("Debug window for all kind of stuff"));
     menuExtra->Append(ID_MENU_DEBUG_GUIDES      , _("&Guides"                   ), _("Creation of guides"                ));
     menuExtra->Append(ID_MENU_DEBUG_SCORE_SLIPS , _("&Scoreslips"               ), _("Creation of scoreslips"            ));
-
+    menuExtra->Append(ID_MENU_IMPORT_SCHEMA     , _("&Import schema"            ), _("Import a new schema (.asc) for playing"));
     auto convertData = new wxMenu;
     convertData->Append(ID_MENU_OLD_TO_DBASE  , _("&Old -> database"           ), _("Convert 'old' .ini/data files to single new .db file" ));
     convertData->Append(ID_MENU_DBASE_TO_OLD  , _("&Database -> old"           ), _("Convert .db file to 'old' .ini/data files"            ));
@@ -617,13 +619,14 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     SetStatusText(_("Welcome at ") +  __PRG_NAME__);
     UpdateStatusbarInfo();
 
-    Bind(wxEVT_MENU, &MyFrame::OnSystemInfo,this, ID_SYSTEM_INFO);
-    Bind(wxEVT_MENU, &MyFrame::OnAbout,     this, ID_ABOUT);
-    Bind(wxEVT_MENU, &MyFrame::OnExit ,     this, ID_EXIT);
-    Bind(wxEVT_MENU, &MyFrame::OnPrintPage, this, ID_MENU_PRINTPAGE);
-    Bind(wxEVT_MENU, &MyFrame::OnPrintFile, this, ID_MENU_PRINTFILE);
-    Bind(wxEVT_MENU, &MyFrame::OnMenuChoice,this, ID_MENU_SETUP_FIRST, ID_MENU_SETUP_LAST);
-    Bind(wxEVT_MENU, &MyFrame::OnLogging,   this, ID_MENU_LOG);
+    Bind(wxEVT_MENU, &MyFrame::OnSystemInfo,   this, ID_SYSTEM_INFO);
+    Bind(wxEVT_MENU, &MyFrame::OnAbout,        this, ID_ABOUT);
+    Bind(wxEVT_MENU, &MyFrame::OnExit ,        this, ID_EXIT);
+    Bind(wxEVT_MENU, &MyFrame::OnPrintPage,    this, ID_MENU_PRINTPAGE);
+    Bind(wxEVT_MENU, &MyFrame::OnPrintFile,    this, ID_MENU_PRINTFILE);
+    Bind(wxEVT_MENU, &MyFrame::OnImportSchema, this, ID_MENU_IMPORT_SCHEMA);
+    Bind(wxEVT_MENU, &MyFrame::OnMenuChoice,   this, ID_MENU_SETUP_FIRST, ID_MENU_SETUP_LAST);
+    Bind(wxEVT_MENU, &MyFrame::OnLogging,      this, ID_MENU_LOG);
     Bind(wxEVT_MENU, [this](wxCommandEvent&){AUTOTEST_BUSY("menu"); io::ConvertDataBase(io::FromOldToDb); }, ID_MENU_OLD_TO_DBASE);
     Bind(wxEVT_MENU, [this](wxCommandEvent&){AUTOTEST_BUSY("menu"); io::ConvertDataBase (io::FromDbToOld);}, ID_MENU_DBASE_TO_OLD);
     Bind(wxEVT_MENU, [this](wxCommandEvent&){AUTOTEST_BUSY("menu"); cfg::DatabaseTypeSet(io::DB_ORG)     ;}, ID_MENU_OLD_DBASE);
@@ -643,6 +646,7 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
 
     //all initialized, now show us!
     ShowStartImage(this);
+    LoadExistingSchemaFiles();  // load all known imported schemafiles
 }   // MyFrame()
  
 void MyFrame::OnExit(wxCommandEvent& )
@@ -715,20 +719,24 @@ void MyFrame::AutotestCreatePositions()
     positionsFile.AddLine(    "SystemComBoxMC := \"" + ssCheckBoxBusyMC + "\" ;name of the checkbox for communication between autohotkey and the program for ChoiceMC");
     positionsFile.AddLine(    "HotkeyPos      := \""  HOTKEY  "\" ;hotkey to request mouse-positions to be generated");
     positionsFile.AddLine(    "; menu-definitions");
-    positionsFile.AddLine(    _("MenuNewMatch      := \"fn\"       ; File: New match/session"             ));
-    positionsFile.AddLine(    _("MenuShutdown      := \"fe\"       ; File: Exit"         ));
-    positionsFile.AddLine(    _("MenuPrinter       := \"fp\"       ; File: Printer choice"           ));
-    positionsFile.AddLine(    _("MenuPrintPage     := \"fg\"       ; File: print paGe"       ));
-    positionsFile.AddLine(    _("MenuSetupMatch    := \"sm\"       ; Settings: setup Match"    ));
-    positionsFile.AddLine(    _("MenuSetupSchema   := \"ss\"       ; Settings: setup Schema"       ));
+    positionsFile.AddLine(    _("MenuNewMatch      := \"fn\"       ; File: New match/session"               ));
+    positionsFile.AddLine(    _("MenuShutdown      := \"fe\"       ; File: Exit"                            ));
+    positionsFile.AddLine(    _("MenuPrinter       := \"fp\"       ; File: Printer choice"                  ));
+    positionsFile.AddLine(    _("MenuPrintPage     := \"fg\"       ; File: print paGe"                      ));
+    positionsFile.AddLine(    _("MenuSetupMatch    := \"sm\"       ; Settings: setup Match"                 ));
+    positionsFile.AddLine(    _("MenuSetupSchema   := \"ss\"       ; Settings: setup Schema"                ));
     positionsFile.AddLine(    _("MenuNamesInit     := \"se\"       ; Settings: pairnames Entry/change"      ));
-    positionsFile.AddLine(    _("MenuNamesAssign   := \"sa\"       ; Settings: pairnames Assignment"    ));
-    positionsFile.AddLine(    _("MenuScoreEntry    := \"cc\"       ; sCores: sCoreentry"             ));
-    positionsFile.AddLine(    _("MenuCorSession    := \"cs\"       ; sCores: entry Sesssioncorrections"  ));
-    positionsFile.AddLine(    _("MenuCorEnd        := \"ce\"       ; sCores: entry Endcorrections"     ));
+    positionsFile.AddLine(    _("MenuNamesAssign   := \"sa\"       ; Settings: pairnames Assignment"        ));
+    positionsFile.AddLine(    _("MenuScoreEntry    := \"cc\"       ; sCores: sCoreentry"                    ));
+    positionsFile.AddLine(    _("MenuCorSession    := \"cs\"       ; sCores: entry Sesssioncorrections"     ));
+    positionsFile.AddLine(    _("MenuCorEnd        := \"ce\"       ; sCores: entry Endcorrections"          ));
     positionsFile.AddLine(    _("MenuResult        := \"cr\"       ; sCores: calculation Result"            ));
-    positionsFile.AddLine(    _("MenuDbType        := \"twn\"      ; Tools: sWitch between datatypes: New datatype"        ));
-    positionsFile.AddLine(    _("MenuOldType       := \"two\"      ; Tools: sWitch between datatypes: Old datatype"          ));
+    positionsFile.AddLine(    _("MenuDebug         := \"td\"       ; Tools: Debug window"                   ));
+    positionsFile.AddLine(    _("MenuGuides        := \"tg\"       ; Tools: Guide creation"                 ));
+    positionsFile.AddLine(    _("MenuScoreSlips    := \"ts\"       ; Tools: Scoreslip creation"             ));
+    positionsFile.AddLine(    _("MenuImportSchema  := \"ti\"       ; Tools: Import a new playing-schema"    ));
+    positionsFile.AddLine(    _("MenuDbType        := \"twn\"      ; Tools: sWitch between datatypes: New datatype" ));
+    positionsFile.AddLine(    _("MenuOldType       := \"two\"      ; Tools: sWitch between datatypes: Old datatype" ));
     positionsFile.AddLine(    _("AllMenus          := [\"fn\",\"fp\",\"fg\",\"sm\",\"ss\",\"se\",\"sa\",\"cc\",\"cs\",\"ce\",\"cr\",\"two\",\"twn\"]"));
     positionsFile.AddLine(    ";\n;windowrelative-positions");
     positionsFile.AddLine(    ";s* vars are screen-coordinates, TL=TopLeft, TR=TopRight, BR=BottomRight\n;");
@@ -900,3 +908,49 @@ void MyFrame::OnPrintFile(wxCommandEvent& )
         prn::PrintAFile(filename);
     }
 }   // OnPrintFile()
+
+static auto const NBB_SCHEMA_EXTENSION("asc");  // Dutch Bridge Association
+
+void MyFrame::OnImportSchema(wxCommandEvent& )
+{
+    AUTOTEST_BUSY("ImportSchema");
+    wxString schemaFile = wxFileSelector(_("Choose a schema file to import")
+                                            , ES, ES
+                                            , NBB_SCHEMA_EXTENSION
+                                            , ES
+                                            , wxFD_FILE_MUST_EXIST
+                                        );
+
+    if ( !schemaFile.IsEmpty() )
+    {
+        LogMessage(_("Importing file <%s>"), schemaFile);
+        wxFileName fn(schemaFile);
+        if (0 == cfg::GetBaseFolder().CmpNoCase(fn.GetPath()))
+        {
+            wxString error(_("Don't import a schema from the basefolder itself!"));
+            MyLogError(error);
+            MyMessageBox(error, _("ERROR"));
+        } else
+        {   // only import if folders are different!
+            if (schema::ImportSchema(schemaFile, true))
+            {   // copy/overwrite file to the basefolder: load all schemafiles at startup from here
+                wxString basename = cfg::GetBaseFolder()+PS+fn.GetFullName();
+                if (!wxCopyFile(schemaFile, basename, true))
+                {
+                    MyLogError("Could not copy <%s> to <%s>", schemaFile, basename);
+                }
+            }
+        }
+    }
+}   // OnImportSchema()
+
+void MyFrame::LoadExistingSchemaFiles()
+{   // load all schemafiles that were successfully imported earlier
+    wxArrayString schemas;
+    wxString wild("*."); wild += NBB_SCHEMA_EXTENSION;
+    (void)wxDir::GetAllFiles(cfg::GetBaseFolder(), &schemas, wild, wxDIR_FILES);
+    for (const auto& schema : schemas)
+    {
+        (void)schema::ImportSchema(schema);
+    }
+}   // LoadExistingSchemaFiles()

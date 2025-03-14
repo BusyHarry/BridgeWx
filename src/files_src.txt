@@ -10,6 +10,7 @@ correctionsSession.cpp
 database.cpp
 debug.cpp
 fileIo.cpp
+importExportSchema.cpp
 main.cpp
 mygrid.cpp
 mylog.cpp
@@ -42,6 +43,7 @@ database.h
 dbkeys.h
 debug.h
 fileIo.h
+importExportSchema.h
 mygrid.h
 mylog.h
 nameEditor.h

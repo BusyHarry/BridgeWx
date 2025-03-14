@@ -1,17 +1,19 @@
 ﻿// Copyright(c) 2024-present, BusyHarry/h.levels & BridgeWx contributors.
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
+#include <vector>
 #include "schemaData.h"
 
 /*
 A positive setnr: this set is on this table, a negative setnr: get games from that table,
 A positive table for a pair means: play line = North/South, negative table means: play line = East/West.
-The number of sets is equal to the number of rounds
+The number of sets is equal to the number of rounds (?)
+The datasize = rounds*(pairs+tables)
 */
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*(5+8)];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*(5+8)];
     } _5tin08 =
         {5,8,5,"5tin08"
         // R1  R2  R3  R4 R5 etc
@@ -34,8 +36,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*12];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*12];
     } _6multi08 =
         {6,8,4,"6multi08"
         ,  1,  1,  5,  5,  5,  5    /*  sets for table 1*/
@@ -55,8 +57,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*16];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*16];
     } _6multi10 =
         {6,10,6,"6multi10"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -80,8 +82,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*18];
     } _6multi12 =
         {6,12,6,"6multi12"
         ,  1,  1,  1,  1, -4,  1    /*  sets for table 1*/
@@ -107,8 +109,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*21];
     } _6multi14 =
         {6,14,7,"6multi14"
         ,  1,  1,  1,  1, -4,  1    /*  sets for table 1*/
@@ -137,8 +139,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*24];
     } _6multi16 =
         {6,16,8,"6multi16"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -170,8 +172,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*27];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*27];
     } _6multi18 =
         {6,18,9,"6multi18"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -206,8 +208,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*30];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*30];
     } _6multi20 =
         {6,20,10,"6multi20"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -245,8 +247,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*33];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*33];
     } _6multi22 =
         {6,22,11,"6multi22"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -287,8 +289,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*36];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*36];
     } _6multi24 =
         {6,24,12,"6multi24"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -332,8 +334,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*12];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*12];
     } _7multi08 =
         {7,8,4,"7multi08"
         ,  1,  7,  2,  3,  4,  5,  6    /*  sets for table 1*/
@@ -353,8 +355,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*15];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*15];
     } _7multi10 =
         {7,10,5,"7multi10"
         ,  1,  2,  3,  4,  5,  6,  7    /*  sets for table 1*/
@@ -377,8 +379,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*18];
     } _7multi12 =
         {7,12,6,"7multi12"
         ,  1,  2,  3,  4,  5,  6,  7    /*  sets for table 1*/
@@ -404,8 +406,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*21];
     } _7multi14 =
         {7,14,7,"7multi14"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -434,8 +436,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*24];
     } _7multi16 =
         {7,16,8,"7multi16"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -467,8 +469,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*27];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*27];
     } _7multi18 =
         {7,18,9,"7multi18"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -503,8 +505,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*30];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*30];
     } _7multi20 =
         {7,20,10,"7multi20"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -542,8 +544,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*33];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*33];
     } _7multi22 =
         {7,22,11,"7multi22"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -584,8 +586,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*36];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*36];
     } _7multi24 =
         {7,24,12,"7multi24"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -629,8 +631,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*39];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*39];
     } _7multi26 =
         {7,26,13,"7multi26"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -677,8 +679,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*42];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*42];
     } _7multi28 =
         {7,28,14,"7multi28"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -728,8 +730,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[4*12];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[4*12];
     } _4basis8 =
         {4,8,4,"4basis8"
         ,  1,  1,  1,  1    /*  sets for table 1*/
@@ -749,8 +751,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*15];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*15];
     } _5basis10 =
         {5,10,5,"5basis10"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -773,8 +775,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*18];
     } _6basis12_1_5 =
         {6,12,6,"6basis12.1-5"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -800,8 +802,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*18];
     } _6basis12_2_5 =
         {6,12,6,"6basis12.2-5"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -827,8 +829,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*18];
     } _6basis12_3_5 =
         {6,12,6,"6basis12.3-5"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -854,8 +856,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*18];
     } _6basis12_4_5 =
         {6,12,6,"6basis12.4-5"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -881,8 +883,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*18];
     } _6basis12_5_5 = 
         {6,12,6,"6basis12.5-5"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -908,8 +910,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*21];
     } _7basis14 =
         {7,14,7,"7basis14"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -938,8 +940,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[3*12];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[3*12];
     } _3drive08 =
         {3,8,4,"3drive08"
         ,  1,  1,  1    /*  sets for table 1*/
@@ -959,8 +961,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*9];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*9];
     } _5howel06_1_1 =
         {5,6,3,"5howel06.1-1"
         ,  1,  1,  1,  3,  5    /*  sets for table 1*/
@@ -977,8 +979,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*12];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*12];
     } _7howel08_1_1 =
         {7,8,4,"7howel08.1-1"
         ,  1,  6,  7,  2,  5,  3,  4    /*  sets for table 1*/
@@ -998,8 +1000,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[3*15];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[3*15];
     } _3howel10_1_3 =
         {3,10,5,"3howel10.1-3"
         ,  1,  1,  1    /*  sets for table 1*/
@@ -1022,8 +1024,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[3*15];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[3*15];
     } _3howel10_2_3 =
         {3,10,5,"3howel10.2-3"
         ,  1,  1,  1    /*  sets for table 1*/
@@ -1046,8 +1048,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[3*15];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[3*15];
     } _3howel10_3_3 =
         {3,10,5,"3howel10.3-3"
         ,  1,  1,  1    /*  sets for table 1*/
@@ -1070,8 +1072,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[4*15];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[4*15];
     } _4howel10_2_2 =
         {4,10,5,"4howel10.2-2"
         ,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1094,8 +1096,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*15];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*15];
     } _5howel10_1_2 =
         {5,10,5,"5howel10.1-2"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1118,8 +1120,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[9*15];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[9*15];
     } _9howel10_1_1 =
         {9,10,5,"9howel10.1-1"
         ,  1,  2,  5,  3,  4,  6,  7,  8,  9    /*  sets for table 1*/
@@ -1142,8 +1144,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[9*15];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[9*15];
     } _9howel10_2_1 =
         {9,10,5,"9howel10.2-1"
         ,  1,  1,  1,  1,  1,  6,  6,  6,  6    /*  sets for table 1*/
@@ -1166,8 +1168,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[3*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[3*18];
     } _3howel12_3_3 =
         {3,12,6,"3howel12.3-3"
         ,  1,  1,  1    /*  sets for table 1*/
@@ -1193,8 +1195,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[3*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[3*18];
     } _3howel12_3_3nz =
         {3,12,6,"3howel12nz.3-3"
         ,  1,  1,  1    /*  sets for table 1*/
@@ -1221,8 +1223,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[3*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[3*18];
     } _3harrie_12nzow =
         {3,12,6,"3harrie_nzow"
         ,  1,  1,  1    /*  sets for table 1*/
@@ -1249,8 +1251,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[4*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[4*18];
     } _4howel12_1_3 =
         {4,12,6,"4howel12.1-3"
         ,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1276,8 +1278,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[4*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[4*18];
     } _4howel12_2_3 =
         {4,12,6,"4howel12.2-3"
         ,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1303,8 +1305,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*18];
     } _5howel12_2_2 =
         {5,12,6,"5howel12.2-2"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1330,8 +1332,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*18];
     } _6howel12_1_2 =
         {6,12,6,"6howel12.1-2"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1357,8 +1359,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[11*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[11*18];
     } _11howe12_2_1 =
         {11,12,6,"11howe12.2-1"
         ,  1,  1,  1,  1,  1,  1,  7,  7,  7,  7,  7    /*  sets for table 1*/
@@ -1384,8 +1386,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[11*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[11*18];
     } _11howe12_3_1 =
         {11,12,6,"11howe12.3-1"
         ,  1,  1,  1,  1,  5,  5,  5,  5,  9,  9,  9    /*  sets for table 1*/
@@ -1411,8 +1413,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[4*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[4*21];
     } _4howel14_1_3 =
         {4,14,7,"4howel14.1-3"
         ,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1441,8 +1443,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[4*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[4*21];
     } _4howel14_2_3 =
         {4,14,7,"4howel14.2-3"
         ,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1471,8 +1473,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*21];
     } _5howel14_3_3 =
         {5,14,7,"5howel14.3-3"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1501,8 +1503,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*21];
     } _6howel14_2_2 =
         {6,14,7,"6howel14.2-2"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1531,8 +1533,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*21];
     } _7howel14_1_2 =
         {7,14,7,"7howel14.1-2"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1561,8 +1563,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*24];
     } _5howel16_1_3 =
         {5,16,8,"5howel16.1-3"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1594,8 +1596,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*24];
     } _5howel16_2_3 =
         {5,16,8,"5howel16.2-3"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1627,8 +1629,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*24];
     } _5howel16_3_3 =
         {5,16,8,"5howel16.3-3"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1660,8 +1662,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*24];
     } _7howel16 =
         {7,16,8,"7howel16"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1693,8 +1695,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*27];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*27];
     } _5howel18_3_3 =
         {5,18,9,"5howel18.3-3"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1729,8 +1731,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*27];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*27];
     } _6howel18_1_3 =
         {6,18,9,"6howel18.1-3"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1765,8 +1767,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*27];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*27];
     } _6howel18_2_3 =
         {6,18,9,"6howel18.2-3"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1801,8 +1803,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[4*15];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[4*15];
     } _4stayr10 =
         {4,10,5,"4stayr10"
         ,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1825,8 +1827,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[4*15];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[4*15];
     } _4stayr10_1_x =
         {4,10,5,"4stayr10.1-x"
         ,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1849,8 +1851,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[4*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[4*18];
     } _4stayr12 =
         {4,12,6,"4stayr12"
         ,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1876,8 +1878,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[4*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[4*18];
     } _4stayr12_1_x =
         {4,12,6,"4stayr12.1-x"
         ,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1903,8 +1905,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*18];
     } _5stayr12 =
         {5,12,6,"5stayr12"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1930,8 +1932,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*18];
     } _5stayr12_1_x =
         {5,12,6,"5stayr12.1-x"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1957,8 +1959,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*19];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*19];
     } _6stayr13 =
         {6,13,6,"6stayr13"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -1985,8 +1987,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*19];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*19];
     } _6stayr13_1_5 =
         {6,13,6,"6stayr13.1-5"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2013,8 +2015,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[4*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[4*21];
     } _4stayr14 =
         {4,14,7,"4stayr14"
         ,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2043,8 +2045,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[4*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[4*21];
     } _4stayr14special =
         {4,14,7,"4stayr14_sp"
         ,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2074,8 +2076,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[4*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[4*21];
     } _4stayr14_1_x =
         {4,14,7,"4stayr14.1-x"
         ,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2104,8 +2106,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*21];
     } _5stayr14 =
         {5,14,7,"5stayr14"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2134,8 +2136,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*21];
     } _5stayr14_1_x =
         {5,14,7,"5stayr14.1-x"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2164,8 +2166,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*21];
     } _6stayr14 =
         {6,14,7,"6stayr14"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2194,8 +2196,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*21];
     } _6stayr14_1_5 =
         {6,14,7,"6stayr14.1-5"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2224,8 +2226,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*24];
     } _5stayr16 =
         {5,16,8,"5stayr16"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2257,8 +2259,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*24];
     } _5stayr16_1_x =
         {5,16,8,"5stayr16.1-x"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2290,8 +2292,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*24];
     } _6stayr16 =
         {6,16,8,"6stayr16"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2323,8 +2325,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*24];
     } _6stayr16_1_5 =
         {6,16,8,"6stayr16.1-5"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2356,8 +2358,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*24];
     } _7stayr16 =
         {7,16,8,"7stayr16"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2389,8 +2391,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*24];
     } _7stayr16_1_x =
         {7,16,8,"7stayr16.1-x"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2422,8 +2424,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*28];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*28];
     } _5stayr18 =
         {5,18,10,"5stayr18"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2459,8 +2461,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*28];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*28];
     } _5stayr18_1_x =
         {5,18,10,"5stayr18.1-x"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2496,8 +2498,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*27];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*27];
     } _6stayr18 =
         {6,18,9,"6stayr18"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2532,8 +2534,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*27];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*27];
     } _6stayr18_1_5 =
         {6,18,9,"6stayr18.1-5"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2568,8 +2570,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*27];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*27];
     } _7stayr18 =
         {7,18,9,"7stayr18"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2604,8 +2606,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*27];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*27];
     } _7stayr18_1_x =
         {7,18,9,"7stayr18.1-x"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2640,8 +2642,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*30];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*30];
     } _6stayr20 = 
         {6,20,10,"6stayr20"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2679,8 +2681,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*30];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*30];
     } _6stayr20_1_5 = 
         {6,20,10,"6stayr20.1-5"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2718,8 +2720,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*30];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*30];
     } _7stayr20 = 
         {7,20,10,"7stayr20"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2757,8 +2759,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*30];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*30];
     } _7stayr20_1_x = 
         {7,20,10,"7stayr20.1-x"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2796,8 +2798,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*34];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*34];
     } _6stayr22 = 
         {6,22,12,"6stayr22"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2839,8 +2841,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*34];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*34];
     } _6stayr22_1_5 = 
         {6,22,12,"6stayr22.1-5"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2882,8 +2884,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*33];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*33];
     } _7stayr22 = 
         {7,22,11,"7stayr22"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2924,8 +2926,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*33];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*33];
     } _7stayr22_1_x = 
         {7,22,11,"7stayr22.1-x"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -2966,8 +2968,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*36];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*36];
     } _7stayr24 = 
         {7,24,12,"7stayr24"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3011,8 +3013,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*36];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*36];
     } _7stayr24_1_x = 
         {7,24,12,"7stayr24.1-x"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3056,8 +3058,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*40];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*40];
     } _7stayr26 = 
         {7,26,14,"7stayr26"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3105,8 +3107,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*40];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*40];
     } _7stayr26_1_x = 
         {7,26,14,"7stayr26.1-x"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3154,8 +3156,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*15];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*15];
     } _7txx8 = 
         {7,8,7,"7txx8"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3178,8 +3180,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*17];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*17];
     } _7txx10 = 
         {7,10,7,"7txx10"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3204,8 +3206,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*19];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*19];
     } _7txx12 = 
         {7,12,7,"7txx12"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3232,8 +3234,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*21];
     } _7txx14 = 
         {7,14,7,"7txx14"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3262,8 +3264,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*24];
     } _7txx16 = 
         {7,16,8,"7txx16"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3295,8 +3297,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*27];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*27];
     } _7txx18 = 
         {7,18,9,"7txx18"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3331,8 +3333,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*12];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*12];
     } _7t8 = 
         {7,8,4,"7t8"
         ,  1,  6,  7,  2,  5,  3,  4    /*  sets for table 1*/
@@ -3352,8 +3354,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*15];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*15];
     } _7t10 = 
         {7,10,5,"7t10"
         ,  1,  2,  5,  3,  6,  7,  4    /*  sets for table 1*/
@@ -3376,8 +3378,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*21];
     } _7t14 = 
         {7,14,7,"7t14"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3406,8 +3408,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*24];
     } _7t16 = 
         {7,16,8,"7t16"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3439,8 +3441,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*27];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*27];
     } _7t18 = 
         {7,18,9,"7t18"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3475,8 +3477,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*30];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*30];
     } _7t20 = 
         {7,20,10,"7t20"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3516,8 +3518,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*33];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*33];
     } _7t22 = 
         {7,22,11,"7t22"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3560,8 +3562,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*38];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*38];
     } _7t24 = 
         {7,24,14,"7t24"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3607,8 +3609,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*12];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*12];
     } _6t8 =
         {6,8,4,"6t8"
         ,  1,  5,  4,  5,  1,  3    /*  sets for table 1*/
@@ -3628,8 +3630,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*16];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*16];
     } _6t10 =
         {6,10,6,"6t10"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3653,8 +3655,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*18];
     } _6t12 =
         {6,12,6,"6t12"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3680,8 +3682,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*21];
     } _6t14 =
         {6,14,7,"6t14"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3710,8 +3712,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*24];
     } _6t16 =
         {6,16,8,"6t16"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3743,8 +3745,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*27];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*27];
     } _6t18 =
         {6,18,9,"6t18"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3779,8 +3781,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*12];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*12];
     } _6multi08_nieuw =
         {6,8,4,"6multi08_nieuw"
         ,  1,  1,  5,  5,  5,  5    /*  sets for table 1*/
@@ -3800,8 +3802,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*16];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*16];
     } _6multi10_nieuw =
         {6,10,6,"6multi10_nieuw"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3825,8 +3827,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*18];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*18];
     } _6multi12_nieuw =
         {6,12,6,"6multi12_nieuw"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3852,8 +3854,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*21];
     } _6multi14_nieuw =
         {6,14,7,"6multi14_nieuw"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3882,8 +3884,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*24];
     } _6multi16_nieuw =
         {6,16,8,"6multi16_nieuw"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3915,8 +3917,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*27];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*27];
     } _6multi18_nieuw =
         {6,18,9,"6multi18_nieuw"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3951,8 +3953,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*30];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*30];
     } _6multi20_nieuw =
         {6,20,10,"6multi20_nieuw"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -3990,8 +3992,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*33];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*33];
     } _6multi22_nieuw =
         {6,22,11,"6multi22_nieuw"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4032,8 +4034,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[6*36];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[6*36];
     } _6multi24_nieuw =
         {6,24,12,"6multi24_nieuw"
         ,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4077,8 +4079,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*12];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*12];
     } _7multi08_nieuw =
         {7,8,4,"7multi08_nieuw"
         ,  1,  7,  6,  5,  2,  3,  4    /*  sets for table 1*/
@@ -4098,8 +4100,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*15];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*15];
     } _7multi10_nieuw =
         {7,10,5,"7multi10_nieuw"
         ,  1,  2,  3,  4,  5,  6,  7    /*  sets for table 1*/
@@ -4122,8 +4124,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*19];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*19];
     } _7multi12_nieuw =
         {7,12,7,"7multi12_nieuw"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4150,8 +4152,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*21];
     } _7multi14_nieuw =
         {7,14,7,"7multi14_nieuw"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4180,8 +4182,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*24];
     } _7multi16_nieuw =
         {7,16,8,"7multi16_nieuw"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4213,8 +4215,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*27];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*27];
     } _7multi18_nieuw =
         {7,18,9,"7multi18_nieuw"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4249,8 +4251,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*30];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*30];
     } _7multi20_nieuw =
         {7,20,10,"7multi20_nieuw"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4288,8 +4290,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*33];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*33];
     } _7multi22_nieuw =
         {7,22,11,"7multi22_nieuw"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4330,8 +4332,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*36];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*36];
     } _7multi24_nieuw =
         {7,24,12,"7multi24_nieuw"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4375,8 +4377,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*39];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*39];
     } _7multi26_nieuw =
         {7,26,13,"7multi26_nieuw"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4423,8 +4425,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[7*42];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[7*42];
     } _7multi28_nieuw =
         {7,28,14,"7multi28_nieuw"
         ,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4474,8 +4476,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[8*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[8*24];
     } _8sche_a16 =
         {8,16,8,"8sche_a16"
         ,  1,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4507,8 +4509,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[8*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[8*24];
     } _8sche_bc16 =
         {8,16,8,"8sche_bc16"
         ,  1,  1,  1,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4540,8 +4542,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[4*22];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[4*22];
     } _4mitchel14h =
         {4,14,8,"4mitchel14_horne"
         ,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4571,8 +4573,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[4*24];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[4*24];
     } _4mitchel16h =
         {4,16,8,"4mitchel16_horne"
         ,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4604,8 +4606,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*21];
     } _5stayr14_1_x_bl =
         {5,14,7,"5stayr14.1-x_bl"   // R3: nz<->ow
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4634,8 +4636,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*21];
     } _5stayr14_1_x_br =
         {5,14,7,"5stayr14.1-x_br"   // R4: nz<->ow
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4665,8 +4667,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*21];
     } _5stayr14_1_x_ge =
         {5,14,7,"5stayr14.1-x_ge"   // R5: nz<->ow
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4696,8 +4698,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*21];
     } _5stayr14_1_x_gr =
         {5,14,7,"5stayr14.1-x_gr"   // R3+R4: nz<->ow
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4727,8 +4729,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*21];
     } _5stayr14_1_x_ro =
         {5,14,7,"5stayr14.1-x_ro"   // R3+R5: nz<->ow
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4758,8 +4760,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*21];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*21];
     } _5stayr14_1_x_zw =
         {5,14,7,"5stayr14.1-x_zw"   // R4+R5: nz<->ow
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4788,8 +4790,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*26];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*26];
     } _5stayr16_1_x_n =
         {5,16,10,"5stayr16.1-x_n"   // spellen blijven liggen
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4823,8 +4825,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*26];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*26];
     } _5stayr16_1_x_n_bl =
         {5,16,10,"5stayr16.1-x_n_bl"    // spellen blijven liggen, R3: nz<->ow
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4858,8 +4860,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*26];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*26];
     } _5stayr16_1_x_n_br =
         {5,16,10,"5stayr16.1-x_n_br"    // spellen blijven liggen, R4: nz<->ow
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4893,8 +4895,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*26];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*26];
     } _5stayr16_1_x_n_ge =
         {5,16,10,"5stayr16.1-x_n_ge"    // spellen blijven liggen, R5: nz<->ow
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4928,8 +4930,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*26];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*26];
     } _5stayr16_1_x_n_gr =
         {5,16,10,"5stayr16.1-x_n_gr"    // spellen blijven liggen, R3+R4: nz<->ow
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4963,8 +4965,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*26];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*26];
     } _5stayr16_1_x_n_ro =
         {5,16,10,"5stayr16.1-x_n_ro"    // spellen blijven liggen, R3+R5: nz<->ow
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -4998,8 +5000,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*26];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*26];
     } _5stayr16_1_x_n_zw =
         {5,16,10,"5stayr16.1-x_n_zw"    // spellen blijven liggen, R4+R5: nz<->ow
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -5033,8 +5035,8 @@ static struct
 
 static struct
     {   UINT rounds;     UINT pairs;
-        UINT tables;     const char* name;
-        signed char data[5*30];
+        UINT tables;     char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[5*30];
     } _5mitchell10_10 =
         {5,20,10,"5mitchell10_10"
         ,  1,  1,  1,  1,  1    /*  sets for table 1*/
@@ -5072,8 +5074,8 @@ static struct
 
 static struct
         {       UINT rounds;             UINT pairs;
-                UINT tables;             const char* name;
-                signed char data[8*(14+8)];
+                UINT tables;             char name[SCHEMA_NAME_SIZE];
+                SchemaDataType data[8*(14+8)];
         } _8special14_08 =
                 {8,14,8,"8special14_08"
         ,  1,  1,  1,  1,  1,  1,  1,  1   /*  sets for table 1*/
@@ -5103,8 +5105,8 @@ static struct
 
 static struct
         {       UINT rounds;             UINT pairs;
-                UINT tables;             const char* name;
-                signed char data[8*(18+9)];
+                UINT tables;             char name[SCHEMA_NAME_SIZE];
+                SchemaDataType data[8*(18+9)];
         } _8mitchel18_09 =
                 {8,18,9,"8mitchel18_09"
         ,  1,  1,  1,  1,  1,  1,  1,  1   /*  sets for table 1*/
@@ -5139,8 +5141,8 @@ static struct
 
 static struct
         {       UINT rounds;             UINT pairs;
-                UINT tables;             const char* name;
-                signed char data[8*(18+9)];
+                UINT tables;             char name[SCHEMA_NAME_SIZE];
+                SchemaDataType data[8*(18+9)];
         } _8BridgeBoost18_09 =
                 {8,18,9,"8BridgeBoost18_09"
         ,  1,  1,  1,  1,  1,  1,  1,  1   /*  sets for table 1*/
@@ -5175,8 +5177,8 @@ static struct
 
 static struct
         {       UINT rounds;             UINT pairs;
-                UINT tables;             const char* name;
-        signed char data[8*(20+10)];
+                UINT tables;             char name[SCHEMA_NAME_SIZE];
+        SchemaDataType data[8*(20+10)];
         } _8mitchel20_10 =
                 {8,20,10,"8mitchel20_10"
         ,  1,  1,  1,  1,  1,  1,  1,  1   /*  sets for table 1*/
@@ -5212,7 +5214,7 @@ static struct
         ,-10,-10,-10,-10,-10,-10,-10,-10   /*tables for pair  20*/
 };
 
-const struct SCHEMA_DATA* const schemaTable[]=
+std::vector<const SCHEMA_DATA*> schemaTable =
 {
     (struct SCHEMA_DATA*) &_5tin08,
     (struct SCHEMA_DATA*) &_6multi08, (struct SCHEMA_DATA*) &_6multi10,
@@ -5304,7 +5306,4 @@ const struct SCHEMA_DATA* const schemaTable[]=
     (struct SCHEMA_DATA*) &_8mitchel18_09,
     (struct SCHEMA_DATA*) &_8mitchel20_10,
     (struct SCHEMA_DATA*) &_8BridgeBoost18_09,
-    0
 };
-
-const int SCHEMA_NUM_ENTRIES = sizeof(schemaTable)/sizeof(schemaTable[0]) - 1;

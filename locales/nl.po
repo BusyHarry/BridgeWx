@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-10 12:04+0100\n"
-"PO-Revision-Date: 2025-03-10 12:04+0100\n"
+"POT-Creation-Date: 2025-03-14 15:53+0100\n"
+"PO-Revision-Date: 2025-03-14 15:53+0100\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -247,7 +247,7 @@ msgstr "frequentiestaten"
 msgid "group"
 msgstr "groep"
 
-#: ..\src\calcScore.cpp:289 ..\src\main.cpp:737
+#: ..\src\calcScore.cpp:289 ..\src\main.cpp:745
 msgid "session"
 msgstr "zitting"
 
@@ -268,7 +268,7 @@ msgstr "club zitting"
 msgid "club total"
 msgstr "club totaal"
 
-#: ..\src\calcScore.cpp:334
+#: ..\src\calcScore.cpp:334 ..\src\main.cpp:932
 msgid "ERROR"
 msgstr "ERROR"
 
@@ -582,7 +582,7 @@ msgstr "Fout in parameter: "
 msgid " of "
 msgstr " van "
 
-#: ..\src\cfg.cpp:909 ..\src\main.cpp:666
+#: ..\src\cfg.cpp:909 ..\src\main.cpp:670
 msgid ", version "
 msgstr ", versie "
 
@@ -651,7 +651,7 @@ msgid "ChoiceMC::SetPopupWidth() size=%i, columns=%u, width=%i"
 msgstr "ChoiceMC::SetPopupWidth() size=%i, colommen=%u, breedte=%i"
 
 #: ..\src\correctionsEnd.cpp:35 ..\src\correctionsSession.cpp:48
-#: ..\src\main.cpp:738
+#: ..\src\main.cpp:746
 msgid "pair"
 msgstr "paar"
 
@@ -1353,282 +1353,290 @@ msgstr "Bridge Databestanden"
 msgid "Help, new busy request while previous not yet handled by Idle???"
 msgstr "Help, new busy request while previous not yet handled by Idle???"
 
-#: ..\src\main.cpp:362
+#: ..\src\main.cpp:364
 msgid "Use buildin language: 'English'"
 msgstr "Gebruik interne taal: 'Engels'"
 
-#: ..\src\main.cpp:368
+#: ..\src\main.cpp:370
 #, c-format
 msgid "Search for languages, folder found: '%s'"
 msgstr "Zoeken naar talen, folder gevonden: '%s'"
 
-#: ..\src\main.cpp:427
+#: ..\src\main.cpp:429
 #, c-format
 msgid "Systemlanguage: id=%d, %s"
 msgstr "Systeemtaal: id=%d, %s"
 
-#: ..\src\main.cpp:429
+#: ..\src\main.cpp:431
 msgid "Systemlanguage: the default system language"
 msgstr "Systeemtaal: de default systeem taal"
 
-#: ..\src\main.cpp:473
+#: ..\src\main.cpp:475
 msgid "MyApp::OnInit() finished, showing startup picture"
 msgstr "MyApp::OnInit() finished, showing startup picture"
 
-#: ..\src\main.cpp:478
+#: ..\src\main.cpp:480
 msgid "'Bridge' calculation program"
 msgstr "Bridge rekenprogramma"
 
-#: ..\src\main.cpp:547
+#: ..\src\main.cpp:549
 #, c-format
 msgid "Mainwindow position: {%i,%i}, size: %i*%i"
 msgstr "Mainwindow position: {%i,%i}, size: %i*%i"
 
-#: ..\src\main.cpp:562
+#: ..\src\main.cpp:564
 msgid "&New match/session"
 msgstr "&Nieuwe wedstrijd/zitting"
 
-#: ..\src\main.cpp:562
+#: ..\src\main.cpp:564
 msgid "Match/session entry"
 msgstr "Wedstrijd/zitting ingave"
 
-#: ..\src\main.cpp:563
+#: ..\src\main.cpp:565
 msgid "&Printer choice"
 msgstr "&Printerkeuze"
 
-#: ..\src\main.cpp:563
+#: ..\src\main.cpp:565
 msgid "Printer choice and setup"
 msgstr "Printer keuze en instellingen"
 
-#: ..\src\main.cpp:564
+#: ..\src\main.cpp:566
 msgid "Print current page"
 msgstr "Print huidige pagina"
 
-#: ..\src\main.cpp:564
+#: ..\src\main.cpp:566
 msgid "print pa&Ge"
 msgstr "print pa&Gina"
 
-#: ..\src\main.cpp:565
+#: ..\src\main.cpp:567
 msgid "Print a file"
 msgstr "Print een bestand"
 
-#: ..\src\main.cpp:565
+#: ..\src\main.cpp:567
 msgid "print &File"
 msgstr "print &Bestand"
 
-#: ..\src\main.cpp:568
+#: ..\src\main.cpp:570
 msgid "&Exit"
 msgstr "&Afsluiten"
 
-#: ..\src\main.cpp:568
+#: ..\src\main.cpp:570
 msgid "This will end the program"
 msgstr "Dit zal het programma beeindigen"
 
-#: ..\src\main.cpp:571
+#: ..\src\main.cpp:573
 msgid "&Match"
 msgstr "&Wedstrijd"
 
-#: ..\src\main.cpp:571
+#: ..\src\main.cpp:573
 msgid "Setup for the active match"
 msgstr "Instellingen tbv de aktieve wedstrijd"
 
-#: ..\src\main.cpp:572
+#: ..\src\main.cpp:574
 msgid "&Schema"
 msgstr "Schema"
 
-#: ..\src\main.cpp:572
+#: ..\src\main.cpp:574
 msgid "Entry/change of schema"
 msgstr "Ingave/wijzigen van schema"
 
-#: ..\src\main.cpp:573 ..\src\nameEditor.cpp:51
+#: ..\src\main.cpp:575 ..\src\nameEditor.cpp:51
 msgid "Entry/change of pair/clubnames"
 msgstr "Ingave/wijzigen van paar/club namen"
 
-#: ..\src\main.cpp:573
+#: ..\src\main.cpp:575
 msgid "pairnames &Entry/change"
 msgstr "paarnamen &Ingeven/wijzigen"
 
-#: ..\src\main.cpp:574
+#: ..\src\main.cpp:576
 msgid "Connect a global pairname to a sessionpairnumber"
 msgstr "Paarnaam koppelen aan paarnummer van zitting"
 
-#: ..\src\main.cpp:574
+#: ..\src\main.cpp:576
 msgid "pairnames &Assigment"
 msgstr "paarnamen &Toekennen"
 
-#: ..\src\main.cpp:578
+#: ..\src\main.cpp:580
 msgid "Entry/change of scores"
 msgstr "Ingeven/aanpassen scores"
 
-#: ..\src\main.cpp:578
+#: ..\src\main.cpp:580
 msgid "s&Core-entry"
 msgstr "&Score ingave"
 
-#: ..\src\main.cpp:579
+#: ..\src\main.cpp:581
 msgid "&Sessioncorrections"
 msgstr "&Zitting correcties"
 
-#: ..\src\main.cpp:579
+#: ..\src\main.cpp:581
 msgid "Entry/change of session corrections"
 msgstr "Ingeven/aanpassen correcties tbv een zitting"
 
-#: ..\src\main.cpp:580
+#: ..\src\main.cpp:582
 msgid "&Endcorrections"
 msgstr "&Eind correcties"
 
-#: ..\src\main.cpp:580
+#: ..\src\main.cpp:582
 msgid "Entry/change of end corrections"
 msgstr "Ingeven/aanpassen correcties voor de einduitslag"
 
-#: ..\src\main.cpp:581
+#: ..\src\main.cpp:583
 msgid "&Results"
 msgstr "&Uitslag"
 
-#: ..\src\main.cpp:581
+#: ..\src\main.cpp:583
 msgid "Calculation of session/end result"
 msgstr "Berekenen van de zitting/eind uitslag"
 
-#: ..\src\main.cpp:584
+#: ..\src\main.cpp:586
 msgid "&Log window"
 msgstr "&Log window"
 
-#: ..\src\main.cpp:584
+#: ..\src\main.cpp:586
 msgid "Enable/disable logging window"
 msgstr "Aan / uitzetten van log window"
 
-#: ..\src\main.cpp:585
+#: ..\src\main.cpp:587
 msgid "&Debug window"
 msgstr "&Debug window"
 
-#: ..\src\main.cpp:585
+#: ..\src\main.cpp:587
 msgid "Debug window for all kind of stuff"
 msgstr "Debug window voor allerlei zaken"
 
-#: ..\src\main.cpp:586
+#: ..\src\main.cpp:588
 msgid "&Guides"
 msgstr "&Gidsbriefjes"
 
-#: ..\src\main.cpp:586
+#: ..\src\main.cpp:588
 msgid "Creation of guides"
 msgstr "Aanmaak van gidsbriefjes"
 
-#: ..\src\main.cpp:587
+#: ..\src\main.cpp:589
 msgid "&Scoreslips"
 msgstr "&Scoreslips"
 
-#: ..\src\main.cpp:587
+#: ..\src\main.cpp:589
 msgid "Creation of scoreslips"
 msgstr "Aanmaak van scoreslips"
 
 #: ..\src\main.cpp:590
+msgid "&Import schema"
+msgstr "&Importeer schema"
+
+#: ..\src\main.cpp:590
+msgid "Import a new schema (.asc) for playing"
+msgstr "Importeer een nieuw (.asc) speelschema"
+
+#: ..\src\main.cpp:592
 msgid "&Old -> database"
 msgstr "&Oud -> database"
 
-#: ..\src\main.cpp:590
+#: ..\src\main.cpp:592
 msgid "Convert 'old' .ini/data files to single new .db file"
 msgstr "Omzetten van 'oude' .ini/data bestanden naar een enkel .db bestand"
 
-#: ..\src\main.cpp:591
+#: ..\src\main.cpp:593
 msgid "&Database -> old"
 msgstr "&Database -> oud"
 
-#: ..\src\main.cpp:591
+#: ..\src\main.cpp:593
 msgid "Convert .db file to 'old' .ini/data files"
 msgstr "Omzetten van .db bestand naar 'oude' .ini/data bestanden"
 
-#: ..\src\main.cpp:592
+#: ..\src\main.cpp:594
 msgid "&Convert data"
 msgstr "&Converteren data"
 
-#: ..\src\main.cpp:592
+#: ..\src\main.cpp:594
 msgid "convert match-data between old/new types"
 msgstr "wedstrijdgegevens omzetten van het ene type naar het andere"
 
-#: ..\src\main.cpp:594
+#: ..\src\main.cpp:596
 msgid "&Old datatype (.ini)"
 msgstr "&Oud bestandstype (.ini)"
 
-#: ..\src\main.cpp:594
+#: ..\src\main.cpp:596
 msgid "Use 'old' .ini/data files for data storage"
 msgstr "Gebruik van 'oude' .ini/data bestanden voor opslag"
 
-#: ..\src\main.cpp:595
+#: ..\src\main.cpp:597
 msgid "&New datatype (.db)"
 msgstr "&Nieuw bestandstype (.db)"
 
-#: ..\src\main.cpp:595
+#: ..\src\main.cpp:597
 msgid "Use new .db file for data storage"
 msgstr "Gebruik van nieuw .db bestand voor opslag"
 
-#: ..\src\main.cpp:596
+#: ..\src\main.cpp:598
 msgid "s&Witch between datatypes"
 msgstr "&Wissel van bestandstype"
 
-#: ..\src\main.cpp:596
+#: ..\src\main.cpp:598
 msgid "switch between the two datatypes"
 msgstr "omschakelen van het ene opslagtype naar het andere"
 
-#: ..\src\main.cpp:597
+#: ..\src\main.cpp:599
 msgid "&Language"
 msgstr "&Taal"
 
-#: ..\src\main.cpp:597
+#: ..\src\main.cpp:599
 msgid "language of the userinterface"
 msgstr "taal van de gebruikers interface"
 
-#: ..\src\main.cpp:600
+#: ..\src\main.cpp:602
 msgid "&System info"
 msgstr "&Systeem info"
 
-#: ..\src\main.cpp:600
+#: ..\src\main.cpp:602
 msgid "Info about the version of wxWidgets"
 msgstr "Info over versie van wxWidgets"
 
-#: ..\src\main.cpp:601
+#: ..\src\main.cpp:603
 msgid "&About "
 msgstr "&Over "
 
-#: ..\src\main.cpp:604 ..\src\mylog.cpp:114
+#: ..\src\main.cpp:606 ..\src\mylog.cpp:114
 msgid "&File"
 msgstr "&Bestand"
 
-#: ..\src\main.cpp:605
+#: ..\src\main.cpp:607
 msgid "&Settings"
 msgstr "&Instellingen"
 
-#: ..\src\main.cpp:606
+#: ..\src\main.cpp:608
 msgid "s&Cores"
 msgstr "&Scores"
 
-#: ..\src\main.cpp:607
+#: ..\src\main.cpp:609
 msgid "&Tools"
 msgstr "&Extra"
 
-#: ..\src\main.cpp:608
+#: ..\src\main.cpp:610
 msgid "&Help"
 msgstr "&Help"
 
-#: ..\src\main.cpp:617
+#: ..\src\main.cpp:619
 msgid "Welcome at "
 msgstr "Welkom bij "
 
-#: ..\src\main.cpp:638
+#: ..\src\main.cpp:641
 msgid "hello in the console!"
 msgstr "hallo in de console!"
 
-#: ..\src\main.cpp:641
+#: ..\src\main.cpp:644
 msgid "Debug active"
 msgstr "Debug active"
 
-#: ..\src\main.cpp:656
+#: ..\src\main.cpp:660
 msgid "PrintPage()"
 msgstr "PrintPage()"
 
-#: ..\src\main.cpp:666
+#: ..\src\main.cpp:670
 msgid ", from "
 msgstr ", uit "
 
-#: ..\src\main.cpp:667
+#: ..\src\main.cpp:671
 #, c-format
 msgid ""
 "\n"
@@ -1649,125 +1657,154 @@ msgstr ""
 "\n"
 "(c) wxSystemInformationFrame, PB: https://github.com/PBfordev"
 
-#: ..\src\main.cpp:674
+#: ..\src\main.cpp:678
 msgid "About "
 msgstr "Over "
 
-#: ..\src\main.cpp:718
+#: ..\src\main.cpp:722
 msgid "MenuNewMatch      := \"fn\"       ; File: New match/session"
 msgstr "MenuNewMatch      := \"bn\"       ; Bestand: Nieuw"
 
-#: ..\src\main.cpp:719
+#: ..\src\main.cpp:723
 msgid "MenuShutdown      := \"fe\"       ; File: Exit"
 msgstr "MenuShutdown      := \"ba\"       ; Bestand: Afsluiten"
 
-#: ..\src\main.cpp:720
+#: ..\src\main.cpp:724
 msgid "MenuPrinter       := \"fp\"       ; File: Printer choice"
 msgstr "MenuPrinter       := \"bp\"       ; Bestand: Printer"
 
-#: ..\src\main.cpp:721
+#: ..\src\main.cpp:725
 msgid "MenuPrintPage     := \"fg\"       ; File: print paGe"
 msgstr "MenuPrintPage     := \"bg\"       ; Bestand: printpaGina"
 
-#: ..\src\main.cpp:722
+#: ..\src\main.cpp:726
 msgid "MenuSetupMatch    := \"sm\"       ; Settings: setup Match"
 msgstr "MenuSetupMatch    := \"iw\"       ; Instellingen: Wedstrijd"
 
-#: ..\src\main.cpp:723
+#: ..\src\main.cpp:727
 msgid "MenuSetupSchema   := \"ss\"       ; Settings: setup Schema"
 msgstr "MenuSetupSchema   := \"is\"       ; Instellingen: Schema"
 
-#: ..\src\main.cpp:724
+#: ..\src\main.cpp:728
 msgid "MenuNamesInit     := \"se\"       ; Settings: pairnames Entry/change"
 msgstr "MenuNamesInit     := \"ii\"       ; Instellingen: Ingeven"
 
-#: ..\src\main.cpp:725
+#: ..\src\main.cpp:729
 msgid "MenuNamesAssign   := \"sa\"       ; Settings: pairnames Assignment"
 msgstr "MenuNamesAssign   := \"it\"       ; Instellingen: Toekennen"
 
-#: ..\src\main.cpp:726
+#: ..\src\main.cpp:730
 msgid "MenuScoreEntry    := \"cc\"       ; sCores: sCoreentry"
 msgstr "MenuScoreEntry    := \"ss\"       ; Scores: Scores"
 
-#: ..\src\main.cpp:727
+#: ..\src\main.cpp:731
 msgid "MenuCorSession    := \"cs\"       ; sCores: entry Sesssioncorrections"
 msgstr "MenuCorSession    := \"sz\"       ; Scores: Zittingcorrecties"
 
-#: ..\src\main.cpp:728
+#: ..\src\main.cpp:732
 msgid "MenuCorEnd        := \"ce\"       ; sCores: entry Endcorrections"
 msgstr "MenuCorEnd        := \"se\"       ; Scores: Eindcorrecties"
 
-#: ..\src\main.cpp:729
+#: ..\src\main.cpp:733
 msgid "MenuResult        := \"cr\"       ; sCores: calculation Result"
 msgstr "MenuResult        := \"su\"       ; Scores: Uitslag"
 
-#: ..\src\main.cpp:730
+#: ..\src\main.cpp:734
+msgid "MenuDebug         := \"td\"       ; Tools: Debug window"
+msgstr "MenuDebug         := \"ed\"       ; Extra: Debug window"
+
+#: ..\src\main.cpp:735
+msgid "MenuGuides        := \"tg\"       ; Tools: Guide creation"
+msgstr "MenuGuides        := \"eg\"       ; Extra: Gidsbriefjes"
+
+#: ..\src\main.cpp:736
+msgid "MenuScoreSlips    := \"ts\"       ; Tools: Scoreslip creation"
+msgstr "MenuScoreSlips    := \"es\"       ; Extra: Scoreslips aanmaken"
+
+#: ..\src\main.cpp:737
+msgid "MenuImportSchema  := \"ti\"       ; Tools: Import a new playing-schema"
+msgstr "MenuImportSchema  := \"ei\"       ; Extra: Importeren van een nieuw speelschema"
+
+#: ..\src\main.cpp:738
 msgid "MenuDbType        := \"twn\"      ; Tools: sWitch between datatypes: New datatype"
 msgstr "MenuDbType        := \"ewn\"      ; Extra: Wissel Nieuw"
 
-#: ..\src\main.cpp:731
+#: ..\src\main.cpp:739
 msgid "MenuOldType       := \"two\"      ; Tools: sWitch between datatypes: Old datatype"
 msgstr "MenuOldType       := \"ewo\"      ; Extra: Wissel Oud"
 
-#: ..\src\main.cpp:732
+#: ..\src\main.cpp:740
 msgid "AllMenus          := [\"fn\",\"fp\",\"fg\",\"sm\",\"ss\",\"se\",\"sa\",\"cc\",\"cs\",\"ce\",\"cr\",\"two\",\"twn\"]"
 msgstr "AllMenus          := [\"bn\",\"bp\",\"bg\",\"iw\",\"is\",\"ii\",\"it\",\"ss\",\"sz\",\"se\",\"su\",\"ewo\",\"ewn\"]"
 
-#: ..\src\main.cpp:736
+#: ..\src\main.cpp:744
 msgid "changed"
 msgstr "gewijzigd"
 
-#: ..\src\main.cpp:777
+#: ..\src\main.cpp:785
 #, c-format
 msgid "Menu backup current(%u: %s)"
 msgstr "Menu backup current(%u: %s)"
 
-#: ..\src\main.cpp:788
+#: ..\src\main.cpp:796
 #, c-format
 msgid "Menu old page(%u: %s)"
 msgstr "Menu old page(%u: %s)"
 
-#: ..\src\main.cpp:796
+#: ..\src\main.cpp:804
 #, c-format
 msgid "Menu old show(%u)"
 msgstr "Menu old show(%u)"
 
-#: ..\src\main.cpp:802
+#: ..\src\main.cpp:810
 #, c-format
 msgid "Menu new page(%u)"
 msgstr "Menu new page(%u)"
 
-#: ..\src\main.cpp:845
+#: ..\src\main.cpp:853
 #, c-format
 msgid "OnMenu(%u), id unknown!"
 msgstr "OnMenu(%u), id unknown!"
 
-#: ..\src\main.cpp:849
+#: ..\src\main.cpp:857
 #, c-format
 msgid "Menu new show(%u: %s)"
 msgstr "Menu new show(%u: %s)"
 
-#: ..\src\main.cpp:878
+#: ..\src\main.cpp:886
 msgid "Choose a language (and restart)"
 msgstr "Kies een taal (en start opnieuw op)"
 
-#: ..\src\main.cpp:878
+#: ..\src\main.cpp:886
 msgid "Language selection"
 msgstr "Taalselectie"
 
-#: ..\src\main.cpp:888
+#: ..\src\main.cpp:896
 #, c-format
 msgid "Languagechoice: id=%d, name=%s"
 msgstr "Taalkeuze: id=%d, naam=%s"
 
-#: ..\src\main.cpp:895
+#: ..\src\main.cpp:903
 msgid "Choose a file for printing"
 msgstr "Kies een bestand om te printen"
 
-#: ..\src\main.cpp:899
+#: ..\src\main.cpp:907
 #, c-format
 msgid "Printing file <%s>"
 msgstr "Afdrukken van bestand <%s>"
+
+#: ..\src\main.cpp:917
+msgid "Choose a schema file to import"
+msgstr "Kies een schemabestand om te importeren"
+
+#: ..\src\main.cpp:926
+#, c-format
+msgid "Importing file <%s>"
+msgstr "Bestand importeren <%s>"
+
+#: ..\src\main.cpp:930
+msgid "Don't import a schema from the basefolder itself!"
+msgstr "Je kunt geen schema importeren uit de basefolder zelf!"
 
 #: ..\src\mygrid.cpp:173
 #, c-format

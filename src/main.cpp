@@ -477,7 +477,7 @@ bool MyApp::OnInit()
     return true;
 }   //  OnInit()
 
-MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'Bridge' calculation program")) // ssWinTitle: init here because of translation for new frame!
+MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'Bridge' scoring program")) // ssWinTitle: init here because of translation for new frame!
     , m_pActivePage { 0 }
     , m_theApp      { a_theApp }
     , m_oldId       { 0 }
@@ -668,7 +668,7 @@ void MyFrame::OnAbout(wxCommandEvent& )
   
     wxString about;
     about.Printf(   __PRG_NAME__ + _(", version ") + __VERSION__ + _(", from ") + __YEAR__ +
-                    _("\nThis is the 'bridge' calculationprogram of Harrie/Tinus\n"
+                    _("\nThis is the 'bridge' scoring program of Harrie/Tinus\n"
                       "on base of wxWidgets\n\n"
                       "Build date: %s\n%s\n\n"
                       "(c) wxSystemInformationFrame, PB: https://github.com/PBfordev"
@@ -730,7 +730,7 @@ void MyFrame::AutotestCreatePositions()
     positionsFile.AddLine(    _("MenuScoreEntry    := \"cc\"       ; sCores: sCoreentry"                    ));
     positionsFile.AddLine(    _("MenuCorSession    := \"cs\"       ; sCores: entry Sesssioncorrections"     ));
     positionsFile.AddLine(    _("MenuCorEnd        := \"ce\"       ; sCores: entry Endcorrections"          ));
-    positionsFile.AddLine(    _("MenuResult        := \"cr\"       ; sCores: calculation Result"            ));
+    positionsFile.AddLine(    _("MenuResult        := \"cr\"       ; sCores: calculate Results"             ));
     positionsFile.AddLine(    _("MenuDebug         := \"td\"       ; Tools: Debug window"                   ));
     positionsFile.AddLine(    _("MenuGuides        := \"tg\"       ; Tools: Guide creation"                 ));
     positionsFile.AddLine(    _("MenuScoreSlips    := \"ts\"       ; Tools: Scoreslip creation"             ));

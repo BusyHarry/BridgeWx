@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-14 15:53+0100\n"
-"PO-Revision-Date: 2025-03-14 15:53+0100\n"
+"POT-Creation-Date: 2025-03-18 12:21+0100\n"
+"PO-Revision-Date: 2025-03-18 12:23+0100\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -1376,7 +1376,7 @@ msgid "MyApp::OnInit() finished, showing startup picture"
 msgstr "MyApp::OnInit() finished, showing startup picture"
 
 #: ..\src\main.cpp:480
-msgid "'Bridge' calculation program"
+msgid "'Bridge' scoring program"
 msgstr "Bridge rekenprogramma"
 
 #: ..\src\main.cpp:549
@@ -1640,7 +1640,7 @@ msgstr ", uit "
 #, c-format
 msgid ""
 "\n"
-"This is the 'bridge' calculationprogram of Harrie/Tinus\n"
+"This is the 'bridge' scoring program of Harrie/Tinus\n"
 "on base of wxWidgets\n"
 "\n"
 "Build date: %s\n"
@@ -1706,7 +1706,7 @@ msgid "MenuCorEnd        := \"ce\"       ; sCores: entry Endcorrections"
 msgstr "MenuCorEnd        := \"se\"       ; Scores: Eindcorrecties"
 
 #: ..\src\main.cpp:733
-msgid "MenuResult        := \"cr\"       ; sCores: calculation Result"
+msgid "MenuResult        := \"cr\"       ; sCores: calculate Results"
 msgstr "MenuResult        := \"su\"       ; Scores: Uitslag"
 
 #: ..\src\main.cpp:734

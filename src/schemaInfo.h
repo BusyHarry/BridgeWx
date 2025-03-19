@@ -4,11 +4,11 @@
 #if !defined _SCHEMAINFO_H_
 #define _SCHEMAINFO_H_
 
-#include <vector>
 #include "utils.h"
 
 #define INT_VECTOR std::vector<int>
 class wxArrayString;
+class wxString;
 
 namespace schema
 {
@@ -20,6 +20,8 @@ namespace schema
     int         GetId(const wxString& schema);                                // return the id of the wanted schema, SCHEMA_ID_NONE if not found
     wxString    GetName(int id);                                              // get name on base of its id
     UINT        GetMaxRound();                                                // get the maximum nr of rounds of the available schemas
+    bool        ImportSchema(const wxString& a_file, bool bDeleteDup=false);  // import a schema from a testfile
+    void        DebuggingSchemaData();                                        // testing only
 
     struct NS_EW{ UINT ns = 0; UINT ew = 0;};
     struct GameInfo
@@ -38,6 +40,7 @@ namespace schema
     void GetSetInfo         (int schemaId, UINT a_set, vGameInfo& a_info);
 } // end namespace schema
 
+class NEW_SCHEMA;
 class SchemaInfo
 {
 public:
@@ -70,8 +73,8 @@ private:
     UINT                m_pairs;
     bool                m_bSchemaInitOk;
     wxString            m_name;
-    const signed char*  m_pSetData;
-    const signed char*  m_pPairData;
+    const NEW_SCHEMA*   m_pSchema;
+    size_t              m_tableSize;
 };
 
 #endif

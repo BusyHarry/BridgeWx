@@ -75,6 +75,7 @@ enum MY_IDS
 
     ID_MENU_PRINTPAGE,
     ID_MENU_PRINTFILE,
+    ID_MENU_IMPORT_SCHEMA,
     ID_MENU_OLD_TO_DBASE,
     ID_MENU_DBASE_TO_OLD,
     ID_MENU_OLD_DBASE,      // 'original' way of saving game-data: game.* files

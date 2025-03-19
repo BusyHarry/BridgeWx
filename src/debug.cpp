@@ -26,7 +26,7 @@ Ronde       : Round, deal, hand Deal
 Tegenstander: Opponent, Declarer's opponent, Adversary
 Leider      : Declarer
 meer:
-    spel            : board (game?)
+    spel            : board (game?) deal
     Troefkleur      : Trump suit
     Bieden          : Bidding
     Spelverdeler    : Dealer
@@ -35,7 +35,7 @@ meer:
     Score           : Score
     sitlzit tafel   : Sit-out table or Dummy table
     Spellen lenen   : Borrow the cards from a table, Take the cards from a table
-    frequentiestaat : frequency state or "hand distribution"
+    frequentiestaat : frequency table or "hand distribution"
     reken programma : scoring program
     stilzit         : a bye
     scoreslips      : result slips/scorecard, traveler(s)

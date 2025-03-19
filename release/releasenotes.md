@@ -3,8 +3,9 @@
  - replaced most wxMessageBox() with MyMessageBox()
  - outof bounds array access: you have scores, you reduce the number of players in a group, recalculate results
    - now the bad scores are removed and the internal pairnumbers are adjusted
- - added importing new playing schemas
+ - added importing new playing schemas/movements
  - changed 'calculation program' to 'scoring program'
+ - changed internal playing schemas/movements into an easier to read format
 
 #V10.4.0 Tuesday 4 March 2025
  - updated AutoHotkey64.exe from version 2.0.18 to 2.0.19

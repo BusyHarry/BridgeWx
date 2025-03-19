@@ -953,4 +953,5 @@ void MyFrame::LoadExistingSchemaFiles()
     {
         (void)schema::ImportSchema(schema);
     }
+    schema::DebuggingSchemaData();  // for debugging....
 }   // LoadExistingSchemaFiles()

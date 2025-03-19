@@ -155,9 +155,6 @@
     <ClCompile Include="src\setupPrinter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\schemaData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\mygrid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -198,6 +195,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\importExportSchema.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NewSchemaData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -259,9 +259,6 @@
     <ClInclude Include="src\printer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\schemaData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\schemaInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -299,6 +296,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\importExportSchema.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NewSchemaData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -16,9 +16,9 @@ mygrid.cpp
 mylog.cpp
 nameEditor.cpp
 names.cpp
+NewSchemaData.cpp
 orgInterface.cpp
 printer.cpp
-schemaData.cpp
 schemaInfo.cpp
 score.cpp
 scoreEntry.cpp
@@ -48,9 +48,9 @@ mygrid.h
 mylog.h
 nameEditor.h
 names.h
+NewSchemaData.h
 orgInterface.h
 printer.h
-schemaData.h
 schemaInfo.h
 score.h
 scoreEntry.h

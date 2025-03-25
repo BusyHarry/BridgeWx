@@ -17,7 +17,7 @@ extern const wxString ES;       // an Empty String
 template <typename T>
 bool IsInRange(const T& value, const T& low, const T& high)
 {
-    return (value >= low) && (high <= value);
+    return (value >= low) && (value <= high);
 }
 
 struct StringBuf

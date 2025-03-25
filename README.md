@@ -1,6 +1,6 @@
 # BridgeWx
 
-A simple bridge calculation program.
+A simple bridge calculation/scoring program.
 Its a gui-remake of an old dos-commandline program I started in the early 1990s when my bridgepartner was a districtscompetition leader of the Dutch Bridge Association.
 
 Score entry can be done via:

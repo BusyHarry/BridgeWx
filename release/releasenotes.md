@@ -6,6 +6,7 @@
  - added importing new playing schemas/movements
  - changed 'calculation program' to 'scoring program'
  - changed internal playing schemas/movements into an easier to read format
+ - decoupled old/global gameinfo
 
 #V10.4.0 Tuesday 4 March 2025
  - updated AutoHotkey64.exe from version 2.0.18 to 2.0.19

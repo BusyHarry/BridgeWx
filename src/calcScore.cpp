@@ -235,7 +235,7 @@ void CalcScore::ShowChoice()
             pTextFile = &m_txtFileResultOnName;
             break;
         case ResultTotal:
-            title = _("Total result");
+            title = _("Final result");
             pTextFile = &m_txtFileResultTotal;
             break;
         case ResultFrqTable:
@@ -295,7 +295,7 @@ void CalcScore::RefreshInfo()
     // now add dynamic parts
     if ( cfg::GetActiveSession() != 0)
     {
-        choices.push_back(_("total"));
+        choices.push_back(_("final"));
         m_vChoices.push_back(ResultTotal);
     }
     // club related parts
@@ -331,7 +331,7 @@ void CalcScore::RefreshInfo()
     Layout();
     if (FindBadGameData())
     {   // show messagebox on top of the result
-        CallAfter([this] {MyMessageBox(m_txtBadGameData, _("ERROR")); });
+        CallAfter([this] {MyMessageBox(m_txtBadGameData, _("Error")); });
     }
 }   // RefreshInfo()
 
@@ -1297,7 +1297,7 @@ void CalcScore::CalcTotal()
 
     m_txtFileResultTotal.MyCreate(cfg::ConstructFilename(cfg::EXT_RESULT_TOTAL), MyTextFile::WRITE);
     m_txtFileResultTotal.AddLine(cfg::GetDescription());
-    m_txtFileResultTotal.AddLine(FMT(_("Total result%s"), bWeightedAvg ? _(" (weighted average)") : ES));
+    m_txtFileResultTotal.AddLine(FMT(_("Final result%s"), bWeightedAvg ? _(" (weighted average)") : ES));
     m_txtFileResultTotal.AddLine(ES);
     wxString tmp = _("rank pairname                       ");
     for (session=1; session <= maxSession; ++session)
@@ -1400,7 +1400,7 @@ void CalcScore::CalcClub( bool a_bTotal)
     MyTextFile&         txtFile     = a_bTotal ? m_txtFileResultClubTotal : m_txtFileResultClubSession;
     UINT                session     = cfg::GetActiveSession();
     UINT                maxSession  = a_bTotal ? session : 1;
-    wxString            header      = a_bTotal ? _("Total result") : session ? FMT(_("Result of session %u"), session): _("Session result");
+    wxString            header      = a_bTotal ? _("Final result") : session ? FMT(_("Result of session %u"), session): _("Session result");
     wxString            fileName    = cfg::ConstructFilename(a_bTotal ? cfg::EXT_CLUB_TOTAL : cfg::EXT_SESSION_CLUB);
 
     std::vector<CLUB_DATA> club;

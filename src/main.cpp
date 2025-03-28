@@ -929,7 +929,7 @@ void MyFrame::OnImportSchema(wxCommandEvent& )
         {
             wxString error(_("Don't import a schema from the basefolder itself!"));
             MyLogError(error);
-            MyMessageBox(error, _("ERROR"));
+            MyMessageBox(error, _("Error"));
         } else
         {   // only import if folders are different!
             if (schema::ImportSchema(schemaFile, true))

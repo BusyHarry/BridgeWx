@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-18 12:21+0100\n"
-"PO-Revision-Date: 2025-03-18 12:23+0100\n"
+"POT-Creation-Date: 2025-03-27 18:42+0100\n"
+"PO-Revision-Date: 2025-03-27 18:43+0100\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -216,7 +216,7 @@ msgid "Session result on name"
 msgstr "Zitting uitslag op naam"
 
 #: ..\src\calcScore.cpp:238 ..\src\calcScore.cpp:1403
-msgid "Total result"
+msgid "Final result"
 msgstr "Totaal uitslag"
 
 #: ..\src\calcScore.cpp:242
@@ -255,9 +255,8 @@ msgstr "zitting"
 msgid "session on name"
 msgstr "zitting op naam"
 
-#. TRANSLATORS: "total", translation max length = 6
-#: ..\src\calcScore.cpp:298 ..\src\calcScore.cpp:1308
-msgid "total"
+#: ..\src\calcScore.cpp:298
+msgid "final"
 msgstr "totaal"
 
 #: ..\src\calcScore.cpp:304
@@ -269,8 +268,8 @@ msgid "club total"
 msgstr "club totaal"
 
 #: ..\src\calcScore.cpp:334 ..\src\main.cpp:932
-msgid "ERROR"
-msgstr "ERROR"
+msgid "Error"
+msgstr "Error"
 
 #: ..\src\calcScore.cpp:709
 #, c-format
@@ -371,7 +370,7 @@ msgstr " (gewogen gemiddelde)"
 
 #: ..\src\calcScore.cpp:1300
 #, c-format
-msgid "Total result%s"
+msgid "Final result%s"
 msgstr "Totaal uitslag%s"
 
 #: ..\src\calcScore.cpp:1302
@@ -382,6 +381,11 @@ msgstr "rang paarnaam                       "
 #, c-format
 msgid "  S%-4u"
 msgstr "  Z%-4u"
+
+#. TRANSLATORS: "total", translation max length = 6
+#: ..\src\calcScore.cpp:1308
+msgid "total"
+msgstr "totaal"
 
 #. TRANSLATORS: "avg.", translation max length = 4
 #: ..\src\calcScore.cpp:1310
@@ -1938,48 +1942,48 @@ msgstr ""
 "; syntax: <club nr> , <clubnaam>\n"
 "; lengte clubnaam maximaal %u karakters."
 
-#: ..\src\orgInterface.cpp:666 ..\src\utils.cpp:308
+#: ..\src\orgInterface.cpp:710 ..\src\utils.cpp:308
 msgid ": readerror"
 msgstr ": leesfout"
 
-#: ..\src\orgInterface.cpp:704
+#: ..\src\orgInterface.cpp:753
 msgid ": unknown type"
 msgstr ": onbekend type"
 
-#: ..\src\orgInterface.cpp:713
+#: ..\src\orgInterface.cpp:762
 msgid "Problem reading score-file"
 msgstr "Probleem bij inlezen score-file"
 
-#: ..\src\orgInterface.cpp:729
+#: ..\src\orgInterface.cpp:778
 msgid ": open error"
 msgstr ": openfout"
 
-#: ..\src\orgInterface.cpp:729
+#: ..\src\orgInterface.cpp:778
 msgid "Problem opening score-file"
 msgstr "Probleem bij openen score-file"
 
-#: ..\src\orgInterface.cpp:770 ..\src\utils.cpp:254 ..\src\utils.cpp:283
+#: ..\src\orgInterface.cpp:824 ..\src\utils.cpp:254 ..\src\utils.cpp:283
 msgid ": write error"
 msgstr ": schrijffout"
 
-#: ..\src\orgInterface.cpp:770
+#: ..\src\orgInterface.cpp:824
 msgid "Problem writing score-file"
 msgstr "Probleem bij wegschrijven score-file"
 
-#: ..\src\orgInterface.cpp:842 ..\src\orgInterface.cpp:944
+#: ..\src\orgInterface.cpp:896 ..\src\orgInterface.cpp:998
 #, c-format
 msgid "Unable to write corrections to: %s"
 msgstr "Kan korrecties niet wegschrijven naar: %s"
 
-#: ..\src\orgInterface.cpp:848
+#: ..\src\orgInterface.cpp:902
 msgid ";score.2 glbpair bonus.2 games   pairname"
 msgstr ";score.2 glbpaar bonus.2 spellen paarnaam"
 
-#: ..\src\orgInterface.cpp:951
+#: ..\src\orgInterface.cpp:1005
 msgid ";<correction><type> <session pairnr> <extra.1> <max extra> <pairname>"
 msgstr ";<correctie><type> <sessie paarnr> <extra.1> <max extra> <paarnaam>"
 
-#: ..\src\orgInterface.cpp:1016
+#: ..\src\orgInterface.cpp:1070
 msgid ";score 'glb pair' s<games>   name"
 msgstr ";score 'glb paar' s<spellen> naam"
 
@@ -2567,6 +2571,9 @@ msgstr "1 januari 2024"
 #: ..\src\version.h:15
 msgid "monday"
 msgstr "maandag"
+
+#~ msgid "ERROR"
+#~ msgstr "ERROR"
 
 #, fuzzy
 #~| msgid "Warning"

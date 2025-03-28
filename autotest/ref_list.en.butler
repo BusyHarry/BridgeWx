@@ -693,9 +693,9 @@ Group-result of match '<auto-test, session 1>', session 1
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
-Total result
+Final result
 <auto-test, session 1>
-Total result
+Final result
 
 rank pairname                         S1      total   avg.  A B
    1 pair 2 . . . . . . . . . . . .   4.00     4.00   4.00  1 .
@@ -2672,9 +2672,9 @@ Group-result of match '<auto-test, session 2>', session 2
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
-Total result
+Final result
 <auto-test, session 2>
-Total result
+Final result
 
 rank pairname                         S1     S2      total   avg.  A B
    1 pair 3 . . . . . . . . . . . .   3.54   1.32     4.86   2.43  1 .
@@ -4653,9 +4653,9 @@ Group-result of match '<auto-test, session 3>', session 3
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
-Total result
+Final result
 <auto-test, session 3>
-Total result
+Final result
 
 rank pairname                         S1     S2     S3      total   avg.  A B
    1 pair 1 . . . . . . . . . . . .   1.22   3.18   3.18     7.58   2.53  1 .

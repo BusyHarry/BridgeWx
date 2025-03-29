@@ -389,7 +389,7 @@ bool ExistClub(int a_index)
 {
     return     (a_index > 0)
             && (static_cast<size_t>(a_index) < svClubNames.size())
-            && !svClubNames[a_index].empty();
+            && !svClubNames[a_index].IsEmpty();
 }   // ExistClub()
 
 bool ExistClub(const wxString& a_clubName, int* a_pIndex)
@@ -420,7 +420,7 @@ int GetFreeClubIndex()
 
 UINT DetermineClubIndex(const wxString& a_club)
 {
-    if (a_club.empty()) return 0;
+    if (a_club.IsEmpty()) return 0;
 
     UINT ii = 1;
     for (; ii <= suNrOfClubs; ++ii)

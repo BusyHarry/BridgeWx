@@ -490,7 +490,7 @@ bool MyTextCtrl::IsMinusOk(const wxString& val, int pos) const
         return false;
 
     // And then only if there is no existing minus sign there.
-    if ( !val.empty() && val[0] == '-' )
+    if ( !val.IsEmpty() && val[0] == '-' )
         return false;
 
     // Notice that entering '-' can make our value invalid, for example if
@@ -519,7 +519,7 @@ bool MyTextCtrl::IsCharOk(const wxString& val, int pos, wxChar chr)
         }
 
         // Prepending a separator before the minus sign isn't allowed.
-        if ( pos == 0 && !val.empty() && val[0] == '-' )
+        if ( pos == 0 && !val.IsEmpty() && val[0] == '-' )
             return false;
 
         // Otherwise always accept it, adding a decimal separator doesn't

@@ -1597,7 +1597,7 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
     long        score       = svSessionResult[pair].procentScore;
     wxString    corrections = GetSessionCorrectionString(pair);
     corrections.Replace(" ", ES, true);
-    if (!corrections.empty()) corrections = ' ' + corrections;
+    if (!corrections.IsEmpty()) corrections = ' ' + corrections;
     if (m_bButler)
     {
         ADDLINE(FMT(_("imps: %ld, games: %u, sessionscore: %s imps/game%s, rank: %u"),

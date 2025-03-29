@@ -180,7 +180,7 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
     switch (col)
     {
         case COL_COR_PROCENT:
-            if (!newData.empty())
+            if (!newData.IsEmpty())
             {
                 m_theGrid->SetCellValue(row, COL_COR_MP, ES);
                 if ( value == 0 || value == COR_PERCENT_MIN)    // you get minimum if there is rubbisch in the cell ....
@@ -188,7 +188,7 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
             }
             break;
         case COL_COR_MP:
-            if (!newData.empty())
+            if (!newData.IsEmpty())
             {
                 m_theGrid->SetCellValue(row, COL_COR_MP , ES);
                 if ( value == 0 || value == COR_MP_MIN)         // you get minimum if there is rubbisch in the cell ....
@@ -196,7 +196,7 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
             }
             break;
         case COL_COR_MAX:
-            if (newData.empty() || 0 == value)
+            if (newData.IsEmpty() || 0 == value)
             {
                 m_theGrid->SetCellValue(row, COL_COR_EXTRA, ES);
                 m_theGrid->SetCellValue(row, COL_COR_GAMES, ES);
@@ -207,34 +207,34 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
                 if ( value < COR_EXTRA_MIN) value = COR_EXTRA_MIN;
                 if ( value > COR_EXTRA_MAX) value = COR_EXTRA_MAX;
                 m_theGrid->SetCellValue(row, COL_COR_EXTRA, ForceInRange( m_theGrid->GetCellValue(row,COL_COR_EXTRA), COR_EXTRA_MIN, value*10));
-                if (m_theGrid->GetCellValue(row, COL_COR_GAMES).empty())
+                if (m_theGrid->GetCellValue(row, COL_COR_GAMES).IsEmpty())
                     m_theGrid->SetCellValue(row, COL_COR_GAMES, U2String(cfg::GetSetSize()));
             }
             break;
         case COL_COR_EXTRA:
             if (m_bButler)
             {
-                if (newData.empty())    // remove combi-table data
+                if (newData.IsEmpty())    // remove combi-table data
                     m_theGrid->SetCellValue(row, COL_COR_GAMES, ES);
                 else
                 {
                     wxString validated = ForceInRange(newData, -100, 100, true);
                     m_theGrid->CallAfter([this,row,col,validated](){this->m_theGrid->SetCellValue(row, col, validated);});
-                    if (m_theGrid->GetCellValue(row, COL_COR_GAMES).empty())    // set default set-size
+                    if (m_theGrid->GetCellValue(row, COL_COR_GAMES).IsEmpty())    // set default set-size
                         m_theGrid->SetCellValue(row, COL_COR_GAMES, U2String(cfg::GetSetSize()));
                 }
             }
             else  // percent scoring
-            if (!newData.empty())
+            if (!newData.IsEmpty())
             {
-                if (m_theGrid->GetCellValue(row,COL_COR_MAX).empty())
+                if (m_theGrid->GetCellValue(row,COL_COR_MAX).IsEmpty())
                     return CELL_CHANGE_REJECTED;        // only extra-data if we have a maximum inserted
                 wxString extra = ForceInRange(newData, COR_EXTRA_MIN, 10*wxAtoi(m_theGrid->GetCellValue(row,COL_COR_MAX)));
                 m_theGrid->CallAfter([this,row,col,extra](){this->m_theGrid->SetCellValue(row, col, extra);});
             }
             break;
         case COL_COR_GAMES:
-            if (m_theGrid->GetCellValue(row,COL_COR_MAX).empty() && m_theGrid->GetCellValue(row,COL_COR_EXTRA).empty())
+            if (m_theGrid->GetCellValue(row,COL_COR_MAX).IsEmpty() && m_theGrid->GetCellValue(row,COL_COR_EXTRA).IsEmpty())
                 return CELL_CHANGE_REJECTED;        // only games if extra/max data
             break;
         default:

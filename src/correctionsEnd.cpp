@@ -88,7 +88,7 @@ void CorrectionsEnd::AutotestRequestMousePositions(MyTextFile* a_pFile)
         if (score.IsEmpty() && bonus.IsEmpty()) continue;
             
         cor::CORRECTION_END cor;
-        if (score.empty())
+        if (score.IsEmpty())
         {   // we only have a bonus
             cor.score = SCORE_IGNORE;
             cor.bonus = AsciiTolong(bonus, ExpectedDecimalDigits::DIGITS_2);
@@ -145,7 +145,7 @@ bool CorrectionsEnd::OnCellChanging(const CellInfo& a_cellInfo)
     if (col == COL_COR_GAMES)
     {   // only acceptable if we have a non-empty real score
         wxString score = m_theGrid->GetCellValue(row, COL_COR_SCORE);
-        if (score.empty() || score[0] == '-' || score[0] == '*' )
+        if (score.IsEmpty() || score[0] == '-' || score[0] == '*' )
             return CELL_CHANGE_REJECTED;
     }
     else
@@ -156,7 +156,7 @@ bool CorrectionsEnd::OnCellChanging(const CellInfo& a_cellInfo)
             m_theGrid->SetCellValue(row, COL_COR_GAMES, ES);
         }
         else
-            if ( (col == COL_COR_SCORE) && newData.empty() )
+            if ( (col == COL_COR_SCORE) && newData.IsEmpty() )
             {   // only bonus column is needed
                 m_theGrid->SetCellValue(row, COL_COR_GAMES, ES);
             }
@@ -167,7 +167,7 @@ bool CorrectionsEnd::OnCellChanging(const CellInfo& a_cellInfo)
                 long value = AsciiTolong( newData, ExpectedDecimalDigits::DIGITS_2);
                 if ( (value >= minimum) && (value <= 10000) )
                 {   // if inrange, show data
-                    if (col == COL_COR_BONUS && (value == 0 || !m_theGrid->GetCellValue(row, COL_COR_SCORE).empty()))
+                    if (col == COL_COR_BONUS && (value == 0 || !m_theGrid->GetCellValue(row, COL_COR_SCORE).IsEmpty()))
                     {
                         ;
                     }

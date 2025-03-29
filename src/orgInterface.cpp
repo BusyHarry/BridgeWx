@@ -569,7 +569,7 @@ namespace  org
         for (auto buf = tf.GetFirstLine(); !tf.Eof(); buf = tf.GetNextLine())
         {
             buf.Trim(TRIM_LEFT);buf.Trim(TRIM_RIGHT);    // remove spaces in front and back
-            if (buf.empty() || buf[0]==';')
+            if (buf.IsEmpty() || buf[0]==';')
                 continue;                                // ignore empty lines and comment lines
 
             UINT id;
@@ -605,7 +605,7 @@ namespace  org
 
         for ( UINT ii = 1; ii < a_clubNames.size(); ++ii)
         {
-            if ( !a_clubNames[ii].empty() )
+            if ( !a_clubNames[ii].IsEmpty() )
             {
                 wxString tmp = FMT("%3u, %s", ii, a_clubNames[ii]);
                 tf.AddLine(tmp);
@@ -932,7 +932,7 @@ namespace  org
             // <score.2> <glbpair> <bonus.2> S<games> <pairname>
             // +100.00    1        [-99.99 ] s16   xxx - xxx
             str.Trim(TRIM_LEFT); str.Trim(TRIM_RIGHT);
-            if ( str.empty() || str[0] == ';' ) continue;
+            if ( str.IsEmpty() || str[0] == ';' ) continue;
 
             bool    bLineError  = false;
             int     count;
@@ -1034,7 +1034,7 @@ namespace  org
             //;<correctie><type> <sessiepaarnr> <extra.1> <max extra> <paarnaam>
             //    +3        %      28              0           0      paar 28
             str.Trim(TRIM_LEFT); str.Trim(TRIM_RIGHT);
-            if ( str.empty() || str[0] == ';' ) continue;
+            if ( str.IsEmpty() || str[0] == ';' ) continue;
 
             UINT    charCount;
             UINT    sessionPairnr;

@@ -372,7 +372,7 @@ namespace cfg
     void SetActiveMatch(const wxString& a_sMatch, const wxString& a_sMatchPath)
     {
         if (    ( ssActiveMatch == a_sMatch )
-             && ( !a_sMatchPath.empty() && (a_sMatchPath == ssActiveMatchPath))
+             && ( !a_sMatchPath.IsEmpty() && (a_sMatchPath == ssActiveMatchPath))
            ) return;
 
         ssActiveMatch     = a_sMatch;
@@ -677,7 +677,7 @@ namespace cfg
     void SetPrinterName( const wxString& a_printer)
     {
         wxString tmp;
-        if (a_printer.empty())
+        if (a_printer.IsEmpty())
             tmp = FILE_PRINTER_NAME;
         else
             tmp = a_printer;

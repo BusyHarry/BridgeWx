@@ -109,7 +109,7 @@ bool NameEditor::OnCellChanging(const CellInfo& a_cellInfo)
     {
         wxString    newName = a_cellInfo.newData;
         int         clubId  = wxAtoi(m_theGrid->GetCellValue (row, COL_CLUBID));
-        if (newName.empty())
+        if (newName.IsEmpty())
         {   // remove club info for this pair
             m_theGrid->SetCellValue (row, COL_CLUBID, ES);
         }
@@ -214,7 +214,7 @@ void NameEditor::AddName(const wxString& a_pairName, const wxString& a_clubName,
     if (count < cfg::MAX_PAIRS)
     {
         m_theGrid->AppendRows(1);
-        if ( a_pairName.empty() )
+        if ( a_pairName.IsEmpty() )
         {
             m_theGrid->SetCellValue(count, COL_PAIRNAME, FMT(_("pair %d"), count + 1     ));
         }

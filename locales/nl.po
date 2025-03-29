@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-27 18:42+0100\n"
-"PO-Revision-Date: 2025-03-27 18:43+0100\n"
+"POT-Creation-Date: 2025-03-29 16:26+0100\n"
+"PO-Revision-Date: 2025-03-29 16:27+0100\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -118,52 +118,52 @@ msgstr ""
 "\n"
 "Paar naam"
 
-#: ..\src\baseframe.cpp:78
+#: ..\src\baseframe.cpp:79
 #, c-format
 msgid "Baseframe:: row %d, column %d changes from <%s> to <%s>"
 msgstr "Baseframe:: rij %d, kolom %d verandert van <%s> in <%s>"
 
-#: ..\src\baseframe.cpp:93 ..\src\debug.cpp:124
+#: ..\src\baseframe.cpp:94 ..\src\debug.cpp:124
 msgid "Save"
 msgstr "Opslaan"
 
-#: ..\src\baseframe.cpp:94
+#: ..\src\baseframe.cpp:95
 msgid "save changed data"
 msgstr "gewijzigde data opslaan"
 
-#: ..\src\baseframe.cpp:95
+#: ..\src\baseframe.cpp:96
 msgid "Undo"
 msgstr "Herstel"
 
-#: ..\src\baseframe.cpp:96
+#: ..\src\baseframe.cpp:97
 msgid "undo changes"
 msgstr "wijzigingen terugdraaien"
 
-#: ..\src\baseframe.cpp:126
+#: ..\src\baseframe.cpp:127
 msgid "OnCancel()"
 msgstr "OnCancel()"
 
-#: ..\src\baseframe.cpp:156
+#: ..\src\baseframe.cpp:157
 msgid "Search"
 msgstr "Zoek"
 
-#: ..\src\baseframe.cpp:157
+#: ..\src\baseframe.cpp:158
 msgid "Text to search:"
 msgstr "Te zoeken tekst:"
 
-#: ..\src\baseframe.cpp:755
+#: ..\src\baseframe.cpp:756
 msgid "Ok"
 msgstr "Ok"
 
-#: ..\src\baseframe.cpp:756
+#: ..\src\baseframe.cpp:757
 msgid "Yes"
 msgstr "Ja"
 
-#: ..\src\baseframe.cpp:757
+#: ..\src\baseframe.cpp:758
 msgid "No"
 msgstr "Nee"
 
-#: ..\src\baseframe.cpp:758
+#: ..\src\baseframe.cpp:759
 msgid "Cancel"
 msgstr "Afbreken"
 
@@ -766,8 +766,12 @@ msgid "Database version error, expected <= %ld, found %ld"
 msgstr "Database versie error, verwacht <= %ld, aanwezig %ld"
 
 #: ..\src\database.cpp:155
-msgid ": is not accessable!"
-msgstr ": is niet toegankelijk!"
+msgid ""
+": is not accessable!\n"
+"Path set to: "
+msgstr ""
+": is niet toegankelijk!\n"
+"Opslaglocatie nu in map: "
 
 #: ..\src\database.cpp:218
 #, c-format

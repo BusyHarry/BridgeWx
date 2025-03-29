@@ -43,7 +43,7 @@ namespace cfg
     static const wxString   ssGlobalNameFile ("globalNames.db");    // db-filename when using global names
     static wxString         ssBaseFolder;           // folder where bridge.ini/globalNames.db is located
 
-    static wxString         ssVersion;              // version string in (all) the ini-files
+
     static wxString         ssActiveMatch;          // base-name of the active match, used in filenames. Must be inited here!
     static wxString         ssActiveMatchPath;      // location of match-data
     static wxString         ssMatchIni;             // = "default.ini";
@@ -699,7 +699,7 @@ namespace cfg
                 return CFG_ERROR;
         }
 
-        ssVersion     = io::ReadValue(KEY_PRG_VERSION   , ssVersion );
+        io::WriteValue(KEY_PRG_VERSION, GetVersion());
         ssDescription = io::ReadValue(KEY_SESSION_DISCR , ssDescription, suSession );
         return io::SchemaRead (sSessionInfo, suSession );
     }   // UpdateConfigSession()
@@ -712,7 +712,7 @@ namespace cfg
             return CFG_ERROR;
         }
 
-        ssVersion       = io::ReadValue     (KEY_PRG_VERSION     , GetVersion()      );
+        io::WriteValue(KEY_PRG_VERSION, GetVersion());
         ssComment       = io::ReadValue     (KEY_MATCH_CMNT      , GetCopyright()    );
         (void)            io::ReadValue     (KEY_MATCH_DISCR     , ssDescription     );
 
@@ -752,9 +752,7 @@ namespace cfg
             spConfigMain->SetRecordDefaults();   //write all requested entries to the file, if not present
         }
 
-        siLanguage        = spConfigMain->Read(CFG_MAIN_LANGUAGE, siLanguage);
-        (void)              spConfigMain->Read(CFG_MAIN_LANGUAGE_DESCRIPTION, "default");
-        ssVersion         = spConfigMain->Read(CFG_MAIN_VERSION, GetVersion());
+        spConfigMain->Write(CFG_MAIN_VERSION, GetVersion());
         wxString tmp      = GetActiveMatchPath() + GetActiveMatch();  // base+name....
         wxFileName tmp2   = spConfigMain->Read(CFG_MAIN_GAME, tmp);
         ssActiveMatch     = tmp2.GetFullName();
@@ -769,6 +767,8 @@ namespace cfg
             (void)spConfigMain->Write(CFG_MAIN_GAME, tmp);
         }
 
+        siLanguage        = spConfigMain->Read(CFG_MAIN_LANGUAGE, siLanguage);
+        (void)              spConfigMain->Read(CFG_MAIN_LANGUAGE_DESCRIPTION, "default");
         slActiveDbType    = static_cast<io::ActiveDbType>(spConfigMain->Read(CFG_MAIN_DBTYPE, slActiveDbType));
         io::DatabaseTypeSet(static_cast<io::ActiveDbType>(slActiveDbType), true);  // silently set db-type
 

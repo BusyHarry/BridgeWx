@@ -11,6 +11,8 @@
  - small texts update
  - consequent use of wxString::IsEmpty() i.s.o wxString::empty()
  - changed some wxStatictext to wxGenericStaticText to prevent clipping problems
+ - solved problem when .db was on a non-existing/non-writable location
+ - now current programversion is always updated in the datafiles
 
 #V10.4.0 Tuesday 4 March 2025
  - updated AutoHotkey64.exe from version 2.0.18 to 2.0.19

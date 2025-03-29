@@ -151,12 +151,12 @@ CfgFileEnum DatabaseOpen(io::GlbDbType /*dbType*/, CfgFileEnum a_how2Open)
         (void)db.Mkdir(wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);     // create full path, no error if allready there
     if (!db.IsDirWritable())
     {
-        // if not writable, select "C:\\Users\\<me>\\AppData\\Local\\BridgeWx" dir
-        wxString err = db.GetFullPath() + _(": is not accessable!");
+        // if not writable, select "<documents_dir>/BridgeWx" folder
+        wxString err = db.GetFullPath() + _(": is not accessable!\nPath set to: ") + cfg::GetBaseFolder();
         MyLogError( err );      // wxLogError will stop the programm with a pop-up...
         MyMessageBox(err);
         wxString dir = cfg::GetBaseFolder();
-        cfg::SetActiveMatch(db.GetFullName(), dir);
+        cfg::SetActiveMatch(db.GetName(), dir); //NB, no extension!
         db = wxFileName(dir, db.GetFullName());
     }
 

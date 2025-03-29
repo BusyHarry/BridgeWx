@@ -10,6 +10,7 @@
  - decoupled old/global gameinfo
  - small texts update
  - consequent use of wxString::IsEmpty() i.s.o wxString::empty()
+ - changed some wxStatictext to wxGenericStaticText to prevent clipping problems
 
 #V10.4.0 Tuesday 4 March 2025
  - updated AutoHotkey64.exe from version 2.0.18 to 2.0.19

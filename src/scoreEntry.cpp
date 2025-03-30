@@ -25,7 +25,7 @@ static bool     GetScore        (UINT theGame, UINT nsPair, score::GameSetData& 
 #define CHOICE_ID_SLIP    0ULL  /* slip/game added FIRST to this sizer*/
 #define CHOICE_ID_GAME_NS 1ULL  /* game/ns added SECOND to this sizer*/
 #define CHOICE_ID_ROUND   2ULL  /* choice round added THIRD to this sizer*/
-#define CHOICE_ID_GAME    3ULL  /* choice round added FOURTH to this sizer*/
+#define CHOICE_ID_GAME    3ULL  /* choice game added FOURTH to this sizer*/
 
 #define CHOICE_GAME     "ChoiceGame"
 #define CHOICE_ROUND    "ChoiceRound"
@@ -36,18 +36,21 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     m_theGrid->CreateGrid(0, COL_NR_OF);
 //    m_theGrid->SetRowLabelSize( 4*GetCharWidth() );   // room for 3 digit numbers
     m_theGrid->HideRowLabels();                         // don't need 1 to N
-    int sizeOne = GetCharWidth();
+    #define sizeOne GetCharWidth()
     #define SIZE_PAIRNAME   ((cfg::MAX_NAME_SIZE+1)* sizeOne)   /* original name        */
     #define SIZE_PAIRNR     (6 * sizeOne)                       /* "AB12 *"             */
     #define SIZE_ID         (5 * sizeOne)                       /* just numbers 1-120   */
     #define SIZE_SCORE      (8 * sizeOne)                       /* 'score nz' / 'R-9999'*/
-    m_theGrid->SetColSize(COL_GAME      , SIZE_ID       ); m_theGrid->SetColLabelValue(COL_GAME     , _("game"    ));
-    m_theGrid->SetColSize(COL_NS        , SIZE_PAIRNR   ); m_theGrid->SetColLabelValue(COL_NS       , _("ns"      ));
-    m_theGrid->SetColSize(COL_EW        , SIZE_PAIRNR   ); m_theGrid->SetColLabelValue(COL_EW       , _("ew"      ));
-    m_theGrid->SetColSize(COL_SCORE_NS  , SIZE_SCORE    ); m_theGrid->SetColLabelValue(COL_SCORE_NS , _("score ns"));
-    m_theGrid->SetColSize(COL_SCORE_EW  , SIZE_SCORE    ); m_theGrid->SetColLabelValue(COL_SCORE_EW , _("score ew"));
-    m_theGrid->SetColSize(COL_NAME_NS   , SIZE_PAIRNAME ); m_theGrid->SetColLabelValue(COL_NAME_NS  , _("name ns" ));
-    m_theGrid->SetColSize(COL_NAME_EW   , SIZE_PAIRNAME ); m_theGrid->SetColLabelValue(COL_NAME_EW  , _("name ew" ));
+    #define SIZE_CONTRACT   (9 * sizeOne)                       /* 3sa+3** */
+    m_theGrid->SetColSize(COL_GAME       , SIZE_ID      ); m_theGrid->SetColLabelValue(COL_GAME       , _("game"       ));
+    m_theGrid->SetColSize(COL_NS         , SIZE_PAIRNR  ); m_theGrid->SetColLabelValue(COL_NS         , _("ns"         ));
+    m_theGrid->SetColSize(COL_EW         , SIZE_PAIRNR  ); m_theGrid->SetColLabelValue(COL_EW         , _("ew"         ));
+    m_theGrid->SetColSize(COL_SCORE_NS   , SIZE_SCORE   ); m_theGrid->SetColLabelValue(COL_SCORE_NS   , _("score ns"   ));
+    m_theGrid->SetColSize(COL_SCORE_EW   , SIZE_SCORE   ); m_theGrid->SetColLabelValue(COL_SCORE_EW   , _("score ew"   ));
+    m_theGrid->SetColSize(COL_NAME_NS    , SIZE_PAIRNAME); m_theGrid->SetColLabelValue(COL_NAME_NS    , _("name ns"    ));
+    m_theGrid->SetColSize(COL_NAME_EW    , SIZE_PAIRNAME); m_theGrid->SetColLabelValue(COL_NAME_EW    , _("name ew"    ));
+    m_theGrid->SetColSize(COL_CONTRACT_NS, SIZE_CONTRACT); m_theGrid->SetColLabelValue(COL_CONTRACT_NS, _("contract ns"));
+    m_theGrid->SetColSize(COL_CONTRACT_EW, SIZE_CONTRACT); m_theGrid->SetColLabelValue(COL_CONTRACT_EW, _("contract ew"));
 
     wxGridCellAttr* pAttr = new wxGridCellAttr;
     // apparently can be used only once
@@ -90,7 +93,7 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     m_pSizerAllChoices->MyAdd(m_pChoiceGame, defaultSF0);
 
     // CHOICE_ID_ROUND  choice round added THIRD to this sizer
-    // CHOICE_ID_GAME   choice round added FOURTH to this sizer
+    // CHOICE_ID_GAME   choice game added FOURTH to this sizer
 
     auto pButtonNextEmptyScore = new wxButton(this, wxID_ANY , _("++empty score") );
     pButtonNextEmptyScore->Bind(wxEVT_BUTTON,&ScoreEntry::OnNextEmptyScore, this);
@@ -99,6 +102,10 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     auto pButtonSwitchNsEw = new wxButton(this, wxID_ANY , _("ns<-->ew") );
     pButtonSwitchNsEw->Bind(wxEVT_BUTTON,&ScoreEntry::OnSwitchNsEw, this);
     pButtonSwitchNsEw->SetToolTip(_("switch NS pair with EW pair: wrong direction"));
+
+    m_pCheckboxContract = new wxCheckBox(this, wxID_ANY, _("contract entry"));
+    m_pCheckboxContract->Bind(wxEVT_CHECKBOX, &ScoreEntry::OnCheckboxContract, this);
+    m_pCheckboxContract->SetToolTip(_("Enter contracts like: -x[*[*]] or y'SUIT'[[+|-]x][*[*]]"));
 
     auto search   = CreateSearchBox();
     auto okCancel = CreateOkCancelButtons();
@@ -110,6 +117,8 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     hBoxSearchOk->Add(search                , defaultSF1);
     hBoxSearchOk->Add(pButtonNextEmptyScore , defaultSF0);
     hBoxSearchOk->Add(pButtonSwitchNsEw     , defaultSF0);
+    hBoxSearchOk->AddSpacer(30);
+    hBoxSearchOk->Add(m_pCheckboxContract   , defaultSF0);
     hBoxSearchOk->AddStretchSpacer(1000);
     hBoxSearchOk->Add(vBoxOk                , defaultSF0);
     // add to layout
@@ -135,6 +144,8 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     AUTOTEST_ADD_WINDOW(pButtonSwitchNsEw    , "SwitchNsEw" );
     AUTOTEST_ADD_WINDOW(m_pChoiceRound       , CHOICE_ROUND );
     AUTOTEST_ADD_WINDOW(m_pChoiceGame        , CHOICE_GAME  );
+    AUTOTEST_ADD_WINDOW(m_pCheckboxContract  , "CheckContract");
+    
     m_description = "ScoreEntry";
 }   // ScoreEntry()
 
@@ -146,12 +157,58 @@ ScoreEntry::~ScoreEntry(){}
     WriteScoresToDisk();
 }   // BackupData()
 
+// show a popup if an entered value is wrong/questionable
+static int PopUp(MyGrid* pGrid, const CellInfo& a_cellInfo, const wxString& msg, long style = wxOK | wxCENTER )
+{
+    int         row = a_cellInfo.row;
+    int         col = a_cellInfo.column;
+    wxColour    org = pGrid->GetCellBackgroundColour(row, col);
+
+    pGrid->SetCellBackgroundColour(row, col, *wxRED );
+    pGrid->SetCellValue(row, col, a_cellInfo.newData);
+    pGrid->Refresh();
+    wxBell();
+    int result = MyMessageBox(msg, "???", style);
+    pGrid->SetCellBackgroundColour(row, col, org );
+    pGrid->Refresh();
+    return result;
+}   // PopUp()
+
 bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
 {
     AUTOTEST_BUSY("cellChanging");
     if (a_cellInfo.pList != m_theGrid)
     {
         return CELL_CHANGE_OK;  //hm, its not my grid
+    }
+
+    if ((a_cellInfo.column == COL_CONTRACT_NS) || (a_cellInfo.column == COL_CONTRACT_EW))
+    {
+        wxString    newData     = a_cellInfo.newData;
+        int         row         = a_cellInfo.row;
+        int         col         = a_cellInfo.column;
+
+        wxString sessionPair = m_theGrid->GetCellValue(row, col == COL_CONTRACT_NS ? COL_NS : COL_EW);
+        bool bVulnerable = '*' == sessionPair[0];
+        wxString    result;
+        int score = score::GetContractScoreFromString(newData, bVulnerable, result);
+        if (score == 0 || score == -1)
+        {
+            if (result.IsEmpty()) result = _("Can't interpret contract!");
+            PopUp(m_theGrid, a_cellInfo, result);
+            m_theGrid->CallAfter([this,a_cellInfo](){this->m_theGrid->GoToCell(a_cellInfo.row, a_cellInfo.column);});
+        }
+        else
+        {
+            wxString scoreString = FMT("%i", col == COL_CONTRACT_NS ? score : -score);
+            m_theGrid->SetCellValue(row, COL_SCORE_NS, scoreString);
+            m_theGrid->SetCellValue(row, COL_SCORE_EW, ES);
+        }
+        m_theGrid->SetCellValue(row, col == COL_CONTRACT_NS ? COL_CONTRACT_EW : COL_CONTRACT_NS, ES);   // clear other entry
+        m_iRowToSave = row;
+        CallAfter([this, a_cellInfo]{wxString nospace=a_cellInfo.newData; nospace.Replace(' ', ""); this->m_theGrid->SetCellValue(a_cellInfo.row, a_cellInfo.column, nospace);});
+        CallAfter(&ScoreEntry::SaveRowData);        // delayed, because new data is not copied yet to grid...
+        return CELL_CHANGE_OK;  // accept change
     }
 
     if ( (a_cellInfo.column != COL_SCORE_NS ) && (a_cellInfo.column != COL_SCORE_EW) )
@@ -187,18 +244,11 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
         score::ScoreValidation result = score::IsScoreValid(score, game, bNS);
         if ((score != SCORE_NP) && !result == score::ScoreValid)
         {
-            wxColour org = m_theGrid->GetCellBackgroundColour(row, col);
-            m_theGrid->SetCellBackgroundColour(row, col, *wxRED );
-            // grid shows old data during msgbox, so put new data in...
-            m_theGrid->SetCellValue(row, col, newData);
-            m_theGrid->Refresh();
             wxString msg = result == score::ScoreSpecial
                 ? _("unexpected/special score, accept anyway?")
                 : _("invalid score, accept anyway?");
-            bool bNo = (wxNO == MyMessageBox(msg, "???", wxYES_NO | wxICON_INFORMATION));
-            m_theGrid->SetCellBackgroundColour(row, col, org );
-            m_theGrid->Refresh();
-            if (bNo)
+
+            if (wxNO == PopUp(m_theGrid, a_cellInfo, msg, wxYES_NO | wxICON_INFORMATION))
             {
                 // 'new' data stays in grid, so putback old again.....
                 m_theGrid->SetCellValue(row, col, a_cellInfo.oldData);
@@ -231,6 +281,8 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
         }
     }
 
+    m_theGrid->SetCellValue(row, COL_CONTRACT_NS, ES);  // empty contractname if you enter the score yourself.
+    m_theGrid->SetCellValue(row, COL_CONTRACT_EW, ES);
     // now position to next empty score: do it delayed to prevent interaction with 'enter'
     // If there are 2 or more empty scores in the next lines, the 'enter' would work on the repositioning 
     CallAfter(&ScoreEntry::GotoNextEmptyScore);
@@ -275,6 +327,8 @@ void ScoreEntry::SaveRowData()
     setData.pairEW = ew;
     setData.scoreNS= scoreNS;
     setData.scoreEW= scoreEW;
+    setData.contractNS = m_theGrid->GetCellValue(m_iRowToSave, COL_CONTRACT_NS);
+    setData.contractEW = m_theGrid->GetCellValue(m_iRowToSave, COL_CONTRACT_EW);
     if (it != scores.end() )
     {
         *it = setData;
@@ -430,8 +484,10 @@ void ScoreEntry::RefreshInfo()
 
                 #define IS_NS true
                 #define IS_EW false
-                m_theGrid->SetCellValue(currentRow, COL_NS      , score::VulnerableChar(theGame, IS_NS) + nsName );
-                m_theGrid->SetCellValue(currentRow, COL_EW      , score::VulnerableChar(theGame, IS_EW) + ewName );
+                m_theGrid->SetCellValue(currentRow, COL_NS         , score::VulnerableChar(theGame, IS_NS) + nsName);
+                m_theGrid->SetCellValue(currentRow, COL_EW         , score::VulnerableChar(theGame, IS_EW) + ewName);
+                m_theGrid->SetCellValue(currentRow, COL_CONTRACT_NS, data.contractNS);
+                m_theGrid->SetCellValue(currentRow, COL_CONTRACT_EW, data.contractEW);
                 if (game == 1)
                 {   // if scoreslips, only display playernames for first game on the slip
                     m_theGrid->SetCellValue(currentRow, COL_NAME_NS , names::PairnrSession2GlobalText(nsPair) );
@@ -481,6 +537,10 @@ void ScoreEntry::RefreshInfo()
         m_pSizerAllChoices->Hide(CHOICE_ID_ROUND);
         m_pSizerAllChoices->Show((size_t)CHOICE_ID_GAME);
     }
+
+    // show/hide the columns for contract-entry
+    m_theGrid->SetColSize(COL_CONTRACT_NS, m_pCheckboxContract->GetValue() ? SIZE_CONTRACT : 0);
+    m_theGrid->SetColSize(COL_CONTRACT_EW, m_pCheckboxContract->GetValue() ? SIZE_CONTRACT : 0);
 
     Layout();
     static wxString explanation;    // MUST be initialized dynamically: translation
@@ -610,6 +670,11 @@ void ScoreEntry::PrintPage()
     wxString title = FMT(_("Overview of the scores%s for '%s', %s"), sSession, cfg::GetDescription(), sRoundGame);
     m_theGrid->PrintGrid(title, m_theGrid->GetNumberCols());
 }   // PrintPage()
+
+void ScoreEntry::OnCheckboxContract(wxCommandEvent&)
+{
+    RefreshInfo();
+}   // OnCheckboxContract()
 
 static bool GetScore(UINT a_theGame, UINT a_nsPair, score::GameSetData& a_setData, bool& a_bReversed)
 {

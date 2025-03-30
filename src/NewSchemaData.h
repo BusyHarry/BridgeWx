@@ -25,7 +25,7 @@ public:
     NewSchemaDataType    rounds = 0;
     NewSchemaDataType    dummy  = 0;
     std::string name;
-    std::vector< std::vector<NewTableInfo> > tableData; // [rounds][table] NB 1-based: round 0 and table 0 are dummies!
+    std::vector< std::vector<NewTableInfo> > tableData; // [round][table] NB 1-based: round 0 and table 0 are dummies!
 };
 
 extern std::vector<const NEW_SCHEMA*> newSchemaTable;   // vector of pointers to schema's

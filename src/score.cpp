@@ -358,4 +358,247 @@ bool DeleteScoresFromPair(UINT a_pair)
     return bDeleted;
 }   // DeleteScoresFromPair()
 
+/*
+* Following are methods to calculate a score from a contract in text format.
+*  "-x[*[*]]" or "y'SUIT'[[+|-]x][*[*]]"
+*  where 'x' = the number of down/over tricks.
+*  where 'y' = the contract bidden
+*  where 'SUIT' is the type of the contract (or, when abbreviated, the first match in the card-names)
+*  where '*' is doubled, and '**' is redoubled
+*/
+
+    struct CardNameAndType
+    {
+        wxString    name;   // clubs|diamonds|hearts|spades|notrump
+        PlayType    type;   // clubdiamonds|heartsSpades|notrump
+        CardId      id;     // suit-id of 'name'
+    };
+
+    static std::vector<CardNameAndType> svCardNames;            // identification of all suits
+    static std::vector<CardNameAndType> svCardNamesLowercase;   // lowercased version of 'svCardNames'
+    static std::vector<wxString>        svDoubledTypeNames;     // names of all the 'DoubledType' types
+    static std::vector<wxString>        svPlayTypeNames;        // names of all the 'PlayType' types
+
+    void InitTexts4Translation(bool a_bForce)
+    {   // needed for text-translations: static text are initialized before the translation is setup
+        static bool bInit = false;
+        if (bInit && !a_bForce) return;
+        bInit = true;
+
+        svCardNames =
+        {
+              {_("Clubs"   ), PlayType::PtClubsDiamonds, CardId::CiClubs   }
+            , {_("Diamonds"), PlayType::PtClubsDiamonds, CardId::CiDiamonds}
+            , {_("Hearts"  ), PlayType::PtHeartsSpades , CardId::CiHearts  }
+            , {_("Spades"  ), PlayType::PtHeartsSpades , CardId::CiSpades  }
+            , {_("NoTrump" ), PlayType::PtNoTrump      , CardId::CiNoTrump }
+            , {  "Z"        , PlayType::PtNoTrump      , CardId::CiNoTrump }    // extra: 'special' shorthand for Dutch language
+        };
+        svPlayTypeNames      = {_("Clubs/Diamonds"), _("Hearts/Spades"), _("NoTrump")};
+        svDoubledTypeNames   = {"", _("doubled"), _("redoubled")};
+        svCardNamesLowercase = svCardNames; // need lowercase for matching contracts
+        for (auto& str : svCardNamesLowercase) { str.name.MakeLower(); }
+    }   // InitTexts4Translation()
+
+    static const int siDoubleFactor [] = {  1,  2,   4 }; // multiplication for specific 'doubledType', indexed with 'DoubledType'
+    static const int siInsultBonus  [] = {  0, 50, 100 }; // bonus when doubled, indexed with 'DoubledType'
+    static const int siPlayTypeValue[] = { 20, 30,  30 }; // trick-value, indexed with 'PlayType'
+    static const int siPlayTypeExtra[] = {  0,  0,  10 }; // extra score for first trick of specific 'PlayType', indexed with 'PlayType'
+    static const int siDoubledNotVulnerable[14] =
+    {   // scores for down, doubled, not-vulnerable, indexed with '-overTricks'
+        0, -100, -300, -500, -800,  -1100, -1400, -1700, -2000, -2300, -2600, -2900, -3200, -3500
+    };
+    static const int siDoubledVulnerable[14] =
+    {   // scores for down, doubled, vulnerable, indexed with '-overTricks'
+        0, -200, -500, -800, -1100, -1400, -1700, -2000, -2300, -2600, -2900, -3200, -3500, -3800
+    };
+    static const wxString sQuestionMarks("???");
+
+    wxString GetCardName(CardId id)
+    {
+        InitTexts4Translation();
+        if (id >= svCardNames.size()) return sQuestionMarks;
+        return svCardNames[id].name;
+    }   // GetCardName()
+
+    wxString GetPlayTypeName(PlayType type)
+    {
+        InitTexts4Translation();
+        if (type >= svPlayTypeNames.size()) return sQuestionMarks;
+        return svPlayTypeNames[type];
+    }   // GetPlayTypeName
+
+    wxString GetDoubledTypeName(int type)
+    {
+        InitTexts4Translation();
+        if ((size_t)type >= svDoubledTypeNames.size()) return sQuestionMarks;
+        return svDoubledTypeNames[(size_t)type];
+    }   // GetDoubledTypeName
+
+    struct Contract
+    {
+        PlayType    type       = PlayType::PtClubsDiamonds;
+        CardId      id         = CardId  ::CiClubs;
+        int         doubled    = 0;
+        int         level      = 0;
+        int         overTricks = 0;
+    };
+
+    /*
+    *  fe: 3 NT with 3 overtricks: type = NoTrump, level = 3, overTricks = 3, doubled = 0
+    */
+    static int CalculateScore4Contract(const Contract& a_contract, bool a_bVulnerable, wxString& a_errorDescription)
+    {   // 1 <= level <= 7, -13 <= overTricks <= 6
+        int score;
+        int vulnerableFactor = a_bVulnerable ? 2 : 1;
+        if (a_contract.overTricks < 0)
+        {   // contract down
+            if (a_contract.level == 0)
+            {   // only '-N' was given as contract
+                if (a_contract.overTricks < -13)
+                {
+                    a_errorDescription = _("more down then contract-tricks??\n");
+                    return 0;
+                }
+            }
+            else
+            {   // full contract info, now we can be more precise
+                if (!IsInRange(a_contract.level, 1, 7))
+                {
+                    a_errorDescription = _("more tricks then possible in a game??\n");
+                    return 0;
+                }
+                if (a_contract.overTricks < -(6 + a_contract.level))
+                {
+                    a_errorDescription = _("more down then contract-tricks??\n");
+                    return 0;
+                }
+            }
+
+            if (a_contract.doubled == 0)
+                return a_contract.overTricks * vulnerableFactor * 50;
+            auto& penalty = a_bVulnerable ? siDoubledVulnerable : siDoubledNotVulnerable;
+            score  = penalty[-a_contract.overTricks];
+            score *= a_contract.doubled;
+            return score;
+        }   // contract down
+        
+        if ( !IsInRange(a_contract.level, 1, 7) || !IsInRange(a_contract.overTricks, 0, 7 - a_contract.level) )
+        {
+            a_errorDescription = _("more tricks then possible in a game??\n");
+            return 0;
+        }
+        score  = a_contract.level * siPlayTypeValue[a_contract.type];
+        score += siPlayTypeExtra[a_contract.type];
+        score *= siDoubleFactor [a_contract.doubled];
+
+        // determine bonus
+        if (score < 100)
+            score += 50;                                // part score bonus
+        else
+        {
+            score += a_bVulnerable ? 500 : 300;         // game bonus
+            if (a_contract.level == 6)
+                score += a_bVulnerable ? 750 : 500;     // small slam bonus
+            else if (a_contract.level == 7)
+                score += a_bVulnerable ? 1500 : 1000;   // grand slam bonus
+        }
+
+        score += siInsultBonus[a_contract.doubled];     // insult bonus
+
+        if (a_contract.overTricks > 0)
+        {                                               // overtrick bonus
+            if (a_contract.doubled == 0)
+                score += a_contract.overTricks * siPlayTypeValue[a_contract.type];
+            else
+                score += a_contract.overTricks * a_contract.doubled * vulnerableFactor * 100;
+        }   // overtricks
+        return score;
+    }   // CalculateScore4Contract()
+
+    static void SkipDigits(const wxChar* &pBuf)       // skip digits
+    {
+        while (std::isdigit(*pBuf)) ++pBuf;
+    }   // SkipDigits()
+
+    static void GetDoubled(const wxChar* &pBuf, int& doubled)   // get all 'doubled' characters
+    {
+        while ('*' == *pBuf)
+        {
+            if (doubled < 2) ++doubled; // max == re-doubled!
+            ++pBuf;
+        }
+    }   // GetDoubled()
+
+    static bool ExtractContract(const wxString& a_input, Contract& a_contract)
+    {   // convert string representation of a contract to binairy types
+        wxString input = a_input.Lower();   // lowercase for easier compare
+        input.Replace(' ', "");             // remove all spaces
+        const wxChar* pInput = input.c_str();
+        if (*pInput == '-')
+        {   // only number of down tricks given
+            a_contract.overTricks = wxAtoi(pInput);
+            if (a_contract.overTricks == 0) return false;
+            SkipDigits(++pInput);
+            GetDoubled(pInput, a_contract.doubled);
+            return true;
+        }   // contract down
+
+        a_contract.level = wxAtoi(pInput);          // determine the bidlevel
+        if (0 == a_contract.level) return false;    // can't have a 0 contract
+        SkipDigits(pInput);
+        // now we expect the suit. Match all the alpha-characters in the input with pre-defined cardnames
+        size_t len = 0; wxString expectedChars = "*-+0123456789";
+        while (pInput[len] && -1 == expectedChars.Find(pInput[len])) {++len;}   // find first non-name char
+        if (len == 0) return false; // no (abbreviated) suit found
+        wxString tmp = wxString(pInput).Mid(0, len);
+        // find the first (partial) match of a card-name
+        const auto it = std::find_if(svCardNamesLowercase.begin(), svCardNamesLowercase.end(), [&tmp](const auto& it){return it.name.StartsWith(tmp);});
+        if (it == svCardNamesLowercase.end()) return false;    // no (partial) match found
+        a_contract.type = it->type;
+        a_contract.id   = it->id;
+        pInput += len;
+        //now we expect a (signed) number or '*' for double
+        GetDoubled(pInput, a_contract.doubled);
+        // now there could be a (signed) number
+        if (!*pInput) return true;  // end of string, just level and contract given
+        if (-1 == expectedChars.Find(*pInput)) return false;
+        a_contract.overTricks = wxAtoi(pInput); SkipDigits(++pInput);
+        GetDoubled(pInput, a_contract.doubled);
+        return true;    // could give error if not eol, but we just ignore rest, if present.....
+    }   // ExtractContract()
+
+    int GetContractScoreFromString(const wxString& a_input, bool a_bVulnerable, wxString& a_sResult)
+    {
+        // next init is only for translating text when we need them (static texts are NOT translated)
+        InitTexts4Translation();
+
+        a_sResult.clear();
+        Contract contract;
+
+        if (!ExtractContract(a_input, contract))
+            return -1;  // error in contract description, show usage
+
+        int score = CalculateScore4Contract(contract, a_bVulnerable, a_sResult);
+        if (score != 0) // when zero, a_sResult contains an error description
+        {
+            if (contract.overTricks < 0)
+            {
+                a_sResult = FMT(_("%i down %s"), -contract.overTricks, GetDoubledTypeName(contract.doubled));
+            }
+            else
+            {
+                a_sResult = FMT("%i %s %+i %s"
+                    , contract.level
+                    , GetCardName(contract.id)
+                    , contract.overTricks
+                    , GetDoubledTypeName(contract.doubled)
+                );
+            }
+            a_sResult.Trim(true);   // remove last space, if present
+        }
+
+        return score;
+    }   // GetContractScoreFromString()
+
 }   // end namespace score

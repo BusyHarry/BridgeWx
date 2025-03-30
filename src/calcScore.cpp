@@ -347,7 +347,7 @@ void CalcScore::PrintPage()
     for (int line = 0; line < itemCount; ++line)
     {
         wxString info = m_pListBox->GetItemText(line);
-        if (info.IsEmpty() || '\n' != info.Last()) info += '\n';    // Last()== *info.rbegin()
+        if (info.IsEmpty() || '\n' != *info.rbegin()) info += '\n';    // Last()== *info.rbegin()
         prn::PrintLine(info);
     }
 

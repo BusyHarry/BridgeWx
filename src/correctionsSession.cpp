@@ -214,7 +214,7 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
         case COL_COR_EXTRA:
             if (m_bButler)
             {
-                if (newData.IsEmpty())    // remove combi-table data
+                if (newData.IsEmpty())      // remove combi-table data
                     m_theGrid->SetCellValue(row, COL_COR_GAMES, ES);
                 else
                 {

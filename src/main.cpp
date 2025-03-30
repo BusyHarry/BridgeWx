@@ -430,6 +430,7 @@ void MyApp::ReInitLanguage()
     else
         MyLogMessage(_("Systemlanguage: the default system language"));
 
+    score::InitTexts4Translation(true);   // force re-init of static texts for translation
 }   // ReInitLanguage()
 
 bool MyApp::OnInit()

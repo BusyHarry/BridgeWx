@@ -19,10 +19,12 @@ namespace score
 
     struct GameSetData
     {
-        UINT   pairNS;
-        UINT   pairEW;
-        int    scoreNS;
-        int    scoreEW;
+        UINT        pairNS;
+        UINT        pairEW;
+        int         scoreNS;
+        int         scoreEW;
+        wxString    contractNS;
+        wxString    contractEW;
         bool operator < (const GameSetData &rhs) const
         {   /* sorting on NS */ return pairNS < rhs.pairNS; }
         bool operator == (const GameSetData &rhs) const
@@ -46,24 +48,58 @@ namespace score
         , ScoreInvalid  // incorrect score
         , ScoreSpecial  // possible score, but highly unexpected like 6 down
     };
-    void                ReadScoresFromDisk  ();
-    void                WriteScoresToDisk   ();
-    const vvScoreData*  GetScoreData        ();                     // get a ptr to the current scores
-    void                SetScoreData        (const vvScoreData&);   // update the scores (write to disk)
-    UINT                GetNumberOfGames    (const vvScoreData* a_scoreData = nullptr);                     // highest gamenr that is played in a session
-    bool                IsReal              (int score);            // checks if score is real (not adjusted)
-    bool                IsProcent           (int score);            // checks if its a '%' score
-    wxString            ScoreToString       (int score);            // get string representation of score
-    int                 ScoreFromString     (const wxString& score);// convert string to (possible) score
-    bool                IsVulnerable        (UINT game, bool bNS);  // checks for vulnerability
-    char                VulnerableChar      (UINT game, bool bNS);  // returns '*' if vulnerable else ' '
-    ScoreValidation     IsScoreValid        (int score, UINT game, bool bNS);   // checks if a score is valid
-    int                 Score2Real          (int score);            // make adjusted real score into real score
+    void                ReadScoresFromDisk();
+    void                WriteScoresToDisk();
+    const vvScoreData*  GetScoreData();                     // get a ptr to the current scores
+    void                SetScoreData(const vvScoreData&);   // update the scores (write to disk)
+    UINT                GetNumberOfGames(const vvScoreData* a_scoreData = nullptr);                     // highest gamenr that is played in a session
+    bool                IsReal(int score);            // checks if score is real (not adjusted)
+    bool                IsProcent(int score);            // checks if its a '%' score
+    wxString            ScoreToString(int score);            // get string representation of score
+    int                 ScoreFromString(const wxString& score);// convert string to (possible) score
+    bool                IsVulnerable(UINT game, bool bNS);  // checks for vulnerability
+    char                VulnerableChar(UINT game, bool bNS);  // returns '*' if vulnerable else ' '
+    ScoreValidation     IsScoreValid(int score, UINT game, bool bNS);   // checks if a score is valid
+    int                 Score2Real(int score);            // make adjusted real score into real score
     int                 Procentscore2Procent(int score);            // convert aribitrairy score to 0<=value<=100
     UINT                GetNumberOfGamesPlayedByGlobalPair(UINT globalPairnr);
-    bool                ExistGameData       ();                     // true, if there is atleast one score entered
-    bool                AdjustPairNrs       (UINT fromPair, int delta); // adjust all pairnrs in the scoredata starting from 'frompair' with 'delta', return true if one or more changes
+    bool                ExistGameData();                     // true, if there is atleast one score entered
+    bool                AdjustPairNrs(UINT fromPair, int delta); // adjust all pairnrs in the scoredata starting from 'frompair' with 'delta', return true if one or more changes
     bool                DeleteScoresFromPair(UINT sessionPair);     // delete all scores for 'pair', return true if anything deleted
 
-}      // end of namespace score
+    // next some enums and methods to handle contracts in text
+    enum PlayType :int
+    {
+          PlayTypeFirst   = 0
+        , PtClubsDiamonds = PlayTypeFirst
+        , PtHeartsSpades  = 1
+        , PtNoTrump       = 2
+        , PlayTypeLast    = PtNoTrump
+    };
+
+    enum CardId :int
+    {
+          CardIdFirst   = 0
+        , CiClubs       = CardIdFirst
+        , CiDiamonds    = 1
+        , CiHearts      = 2
+        , CiSpades      = 3
+        , CiNoTrump     = 4
+        , CardIdLast    = CiNoTrump
+    };
+
+    /*
+    *  Get the score for the contract in 'input': "-n[*[*]]"  or "n'SUITE'[[+|-]n][*[*]]"
+    *  return value:
+    *    0  = error in calculation: not all params are consistent
+    *   -1  = malformed contract, show usage
+    *  rest = correct score
+    */
+    int                 GetContractScoreFromString(const wxString& input, bool bVulnerable, wxString& result);
+    wxString            GetDoubledTypeName        (int         type           );
+    wxString            GetPlayTypeName           (PlayType    type           );
+    wxString            GetCardName               (CardId      id             );    // name of the suit
+    void                InitTexts4Translation     (bool        bForce = false );    // init static texts for translation
+
+} // end of namespace score
 #endif

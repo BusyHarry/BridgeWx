@@ -43,6 +43,7 @@ private:
     void        OnSelectRound       (wxCommandEvent&);
     void        OnSelectGame        (wxCommandEvent&);
     void        OnSwitchNsEw        (wxCommandEvent&);
+    void        OnCheckboxContract  (wxCommandEvent&);
 
     MyGrid*     m_theGrid;
     wxRadioBox* m_pRadioBoxSlipGame;// select input order based on slip (sets) or game number
@@ -59,6 +60,7 @@ private:
     UINT        m_uActiveGame;      // the choosen game nr
     wxBoxSizer* m_pSizerAllChoices; // for choices: slip/ns/round/game
     bool        m_bCancelInProgress;// true, if cancel is wanted
+    wxCheckBox* m_pCheckboxContract;// if set, columns 'COL_CONTRACT_NS'and 'COL_CONTRACT_EW' are shown
 
     enum
     {
@@ -66,6 +68,8 @@ private:
         , COL_GAME = COL_ZERO               // game nr
         , COL_NS                            // NS session pair nr
         , COL_EW                            // EW session pair nr
+        , COL_CONTRACT_NS                   // contract entry for NS
+        , COL_CONTRACT_EW                   // contract entry for EW
         , COL_SCORE_NS                      // score NS
         , COL_SCORE_EW                      // score EW (only if adjusted score)
         , COL_NAME_NS                       // pairname NS

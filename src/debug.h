@@ -34,6 +34,7 @@ private:
     void HandleCommandLine      (wxString cmdLine);
     void DoCommand              (const wxString& cmd);
     void CalcScore              (const wxChar* pBuf);
+    void CalcScoreOld           (const wxChar* pBuf);
     void List                   (const wxChar* pBuf);
     void GuideCard              (UINT pair, bool bAskExtra = true);
     void Usage                  ();

@@ -1,7 +1,7 @@
 # BridgeWx
 
 A simple bridge calculation/scoring program.
-Its a gui-remake of an old dos-commandline program I started in the early 1990s when my bridgepartner was a districtscompetition leader of the Dutch Bridge Association.
+Its a gui-remake of an old dos-commandline program I started in the early 1990s when my bridgepartner was a districtscompetition leader of the Dutch Bridge Association. Its based on the WxWidgets framework.
 
 Score entry can be done via:
 - score-slips
@@ -79,13 +79,13 @@ To get your BridgeWx translation:
 # Building:
 
  - I have only build/tested everything in MicrosoftWindows 10 with VisualStudio2019!
- - the gui is based on wxWidgets V3.2.6 (V3.2.5 is also ok)
+ - the gui is based on wxWidgets V3.2.7 (V3.2.6, V3.2.5 is also ok)
  - I only used the x64 version (also for wxWidgets)
- - apply the change/addition from 'BridgeWx\wxWidgetsChanges\v3.2.6\'
+ - apply the change/addition from 'BridgeWx\wxWidgetsChanges\v3.2.7\'
  - copy the tools from the release BridgeWxBin_v\*.zip[BridgeWx/tools/*.exe] to the '\<BridgeWxBase\>/tools' folder 
  - add a global env-variable '\<wxwin\>' or
  - from a cmd-prompt: set environment variable '\<wxwin\>' to wxWidgets basefolder:
- 	- set wxwin=d:\wxWidgets_3.2.6  ( == \<wxBase\> )
+ 	- set wxwin=d:\wxWidgets_3.2.7  ( == \<wxBase\> )
  - start BridgeWx.sln (from the base folder where the repo is located)
 
  - initially to have the English language available for the compiled executable:

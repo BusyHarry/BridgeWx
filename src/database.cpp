@@ -106,7 +106,7 @@ static wxFileConfig* InitDatabase(const wxString& a_dbFile)
         file.AddLine(";info database           : 'data saved according definition of version <x>'");
         file.AddLine(";info pair names         : '<global pairnr> = {<name>,<clubId>}, max size=30'");
         file.AddLine(";info club names         : '<club id> = \"club name\", max size=25'");
-        file.AddLine(";info game result        : '<game nr> = {<ns>,<ew>,<ns result>,<ew result>}[@ ...]'");
+        file.AddLine(";info game result        : '<game nr> = {<ns>,<ew>,<ns result>,<ew result>[,\"ns contract\",\"ew contract\"]}[@ ...]'");
         file.AddLine(";info schema             : '{<nr of games>,<setsize>,<first game>}@{<nr of pairs>,<absent pair>,\"schema\",\"groupChars\"}[@...]'");
         file.AddLine(";info min/max club       : '{<min pairs needed>,<max pairs used>}'");
         file.AddLine(";info assignments        : '<global pairnr>[@...] -> array[<sessionpair>] = <global pairnr>'");
@@ -151,12 +151,12 @@ CfgFileEnum DatabaseOpen(io::GlbDbType /*dbType*/, CfgFileEnum a_how2Open)
         (void)db.Mkdir(wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);     // create full path, no error if allready there
     if (!db.IsDirWritable())
     {
-        // if not writable, select "C:\\Users\\<me>\\AppData\\Local\\BridgeWx" dir
-        wxString err = db.GetFullPath() + _(": is not accessable!");
+        // if not writable, select "<documents_dir>/BridgeWx" folder
+        wxString err = db.GetFullPath() + _(": is not accessable!\nPath set to: ") + cfg::GetBaseFolder();
         MyLogError( err );      // wxLogError will stop the programm with a pop-up...
         MyMessageBox(err);
         wxString dir = cfg::GetBaseFolder();
-        cfg::SetActiveMatch(db.GetFullName(), dir);
+        cfg::SetActiveMatch(db.GetName(), dir); //NB, no extension!
         db = wxFileName(dir, db.GetFullName());
     }
 
@@ -281,6 +281,17 @@ bool ClubnamesWrite(const std::vector<wxString>& clubNames)
     return bResult;
 } // ClubnamesWrite()
 
+static char* TrimContract(char contract[])
+{   // remove spaces and '"' at end of input
+    size_t len = strlen(contract);
+    while (len && (contract[len - 1] == ' ' || contract[len - 1] == '"'))
+    {
+        --len;
+        contract[len] = 0;
+    }
+    return contract;
+}   // TrimContract()
+
 bool ScoresRead(vvScoreData& scoreData, UINT session)
 {
     scoreData.clear();                  // remove old data
@@ -299,10 +310,20 @@ bool ScoresRead(vvScoreData& scoreData, UINT session)
         score::GameSetData setData;
         for (const auto& it : splitValues)
         {
-            char nsScore[10]={0};
-            char ewScore[10]={0};
-            auto count = wxSscanf(it," { %u , %u, %9[^, ] , %9[^} ] }", &setData.pairNS, &setData.pairEW, nsScore, ewScore);
-            if (count != 4)
+            char nsScore   [10] = {0};  // {1,2,'score','score'} or {1,2,'score','score',"nsContract","ewContract"} 
+            char ewScore   [10] = {0};
+            char nsContract[20] = {0};
+            char ewContract[20] = {0};
+
+            // OK, so sscanf fails if the string to read is empty! Solution: read string INCLUSIVE closing quote!
+            auto count = wxSscanf(it," { %u , %u, %9[^, ] , %9[^} ,] , \"%19[^,], \"%19[^}]}"
+                , &setData.pairNS, &setData.pairEW, nsScore, ewScore, nsContract, ewContract);
+            if (count == 6) // we have also read two biddings
+            {   // remove possible spaces and '"' at end of input
+                setData.contractNS = TrimContract(nsContract);
+                setData.contractEW = TrimContract(ewContract);
+            }
+            if (count != 4 && count != 6)
             {
                 MyLogError(_("Reading scores: game %u: <%s> invalid!"), game, it);
                 continue;
@@ -332,8 +353,11 @@ bool ScoresWrite(const vvScoreData& scoreData, UINT session)
             wxChar separator = ' ';
             for (auto score : it)
             {
-                theScores += FMT("%c{%u,%u,%s,%s}", separator, score.pairNS, score.pairEW,
-                        score::ScoreToString(score.scoreNS), score::ScoreToString(score.scoreEW));
+                wxString contracts;
+                if (!score.contractNS.IsEmpty() || !score.contractEW.IsEmpty())
+                    contracts = FMT(",\"%s\",\"%s\"", score.contractNS, score.contractEW);
+                theScores += FMT("%c{%u,%u,%s,%s%s}", separator, score.pairNS, score.pairEW,
+                        score::ScoreToString(score.scoreNS), score::ScoreToString(score.scoreEW), contracts);
                 separator = theSeparator;
             }
             if (!s_pConfig->Write(FMT("%u", game), theScores))

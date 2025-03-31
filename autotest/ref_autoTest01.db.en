@@ -3,7 +3,7 @@
 ;info database           : 'data saved according definition of version <x>'
 ;info pair names         : '<global pairnr> = {<name>,<clubId>}, max size=30'
 ;info club names         : '<club id> = "club name", max size=25'
-;info game result        : '<game nr> = {<ns>,<ew>,<ns result>,<ew result>}[@ ...]'
+;info game result        : '<game nr> = {<ns>,<ew>,<ns result>,<ew result>[,"ns contract","ew contract"]}[@ ...]'
 ;info schema             : '{<nr of games>,<setsize>,<first game>}@{<nr of pairs>,<absent pair>,"schema","groupChars"}[@...]'
 ;info min/max club       : '{<min pairs needed>,<max pairs used>}'
 ;info assignments        : '<global pairnr>[@...] -> array[<sessionpair>] = <global pairnr>'

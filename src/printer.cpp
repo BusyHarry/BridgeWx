@@ -565,7 +565,7 @@ bool MyLinePrinter::PrinterOpen()
         return true;    // printer already opened.
     }
 
-    if (m_sPrinterName.empty())
+    if (m_sPrinterName.IsEmpty())
     {
         if (!SelectPrinter())
         {

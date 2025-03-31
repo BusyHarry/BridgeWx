@@ -100,7 +100,7 @@ void MyGrid::OnCellChanging(wxGridEvent& a_event)
 bool MyGrid::Search(const wxString& a_s2Search )
 {
     int rows = GetNumberRows();
-    if ((rows == 0) || a_s2Search.empty()) return false;      // no data to search for
+    if ((rows == 0) || a_s2Search.IsEmpty()) return false;      // no data to search for
 
     wxString search(a_s2Search);
     search.MakeLower();

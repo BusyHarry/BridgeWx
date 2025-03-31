@@ -14,6 +14,7 @@
 #include "wx/combobox.h"
 #include "wx/regex.h"
 #include <wx/filepicker.h>
+#include <wx/generic/stattextg.h>
 
 #include "cfg.h"
 #include "baseframe.h"
@@ -154,7 +155,7 @@ wxBoxSizer* Baseframe::CreateSearchBox()
     m_pTxtCtrlSearchBox = new wxTextCtrl  (this, ID_BASEFRAME_SEARCH, Unique("SearchEntry"  ), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
     m_pTxtCtrlSearchBox->Clear();   // remove label-text from entry, but keep window-title for autotest...
     auto pButton        = new wxButton    (this, ID_BASEFRAME_SEARCH, Unique(_("Search"     )));
-    hSearchBox->Add(      new wxStaticText(this, wxID_ANY           , _("Text to search:")), TXT_CTRL_SIZER);
+    hSearchBox->Add(      new wxGenericStaticText(this, wxID_ANY    , _("Text to search:")), TXT_CTRL_SIZER);
     hSearchBox->Add(m_pTxtCtrlSearchBox , 0, wxRIGHT, 20);
     hSearchBox->Add(pButton             , 0);
 
@@ -490,7 +491,7 @@ bool MyTextCtrl::IsMinusOk(const wxString& val, int pos) const
         return false;
 
     // And then only if there is no existing minus sign there.
-    if ( !val.empty() && val[0] == '-' )
+    if ( !val.IsEmpty() && val[0] == '-' )
         return false;
 
     // Notice that entering '-' can make our value invalid, for example if
@@ -519,7 +520,7 @@ bool MyTextCtrl::IsCharOk(const wxString& val, int pos, wxChar chr)
         }
 
         // Prepending a separator before the minus sign isn't allowed.
-        if ( pos == 0 && !val.empty() && val[0] == '-' )
+        if ( pos == 0 && !val.IsEmpty() && val[0] == '-' )
             return false;
 
         // Otherwise always accept it, adding a decimal separator doesn't

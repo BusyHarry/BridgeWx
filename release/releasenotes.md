@@ -6,6 +6,15 @@
  - added importing new playing schemas/movements
  - changed 'calculation program' to 'scoring program'
  - changed internal playing schemas/movements into an easier to read format
+ - stupid typo in IsInRange()
+ - decoupled old/global gameinfo
+ - small texts update
+ - consequent use of wxString::IsEmpty() i.s.o wxString::empty()
+ - changed some wxStatictext to wxGenericStaticText to prevent clipping problems
+ - solved problem when .db was on a non-existing/non-writable location
+ - now current programversion is always updated in the datafiles
+ - entry of scores can now also be done by contract i.s.o pure score-data
+ - updated wxWidgets to V3.2.7 (no changes compared to V3.2.6)
 
 #V10.4.0 Tuesday 4 March 2025
  - updated AutoHotkey64.exe from version 2.0.18 to 2.0.19

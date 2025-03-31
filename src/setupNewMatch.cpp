@@ -102,7 +102,7 @@ void SetupNewMatch::UpdateSelection()
     wxString extension  = io::DatabaseTypeGet() == io::DB_ORG ? ".ini" : ".db";
     wxArrayString choices;
     wxString file = wxFindFirstFile(path + "/*" + extension);
-    while ( !file.empty() )
+    while ( !file.IsEmpty() )
     {
         file = file.AfterLast('/').AfterLast('\\'); // remove path
         if (file != cfg::GetBareMainIni())

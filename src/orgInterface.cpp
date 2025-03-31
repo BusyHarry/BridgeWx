@@ -569,7 +569,7 @@ namespace  org
         for (auto buf = tf.GetFirstLine(); !tf.Eof(); buf = tf.GetNextLine())
         {
             buf.Trim(TRIM_LEFT);buf.Trim(TRIM_RIGHT);    // remove spaces in front and back
-            if (buf.empty() || buf[0]==';')
+            if (buf.IsEmpty() || buf[0]==';')
                 continue;                                // ignore empty lines and comment lines
 
             UINT id;
@@ -605,7 +605,7 @@ namespace  org
 
         for ( UINT ii = 1; ii < a_clubNames.size(); ++ii)
         {
-            if ( !a_clubNames[ii].empty() )
+            if ( !a_clubNames[ii].IsEmpty() )
             {
                 wxString tmp = FMT("%3u, %s", ii, a_clubNames[ii]);
                 tf.AddLine(tmp);
@@ -657,10 +657,54 @@ namespace  org
         return true;
     }   // SessionNamesRead()
 
+
+#ifdef _WIN32           // for vs 32/64bit we need 1 byte packing to read/write 'old' data
+    #pragma pack(1)
+#endif
+
+        /*
+        Layout of score-file:
+        Scores[cfg::MAX_PAIRS/2+1]  -> entry[0] = DESCRIPTION, rest is zero
+        N*Scores[x]                 -> N=games with data, entry[0]=SetCount, rest: Scores[nrOfSets] of GameSetData
+        */
+
+    struct GameSetDataOrg
+    {
+        UINT8   pairNS;         // database used 8bit variables to preserve space (640Kb in DOS!)
+        UINT8   pairEW;         // so we were limited by this to 255 pairs
+        INT16   scoreNS;        // Schemadata used 8bit signed pairs (+ -> NS, - -> EW)
+        INT16   scoreEW;        // so pairs were limited to 127
+    };
+
+    struct DESCRIPTION
+    {
+        INT16   dataType;
+        UINT16  nrOfGamesWithData;
+        UINT16  restSize; //rest of data AFTER row 0 (== Scores[cfg::MAX_PAIRS/2+1]  )
+    };
+
+    struct SetCount
+    {
+        UINT8   dummy[2];
+        UINT8   nrOfSets;
+    };
+
+    union Scores
+    {
+        GameSetDataOrg  setData;
+        DESCRIPTION     description;
+        SetCount        setCount;
+    };
+
+#ifdef _WIN32
+    #pragma pack()
+#endif
+
+
     static constexpr int    CURRENT_TYPE = 1;        // version of datastorage
     bool ScoresRead(vvScoreData& a_scoreData, UINT /*a_session*/)
     {
-        score::Scores      gamesetdata[MAX_PAIRS3/2+1];
+        Scores      gamesetdata[MAX_PAIRS3/2+1];
         wxString    scoreFile   = _ConstructFilename( cfg::EXT_SESSION_SCORE );
         bool        bError      = false;
         wxString    errorMsg    = _(": readerror");
@@ -695,7 +739,12 @@ namespace  org
                         scores.clear();
                         for (UINT sets = 1; sets <= nrOfSets; ++sets)
                         {
-                            scores.push_back(gamesetdata[sets].setData);
+                            score::GameSetData newData;    // old to new
+                            newData.pairNS  = gamesetdata[sets].setData.pairNS;
+                            newData.pairEW  = gamesetdata[sets].setData.pairEW;
+                            newData.scoreNS = gamesetdata[sets].setData.scoreNS;
+                            newData.scoreEW = gamesetdata[sets].setData.scoreEW;
+                            scores.push_back(newData);
                         }
                         a_scoreData[game] = scores;
                     }
@@ -730,14 +779,14 @@ namespace  org
             return false;
         }
 
-        score::Scores      gamesetdata[MAX_PAIRS3/2+1] = {0};
+        Scores      gamesetdata[MAX_PAIRS3/2+1] = {0};
         bool        bError      = false;
         UINT        restSize    = 0;
         UINT        nrOfGames   = score::GetNumberOfGames(&a_scoreData);
 
         for (UINT game = 1; game <= nrOfGames; ++game)
             restSize += 1+a_scoreData[game].size();
-        restSize *= sizeof(score::Scores);
+        restSize *= sizeof(Scores);
         gamesetdata[0].description.dataType             = CURRENT_TYPE;
         gamesetdata[0].description.nrOfGamesWithData    = nrOfGames;
         gamesetdata[0].description.restSize             = restSize;
@@ -757,7 +806,12 @@ namespace  org
 
             for (UINT set = 1; set <= nrOfSets; ++set)
             {
-                gamesetdata[set].setData = gameData[set-1];
+                GameSetDataOrg oldData;    // new to old, ignoring possible contracts
+                oldData.pairNS  = gameData[set-1].pairNS;
+                oldData.pairEW  = gameData[set-1].pairEW;
+                oldData.scoreNS = gameData[set-1].scoreNS;
+                oldData.scoreEW = gameData[set-1].scoreEW;
+                gamesetdata[set].setData = oldData;
             }
             if (fwrite(&gamesetdata[1], sizeof(gamesetdata[0]), nrOfSets, fp) != nrOfSets)  // write set-data
             {    bError = true; goto error; }
@@ -878,7 +932,7 @@ namespace  org
             // <score.2> <glbpair> <bonus.2> S<games> <pairname>
             // +100.00    1        [-99.99 ] s16   xxx - xxx
             str.Trim(TRIM_LEFT); str.Trim(TRIM_RIGHT);
-            if ( str.empty() || str[0] == ';' ) continue;
+            if ( str.IsEmpty() || str[0] == ';' ) continue;
 
             bool    bLineError  = false;
             int     count;
@@ -980,7 +1034,7 @@ namespace  org
             //;<correctie><type> <sessiepaarnr> <extra.1> <max extra> <paarnaam>
             //    +3        %      28              0           0      paar 28
             str.Trim(TRIM_LEFT); str.Trim(TRIM_RIGHT);
-            if ( str.empty() || str[0] == ';' ) continue;
+            if ( str.IsEmpty() || str[0] == ';' ) continue;
 
             UINT    charCount;
             UINT    sessionPairnr;

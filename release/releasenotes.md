@@ -1,4 +1,7 @@
 # Releasenotes
+#V10.6.0  ......
+
+
 #V10.5.0  Tuesday 1 April 2025
  - replaced most wxMessageBox() with MyMessageBox()
  - outof bounds array access: you have scores, you reduce the number of players in a group, recalculate results

@@ -4,7 +4,7 @@
 
 :: set wxwin to the base of your wxWidgets installation
 
-set wxwin=D:\wxWidgets_3.2.6
+set wxwin=D:\wxWidgets_3.2.7
 
 :: check if path exists, if not: show warning and clear wxwin
 if not exist %wxwin%\locale (..\tools\msgbox.exe Warning "Environment variable wxwin='%wxwin%'" "Target does not exist!" "Set correct value in %~f0" & set wxwin=)

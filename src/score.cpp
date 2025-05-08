@@ -392,6 +392,7 @@ bool DeleteScoresFromPair(UINT a_pair)
             , {_("Hearts"  ), PlayType::PtHeartsSpades , CardId::CiHearts  }
             , {_("Spades"  ), PlayType::PtHeartsSpades , CardId::CiSpades  }
             , {_("NoTrump" ), PlayType::PtNoTrump      , CardId::CiNoTrump }
+            , {_("Pass"    ), PlayType::PtPass         , CardId::CiPass    }    // game not played: no player did a bid
             , {  "Z"        , PlayType::PtNoTrump      , CardId::CiNoTrump }    // extra: 'special' shorthand for Dutch language
         };
         svPlayTypeNames      = {_("Clubs/Diamonds"), _("Hearts/Spades"), _("NoTrump")};
@@ -458,7 +459,7 @@ bool DeleteScoresFromPair(UINT a_pair)
                 if (a_contract.overTricks < -13)
                 {
                     a_errorDescription = _("more down then contract-tricks??\n");
-                    return 0;
+                    return SCORE_NOT_CONSISTENT;
                 }
             }
             else
@@ -466,12 +467,12 @@ bool DeleteScoresFromPair(UINT a_pair)
                 if (!IsInRange(a_contract.level, 1, 7))
                 {
                     a_errorDescription = _("more tricks then possible in a game??\n");
-                    return 0;
+                    return SCORE_NOT_CONSISTENT;
                 }
                 if (a_contract.overTricks < -(6 + a_contract.level))
                 {
                     a_errorDescription = _("more down then contract-tricks??\n");
-                    return 0;
+                    return SCORE_NOT_CONSISTENT;
                 }
             }
 
@@ -486,7 +487,7 @@ bool DeleteScoresFromPair(UINT a_pair)
         if ( !IsInRange(a_contract.level, 1, 7) || !IsInRange(a_contract.overTricks, 0, 7 - a_contract.level) )
         {
             a_errorDescription = _("more tricks then possible in a game??\n");
-            return 0;
+            return SCORE_NOT_CONSISTENT;
         }
         score  = a_contract.level * siPlayTypeValue[a_contract.type];
         score += siPlayTypeExtra[a_contract.type];
@@ -544,6 +545,11 @@ bool DeleteScoresFromPair(UINT a_pair)
             return true;
         }   // contract down
 
+        if (svCardNamesLowercase[CiPass].name.StartsWith(input))
+        {
+            a_contract.id = CiPass;
+            return true;
+        }
         a_contract.level = wxAtoi(pInput);          // determine the bidlevel
         if (0 == a_contract.level) return false;    // can't have a 0 contract
         SkipDigits(pInput);
@@ -577,10 +583,14 @@ bool DeleteScoresFromPair(UINT a_pair)
         Contract contract;
 
         if (!ExtractContract(a_input, contract))
-            return -1;  // error in contract description, show usage
-
+            return SCORE_MALFORMED;  // error in contract description, show usage
+        if (contract.id == CiPass)
+        {
+            a_sResult = svCardNames[CiPass].name;
+            return 0;
+        }
         int score = CalculateScore4Contract(contract, a_bVulnerable, a_sResult);
-        if (score != 0) // when zero, a_sResult contains an error description
+        if (score != SCORE_NOT_CONSISTENT) // if so, a_sResult contains an error description
         {
             if (contract.overTricks < 0)
             {

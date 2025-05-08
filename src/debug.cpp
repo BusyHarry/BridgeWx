@@ -992,7 +992,10 @@ void Debug::HandleCommandLine(wxString cmd)
     if (!cmd.IsEmpty())
     {
         cmd.MakeUpper();
-        DoCommand(cmd);
+        if (cmd.length() > 1 && score::GetCardName(score::CiPass).MakeUpper().StartsWith(cmd))
+            OUTPUT_TEXT_FORMATTED("%s, %s 0", score::GetCardName(score::CiPass), _("score"));
+        else
+            DoCommand(cmd);
         m_pCheckBoxPrintNext->SetValue(false);
         m_bPrintNext = false;
     }
@@ -1439,9 +1442,9 @@ void Debug::CalcScore(const wxChar* pBuf)
     OUTPUT_TEXT(resultAsString);
     switch (scoreNv)
     {
-        case 0:     // contract values not consistent, error already shown through 'resultAsString'
+        case SCORE_NOT_CONSISTENT:  // contract values not consistent, error already shown through 'resultAsString'
             break;
-        case -1:    // bad contract description (empty 'resultAsString')
+        case SCORE_MALFORMED:       // bad contract description (empty 'resultAsString')
             Usage();
             break;
         default:

@@ -74,7 +74,8 @@ namespace score
         , PtClubsDiamonds = PlayTypeFirst
         , PtHeartsSpades  = 1
         , PtNoTrump       = 2
-        , PlayTypeLast    = PtNoTrump
+        , PtPass          = 3
+        , PlayTypeLast    = PtPass
     };
 
     enum CardId :int
@@ -85,16 +86,19 @@ namespace score
         , CiHearts      = 2
         , CiSpades      = 3
         , CiNoTrump     = 4
-        , CardIdLast    = CiNoTrump
+        , CiPass        = 5
+        , CardIdLast    = CiPass
     };
 
     /*
     *  Get the score for the contract in 'input': "-n[*[*]]"  or "n'SUITE'[[+|-]n][*[*]]"
     *  return value:
-    *    0  = error in calculation: not all params are consistent
-    *   -1  = malformed contract, show usage
+    *   SCORE_NOT_CONSISTENT = error in calculation: not all params are consistent
+    *   SCORE_MALFORMED      = malformed contract, show usage
     *  rest = correct score
     */
+    #define SCORE_MALFORMED         -1
+    #define SCORE_NOT_CONSISTENT    -2
     int                 GetContractScoreFromString(const wxString& input, bool bVulnerable, wxString& result);
     wxString            GetDoubledTypeName        (int         type           );
     wxString            GetPlayTypeName           (PlayType    type           );

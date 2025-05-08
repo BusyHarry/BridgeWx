@@ -199,16 +199,28 @@ void MyGrid::SetSortMethod(const std::vector<SortMethod>& a_sortTypes)
     m_vSortMethod = a_sortTypes;
 }   // SetSortMethod()
 
-#include <numeric>
-
-#define ROW2EXTERN_SKIP(event)  do {event.SetRow(GridRowToExtern(event.GetRow())); event.Skip();} while (0)  /* let the real method do its work*/
-
 void MyGrid::BindLate()
 {   // (try to) be the latest 'binder': you will get the events first!
     Bind(wxEVT_GRID_LABEL_LEFT_CLICK, &MyGrid::SortOnLeftClickLabel, this, wxID_ANY);
     Bind(wxEVT_GRID_CELL_CHANGING   , &MyGrid::SortOnCellChanging  , this, wxID_ANY);
     Bind(wxEVT_GRID_SELECT_CELL     , &MyGrid::SortOnSelectCell    , this, wxID_ANY);
 }   // BindLate()
+
+static void GridEventSetRow(wxGridEvent& a_evt, int a_row)
+{   // Will change the protected 'm_row' variable in 'a_evt' to 'a_row'
+    // Now we don't need the change in 'include/wx/grid.h' which added a public method SetRow() to access the 'm_row' variable
+    class MywxGridEvent : public wxGridEvent
+    {   // dummy class to be able to access protected members of the base class
+        public:
+        MywxGridEvent() {}; // not used...
+        void SetRow(int a_row){wxGridEvent::m_row = a_row;}
+    };
+
+    auto pMy = reinterpret_cast<MywxGridEvent*>(&a_evt);
+    pMy->SetRow(a_row);
+}   // GridEventSetRow()
+
+#define ROW2EXTERN_SKIP(event)  do {event.Skip(); if (m_sortType != SORT_NONE) GridEventSetRow(event, GridRowToExtern(event.GetRow()));} while (0)  /* let the real method do its work*/
 
 void MyGrid::SortOnCellChanging(wxGridEvent& a_event)
 {
@@ -253,6 +265,8 @@ wxString MyGrid::GetCellValue(int a_row, int a_col) const
 {
     return wxGrid::GetCellValue( GridRowToIntern(a_row), a_col);
 }   // GetCellValue()
+
+#include <numeric>
 
 bool MyGrid::AppendRows(int a_numRows, bool a_updateLabels)
 {

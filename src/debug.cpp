@@ -1442,9 +1442,9 @@ void Debug::CalcScore(const wxChar* pBuf)
     OUTPUT_TEXT(resultAsString);
     switch (scoreNv)
     {
-        case SCORE_NOT_CONSISTENT:  // contract values not consistent, error already shown through 'resultAsString'
+        case CONTRACT_NOT_CONSISTENT:  // contract values not consistent, error already shown through 'resultAsString'
             break;
-        case SCORE_MALFORMED:       // bad contract description (empty 'resultAsString')
+        case CONTRACT_MALFORMED:       // bad contract description (empty 'resultAsString')
             Usage();
             break;
         default:
@@ -1470,19 +1470,8 @@ void Debug::Usage()
             "   n         = yes<->no testing of setentry\n"
             "   d         = debug: test schema's\n"
             "   o         = overview active schema\n"
-            "   -x[*[*]] or y'SUIT'[[+|-]x][*[*]]   calculate the score for:\n"
-            "             'x'    = the number of over/under tricks.\n"
-            "             'y'    = the level of the contract.\n"
-            "             'SUIT' = the type of the contract (or, when abbreviated, the first match in the card-names)\n"
-            "             '*'    = doubled, and '**' is redoubled\n"
-    );
-    sp += FMT("             %s:", _("SUIT"));
-    for (int index = score::CardId::CardIdFirst; index <= score::CardId::CardIdLast; ++index)
-    {   // can't use 'score::CardId' for index: it doesn't go above last typevalue! (I made it so!)
-        sp += FMT(" '%s' |",  score::GetCardName(static_cast<score::CardId>(index)));
-    }
-    sp.RemoveLast();    // == '|'
-    sp += '\n';
+           );
+    sp += "   " + score::GetContractExplanation();
 
     OUTPUT_TEXT(sp);
 }   // Usage()

@@ -93,17 +93,18 @@ namespace score
     /*
     *  Get the score for the contract in 'input': "-n[*[*]]"  or "n'SUITE'[[+|-]n][*[*]]"
     *  return value:
-    *   SCORE_NOT_CONSISTENT = error in calculation: not all params are consistent
-    *   SCORE_MALFORMED      = malformed contract, show usage
+    *   CONTRACT_NOT_CONSISTENT = error in calculation: not all params are consistent (like 7clubs+1, or 1club-8)
+    *   CONTRACT_MALFORMED      = malformed contract: can't interprete the input, show usage
     *  rest = correct score
     */
-    #define SCORE_MALFORMED         -1
-    #define SCORE_NOT_CONSISTENT    -2
+    #define CONTRACT_MALFORMED         -1
+    #define CONTRACT_NOT_CONSISTENT    -2
     int                 GetContractScoreFromString(const wxString& input, bool bVulnerable, wxString& result);
     wxString            GetDoubledTypeName        (int         type           );
     wxString            GetPlayTypeName           (PlayType    type           );
     wxString            GetCardName               (CardId      id             );    // name of the suit
     void                InitTexts4Translation     (bool        bForce = false );    // init static texts for translation
+    wxString            GetContractExplanation    ();                               // how to build a contract-string
 
 } // end of namespace score
 #endif

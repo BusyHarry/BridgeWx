@@ -192,9 +192,9 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
         bool bVulnerable = '*' == sessionPair[0];
         wxString    result;
         int score = score::GetContractScoreFromString(newData, bVulnerable, result);
-        if (score == SCORE_MALFORMED || score == SCORE_NOT_CONSISTENT)
+        if (score == CONTRACT_MALFORMED || score == CONTRACT_NOT_CONSISTENT)
         {
-            if (result.IsEmpty()) result = _("Can't interpret contract!");
+            if (result.IsEmpty()) result = _("Can't interpret contract!") + "\n\n" + score::GetContractExplanation();
             PopUp(m_theGrid, a_cellInfo, result);
             m_theGrid->CallAfter([this,a_cellInfo](){this->m_theGrid->GoToCell(a_cellInfo.row, a_cellInfo.column);});
         }

@@ -459,7 +459,7 @@ bool DeleteScoresFromPair(UINT a_pair)
                 if (a_contract.overTricks < -13)
                 {
                     a_errorDescription = _("more down then contract-tricks??\n");
-                    return SCORE_NOT_CONSISTENT;
+                    return CONTRACT_NOT_CONSISTENT;
                 }
             }
             else
@@ -467,12 +467,12 @@ bool DeleteScoresFromPair(UINT a_pair)
                 if (!IsInRange(a_contract.level, 1, 7))
                 {
                     a_errorDescription = _("more tricks then possible in a game??\n");
-                    return SCORE_NOT_CONSISTENT;
+                    return CONTRACT_NOT_CONSISTENT;
                 }
                 if (a_contract.overTricks < -(6 + a_contract.level))
                 {
                     a_errorDescription = _("more down then contract-tricks??\n");
-                    return SCORE_NOT_CONSISTENT;
+                    return CONTRACT_NOT_CONSISTENT;
                 }
             }
 
@@ -487,7 +487,7 @@ bool DeleteScoresFromPair(UINT a_pair)
         if ( !IsInRange(a_contract.level, 1, 7) || !IsInRange(a_contract.overTricks, 0, 7 - a_contract.level) )
         {
             a_errorDescription = _("more tricks then possible in a game??\n");
-            return SCORE_NOT_CONSISTENT;
+            return CONTRACT_NOT_CONSISTENT;
         }
         score  = a_contract.level * siPlayTypeValue[a_contract.type];
         score += siPlayTypeExtra[a_contract.type];
@@ -583,14 +583,14 @@ bool DeleteScoresFromPair(UINT a_pair)
         Contract contract;
 
         if (!ExtractContract(a_input, contract))
-            return SCORE_MALFORMED;  // error in contract description, show usage
+            return CONTRACT_MALFORMED;  // error in contract description, show usage
         if (contract.id == CiPass)
         {
             a_sResult = svCardNames[CiPass].name;
             return 0;
         }
         int score = CalculateScore4Contract(contract, a_bVulnerable, a_sResult);
-        if (score != SCORE_NOT_CONSISTENT) // if so, a_sResult contains an error description
+        if (score != CONTRACT_NOT_CONSISTENT) // if so, a_sResult contains an error description
         {
             if (contract.overTricks < 0)
             {
@@ -611,4 +611,22 @@ bool DeleteScoresFromPair(UINT a_pair)
         return score;
     }   // GetContractScoreFromString()
 
+    wxString GetContractExplanation()
+    {
+        wxString result = 
+          _("-x[*[*]] or y'SUIT'[[+|-]x][*[*]]   calculate the score for:\n"
+            "      'x'    = the number of over/under tricks.\n"
+            "      'y'    = the level of the contract.\n"
+            "      '*'    = doubled, and '**' is redoubled\n"
+            "      'SUIT' = the type of the contract (or, when abbreviated, the first match in the suit-names)\n"
+          );
+            result += FMT("      %s:", _("SUIT"));
+            for (int index = CardId::CardIdFirst; index <= CardId::CardIdLast; ++index)
+            {   // can't use 'score::CardId' for index: it doesn't go above last typevalue! (I made it so!)
+                result += FMT(" '%s' |",  score::GetCardName(static_cast<CardId>(index)));
+            }
+            result.RemoveLast();    // == '|'
+            result += '\n';
+        return result;
+    }   // GetContractExplanation
 }   // end namespace score

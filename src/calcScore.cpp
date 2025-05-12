@@ -897,6 +897,7 @@ long CalcScore::NeubergPoints(long points, UINT gameCount, UINT comparableCount)
 void CalcScore::ApplySessionCorrections(void)
 {
     m_maxPair = 1;
+    m_bSomeCorrection = false;  // reset flag, else it could inherit a 'true' from a previous session
 
     for (UINT pair = 1; pair < svSessionResult.size(); ++pair)
     {

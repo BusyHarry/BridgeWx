@@ -49,8 +49,9 @@ private:
     void StringDoubler          (const wxString& msg, UINT pair);
     wxString GetNsEwString      (UINT pair, UINT round);
     wxString SetToGamesAsString (UINT set, bool bWide = true);
-    UINT GetOpponent            (UINT pair, UINT round);
+    wxString CenterText         (const wxString& text, size_t length);  // return a centered string with size length
     wxString GetBorrowTableAsString( UINT table, UINT round);
+    UINT GetOpponent            (UINT pair, UINT round);
     void InitGroupData          ();
     void GroupOverview          ();
     void TestSchemas            ();

@@ -24,8 +24,8 @@ SetupPrinter::SetupPrinter(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPa
     m_pTxtCtrlLinesPP->SetMinMax(1, 100);   // lines per page: 1-100
     // now add all of the above in sets of 2 to a flexgridsizer
     wxFlexGridSizer* fgs = new wxFlexGridSizer(2 /*rows*/, 2 /*columns*/, 9 /*v-gap*/, 25 /*h-gap*/);
-    fgs->Add( new wxStaticText(this, wxID_ANY, _("Printer: "       )), 0, wxALIGN_CENTER_VERTICAL );   fgs->MyAdd( m_choiceBoxPrn    );
-    fgs->Add( new wxStaticText(this, wxID_ANY, _("Lines per page: ")), 0, wxALIGN_CENTER_VERTICAL );   fgs->  Add( m_pTxtCtrlLinesPP );
+    fgs->Add( new wxStaticText(this, wxID_ANY, _("Printer:"       )), 0, wxALIGN_CENTER_VERTICAL );   fgs->MyAdd( m_choiceBoxPrn    );
+    fgs->Add( new wxStaticText(this, wxID_ANY, _("Lines per page:")), 0, wxALIGN_CENTER_VERTICAL );   fgs->  Add( m_pTxtCtrlLinesPP );
 
     m_pChkBoxFF = new wxCheckBox(this, wxID_ANY, _("FormFeed after each print command"));
     m_pChkBoxFF->SetToolTip(_("FF after each single printcommand i.s.o when the page is full"));

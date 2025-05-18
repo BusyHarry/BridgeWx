@@ -484,99 +484,99 @@ Frequentie staten
 uitslag van zitting 1
 
 
-    spel 1             spel 2             spel 3             spel 4         
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   210  14     0      230  14     0      240  14     0      %80  11.2   0   
-   140  12     2      140  12     2      140  12     2      260  13.9   0   
-   130  10     4      130  10     4      130  10     4      140  11.6   2   
-    70   8     6       80   8     6       90   8     6      130   9.3   4   
-     0   5     9       70   6     8       70   6     8       80   7     6   
-  -120   2    12        0   4    10        0   4    10        0   4.7   8   
-  -160   0    14     -120   2    12     -120   2    12     -120   2.4  10   
-                     -160   0    14     -160   0    14     -160   0.1  12   
-                                                           -620   0    14   
+spel 1             spel 2             spel 3             spel 4             
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    210  14     0      230  14     0      240  14     0      %80  11.2   0  
+    140  12     2      140  12     2      140  12     2      260  13.9   0  
+    130  10     4      130  10     4      130  10     4      140  11.6   2  
+     70   8     6       80   8     6       90   8     6      130   9.3   4  
+      0   5     9       70   6     8       70   6     8       80   7     6  
+   -120   2    12        0   4    10        0   4    10        0   4.7   8  
+   -160   0    14     -120   2    12     -120   2    12     -120   2.4  10  
+                      -160   0    14     -160   0    14     -160   0.1  12  
+                                                            -620   0    14  
 
 
-    spel 5             spel 6             spel 7             spel 8         
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   300  14     0      340  14     0      300  14     0      %70   9.8   0   
-   270  12     2      160  12     2      160  12     2      %30   0     9.8 
-   160  10     4      100   9     5      150  10     4      340  13.9   0.1 
-    90   8     6     -100   6     8      110   8     6      200  11.6   2.4 
-  -100   5     9     -140   4    10     -100   6     8      160   9.3   4.7 
-  -140   2    12     -600   2    12     -140   4    10      120   7     7   
-  -600   0    14     -800   0    14     -150   2    12     -100   4.7   9.3 
-                                       -1000   0    14     -140   2.4  11.6 
-                                                          -1100   0.1  13.9 
+spel 5             spel 6             spel 7             spel 8             
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    300  14     0      340  14     0      300  14     0      %70   9.8   0  
+    270  12     2      160  12     2      160  12     2      %30   0     9.8
+    160  10     4      100   9     5      150  10     4      340  13.9   0.1
+     90   8     6     -100   6     8      110   8     6      200  11.6   2.4
+   -100   5     9     -140   4    10     -100   6     8      160   9.3   4.7
+   -140   2    12     -600   2    12     -140   4    10      120   7     7  
+   -600   0    14     -800   0    14     -150   2    12     -100   4.7   9.3
+                                        -1000   0    14     -140   2.4  11.6
+                                                           -1100   0.1  13.9
 
 
-    spel 9             spel 10            spel 11            spel 12        
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   130  14     0      200  14     0      300  14     0      %60   8.4   5.6 
-   100  12     2      140  12     2      150  12     2      %40   5.6   0   
-    70  10     4       90  10     4      100  10     4      160  13.7   0.1 
-     0   8     6        0   7     7       90   8     6      110  11     2.4 
-   -50   5     9      -70   4    10        0   6     8        0   8.3   4.7 
-  -150   2    12     -150   2    12      -80   4    10      -90   5.7   7   
-  -180   0    14     -190   0    14     -150   2    12     -150   3     9.3 
-                                        -200   0    14     -210   0.3  11.6 
-                                                           -630   0    13.9 
+spel 9             spel 10            spel 11            spel 12            
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    130  14     0      200  14     0      300  14     0      %60   8.4   5.6
+    100  12     2      140  12     2      150  12     2      %40   5.6   0  
+     70  10     4       90  10     4      100  10     4      160  13.7   0.1
+      0   8     6        0   7     7       90   8     6      110  11     2.4
+    -50   5     9      -70   4    10        0   6     8        0   8.3   4.7
+   -150   2    12     -150   2    12      -80   4    10      -90   5.7   7  
+   -180   0    14     -190   0    14     -150   2    12     -150   3     9.3
+                                         -200   0    14     -210   0.3  11.6
+                                                            -630   0    13.9
 
 
-    spel 13            spel 14            spel 15            spel 16        
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   800  13     1      800  14     0      500  14     0      %50   0     7   
-   600  10     4      600  12     2      300  12     2      300  13     0.1 
-   200   8     6      300  10     4      190  10     4      200  10     2.4 
-   170   6     8      200   8     6      150   8     6      160   8     4.7 
-   130   4    10      180   6     8      120   6     8      150   6     7   
-   110   2    12      140   4    10      110   4    10      110   4     9.3 
-  -270   0    14      110   2    12     -300   2    12     -340   2    11.6 
-                     -280   0    14     -500   0    14     -500   0    13.9 
+spel 13            spel 14            spel 15            spel 16            
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    800  13     1      800  14     0      500  14     0      %50   0     7  
+    600  10     4      600  12     2      300  12     2      300  13     0.1
+    200   8     6      300  10     4      190  10     4      200  10     2.4
+    170   6     8      200   8     6      150   8     6      160   8     4.7
+    130   4    10      180   6     8      120   6     8      150   6     7  
+    110   2    12      140   4    10      110   4    10      110   4     9.3
+   -270   0    14      110   2    12     -300   2    12     -340   2    11.6
+                      -280   0    14     -500   0    14     -500   0    13.9
 
 
 
-    spel 17            spel 18            spel 19            spel 20        
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   150  13     1      300  14     0      420  14     0      620  14     0   
-  -100  10     4      150  12     2      400  12     2      500  12     2   
-  -110   8     6      110  10     4      170  10     4      130  10     4   
-  -140   6     8     -110   7     7      120   8     6     -110   8     6   
-  -150   4    10     -150   4    10     -110   6     8     -120   6     8   
-  -420   2    12     -420   2    12     -120   4    10     -130   4    10   
- -1200   0    14     -800   0    14     -160   2    12     -170   1    13   
-                                        -600   0    14                      
+spel 17            spel 18            spel 19            spel 20            
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    150  13     1      300  14     0      420  14     0      620  14     0  
+   -100  10     4      150  12     2      400  12     2      500  12     2  
+   -110   8     6      110  10     4      170  10     4      130  10     4  
+   -140   6     8     -110   7     7      120   8     6     -110   8     6  
+   -150   4    10     -150   4    10     -110   6     8     -120   6     8  
+   -420   2    12     -420   2    12     -120   4    10     -130   4    10  
+  -1200   0    14     -800   0    14     -160   2    12     -170   1    13  
+                                         -600   0    14                     
 
 
-    spel 21            spel 22            spel 23            spel 24        
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   160  14     0      150  14     0      150  14     0      150  12     1   
-   150  12     2      130  12     2      140  12     2      100   6     6   
-   130  10     4      120  10     4      110  10     4     -110   0    10   
-   120   8     6      100   7     7      100   8     6     -170   2    12   
-   110   6     8     -120   4    10     -100   6     8     -300   0    14   
-   100   4    10     -160   2    12     -160   4    10                      
-    50   2    12     -170   0    14     -170   2    12                      
-  -170   0    14                        -200   0    14                      
+spel 21            spel 22            spel 23            spel 24            
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    160  14     0      150  14     0      150  14     0      150  12     1  
+    150  12     2      130  12     2      140  12     2      100   6     6  
+    130  10     4      120  10     4      110  10     4     -110   0    10  
+    120   8     6      100   7     7      100   8     6     -170   2    12  
+    110   6     8     -120   4    10     -100   6     8     -300   0    14  
+    100   4    10     -160   2    12     -160   4    10                     
+     50   2    12     -170   0    14     -170   2    12                     
+   -170   0    14                        -200   0    14                     
 
 
-    spel 25            spel 26            spel 27            spel 28        
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   170  14     0      170  14     0      170  14     0      170  13     1   
-   150  11     3      150  11     3      160  12     2      150  10     4   
-   140   8     6      140   8     6      150  10     4      140   8     6   
-   120   6     8      120   5     9      140   8     6      120   6     8   
-   110   4    10     -130   2    12      130   6     8       50   4    10   
-  -130   2    12     -240   0    14      120   4    10     -130   2    12   
-  -230   0    14                        -130   2    12     -260   0    14   
-                                        -250   0    14                      
+spel 25            spel 26            spel 27            spel 28            
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    170  14     0      170  14     0      170  14     0      170  13     1  
+    150  11     3      150  11     3      160  12     2      150  10     4  
+    140   8     6      140   8     6      150  10     4      140   8     6  
+    120   6     8      120   5     9      140   8     6      120   6     8  
+    110   4    10     -130   2    12      130   6     8       50   4    10  
+   -130   2    12     -240   0    14      120   4    10     -130   2    12  
+   -230   0    14                        -130   2    12     -260   0    14  
+                                         -250   0    14                     
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -584,25 +584,25 @@ Groep uitslag
 
 Groep-uitslag van wedstrijd '<auto-test, zitting 1>', zitting 1
 
-                         spellen : 1-4   5-8   9-12 13-16 17-20 21-24 25-28  extra  kor  kor   tot   score(%)
+                         spellen :  1-4   5-8  9-12  13-16 17-20 21-24 25-28 extra  kor  kor   tot   score (%)
   1 paar 1 . . . . . . . . . . . .  24    35.6   7.6  37.9  13    25    48    1/2              192.1 48.76
   2 paar 2 . . . . . . . . . . . .  31    21.7   0.3  12    20     9    33                     127   32.40
   3 paar 3 . . . . . . . . . . . .  46    32    45.6  51.6  36    11    21               10mp  253.2 64.59
   4 paar 4 . . . . . . . . . . . .  39.3  24    41    18    29    47    56                     254.3 64.87
-  5 gewijzigd paar 5 . . . . . . .   8.4  20.4  51.7  43.3  24    32     0           3%        179.8 48.87
+  5 gewijzigd paar 5 . . . . . . .   8.4  20.4  51.7  43.3  24    32     0          3%         179.8 48.87
   6 paar 6 . . . . . . . . . . . .  35.2  27.8   4.1   4    27    29    23                     150.1 38.29
   7 paar 7 . . . . . . . . . . . .  16    33.8  53.6  32    32    44     8                     219.4 55.97
   8 paar 8 . . . . . . . . . . . .  18    34.3  14.4  22.4  43    22    35                     213.1 54.36
-  9 paar 9 . . . . . . . . . . . .  55.9  12.4 ---    24    46     3    14                     155.3 46.22
- 10 paar 10  . . . . . . . . . . .   0     0.1  28.4   9.1 ---    52    12                     101.6 30.24
- 11 paar 11  . . . . . . . . . . .  47.6  53.9   9    19    15   ---    44                     188.5 56.10
+  9 paar 9 . . . . . . . . . . . .  55.9  12.4 -----  24    46     3    14                     155.3 46.22
+ 10 paar 10  . . . . . . . . . . .   0     0.1  28.4   9.1 -----  52    12                     101.6 30.24
+ 11 paar 11  . . . . . . . . . . .  47.6  53.9   9    19    15   -----  44                     188.5 56.10
  12 paar 12  . . . . . . . . . . .   0.1   2.1  25.7  46    18    52    25                     168.9 43.09
  13 paar 13  . . . . . . . . . . .  17.7  43.3  18.7  52    38     4    42                     215.7 55.03
- 14 paar 14  . . . . . . . . . . .  54   ---    36    36    10    18     1                     155   46.13
- 15 paar 15  . . . . . . . . . . .  37    43.6  22   ---    41    32    55                     244.5 72.77
+ 14 paar 14  . . . . . . . . . . .  54   -----  36    36    10    18     1                     155   46.13
+ 15 paar 15  . . . . . . . . . . .  37    43.6  22   -----  41    32    55                     244.5 72.77
  16 --> afwezig paar
- 17 paar 17  . . . . . . . . . . .   8    55.9  29.3  10    25    36   ---                     164.2 48.87
- 18 paar 18  . . . . . . . . . . . ---    12.7  45.3  30.7  31    22    31                     172.7 51.40
+ 17 paar 17  . . . . . . . . . . .   8    55.9  29.3  10    25    36   -----                   164.2 48.87
+ 18 paar 18  . . . . . . . . . . . -----  12.7  45.3  30.7  31    22    31                     172.7 51.40
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -610,24 +610,24 @@ Totaal uitslag
 <auto-test, zitting 1>
 Totaal uitslag
 
-rang paarnaam                         Z1     totaal   gem.  A B
-   1 paar 15  . . . . . . . . . . .  72.77    72.77  72.77  . 1
-   2 paar 4 . . . . . . . . . . . .  64.87    64.87  64.87  1 .
-   3 paar 3 . . . . . . . . . . . .  64.59    64.59  64.59  2 .
-   4 paar 11  . . . . . . . . . . .  56.10    56.10  56.10  . 2
-   5 paar 7 . . . . . . . . . . . .  55.97    55.97  55.97  3 .
-   6 paar 13  . . . . . . . . . . .  55.03    55.03  55.03  . 3
-   7 paar 8 . . . . . . . . . . . .  54.36    54.36  54.36  4 .
-   8 paar 18  . . . . . . . . . . .  51.40    51.40  51.40  . 4
-   9 paar 2 . . . . . . . . . . . .  50.00    50.00  50.00  5 .
-  10 gewijzigd paar 5 . . . . . . .  48.87    48.87  48.87  6 .
-  10 paar 17  . . . . . . . . . . .  48.87    48.87  48.87  . 5
-  12 paar 1 . . . . . . . . . . . .  48.76    48.76  48.76  7 .
-  13 paar 9 . . . . . . . . . . . .  46.22    46.22  46.22  . 6
-  14 paar 14  . . . . . . . . . . .  46.13    46.13  46.13  . 7
-  15 paar 12  . . . . . . . . . . .  43.09    43.09  43.09  . 8
-  16 paar 6 . . . . . . . . . . . .  38.29    38.29  38.29  8 .
-  17 paar 10  . . . . . . . . . . .  30.24    30.24  30.24  . 9
+rang paarnaam                         Z1      totaal  gem.  A B
+   1 paar 15  . . . . . . . . . . .  72.77     72.77 72.77  . 1
+   2 paar 4 . . . . . . . . . . . .  64.87     64.87 64.87  1 .
+   3 paar 3 . . . . . . . . . . . .  64.59     64.59 64.59  2 .
+   4 paar 11  . . . . . . . . . . .  56.10     56.10 56.10  . 2
+   5 paar 7 . . . . . . . . . . . .  55.97     55.97 55.97  3 .
+   6 paar 13  . . . . . . . . . . .  55.03     55.03 55.03  . 3
+   7 paar 8 . . . . . . . . . . . .  54.36     54.36 54.36  4 .
+   8 paar 18  . . . . . . . . . . .  51.40     51.40 51.40  . 4
+   9 paar 2 . . . . . . . . . . . .  50.00     50.00 50.00  5 .
+  10 gewijzigd paar 5 . . . . . . .  48.87     48.87 48.87  6 .
+  10 paar 17  . . . . . . . . . . .  48.87     48.87 48.87  . 5
+  12 paar 1 . . . . . . . . . . . .  48.76     48.76 48.76  7 .
+  13 paar 9 . . . . . . . . . . . .  46.22     46.22 46.22  . 6
+  14 paar 14  . . . . . . . . . . .  46.13     46.13 46.13  . 7
+  15 paar 12  . . . . . . . . . . .  43.09     43.09 43.09  . 8
+  16 paar 6 . . . . . . . . . . . .  38.29     38.29 38.29  8 .
+  17 paar 10  . . . . . . . . . . .  30.24     30.24 30.24  . 9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -1374,16 +1374,16 @@ Uitslag per spel
 
 Uitslag van spel 1 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 1         
-scoreNZ NZ    OW   
-   top: 14    14   
-   210  14     0   
-   140  12     2   
-   130  10     4   
-    70   8     6   
-     0   5     9   
-  -120   2    12   
-  -160   0    14   
+spel 1
+scoreNZ  NZ    OW  
+   top:  14    14  
+    210  14     0  
+    140  12     2  
+    130  10     4  
+     70   8     6  
+      0   5     9  
+   -120   2    12  
+   -160   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2      0         A4   A7    130         A5   A3   -120       
@@ -1396,17 +1396,17 @@ Uitslag per spel
 
 Uitslag van spel 2 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 2         
-scoreNZ NZ    OW   
-   top: 14    14   
-   230  14     0   
-   140  12     2   
-   130  10     4   
-    80   8     6   
-    70   6     8   
-     0   4    10   
-  -120   2    12   
-  -160   0    14   
+spel 2
+scoreNZ  NZ    OW  
+   top:  14    14  
+    230  14     0  
+    140  12     2  
+    130  10     4  
+     80   8     6  
+     70   6     8  
+      0   4    10  
+   -120   2    12  
+   -160   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
@@ -1419,17 +1419,17 @@ Uitslag per spel
 
 Uitslag van spel 3 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 3         
-scoreNZ NZ    OW   
-   top: 14    14   
-   240  14     0   
-   140  12     2   
-   130  10     4   
-    90   8     6   
-    70   6     8   
-     0   4    10   
-  -120   2    12   
-  -160   0    14   
+spel 3
+scoreNZ  NZ    OW  
+   top:  14    14  
+    240  14     0  
+    140  12     2  
+    130  10     4  
+     90   8     6  
+     70   6     8  
+      0   4    10  
+   -120   2    12  
+   -160   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
@@ -1442,18 +1442,18 @@ Uitslag per spel
 
 Uitslag van spel 4 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 4         
-scoreNZ NZ    OW   
-   top: 14    14   
-   %80  11.2   0   
-   260  13.9   0   
-   140  11.6   2   
-   130   9.3   4   
-    80   7     6   
-     0   4.7   8   
-  -120   2.4  10   
-  -160   0.1  12   
-  -620   0    14   
+spel 4
+scoreNZ  NZ    OW  
+   top:  14    14  
+    %80  11.2   0  
+    260  13.9   0  
+    140  11.6   2  
+    130   9.3   4  
+     80   7     6  
+      0   4.7   8  
+   -120   2.4  10  
+   -160   0.1  12  
+   -620   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     80         A4   A7    130         A5   A3   -120       
@@ -1466,16 +1466,16 @@ Uitslag per spel
 
 Uitslag van spel 5 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 5         
-scoreNZ NZ    OW   
-   top: 14    14   
-   300  14     0   
-   270  12     2   
-   160  10     4   
-    90   8     6   
-  -100   5     9   
-  -140   2    12   
-  -600   0    14   
+spel 5
+scoreNZ  NZ    OW  
+   top:  14    14  
+    300  14     0  
+    270  12     2  
+    160  10     4  
+     90   8     6  
+   -100   5     9  
+   -140   2    12  
+   -600   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5   -100         A2   A8   -100         A3   A4     90       
@@ -1488,16 +1488,16 @@ Uitslag per spel
 
 Uitslag van spel 6 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 6         
-scoreNZ NZ    OW   
-   top: 14    14   
-   340  14     0   
-   160  12     2   
-   100   9     5   
-  -100   6     8   
-  -140   4    10   
-  -600   2    12   
-  -800   0    14   
+spel 6
+scoreNZ  NZ    OW  
+   top:  14    14  
+    340  14     0  
+    160  12     2  
+    100   9     5  
+   -100   6     8  
+   -140   4    10  
+   -600   2    12  
+   -800   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    100         A2   A8   -100         A3   A4    100       
@@ -1510,17 +1510,17 @@ Uitslag per spel
 
 Uitslag van spel 7 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 7         
-scoreNZ NZ    OW   
-   top: 14    14   
-   300  14     0   
-   160  12     2   
-   150  10     4   
-   110   8     6   
-  -100   6     8   
-  -140   4    10   
-  -150   2    12   
- -1000   0    14   
+spel 7
+scoreNZ  NZ    OW  
+   top:  14    14  
+    300  14     0  
+    160  12     2  
+    150  10     4  
+    110   8     6  
+   -100   6     8  
+   -140   4    10  
+   -150   2    12  
+  -1000   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    150         A2   A8   -100         A3   A4    110       
@@ -1533,18 +1533,18 @@ Uitslag per spel
 
 Uitslag van spel 8 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 8         
-scoreNZ NZ    OW   
-   top: 14    14   
-   %70   9.8   0   
-   %30   0     9.8 
-   340  13.9   0.1 
-   200  11.6   2.4 
-   160   9.3   4.7 
-   120   7     7   
-  -100   4.7   9.3 
-  -140   2.4  11.6 
- -1100   0.1  13.9 
+spel 8
+scoreNZ  NZ    OW  
+   top:  14    14  
+    %70   9.8   0  
+    %30   0     9.8
+    340  13.9   0.1
+    200  11.6   2.4
+    160   9.3   4.7
+    120   7     7  
+   -100   4.7   9.3
+   -140   2.4  11.6
+  -1100   0.1  13.9
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    200         A2   A8   -100         A3   A4    120       
@@ -1557,16 +1557,16 @@ Uitslag per spel
 
 Uitslag van spel 9 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 9         
-scoreNZ NZ    OW   
-   top: 14    14   
-   130  14     0   
-   100  12     2   
-    70  10     4   
-     0   8     6   
-   -50   5     9   
-  -150   2    12   
-  -180   0    14   
+spel 9
+scoreNZ  NZ    OW  
+   top:  14    14  
+    130  14     0  
+    100  12     2  
+     70  10     4  
+      0   8     6  
+    -50   5     9  
+   -150   2    12  
+   -180   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -180         A3   A1    100         A4   A8     70       
@@ -1579,16 +1579,16 @@ Uitslag per spel
 
 Uitslag van spel 10 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 10        
-scoreNZ NZ    OW   
-   top: 14    14   
-   200  14     0   
-   140  12     2   
-    90  10     4   
-     0   7     7   
-   -70   4    10   
-  -150   2    12   
-  -190   0    14   
+spel 10
+scoreNZ  NZ    OW  
+   top:  14    14  
+    200  14     0  
+    140  12     2  
+     90  10     4  
+      0   7     7  
+    -70   4    10  
+   -150   2    12  
+   -190   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -190         A3   A1    200         A4   A8     90       
@@ -1601,17 +1601,17 @@ Uitslag per spel
 
 Uitslag van spel 11 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 11        
-scoreNZ NZ    OW   
-   top: 14    14   
-   300  14     0   
-   150  12     2   
-   100  10     4   
-    90   8     6   
-     0   6     8   
-   -80   4    10   
-  -150   2    12   
-  -200   0    14   
+spel 11
+scoreNZ  NZ    OW  
+   top:  14    14  
+    300  14     0  
+    150  12     2  
+    100  10     4  
+     90   8     6  
+      0   6     8  
+    -80   4    10  
+   -150   2    12  
+   -200   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -200         A3   A1    300         A4   A8    100       
@@ -1624,18 +1624,18 @@ Uitslag per spel
 
 Uitslag van spel 12 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 12        
-scoreNZ NZ    OW   
-   top: 14    14   
-   %60   8.4   5.6 
-   %40   5.6   0   
-   160  13.7   0.1 
-   110  11     2.4 
-     0   8.3   4.7 
-   -90   5.7   7   
-  -150   3     9.3 
-  -210   0.3  11.6 
-  -630   0    13.9 
+spel 12
+scoreNZ  NZ    OW  
+   top:  14    14  
+    %60   8.4   5.6
+    %40   5.6   0  
+    160  13.7   0.1
+    110  11     2.4
+      0   8.3   4.7
+    -90   5.7   7  
+   -150   3     9.3
+   -210   0.3  11.6
+   -630   0    13.9
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -210         A3   A1    %40,%40     A4   A8    110       
@@ -1648,16 +1648,16 @@ Uitslag per spel
 
 Uitslag van spel 13 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 13        
-scoreNZ NZ    OW   
-   top: 14    14   
-   800  13     1   
-   600  10     4   
-   200   8     6   
-   170   6     8   
-   130   4    10   
-   110   2    12   
-  -270   0    14   
+spel 13
+scoreNZ  NZ    OW  
+   top:  14    14  
+    800  13     1  
+    600  10     4  
+    200   8     6  
+    170   6     8  
+    130   4    10  
+    110   2    12  
+   -270   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1    200         A6   A3   -270       
@@ -1670,17 +1670,17 @@ Uitslag per spel
 
 Uitslag van spel 14 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 14        
-scoreNZ NZ    OW   
-   top: 14    14   
-   800  14     0   
-   600  12     2   
-   300  10     4   
-   200   8     6   
-   180   6     8   
-   140   4    10   
-   110   2    12   
-  -280   0    14   
+spel 14
+scoreNZ  NZ    OW  
+   top:  14    14  
+    800  14     0  
+    600  12     2  
+    300  10     4  
+    200   8     6  
+    180   6     8  
+    140   4    10  
+    110   2    12  
+   -280   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1    300         A6   A3   -280       
@@ -1693,17 +1693,17 @@ Uitslag per spel
 
 Uitslag van spel 15 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 15        
-scoreNZ NZ    OW   
-   top: 14    14   
-   500  14     0   
-   300  12     2   
-   190  10     4   
-   150   8     6   
-   120   6     8   
-   110   4    10   
-  -300   2    12   
-  -500   0    14   
+spel 15
+scoreNZ  NZ    OW  
+   top:  14    14  
+    500  14     0  
+    300  12     2  
+    190  10     4  
+    150   8     6  
+    120   6     8  
+    110   4    10  
+   -300   2    12  
+   -500   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -300       
@@ -1716,17 +1716,17 @@ Uitslag per spel
 
 Uitslag van spel 16 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 16        
-scoreNZ NZ    OW   
-   top: 14    14   
-   %50   0     7   
-   300  13     0.1 
-   200  10     2.4 
-   160   8     4.7 
-   150   6     7   
-   110   4     9.3 
-  -340   2    11.6 
-  -500   0    13.9 
+spel 16
+scoreNZ  NZ    OW  
+   top:  14    14  
+    %50   0     7  
+    300  13     0.1
+    200  10     2.4
+    160   8     4.7
+    150   6     7  
+    110   4     9.3
+   -340   2    11.6
+   -500   0    13.9
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -340       
@@ -1739,16 +1739,16 @@ Uitslag per spel
 
 Uitslag van spel 17 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 17        
-scoreNZ NZ    OW   
-   top: 14    14   
-   150  13     1   
-  -100  10     4   
-  -110   8     6   
-  -140   6     8   
-  -150   4    10   
-  -420   2    12   
- -1200   0    14   
+spel 17
+scoreNZ  NZ    OW  
+   top:  14    14  
+    150  13     1  
+   -100  10     4  
+   -110   8     6  
+   -140   6     8  
+   -150   4    10  
+   -420   2    12  
+  -1200   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -140         A3   A2    150         A4   A6   -110       
@@ -1761,16 +1761,16 @@ Uitslag per spel
 
 Uitslag van spel 18 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 18        
-scoreNZ NZ    OW   
-   top: 14    14   
-   300  14     0   
-   150  12     2   
-   110  10     4   
-  -110   7     7   
-  -150   4    10   
-  -420   2    12   
-  -800   0    14   
+spel 18
+scoreNZ  NZ    OW  
+   top:  14    14  
+    300  14     0  
+    150  12     2  
+    110  10     4  
+   -110   7     7  
+   -150   4    10  
+   -420   2    12  
+   -800   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -150         A3   A2    150         A4   A6   -110       
@@ -1783,17 +1783,17 @@ Uitslag per spel
 
 Uitslag van spel 19 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 19        
-scoreNZ NZ    OW   
-   top: 14    14   
-   420  14     0   
-   400  12     2   
-   170  10     4   
-   120   8     6   
-  -110   6     8   
-  -120   4    10   
-  -160   2    12   
-  -600   0    14   
+spel 19
+scoreNZ  NZ    OW  
+   top:  14    14  
+    420  14     0  
+    400  12     2  
+    170  10     4  
+    120   8     6  
+   -110   6     8  
+   -120   4    10  
+   -160   2    12  
+   -600   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -160         A3   A2    170         A4   A6   -110       
@@ -1806,16 +1806,16 @@ Uitslag per spel
 
 Uitslag van spel 20 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 20        
-scoreNZ NZ    OW   
-   top: 14    14   
-   620  14     0   
-   500  12     2   
-   130  10     4   
-  -110   8     6   
-  -120   6     8   
-  -130   4    10   
-  -170   1    13   
+spel 20
+scoreNZ  NZ    OW  
+   top:  14    14  
+    620  14     0  
+    500  12     2  
+    130  10     4  
+   -110   8     6  
+   -120   6     8  
+   -130   4    10  
+   -170   1    13  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -170         A3   A2   -170         A4   A6   -110       
@@ -1828,17 +1828,17 @@ Uitslag per spel
 
 Uitslag van spel 21 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 21        
-scoreNZ NZ    OW   
-   top: 14    14   
-   160  14     0   
-   150  12     2   
-   130  10     4   
-   120   8     6   
-   110   6     8   
-   100   4    10   
-    50   2    12   
-  -170   0    14   
+spel 21
+scoreNZ  NZ    OW  
+   top:  14    14  
+    160  14     0  
+    150  12     2  
+    130  10     4  
+    120   8     6  
+    110   6     8  
+    100   4    10  
+     50   2    12  
+   -170   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4     50         A5   A8    160       
@@ -1851,16 +1851,16 @@ Uitslag per spel
 
 Uitslag van spel 22 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 22        
-scoreNZ NZ    OW   
-   top: 14    14   
-   150  14     0   
-   130  12     2   
-   120  10     4   
-   100   7     7   
-  -120   4    10   
-  -160   2    12   
-  -170   0    14   
+spel 22
+scoreNZ  NZ    OW  
+   top:  14    14  
+    150  14     0  
+    130  12     2  
+    120  10     4  
+    100   7     7  
+   -120   4    10  
+   -160   2    12  
+   -170   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4    100         A5   A8   -160       
@@ -1873,17 +1873,17 @@ Uitslag per spel
 
 Uitslag van spel 23 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 23        
-scoreNZ NZ    OW   
-   top: 14    14   
-   150  14     0   
-   140  12     2   
-   110  10     4   
-   100   8     6   
-  -100   6     8   
-  -160   4    10   
-  -170   2    12   
-  -200   0    14   
+spel 23
+scoreNZ  NZ    OW  
+   top:  14    14  
+    150  14     0  
+    140  12     2  
+    110  10     4  
+    100   8     6  
+   -100   6     8  
+   -160   4    10  
+   -170   2    12  
+   -200   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4   -200         A5   A8   -160       
@@ -1896,14 +1896,14 @@ Uitslag per spel
 
 Uitslag van spel 24 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 24        
-scoreNZ NZ    OW   
-   top: 14    14   
-   150  12     1   
-   100   6     6   
-  -110   0    10   
-  -170   2    12   
-  -300   0    14   
+spel 24
+scoreNZ  NZ    OW  
+   top:  14    14  
+    150  12     1  
+    100   6     6  
+   -110   0    10  
+   -170   2    12  
+   -300   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4   -300         A5   A8   R150,R110  
@@ -1916,16 +1916,16 @@ Uitslag per spel
 
 Uitslag van spel 25 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 25        
-scoreNZ NZ    OW   
-   top: 14    14   
-   170  14     0   
-   150  11     3   
-   140   8     6   
-   120   6     8   
-   110   4    10   
-  -130   2    12   
-  -230   0    14   
+spel 25
+scoreNZ  NZ    OW  
+   top:  14    14  
+    170  14     0  
+    150  11     3  
+    140   8     6  
+    120   6     8  
+    110   4    10  
+   -130   2    12  
+   -230   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -230         A6   A2    110       
@@ -1938,15 +1938,15 @@ Uitslag per spel
 
 Uitslag van spel 26 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 26        
-scoreNZ NZ    OW   
-   top: 14    14   
-   170  14     0   
-   150  11     3   
-   140   8     6   
-   120   5     9   
-  -130   2    12   
-  -240   0    14   
+spel 26
+scoreNZ  NZ    OW  
+   top:  14    14  
+    170  14     0  
+    150  11     3  
+    140   8     6  
+    120   5     9  
+   -130   2    12  
+   -240   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -240         A6   A2    120       
@@ -1959,17 +1959,17 @@ Uitslag per spel
 
 Uitslag van spel 27 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 27        
-scoreNZ NZ    OW   
-   top: 14    14   
-   170  14     0   
-   160  12     2   
-   150  10     4   
-   140   8     6   
-   130   6     8   
-   120   4    10   
-  -130   2    12   
-  -250   0    14   
+spel 27
+scoreNZ  NZ    OW  
+   top:  14    14  
+    170  14     0  
+    160  12     2  
+    150  10     4  
+    140   8     6  
+    130   6     8  
+    120   4    10  
+   -130   2    12  
+   -250   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -250         A6   A2    130       
@@ -1982,16 +1982,16 @@ Uitslag per spel
 
 Uitslag van spel 28 voor '<auto-test, zitting 1>', zitting 1
 
-    spel 28        
-scoreNZ NZ    OW   
-   top: 14    14   
-   170  13     1   
-   150  10     4   
-   140   8     6   
-   120   6     8   
-    50   4    10   
-  -130   2    12   
-  -260   0    14   
+spel 28
+scoreNZ  NZ    OW  
+   top:  14    14  
+    170  13     1  
+    150  10     4  
+    140   8     6  
+    120   6     8  
+     50   4    10  
+   -130   2    12  
+   -260   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -260         A6   A2    140       
@@ -2379,99 +2379,99 @@ Frequentie staten
 uitslag van zitting 2
 
 
-    spel 1             spel 2             spel 3             spel 4         
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   210  14     0      230  14     0      240  14     0      %80  11     0   
-   140  12     2      140  12     2      140  12     2      260  13     0   
-   130  10     4      130  10     4      130  10     4      140  11     2   
-    70   8     6       80   8     6       90   8     6      130   9     4   
-     0   5     9       70   6     8       70   6     8       80   7     6   
-  -120   2    12        0   4    10        0   4    10        0   5     8   
-  -160   0    14     -120   2    12     -120   2    12     -120   3    10   
-                     -160   0    14     -160   0    14     -160   1    12   
-                                                           -620   0    14   
+spel 1             spel 2             spel 3             spel 4             
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    210  14     0      230  14     0      240  14     0      %80  11     0  
+    140  12     2      140  12     2      140  12     2      260  13     0  
+    130  10     4      130  10     4      130  10     4      140  11     2  
+     70   8     6       80   8     6       90   8     6      130   9     4  
+      0   5     9       70   6     8       70   6     8       80   7     6  
+   -120   2    12        0   4    10        0   4    10        0   5     8  
+   -160   0    14     -120   2    12     -120   2    12     -120   3    10  
+                      -160   0    14     -160   0    14     -160   1    12  
+                                                            -620   0    14  
 
 
-    spel 5             spel 6             spel 7             spel 8         
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   300  14     0      340  14     0      300  14     0      %70  10     0   
-   270  12     2      160  12     2      160  12     2      %30   0    10   
-   160  10     4      100   9     5      150  10     4      340  13     1   
-    90   8     6     -100   6     8      110   8     6      200  11     3   
-  -100   5     9     -140   4    10     -100   6     8      160   9     5   
-  -140   2    12     -600   2    12     -140   4    10      120   7     7   
-  -600   0    14     -800   0    14     -150   2    12     -100   5     9   
-                                       -1000   0    14     -140   3    11   
-                                                          -1100   1    13   
+spel 5             spel 6             spel 7             spel 8             
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    300  14     0      340  14     0      300  14     0      %70  10     0  
+    270  12     2      160  12     2      160  12     2      %30   0    10  
+    160  10     4      100   9     5      150  10     4      340  13     1  
+     90   8     6     -100   6     8      110   8     6      200  11     3  
+   -100   5     9     -140   4    10     -100   6     8      160   9     5  
+   -140   2    12     -600   2    12     -140   4    10      120   7     7  
+   -600   0    14     -800   0    14     -150   2    12     -100   5     9  
+                                        -1000   0    14     -140   3    11  
+                                                           -1100   1    13  
 
 
-    spel 9             spel 10            spel 11            spel 12        
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   130  14     0      200  14     0      300  14     0      %60   8     6   
-   100  12     2      140  12     2      150  12     2      %40   6     0   
-    70  10     4       90  10     4      100  10     4      160  12     1   
-     0   8     6        0   7     7       90   8     6      110  10     3   
-   -50   5     9      -70   4    10        0   6     8        0   8     5   
-  -150   2    12     -150   2    12      -80   4    10      -90   6     7   
-  -180   0    14     -190   0    14     -150   2    12     -150   4     9   
-                                        -200   0    14     -210   2    11   
-                                                           -630   0    13   
+spel 9             spel 10            spel 11            spel 12            
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    130  14     0      200  14     0      300  14     0      %60   8     6  
+    100  12     2      140  12     2      150  12     2      %40   6     0  
+     70  10     4       90  10     4      100  10     4      160  12     1  
+      0   8     6        0   7     7       90   8     6      110  10     3  
+    -50   5     9      -70   4    10        0   6     8        0   8     5  
+   -150   2    12     -150   2    12      -80   4    10      -90   6     7  
+   -180   0    14     -190   0    14     -150   2    12     -150   4     9  
+                                         -200   0    14     -210   2    11  
+                                                            -630   0    13  
 
 
-    spel 13            spel 14            spel 15            spel 16        
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   800  13     1      800  14     0      500  14     0      %50   0     7   
-   600  10     4      600  12     2      300  12     2      300  13     1   
-   200   8     6      300  10     4      190  10     4      200  10     3   
-   170   6     8      200   8     6      150   8     6      160   8     5   
-   130   4    10      180   6     8      120   6     8      150   6     7   
-   110   2    12      140   4    10      110   4    10      110   4     9   
-  -270   0    14      110   2    12     -300   2    12     -340   2    11   
-                     -280   0    14     -500   0    14     -500   0    13   
+spel 13            spel 14            spel 15            spel 16            
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    800  13     1      800  14     0      500  14     0      %50   0     7  
+    600  10     4      600  12     2      300  12     2      300  13     1  
+    200   8     6      300  10     4      190  10     4      200  10     3  
+    170   6     8      200   8     6      150   8     6      160   8     5  
+    130   4    10      180   6     8      120   6     8      150   6     7  
+    110   2    12      140   4    10      110   4    10      110   4     9  
+   -270   0    14      110   2    12     -300   2    12     -340   2    11  
+                      -280   0    14     -500   0    14     -500   0    13  
 
 
 
-    spel 17            spel 18            spel 19            spel 20        
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   150  14     0      300  14     0      420  14     0      620  14     0   
-   100  12     2      150  12     2      400  12     2      500  12     2   
-  -100  10     4      110  10     4      170  10     4      130  10     4   
-  -110   8     6     -110   7     7      120   8     6     -110   8     6   
-  -140   6     8     -150   4    10     -110   6     8     -120   6     8   
-  -150   4    10     -420   2    12     -120   4    10     -130   4    10   
-  -420   2    12     -800   0    14     -160   2    12     -170   1    13   
- -1200   0    14                        -600   0    14                      
+spel 17            spel 18            spel 19            spel 20            
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    150  14     0      300  14     0      420  14     0      620  14     0  
+    100  12     2      150  12     2      400  12     2      500  12     2  
+   -100  10     4      110  10     4      170  10     4      130  10     4  
+   -110   8     6     -110   7     7      120   8     6     -110   8     6  
+   -140   6     8     -150   4    10     -110   6     8     -120   6     8  
+   -150   4    10     -420   2    12     -120   4    10     -130   4    10  
+   -420   2    12     -800   0    14     -160   2    12     -170   1    13  
+  -1200   0    14                        -600   0    14                     
 
 
-    spel 21            spel 22            spel 23            spel 24        
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   160  14     0      150  14     0      150  14     0      150  12     1   
-   150  12     2      130  12     2      140  12     2      100   6     6   
-   130  10     4      120  10     4      110  10     4     -110   0    10   
-   120   8     6      100   7     7      100   8     6     -170   2    12   
-   110   6     8     -120   4    10     -100   6     8     -300   0    14   
-   100   4    10     -160   2    12     -160   4    10                      
-    50   2    12     -170   0    14     -170   2    12                      
-  -170   0    14                        -200   0    14                      
+spel 21            spel 22            spel 23            spel 24            
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    160  14     0      150  14     0      150  14     0      150  12     1  
+    150  12     2      130  12     2      140  12     2      100   6     6  
+    130  10     4      120  10     4      110  10     4     -110   0    10  
+    120   8     6      100   7     7      100   8     6     -170   2    12  
+    110   6     8     -120   4    10     -100   6     8     -300   0    14  
+    100   4    10     -160   2    12     -160   4    10                     
+     50   2    12     -170   0    14     -170   2    12                     
+   -170   0    14                        -200   0    14                     
 
 
-    spel 25            spel 26            spel 27            spel 28        
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   170  14     0      170  14     0      170  14     0      170  13     1   
-   150  11     3      150  11     3      160  12     2      150  10     4   
-   140   8     6      140   8     6      150  10     4      140   8     6   
-   120   6     8      120   5     9      140   8     6      120   6     8   
-   110   4    10     -130   2    12      130   6     8       50   4    10   
-  -130   2    12     -240   0    14      120   4    10     -130   2    12   
-  -230   0    14                        -130   2    12     -260   0    14   
-                                        -250   0    14                      
+spel 25            spel 26            spel 27            spel 28            
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    170  14     0      170  14     0      170  14     0      170  13     1  
+    150  11     3      150  11     3      160  12     2      150  10     4  
+    140   8     6      140   8     6      150  10     4      140   8     6  
+    120   6     8      120   5     9      140   8     6      120   6     8  
+    110   4    10     -130   2    12      130   6     8       50   4    10  
+   -130   2    12     -240   0    14      120   4    10     -130   2    12  
+   -230   0    14                        -130   2    12     -260   0    14  
+                                         -250   0    14                     
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2479,25 +2479,25 @@ Groep uitslag
 
 Groep-uitslag van wedstrijd '<auto-test, zitting 2>', zitting 2
 
-                         spellen : 1-4   5-8   9-12 13-16 17-20 21-24 25-28   tot   score(%)
-  1 paar 15  . . . . . . . . . . .  24    35     8    37    13    25    48    190   48.47
-  2 paar 4 . . . . . . . . . . . .  31    22     2    12    19     9    33    128   32.65
-  3 paar 3 . . . . . . . . . . . .  46    32    46    51    37    11    21    244   62.24
-  4 paar 11  . . . . . . . . . . .  39    24    40    18    29    47    56    253   64.54
-  5 paar 7 . . . . . . . . . . . .   9    21    50    43    24    32     0    179   45.66
-  6 paar 13  . . . . . . . . . . .  35    28     5     4    27    29    23    151   38.52
-  7 paar 8 . . . . . . . . . . . .  16    34    53    32    32    44     8    219   55.87
-  8 paar 18  . . . . . . . . . . .  18    34    15    23    43    22    35    214   54.59
-  9 paar 17  . . . . . . . . . . .  55    13   ---    24    46     3    14    155   46.13
- 10 gewijzigd paar 5 . . . . . . .   0     1    28    10   ---    52    12    103   30.65
- 11 paar 1 . . . . . . . . . . . .  47    53    10    19    16   ---    44    189   56.25
- 12 paar 9 . . . . . . . . . . . .   1     3    26    46    18    52    25    171   43.62
- 13 paar 14  . . . . . . . . . . .  18    43    19    52    38     4    42    216   55.10
- 14 paar 12  . . . . . . . . . . .  54   ---    36    36    10    18     1    155   46.13
- 15 paar 6 . . . . . . . . . . . .  37    43    22   ---    40    32    55    242   72.02
+                         spellen :  1-4   5-8  9-12  13-16 17-20 21-24 25-28     tot   score (%)
+  1 paar 15  . . . . . . . . . . .  24    35     8    37    13    25    48       190   48.47
+  2 paar 4 . . . . . . . . . . . .  31    22     2    12    19     9    33       128   32.65
+  3 paar 3 . . . . . . . . . . . .  46    32    46    51    37    11    21       244   62.24
+  4 paar 11  . . . . . . . . . . .  39    24    40    18    29    47    56       253   64.54
+  5 paar 7 . . . . . . . . . . . .   9    21    50    43    24    32     0       179   45.66
+  6 paar 13  . . . . . . . . . . .  35    28     5     4    27    29    23       151   38.52
+  7 paar 8 . . . . . . . . . . . .  16    34    53    32    32    44     8       219   55.87
+  8 paar 18  . . . . . . . . . . .  18    34    15    23    43    22    35       214   54.59
+  9 paar 17  . . . . . . . . . . .  55    13   -----  24    46     3    14       155   46.13
+ 10 gewijzigd paar 5 . . . . . . .   0     1    28    10   -----  52    12       103   30.65
+ 11 paar 1 . . . . . . . . . . . .  47    53    10    19    16   -----  44       189   56.25
+ 12 paar 9 . . . . . . . . . . . .   1     3    26    46    18    52    25       171   43.62
+ 13 paar 14  . . . . . . . . . . .  18    43    19    52    38     4    42       216   55.10
+ 14 paar 12  . . . . . . . . . . .  54   -----  36    36    10    18     1       155   46.13
+ 15 paar 6 . . . . . . . . . . . .  37    43    22   -----  40    32    55       242   72.02
  16 --> afwezig paar
- 17 paar 10  . . . . . . . . . . .   8    55    29    10    25    36   ---    163   48.51
- 18 paar 16  . . . . . . . . . . . ---    13    45    31    31    22    31    173   51.49
+ 17 paar 10  . . . . . . . . . . .   8    55    29    10    25    36   -----     163   48.51
+ 18 paar 16  . . . . . . . . . . . -----  13    45    31    31    22    31       173   51.49
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2505,25 +2505,25 @@ Totaal uitslag
 <auto-test, zitting 2>
 Totaal uitslag
 
-rang paarnaam                         Z1     Z2     totaal   gem.  A B
-   1 paar 3 . . . . . . . . . . . .  64.59  62.24   126.83  63.42  1 .
-   2 paar 15  . . . . . . . . . . .  72.77  48.47   121.24  60.62  2 .
-   3 paar 11  . . . . . . . . . . .  56.10  64.54   120.64  60.32  3 .
-   4 paar 6 . . . . . . . . . . . .  38.29  72.02   110.31  55.16  . 1
-   5 paar 8 . . . . . . . . . . . .  54.36  55.87   110.23  55.12  4 .
-   6 paar 18  . . . . . . . . . . .  51.40  54.59   105.99  53.00  5 .
-   7 paar 1 . . . . . . . . . . . .  48.76  56.25   105.01  52.51  . 2
-   8 paar 16  . . . . . . . . . . .  51.49a 51.49   102.98  51.49  . 3
-   9 paar 7 . . . . . . . . . . . .  55.97  45.66   101.63  50.82  6 .
-  10 paar 14  . . . . . . . . . . .  46.13  55.10   101.23  50.62  . 4
-  11 paar 2 . . . . . . . . . . . .  50.00  50.00a  100.00  50.00  . .
-  12 paar 4 . . . . . . . . . . . .  64.87  32.65    97.52  48.76  7 .
-  13 paar 17  . . . . . . . . . . .  48.87  46.13    95.00  47.50  . 5
-  14 paar 13  . . . . . . . . . . .  55.03  38.52    93.55  46.78  8 .
-  15 paar 9 . . . . . . . . . . . .  46.22  43.62    89.84  44.92  . 6
-  16 paar 12  . . . . . . . . . . .  43.09  46.13    89.22  44.61  . 7
-  17 gewijzigd paar 5 . . . . . . .  48.87  30.65    79.52  39.76  . 8
-  18 paar 10  . . . . . . . . . . .  30.24  48.51    78.75  39.38  . 9
+rang paarnaam                         Z1     Z2      totaal  gem.  A B
+   1 paar 3 . . . . . . . . . . . .  64.59  62.24    126.83 63.42  1 .
+   2 paar 15  . . . . . . . . . . .  72.77  48.47    121.24 60.62  2 .
+   3 paar 11  . . . . . . . . . . .  56.10  64.54    120.64 60.32  3 .
+   4 paar 6 . . . . . . . . . . . .  38.29  72.02    110.31 55.16  . 1
+   5 paar 8 . . . . . . . . . . . .  54.36  55.87    110.23 55.12  4 .
+   6 paar 18  . . . . . . . . . . .  51.40  54.59    105.99 53.00  5 .
+   7 paar 1 . . . . . . . . . . . .  48.76  56.25    105.01 52.51  . 2
+   8 paar 16  . . . . . . . . . . .  51.49a 51.49    102.98 51.49  . 3
+   9 paar 7 . . . . . . . . . . . .  55.97  45.66    101.63 50.82  6 .
+  10 paar 14  . . . . . . . . . . .  46.13  55.10    101.23 50.62  . 4
+  11 paar 2 . . . . . . . . . . . .  50.00  50.00a   100.00 50.00  . .
+  12 paar 4 . . . . . . . . . . . .  64.87  32.65     97.52 48.76  7 .
+  13 paar 17  . . . . . . . . . . .  48.87  46.13     95.00 47.50  . 5
+  14 paar 13  . . . . . . . . . . .  55.03  38.52     93.55 46.78  8 .
+  15 paar 9 . . . . . . . . . . . .  46.22  43.62     89.84 44.92  . 6
+  16 paar 12  . . . . . . . . . . .  43.09  46.13     89.22 44.61  . 7
+  17 gewijzigd paar 5 . . . . . . .  48.87  30.65     79.52 39.76  . 8
+  18 paar 10  . . . . . . . . . . .  30.24  48.51     78.75 39.38  . 9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -3270,16 +3270,16 @@ Uitslag per spel
 
 Uitslag van spel 1 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 1         
-scoreNZ NZ    OW   
-   top: 14    14   
-   210  14     0   
-   140  12     2   
-   130  10     4   
-    70   8     6   
-     0   5     9   
-  -120   2    12   
-  -160   0    14   
+spel 1
+scoreNZ  NZ    OW  
+   top:  14    14  
+    210  14     0  
+    140  12     2  
+    130  10     4  
+     70   8     6  
+      0   5     9  
+   -120   2    12  
+   -160   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2      0         A4   A7    130         A5   A3   -120       
@@ -3292,17 +3292,17 @@ Uitslag per spel
 
 Uitslag van spel 2 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 2         
-scoreNZ NZ    OW   
-   top: 14    14   
-   230  14     0   
-   140  12     2   
-   130  10     4   
-    80   8     6   
-    70   6     8   
-     0   4    10   
-  -120   2    12   
-  -160   0    14   
+spel 2
+scoreNZ  NZ    OW  
+   top:  14    14  
+    230  14     0  
+    140  12     2  
+    130  10     4  
+     80   8     6  
+     70   6     8  
+      0   4    10  
+   -120   2    12  
+   -160   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
@@ -3315,17 +3315,17 @@ Uitslag per spel
 
 Uitslag van spel 3 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 3         
-scoreNZ NZ    OW   
-   top: 14    14   
-   240  14     0   
-   140  12     2   
-   130  10     4   
-    90   8     6   
-    70   6     8   
-     0   4    10   
-  -120   2    12   
-  -160   0    14   
+spel 3
+scoreNZ  NZ    OW  
+   top:  14    14  
+    240  14     0  
+    140  12     2  
+    130  10     4  
+     90   8     6  
+     70   6     8  
+      0   4    10  
+   -120   2    12  
+   -160   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
@@ -3338,18 +3338,18 @@ Uitslag per spel
 
 Uitslag van spel 4 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 4         
-scoreNZ NZ    OW   
-   top: 14    14   
-   %80  11     0   
-   260  13     0   
-   140  11     2   
-   130   9     4   
-    80   7     6   
-     0   5     8   
-  -120   3    10   
-  -160   1    12   
-  -620   0    14   
+spel 4
+scoreNZ  NZ    OW  
+   top:  14    14  
+    %80  11     0  
+    260  13     0  
+    140  11     2  
+    130   9     4  
+     80   7     6  
+      0   5     8  
+   -120   3    10  
+   -160   1    12  
+   -620   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     80         A4   A7    130         A5   A3   -120       
@@ -3362,16 +3362,16 @@ Uitslag per spel
 
 Uitslag van spel 5 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 5         
-scoreNZ NZ    OW   
-   top: 14    14   
-   300  14     0   
-   270  12     2   
-   160  10     4   
-    90   8     6   
-  -100   5     9   
-  -140   2    12   
-  -600   0    14   
+spel 5
+scoreNZ  NZ    OW  
+   top:  14    14  
+    300  14     0  
+    270  12     2  
+    160  10     4  
+     90   8     6  
+   -100   5     9  
+   -140   2    12  
+   -600   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5   -100         A2   A8   -100         A3   A4     90       
@@ -3384,16 +3384,16 @@ Uitslag per spel
 
 Uitslag van spel 6 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 6         
-scoreNZ NZ    OW   
-   top: 14    14   
-   340  14     0   
-   160  12     2   
-   100   9     5   
-  -100   6     8   
-  -140   4    10   
-  -600   2    12   
-  -800   0    14   
+spel 6
+scoreNZ  NZ    OW  
+   top:  14    14  
+    340  14     0  
+    160  12     2  
+    100   9     5  
+   -100   6     8  
+   -140   4    10  
+   -600   2    12  
+   -800   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    100         A2   A8   -100         A3   A4    100       
@@ -3406,17 +3406,17 @@ Uitslag per spel
 
 Uitslag van spel 7 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 7         
-scoreNZ NZ    OW   
-   top: 14    14   
-   300  14     0   
-   160  12     2   
-   150  10     4   
-   110   8     6   
-  -100   6     8   
-  -140   4    10   
-  -150   2    12   
- -1000   0    14   
+spel 7
+scoreNZ  NZ    OW  
+   top:  14    14  
+    300  14     0  
+    160  12     2  
+    150  10     4  
+    110   8     6  
+   -100   6     8  
+   -140   4    10  
+   -150   2    12  
+  -1000   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    150         A2   A8   -100         A3   A4    110       
@@ -3429,18 +3429,18 @@ Uitslag per spel
 
 Uitslag van spel 8 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 8         
-scoreNZ NZ    OW   
-   top: 14    14   
-   %70  10     0   
-   %30   0    10   
-   340  13     1   
-   200  11     3   
-   160   9     5   
-   120   7     7   
-  -100   5     9   
-  -140   3    11   
- -1100   1    13   
+spel 8
+scoreNZ  NZ    OW  
+   top:  14    14  
+    %70  10     0  
+    %30   0    10  
+    340  13     1  
+    200  11     3  
+    160   9     5  
+    120   7     7  
+   -100   5     9  
+   -140   3    11  
+  -1100   1    13  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    200         A2   A8   -100         A3   A4    120       
@@ -3453,16 +3453,16 @@ Uitslag per spel
 
 Uitslag van spel 9 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 9         
-scoreNZ NZ    OW   
-   top: 14    14   
-   130  14     0   
-   100  12     2   
-    70  10     4   
-     0   8     6   
-   -50   5     9   
-  -150   2    12   
-  -180   0    14   
+spel 9
+scoreNZ  NZ    OW  
+   top:  14    14  
+    130  14     0  
+    100  12     2  
+     70  10     4  
+      0   8     6  
+    -50   5     9  
+   -150   2    12  
+   -180   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -180         A3   A1    100         A4   A8     70       
@@ -3475,16 +3475,16 @@ Uitslag per spel
 
 Uitslag van spel 10 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 10        
-scoreNZ NZ    OW   
-   top: 14    14   
-   200  14     0   
-   140  12     2   
-    90  10     4   
-     0   7     7   
-   -70   4    10   
-  -150   2    12   
-  -190   0    14   
+spel 10
+scoreNZ  NZ    OW  
+   top:  14    14  
+    200  14     0  
+    140  12     2  
+     90  10     4  
+      0   7     7  
+    -70   4    10  
+   -150   2    12  
+   -190   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -190         A3   A1    200         A4   A8     90       
@@ -3497,17 +3497,17 @@ Uitslag per spel
 
 Uitslag van spel 11 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 11        
-scoreNZ NZ    OW   
-   top: 14    14   
-   300  14     0   
-   150  12     2   
-   100  10     4   
-    90   8     6   
-     0   6     8   
-   -80   4    10   
-  -150   2    12   
-  -200   0    14   
+spel 11
+scoreNZ  NZ    OW  
+   top:  14    14  
+    300  14     0  
+    150  12     2  
+    100  10     4  
+     90   8     6  
+      0   6     8  
+    -80   4    10  
+   -150   2    12  
+   -200   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -200         A3   A1    300         A4   A8    100       
@@ -3520,18 +3520,18 @@ Uitslag per spel
 
 Uitslag van spel 12 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 12        
-scoreNZ NZ    OW   
-   top: 14    14   
-   %60   8     6   
-   %40   6     0   
-   160  12     1   
-   110  10     3   
-     0   8     5   
-   -90   6     7   
-  -150   4     9   
-  -210   2    11   
-  -630   0    13   
+spel 12
+scoreNZ  NZ    OW  
+   top:  14    14  
+    %60   8     6  
+    %40   6     0  
+    160  12     1  
+    110  10     3  
+      0   8     5  
+    -90   6     7  
+   -150   4     9  
+   -210   2    11  
+   -630   0    13  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -210         A3   A1    %40,%40     A4   A8    110       
@@ -3544,16 +3544,16 @@ Uitslag per spel
 
 Uitslag van spel 13 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 13        
-scoreNZ NZ    OW   
-   top: 14    14   
-   800  13     1   
-   600  10     4   
-   200   8     6   
-   170   6     8   
-   130   4    10   
-   110   2    12   
-  -270   0    14   
+spel 13
+scoreNZ  NZ    OW  
+   top:  14    14  
+    800  13     1  
+    600  10     4  
+    200   8     6  
+    170   6     8  
+    130   4    10  
+    110   2    12  
+   -270   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1    200         A6   A3   -270       
@@ -3566,17 +3566,17 @@ Uitslag per spel
 
 Uitslag van spel 14 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 14        
-scoreNZ NZ    OW   
-   top: 14    14   
-   800  14     0   
-   600  12     2   
-   300  10     4   
-   200   8     6   
-   180   6     8   
-   140   4    10   
-   110   2    12   
-  -280   0    14   
+spel 14
+scoreNZ  NZ    OW  
+   top:  14    14  
+    800  14     0  
+    600  12     2  
+    300  10     4  
+    200   8     6  
+    180   6     8  
+    140   4    10  
+    110   2    12  
+   -280   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1    300         A6   A3   -280       
@@ -3589,17 +3589,17 @@ Uitslag per spel
 
 Uitslag van spel 15 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 15        
-scoreNZ NZ    OW   
-   top: 14    14   
-   500  14     0   
-   300  12     2   
-   190  10     4   
-   150   8     6   
-   120   6     8   
-   110   4    10   
-  -300   2    12   
-  -500   0    14   
+spel 15
+scoreNZ  NZ    OW  
+   top:  14    14  
+    500  14     0  
+    300  12     2  
+    190  10     4  
+    150   8     6  
+    120   6     8  
+    110   4    10  
+   -300   2    12  
+   -500   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -300       
@@ -3612,17 +3612,17 @@ Uitslag per spel
 
 Uitslag van spel 16 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 16        
-scoreNZ NZ    OW   
-   top: 14    14   
-   %50   0     7   
-   300  13     1   
-   200  10     3   
-   160   8     5   
-   150   6     7   
-   110   4     9   
-  -340   2    11   
-  -500   0    13   
+spel 16
+scoreNZ  NZ    OW  
+   top:  14    14  
+    %50   0     7  
+    300  13     1  
+    200  10     3  
+    160   8     5  
+    150   6     7  
+    110   4     9  
+   -340   2    11  
+   -500   0    13  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -340       
@@ -3635,17 +3635,17 @@ Uitslag per spel
 
 Uitslag van spel 17 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 17        
-scoreNZ NZ    OW   
-   top: 14    14   
-   150  14     0   
-   100  12     2   
-  -100  10     4   
-  -110   8     6   
-  -140   6     8   
-  -150   4    10   
-  -420   2    12   
- -1200   0    14   
+spel 17
+scoreNZ  NZ    OW  
+   top:  14    14  
+    150  14     0  
+    100  12     2  
+   -100  10     4  
+   -110   8     6  
+   -140   6     8  
+   -150   4    10  
+   -420   2    12  
+  -1200   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -140         A3   A2    150         A4   A6   -110       
@@ -3658,16 +3658,16 @@ Uitslag per spel
 
 Uitslag van spel 18 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 18        
-scoreNZ NZ    OW   
-   top: 14    14   
-   300  14     0   
-   150  12     2   
-   110  10     4   
-  -110   7     7   
-  -150   4    10   
-  -420   2    12   
-  -800   0    14   
+spel 18
+scoreNZ  NZ    OW  
+   top:  14    14  
+    300  14     0  
+    150  12     2  
+    110  10     4  
+   -110   7     7  
+   -150   4    10  
+   -420   2    12  
+   -800   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -150         A3   A2    150         A4   A6   -110       
@@ -3680,17 +3680,17 @@ Uitslag per spel
 
 Uitslag van spel 19 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 19        
-scoreNZ NZ    OW   
-   top: 14    14   
-   420  14     0   
-   400  12     2   
-   170  10     4   
-   120   8     6   
-  -110   6     8   
-  -120   4    10   
-  -160   2    12   
-  -600   0    14   
+spel 19
+scoreNZ  NZ    OW  
+   top:  14    14  
+    420  14     0  
+    400  12     2  
+    170  10     4  
+    120   8     6  
+   -110   6     8  
+   -120   4    10  
+   -160   2    12  
+   -600   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -160         A3   A2    170         A4   A6   -110       
@@ -3703,16 +3703,16 @@ Uitslag per spel
 
 Uitslag van spel 20 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 20        
-scoreNZ NZ    OW   
-   top: 14    14   
-   620  14     0   
-   500  12     2   
-   130  10     4   
-  -110   8     6   
-  -120   6     8   
-  -130   4    10   
-  -170   1    13   
+spel 20
+scoreNZ  NZ    OW  
+   top:  14    14  
+    620  14     0  
+    500  12     2  
+    130  10     4  
+   -110   8     6  
+   -120   6     8  
+   -130   4    10  
+   -170   1    13  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -170         A3   A2   -170         A4   A6   -110       
@@ -3725,17 +3725,17 @@ Uitslag per spel
 
 Uitslag van spel 21 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 21        
-scoreNZ NZ    OW   
-   top: 14    14   
-   160  14     0   
-   150  12     2   
-   130  10     4   
-   120   8     6   
-   110   6     8   
-   100   4    10   
-    50   2    12   
-  -170   0    14   
+spel 21
+scoreNZ  NZ    OW  
+   top:  14    14  
+    160  14     0  
+    150  12     2  
+    130  10     4  
+    120   8     6  
+    110   6     8  
+    100   4    10  
+     50   2    12  
+   -170   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4     50         A5   A8    160       
@@ -3748,16 +3748,16 @@ Uitslag per spel
 
 Uitslag van spel 22 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 22        
-scoreNZ NZ    OW   
-   top: 14    14   
-   150  14     0   
-   130  12     2   
-   120  10     4   
-   100   7     7   
-  -120   4    10   
-  -160   2    12   
-  -170   0    14   
+spel 22
+scoreNZ  NZ    OW  
+   top:  14    14  
+    150  14     0  
+    130  12     2  
+    120  10     4  
+    100   7     7  
+   -120   4    10  
+   -160   2    12  
+   -170   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4    100         A5   A8   -160       
@@ -3770,17 +3770,17 @@ Uitslag per spel
 
 Uitslag van spel 23 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 23        
-scoreNZ NZ    OW   
-   top: 14    14   
-   150  14     0   
-   140  12     2   
-   110  10     4   
-   100   8     6   
-  -100   6     8   
-  -160   4    10   
-  -170   2    12   
-  -200   0    14   
+spel 23
+scoreNZ  NZ    OW  
+   top:  14    14  
+    150  14     0  
+    140  12     2  
+    110  10     4  
+    100   8     6  
+   -100   6     8  
+   -160   4    10  
+   -170   2    12  
+   -200   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4   -200         A5   A8   -160       
@@ -3793,14 +3793,14 @@ Uitslag per spel
 
 Uitslag van spel 24 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 24        
-scoreNZ NZ    OW   
-   top: 14    14   
-   150  12     1   
-   100   6     6   
-  -110   0    10   
-  -170   2    12   
-  -300   0    14   
+spel 24
+scoreNZ  NZ    OW  
+   top:  14    14  
+    150  12     1  
+    100   6     6  
+   -110   0    10  
+   -170   2    12  
+   -300   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4   -300         A5   A8   R150,R110  
@@ -3813,16 +3813,16 @@ Uitslag per spel
 
 Uitslag van spel 25 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 25        
-scoreNZ NZ    OW   
-   top: 14    14   
-   170  14     0   
-   150  11     3   
-   140   8     6   
-   120   6     8   
-   110   4    10   
-  -130   2    12   
-  -230   0    14   
+spel 25
+scoreNZ  NZ    OW  
+   top:  14    14  
+    170  14     0  
+    150  11     3  
+    140   8     6  
+    120   6     8  
+    110   4    10  
+   -130   2    12  
+   -230   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -230         A6   A2    110       
@@ -3835,15 +3835,15 @@ Uitslag per spel
 
 Uitslag van spel 26 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 26        
-scoreNZ NZ    OW   
-   top: 14    14   
-   170  14     0   
-   150  11     3   
-   140   8     6   
-   120   5     9   
-  -130   2    12   
-  -240   0    14   
+spel 26
+scoreNZ  NZ    OW  
+   top:  14    14  
+    170  14     0  
+    150  11     3  
+    140   8     6  
+    120   5     9  
+   -130   2    12  
+   -240   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -240         A6   A2    120       
@@ -3856,17 +3856,17 @@ Uitslag per spel
 
 Uitslag van spel 27 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 27        
-scoreNZ NZ    OW   
-   top: 14    14   
-   170  14     0   
-   160  12     2   
-   150  10     4   
-   140   8     6   
-   130   6     8   
-   120   4    10   
-  -130   2    12   
-  -250   0    14   
+spel 27
+scoreNZ  NZ    OW  
+   top:  14    14  
+    170  14     0  
+    160  12     2  
+    150  10     4  
+    140   8     6  
+    130   6     8  
+    120   4    10  
+   -130   2    12  
+   -250   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -250         A6   A2    130       
@@ -3879,16 +3879,16 @@ Uitslag per spel
 
 Uitslag van spel 28 voor '<auto-test, zitting 2>', zitting 2
 
-    spel 28        
-scoreNZ NZ    OW   
-   top: 14    14   
-   170  13     1   
-   150  10     4   
-   140   8     6   
-   120   6     8   
-    50   4    10   
-  -130   2    12   
-  -260   0    14   
+spel 28
+scoreNZ  NZ    OW  
+   top:  14    14  
+    170  13     1  
+    150  10     4  
+    140   8     6  
+    120   6     8  
+     50   4    10  
+   -130   2    12  
+   -260   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -260         A6   A2    140       
@@ -4276,99 +4276,99 @@ Frequentie staten
 uitslag van zitting 3
 
 
-    spel 1             spel 2             spel 3             spel 4         
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   210  14     0      230  14     0      240  14     0      %80  11     0   
-   140  12     2      140  12     2      140  12     2      260  13     0   
-   130  10     4      130  10     4      130  10     4      140  11     2   
-    70   8     6       80   8     6       90   8     6      130   9     4   
-     0   5     9       70   6     8       70   6     8       80   7     6   
-  -120   2    12        0   4    10        0   4    10        0   5     8   
-  -160   0    14     -120   2    12     -120   2    12     -120   3    10   
-                     -160   0    14     -160   0    14     -160   1    12   
-                                                           -620   0    14   
+spel 1             spel 2             spel 3             spel 4             
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    210  14     0      230  14     0      240  14     0      %80  11     0  
+    140  12     2      140  12     2      140  12     2      260  13     0  
+    130  10     4      130  10     4      130  10     4      140  11     2  
+     70   8     6       80   8     6       90   8     6      130   9     4  
+      0   5     9       70   6     8       70   6     8       80   7     6  
+   -120   2    12        0   4    10        0   4    10        0   5     8  
+   -160   0    14     -120   2    12     -120   2    12     -120   3    10  
+                      -160   0    14     -160   0    14     -160   1    12  
+                                                            -620   0    14  
 
 
-    spel 5             spel 6             spel 7             spel 8         
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   300  14     0      340  14     0      300  14     0      %70  10     0   
-   270  12     2      160  12     2      160  12     2      %30   0    10   
-   160  10     4      100   9     5      150  10     4      340  13     1   
-    90   8     6     -100   6     8      110   8     6      200  11     3   
-  -100   5     9     -140   4    10     -100   6     8      160   9     5   
-  -140   2    12     -600   2    12     -140   4    10      120   7     7   
-  -600   0    14     -800   0    14     -150   2    12     -100   5     9   
-                                       -1000   0    14     -140   3    11   
-                                                          -1100   1    13   
+spel 5             spel 6             spel 7             spel 8             
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    300  14     0      340  14     0      300  14     0      %70  10     0  
+    270  12     2      160  12     2      160  12     2      %30   0    10  
+    160  10     4      100   9     5      150  10     4      340  13     1  
+     90   8     6     -100   6     8      110   8     6      200  11     3  
+   -100   5     9     -140   4    10     -100   6     8      160   9     5  
+   -140   2    12     -600   2    12     -140   4    10      120   7     7  
+   -600   0    14     -800   0    14     -150   2    12     -100   5     9  
+                                        -1000   0    14     -140   3    11  
+                                                           -1100   1    13  
 
 
-    spel 9             spel 10            spel 11            spel 12        
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   130  14     0      200  14     0      300  14     0      %60   8     6   
-   100  12     2      140  12     2      150  12     2      %40   6     0   
-    70  10     4       90  10     4      100  10     4      160  12     1   
-     0   8     6        0   7     7       90   8     6      110  10     3   
-   -50   5     9      -70   4    10        0   6     8        0   8     5   
-  -150   2    12     -150   2    12      -80   4    10      -90   6     7   
-  -180   0    14     -190   0    14     -150   2    12     -150   4     9   
-                                        -200   0    14     -210   2    11   
-                                                           -630   0    13   
+spel 9             spel 10            spel 11            spel 12            
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    130  14     0      200  14     0      300  14     0      %60   8     6  
+    100  12     2      140  12     2      150  12     2      %40   6     0  
+     70  10     4       90  10     4      100  10     4      160  12     1  
+      0   8     6        0   7     7       90   8     6      110  10     3  
+    -50   5     9      -70   4    10        0   6     8        0   8     5  
+   -150   2    12     -150   2    12      -80   4    10      -90   6     7  
+   -180   0    14     -190   0    14     -150   2    12     -150   4     9  
+                                         -200   0    14     -210   2    11  
+                                                            -630   0    13  
 
 
-    spel 13            spel 14            spel 15            spel 16        
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   800  13     1      800  14     0      500  14     0      %50   0     7   
-   600  10     4      600  12     2      300  12     2      300  13     1   
-   200   8     6      300  10     4      190  10     4      200  10     3   
-   170   6     8      200   8     6      150   8     6      160   8     5   
-   130   4    10      180   6     8      120   6     8      150   6     7   
-   110   2    12      140   4    10      110   4    10      110   4     9   
-  -270   0    14      110   2    12     -300   2    12     -340   2    11   
-                     -280   0    14     -500   0    14     -500   0    13   
+spel 13            spel 14            spel 15            spel 16            
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    800  13     1      800  14     0      500  14     0      %50   0     7  
+    600  10     4      600  12     2      300  12     2      300  13     1  
+    200   8     6      300  10     4      190  10     4      200  10     3  
+    170   6     8      200   8     6      150   8     6      160   8     5  
+    130   4    10      180   6     8      120   6     8      150   6     7  
+    110   2    12      140   4    10      110   4    10      110   4     9  
+   -270   0    14      110   2    12     -300   2    12     -340   2    11  
+                      -280   0    14     -500   0    14     -500   0    13  
 
 
 
-    spel 17            spel 18            spel 19            spel 20        
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   150  14     0      300  14     0      420  14     0      620  14     0   
-   100  12     2      150  12     2      400  12     2      500  12     2   
-  -100  10     4      110  10     4      170  10     4      130  10     4   
-  -110   8     6     -110   7     7      120   8     6     -110   8     6   
-  -140   6     8     -150   4    10     -110   6     8     -120   6     8   
-  -150   4    10     -420   2    12     -120   4    10     -130   4    10   
-  -420   2    12     -800   0    14     -160   2    12     -170   1    13   
- -1200   0    14                        -600   0    14                      
+spel 17            spel 18            spel 19            spel 20            
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    150  14     0      300  14     0      420  14     0      620  14     0  
+    100  12     2      150  12     2      400  12     2      500  12     2  
+   -100  10     4      110  10     4      170  10     4      130  10     4  
+   -110   8     6     -110   7     7      120   8     6     -110   8     6  
+   -140   6     8     -150   4    10     -110   6     8     -120   6     8  
+   -150   4    10     -420   2    12     -120   4    10     -130   4    10  
+   -420   2    12     -800   0    14     -160   2    12     -170   1    13  
+  -1200   0    14                        -600   0    14                     
 
 
-    spel 21            spel 22            spel 23            spel 24        
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   160  14     0      150  14     0      150  14     0      150  12     1   
-   150  12     2      130  12     2      140  12     2      100   6     6   
-   130  10     4      120  10     4      110  10     4     -110   0    10   
-   120   8     6      100   7     7      100   8     6     -170   2    12   
-   110   6     8     -120   4    10     -100   6     8     -300   0    14   
-   100   4    10     -160   2    12     -160   4    10                      
-    50   2    12     -170   0    14     -170   2    12                      
-  -170   0    14                        -200   0    14                      
+spel 21            spel 22            spel 23            spel 24            
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    160  14     0      150  14     0      150  14     0      150  12     1  
+    150  12     2      130  12     2      140  12     2      100   6     6  
+    130  10     4      120  10     4      110  10     4     -110   0    10  
+    120   8     6      100   7     7      100   8     6     -170   2    12  
+    110   6     8     -120   4    10     -100   6     8     -300   0    14  
+    100   4    10     -160   2    12     -160   4    10                     
+     50   2    12     -170   0    14     -170   2    12                     
+   -170   0    14                        -200   0    14                     
 
 
-    spel 25            spel 26            spel 27            spel 28        
-scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   scoreNZ NZ    OW   
-   top: 14    14      top: 14    14      top: 14    14      top: 14    14   
-   170  14     0      170  14     0      170  14     0      170  13     1   
-   150  11     3      150  11     3      160  12     2      150  10     4   
-   140   8     6      140   8     6      150  10     4      140   8     6   
-   120   6     8      120   5     9      140   8     6      120   6     8   
-   110   4    10     -130   2    12      130   6     8       50   4    10   
-  -130   2    12     -240   0    14      120   4    10     -130   2    12   
-  -230   0    14                        -130   2    12     -260   0    14   
-                                        -250   0    14                      
+spel 25            spel 26            spel 27            spel 28            
+scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  scoreNZ  NZ    OW  
+   top:  14    14     top:  14    14     top:  14    14     top:  14    14  
+    170  14     0      170  14     0      170  14     0      170  13     1  
+    150  11     3      150  11     3      160  12     2      150  10     4  
+    140   8     6      140   8     6      150  10     4      140   8     6  
+    120   6     8      120   5     9      140   8     6      120   6     8  
+    110   4    10     -130   2    12      130   6     8       50   4    10  
+   -130   2    12     -240   0    14      120   4    10     -130   2    12  
+   -230   0    14                        -130   2    12     -260   0    14  
+                                         -250   0    14                     
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4376,25 +4376,25 @@ Groep uitslag
 
 Groep-uitslag van wedstrijd '<auto-test, zitting 3>', zitting 3
 
-                         spellen : 1-4   5-8   9-12 13-16 17-20 21-24 25-28   tot   score(%)
-  1 paar 3 . . . . . . . . . . . .  24    35     8    37    13    25    48    190   48.47
-  2 paar 15  . . . . . . . . . . .  31    22     2    12    19     9    33    128   32.65
-  3 paar 11  . . . . . . . . . . .  46    32    46    51    37    11    21    244   62.24
-  4 paar 6 . . . . . . . . . . . .  39    24    40    18    29    47    56    253   64.54
-  5 paar 8 . . . . . . . . . . . .   9    21    50    43    24    32     0    179   45.66
-  6 paar 18  . . . . . . . . . . .  35    28     5     4    27    29    23    151   38.52
-  7 paar 1 . . . . . . . . . . . .  16    34    53    32    32    44     8    219   55.87
-  8 paar 16  . . . . . . . . . . .  18    34    15    23    43    22    35    214   54.59
-  9 paar 7 . . . . . . . . . . . .  55    13   ---    24    46     3    14    155   46.13
- 10 paar 14  . . . . . . . . . . .   0     1    28    10   ---    52    12    103   30.65
- 11 paar 2 . . . . . . . . . . . .  47    53    10    19    16   ---    44    189   56.25
- 12 paar 4 . . . . . . . . . . . .   1     3    26    46    18    52    25    171   43.62
- 13 paar 17  . . . . . . . . . . .  18    43    19    52    38     4    42    216   55.10
- 14 paar 13  . . . . . . . . . . .  54   ---    36    36    10    18     1    155   46.13
- 15 paar 9 . . . . . . . . . . . .  37    43    22   ---    40    32    55    242   72.02
+                         spellen :  1-4   5-8  9-12  13-16 17-20 21-24 25-28     tot   score (%)
+  1 paar 3 . . . . . . . . . . . .  24    35     8    37    13    25    48       190   48.47
+  2 paar 15  . . . . . . . . . . .  31    22     2    12    19     9    33       128   32.65
+  3 paar 11  . . . . . . . . . . .  46    32    46    51    37    11    21       244   62.24
+  4 paar 6 . . . . . . . . . . . .  39    24    40    18    29    47    56       253   64.54
+  5 paar 8 . . . . . . . . . . . .   9    21    50    43    24    32     0       179   45.66
+  6 paar 18  . . . . . . . . . . .  35    28     5     4    27    29    23       151   38.52
+  7 paar 1 . . . . . . . . . . . .  16    34    53    32    32    44     8       219   55.87
+  8 paar 16  . . . . . . . . . . .  18    34    15    23    43    22    35       214   54.59
+  9 paar 7 . . . . . . . . . . . .  55    13   -----  24    46     3    14       155   46.13
+ 10 paar 14  . . . . . . . . . . .   0     1    28    10   -----  52    12       103   30.65
+ 11 paar 2 . . . . . . . . . . . .  47    53    10    19    16   -----  44       189   56.25
+ 12 paar 4 . . . . . . . . . . . .   1     3    26    46    18    52    25       171   43.62
+ 13 paar 17  . . . . . . . . . . .  18    43    19    52    38     4    42       216   55.10
+ 14 paar 13  . . . . . . . . . . .  54   -----  36    36    10    18     1       155   46.13
+ 15 paar 9 . . . . . . . . . . . .  37    43    22   -----  40    32    55       242   72.02
  16 --> afwezig paar
- 17 gewijzigd paar 5 . . . . . . .   8    55    29    10    25    36   ---    163   48.51
- 18 paar 10  . . . . . . . . . . . ---    13    45    31    31    22    31    173   51.49
+ 17 gewijzigd paar 5 . . . . . . .   8    55    29    10    25    36   -----     163   48.51
+ 18 paar 10  . . . . . . . . . . . -----  13    45    31    31    22    31       173   51.49
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4402,25 +4402,25 @@ Totaal uitslag
 <auto-test, zitting 3>
 Totaal uitslag
 
-rang paarnaam                         Z1     Z2     Z3     totaal   gem.  A B
-   1 paar 11  . . . . . . . . . . .  56.10  64.54  62.24   182.88  60.96  1 .
-   2 paar 3 . . . . . . . . . . . .  64.59  62.24  48.47   175.30  58.43  2 .
-   3 paar 6 . . . . . . . . . . . .  38.29  72.02  64.54   174.85  58.28  3 .
-   4 paar 9 . . . . . . . . . . . .  46.22  43.62  72.02   161.86  53.95  . 1
-   5 paar 1 . . . . . . . . . . . .  48.76  56.25  55.87   160.88  53.63  4 .
-   6 paar 2 . . . . . . . . . . . .  50.00  52.50a 56.25   158.75  52.92  . 2
-   7 paar 16  . . . . . . . . . . .  52.50a 51.49  54.59   158.58  52.86  5 .
-   8 paar 8 . . . . . . . . . . . .  54.36  55.87  45.66   155.89  51.96  6 .
-   9 paar 15  . . . . . . . . . . .  72.77  48.47  32.65   153.89  51.30  7 .
-  10 paar 17  . . . . . . . . . . .  48.87  46.13  55.10   150.10  50.03  . 3
-  11 paar 7 . . . . . . . . . . . .  55.97  45.66  46.13   147.76  49.25  . 4
-  12 paar 18  . . . . . . . . . . .  51.40  54.59  38.52   144.51  48.17  8 .
-  13 paar 4 . . . . . . . . . . . .  64.87  32.65  43.62   141.14  47.05  . 5
-  14 paar 13  . . . . . . . . . . .  55.03  38.52  46.13   139.68  46.56  . 6
-  15 paar 12  . . . . . . . . . . .  43.09  46.13  44.61a  133.83  44.61  . .
-  16 paar 14  . . . . . . . . . . .  46.13  55.10  30.65   131.88  43.96  . 7
-  17 paar 10  . . . . . . . . . . .  30.24  48.51  51.49   130.24  43.41  . 8
-  18 gewijzigd paar 5 . . . . . . .  48.87  30.65  48.51   128.03  42.68  . 9
+rang paarnaam                         Z1     Z2     Z3      totaal  gem.  A B
+   1 paar 11  . . . . . . . . . . .  56.10  64.54  62.24    182.88 60.96  1 .
+   2 paar 3 . . . . . . . . . . . .  64.59  62.24  48.47    175.30 58.43  2 .
+   3 paar 6 . . . . . . . . . . . .  38.29  72.02  64.54    174.85 58.28  3 .
+   4 paar 9 . . . . . . . . . . . .  46.22  43.62  72.02    161.86 53.95  . 1
+   5 paar 1 . . . . . . . . . . . .  48.76  56.25  55.87    160.88 53.63  4 .
+   6 paar 2 . . . . . . . . . . . .  50.00  52.50a 56.25    158.75 52.92  . 2
+   7 paar 16  . . . . . . . . . . .  52.50a 51.49  54.59    158.58 52.86  5 .
+   8 paar 8 . . . . . . . . . . . .  54.36  55.87  45.66    155.89 51.96  6 .
+   9 paar 15  . . . . . . . . . . .  72.77  48.47  32.65    153.89 51.30  7 .
+  10 paar 17  . . . . . . . . . . .  48.87  46.13  55.10    150.10 50.03  . 3
+  11 paar 7 . . . . . . . . . . . .  55.97  45.66  46.13    147.76 49.25  . 4
+  12 paar 18  . . . . . . . . . . .  51.40  54.59  38.52    144.51 48.17  8 .
+  13 paar 4 . . . . . . . . . . . .  64.87  32.65  43.62    141.14 47.05  . 5
+  14 paar 13  . . . . . . . . . . .  55.03  38.52  46.13    139.68 46.56  . 6
+  15 paar 12  . . . . . . . . . . .  43.09  46.13  44.61a   133.83 44.61  . .
+  16 paar 14  . . . . . . . . . . .  46.13  55.10  30.65    131.88 43.96  . 7
+  17 paar 10  . . . . . . . . . . .  30.24  48.51  51.49    130.24 43.41  . 8
+  18 gewijzigd paar 5 . . . . . . .  48.87  30.65  48.51    128.03 42.68  . 9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -5167,16 +5167,16 @@ Uitslag per spel
 
 Uitslag van spel 1 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 1         
-scoreNZ NZ    OW   
-   top: 14    14   
-   210  14     0   
-   140  12     2   
-   130  10     4   
-    70   8     6   
-     0   5     9   
-  -120   2    12   
-  -160   0    14   
+spel 1
+scoreNZ  NZ    OW  
+   top:  14    14  
+    210  14     0  
+    140  12     2  
+    130  10     4  
+     70   8     6  
+      0   5     9  
+   -120   2    12  
+   -160   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2      0         A4   A7    130         A5   A3   -120       
@@ -5189,17 +5189,17 @@ Uitslag per spel
 
 Uitslag van spel 2 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 2         
-scoreNZ NZ    OW   
-   top: 14    14   
-   230  14     0   
-   140  12     2   
-   130  10     4   
-    80   8     6   
-    70   6     8   
-     0   4    10   
-  -120   2    12   
-  -160   0    14   
+spel 2
+scoreNZ  NZ    OW  
+   top:  14    14  
+    230  14     0  
+    140  12     2  
+    130  10     4  
+     80   8     6  
+     70   6     8  
+      0   4    10  
+   -120   2    12  
+   -160   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
@@ -5212,17 +5212,17 @@ Uitslag per spel
 
 Uitslag van spel 3 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 3         
-scoreNZ NZ    OW   
-   top: 14    14   
-   240  14     0   
-   140  12     2   
-   130  10     4   
-    90   8     6   
-    70   6     8   
-     0   4    10   
-  -120   2    12   
-  -160   0    14   
+spel 3
+scoreNZ  NZ    OW  
+   top:  14    14  
+    240  14     0  
+    140  12     2  
+    130  10     4  
+     90   8     6  
+     70   6     8  
+      0   4    10  
+   -120   2    12  
+   -160   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     70         A4   A7    130         A5   A3   -120       
@@ -5235,18 +5235,18 @@ Uitslag per spel
 
 Uitslag van spel 4 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 4         
-scoreNZ NZ    OW   
-   top: 14    14   
-   %80  11     0   
-   260  13     0   
-   140  11     2   
-   130   9     4   
-    80   7     6   
-     0   5     8   
-  -120   3    10   
-  -160   1    12   
-  -620   0    14   
+spel 4
+scoreNZ  NZ    OW  
+   top:  14    14  
+    %80  11     0  
+    260  13     0  
+    140  11     2  
+    130   9     4  
+     80   7     6  
+      0   5     8  
+   -120   3    10  
+   -160   1    12  
+   -620   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A2     80         A4   A7    130         A5   A3   -120       
@@ -5259,16 +5259,16 @@ Uitslag per spel
 
 Uitslag van spel 5 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 5         
-scoreNZ NZ    OW   
-   top: 14    14   
-   300  14     0   
-   270  12     2   
-   160  10     4   
-    90   8     6   
-  -100   5     9   
-  -140   2    12   
-  -600   0    14   
+spel 5
+scoreNZ  NZ    OW  
+   top:  14    14  
+    300  14     0  
+    270  12     2  
+    160  10     4  
+     90   8     6  
+   -100   5     9  
+   -140   2    12  
+   -600   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5   -100         A2   A8   -100         A3   A4     90       
@@ -5281,16 +5281,16 @@ Uitslag per spel
 
 Uitslag van spel 6 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 6         
-scoreNZ NZ    OW   
-   top: 14    14   
-   340  14     0   
-   160  12     2   
-   100   9     5   
-  -100   6     8   
-  -140   4    10   
-  -600   2    12   
-  -800   0    14   
+spel 6
+scoreNZ  NZ    OW  
+   top:  14    14  
+    340  14     0  
+    160  12     2  
+    100   9     5  
+   -100   6     8  
+   -140   4    10  
+   -600   2    12  
+   -800   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    100         A2   A8   -100         A3   A4    100       
@@ -5303,17 +5303,17 @@ Uitslag per spel
 
 Uitslag van spel 7 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 7         
-scoreNZ NZ    OW   
-   top: 14    14   
-   300  14     0   
-   160  12     2   
-   150  10     4   
-   110   8     6   
-  -100   6     8   
-  -140   4    10   
-  -150   2    12   
- -1000   0    14   
+spel 7
+scoreNZ  NZ    OW  
+   top:  14    14  
+    300  14     0  
+    160  12     2  
+    150  10     4  
+    110   8     6  
+   -100   6     8  
+   -140   4    10  
+   -150   2    12  
+  -1000   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    150         A2   A8   -100         A3   A4    110       
@@ -5326,18 +5326,18 @@ Uitslag per spel
 
 Uitslag van spel 8 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 8         
-scoreNZ NZ    OW   
-   top: 14    14   
-   %70  10     0   
-   %30   0    10   
-   340  13     1   
-   200  11     3   
-   160   9     5   
-   120   7     7   
-  -100   5     9   
-  -140   3    11   
- -1100   1    13   
+spel 8
+scoreNZ  NZ    OW  
+   top:  14    14  
+    %70  10     0  
+    %30   0    10  
+    340  13     1  
+    200  11     3  
+    160   9     5  
+    120   7     7  
+   -100   5     9  
+   -140   3    11  
+  -1100   1    13  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A5    200         A2   A8   -100         A3   A4    120       
@@ -5350,16 +5350,16 @@ Uitslag per spel
 
 Uitslag van spel 9 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 9         
-scoreNZ NZ    OW   
-   top: 14    14   
-   130  14     0   
-   100  12     2   
-    70  10     4   
-     0   8     6   
-   -50   5     9   
-  -150   2    12   
-  -180   0    14   
+spel 9
+scoreNZ  NZ    OW  
+   top:  14    14  
+    130  14     0  
+    100  12     2  
+     70  10     4  
+      0   8     6  
+    -50   5     9  
+   -150   2    12  
+   -180   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -180         A3   A1    100         A4   A8     70       
@@ -5372,16 +5372,16 @@ Uitslag per spel
 
 Uitslag van spel 10 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 10        
-scoreNZ NZ    OW   
-   top: 14    14   
-   200  14     0   
-   140  12     2   
-    90  10     4   
-     0   7     7   
-   -70   4    10   
-  -150   2    12   
-  -190   0    14   
+spel 10
+scoreNZ  NZ    OW  
+   top:  14    14  
+    200  14     0  
+    140  12     2  
+     90  10     4  
+      0   7     7  
+    -70   4    10  
+   -150   2    12  
+   -190   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -190         A3   A1    200         A4   A8     90       
@@ -5394,17 +5394,17 @@ Uitslag per spel
 
 Uitslag van spel 11 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 11        
-scoreNZ NZ    OW   
-   top: 14    14   
-   300  14     0   
-   150  12     2   
-   100  10     4   
-    90   8     6   
-     0   6     8   
-   -80   4    10   
-  -150   2    12   
-  -200   0    14   
+spel 11
+scoreNZ  NZ    OW  
+   top:  14    14  
+    300  14     0  
+    150  12     2  
+    100  10     4  
+     90   8     6  
+      0   6     8  
+    -80   4    10  
+   -150   2    12  
+   -200   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -200         A3   A1    300         A4   A8    100       
@@ -5417,18 +5417,18 @@ Uitslag per spel
 
 Uitslag van spel 12 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 12        
-scoreNZ NZ    OW   
-   top: 14    14   
-   %60   8     6   
-   %40   6     0   
-   160  12     1   
-   110  10     3   
-     0   8     5   
-   -90   6     7   
-  -150   4     9   
-  -210   2    11   
-  -630   0    13   
+spel 12
+scoreNZ  NZ    OW  
+   top:  14    14  
+    %60   8     6  
+    %40   6     0  
+    160  12     1  
+    110  10     3  
+      0   8     5  
+    -90   6     7  
+   -150   4     9  
+   -210   2    11  
+   -630   0    13  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A7   -210         A3   A1    %40,%40     A4   A8    110       
@@ -5441,16 +5441,16 @@ Uitslag per spel
 
 Uitslag van spel 13 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 13        
-scoreNZ NZ    OW   
-   top: 14    14   
-   800  13     1   
-   600  10     4   
-   200   8     6   
-   170   6     8   
-   130   4    10   
-   110   2    12   
-  -270   0    14   
+spel 13
+scoreNZ  NZ    OW  
+   top:  14    14  
+    800  13     1  
+    600  10     4  
+    200   8     6  
+    170   6     8  
+    130   4    10  
+    110   2    12  
+   -270   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1    200         A6   A3   -270       
@@ -5463,17 +5463,17 @@ Uitslag per spel
 
 Uitslag van spel 14 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 14        
-scoreNZ NZ    OW   
-   top: 14    14   
-   800  14     0   
-   600  12     2   
-   300  10     4   
-   200   8     6   
-   180   6     8   
-   140   4    10   
-   110   2    12   
-  -280   0    14   
+spel 14
+scoreNZ  NZ    OW  
+   top:  14    14  
+    800  14     0  
+    600  12     2  
+    300  10     4  
+    200   8     6  
+    180   6     8  
+    140   4    10  
+    110   2    12  
+   -280   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1    300         A6   A3   -280       
@@ -5486,17 +5486,17 @@ Uitslag per spel
 
 Uitslag van spel 15 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 15        
-scoreNZ NZ    OW   
-   top: 14    14   
-   500  14     0   
-   300  12     2   
-   190  10     4   
-   150   8     6   
-   120   6     8   
-   110   4    10   
-  -300   2    12   
-  -500   0    14   
+spel 15
+scoreNZ  NZ    OW  
+   top:  14    14  
+    500  14     0  
+    300  12     2  
+    190  10     4  
+    150   8     6  
+    120   6     8  
+    110   4    10  
+   -300   2    12  
+   -500   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -300       
@@ -5509,17 +5509,17 @@ Uitslag per spel
 
 Uitslag van spel 16 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 16        
-scoreNZ NZ    OW   
-   top: 14    14   
-   %50   0     7   
-   300  13     1   
-   200  10     3   
-   160   8     5   
-   150   6     7   
-   110   4     9   
-  -340   2    11   
-  -500   0    13   
+spel 16
+scoreNZ  NZ    OW  
+   top:  14    14  
+    %50   0     7  
+    300  13     1  
+    200  10     3  
+    160   8     5  
+    150   6     7  
+    110   4     9  
+   -340   2    11  
+   -500   0    13  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A2   A5    110         A4   A1   -500         A6   A3   -340       
@@ -5532,17 +5532,17 @@ Uitslag per spel
 
 Uitslag van spel 17 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 17        
-scoreNZ NZ    OW   
-   top: 14    14   
-   150  14     0   
-   100  12     2   
-  -100  10     4   
-  -110   8     6   
-  -140   6     8   
-  -150   4    10   
-  -420   2    12   
- -1200   0    14   
+spel 17
+scoreNZ  NZ    OW  
+   top:  14    14  
+    150  14     0  
+    100  12     2  
+   -100  10     4  
+   -110   8     6  
+   -140   6     8  
+   -150   4    10  
+   -420   2    12  
+  -1200   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -140         A3   A2    150         A4   A6   -110       
@@ -5555,16 +5555,16 @@ Uitslag per spel
 
 Uitslag van spel 18 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 18        
-scoreNZ NZ    OW   
-   top: 14    14   
-   300  14     0   
-   150  12     2   
-   110  10     4   
-  -110   7     7   
-  -150   4    10   
-  -420   2    12   
-  -800   0    14   
+spel 18
+scoreNZ  NZ    OW  
+   top:  14    14  
+    300  14     0  
+    150  12     2  
+    110  10     4  
+   -110   7     7  
+   -150   4    10  
+   -420   2    12  
+   -800   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -150         A3   A2    150         A4   A6   -110       
@@ -5577,17 +5577,17 @@ Uitslag per spel
 
 Uitslag van spel 19 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 19        
-scoreNZ NZ    OW   
-   top: 14    14   
-   420  14     0   
-   400  12     2   
-   170  10     4   
-   120   8     6   
-  -110   6     8   
-  -120   4    10   
-  -160   2    12   
-  -600   0    14   
+spel 19
+scoreNZ  NZ    OW  
+   top:  14    14  
+    420  14     0  
+    400  12     2  
+    170  10     4  
+    120   8     6  
+   -110   6     8  
+   -120   4    10  
+   -160   2    12  
+   -600   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -160         A3   A2    170         A4   A6   -110       
@@ -5600,16 +5600,16 @@ Uitslag per spel
 
 Uitslag van spel 20 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 20        
-scoreNZ NZ    OW   
-   top: 14    14   
-   620  14     0   
-   500  12     2   
-   130  10     4   
-  -110   8     6   
-  -120   6     8   
-  -130   4    10   
-  -170   1    13   
+spel 20
+scoreNZ  NZ    OW  
+   top:  14    14  
+    620  14     0  
+    500  12     2  
+    130  10     4  
+   -110   8     6  
+   -120   6     8  
+   -130   4    10  
+   -170   1    13  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A8   -170         A3   A2   -170         A4   A6   -110       
@@ -5622,17 +5622,17 @@ Uitslag per spel
 
 Uitslag van spel 21 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 21        
-scoreNZ NZ    OW   
-   top: 14    14   
-   160  14     0   
-   150  12     2   
-   130  10     4   
-   120   8     6   
-   110   6     8   
-   100   4    10   
-    50   2    12   
-  -170   0    14   
+spel 21
+scoreNZ  NZ    OW  
+   top:  14    14  
+    160  14     0  
+    150  12     2  
+    130  10     4  
+    120   8     6  
+    110   6     8  
+    100   4    10  
+     50   2    12  
+   -170   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4     50         A5   A8    160       
@@ -5645,16 +5645,16 @@ Uitslag per spel
 
 Uitslag van spel 22 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 22        
-scoreNZ NZ    OW   
-   top: 14    14   
-   150  14     0   
-   130  12     2   
-   120  10     4   
-   100   7     7   
-  -120   4    10   
-  -160   2    12   
-  -170   0    14   
+spel 22
+scoreNZ  NZ    OW  
+   top:  14    14  
+    150  14     0  
+    130  12     2  
+    120  10     4  
+    100   7     7  
+   -120   4    10  
+   -160   2    12  
+   -170   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4    100         A5   A8   -160       
@@ -5667,17 +5667,17 @@ Uitslag per spel
 
 Uitslag van spel 23 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 23        
-scoreNZ NZ    OW   
-   top: 14    14   
-   150  14     0   
-   140  12     2   
-   110  10     4   
-   100   8     6   
-  -100   6     8   
-  -160   4    10   
-  -170   2    12   
-  -200   0    14   
+spel 23
+scoreNZ  NZ    OW  
+   top:  14    14  
+    150  14     0  
+    140  12     2  
+    110  10     4  
+    100   8     6  
+   -100   6     8  
+   -160   4    10  
+   -170   2    12  
+   -200   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4   -200         A5   A8   -160       
@@ -5690,14 +5690,14 @@ Uitslag per spel
 
 Uitslag van spel 24 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 24        
-scoreNZ NZ    OW   
-   top: 14    14   
-   150  12     1   
-   100   6     6   
-  -110   0    10   
-  -170   2    12   
-  -300   0    14   
+spel 24
+scoreNZ  NZ    OW  
+   top:  14    14  
+    150  12     1  
+    100   6     6  
+   -110   0    10  
+   -170   2    12  
+   -300   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A1   A6    100         A2   A4   -300         A5   A8   R150,R110  
@@ -5710,16 +5710,16 @@ Uitslag per spel
 
 Uitslag van spel 25 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 25        
-scoreNZ NZ    OW   
-   top: 14    14   
-   170  14     0   
-   150  11     3   
-   140   8     6   
-   120   6     8   
-   110   4    10   
-  -130   2    12   
-  -230   0    14   
+spel 25
+scoreNZ  NZ    OW  
+   top:  14    14  
+    170  14     0  
+    150  11     3  
+    140   8     6  
+    120   6     8  
+    110   4    10  
+   -130   2    12  
+   -230   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -230         A6   A2    110       
@@ -5732,15 +5732,15 @@ Uitslag per spel
 
 Uitslag van spel 26 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 26        
-scoreNZ NZ    OW   
-   top: 14    14   
-   170  14     0   
-   150  11     3   
-   140   8     6   
-   120   5     9   
-  -130   2    12   
-  -240   0    14   
+spel 26
+scoreNZ  NZ    OW  
+   top:  14    14  
+    170  14     0  
+    150  11     3  
+    140   8     6  
+    120   5     9  
+   -130   2    12  
+   -240   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -240         A6   A2    120       
@@ -5753,17 +5753,17 @@ Uitslag per spel
 
 Uitslag van spel 27 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 27        
-scoreNZ NZ    OW   
-   top: 14    14   
-   170  14     0   
-   160  12     2   
-   150  10     4   
-   140   8     6   
-   130   6     8   
-   120   4    10   
-  -130   2    12   
-  -250   0    14   
+spel 27
+scoreNZ  NZ    OW  
+   top:  14    14  
+    170  14     0  
+    160  12     2  
+    150  10     4  
+    140   8     6  
+    130   6     8  
+    120   4    10  
+   -130   2    12  
+   -250   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -250         A6   A2    130       
@@ -5776,16 +5776,16 @@ Uitslag per spel
 
 Uitslag van spel 28 voor '<auto-test, zitting 3>', zitting 3
 
-    spel 28        
-scoreNZ NZ    OW   
-   top: 14    14   
-   170  13     1   
-   150  10     4   
-   140   8     6   
-   120   6     8   
-    50   4    10   
-  -130   2    12   
-  -260   0    14   
+spel 28
+scoreNZ  NZ    OW  
+   top:  14    14  
+    170  13     1  
+    150  10     4  
+    140   8     6  
+    120   6     8  
+     50   4    10  
+   -130   2    12  
+   -260   0    14  
 
   NZ   OW  SCORE         NZ   OW  SCORE         NZ   OW  SCORE       
   A3   A8    120         A5   A4   -260         A6   A2    140       

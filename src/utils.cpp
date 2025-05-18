@@ -76,6 +76,11 @@ wxString I2String(int x)
     return FMT("%d", x);
 }   // I2String()
 
+wxString L2String(long x)
+{
+    return FMT("%ld", x);
+}   // L2String()
+
 long RoundLong(long a,int b)    // rounding when deviding long by int
 {
     if (b == 0)

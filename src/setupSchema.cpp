@@ -16,65 +16,63 @@
 #include "score.h"
 #include "names.h"
 
-//#define MY_SIZE_STATIC_TEXT wxDefaultPosition, {150,-1}
-#define MY_SIZE_STATIC_TEXT wxDefaultPosition, {16*GetCharWidth(),-1}
 #define CHOICE_SCHEMA   "ChoiceSchema"
 #define CHOICE_GROUP    "ChoiceGroup"
 
 SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, a_pageId)
 {
 //rounds and nr of games for this match: 2*wxStaticText+wxTextCtrl
-    auto nrOfRounds = new wxStaticText(this, wxID_ANY, _("Rounds:"), MY_SIZE_STATIC_TEXT);
-    m_pTxtCtrlNrOfRounds = new MyTextCtrl  (this, wxID_ANY, "Rounds",MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
+    auto nrOfRounds      = new wxStaticText(this, wxID_ANY, _("Rounds:"));
+    m_pTxtCtrlNrOfRounds = new MyTextCtrl  (this, wxID_ANY, "Rounds", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
     m_pTxtCtrlNrOfRounds->SetToolTip(_("Number of rounds in this session"));
     m_pTxtCtrlNrOfRounds->SetMinMax(1, schema::GetMaxRound());
     m_pTxtCtrlNrOfRounds->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusRoundsSetSize, this);
     m_pTxtCtrlNrOfRounds->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterRoundsSetSize,     this);
 
-    auto nrOfGames = new wxStaticText(this, wxID_ANY, _("Games:  "));
+    auto nrOfGames      = new wxStaticText(this, wxID_ANY, "    " + _("Games:"));
     m_pTxtCtrlNrOfGames = new wxTextCtrl  (this, wxID_ANY, "NrOfGames", MY_SIZE_TXTCTRL_NUM(3), wxTE_READONLY);
     m_pTxtCtrlNrOfGames->SetToolTip(FMT(_("Number of games to play in this session (max=%u)"),cfg::MAX_GAMES));
 
-    auto firstGame = new wxStaticText(this, wxID_ANY, _("First game:  "));
+    auto firstGame      = new wxStaticText(this, wxID_ANY, "    " + _("First game:"));
     m_pTxtCtrlFirstGame = new MyTextCtrl(this, wxID_ANY, "FirstGame", MY_SIZE_TXTCTRL_NUM(2));
     m_pTxtCtrlFirstGame->SetToolTip(_("Number of the first game (1, or f.e. 17 for session 2)"));
     m_pTxtCtrlFirstGame->SetMinMax(1, cfg::MAX_GAMES);
     m_pTxtCtrlFirstGame->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusRoundsSetSize, this);
     m_pTxtCtrlFirstGame->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterRoundsSetSize,     this);
 
-    wxBoxSizer*     nrOfGamesSizer = new wxBoxSizer  (wxHORIZONTAL);
-    nrOfGamesSizer->Add(nrOfRounds          ,0, wxALIGN_CENTER_VERTICAL);
-    nrOfGamesSizer->Add(m_pTxtCtrlNrOfRounds,0);    nrOfGamesSizer->AddSpacer( 30 );
-    nrOfGamesSizer->Add(nrOfGames           ,0, wxALIGN_CENTER_VERTICAL);
-    nrOfGamesSizer->Add(m_pTxtCtrlNrOfGames ,0);    nrOfGamesSizer->AddSpacer( 30 );
-    nrOfGamesSizer->Add(firstGame           ,0, wxALIGN_CENTER_VERTICAL);
-    nrOfGamesSizer->Add(m_pTxtCtrlFirstGame ,0);
-
+    wxFlexGridSizer* fgs = new wxFlexGridSizer(3 /*rows*/, 6 /*columns*/, 20 /*v-gap*/, 10 /*h-gap*/);
+    // row 1
+    fgs->Add(nrOfRounds          , 0, wxALIGN_CENTER_VERTICAL);
+    fgs->Add(m_pTxtCtrlNrOfRounds, 0, wxALIGN_CENTER_VERTICAL);
+    fgs->Add(nrOfGames           , 0, wxALIGN_CENTER_VERTICAL);
+    fgs->Add(m_pTxtCtrlNrOfGames , 0, wxALIGN_CENTER_VERTICAL);
+    fgs->Add(firstGame           , 0, wxALIGN_CENTER_VERTICAL);
+    fgs->Add(m_pTxtCtrlFirstGame , 0, wxALIGN_CENTER_VERTICAL);
 
 //nr of games per table = setSize:  wxStaticText + wxTextCtrl
-    auto setSize = new wxStaticText(this, wxID_ANY, _("Games per table:"), MY_SIZE_STATIC_TEXT);
+    auto setSize = new wxStaticText(this, wxID_ANY, _("Games per table:"));
     m_pTxtCtrlSetSize = new MyTextCtrl(this, wxID_ANY, "GamesPerTable", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
     m_pTxtCtrlSetSize->SetToolTip(_("Number of games per table"));
     m_pTxtCtrlSetSize->SetMinMax(1, cfg::MAX_GAMES);
 
     m_pTxtCtrlSetSize->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusRoundsSetSize, this);
     m_pTxtCtrlSetSize->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterRoundsSetSize,     this);
-
-    wxBoxSizer* SetSizeSizer = new wxBoxSizer(wxHORIZONTAL);
-    SetSizeSizer->Add(setSize          , 0, wxALIGN_CENTER_VERTICAL);
-    SetSizeSizer->Add(m_pTxtCtrlSetSize, 0);
+    #define Dummy new wxStaticText(this, wxID_ANY,"")   /* a dummy entry for the flex grid sizer*/
+    // row 2
+    fgs->Add(setSize          , 0, wxALIGN_CENTER_VERTICAL);
+    fgs->Add(m_pTxtCtrlSetSize, 0, wxALIGN_CENTER_VERTICAL);
+    fgs->Add(Dummy); fgs->Add(Dummy); fgs->Add(Dummy); fgs->Add(Dummy); // fill flexsizer
 
 //nr of groups:  wxStaticText + wxTextCtrl
-    auto nrOfGroups = new wxStaticText(this, wxID_ANY, _("Groups: "), MY_SIZE_STATIC_TEXT);
+    auto nrOfGroups      = new wxStaticText(this, wxID_ANY, _("Groups:"));
     m_pTxtCtrlNrOfGroups = new MyTextCtrl(this, wxID_ANY,"Groups", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
     m_pTxtCtrlNrOfGroups->SetToolTip(_("Number of groups that play the same games"));
     m_pTxtCtrlNrOfGroups->SetMinMax(1, cfg::MAX_GROUPS);
     m_pTxtCtrlNrOfGroups->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusNrOfGroups, this);
     m_pTxtCtrlNrOfGroups->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterNrOfGroups    , this);
-
-    wxBoxSizer* nrOfGroupsSizer = new wxBoxSizer(wxHORIZONTAL);
-    nrOfGroupsSizer->Add(nrOfGroups          , 0, wxALIGN_CENTER_VERTICAL);
-    nrOfGroupsSizer->Add(m_pTxtCtrlNrOfGroups, 0);
+    // row 3
+    fgs->Add(nrOfGroups          , 0, wxALIGN_CENTER_VERTICAL);
+    fgs->Add(m_pTxtCtrlNrOfGroups, 0, wxALIGN_CENTER_VERTICAL);
 
 // groupinfo
 //1) wxStaticText+wxChoice(group)   wxButton(nextgroup) 
@@ -83,7 +81,7 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
 
     auto nextGroup = new wxButton(this, wxID_ANY, _("++group"));
     nextGroup->SetToolTip(_("Info for the next group"));
-    Bind(wxEVT_BUTTON, &SetupSchema::OnNextGroup, this, nextGroup->GetId() );
+    nextGroup->Bind(wxEVT_BUTTON, &SetupSchema::OnNextGroup, this );
 
     wxBoxSizer* groupCountSizer = new wxBoxSizer(wxHORIZONTAL);
     groupCountSizer->MyAdd(m_pChoiceBoxGroup); groupCountSizer->AddSpacer(20);
@@ -122,9 +120,7 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
 
     // add all sizers to vertical sizer
     wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Schema entry for this session"));
-    vBox->AddSpacer( 30 );  vBox->Add(nrOfGamesSizer        , 0, wxALIGN_LEFT   );
-    vBox->AddSpacer( 30 );  vBox->Add(SetSizeSizer          , 0, wxALIGN_LEFT   );
-    vBox->AddSpacer( 30 );  vBox->Add(nrOfGroupsSizer       , 0, wxALIGN_LEFT   );
+    vBox->AddSpacer( 30 );  vBox->Add(fgs                   , 0, wxALIGN_LEFT   );
     vBox->AddSpacer( 30 );  vBox->Add(groupCountSizer       , 0, wxALIGN_LEFT   );
     vBox->AddSpacer(  5 );  vBox->Add(groupInfoSizer        , 0                 );
     vBox->AddStretchSpacer( 30 );  vBox->Add(okCancel       , 0, wxALL | wxALIGN_CENTER, MY_BORDERSIZE );

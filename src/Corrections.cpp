@@ -106,11 +106,11 @@ namespace cor
            )
         {
             wxString msg  = FMT(_("Invalid total-correction/end data <%s> will be ignored.\n"), a_input);
-                     msg += FMT(_(" score  : %ld\n"), a_ce.score);
-                     msg += FMT(_(" bonus  : %ld\n"), a_ce.bonus);
-                     msg += FMT(_(" GlPair : %u\n" ), a_globalPair);
-                     msg += FMT(_(" games: %u, cfg::max: %u"), a_ce.games, cfg::MAX_GAMES); //cfg::GetNrOfGames());
-                     MyLogError("%s", msg);
+                     msg += FMT(" %-11s: %ld\n", _("score")     , a_ce.score);
+                     msg += FMT(" %-11s: %ld\n", _("bonus")     , a_ce.bonus);
+                     msg += FMT(" %-11s: %u\n" , _("globalPair"), a_globalPair);
+                     msg += FMT(" %s: %u, cfg::max: %u", _("games"), a_ce.games, cfg::MAX_GAMES); //cfg::GetNrOfGames());
+            MyLogError("%s", msg);
             MyMessageBox(msg);
             return false;
         }

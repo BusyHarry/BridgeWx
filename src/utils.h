@@ -72,7 +72,7 @@ wxString GetDateTime();                         // get current datetime as : Get
 
 wxString U2String       (UINT x);  // (unsigned) int to string
 wxString I2String       (int  x);  // int to string
-
+wxString L2String       (long x);  // long to string
 UINT MyGetFilesize      (const wxString& file);
 bool ReadFileBinairy    (const wxString& file, void* buffer, UINT bufSize);
 bool WriteFileBinairy   (const wxString& file, void* buffer, UINT bufSize);

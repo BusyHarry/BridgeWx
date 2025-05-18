@@ -1,6 +1,11 @@
 # Releasenotes
 #V10.6.0  ......
-
+ - updated wxWidgets to V3.2.8 (no changes compared to V3.2.7)
+ - don't need anymore to change 'include/wx/grid.h' with public method 'SetRow()'
+ - show used version of wxWidgets in About()
+ - when reading scores from the database, clear the contracts for each game, else they inherit these from a previous game!
+ - removed an empty, unneeded correction column in several result listings
+ - made translations easier by doing the math for tables internally, so only plain text-translations needed
 
 #V10.5.0  Tuesday 1 April 2025
  - replaced most wxMessageBox() with MyMessageBox()

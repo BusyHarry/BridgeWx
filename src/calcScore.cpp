@@ -700,6 +700,7 @@ void CalcScore::SaveGroupResult()
     UINT setSize            = cfg::GetSetSize();
     UINT sets               = cfg::GetNrOfGames()/setSize;
     UINT offsetFirstGame    = cfg::GetFirstGame() - 1;
+    bool bHaveCorrections   = spmCorSession->size();
 
     m_txtFileResultGroup.MyCreate(cfg::ConstructFilename(cfg::EXT_RESULT_GROUP), MyTextFile::WRITE);
     m_txtFileResultGroup.AddLine(ES);
@@ -710,42 +711,73 @@ void CalcScore::SaveGroupResult()
     m_txtFileResultGroup.AddLine(tmp);
     m_txtFileResultGroup.AddLine(ES);
 
-    tmp.Printf("    %*s", cfg::MAX_NAME_SIZE, _("games :"));
-    for (UINT ii = 0; ii < sets; ++ii)
-        tmp += FMT("%2u-%-2u ", offsetFirstGame+setSize*ii+1, offsetFirstGame+setSize*ii+setSize);
-    if (spmCorSession->size())
-        tmp += m_bButler ? _(" extra   cor  ") : _(" extra  cor  cor ");
-    tmp += _("  tot   score") + (m_bButler ? _("(imps/game)") : wxString("(%)"));
-    m_txtFileResultGroup.AddLine(tmp);
+    const size_t SIZE_GRP_PAIR       (3);
+    const size_t SIZE_GRP_NAME       (cfg::MAX_NAME_SIZE);
+    const size_t SIZE_GRP_SCORE      (5);
+    const size_t SIZE_GRP_EXTRA      (6);
+    const size_t SIZE_GRP_CORR       (4);
+    const size_t SIZE_GRP_TOTAL      (6);
 
+    #define GRP_INSERT_POS ((size_t)2)   /*start index to insert set-info*/
+    std::vector<FormBuilder::ColumnInfoRow> formInfo =
+        {
+              {SIZE_GRP_PAIR         , FormBuilder::Align::RIGHT , ES, true}
+            , {SIZE_GRP_NAME         , FormBuilder::Align::LEFT  , ES, true}
+                // setinfo added later
+            , {SIZE_GRP_EXTRA        , FormBuilder::Align::CENTER, ES, bHaveCorrections}
+            , {SIZE_GRP_CORR         , FormBuilder::Align::LEFT  , ES, bHaveCorrections && !m_bButler}
+            , {SIZE_GRP_CORR         , FormBuilder::Align::LEFT  , ES, bHaveCorrections}
+            , {SIZE_GRP_TOTAL        , FormBuilder::Align::RIGHT , ES, true}
+            , {SIZE_GRP_SCORE        , FormBuilder::Align::RIGHT , ES, true}
+        };
+    FormBuilder::Align alignScore = m_bButler ? FormBuilder::Align::RIGHT : FormBuilder::Align::RIGHT_SPACE2;
+    std::vector<FormBuilder::ColumnInfoHeader> headerInfo =
+    {   // as it says: info for the header, columnsize is taken from the form-info
+          {FormBuilder::Align::RIGHT, ES, ES          }
+        , {FormBuilder::Align::RIGHT, ES, _("games :")}
+            // setinfo added later
+        , {FormBuilder::Align::LEFT , ES, _("extra"  )}
+        , {FormBuilder::Align::LEFT , ES, _("cor"    )}
+        , {FormBuilder::Align::LEFT , ES, _("cor"    )}
+        , {alignScore               , ES, _("tot"    )}
+        , {FormBuilder::Align::LEFT , ES, _("score"  )}
+    };
+
+    for (UINT ii = 0; ii < sets; ++ii)
+    {   // add set-info for form and header
+        wxString tmp2 = FMT("%u-%u", offsetFirstGame + setSize * ii + 1, offsetFirstGame + setSize * ii + setSize);
+        headerInfo.insert(headerInfo.begin() + GRP_INSERT_POS + ii, {FormBuilder::Align::CENTER, ES, tmp2});
+        formInfo  .insert(formInfo  .begin() + GRP_INSERT_POS + ii, {SIZE_GRP_SCORE, FormBuilder::Align::RIGHT, ES, true});
+    }
+
+    FormBuilder group(formInfo);
+    wxString tmp2 = group.CreateHeader(headerInfo);
+    tmp2 += " " + (m_bButler ? _("(imps/game)") : wxString("(%)"));
+    m_txtFileResultGroup.AddLine(tmp2);
     for (UINT pair=1; pair <= m_maxPair; ++pair)
     {
         if (svSessionResult[pair].nrOfGames == 0)
         {
-//            tmp.Printf(_("%3u  NOT PLAYED?? absent??"), pair);  //???? kan niet, is "paar heeft niet gespeeld: afwezig..."
             if (cfg::IsSessionPairAbsent(pair))
-            {
                 tmp.Printf("%3u --> %s", pair,  _("absent"));
-            }
             else
-            {
                 tmp.Printf("%3u %s --> %s", pair, names::PairnrSession2GlobalText(pair), _("NOT PLAYED"));  //???? kan niet, is "paar heeft niet gespeeld : afwezig..."
-            }
             m_txtFileResultGroup.AddLine(tmp);
             continue;                   // pair didn't play
         }
-        tmp.Printf("%3u %s", pair, DottedName(names::PairnrSession2GlobalText(pair)));
+        std::vector<wxString> rowInfo = {U2String(pair), DottedName(names::PairnrSession2GlobalText(pair))};
+
         for (UINT ii = 0; ii < sets; ++ii)
         {
             UINT gamesPlayed = 0;
             long score = GetSetResult(pair, offsetFirstGame+setSize*ii+1, setSize, &gamesPlayed);
             if (gamesPlayed)    // if at least played once in this set, show score
-                tmp += FMT(" %5s", LongToAscii1(score* (m_bButler?10:1)));
+                rowInfo.push_back(LongToAscii1(score * (m_bButler ? 10 : 1)));
             else
-                tmp += " ---  ";
+                rowInfo.push_back("-----");
         }
         // now add corrections
-        if (spmCorSession->size())
+        if (bHaveCorrections)
         {
             int procent     = 0;
             int mp          = 0;
@@ -765,20 +797,28 @@ void CalcScore::SaveGroupResult()
             }
 
             wxString sMp = m_bButler ? "i " : "mp";
-            if (m_bButler)
-                tmp += games ? FMT("%+5ii " , extra)                : wxString("       ");
-            else 
-                tmp += maxExtra ? FMT("%3d/%-3d" , extra, maxExtra ): wxString("       ");
-            if (!m_bButler)
-                tmp += procent ? FMT( " %2d%%"  , procent): wxString("    "   );
-            tmp += mp          ? FMT( " %3d%s"  , mp,sMp ): wxString("      " );
+
+            tmp2.Clear();
+            if ( m_bButler && games   ) tmp2 = FMT("%+ii" , extra);
+            if (!m_bButler && maxExtra) tmp2 = FMT("%d/%d", extra, maxExtra );
+            rowInfo.push_back(tmp2);    // extra
+
+            tmp2.Clear();
+            if (!m_bButler && procent) tmp2 = FMT("%d%%", procent);
+            rowInfo.push_back(tmp2);  // cor %
+
+            tmp2.Clear();
+            if (mp) tmp2 = FMT( "%d%s"  , mp,sMp );
+            rowInfo.push_back(tmp2);
+        }
+        else
+        {   // table MUST be filled
+            rowInfo.push_back(ES); rowInfo.push_back(ES); rowInfo.push_back(ES);
         }
 
-        tmp += (m_bButler)
-            ? FMT(" %5ld  %5s", svSessionResult[pair].butlerMp, LongToAscii2(svSessionResult[pair].procentScore))
-            : FMT(" %6s %s"   , LongToAscii1(svSessionResult[pair].points), LongToAscii2(svSessionResult[pair].procentScore))
-            ;
-        m_txtFileResultGroup.AddLine(tmp);
+        rowInfo.push_back(m_bButler ? L2String(svSessionResult[pair].butlerMp) : LongToAscii1(svSessionResult[pair].points));
+        rowInfo.push_back(LongToAscii2(svSessionResult[pair].procentScore));
+        m_txtFileResultGroup.AddLine(group.CreateRow(rowInfo));
     }
 
     m_txtFileResultGroup.Flush();
@@ -786,11 +826,42 @@ void CalcScore::SaveGroupResult()
 
 void CalcScore::SaveSessionResultsProcent()
 {
-    wxString tmp;
-    tmp.Printf(_("rank pair %-*s  tot.    max  score  %s  %s"),
-        cfg::MAX_NAME_SIZE,_("pairname"),
-        m_bSomeCorrection ? _("corr.  ") : ES,
-        GetGroupResultString(0, &svSessionRankToPair, true));
+    const size_t SIZE_RP_RANK        (4);
+    const size_t SIZE_RP_PAIR        (4);
+    const size_t SIZE_RP_NAME        (cfg::MAX_NAME_SIZE);
+    const size_t SIZE_RP_TOTAL       (6);
+    const size_t SIZE_RP_MAX         (5);
+    const size_t SIZE_RP_SCORE       (6);
+    const size_t SIZE_RP_CORRECTION  (7);
+    const size_t SIZE_RP_GROUPRESULT (FormBuilder::NO_LIMIT);
+
+    std::vector<FormBuilder::ColumnInfoRow> formInfo =
+    {
+          {SIZE_RP_RANK       , FormBuilder::Align::RIGHT, ES , true}
+        , {SIZE_RP_PAIR       , FormBuilder::Align::RIGHT, ES , true}
+        , {SIZE_RP_NAME       , FormBuilder::Align::LEFT , ES , true}
+        , {SIZE_RP_TOTAL      , FormBuilder::Align::RIGHT, ES , true}
+        , {SIZE_RP_MAX        , FormBuilder::Align::RIGHT, ES , true}
+        , {SIZE_RP_SCORE      , FormBuilder::Align::RIGHT, '%', true}
+        , {SIZE_RP_CORRECTION , FormBuilder::Align::LEFT , ' ', m_bSomeCorrection}
+        , {SIZE_RP_GROUPRESULT, FormBuilder::Align::LEFT , ES , true}
+    };
+
+    std::vector<FormBuilder::ColumnInfoHeader> headerInfo =
+    {
+          {FormBuilder::Align::RIGHT , ES , _("rank"    )}
+        , {FormBuilder::Align::RIGHT , ES , _("pair"    )}
+        , {FormBuilder::Align::LEFT  , ES , _("pairname")}
+        , {FormBuilder::Align::CENTER, ES , _("tot."    )}
+        , {FormBuilder::Align::RIGHT , ES , _("max"     )}
+        , {FormBuilder::Align::RIGHT , ' ', _("score"   )}
+        , {FormBuilder::Align::LEFT  , ' ', _("corr."   )}
+        , {FormBuilder::Align::LEFT  , ES , GetGroupResultString(0, &svSessionRankToPair, GROUPRESULT_SESSION)}
+    };
+
+    FormBuilder percentResult(formInfo);
+    wxString tmp = percentResult.CreateHeader(headerInfo);
+
     m_txtFileResultSession.AddLine(tmp);m_txtFileResultOnName.AddLine(tmp);
     UINT startLine = m_txtFileResultSession.GetLineCount();    //from here the pairinfo is addded
     // pre-create empty lines for result on name-order
@@ -803,15 +874,18 @@ void CalcScore::SaveSessionResultsProcent()
         if (svSessionResult[pair].maxScore == 0)
             continue;                   // pair didn't play
         wxString correction = GetSessionCorrectionString(pair, m_bSomeCorrection);
-        tmp.Printf(" %3u %4s %s %6s  %4d  %5s%% %s  %s",
-            svSessionPairToRank[pair],
-            names::PairnrSession2SessionText(pair),
-            DottedName(names::PairnrSession2GlobalText(pair)),
-            LongToAscii1(svSessionResult[pair].points),
-            svSessionResult[pair].maxScore,
-            LongToAscii2(score),
-            correction,
-            GetGroupResultString(pair));
+        std::vector<wxString> rowInfo =
+        {
+              U2String(svSessionPairToRank[pair])
+            , names::PairnrSession2SessionText(pair)
+            , DottedName(names::PairnrSession2GlobalText(pair))
+            , LongToAscii1(svSessionResult[pair].points)
+            , U2String(svSessionResult[pair].maxScore)
+            , LongToAscii2(score)
+            , correction
+            , GetGroupResultString(pair)
+        };
+        tmp = percentResult.CreateRow(rowInfo);
         m_txtFileResultSession.AddLine(tmp);                       // rank order
         m_txtFileResultOnName[0 - 1ULL + pair + startLine] = tmp;  // pair order
     }
@@ -819,14 +893,45 @@ void CalcScore::SaveSessionResultsProcent()
 
 void CalcScore::SaveSessionResultsButler()
 {
-    wxString tmp;
-    tmp.Printf(_("rank pair %-*s  imps  games   score %s  %s"),
-        cfg::MAX_NAME_SIZE,_("pairname"),
-        m_bSomeCorrection ? _("corr.  ") : ES,
-        GetGroupResultString(0, &svSessionRankToPair, true));
+    const size_t SIZE_RI_RANK        (4);
+    const size_t SIZE_RI_PAIR        (4);
+    const size_t SIZE_RI_NAME        (cfg::MAX_NAME_SIZE);
+    const size_t SIZE_RI_IMPS        (4);
+    const size_t SIZE_RI_GAMES       (7);
+    const size_t SIZE_RI_SCORE       (6);
+    const size_t SIZE_RI_CORRECTION  (7);
+    const size_t SIZE_RI_GROUPRESULT (FormBuilder::NO_LIMIT);
+
+    std::vector<FormBuilder::ColumnInfoRow> formInfo =
+    {   // column-size definition and info for all lines (except header)
+          {SIZE_RI_RANK       , FormBuilder::Align::RIGHT, ES , true}
+        , {SIZE_RI_PAIR       , FormBuilder::Align::RIGHT, ES , true}
+        , {SIZE_RI_NAME       , FormBuilder::Align::LEFT , ES , true}
+        , {SIZE_RI_IMPS       , FormBuilder::Align::RIGHT, ES , true}
+        , {SIZE_RI_GAMES      , FormBuilder::Align::RIGHT, ES , true}
+        , {SIZE_RI_SCORE      , FormBuilder::Align::RIGHT, ES , true}
+        , {SIZE_RI_CORRECTION , FormBuilder::Align::LEFT , ' ', m_bSomeCorrection}
+        , {SIZE_RI_GROUPRESULT, FormBuilder::Align::LEFT , ES , true}
+    };
+
+    std::vector<FormBuilder::ColumnInfoHeader> headerInfo =
+    {   // as it says: info for the header, size is taken from the form-info
+          {FormBuilder::Align::RIGHT , ES , _("rank"    )}
+        , {FormBuilder::Align::RIGHT , ES , _("pair"    )}
+        , {FormBuilder::Align::LEFT  , ES , _("pairname")}
+        , {FormBuilder::Align::CENTER, ES , _("imps"    )}
+        , {FormBuilder::Align::RIGHT , ES , _("games"   )}
+        , {FormBuilder::Align::RIGHT , ES , _("score"   )}
+        , {FormBuilder::Align::LEFT  , ' ', _("corr."   )}
+        , {FormBuilder::Align::LEFT  , ES , GetGroupResultString(0, &svSessionRankToPair, GROUPRESULT_SESSION)}
+    };
+
+    FormBuilder impsResult(formInfo);
+    wxString tmp = impsResult.CreateHeader(headerInfo);
+
     m_txtFileResultSession.AddLine(tmp);m_txtFileResultOnName.AddLine(tmp);
     UINT startLine = m_txtFileResultSession.GetLineCount();    //from here the pairinfo is addded
-                                                               // pre-create empty lines for result on name-order
+    // pre-create empty lines for result on name-order
     for (UINT lc = 1; lc <= m_maxPair;++lc) m_txtFileResultOnName.AddLine(ES);
 
     for (UINT rank=1; rank < svSessionRankToPair.size(); ++rank)
@@ -836,15 +941,19 @@ void CalcScore::SaveSessionResultsButler()
         if (svSessionResult[pair].nrOfGames == 0)
             continue;                   // pair didn't play
         wxString correction = GetSessionCorrectionString(pair, m_bSomeCorrection);
-        tmp.Printf(" %3u %4s %s %4ld   %3u     %5s %s  %s",
-            svSessionPairToRank[pair],
-            names::PairnrSession2SessionText(pair),
-            DottedName(names::PairnrSession2GlobalText(pair)),
-            svSessionResult[pair].butlerMp,
-            svSessionResult[pair].nrOfGames,
-            LongToAscii2(score),
-            correction,
-            GetGroupResultString(pair));
+        std::vector<wxString> rowInfo =
+        {
+              U2String(svSessionPairToRank[pair])
+            , names::PairnrSession2SessionText(pair)
+            , DottedName(names::PairnrSession2GlobalText(pair))
+            , L2String(svSessionResult[pair].butlerMp)
+            , U2String(svSessionResult[pair].nrOfGames)
+            , LongToAscii2(score)
+            , correction
+            , GetGroupResultString(pair)
+        };
+        tmp = impsResult.CreateRow(rowInfo);
+
         m_txtFileResultSession.AddLine(tmp);                       // rank order
         m_txtFileResultOnName[0 - 1ULL + pair + startLine] = tmp;  // pair order
     }
@@ -853,7 +962,7 @@ void CalcScore::SaveSessionResultsButler()
 void CalcScore::SaveSessionResults()
 {
     m_txtFileResultSession.MyCreate(cfg::ConstructFilename(cfg::EXT_RESULT_SESSION_RANK), MyTextFile::WRITE);
-    m_txtFileResultOnName.MyCreate(cfg::ConstructFilename(cfg::EXT_RESULT_SESSION_NAME), MyTextFile::WRITE);
+    m_txtFileResultOnName .MyCreate(cfg::ConstructFilename(cfg::EXT_RESULT_SESSION_NAME), MyTextFile::WRITE);
     AddHeader(m_txtFileResultSession);
     AddHeader(m_txtFileResultOnName);
     m_txtFileResultSession.AddLine(ES); m_txtFileResultOnName.AddLine(ES);
@@ -972,38 +1081,81 @@ void CalcScore::MakeFrequenceTable(UINT a_game, std::vector<wxString>& a_stringT
 {
     a_stringTable.clear();
     wxString tmp;
-    tmp.Printf(_("    game %-3u       "), a_game + cfg::GetFirstGame() - 1);
+    tmp.Printf("%s %u", _("game"), a_game + cfg::GetFirstGame() - 1);
     a_stringTable.push_back(tmp);
     if (m_bButler)
     {
-        a_stringTable.push_back(FMT(_("datumscore NS: %i, EW: %i"), svDatumScores[a_game].dsNS, svDatumScores[a_game].dsEW));
-        a_stringTable.push_back(_("scoreNS delta imps  scoreEW delta imps"));
-        //      for ( const auto& it : svButlerFkw[game])   // gives low->high scores, we want high->low
+        a_stringTable.push_back(FMT("%s %s: %i, %s: %i", _("datumscore"), _("NS"), svDatumScores[a_game].dsNS, _("EW"), svDatumScores[a_game].dsEW));
+        // form definitions
+        const size_t SIZE_FT_SCORE  (5);
+        const size_t SIZE_FT_DELTA  (5);
+        const size_t SIZE_FT_IMPS   (4);
+
+        std::vector<FormBuilder::ColumnInfoRow> formInfo =
+        {   // column-size definition and info for all rows
+              {SIZE_FT_SCORE, FormBuilder::Align::RIGHT, ES , true}
+            , {SIZE_FT_DELTA, FormBuilder::Align::RIGHT, ES , true}
+            , {SIZE_FT_IMPS , FormBuilder::Align::RIGHT, ' ', true}
+            , {SIZE_FT_SCORE, FormBuilder::Align::RIGHT, ES , true}
+            , {SIZE_FT_DELTA, FormBuilder::Align::RIGHT, ES , true}
+            , {SIZE_FT_IMPS , FormBuilder::Align::RIGHT, ES , true}
+        };
+
+        std::vector<FormBuilder::ColumnInfoHeader> headerInfo =
+        {   // as it says: info for the header, columnsize is taken from the form-info
+              {FormBuilder::Align::RIGHT, ES , _("NS"   )}
+            , {FormBuilder::Align::RIGHT, ES , _("delta")}
+            , {FormBuilder::Align::RIGHT, ' ', _("imps" )}
+            , {FormBuilder::Align::RIGHT, ES , _("EW"   )}
+            , {FormBuilder::Align::RIGHT, ES , _("delta")}
+            , {FormBuilder::Align::RIGHT, ES , _("imps" )}
+        };
+
+        FormBuilder frequencyTable(formInfo);
+        tmp = frequencyTable.CreateHeader(headerInfo);
+        a_stringTable.push_back(tmp);
         for (auto it = svButlerFkw[a_game].rbegin(); it != svButlerFkw[a_game].rend(); ++it)
-        {
-            a_stringTable.push_back (FMT("%6s  %5ld %3i   %6s  %5ld %3i"
-                                            , score::ScoreToString(it->second.scoreNs)
-                                            , it->second.deltaNs
-                                            , it->second.impsNs
-                                            , score::ScoreToString(it->second.scoreEw)
-                                            , it->second.deltaEw
-                                            , it->second.impsEw
-                                        )
-                                    );
+        {   //scores high to low overview
+            std::vector<wxString> rowInfo = {     score::ScoreToString(it->second.scoreNs)
+                                                , L2String(it->second.deltaNs)
+                                                , I2String(it->second.impsNs)
+                                                , score::ScoreToString(it->second.scoreEw)
+                                                , L2String(it->second.deltaEw)
+                                                , I2String(it->second.impsEw)
+                                            };
+            a_stringTable.push_back(frequencyTable.CreateRow(rowInfo));
         }
     }
     else
     {
-        a_stringTable.push_back(_("scoreNS NS    EW   "));
-        a_stringTable.push_back(FMT(_("   top: %-5u %-5u"), svGameTops[a_game].topNS, svGameTops[a_game].topEW));
+        // form definitions
+        const size_t SIZE_FT_SCORE  (7);
+        const size_t SIZE_FT_MP     (5);
+
+        std::vector<FormBuilder::ColumnInfoRow> formInfo =
+        {   // column-size definition and info for all rows
+              {SIZE_FT_SCORE, FormBuilder::Align::RIGHT, ES, true}
+            , {SIZE_FT_MP   , FormBuilder::Align::RIGHT, ES, true}
+            , {SIZE_FT_MP   , FormBuilder::Align::RIGHT, ES, true}
+        };
+
+        std::vector<FormBuilder::ColumnInfoHeader> headerInfo =
+        {   // as it says: info for the header, columnsize is taken from the form-info
+              {FormBuilder::Align::RIGHT , ES, _("scoreNS")}
+            , {FormBuilder::Align::CENTER, ES, _("NS"     )}
+            , {FormBuilder::Align::CENTER, ES, _("EW"     )}
+        };
+
+        FormBuilder frequencyTable(formInfo);
+        a_stringTable.push_back(frequencyTable.CreateHeader(headerInfo));
+        std::vector<wxString> rowInfo = { _("top:"), U2String(svGameTops[a_game].topNS)+"  ", U2String(svGameTops[a_game].topEW)+"  "};
+        a_stringTable.push_back(frequencyTable.CreateRow(rowInfo));
+
         const auto& frqInfo = svFrequencyInfo[a_game];
         for (auto it : frqInfo)
         {
-            tmp.Printf("%6s %5s %5s ",
-                score::ScoreToString(it.score),
-                LongToAscii1(it.points),
-                LongToAscii1(it.pointsEW));
-            a_stringTable.push_back(tmp);
+            rowInfo = {score::ScoreToString(it.score),LongToAscii1(it.points),LongToAscii1(it.pointsEW)};
+            a_stringTable.push_back(frequencyTable.CreateRow(rowInfo));
         }
     }
 }   // MakeFrequenceTable()
@@ -1247,14 +1399,14 @@ void CalcScore::CalcTotal()
             }
             else
                 totalScoreAvg = averageWeighted*maxSession;
-            average=RoundLong(totalScore,maxSession-(absentCount+noSessionCount)); // determine avarage score
+            average=RoundLong(totalScore,maxSession-(absentCount+noSessionCount)); // determine average score
             if (average > (long)cfg::GetMaxMean() )                         // too big: take max average
                 average=cfg::GetMaxMean();
             totalScore += average*absentCount;
         }
         else
         {
-            if (totalGames)  // niet door 0 delen!
+            if (totalGames)  // don't devide by 0!
                 averageWeighted=RoundLong(totalScoreAvg,(int)totalGames);    // determine average score
             else
                 averageWeighted = 0;
@@ -1267,7 +1419,7 @@ void CalcScore::CalcTotal()
             svTotalResult[pair].average = svTotalResult[pair].averageWeighted;
         }
         else
-        {   svTotalResult[pair].total     = totalScore+totalBonus;// en totaal
+        {   svTotalResult[pair].total     = totalScore+totalBonus;// and total
             svTotalResult[pair].average = average;      // save it
         }
         svTotalResult[pair].bonus=totalBonus;           //  and bonus
@@ -1300,21 +1452,50 @@ void CalcScore::CalcTotal()
     m_txtFileResultTotal.AddLine(cfg::GetDescription());
     m_txtFileResultTotal.AddLine(FMT(_("Final result%s"), bWeightedAvg ? _(" (weighted average)") : ES));
     m_txtFileResultTotal.AddLine(ES);
-    wxString tmp = _("rank pairname                       ");
+
+    // form definitions
+    const size_t SIZE_RT_RANK        (4);
+    const size_t SIZE_RT_NAME        (cfg::MAX_NAME_SIZE);
+    const size_t SIZE_RT_SESSION     (5);
+    const size_t SIZE_RT_BONUS       (7);
+    const size_t SIZE_RT_TOTAL       (7);
+    const size_t SIZE_RT_AVG         (5);
+    const size_t SIZE_RI_SCORE       (6);
+    const size_t SIZE_RT_CORRECTION  (7);
+    const size_t SIZE_RT_GROUPRESULT (FormBuilder::NO_LIMIT);
+
+    #define RT_INSERT_POS ((size_t)2)   /*start index to insert session info*/
+    std::vector<FormBuilder::ColumnInfoRow> formInfo =
+    {   // column-size definition and info for all rows
+          {SIZE_RT_RANK       , FormBuilder::Align::RIGHT, ES , true}
+        , {SIZE_RT_NAME       , FormBuilder::Align::LEFT , ' ', true}
+        // session info added later
+        , {SIZE_RT_BONUS      , FormBuilder::Align::RIGHT, ES , bBonus}
+        , {SIZE_RT_TOTAL      , FormBuilder::Align::RIGHT, ES , true}
+        , {SIZE_RT_AVG        , FormBuilder::Align::RIGHT, ES , true}
+        , {SIZE_RT_GROUPRESULT, FormBuilder::Align::LEFT , ES , true}
+    };
+
+    std::vector<FormBuilder::ColumnInfoHeader> headerInfo =
+    {   // as it says: info for the header, columnsize is taken from the form-info
+          {FormBuilder::Align::LEFT , ES , _("rank"    )}
+        , {FormBuilder::Align::LEFT , ' ', _("pairname")}
+        // session info added later
+        , {FormBuilder::Align::RIGHT, ES , _("bonus"   )}      //xgettext:TRANSLATORS: "total", translation max length = 7
+        , {FormBuilder::Align::RIGHT, ES , _("total"   )}      //xgettext:TRANSLATORS: "avg.", translation max length = 5
+        , {FormBuilder::Align::RIGHT, ES , _("avg."    )}
+        , {FormBuilder::Align::LEFT , ES , GetGroupResultString(0, &indexSessionPairnr, GROUPRESULT_FINAL)}
+    };
+
     for (session=1; session <= maxSession; ++session)
     {
-        tmp += FMT(_("  S%-4u"),session);
+        formInfo  .insert(formInfo.begin()   + RT_INSERT_POS + session - 1, {SIZE_RT_SESSION, FormBuilder::Align::RIGHT, ES, true});
+        //xgettext:TRANSLATORS: 'S' is first character of 'Session'
+        headerInfo.insert(headerInfo.begin() + RT_INSERT_POS + session - 1, {FormBuilder::Align::CENTER, ' ', FMT(_("S%u"), session)});
     }
-    //xgettext:TRANSLATORS: "total", translation max length = 6
-    wxString total =  FMT("%6s", _("total"));
-    //xgettext:TRANSLATORS: "avg.", translation max length = 4
-    wxString avg = FMT("%4s", _("avg."));
-    tmp += FMT("  %s   %s%s %s"
-                , bWeightedAvg ? wxString(" ") : total
-                , avg
-                , bBonus ? _("bonus  ") : ES
-                , GetGroupResultString(0, &indexSessionPairnr, false)
-              );
+
+    FormBuilder totalResult(formInfo);
+    wxString tmp = totalResult.CreateHeader(headerInfo);
     m_txtFileResultTotal.AddLine(tmp);
 
     for (UINT rank = 1; rank < svTotalRankToPair.size(); ++rank)
@@ -1323,26 +1504,32 @@ void CalcScore::CalcTotal()
         if (!svTotalResult[pair].bHasPlayed)
             break;  // all global players that have not played yet, should be at end of rank-array!
         totalScore  = svTotalResult[pair].total;
-        tmp = FMT(" %3u %s ", svTotalPairToRank[pair], DottedName(names::PairnrGlobal2GlobalText(pair)));
+        std::vector<wxString> rowInfo = {U2String(svTotalPairToRank[pair]), DottedName(names::PairnrGlobal2GlobalText(pair))};
+
         for (session=1; session <= maxSession; ++session)
         {
+            char extra = ' ';
             tempscore = sessionResults[session][pair].score;
             if (tempscore == SCORE_NO_TOTAL)
-                tmp += " ----- ";
+                rowInfo.push_back("-----");
             else if (sessionResults[session][pair].games == 0)
-                tmp+= FMT(" %5sa", LongToAscii2(svTotalResult[pair].average));
+            {
+                rowInfo.push_back(LongToAscii2(svTotalResult[pair].average));
+                extra = 'a';
+            }
             else
-                tmp+=FMT(" %5s ", LongToAscii2(tempscore));
+                rowInfo.push_back(LongToAscii2(tempscore));
+
+            formInfo[RT_INSERT_POS + session - 1].extra = extra;
         }
         wxString bonusString;
         if (bBonus)                         // yes, we have a bonus!
         {
             totalBonus = svTotalResult[pair].bonus;
             if (totalBonus)                // and this pair has it
-                bonusString = FMT("%6s ",LongToAscii2(totalBonus));
-            else                           // and this pair not
-                bonusString = FMT("%6s ",ES);
+                bonusString=LongToAscii2(totalBonus);
         }
+        rowInfo.push_back(bonusString);
         wxString totalString;
         if (bWeightedAvg)
         {
@@ -1352,12 +1539,13 @@ void CalcScore::CalcTotal()
                 totalString = ' ';      // no dif
         }
         else
-            totalString = FMT("%6s ", LongToAscii2(totalScore));
-        tmp += FMT("  %s %s%5s %s",
-            totalString,
-            bonusString,
-            LongToAscii2( RoundLong(totalScore,svTotalResult[pair].nrOfSessions)),
-            GetGroupResultString( names::PairnrGlobal2SessionPairnr(pair)));
+        {
+            totalString = LongToAscii2(totalScore);
+        }
+        rowInfo.push_back(totalString);
+        rowInfo.push_back(LongToAscii2( RoundLong(totalScore,svTotalResult[pair].nrOfSessions)));
+        rowInfo.push_back(GetGroupResultString(names::PairnrGlobal2SessionPairnr(pair)));
+        tmp = totalResult.CreateRow(rowInfo);
         m_txtFileResultTotal.AddLine(tmp);
     }   // end for all ranks
 
@@ -1452,8 +1640,40 @@ void CalcScore::CalcClub( bool a_bTotal)
     txtFile.AddLine(tmp);
     txtFile.AddLine(m_bButler ? _("Scores are in imps, results and average in imps/pair") : _("Scores, results and average are in %"));
     txtFile.AddLine(ES);
-    tmp = FMT(_("rank count  %-*s   score    avg. totalscore"), cfg::MAX_CLUB_SIZE, _("club-name"));
-    txtFile.AddLine(tmp);
+
+    const size_t SIZE_CR_RANK        (4);
+    const size_t SIZE_CR_COUNT       (6);
+    const size_t SIZE_CR_CLUB        (cfg::MAX_CLUB_SIZE);
+    const size_t SIZE_CR_SCORE       (7);
+    const size_t SIZE_CR_AVG         (5);
+    const size_t SIZE_CR_TOTAL       (FormBuilder::NO_LIMIT);
+
+
+    std::vector<FormBuilder::ColumnInfoRow> formInfo =
+    {
+          {SIZE_CR_RANK , FormBuilder::Align::RIGHT_SPACE1, ES, true}
+        , {SIZE_CR_COUNT, FormBuilder::Align::RIGHT_SPACE2, ES, true}
+        , {SIZE_CR_CLUB , FormBuilder::Align::LEFT        , ES, true}
+        , {SIZE_CR_SCORE, FormBuilder::Align::RIGHT       , ES, true}
+        , {SIZE_CR_AVG  , FormBuilder::Align::RIGHT       , ES, true}
+        , {SIZE_CR_TOTAL, FormBuilder::Align::RIGHT       , ES, true}
+    };
+
+    std::vector<FormBuilder::ColumnInfoHeader> headerInfo =
+    {   // as it says: info for the header, columnsize is taken from the form-info
+          {FormBuilder::Align::RIGHT, ES , _("rank"      )}
+        , {FormBuilder::Align::RIGHT, ES , _("count"     )}
+        , {FormBuilder::Align::LEFT , ES , _("club-name" )}
+        , {FormBuilder::Align::RIGHT, ES , _("score"     )}
+        , {FormBuilder::Align::RIGHT, ' ', _("avg."      )}
+        , {FormBuilder::Align::LEFT , ES , _("totalscore")}
+    };
+
+    FormBuilder clubResult(formInfo);
+    wxString tmp2 = clubResult.CreateHeader(headerInfo);
+
+    txtFile.AddLine(tmp2);
+
 
     UINT rank               = 1;
     UINT actualRank         = 1;
@@ -1472,24 +1692,28 @@ void CalcScore::CalcClub( bool a_bTotal)
             actualRank = rank;
             previousAvgScore = avgScore;
         }
-        tmp = FMT("%3u  %4u   %-*s  %7s  %5s  %7s (%2u, %5s)",
-                    actualRank,
-                    clubCount,
-                    cfg::MAX_CLUB_SIZE,names::GetClubName(club[clubIndex].clubId),
-                    LongToAscii2(club[clubIndex].score),
-                    LongToAscii2(avgScore),
-                    LongToAscii2(club[clubIndex].totalScore),
-                    club[clubIndex].clubCount,
-                    LongToAscii2(RoundLong(club[clubIndex].totalScore,club[clubIndex].clubCount*maxSession))
-                );
-        txtFile.AddLine(tmp);
+        std::vector<wxString> rowInfo =
+        {
+              U2String(actualRank)
+            , U2String(clubCount)
+            , names::GetClubName(club[clubIndex].clubId)
+            , LongToAscii2(club[clubIndex].score)
+            , LongToAscii2(avgScore)
+            , FMT("%7s (%2u, %5s)"
+                , LongToAscii2(club[clubIndex].totalScore)
+                , club[clubIndex].clubCount
+                , LongToAscii2 (RoundLong(club[clubIndex].totalScore, club[clubIndex].clubCount * maxSession)))
+        };
+        tmp2 = clubResult.CreateRow(rowInfo);
+        txtFile.AddLine(tmp2);
+
         ++rank;
     }
 
     if (club[0].clubCount)
     {   // pairs, not a member of a club
         txtFile.AddLine(ES);
-        tmp = FMT(_("individual pairs: %u, score: %6s%% (%5s)"),
+        tmp = FMT(_("individual pairs: %u, score: %6s (%5s)"),
             club[0].clubCount,
             LongToAscii2(club[0].totalScore),
             LongToAscii2(RoundLong(club[0].totalScore,club[0].clubCount*maxSession))
@@ -1648,11 +1872,18 @@ void CalcScore::OnCalcResultGame(const wxCommandEvent& a_evt)
     const auto& scores      = (*score::GetScoreData())[game];   // scores for this game
     int         sets        = scores.size();
     auto        setsPerLine = std::min(3, sets);                // max n scores/line
+    auto        SIZE_NS     = 5;
+    auto        SIZE_SCORE  = 12;
     wxString    tmp;
 
     for (int count = 1; count <= setsPerLine; ++count)
     {
-        tmp += FMT(_("  NS   EW  SCORE       "));
+//        tmp += FMT(_("  NS   EW  SCORE       "));
+        tmp +=   FormBuilder::CreateColumn(_("NS"   ), SIZE_NS   , FormBuilder::Align::RIGHT_SPACE1)
+               + FormBuilder::CreateColumn(_("EW"   ), SIZE_NS   , FormBuilder::Align::RIGHT_SPACE1) + " "
+               + FormBuilder::CreateColumn(_("SCORE"), SIZE_SCORE, FormBuilder::Align::LEFT )
+            ;
+
     }
     ADDLINE(tmp);
     tmp.clear();
@@ -1668,6 +1899,7 @@ void CalcScore::OnCalcResultGame(const wxCommandEvent& a_evt)
                                 ? wxString("       ")
                                 : FMT(",%-6s",score::ScoreToString(setData.scoreEW))
                  );
+
         if (++count > setsPerLine)
         {
             ADDLINE(tmp);
@@ -1762,3 +1994,91 @@ bool CalcScore::FindBadGameData()
     return bBadGameData;
 #undef CHECK_PAIR
 }   // CheckGameData()
+
+wxString FormBuilder::CreateHeader(const std::vector<ColumnInfoHeader>& a_headerInfo)
+{   // creation of the header, called once
+    auto size = a_headerInfo.size();
+    if (size != m_rowInfo.size())   // no translation: error should popup during development!
+        return "Error: mismatch in size of headerInfo and rowInfo";
+    wxString result;
+    auto rowInfo = m_rowInfo.begin();
+    for (const auto& column : a_headerInfo)
+    {
+        if (rowInfo->active)
+        {
+            if (FormBuilder::NO_LIMIT == rowInfo->size)
+                result += column.header;
+            else
+                result += CreateColumn(column.header, rowInfo->size, column.align);
+        }
+        result += column.extra + FormBuilder::SEPERATOR;   // always add the 'extra' and a separator between colums
+        ++rowInfo;
+    }
+    return result.RemoveLast(); // remove last separator
+}   // CreateHeader()
+
+wxString FormBuilder::CreateRow(const std::vector<wxString>& a_columsContent)
+{   // called for each data-row
+    size_t size = a_columsContent.size();
+    if (size != m_rowInfo.size())   // no translation: error should popup during development!
+        return "Error: mismatch in size of columnInfo and rowInfo";
+    wxString result;
+    auto content = a_columsContent.begin();
+    for (const auto& column : m_rowInfo)
+    {
+        if (column.active)
+        {
+            if (FormBuilder::NO_LIMIT == column.size)
+                result += *content;
+            else
+                result += CreateColumn(*content, column.size, column.align);
+        }
+        result += column.extra + FormBuilder::SEPERATOR;   // always add the 'extra' and a separator between colums
+        ++content;
+    }
+    return result.RemoveLast(); // remove last separator
+}   // CreateRow()
+
+wxString FormBuilder::CreateColumn(const wxString& a_input, size_t a_len, Align a_align)
+{   // create a string with the wanted columnsize and alignment
+    size_t len = a_input.Len();
+    if (len == a_len)
+        return a_input;
+    if (len > a_len)
+        return a_input.Left(a_len);
+    wxString result;
+    #define _TEST_ 0
+    #if _TEST_
+    #define FILL_LEFT  '<'
+    #define FILL_RIGHT '>'
+    #else
+    #define FILL_LEFT  ' '
+    #define FILL_RIGHT ' '
+    #endif
+    switch (a_align)
+    {
+        case FormBuilder::Align::LEFT:
+            result = a_input + wxString(FILL_RIGHT, a_len - len);
+            break;
+        case FormBuilder::Align::CENTER:
+            result = wxString(FILL_LEFT, (a_len - len)/2) + a_input + wxString(FILL_RIGHT, a_len - len - (a_len - len)/2);
+            break;
+        case FormBuilder::Align::RIGHT:
+            result = wxString(FILL_LEFT, a_len - len) + a_input;
+            break;
+        case FormBuilder::Align::LEFT_SPACE1:
+            return CreateColumn(" " + a_input, a_len, FormBuilder::Align::LEFT);
+            break;
+        case FormBuilder::Align::LEFT_SPACE2:
+            return CreateColumn("  " + a_input, a_len, FormBuilder::Align::LEFT);
+            break;
+        case FormBuilder::Align::RIGHT_SPACE1:
+            return CreateColumn(a_input + " ", a_len, FormBuilder::Align::RIGHT);
+            break;
+        case FormBuilder::Align::RIGHT_SPACE2:
+            return CreateColumn(a_input + "  ", a_len, FormBuilder::Align::RIGHT);
+            break;
+    }
+    return result;
+}   // CreateColumn()
+

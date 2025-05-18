@@ -758,7 +758,7 @@ void  MyLinePrinter::Line2Printer()
 
         if (m_iLinesOnPage == 0 && !m_sPageTitle.IsEmpty())
         {   // print header, if available
-            wxString header = FMT(_("              page %d: "), 1+m_iPagesPrinted) + m_sPageTitle;
+            wxString header = FMT("              %s %d: ", _("page"), 1+m_iPagesPrinted) + m_sPageTitle;
             (void)TextOut(m_hPrinter, X(0), Y(m_iLinesOnPage), header.c_str(), header.Len());
             ++m_iLinesOnPage;
         }

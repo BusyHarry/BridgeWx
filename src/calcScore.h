@@ -70,7 +70,9 @@ private:
     void        OnCalcResultGame        (const wxCommandEvent&);
     void        ShowChoice              ();
     long        GetSetResult            (UINT pair, UINT firstGame, UINT nrOfGames, UINT* pGamesPlayed = nullptr);  // get earned match-points for wanted games
-    wxString    GetGroupResultString    (UINT pair, const std::vector<UINT>* a_pIndex = nullptr, bool bSession = false);    // get groupstring or rank in group "BLYEGR" / " . 1 ."
+    static const bool GROUPRESULT_SESSION = true;
+    static const bool GROUPRESULT_FINAL   = false;
+    wxString    GetGroupResultString    (UINT pair, const std::vector<UINT>* a_pIndex = nullptr, bool bSession = GROUPRESULT_FINAL);    // get groupstring or rank in group "BLYEGR" / " . 1 ."
     bool        FindBadGameData         (); // return true if invalid pairnrs found in gamedata
 
 //    wxTextCtrl* m_pTextBox;
@@ -114,5 +116,46 @@ private:
     int                     m_choiceResult;
 //    wxStyledTextCtrl* m_pStyledTextBox;
 };
+
+class FormBuilder
+{   // class to create a table with a header and one or more rows of data
+public:
+    enum class Align{ // alignment in the columns of the header/rows
+          LEFT          // fillup with spaces after till wanted size
+        , CENTER        // as much spaces before and after till wanted size
+        , RIGHT         // as much spaces before till wanted size
+        , LEFT_SPACE1   // add one space in front, then LEFT
+        , LEFT_SPACE2   // add two spaces in front, then LEFT
+        , RIGHT_SPACE1  // add one space after, then RIGHT
+        , RIGHT_SPACE2  // add two spaces after, then RIGHT
+    };
+    static const size_t NO_LIMIT = ((size_t)-1);    // don't apply alignment for this column (mostly the last column)
+    static const char SEPERATOR = ' ';              // separator between columns
+    struct ColumnInfoHeader
+    {
+        Align       align;  // Can be different from row-alignment
+        wxString    extra;  // append this string to the constructed string
+        wxString    header; // column label
+    };
+
+    struct ColumnInfoRow
+    {
+        size_t      size;   // size of this column            , also used for the header
+        Align       align;  // alignment for the data-columns
+        wxString    extra;  // append this string to the constructed string
+        bool        active; // if not set, ignore this column , also used for the header
+    };
+
+    explicit FormBuilder(const std::vector<ColumnInfoRow>& a_rowInfo) : m_rowInfo(a_rowInfo) {}
+    ~FormBuilder() {}
+
+    wxString        CreateHeader(const std::vector<ColumnInfoHeader>& headerInfo);
+    wxString        CreateRow   (const std::vector<wxString>& columsContent);
+    static wxString CreateColumn(const wxString& input, size_t len, Align align);
+
+private:
+    const std::vector<ColumnInfoRow>& m_rowInfo;  // reference, so one can apply runtime updates
+};  // FormBuilder
+
 
 #endif

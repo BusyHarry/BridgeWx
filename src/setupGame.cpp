@@ -49,12 +49,12 @@ SetupGame::SetupGame(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a
     // so we check the values when storing them
     //20231201: seems to be resolved in 3.2.4, but only validation on loosing focus, not enter?????
 
-    wxStaticText*   txtMin = new wxStaticText(this, wxID_ANY, _("min:  "));
+    wxStaticText*   txtMin = new wxStaticText(this, wxID_ANY, _("min:") + "  ");
     m_pTxtCtrlMin = new MyTextCtrl  (this, wxID_ANY, "Min", MY_SIZE_TXTCTRL_NUM(3), wxTE_PROCESS_ENTER);
     m_pTxtCtrlMin->SetMinMax(1, cfg::MAX_PAIRS);
     m_pTxtCtrlMin->Bind(wxEVT_KILL_FOCUS        , &SetupGame::OnFocusLostMin, this); //not needed because validator bug
     m_pTxtCtrlMin->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupGame::OnEnterMin    , this);
-    wxStaticText*   txtMax = new wxStaticText(this, wxID_ANY, _("max:  "));
+    wxStaticText*   txtMax = new wxStaticText(this, wxID_ANY, _("max:") + "  ");
     m_pTxtCtrlMax = new MyTextCtrl  (this, wxID_ANY,"Max",  MY_SIZE_TXTCTRL_NUM(3), wxTE_PROCESS_ENTER);
     m_pTxtCtrlMax->SetMinMax(1, cfg::MAX_PAIRS);
     m_pTxtCtrlMax->Bind(wxEVT_KILL_FOCUS        , &SetupGame::OnFocusLostMax, this);

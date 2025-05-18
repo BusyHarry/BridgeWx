@@ -307,9 +307,9 @@ bool ScoresRead(vvScoreData& scoreData, UINT session)
         if (game > cfg::MAX_GAMES ) { MyLogError(_("Reading scores: gamenr <%s> too high!"), key); continue; }
         auto splitValues = wxSplit(value, theSeparator);
         std::vector<score::GameSetData> gameData;
-        score::GameSetData setData;
         for (const auto& it : splitValues)
         {
+            score::GameSetData setData; // ensure that contracts are cleared!
             char nsScore   [10] = {0};  // {1,2,'score','score'} or {1,2,'score','score',"nsContract","ewContract"} 
             char ewScore   [10] = {0};
             char nsContract[20] = {0};

@@ -192,9 +192,9 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
         bool bVulnerable = '*' == sessionPair[0];
         wxString    result;
         int score = score::GetContractScoreFromString(newData, bVulnerable, result);
-        if (score == 0 || score == -1)
+        if (score == CONTRACT_MALFORMED || score == CONTRACT_NOT_CONSISTENT)
         {
-            if (result.IsEmpty()) result = _("Can't interpret contract!");
+            if (result.IsEmpty()) result = _("Can't interpret contract!") + "\n\n" + score::GetContractExplanation();
             PopUp(m_theGrid, a_cellInfo, result);
             m_theGrid->CallAfter([this,a_cellInfo](){this->m_theGrid->GoToCell(a_cellInfo.row, a_cellInfo.column);});
         }
@@ -544,7 +544,7 @@ void ScoreEntry::RefreshInfo()
 
     Layout();
     static wxString explanation;    // MUST be initialized dynamically: translation
-    explanation = _("Scoreentry: normal: <score>, adjusted: '%'<score> or 'r'<score> or 'np'=not played");
+    explanation = _("Scoreentry: normal: <score>, adjusted: '%'<score> or 'r'<score> or 'np'=not played, contract: <y>'SUIT'[[+|-]<x>][*[*]]");
     SendEvent2Mainframe(this, ID_STATUSBAR_SETTEXT, &explanation);
     if (bMissingSchema)
     {

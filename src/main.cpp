@@ -670,10 +670,10 @@ void MyFrame::OnAbout(wxCommandEvent& )
     wxString about;
     about.Printf(   __PRG_NAME__ + _(", version ") + __VERSION__ + _(", from ") + __YEAR__ +
                     _("\nThis is the 'bridge' scoring program of Harrie/Tinus\n"
-                      "on base of wxWidgets\n\n"
+                      "on base of %s\n\n"
                       "Build date: %s\n%s\n\n"
                       "(c) wxSystemInformationFrame, PB: https://github.com/PBfordev"
-                    ),  wxString::FromUTF8(buildDate), cfg::GetCopyright()
+                    ), wxVERSION_STRING, wxString::FromUTF8(buildDate), cfg::GetCopyright()
                 );
 
     MyMessageBox( about, _("About ") + __PRG_NAME__ , wxOK | wxICON_INFORMATION);

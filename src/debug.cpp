@@ -992,7 +992,10 @@ void Debug::HandleCommandLine(wxString cmd)
     if (!cmd.IsEmpty())
     {
         cmd.MakeUpper();
-        DoCommand(cmd);
+        if (cmd.Len() > 1 && score::GetCardName(score::CiPass).MakeUpper().StartsWith(cmd))
+            OUTPUT_TEXT_FORMATTED("%s, %s 0", score::GetCardName(score::CiPass), _("score"));
+        else
+            DoCommand(cmd);
         m_pCheckBoxPrintNext->SetValue(false);
         m_bPrintNext = false;
     }
@@ -1052,7 +1055,7 @@ wxString Debug::GetBorrowTableAsString(UINT a_table, UINT a_round)
 {
     UINT table = m_schema.GetBorrowTable( a_table, a_round);
     if (table == 0) return "  ";    // no borrowing
-    //xgettext:TRANSLATORS: 'B' -> table to 'B'orrow games from (same games on different tables)
+    //xgettext:TRANSLATORS: 'B' -> table to 'B'orrow boards from (same boards on different tables)
     return FMT(_("B%u"), table);
 }   // GetBorrowTableAsString()
 
@@ -1439,9 +1442,9 @@ void Debug::CalcScore(const wxChar* pBuf)
     OUTPUT_TEXT(resultAsString);
     switch (scoreNv)
     {
-        case 0:     // contract values not consistent, error already shown through 'resultAsString'
+        case CONTRACT_NOT_CONSISTENT:  // contract values not consistent, error already shown through 'resultAsString'
             break;
-        case -1:    // bad contract description (empty 'resultAsString')
+        case CONTRACT_MALFORMED:       // bad contract description (empty 'resultAsString')
             Usage();
             break;
         default:
@@ -1467,19 +1470,8 @@ void Debug::Usage()
             "   n         = yes<->no testing of setentry\n"
             "   d         = debug: test schema's\n"
             "   o         = overview active schema\n"
-            "   -x[*[*]] or y'SUIT'[[+|-]x][*[*]]   calculate the score for:\n"
-            "             'x'    = the number of over/under tricks.\n"
-            "             'y'    = the level of the contract.\n"
-            "             'SUIT' = the type of the contract (or, when abbreviated, the first match in the card-names)\n"
-            "             '*'    = doubled, and '**' is redoubled\n"
-    );
-    sp += FMT("             %s:", _("SUIT"));
-    for (int index = score::CardId::CardIdFirst; index <= score::CardId::CardIdLast; ++index)
-    {   // can't use 'score::CardId' for index: it doesn't go above last typevalue! (I made it so!)
-        sp += FMT(" '%s' |",  score::GetCardName(static_cast<score::CardId>(index)));
-    }
-    sp.RemoveLast();    // == '|'
-    sp += '\n';
+           );
+    sp += "   " + score::GetContractExplanation();
 
     OUTPUT_TEXT(sp);
 }   // Usage()
@@ -1793,19 +1785,18 @@ void Debug::PrintScoreSlips(UINT a_setSize, UINT a_firstSet, UINT a_nrOfSets, UI
 
     prn::table::Text texts[] =
     {
-          {{SL_H0+2, SL_V0+1}  , extra           }    // extra text
-        , {{SL_H0+2, SL_V0+2}  , _("ROUND :"    )}
-        , {{SL_H0+2, SL_V1+1}  , _("TABLE :"    )}
-        , {{SL_H0+2, SL_V2+1}  , _("   NS :"    )}
+          {{SL_H0+2, SL_V0+1}  , extra           }  // extra text
+        , {{SL_H0+2, SL_V0+2}  , _("ROUND :"    )}  // TRANSLATORS: translated strings 'ROUND :' , 'TABLE :', '   NS :' and '   EW :' should have SAME size!
+        , {{SL_H0+2, SL_V1+1}  , _("TABLE :"    )}  // TRANSLATORS: translated strings 'ROUND :' , 'TABLE :', '   NS :' and '   EW :' should have SAME size!
+        , {{SL_H0+2, SL_V2+1}  , _("   NS :"    )}  // TRANSLATORS: translated strings 'ROUND :' , 'TABLE :', '   NS :' and '   EW :' should have SAME size!
         , {{SL_H0+2, SL_V3+1}  , _("   EW :"    )}
         , {{SL_H0+1, maxVPos-1}, _("ini.NS"     )}
         , {{SL_H1+1, maxVPos-1}, _("ini.EW"     )}
-        , {{SL_H2+2, SL_V0+2}  , _("Game"       )}
-        , {{SL_H3+4, SL_V0+1}  , _("Contract"   )}
-        , {{SL_H3+3, SL_V0+2}  , _("NS       EW")}
-        //xgettext:TRANSLATORS: text centered in 9 characters
-        , {{SL_H5+1, SL_V0+2}  , _(" Result  "  )}
-        , {{SL_H6+2, SL_V0+2}  , _("NS score + or -")}
+        , {{SL_H2+1, SL_V0+2}  , CenterText(_("Game"           ),  6)}
+        , {{SL_H3+1, SL_V0+1}  , CenterText(_("Contract"       ), 17)}  // TRANSLATORS: translated string should have SAME size as original text!
+        , {{SL_H3+1, SL_V0+2}  , CenterText(_("NS       EW"    ), 17)}  // above comment works on this line!
+        , {{SL_H5+1, SL_V0+2}  , CenterText(_("Result"         ),  9)}
+        , {{SL_H6+1, SL_V0+2}  , CenterText(_("NS score + or -"), 17)}
     };
     size_t textCount = ARRAY_LEN(texts);
 
@@ -1930,10 +1921,10 @@ void Debug::PrintGuideNew(UINT a_pair)
 
     prn::table::Text texts[]=
     {
-          {{G_H0+1,G_V2+1}, _("round")}
-        , {{G_H1+2,G_V2+1}, _("table")}
-        , {{G_H2+1,G_V2+1}, _("opp.")}
-        , {{G_H3+3,G_V2+1}, _("games")}
+          {{G_H0+1,G_V2+1}, CenterText(_("round"),  5)}
+        , {{G_H1+1,G_V2+1}, CenterText(_("table"),  7)}
+        , {{G_H2+1,G_V2+1}, CenterText(_("opp." ),  5)}
+        , {{G_H3+1,G_V2+1}, CenterText(_("games"), 12)}
         , {{G_H0+0,G_V0+1}, m_pTxtCtrlExtra->GetValue()}
         , {{G_H0+2,G_V1+2}, FMT(_("schema: %22s"), m_pActiveGroupInfo->schema)}
     };
@@ -1961,6 +1952,7 @@ void Debug::PrintGuideNew(UINT a_pair)
         tableInfo.textsV.clear();   // only dynamic texts change per pair, so clear them
         // now build the dynamic parts
         tableInfo.textsV.push_back({{G_H0+0,G_V0+0}, names::PairnrSession2GlobalText(pair+m_pActiveGroupInfo->groupOffset)});
+        // TRANSLATORS: translated string should have SAME size as original!
         tableInfo.textsV.push_back({{G_H0+2,G_V1+1}, FMT(_("Pair %2s%-2u             %2u pairs"), m_pActiveGroupInfo->groupChars, pair, m_pairs)});
         for (UINT round = 1; round <= m_rounds; ++round)
         {
@@ -2065,8 +2057,8 @@ void Debug::PrintSchemaOverviewNew()
     prn::table::Text texts[]=
     {
           {PNT(O_H2+2, O_V1+1), _("round ->")}
-        , {PNT(O_H0+1, O_V2+1), _("games")}
-        , {PNT(O_H1+1, O_V2+1), _("tbl")}
+        , {PNT(O_H0+1, O_V2+1), CenterText(_("games"), 8)}
+        , {PNT(O_H1+1, O_V2+1), CenterText(_("tbl"  ), 3)}
         , {PNT(O_H0+1, O_V0+1), FMT(_("%u pairs, %u rounds, %u games"), m_pairs, m_rounds, m_rounds*cfg::GetSetSize())}
         , {PNT(O_H0+1, O_V0+2), FMT(_("Schema: %s"), m_pActiveGroupInfo->schema)}
     };
@@ -2126,6 +2118,15 @@ void Debug::PrintSchemaOverviewNew()
     myPrint.PrintTable(tableInfo);      // print current guide
     myPrint.EndPrint();
 }   // PrintSchemaOverviewNew()
+
+wxString Debug::CenterText(const wxString& a_text, size_t a_length)
+{   // add spaces in front of the supplied text, so the new string will be centered in a space of 'a_length' characters
+    if (a_length > 100) a_length = 100; //maximize stringlength to 100
+    size_t len = a_text.Len();
+    if (len > a_length) return a_text.substr(0, a_length);  // return 'a_length' chars at max
+    size_t dif = a_length - len;
+    return wxString(' ', dif/2) + a_text;   // add spaces to the front of the string
+}   // CenterText()
 
 #if CALC_OLD
 static void SkipChars(const wxChar* &pBuf)        // skip alpha

@@ -84,8 +84,8 @@ To get your BridgeWx translation:
  - copy the tools from the release BridgeWxBin_v\*.zip[BridgeWx/tools/*.exe] to the '\<BridgeWxBase\>/tools' folder 
  - add a global env-variable '\<wxwin\>' or
  - from a cmd-prompt: set environment variable '\<wxwin\>' to wxWidgets basefolder:
- 	- set wxwin=d:\wxWidgets_3.2.8  ( == \<wxBase\> )
- - start BridgeWx.sln (from the base folder where the repo is located)
+ 	- set wxwin=d:\wxWidgets_3.2.8  ( == \<wxBase\
+  - start BridgeWx.sln (from the base folder where the repo is located)
 
  - initially to have the English language available for the compiled executable:
      - create the folder(s) for the Dutch/English language (automaticaly done when building in VS):

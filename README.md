@@ -1,7 +1,7 @@
 # BridgeWx
 
-A simple bridge calculation program.
-Its a gui-remake of an old dos-commandline program I started in the early 1990s when my bridgepartner was a districtscompetition leader of the Dutch Bridge Association.
+A simple bridge calculation/scoring program.
+Its a gui-remake of an old dos-commandline program I started in the early 1990s when my bridgepartner was a districtscompetition leader of the Dutch Bridge Association. Its based on the WxWidgets framework.
 
 Score entry can be done via:
 - score-slips
@@ -11,6 +11,9 @@ You can have multiple sessions (competition) and multiple groups per session.
 There is a global name entry for participants and you can assign these names to a specific player in a session.
 
 Corrections can be entered for a session and for the competition.
+
+Default, the calculation is done as % scoring.
+Since V10.4.0 scoring can also be done as Butler scoring.
 
 Results are shown in different formats for the session, competition, per player, per game.
 If you enter club-info for the players, you also can have club-rank as result.
@@ -82,6 +85,7 @@ To get your BridgeWx translation:
  - add a global env-variable '\<wxwin\>' or
  - from a cmd-prompt: set environment variable '\<wxwin\>' to wxWidgets basefolder:
  	- set wxwin=d:\wxWidgets_3.2.8  ( == \<wxBase\> )
+
  - start BridgeWx.sln (from the base folder where the repo is located)
 
  - initially to have the English language available for the compiled executable:

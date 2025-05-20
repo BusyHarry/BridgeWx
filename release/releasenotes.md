@@ -1,8 +1,9 @@
 # Releasenotes
-#V10.6.0  ......
+#V10.6.0  Tuesday 20 May 2025
  - updated wxWidgets to V3.2.8 (no changes compared to V3.2.7)
  - don't need anymore to change 'include/wx/grid.h' with public method 'SetRow()'
  - show used version of wxWidgets in About()
+ - added 'pass' as valid contract
  - when reading scores from the database, clear the contracts for each game, else they inherit these from a previous game!
  - removed an empty, unneeded correction column in several result listings
  - made translations easier by doing the math for tables internally, so only plain text-translations needed

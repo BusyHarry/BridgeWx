@@ -100,7 +100,7 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
     m_pTxtCtrlPairs->Bind(wxEVT_KILL_FOCUS,         &SetupSchema::OnLostFocusNrOfPairs, this );
     m_pTxtCtrlPairs->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterPairs        , this );
 
-    m_pChoiceBoxSchemas = new MyChoiceMC(this, _("Schema:"), _("Schema for this group"), Unique(CHOICE_SCHEMA));
+    m_pChoiceBoxSchemas = new MyChoiceMC(this, _("Schema")+':', _("Schema for this group"), Unique(CHOICE_SCHEMA));
     m_pChoiceBoxSchemas->Bind(wxEVT_CHOICE, &SetupSchema::OnSelectSchema, this );
 
     auto absent = new wxStaticText(this, wxID_ANY, _("Absent pair:  "));

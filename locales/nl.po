@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-18 14:20+0200\n"
-"PO-Revision-Date: 2025-05-18 14:20+0200\n"
+"POT-Creation-Date: 2025-05-26 19:02+0200\n"
+"PO-Revision-Date: 2025-05-26 19:02+0200\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -46,7 +46,7 @@ msgstr "globaalPaar"
 
 #: ..\src\Corrections.cpp:112 ..\src\calcScore.cpp:923
 #: ..\src\correctionsEnd.cpp:39 ..\src\correctionsSession.cpp:54
-#: ..\src\debug.cpp:1927 ..\src\debug.cpp:2060
+#: ..\src\debug.cpp:1930 ..\src\debug.cpp:2063
 msgid "games"
 msgstr "spellen"
 
@@ -844,7 +844,8 @@ msgstr "Gidsbriefje voor gekozen paar/alle paren"
 msgid "Pair: "
 msgstr "Paar: "
 
-#: ..\src\debug.cpp:364
+#: ..\src\debug.cpp:364 ..\src\debug.cpp:1922 ..\src\debug.cpp:2066
+#: ..\src\setupSchema.cpp:103
 msgid "Schema"
 msgstr "Schema"
 
@@ -916,7 +917,7 @@ msgstr "Debug console"
 msgid "Creation/print of guides"
 msgstr "Aanmaak/printen van gidsbriefjes"
 
-#: ..\src\debug.cpp:429 ..\src\debug.cpp:1947
+#: ..\src\debug.cpp:429 ..\src\debug.cpp:1950
 msgid "Guides"
 msgstr "Gidsbriefjes"
 
@@ -1089,7 +1090,7 @@ msgstr "aan"
 msgid "testing is now %s for TestRSP()\n"
 msgstr "testen staat nu %s voor TestRSP()\n"
 
-#: ..\src\debug.cpp:1453 ..\src\debug.cpp:2319
+#: ..\src\debug.cpp:1453 ..\src\debug.cpp:2322
 #, c-format
 msgid ", score vulnerable: %i, not vulnerable: %i\n"
 msgstr ", score kwetsbaar: %i, niet kwetsbaar: %i\n"
@@ -1223,82 +1224,72 @@ msgstr "Resultaat"
 msgid "NS score + or -"
 msgstr "NZ score + of -"
 
-#: ..\src\debug.cpp:1924
+#: ..\src\debug.cpp:1927
 msgid "round"
 msgstr "ronde"
 
-#: ..\src\debug.cpp:1925
+#: ..\src\debug.cpp:1928
 msgid "table"
 msgstr "tafel"
 
 # no error
-#: ..\src\debug.cpp:1926
+#: ..\src\debug.cpp:1929
 msgid "opp."
 msgstr "tegen"
 
-#: ..\src\debug.cpp:1929
-#, c-format
-msgid "schema: %22s"
-msgstr "schema: %22s"
-
 #. TRANSLATORS: translated string should have SAME size as original!
-#: ..\src\debug.cpp:1956
+#: ..\src\debug.cpp:1959
 #, c-format
 msgid "Pair %2s%-2u             %2u pairs"
 msgstr "Paar %2s%-2u             %2u paren"
 
-#: ..\src\debug.cpp:2059
+#: ..\src\debug.cpp:2062
 msgid "round ->"
 msgstr "ronde ->"
 
-#: ..\src\debug.cpp:2061
+#: ..\src\debug.cpp:2064
 msgid "tbl"
 msgstr "tfl"
 
-#: ..\src\debug.cpp:2062
+#: ..\src\debug.cpp:2065
 #, c-format
 msgid "%u pairs, %u rounds, %u games"
 msgstr "%u paren, %u rondes, %u spellen"
 
-#: ..\src\debug.cpp:2063
-#, c-format
-msgid "Schema: %s"
-msgstr "Schema: %s"
-
-#: ..\src\debug.cpp:2117
+#: ..\src\debug.cpp:2120
 msgid "Schemaoverview"
 msgstr "Schemaoverzicht"
 
-#: ..\src\debug.cpp:2147 ..\src\score.cpp:399
+#: ..\src\debug.cpp:2150 ..\src\score.cpp:399
 msgid "doubled"
 msgstr "gedubbeld"
 
-#: ..\src\debug.cpp:2147 ..\src\score.cpp:399
+#: ..\src\debug.cpp:2150 ..\src\score.cpp:399
 msgid "redoubled"
 msgstr "geredubbeld"
 
-#: ..\src\debug.cpp:2148 ..\src\score.cpp:398
+#: ..\src\debug.cpp:2151 ..\src\score.cpp:398
 msgid "Clubs/Diamonds"
 msgstr "Klaveren/Ruiten"
 
-#: ..\src\debug.cpp:2148 ..\src\score.cpp:398
+#: ..\src\debug.cpp:2151 ..\src\score.cpp:398
 msgid "Hearts/Spades"
 msgstr "Harten/Schoppen"
 
-#: ..\src\debug.cpp:2148 ..\src\score.cpp:394 ..\src\score.cpp:398
+#: ..\src\debug.cpp:2151 ..\src\score.cpp:394 ..\src\score.cpp:398
 msgid "NoTrump"
 msgstr "SansAtout"
 
-#: ..\src\debug.cpp:2219 ..\src\score.cpp:461 ..\src\score.cpp:474
+#: ..\src\debug.cpp:2222 ..\src\score.cpp:461 ..\src\score.cpp:474
 msgid "more down then contract-tricks??\n"
 msgstr "meer down dan te behalen aantal slagen??\n"
 
-#: ..\src\debug.cpp:2223 ..\src\score.cpp:597
+#: ..\src\debug.cpp:2226 ..\src\score.cpp:597
 #, c-format
 msgid "%i down %s"
 msgstr "%i down %s"
 
-#: ..\src\debug.cpp:2250 ..\src\score.cpp:469 ..\src\score.cpp:489
+#: ..\src\debug.cpp:2253 ..\src\score.cpp:469 ..\src\score.cpp:489
 msgid "more tricks then possible in a game??\n"
 msgstr "meer slagen dan er in een spel zijn??\n"
 
@@ -1420,7 +1411,7 @@ msgstr "Instellingen tbv de aktieve wedstrijd"
 
 #: ..\src\main.cpp:575
 msgid "&Schema"
-msgstr "Schema"
+msgstr "&Schema"
 
 #: ..\src\main.cpp:575
 msgid "Entry/change of schema"
@@ -2512,10 +2503,6 @@ msgstr "Aantal paren:  "
 #: ..\src\setupSchema.cpp:103
 msgid "Schema for this group"
 msgstr "Schema voor deze groep"
-
-#: ..\src\setupSchema.cpp:103
-msgid "Schema:"
-msgstr "Schema:"
 
 #: ..\src\setupSchema.cpp:106
 msgid "Absent pair:  "

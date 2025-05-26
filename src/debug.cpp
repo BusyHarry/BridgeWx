@@ -1919,6 +1919,9 @@ void Debug::PrintGuideNew(UINT a_pair)
     };
     size_t lineCount = ARRAY_LEN(lines);
 
+    wxString schema = _("Schema");
+    schema = schema.Left(12);     // assume reasonable size!
+    schema += FMT(": %*s", 30 - 2 - static_cast<int>(schema.length()), m_pActiveGroupInfo->schema);
     prn::table::Text texts[]=
     {
           {{G_H0+1,G_V2+1}, CenterText(_("round"),  5)}
@@ -1926,7 +1929,7 @@ void Debug::PrintGuideNew(UINT a_pair)
         , {{G_H2+1,G_V2+1}, CenterText(_("opp." ),  5)}
         , {{G_H3+1,G_V2+1}, CenterText(_("games"), 12)}
         , {{G_H0+0,G_V0+1}, m_pTxtCtrlExtra->GetValue()}
-        , {{G_H0+2,G_V1+2}, FMT(_("schema: %22s"), m_pActiveGroupInfo->schema)}
+        , {{G_H0+2,G_V1+2}, schema}
     };
     size_t textCount = ARRAY_LEN(texts);
 
@@ -2060,7 +2063,7 @@ void Debug::PrintSchemaOverviewNew()
         , {PNT(O_H0+1, O_V2+1), CenterText(_("games"), 8)}
         , {PNT(O_H1+1, O_V2+1), CenterText(_("tbl"  ), 3)}
         , {PNT(O_H0+1, O_V0+1), FMT(_("%u pairs, %u rounds, %u games"), m_pairs, m_rounds, m_rounds*cfg::GetSetSize())}
-        , {PNT(O_H0+1, O_V0+2), FMT(_("Schema: %s"), m_pActiveGroupInfo->schema)}
+        , {PNT(O_H0+1, O_V0+2), FMT("%s: %s", _("Schema"), m_pActiveGroupInfo->schema)}
     };
     size_t textCount = ARRAY_LEN(texts);
 

@@ -1,4 +1,7 @@
 # Releasenotes
+#V10.7.0  .....
+
+
 #V10.6.0  Tuesday 20 May 2025
  - updated wxWidgets to V3.2.8 (no changes compared to V3.2.7)
  - don't need anymore to change 'include/wx/grid.h' with public method 'SetRow()'

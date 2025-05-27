@@ -322,7 +322,7 @@ UINT SchemaInfo::GetOpponent(UINT pair, UINT round) const
 static const auto nl('\n');
 static void ExportSchemaNBB(const NEW_SCHEMA& schema, std::ostream& os)
 {
-    wxString tmp = FMT("%u %u %u %u %u\n",schema.pairs, schema.tables, schema.sets, schema.rounds, schema.dummy);
+    wxString tmp = FMT("%u %u %u %u %u\n",schema.pairs, schema.tables, schema.rounds, schema.sets, schema.schemaType);
     os << tmp;
 
     for (UINT round = 1; round <= schema.rounds; ++round)
@@ -394,14 +394,14 @@ static void CreateNewSchemaDataCpp()
         for (auto& chr : sanitizedName) { if (chr == ' ' || chr == '\'' || chr == '.' || chr == '-') chr = '_'; }
         schemas.push_back(sanitizedName);
         fp  << "\nstatic NEW_SCHEMA " << sanitizedName << "\n{ "
-            << newSchema.pairs  <<  " /*pairs*/, "
-            << newSchema.tables <<  " /*tables*/, "
-            << newSchema.sets   <<  " /*sets*/, "
-            << newSchema.rounds <<  " /*rounds*/, "
-            << newSchema.dummy  <<  " /*dummy*/, \""
-            << newSchema.name   <<  "\" /*schemaName*/,\n"
-                                    "  {\n"
-                                    "      {/*dummy round 0*/}          //NS,EW,SET,SetFromTable\n";
+            << newSchema.pairs      <<  " /*pairs*/, "
+            << newSchema.tables     <<  " /*tables*/, "
+            << newSchema.rounds     <<  " /*rounds*/, "
+            << newSchema.sets       <<  " /*sets*/, "
+            << newSchema.schemaType <<  " /*schema type: 0=pair schema, 1=individual schema*/, \""
+            << newSchema.name       <<  "\" /*schemaName*/,\n"
+                                        "  {\n"
+                                        "      {/*dummy round 0*/}          //NS,EW,SET,SetFromTable\n";
         for (UINT round = 1; round <= newSchema.rounds; ++round)
         {
             fp << FMT("    , {/*r%-2u*/ {/*dummy table 0*/}", round);

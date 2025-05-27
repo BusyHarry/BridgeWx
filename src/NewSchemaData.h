@@ -23,7 +23,7 @@ public:
     NewSchemaDataType    tables = 0;
     NewSchemaDataType    sets   = 0;
     NewSchemaDataType    rounds = 0;
-    NewSchemaDataType    dummy  = 0;
+    NewSchemaDataType    schemaType  = 0;   // 0=pair schema, 1=individual schema
     std::string name;
     std::vector< std::vector<NewTableInfo> > tableData; // [round][table] NB 1-based: round 0 and table 0 are dummies!
 };

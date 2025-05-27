@@ -4,7 +4,7 @@
 #include "NewSchemaData.h"
 
 static NEW_SCHEMA _5tin08
-{ 8 /*pairs*/, 5 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5tin08" /*schemaName*/,
+{ 8 /*pairs*/, 5 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5tin08" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 0, 0, 5, 0} }
@@ -16,7 +16,7 @@ static NEW_SCHEMA _5tin08
 };
 
 static NEW_SCHEMA _6multi08
-{ 8 /*pairs*/, 4 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi08" /*schemaName*/,
+{ 8 /*pairs*/, 4 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi08" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0} }
@@ -29,7 +29,7 @@ static NEW_SCHEMA _6multi08
 };
 
 static NEW_SCHEMA _6multi10
-{ 10 /*pairs*/, 6 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi10" /*schemaName*/,
+{ 10 /*pairs*/, 6 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi10" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, { 0, 0, 6, 0} }
@@ -42,7 +42,7 @@ static NEW_SCHEMA _6multi10
 };
 
 static NEW_SCHEMA _6multi12
-{ 12 /*pairs*/, 6 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi12" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi12" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0} }
@@ -55,7 +55,7 @@ static NEW_SCHEMA _6multi12
 };
 
 static NEW_SCHEMA _6multi14
-{ 14 /*pairs*/, 7 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi14" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi14" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1} }
@@ -68,7 +68,7 @@ static NEW_SCHEMA _6multi14
 };
 
 static NEW_SCHEMA _6multi16
-{ 16 /*pairs*/, 8 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi16" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi16" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 4, 4} }
@@ -81,7 +81,7 @@ static NEW_SCHEMA _6multi16
 };
 
 static NEW_SCHEMA _6multi18
-{ 18 /*pairs*/, 9 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi18" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi18" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 4, 4}, {17,18, 2, 2} }
@@ -94,7 +94,7 @@ static NEW_SCHEMA _6multi18
 };
 
 static NEW_SCHEMA _6multi20
-{ 20 /*pairs*/, 10 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi20" /*schemaName*/,
+{ 20 /*pairs*/, 10 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi20" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 4, 4}, {17,18, 2, 2}, {19,20, 3, 3} }
@@ -107,7 +107,7 @@ static NEW_SCHEMA _6multi20
 };
 
 static NEW_SCHEMA _6multi22
-{ 22 /*pairs*/, 11 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi22" /*schemaName*/,
+{ 22 /*pairs*/, 11 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi22" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 4, 4}, {17,18, 2, 2}, {19,20, 3, 3}, {21,22, 5, 5} }
@@ -120,7 +120,7 @@ static NEW_SCHEMA _6multi22
 };
 
 static NEW_SCHEMA _6multi24
-{ 24 /*pairs*/, 12 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi24" /*schemaName*/,
+{ 24 /*pairs*/, 12 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi24" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 4, 4}, {17,18, 2, 2}, {19,20, 3, 3}, {21,22, 5, 5}, {23,24, 6, 6} }
@@ -133,7 +133,7 @@ static NEW_SCHEMA _6multi24
 };
 
 static NEW_SCHEMA _7multi08
-{ 8 /*pairs*/, 4 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi08" /*schemaName*/,
+{ 8 /*pairs*/, 4 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi08" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0} }
@@ -147,7 +147,7 @@ static NEW_SCHEMA _7multi08
 };
 
 static NEW_SCHEMA _7multi10
-{ 10 /*pairs*/, 5 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi10" /*schemaName*/,
+{ 10 /*pairs*/, 5 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi10" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0} }
@@ -161,7 +161,7 @@ static NEW_SCHEMA _7multi10
 };
 
 static NEW_SCHEMA _7multi12
-{ 12 /*pairs*/, 6 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi12" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi12" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 3, 3} }
@@ -175,7 +175,7 @@ static NEW_SCHEMA _7multi12
 };
 
 static NEW_SCHEMA _7multi14
-{ 14 /*pairs*/, 7 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi14" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi14" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0} }
@@ -189,7 +189,7 @@ static NEW_SCHEMA _7multi14
 };
 
 static NEW_SCHEMA _7multi16
-{ 16 /*pairs*/, 8 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi16" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi16" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1} }
@@ -203,7 +203,7 @@ static NEW_SCHEMA _7multi16
 };
 
 static NEW_SCHEMA _7multi18
-{ 18 /*pairs*/, 9 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi18" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi18" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2} }
@@ -217,7 +217,7 @@ static NEW_SCHEMA _7multi18
 };
 
 static NEW_SCHEMA _7multi20
-{ 20 /*pairs*/, 10 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi20" /*schemaName*/,
+{ 20 /*pairs*/, 10 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi20" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2}, {19,20, 3, 3} }
@@ -231,7 +231,7 @@ static NEW_SCHEMA _7multi20
 };
 
 static NEW_SCHEMA _7multi22
-{ 22 /*pairs*/, 11 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi22" /*schemaName*/,
+{ 22 /*pairs*/, 11 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi22" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2}, {19,20, 3, 3}, {21,22, 4, 4} }
@@ -245,7 +245,7 @@ static NEW_SCHEMA _7multi22
 };
 
 static NEW_SCHEMA _7multi24
-{ 24 /*pairs*/, 12 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi24" /*schemaName*/,
+{ 24 /*pairs*/, 12 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi24" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2}, {19,20, 3, 3}, {21,22, 4, 4}, {23,24, 5, 5} }
@@ -259,7 +259,7 @@ static NEW_SCHEMA _7multi24
 };
 
 static NEW_SCHEMA _7multi26
-{ 26 /*pairs*/, 13 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi26" /*schemaName*/,
+{ 26 /*pairs*/, 13 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi26" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2}, {19,20, 3, 3}, {21,22, 4, 4}, {23,24, 5, 5}, {25,26, 6, 6} }
@@ -273,7 +273,7 @@ static NEW_SCHEMA _7multi26
 };
 
 static NEW_SCHEMA _7multi28
-{ 28 /*pairs*/, 14 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi28" /*schemaName*/,
+{ 28 /*pairs*/, 14 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi28" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2}, {19,20, 3, 3}, {21,22, 4, 4}, {23,24, 5, 5}, {25,26, 6, 6}, {27,28, 7, 7} }
@@ -287,7 +287,7 @@ static NEW_SCHEMA _7multi28
 };
 
 static NEW_SCHEMA _6multi08_nieuw
-{ 8 /*pairs*/, 4 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi08_nieuw" /*schemaName*/,
+{ 8 /*pairs*/, 4 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi08_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0} }
@@ -300,7 +300,7 @@ static NEW_SCHEMA _6multi08_nieuw
 };
 
 static NEW_SCHEMA _6multi10_nieuw
-{ 10 /*pairs*/, 6 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi10_nieuw" /*schemaName*/,
+{ 10 /*pairs*/, 6 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi10_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, { 0, 0, 6, 0} }
@@ -313,7 +313,7 @@ static NEW_SCHEMA _6multi10_nieuw
 };
 
 static NEW_SCHEMA _6multi12_nieuw
-{ 12 /*pairs*/, 6 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi12_nieuw" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi12_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0} }
@@ -326,7 +326,7 @@ static NEW_SCHEMA _6multi12_nieuw
 };
 
 static NEW_SCHEMA _6multi14_nieuw
-{ 14 /*pairs*/, 7 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi14_nieuw" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi14_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1} }
@@ -339,7 +339,7 @@ static NEW_SCHEMA _6multi14_nieuw
 };
 
 static NEW_SCHEMA _6multi16_nieuw
-{ 16 /*pairs*/, 8 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi16_nieuw" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi16_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 4, 4} }
@@ -352,7 +352,7 @@ static NEW_SCHEMA _6multi16_nieuw
 };
 
 static NEW_SCHEMA _6multi18_nieuw
-{ 18 /*pairs*/, 9 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi18_nieuw" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi18_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 4, 4}, {17,18, 2, 2} }
@@ -365,7 +365,7 @@ static NEW_SCHEMA _6multi18_nieuw
 };
 
 static NEW_SCHEMA _6multi20_nieuw
-{ 20 /*pairs*/, 10 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi20_nieuw" /*schemaName*/,
+{ 20 /*pairs*/, 10 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi20_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 4, 4}, {17,18, 2, 2}, {19,20, 3, 3} }
@@ -378,7 +378,7 @@ static NEW_SCHEMA _6multi20_nieuw
 };
 
 static NEW_SCHEMA _6multi22_nieuw
-{ 22 /*pairs*/, 11 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi22_nieuw" /*schemaName*/,
+{ 22 /*pairs*/, 11 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi22_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 4, 4}, {17,18, 2, 2}, {19,20, 3, 3}, {21,22, 5, 5} }
@@ -391,7 +391,7 @@ static NEW_SCHEMA _6multi22_nieuw
 };
 
 static NEW_SCHEMA _6multi24_nieuw
-{ 24 /*pairs*/, 12 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6multi24_nieuw" /*schemaName*/,
+{ 24 /*pairs*/, 12 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6multi24_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 4, 4}, {17,18, 2, 2}, {19,20, 3, 3}, {21,22, 5, 5}, {23,24, 6, 6} }
@@ -404,7 +404,7 @@ static NEW_SCHEMA _6multi24_nieuw
 };
 
 static NEW_SCHEMA _7multi08_nieuw
-{ 8 /*pairs*/, 4 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi08_nieuw" /*schemaName*/,
+{ 8 /*pairs*/, 4 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi08_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0} }
@@ -418,7 +418,7 @@ static NEW_SCHEMA _7multi08_nieuw
 };
 
 static NEW_SCHEMA _7multi10_nieuw
-{ 10 /*pairs*/, 5 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi10_nieuw" /*schemaName*/,
+{ 10 /*pairs*/, 5 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi10_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0} }
@@ -432,7 +432,7 @@ static NEW_SCHEMA _7multi10_nieuw
 };
 
 static NEW_SCHEMA _7multi12_nieuw
-{ 12 /*pairs*/, 7 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi12_nieuw" /*schemaName*/,
+{ 12 /*pairs*/, 7 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi12_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, { 0, 0, 7, 0} }
@@ -446,7 +446,7 @@ static NEW_SCHEMA _7multi12_nieuw
 };
 
 static NEW_SCHEMA _7multi14_nieuw
-{ 14 /*pairs*/, 7 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi14_nieuw" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi14_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0} }
@@ -460,7 +460,7 @@ static NEW_SCHEMA _7multi14_nieuw
 };
 
 static NEW_SCHEMA _7multi16_nieuw
-{ 16 /*pairs*/, 8 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi16_nieuw" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi16_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1} }
@@ -474,7 +474,7 @@ static NEW_SCHEMA _7multi16_nieuw
 };
 
 static NEW_SCHEMA _7multi18_nieuw
-{ 18 /*pairs*/, 9 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi18_nieuw" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi18_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2} }
@@ -488,7 +488,7 @@ static NEW_SCHEMA _7multi18_nieuw
 };
 
 static NEW_SCHEMA _7multi20_nieuw
-{ 20 /*pairs*/, 10 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi20_nieuw" /*schemaName*/,
+{ 20 /*pairs*/, 10 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi20_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2}, {19,20, 3, 3} }
@@ -502,7 +502,7 @@ static NEW_SCHEMA _7multi20_nieuw
 };
 
 static NEW_SCHEMA _7multi22_nieuw
-{ 22 /*pairs*/, 11 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi22_nieuw" /*schemaName*/,
+{ 22 /*pairs*/, 11 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi22_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2}, {19,20, 3, 3}, {21,22, 4, 4} }
@@ -516,7 +516,7 @@ static NEW_SCHEMA _7multi22_nieuw
 };
 
 static NEW_SCHEMA _7multi24_nieuw
-{ 24 /*pairs*/, 12 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi24_nieuw" /*schemaName*/,
+{ 24 /*pairs*/, 12 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi24_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2}, {19,20, 3, 3}, {21,22, 4, 4}, {23,24, 5, 5} }
@@ -530,7 +530,7 @@ static NEW_SCHEMA _7multi24_nieuw
 };
 
 static NEW_SCHEMA _7multi26_nieuw
-{ 26 /*pairs*/, 13 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi26_nieuw" /*schemaName*/,
+{ 26 /*pairs*/, 13 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi26_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2}, {19,20, 3, 3}, {21,22, 4, 4}, {23,24, 5, 5}, {25,26, 6, 6} }
@@ -544,7 +544,7 @@ static NEW_SCHEMA _7multi26_nieuw
 };
 
 static NEW_SCHEMA _7multi28_nieuw
-{ 28 /*pairs*/, 14 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7multi28_nieuw" /*schemaName*/,
+{ 28 /*pairs*/, 14 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7multi28_nieuw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2}, {19,20, 3, 3}, {21,22, 4, 4}, {23,24, 5, 5}, {25,26, 6, 6}, {27,28, 7, 7} }
@@ -558,7 +558,7 @@ static NEW_SCHEMA _7multi28_nieuw
 };
 
 static NEW_SCHEMA _4basis8
-{ 8 /*pairs*/, 4 /*tables*/, 4 /*sets*/, 4 /*rounds*/, 0 /*dummy*/, "4basis8" /*schemaName*/,
+{ 8 /*pairs*/, 4 /*tables*/, 4 /*rounds*/, 4 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "4basis8" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0} }
@@ -569,7 +569,7 @@ static NEW_SCHEMA _4basis8
 };
 
 static NEW_SCHEMA _5basis10
-{ 10 /*pairs*/, 5 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5basis10" /*schemaName*/,
+{ 10 /*pairs*/, 5 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5basis10" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0} }
@@ -581,7 +581,7 @@ static NEW_SCHEMA _5basis10
 };
 
 static NEW_SCHEMA _6basis12_1_5
-{ 12 /*pairs*/, 6 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6basis12.1-5" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6basis12.1-5" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0} }
@@ -594,7 +594,7 @@ static NEW_SCHEMA _6basis12_1_5
 };
 
 static NEW_SCHEMA _6basis12_2_5
-{ 12 /*pairs*/, 6 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6basis12.2-5" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6basis12.2-5" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0} }
@@ -607,7 +607,7 @@ static NEW_SCHEMA _6basis12_2_5
 };
 
 static NEW_SCHEMA _6basis12_3_5
-{ 12 /*pairs*/, 6 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6basis12.3-5" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6basis12.3-5" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 9, 4, 1, 0}, { 7,12, 2, 0}, { 5, 6, 3, 0}, { 1,10, 4, 0}, {11, 2, 5, 0}, { 3, 8, 6, 0} }
@@ -620,7 +620,7 @@ static NEW_SCHEMA _6basis12_3_5
 };
 
 static NEW_SCHEMA _6basis12_4_5
-{ 12 /*pairs*/, 6 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6basis12.4-5" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6basis12.4-5" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 7,10, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 9, 2, 4, 0}, { 1, 8, 5, 0}, {11,12, 6, 0} }
@@ -633,7 +633,7 @@ static NEW_SCHEMA _6basis12_4_5
 };
 
 static NEW_SCHEMA _6basis12_5_5
-{ 12 /*pairs*/, 6 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6basis12.5-5" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6basis12.5-5" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, {11, 8, 1, 0}, { 1,12, 2, 0}, { 5, 6, 3, 0}, { 9, 2, 4, 0}, { 7, 4, 5, 0}, { 3,10, 6, 0} }
@@ -646,7 +646,7 @@ static NEW_SCHEMA _6basis12_5_5
 };
 
 static NEW_SCHEMA _7basis14
-{ 14 /*pairs*/, 7 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7basis14" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7basis14" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0} }
@@ -660,7 +660,7 @@ static NEW_SCHEMA _7basis14
 };
 
 static NEW_SCHEMA _3drive08
-{ 8 /*pairs*/, 4 /*tables*/, 3 /*sets*/, 3 /*rounds*/, 0 /*dummy*/, "3drive08" /*schemaName*/,
+{ 8 /*pairs*/, 4 /*tables*/, 3 /*rounds*/, 3 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "3drive08" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 1, 0} }
@@ -670,7 +670,7 @@ static NEW_SCHEMA _3drive08
 };
 
 static NEW_SCHEMA _5howel06_1_1
-{ 6 /*pairs*/, 3 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5howel06.1-1" /*schemaName*/,
+{ 6 /*pairs*/, 3 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5howel06.1-1" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0} }
@@ -682,7 +682,7 @@ static NEW_SCHEMA _5howel06_1_1
 };
 
 static NEW_SCHEMA _7howel08_1_1
-{ 8 /*pairs*/, 4 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7howel08.1-1" /*schemaName*/,
+{ 8 /*pairs*/, 4 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7howel08.1-1" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0} }
@@ -696,7 +696,7 @@ static NEW_SCHEMA _7howel08_1_1
 };
 
 static NEW_SCHEMA _3howel10_1_3
-{ 10 /*pairs*/, 5 /*tables*/, 3 /*sets*/, 3 /*rounds*/, 0 /*dummy*/, "3howel10.1-3" /*schemaName*/,
+{ 10 /*pairs*/, 5 /*tables*/, 3 /*rounds*/, 3 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "3howel10.1-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 1, 1}, { 5, 6, 2, 0}, { 7, 8, 2, 3}, { 9,10, 3, 0} }
@@ -706,7 +706,7 @@ static NEW_SCHEMA _3howel10_1_3
 };
 
 static NEW_SCHEMA _3howel10_2_3
-{ 10 /*pairs*/, 5 /*tables*/, 3 /*sets*/, 3 /*rounds*/, 0 /*dummy*/, "3howel10.2-3" /*schemaName*/,
+{ 10 /*pairs*/, 5 /*tables*/, 3 /*rounds*/, 3 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "3howel10.2-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 6, 1, 0}, { 5, 7, 1, 1}, { 4,10, 2, 0}, { 2, 9, 2, 3}, { 8, 3, 3, 0} }
@@ -716,7 +716,7 @@ static NEW_SCHEMA _3howel10_2_3
 };
 
 static NEW_SCHEMA _3howel10_3_3
-{ 10 /*pairs*/, 5 /*tables*/, 3 /*sets*/, 3 /*rounds*/, 0 /*dummy*/, "3howel10.3-3" /*schemaName*/,
+{ 10 /*pairs*/, 5 /*tables*/, 3 /*rounds*/, 3 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "3howel10.3-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 6, 3, 1, 0}, { 5,10, 1, 1}, { 2, 4, 2, 0}, { 7, 9, 2, 3}, { 1, 8, 3, 0} }
@@ -726,7 +726,7 @@ static NEW_SCHEMA _3howel10_3_3
 };
 
 static NEW_SCHEMA _4howel10_2_2
-{ 10 /*pairs*/, 5 /*tables*/, 4 /*sets*/, 4 /*rounds*/, 0 /*dummy*/, "4howel10.2-2" /*schemaName*/,
+{ 10 /*pairs*/, 5 /*tables*/, 4 /*rounds*/, 4 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "4howel10.2-2" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 6, 7, 1, 0}, {10, 3, 2, 0}, { 2, 4, 3, 0}, { 9, 1, 4, 0}, { 5, 8, 1, 1} }
@@ -737,7 +737,7 @@ static NEW_SCHEMA _4howel10_2_2
 };
 
 static NEW_SCHEMA _5howel10_1_2
-{ 10 /*pairs*/, 5 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5howel10.1-2" /*schemaName*/,
+{ 10 /*pairs*/, 5 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5howel10.1-2" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0} }
@@ -749,7 +749,7 @@ static NEW_SCHEMA _5howel10_1_2
 };
 
 static NEW_SCHEMA _9howel10_1_1
-{ 10 /*pairs*/, 5 /*tables*/, 9 /*sets*/, 9 /*rounds*/, 0 /*dummy*/, "9howel10.1-1" /*schemaName*/,
+{ 10 /*pairs*/, 5 /*tables*/, 9 /*rounds*/, 9 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "9howel10.1-1" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0} }
@@ -765,7 +765,7 @@ static NEW_SCHEMA _9howel10_1_1
 };
 
 static NEW_SCHEMA _9howel10_2_1
-{ 10 /*pairs*/, 5 /*tables*/, 9 /*sets*/, 9 /*rounds*/, 0 /*dummy*/, "9howel10.2-1" /*schemaName*/,
+{ 10 /*pairs*/, 5 /*tables*/, 9 /*rounds*/, 9 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "9howel10.2-1" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0} }
@@ -781,7 +781,7 @@ static NEW_SCHEMA _9howel10_2_1
 };
 
 static NEW_SCHEMA _3howel12_3_3
-{ 12 /*pairs*/, 6 /*tables*/, 3 /*sets*/, 3 /*rounds*/, 0 /*dummy*/, "3howel12.3-3" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 3 /*rounds*/, 3 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "3howel12.3-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 6, 1, 0}, { 8, 4, 2, 0}, {12, 9, 3, 0}, { 2, 7, 1, 1}, { 3, 5, 2, 2}, {11,10, 3, 3} }
@@ -791,7 +791,7 @@ static NEW_SCHEMA _3howel12_3_3
 };
 
 static NEW_SCHEMA _4howel12_1_3
-{ 12 /*pairs*/, 6 /*tables*/, 4 /*sets*/, 4 /*rounds*/, 0 /*dummy*/, "4howel12.1-3" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 4 /*rounds*/, 4 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "4howel12.1-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 1, 1}, {11,12, 2, 2} }
@@ -802,7 +802,7 @@ static NEW_SCHEMA _4howel12_1_3
 };
 
 static NEW_SCHEMA _4howel12_2_3
-{ 12 /*pairs*/, 6 /*tables*/, 4 /*sets*/, 4 /*rounds*/, 0 /*dummy*/, "4howel12.2-3" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 4 /*rounds*/, 4 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "4howel12.2-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 7, 5, 1, 0}, { 1,11, 2, 0}, { 9, 4, 3, 0}, { 8, 6, 4, 0}, { 2,12, 1, 1}, {10, 3, 2, 2} }
@@ -813,7 +813,7 @@ static NEW_SCHEMA _4howel12_2_3
 };
 
 static NEW_SCHEMA _5howel12_2_2
-{ 12 /*pairs*/, 6 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5howel12.2-2" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5howel12.2-2" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 8, 1, 0}, { 9, 2, 2, 0}, { 7, 6, 3, 0}, {11, 4, 4, 0}, { 3,10, 5, 0}, { 5,12, 1, 1} }
@@ -825,7 +825,7 @@ static NEW_SCHEMA _5howel12_2_2
 };
 
 static NEW_SCHEMA _6howel12_1_2
-{ 12 /*pairs*/, 6 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6howel12.1-2" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6howel12.1-2" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0} }
@@ -838,7 +838,7 @@ static NEW_SCHEMA _6howel12_1_2
 };
 
 static NEW_SCHEMA _11howe12_2_1
-{ 12 /*pairs*/, 6 /*tables*/, 11 /*sets*/, 11 /*rounds*/, 0 /*dummy*/, "11howe12.2-1" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 11 /*rounds*/, 11 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "11howe12.2-1" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0} }
@@ -856,7 +856,7 @@ static NEW_SCHEMA _11howe12_2_1
 };
 
 static NEW_SCHEMA _11howe12_3_1
-{ 12 /*pairs*/, 6 /*tables*/, 11 /*sets*/, 11 /*rounds*/, 0 /*dummy*/, "11howe12.3-1" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 11 /*rounds*/, 11 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "11howe12.3-1" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 1, 1}, {11,12, 2, 2} }
@@ -874,7 +874,7 @@ static NEW_SCHEMA _11howe12_3_1
 };
 
 static NEW_SCHEMA _4howel14_1_3
-{ 14 /*pairs*/, 7 /*tables*/, 4 /*sets*/, 4 /*rounds*/, 0 /*dummy*/, "4howel14.1-3" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 4 /*rounds*/, 4 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "4howel14.1-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 1, 1}, {11,12, 2, 2}, {13,14, 3, 3} }
@@ -885,7 +885,7 @@ static NEW_SCHEMA _4howel14_1_3
 };
 
 static NEW_SCHEMA _4howel14_2_3
-{ 14 /*pairs*/, 7 /*tables*/, 4 /*sets*/, 4 /*rounds*/, 0 /*dummy*/, "4howel14.2-3" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 4 /*rounds*/, 4 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "4howel14.2-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 4, 1, 0}, { 9, 7, 2, 0}, {13,11, 3, 0}, { 8, 5, 4, 0}, { 6,14, 1, 1}, {12, 3, 2, 2}, { 2,10, 3, 3} }
@@ -896,7 +896,7 @@ static NEW_SCHEMA _4howel14_2_3
 };
 
 static NEW_SCHEMA _5howel14_3_3
-{ 14 /*pairs*/, 7 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5howel14.3-3" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5howel14.3-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 7, 1, 0}, { 4,12, 2, 0}, { 6,11, 3, 0}, {13, 2, 4, 0}, {10,14, 5, 0}, { 3, 5, 3, 3}, { 8, 9, 4, 4} }
@@ -908,7 +908,7 @@ static NEW_SCHEMA _5howel14_3_3
 };
 
 static NEW_SCHEMA _6howel14_2_2
-{ 14 /*pairs*/, 7 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6howel14.2-2" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6howel14.2-2" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 7, 1, 1, 0}, { 5, 8, 2, 0}, { 9,12, 3, 0}, {14, 4, 4, 0}, {13, 6, 5, 0}, { 2,10, 6, 0}, {11, 3, 1, 1} }
@@ -921,7 +921,7 @@ static NEW_SCHEMA _6howel14_2_2
 };
 
 static NEW_SCHEMA _7howel14_1_2
-{ 14 /*pairs*/, 7 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7howel14.1-2" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7howel14.1-2" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0} }
@@ -935,7 +935,7 @@ static NEW_SCHEMA _7howel14_1_2
 };
 
 static NEW_SCHEMA _5howel16_1_3
-{ 16 /*pairs*/, 8 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5howel16.1-3" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5howel16.1-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 1}, {13,14, 2, 2}, {15,16, 3, 3} }
@@ -947,7 +947,7 @@ static NEW_SCHEMA _5howel16_1_3
 };
 
 static NEW_SCHEMA _5howel16_2_3
-{ 16 /*pairs*/, 8 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5howel16.2-3" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5howel16.2-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1,16, 1, 0}, { 9, 5, 2, 0}, { 2,10, 3, 0}, { 3,11, 4, 0}, {13, 6, 5, 0}, {15, 4, 1, 1}, { 8,14, 3, 3}, { 7,12, 5, 5} }
@@ -959,7 +959,7 @@ static NEW_SCHEMA _5howel16_2_3
 };
 
 static NEW_SCHEMA _5howel16_3_3
-{ 16 /*pairs*/, 8 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5howel16.3-3" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5howel16.3-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 2, 1, 1, 0}, {10, 5, 2, 0}, { 6,13, 3, 0}, {12, 7, 4, 0}, { 8,11, 5, 0}, { 4, 3, 1, 1}, {14,15, 2, 2}, {16, 9, 3, 3} }
@@ -971,7 +971,7 @@ static NEW_SCHEMA _5howel16_3_3
 };
 
 static NEW_SCHEMA _5howel18_3_3
-{ 18 /*pairs*/, 9 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5howel18.3-3" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5howel18.3-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 6, 1, 0}, { 7,12, 2, 0}, { 3,17, 3, 0}, {10,18, 4, 0}, { 4,13, 5, 0}, { 2, 5, 1, 1}, {14,15, 2, 2}, {11,16, 3, 3}, { 8, 9, 4, 4} }
@@ -983,7 +983,7 @@ static NEW_SCHEMA _5howel18_3_3
 };
 
 static NEW_SCHEMA _7howel16
-{ 16 /*pairs*/, 8 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7howel16" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7howel16" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1} }
@@ -997,7 +997,7 @@ static NEW_SCHEMA _7howel16
 };
 
 static NEW_SCHEMA _6howel18_1_3
-{ 18 /*pairs*/, 9 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6howel18.1-3" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6howel18.1-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 2, 2}, {17,18, 3, 3} }
@@ -1010,7 +1010,7 @@ static NEW_SCHEMA _6howel18_1_3
 };
 
 static NEW_SCHEMA _6howel18_2_3
-{ 18 /*pairs*/, 9 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6howel18.2-3" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6howel18.2-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 3, 1, 0}, { 7,18, 2, 0}, { 9,11, 3, 0}, {13,15, 4, 0}, { 6,10, 5, 0}, { 2,14, 6, 0}, { 8,12, 1, 1}, { 5,17, 2, 2}, { 4,16, 3, 3} }
@@ -1023,7 +1023,7 @@ static NEW_SCHEMA _6howel18_2_3
 };
 
 static NEW_SCHEMA _4stayr10
-{ 10 /*pairs*/, 5 /*tables*/, 4 /*sets*/, 4 /*rounds*/, 0 /*dummy*/, "4stayr10" /*schemaName*/,
+{ 10 /*pairs*/, 5 /*tables*/, 4 /*rounds*/, 4 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "4stayr10" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1,10, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9, 2, 1, 1} }
@@ -1034,7 +1034,7 @@ static NEW_SCHEMA _4stayr10
 };
 
 static NEW_SCHEMA _4stayr10_1_x
-{ 10 /*pairs*/, 5 /*tables*/, 4 /*sets*/, 4 /*rounds*/, 0 /*dummy*/, "4stayr10.1-x" /*schemaName*/,
+{ 10 /*pairs*/, 5 /*tables*/, 4 /*rounds*/, 4 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "4stayr10.1-x" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 1, 1} }
@@ -1045,7 +1045,7 @@ static NEW_SCHEMA _4stayr10_1_x
 };
 
 static NEW_SCHEMA _4stayr12
-{ 12 /*pairs*/, 6 /*tables*/, 4 /*sets*/, 4 /*rounds*/, 0 /*dummy*/, "4stayr12" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 4 /*rounds*/, 4 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "4stayr12" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1,10, 1, 0}, { 3,12, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9, 2, 1, 1}, {11, 4, 2, 2} }
@@ -1056,7 +1056,7 @@ static NEW_SCHEMA _4stayr12
 };
 
 static NEW_SCHEMA _4stayr12_1_x
-{ 12 /*pairs*/, 6 /*tables*/, 4 /*sets*/, 4 /*rounds*/, 0 /*dummy*/, "4stayr12.1-x" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 4 /*rounds*/, 4 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "4stayr12.1-x" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 1, 1}, {11,12, 2, 2} }
@@ -1067,7 +1067,7 @@ static NEW_SCHEMA _4stayr12_1_x
 };
 
 static NEW_SCHEMA _5stayr12
-{ 12 /*pairs*/, 6 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr12" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr12" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1,12, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11, 2, 1, 1} }
@@ -1079,7 +1079,7 @@ static NEW_SCHEMA _5stayr12
 };
 
 static NEW_SCHEMA _5stayr12_1_x
-{ 12 /*pairs*/, 6 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr12.1-x" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr12.1-x" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 1} }
@@ -1091,7 +1091,7 @@ static NEW_SCHEMA _5stayr12_1_x
 };
 
 static NEW_SCHEMA _6stayr13
-{ 13 /*pairs*/, 6 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6stayr13" /*schemaName*/,
+{ 13 /*pairs*/, 6 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6stayr13" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, {13,10, 5, 0}, {11,12, 6, 0} }
@@ -1104,7 +1104,7 @@ static NEW_SCHEMA _6stayr13
 };
 
 static NEW_SCHEMA _6stayr13_1_5
-{ 13 /*pairs*/, 6 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6stayr13.1-5" /*schemaName*/,
+{ 13 /*pairs*/, 6 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6stayr13.1-5" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0} }
@@ -1117,7 +1117,7 @@ static NEW_SCHEMA _6stayr13_1_5
 };
 
 static NEW_SCHEMA _4stayr14
-{ 14 /*pairs*/, 7 /*tables*/, 4 /*sets*/, 4 /*rounds*/, 0 /*dummy*/, "4stayr14" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 4 /*rounds*/, 4 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "4stayr14" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1,10, 1, 0}, { 3,12, 2, 0}, { 5,14, 3, 0}, { 7, 8, 4, 0}, { 9, 2, 1, 1}, {11, 4, 2, 2}, {13, 6, 3, 3} }
@@ -1128,7 +1128,7 @@ static NEW_SCHEMA _4stayr14
 };
 
 static NEW_SCHEMA _4stayr14_1_x
-{ 14 /*pairs*/, 7 /*tables*/, 4 /*sets*/, 4 /*rounds*/, 0 /*dummy*/, "4stayr14.1-x" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 4 /*rounds*/, 4 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "4stayr14.1-x" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 1, 1}, {11,12, 2, 2}, {13,14, 3, 3} }
@@ -1139,7 +1139,7 @@ static NEW_SCHEMA _4stayr14_1_x
 };
 
 static NEW_SCHEMA _5stayr14
-{ 14 /*pairs*/, 7 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr14" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr14" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1,12, 1, 0}, { 3,14, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11, 2, 1, 1}, {13, 4, 2, 2} }
@@ -1151,7 +1151,7 @@ static NEW_SCHEMA _5stayr14
 };
 
 static NEW_SCHEMA _5stayr14_1_x
-{ 14 /*pairs*/, 7 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr14.1-x" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr14.1-x" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 1}, {13,14, 2, 2} }
@@ -1163,7 +1163,7 @@ static NEW_SCHEMA _5stayr14_1_x
 };
 
 static NEW_SCHEMA _5stayr14_1_x_bl
-{ 14 /*pairs*/, 7 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr14.1-x_bl" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr14.1-x_bl" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 1}, {13,14, 2, 2} }
@@ -1175,7 +1175,7 @@ static NEW_SCHEMA _5stayr14_1_x_bl
 };
 
 static NEW_SCHEMA _5stayr14_1_x_br
-{ 14 /*pairs*/, 7 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr14.1-x_br" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr14.1-x_br" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 1}, {13,14, 2, 2} }
@@ -1187,7 +1187,7 @@ static NEW_SCHEMA _5stayr14_1_x_br
 };
 
 static NEW_SCHEMA _5stayr14_1_x_ge
-{ 14 /*pairs*/, 7 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr14.1-x_ge" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr14.1-x_ge" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 1}, {13,14, 2, 2} }
@@ -1199,7 +1199,7 @@ static NEW_SCHEMA _5stayr14_1_x_ge
 };
 
 static NEW_SCHEMA _5stayr14_1_x_gr
-{ 14 /*pairs*/, 7 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr14.1-x_gr" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr14.1-x_gr" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 1}, {13,14, 2, 2} }
@@ -1211,7 +1211,7 @@ static NEW_SCHEMA _5stayr14_1_x_gr
 };
 
 static NEW_SCHEMA _5stayr14_1_x_ro
-{ 14 /*pairs*/, 7 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr14.1-x_ro" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr14.1-x_ro" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 1}, {13,14, 2, 2} }
@@ -1223,7 +1223,7 @@ static NEW_SCHEMA _5stayr14_1_x_ro
 };
 
 static NEW_SCHEMA _5stayr14_1_x_zw
-{ 14 /*pairs*/, 7 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr14.1-x_zw" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr14.1-x_zw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 1}, {13,14, 2, 2} }
@@ -1235,7 +1235,7 @@ static NEW_SCHEMA _5stayr14_1_x_zw
 };
 
 static NEW_SCHEMA _6stayr14
-{ 14 /*pairs*/, 7 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6stayr14" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6stayr14" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, {13,10, 5, 0}, {11,12, 6, 0}, { 9,14, 1, 1} }
@@ -1248,7 +1248,7 @@ static NEW_SCHEMA _6stayr14
 };
 
 static NEW_SCHEMA _6stayr14_1_5
-{ 14 /*pairs*/, 7 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6stayr14.1-5" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6stayr14.1-5" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1} }
@@ -1261,7 +1261,7 @@ static NEW_SCHEMA _6stayr14_1_5
 };
 
 static NEW_SCHEMA _5stayr16
-{ 16 /*pairs*/, 8 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr16" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr16" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1,12, 1, 0}, { 3,14, 2, 0}, { 5,16, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11, 2, 1, 1}, {13, 4, 2, 2}, {15, 6, 3, 3} }
@@ -1273,7 +1273,7 @@ static NEW_SCHEMA _5stayr16
 };
 
 static NEW_SCHEMA _5stayr16_1_x
-{ 16 /*pairs*/, 8 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr16.1-x" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr16.1-x" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 1}, {13,14, 2, 2}, {15,16, 3, 3} }
@@ -1285,7 +1285,7 @@ static NEW_SCHEMA _5stayr16_1_x
 };
 
 static NEW_SCHEMA _5stayr16_1_x_n
-{ 16 /*pairs*/, 10 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr16.1-x_n" /*schemaName*/,
+{ 16 /*pairs*/, 10 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr16.1-x_n" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 0}, {13,14, 2, 0}, {15,16, 3, 0}, { 0, 0, 4, 0}, { 0, 0, 5, 0} }
@@ -1297,7 +1297,7 @@ static NEW_SCHEMA _5stayr16_1_x_n
 };
 
 static NEW_SCHEMA _5stayr16_1_x_n_bl
-{ 16 /*pairs*/, 10 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr16.1-x_n_bl" /*schemaName*/,
+{ 16 /*pairs*/, 10 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr16.1-x_n_bl" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 0}, {13,14, 2, 0}, {15,16, 3, 0}, { 0, 0, 4, 0}, { 0, 0, 5, 0} }
@@ -1309,7 +1309,7 @@ static NEW_SCHEMA _5stayr16_1_x_n_bl
 };
 
 static NEW_SCHEMA _5stayr16_1_x_n_br
-{ 16 /*pairs*/, 10 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr16.1-x_n_br" /*schemaName*/,
+{ 16 /*pairs*/, 10 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr16.1-x_n_br" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 0}, {13,14, 2, 0}, {15,16, 3, 0}, { 0, 0, 4, 0}, { 0, 0, 5, 0} }
@@ -1321,7 +1321,7 @@ static NEW_SCHEMA _5stayr16_1_x_n_br
 };
 
 static NEW_SCHEMA _5stayr16_1_x_n_ge
-{ 16 /*pairs*/, 10 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr16.1-x_n_ge" /*schemaName*/,
+{ 16 /*pairs*/, 10 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr16.1-x_n_ge" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 0}, {13,14, 2, 0}, {15,16, 3, 0}, { 0, 0, 4, 0}, { 0, 0, 5, 0} }
@@ -1333,7 +1333,7 @@ static NEW_SCHEMA _5stayr16_1_x_n_ge
 };
 
 static NEW_SCHEMA _5stayr16_1_x_n_gr
-{ 16 /*pairs*/, 10 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr16.1-x_n_gr" /*schemaName*/,
+{ 16 /*pairs*/, 10 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr16.1-x_n_gr" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 0}, {13,14, 2, 0}, {15,16, 3, 0}, { 0, 0, 4, 0}, { 0, 0, 5, 0} }
@@ -1345,7 +1345,7 @@ static NEW_SCHEMA _5stayr16_1_x_n_gr
 };
 
 static NEW_SCHEMA _5stayr16_1_x_n_ro
-{ 16 /*pairs*/, 10 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr16.1-x_n_ro" /*schemaName*/,
+{ 16 /*pairs*/, 10 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr16.1-x_n_ro" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 0}, {13,14, 2, 0}, {15,16, 3, 0}, { 0, 0, 4, 0}, { 0, 0, 5, 0} }
@@ -1357,7 +1357,7 @@ static NEW_SCHEMA _5stayr16_1_x_n_ro
 };
 
 static NEW_SCHEMA _5stayr16_1_x_n_zw
-{ 16 /*pairs*/, 10 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr16.1-x_n_zw" /*schemaName*/,
+{ 16 /*pairs*/, 10 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr16.1-x_n_zw" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 0}, {13,14, 2, 0}, {15,16, 3, 0}, { 0, 0, 4, 0}, { 0, 0, 5, 0} }
@@ -1369,7 +1369,7 @@ static NEW_SCHEMA _5stayr16_1_x_n_zw
 };
 
 static NEW_SCHEMA _6stayr16
-{ 16 /*pairs*/, 8 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6stayr16" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6stayr16" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, {13, 2, 1, 0}, {15, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, { 1,14, 1, 1}, { 3,16, 2, 2} }
@@ -1382,7 +1382,7 @@ static NEW_SCHEMA _6stayr16
 };
 
 static NEW_SCHEMA _6stayr16_1_5
-{ 16 /*pairs*/, 8 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6stayr16.1-5" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6stayr16.1-5" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 2, 2} }
@@ -1395,7 +1395,7 @@ static NEW_SCHEMA _6stayr16_1_5
 };
 
 static NEW_SCHEMA _7stayr16
-{ 16 /*pairs*/, 8 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7stayr16" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7stayr16" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1,16, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15, 2, 1, 1} }
@@ -1409,7 +1409,7 @@ static NEW_SCHEMA _7stayr16
 };
 
 static NEW_SCHEMA _7stayr16_1_x
-{ 16 /*pairs*/, 8 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7stayr16.1-x" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7stayr16.1-x" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1} }
@@ -1423,7 +1423,7 @@ static NEW_SCHEMA _7stayr16_1_x
 };
 
 static NEW_SCHEMA _5stayr18
-{ 18 /*pairs*/, 10 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr18" /*schemaName*/,
+{ 18 /*pairs*/, 10 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr18" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1,12, 1, 0}, { 3,14, 2, 0}, { 5,16, 3, 0}, { 7,18, 4, 0}, { 9,10, 5, 0}, {11, 2, 1, 0}, {13, 4, 2, 0}, {15, 6, 3, 0}, {17, 8, 4, 0}, { 0, 0, 5, 0} }
@@ -1435,7 +1435,7 @@ static NEW_SCHEMA _5stayr18
 };
 
 static NEW_SCHEMA _5stayr18_1_x
-{ 18 /*pairs*/, 10 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5stayr18.1-x" /*schemaName*/,
+{ 18 /*pairs*/, 10 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5stayr18.1-x" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 1}, {13,14, 2, 2}, {15,16, 3, 3}, {17,18, 4, 4}, { 0, 0, 5, 5} }
@@ -1447,7 +1447,7 @@ static NEW_SCHEMA _5stayr18_1_x
 };
 
 static NEW_SCHEMA _6stayr18
-{ 18 /*pairs*/, 9 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6stayr18" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6stayr18" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, {13, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, {17, 8, 4, 0}, { 9,10, 5, 0}, {15,12, 6, 0}, { 1,14, 1, 1}, {11,16, 2, 2}, { 7,18, 3, 3} }
@@ -1460,7 +1460,7 @@ static NEW_SCHEMA _6stayr18
 };
 
 static NEW_SCHEMA _6stayr18_1_5
-{ 18 /*pairs*/, 9 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6stayr18.1-5" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6stayr18.1-5" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 2, 2}, {17,18, 3, 3} }
@@ -1473,7 +1473,7 @@ static NEW_SCHEMA _6stayr18_1_5
 };
 
 static NEW_SCHEMA _7stayr18
-{ 18 /*pairs*/, 9 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7stayr18" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7stayr18" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1,16, 1, 0}, { 3,18, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15, 2, 1, 1}, {17, 4, 2, 2} }
@@ -1487,7 +1487,7 @@ static NEW_SCHEMA _7stayr18
 };
 
 static NEW_SCHEMA _7stayr18_1_x
-{ 18 /*pairs*/, 9 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7stayr18.1-x" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7stayr18.1-x" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2} }
@@ -1501,7 +1501,7 @@ static NEW_SCHEMA _7stayr18_1_x
 };
 
 static NEW_SCHEMA _6stayr20
-{ 20 /*pairs*/, 10 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6stayr20" /*schemaName*/,
+{ 20 /*pairs*/, 10 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6stayr20" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, {13, 4, 2, 0}, { 5, 6, 3, 0}, {17, 8, 4, 0}, {19,10, 5, 0}, {15,12, 6, 0}, { 3,14, 1, 1}, {11,16, 2, 2}, { 7,18, 3, 3}, { 9,20, 4, 4} }
@@ -1514,7 +1514,7 @@ static NEW_SCHEMA _6stayr20
 };
 
 static NEW_SCHEMA _6stayr20_1_5
-{ 20 /*pairs*/, 10 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6stayr20.1-5" /*schemaName*/,
+{ 20 /*pairs*/, 10 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6stayr20.1-5" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 2, 2}, {17,18, 3, 3}, {19,20, 4, 4} }
@@ -1527,7 +1527,7 @@ static NEW_SCHEMA _6stayr20_1_5
 };
 
 static NEW_SCHEMA _7stayr20
-{ 20 /*pairs*/, 10 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7stayr20" /*schemaName*/,
+{ 20 /*pairs*/, 10 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7stayr20" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1,16, 1, 0}, { 3,18, 2, 0}, { 5,20, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15, 2, 1, 1}, {17, 4, 2, 2}, {19, 6, 3, 3} }
@@ -1541,7 +1541,7 @@ static NEW_SCHEMA _7stayr20
 };
 
 static NEW_SCHEMA _7stayr20_1_x
-{ 20 /*pairs*/, 10 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7stayr20.1-x" /*schemaName*/,
+{ 20 /*pairs*/, 10 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7stayr20.1-x" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2}, {19,20, 3, 3} }
@@ -1555,7 +1555,7 @@ static NEW_SCHEMA _7stayr20_1_x
 };
 
 static NEW_SCHEMA _6stayr22
-{ 22 /*pairs*/, 12 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6stayr22" /*schemaName*/,
+{ 22 /*pairs*/, 12 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6stayr22" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, {21, 2, 1, 0}, {13, 4, 2, 0}, {15, 6, 3, 0}, {17, 8, 4, 0}, {19,10, 5, 0}, {11,12, 6, 0}, { 3,14, 1, 1}, { 5,16, 2, 2}, { 7,18, 3, 3}, { 9,20, 4, 4}, { 1,22, 5, 5}, { 0, 0, 6, 6} }
@@ -1568,7 +1568,7 @@ static NEW_SCHEMA _6stayr22
 };
 
 static NEW_SCHEMA _6stayr22_1_5
-{ 22 /*pairs*/, 12 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6stayr22.1-5" /*schemaName*/,
+{ 22 /*pairs*/, 12 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6stayr22.1-5" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 2, 2}, {17,18, 3, 3}, {19,20, 4, 4}, {21,22, 5, 5}, { 0, 0, 6, 6} }
@@ -1581,7 +1581,7 @@ static NEW_SCHEMA _6stayr22_1_5
 };
 
 static NEW_SCHEMA _7stayr22
-{ 22 /*pairs*/, 11 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7stayr22" /*schemaName*/,
+{ 22 /*pairs*/, 11 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7stayr22" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1,16, 1, 0}, { 3,18, 2, 0}, { 5,20, 3, 0}, { 7,22, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15, 2, 1, 1}, {17, 4, 2, 2}, {19, 6, 3, 3}, {21, 8, 4, 4} }
@@ -1595,7 +1595,7 @@ static NEW_SCHEMA _7stayr22
 };
 
 static NEW_SCHEMA _7stayr22_1_x
-{ 22 /*pairs*/, 11 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7stayr22.1-x" /*schemaName*/,
+{ 22 /*pairs*/, 11 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7stayr22.1-x" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2}, {19,20, 3, 3}, {21,22, 4, 4} }
@@ -1609,7 +1609,7 @@ static NEW_SCHEMA _7stayr22_1_x
 };
 
 static NEW_SCHEMA _7stayr24
-{ 24 /*pairs*/, 12 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7stayr24" /*schemaName*/,
+{ 24 /*pairs*/, 12 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7stayr24" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1,16, 1, 0}, { 3,18, 2, 0}, { 5,20, 3, 0}, { 7,22, 4, 0}, { 9,24, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15, 2, 1, 1}, {17, 4, 2, 2}, {19, 6, 3, 3}, {21, 8, 4, 4}, {23,10, 5, 5} }
@@ -1623,7 +1623,7 @@ static NEW_SCHEMA _7stayr24
 };
 
 static NEW_SCHEMA _7stayr24_1_x
-{ 24 /*pairs*/, 12 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7stayr24.1-x" /*schemaName*/,
+{ 24 /*pairs*/, 12 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7stayr24.1-x" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2}, {19,20, 3, 3}, {21,22, 4, 4}, {23,24, 5, 5} }
@@ -1637,7 +1637,7 @@ static NEW_SCHEMA _7stayr24_1_x
 };
 
 static NEW_SCHEMA _7stayr26
-{ 26 /*pairs*/, 14 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7stayr26" /*schemaName*/,
+{ 26 /*pairs*/, 14 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7stayr26" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, {15, 2, 1, 0}, {17, 4, 2, 0}, {19, 6, 3, 0}, {21, 8, 4, 0}, {23,10, 5, 0}, {25,12, 6, 0}, {13,14, 7, 0}, { 1,16, 1, 0}, { 3,18, 2, 0}, { 5,20, 3, 0}, { 7,22, 4, 0}, { 9,24, 5, 0}, {11,26, 6, 0}, { 0, 0, 7, 0} }
@@ -1651,7 +1651,7 @@ static NEW_SCHEMA _7stayr26
 };
 
 static NEW_SCHEMA _7stayr26_1_x
-{ 26 /*pairs*/, 14 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7stayr26.1-x" /*schemaName*/,
+{ 26 /*pairs*/, 14 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7stayr26.1-x" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 0}, {17,18, 2, 0}, {19,20, 3, 0}, {21,22, 4, 0}, {23,24, 5, 0}, {25,26, 6, 0}, { 0, 0, 7, 0} }
@@ -1665,7 +1665,7 @@ static NEW_SCHEMA _7stayr26_1_x
 };
 
 static NEW_SCHEMA _7txx8
-{ 8 /*pairs*/, 7 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7txx8" /*schemaName*/,
+{ 8 /*pairs*/, 7 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7txx8" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 0, 0, 5, 0}, { 0, 0, 6, 0}, { 0, 0, 7, 0} }
@@ -1679,7 +1679,7 @@ static NEW_SCHEMA _7txx8
 };
 
 static NEW_SCHEMA _7txx10
-{ 10 /*pairs*/, 7 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7txx10" /*schemaName*/,
+{ 10 /*pairs*/, 7 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7txx10" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, { 0, 0, 6, 0}, { 0, 0, 7, 0} }
@@ -1693,7 +1693,7 @@ static NEW_SCHEMA _7txx10
 };
 
 static NEW_SCHEMA _7txx12
-{ 12 /*pairs*/, 7 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7txx12" /*schemaName*/,
+{ 12 /*pairs*/, 7 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7txx12" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, { 0, 0, 7, 0} }
@@ -1707,7 +1707,7 @@ static NEW_SCHEMA _7txx12
 };
 
 static NEW_SCHEMA _7txx14
-{ 14 /*pairs*/, 7 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7txx14" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7txx14" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0} }
@@ -1721,7 +1721,7 @@ static NEW_SCHEMA _7txx14
 };
 
 static NEW_SCHEMA _7txx16
-{ 16 /*pairs*/, 8 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7txx16" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7txx16" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1} }
@@ -1735,7 +1735,7 @@ static NEW_SCHEMA _7txx16
 };
 
 static NEW_SCHEMA _7txx18
-{ 18 /*pairs*/, 9 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7txx18" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7txx18" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2} }
@@ -1749,7 +1749,7 @@ static NEW_SCHEMA _7txx18
 };
 
 static NEW_SCHEMA _7t8
-{ 8 /*pairs*/, 4 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7t8" /*schemaName*/,
+{ 8 /*pairs*/, 4 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7t8" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0} }
@@ -1763,7 +1763,7 @@ static NEW_SCHEMA _7t8
 };
 
 static NEW_SCHEMA _7t10
-{ 10 /*pairs*/, 5 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7t10" /*schemaName*/,
+{ 10 /*pairs*/, 5 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7t10" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0} }
@@ -1777,7 +1777,7 @@ static NEW_SCHEMA _7t10
 };
 
 static NEW_SCHEMA _7t14
-{ 14 /*pairs*/, 7 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7t14" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7t14" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0} }
@@ -1791,7 +1791,7 @@ static NEW_SCHEMA _7t14
 };
 
 static NEW_SCHEMA _7t16
-{ 16 /*pairs*/, 8 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7t16" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7t16" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1} }
@@ -1805,7 +1805,7 @@ static NEW_SCHEMA _7t16
 };
 
 static NEW_SCHEMA _7t18
-{ 18 /*pairs*/, 9 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7t18" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7t18" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2} }
@@ -1819,7 +1819,7 @@ static NEW_SCHEMA _7t18
 };
 
 static NEW_SCHEMA _7t20
-{ 20 /*pairs*/, 10 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7t20" /*schemaName*/,
+{ 20 /*pairs*/, 10 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7t20" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2}, {19,20, 3, 3} }
@@ -1833,7 +1833,7 @@ static NEW_SCHEMA _7t20
 };
 
 static NEW_SCHEMA _7t22
-{ 22 /*pairs*/, 11 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7t22" /*schemaName*/,
+{ 22 /*pairs*/, 11 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7t22" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 1, 1}, {17,18, 2, 2}, {19,20, 3, 3}, {21,22, 4, 4} }
@@ -1847,7 +1847,7 @@ static NEW_SCHEMA _7t22
 };
 
 static NEW_SCHEMA _7t24
-{ 24 /*pairs*/, 14 /*tables*/, 7 /*sets*/, 7 /*rounds*/, 0 /*dummy*/, "7t24" /*schemaName*/,
+{ 24 /*pairs*/, 14 /*tables*/, 7 /*rounds*/, 7 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "7t24" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, {10,21, 1, 0}, { 3,22, 2, 0}, { 6,19, 3, 0}, { 4, 2, 4, 0}, { 7, 1, 5, 0}, { 8,23, 6, 0}, {15,20, 7, 0}, {14,17, 1, 1}, { 9,16, 2, 2}, {12,13, 3, 3}, {11,18, 4, 4}, { 5,24, 5, 5}, { 0, 0, 0, 0}, { 0, 0, 0, 0} }
@@ -1861,7 +1861,7 @@ static NEW_SCHEMA _7t24
 };
 
 static NEW_SCHEMA _6t8
-{ 8 /*pairs*/, 4 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6t8" /*schemaName*/,
+{ 8 /*pairs*/, 4 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6t8" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0} }
@@ -1874,7 +1874,7 @@ static NEW_SCHEMA _6t8
 };
 
 static NEW_SCHEMA _6t10
-{ 10 /*pairs*/, 6 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6t10" /*schemaName*/,
+{ 10 /*pairs*/, 6 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6t10" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, { 0, 0, 6, 0} }
@@ -1887,7 +1887,7 @@ static NEW_SCHEMA _6t10
 };
 
 static NEW_SCHEMA _6t12
-{ 12 /*pairs*/, 6 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6t12" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6t12" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0} }
@@ -1900,7 +1900,7 @@ static NEW_SCHEMA _6t12
 };
 
 static NEW_SCHEMA _6t14
-{ 14 /*pairs*/, 7 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6t14" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6t14" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1} }
@@ -1913,7 +1913,7 @@ static NEW_SCHEMA _6t14
 };
 
 static NEW_SCHEMA _6t16
-{ 16 /*pairs*/, 8 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6t16" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6t16" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 2, 2} }
@@ -1926,7 +1926,7 @@ static NEW_SCHEMA _6t16
 };
 
 static NEW_SCHEMA _6t18
-{ 18 /*pairs*/, 9 /*tables*/, 6 /*sets*/, 6 /*rounds*/, 0 /*dummy*/, "6t18" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 6 /*rounds*/, 6 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "6t18" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 1, 1}, {15,16, 2, 2}, {17,18, 3, 3} }
@@ -1939,7 +1939,7 @@ static NEW_SCHEMA _6t18
 };
 
 static NEW_SCHEMA _8sche_a16
-{ 16 /*pairs*/, 8 /*tables*/, 8 /*sets*/, 8 /*rounds*/, 0 /*dummy*/, "8sche_a16" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 8 /*rounds*/, 8 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "8sche_a16" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 5, 6, 2, 0}, { 9,10, 3, 0}, {13,14, 4, 0}, { 3, 4, 5, 0}, { 7, 8, 6, 0}, {11,12, 7, 0}, {15,16, 8, 0} }
@@ -1954,7 +1954,7 @@ static NEW_SCHEMA _8sche_a16
 };
 
 static NEW_SCHEMA _8sche_bc16
-{ 16 /*pairs*/, 8 /*tables*/, 8 /*sets*/, 8 /*rounds*/, 0 /*dummy*/, "8sche_bc16" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 8 /*rounds*/, 8 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "8sche_bc16" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 8, 0} }
@@ -1969,7 +1969,7 @@ static NEW_SCHEMA _8sche_bc16
 };
 
 static NEW_SCHEMA _4mitchel14_horne
-{ 14 /*pairs*/, 8 /*tables*/, 4 /*sets*/, 4 /*rounds*/, 0 /*dummy*/, "4mitchel14_horne" /*schemaName*/,
+{ 14 /*pairs*/, 8 /*tables*/, 4 /*rounds*/, 4 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "4mitchel14_horne" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 1, 1}, {11,12, 2, 2}, {13,14, 3, 3}, { 0, 0, 4, 4} }
@@ -1980,7 +1980,7 @@ static NEW_SCHEMA _4mitchel14_horne
 };
 
 static NEW_SCHEMA _4mitchel16_horne
-{ 16 /*pairs*/, 8 /*tables*/, 4 /*sets*/, 4 /*rounds*/, 0 /*dummy*/, "4mitchel16_horne" /*schemaName*/,
+{ 16 /*pairs*/, 8 /*tables*/, 4 /*rounds*/, 4 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "4mitchel16_horne" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 1, 1}, {11,12, 2, 2}, {13,14, 3, 3}, {15,16, 4, 4} }
@@ -1991,7 +1991,7 @@ static NEW_SCHEMA _4mitchel16_horne
 };
 
 static NEW_SCHEMA _5mitchell10_10
-{ 20 /*pairs*/, 10 /*tables*/, 5 /*sets*/, 5 /*rounds*/, 0 /*dummy*/, "5mitchell10_10" /*schemaName*/,
+{ 20 /*pairs*/, 10 /*tables*/, 5 /*rounds*/, 5 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "5mitchell10_10" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 1, 1}, {13,14, 2, 2}, {15,16, 3, 3}, {17,18, 4, 4}, {19,20, 5, 5} }
@@ -2003,7 +2003,7 @@ static NEW_SCHEMA _5mitchell10_10
 };
 
 static NEW_SCHEMA _4stayr14_sp
-{ 14 /*pairs*/, 7 /*tables*/, 4 /*sets*/, 4 /*rounds*/, 0 /*dummy*/, "4stayr14_sp" /*schemaName*/,
+{ 14 /*pairs*/, 7 /*tables*/, 4 /*rounds*/, 4 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "4stayr14_sp" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1,10, 1, 0}, { 3,12, 2, 0}, { 5,14, 3, 0}, { 7, 8, 4, 0}, { 9, 2, 1, 1}, {11, 4, 2, 2}, {13, 6, 3, 3} }
@@ -2014,7 +2014,7 @@ static NEW_SCHEMA _4stayr14_sp
 };
 
 static NEW_SCHEMA _3howel12nz_3_3
-{ 12 /*pairs*/, 6 /*tables*/, 3 /*sets*/, 3 /*rounds*/, 0 /*dummy*/, "3howel12nz.3-3" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 3 /*rounds*/, 3 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "3howel12nz.3-3" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 6, 1, 0}, { 8, 4, 2, 0}, {12, 9, 3, 0}, { 2, 7, 1, 1}, { 3, 5, 2, 2}, {11,10, 3, 3} }
@@ -2024,7 +2024,7 @@ static NEW_SCHEMA _3howel12nz_3_3
 };
 
 static NEW_SCHEMA _3harrie_nzow
-{ 12 /*pairs*/, 6 /*tables*/, 3 /*sets*/, 3 /*rounds*/, 0 /*dummy*/, "3harrie_nzow" /*schemaName*/,
+{ 12 /*pairs*/, 6 /*tables*/, 3 /*rounds*/, 3 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "3harrie_nzow" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 1, 1}, { 9,10, 2, 2}, {11,12, 3, 3} }
@@ -2034,7 +2034,7 @@ static NEW_SCHEMA _3harrie_nzow
 };
 
 static NEW_SCHEMA _8special14_08
-{ 14 /*pairs*/, 8 /*tables*/, 8 /*sets*/, 8 /*rounds*/, 0 /*dummy*/, "8special14_08" /*schemaName*/,
+{ 14 /*pairs*/, 8 /*tables*/, 8 /*rounds*/, 8 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "8special14_08" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, { 0, 0, 8, 0} }
@@ -2049,7 +2049,7 @@ static NEW_SCHEMA _8special14_08
 };
 
 static NEW_SCHEMA _8mitchel18_09
-{ 18 /*pairs*/, 9 /*tables*/, 8 /*sets*/, 8 /*rounds*/, 0 /*dummy*/, "8mitchel18_09" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 8 /*rounds*/, 8 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "8mitchel18_09" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 8, 0}, {17,18, 1, 1} }
@@ -2064,7 +2064,7 @@ static NEW_SCHEMA _8mitchel18_09
 };
 
 static NEW_SCHEMA _8mitchel20_10
-{ 20 /*pairs*/, 10 /*tables*/, 8 /*sets*/, 8 /*rounds*/, 0 /*dummy*/, "8mitchel20_10" /*schemaName*/,
+{ 20 /*pairs*/, 10 /*tables*/, 8 /*rounds*/, 8 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "8mitchel20_10" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 8, 0}, {17,18, 1, 1}, {19,20, 2, 2} }
@@ -2079,7 +2079,7 @@ static NEW_SCHEMA _8mitchel20_10
 };
 
 static NEW_SCHEMA _8BridgeBoost18_09
-{ 18 /*pairs*/, 9 /*tables*/, 8 /*sets*/, 8 /*rounds*/, 0 /*dummy*/, "8BridgeBoost18_09" /*schemaName*/,
+{ 18 /*pairs*/, 9 /*tables*/, 8 /*rounds*/, 8 /*sets*/, 0 /*schema type: 0=pair schema, 1=individual schema*/, "8BridgeBoost18_09" /*schemaName*/,
   {
       {/*dummy round 0*/}          //NS,EW,SET,SetFromTable
     , {/*r1 */ {/*dummy table 0*/}, { 1, 2, 1, 0}, { 3, 4, 2, 0}, { 5, 6, 3, 0}, { 7, 8, 4, 0}, { 9,10, 5, 0}, {11,12, 6, 0}, {13,14, 7, 0}, {15,16, 8, 0}, {17,18, 8, 8} }

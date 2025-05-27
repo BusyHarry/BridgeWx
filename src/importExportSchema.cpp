@@ -37,7 +37,7 @@ namespace import
     * Empty lines and lines starting with ';' are ignored: comments
     * Syntax:
 
-    8 4 5 5 0                   ; pairs tables sets rounds (0 ?)
+    8 4 5 5 0                   ; pairs tables rounds sets schema-type (0=pair schema, 1=individual schema)
     1-2 1 3-4 2 5-6 3 7-8 4     ; round 1: table 1 to N: NS-EW set    : 0-0 0 -> no play at this table in this round
     1-6 2 5-3 1 7-2 3 8-4 5     ; round 2: table 1 to N: NS-EW set
     1-5 4 3-6 5 4-7 1 2-8 2     ; etc
@@ -55,11 +55,13 @@ namespace import
         if (!file.is_open()) return false;
         if (!GetNonEmptyLine(file, a_line)) return false;
         std::stringstream definition(a_line);
-        definition >> a_schemaData.pairs >> a_schemaData.tables >> a_schemaData.sets >> a_schemaData.rounds >> a_schemaData.dummy;
+        definition >> a_schemaData.pairs >> a_schemaData.tables >> a_schemaData.rounds >> a_schemaData.sets >> a_schemaData.schemaType;
         CHECK_VALUE(a_schemaData.pairs , MAX_PAIRS );
         CHECK_VALUE(a_schemaData.tables, MAX_TABLES);
         CHECK_VALUE(a_schemaData.sets  , MAX_SETS  );
         CHECK_VALUE(a_schemaData.rounds, MAX_ROUNDS);
+        if (a_schemaData.schemaType != 0)
+            return false;       // we can only use pair-schemas
         a_schemaData.tableData.resize(1);    // dummy round 0
         for (int round = 1; round <= a_schemaData.rounds; ++round)
         {
@@ -112,7 +114,7 @@ int main()
     if (!bResult)
         std::cout << "error in line: '" << errorLine << "'\n";
     // Print the results
-    std::cout << "\npairs: " << schema.pairs << ", tables: " << schema.tables << ", sets: " << schema.sets << ", rounds: " << schema.rounds << ", dummy: " << schema.dummy << '\n';
+    std::cout << "\npairs: " << schema.pairs << ", tables: " << schema.tables << ", rounds: " << schema.rounds << ", sets: " << schema.sets << ", schemaType: " << schema.schemaType << '\n';
     std::cout << "schema name: '" << schema.name << "'\n" ;
     for (const auto& roundData : schema.tableData)
     {

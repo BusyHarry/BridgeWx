@@ -330,9 +330,9 @@ namespace cfg
     wxString GetVersion()            // return string to current version
     {
         if (IsScriptTesting())
-            return FMT(_("\"%s\" version %s, %s"), __PRG_NAME__, __VERSION__AUTO, __DATE__AUTO);
+            return FMT("\"%s\" %s %s, %s", __PRG_NAME__, _("version"), __VERSION__AUTO, __DATE__AUTO);
         else
-            return FMT(_("\"%s\" version %s, %s"), __PRG_NAME__, __VERSION__    , __DATE__);
+            return FMT("\"%s\" %s %s, %s", __PRG_NAME__, _("version"), __VERSION__    , __DATE__);
     }   // GetVersion()
 
     wxString GetCopyrightDateTime()
@@ -405,7 +405,7 @@ namespace cfg
     wxString GetActiveMatchAndSession()
     {   // for statusbar display
         if ( suSession == 0 )
-            return ssActiveMatch;
+            return ssActiveMatch;   // TRANSLATORS: 'S' is first char of Session
         return ssActiveMatch + FMT(_(":S%u"), suSession);
     }   // GetActiveMatchAndSession()
 

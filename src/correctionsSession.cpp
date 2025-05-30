@@ -47,7 +47,7 @@ CorrectionsSession::CorrectionsSession(wxWindow* a_pParent, UINT a_pageId) :Base
     m_theGrid->SetRowLabelSize(SIZE_PAIRNR_SES);
     m_theGrid->SetColSize(COL_PAIRNAME_SESSION, SIZE_PAIR_SES   ); m_theGrid->SetColLabelValue(COL_PAIRNAME_SESSION, _("pair"     ));
     m_theGrid->SetColSize(COL_PAIRNAME_GLOBAL , SIZE_PAIRNAME   ); m_theGrid->SetColLabelValue(COL_PAIRNAME_GLOBAL , _("pairname" ));
-    m_theGrid->SetColSize(COL_COR_PROCENT     , SIZE_PROCENT    ); m_theGrid->SetColLabelValue(COL_COR_PROCENT     ,   "%"         );
+    m_theGrid->SetColSize(COL_COR_PROCENT     , SIZE_PROCENT    ); m_theGrid->SetColLabelValue(COL_COR_PROCENT     ,   "%"         );   // TRANSLATORS: 'mp' == MatchPoints
     m_theGrid->SetColSize(COL_COR_MP          , SIZE_MP         ); m_theGrid->SetColLabelValue(COL_COR_MP          , _("mp"       ));
     m_theGrid->SetColSize(COL_COR_MAX         , SIZE_MP         ); m_theGrid->SetColLabelValue(COL_COR_MAX         , _("max"      ));
     m_theGrid->SetColSize(COL_COR_EXTRA       , SIZE_MP         ); m_theGrid->SetColLabelValue(COL_COR_EXTRA       , _("extra"    ));

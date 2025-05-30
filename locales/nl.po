@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-26 19:02+0200\n"
-"PO-Revision-Date: 2025-05-26 19:02+0200\n"
+"POT-Creation-Date: 2025-05-27 17:49+0200\n"
+"PO-Revision-Date: 2025-05-27 17:50+0200\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -60,6 +60,7 @@ msgstr "paarnaam"
 msgid "pair no"
 msgstr "paar nr"
 
+#. TRANSLATORS: 'S' is first char of Session
 #: ..\src\assignNames.cpp:38
 msgid "pair S-1"
 msgstr "paar Z-1"
@@ -69,6 +70,7 @@ msgstr "paar Z-1"
 msgid "rank"
 msgstr "rang"
 
+#. TRANSLATORS: 'S' is first char of Session
 #: ..\src\assignNames.cpp:40
 msgid "rank S-1"
 msgstr "rang Z-1"
@@ -573,10 +575,10 @@ msgid "<no description yet>"
 msgstr "<nog geen beschrijving>"
 
 #: ..\src\cfg.cpp:333 ..\src\cfg.cpp:335
-#, c-format
-msgid "\"%s\" version %s, %s"
-msgstr "\"%s\" versie %s, %s"
+msgid "version"
+msgstr "versie"
 
+#. TRANSLATORS: 'S' is first char of Session
 #: ..\src\cfg.cpp:409
 #, c-format
 msgid ":S%u"
@@ -653,12 +655,12 @@ msgstr "ChoiceMC->mouseclick(show)"
 msgid "ChoiceMC() comboMinSize=%i, charWidth=%i"
 msgstr "ChoiceMC() comboMinSize=%i, charWidth=%i"
 
-#: ..\src\choiceMC.cpp:248
+#: ..\src\choiceMC.cpp:252
 #, c-format
 msgid "CheckAutoSize(%i): SetMinSize: txt+offset=%i, minsize=%i"
 msgstr "CheckAutoSize(%i): SetMinSize: txt+offset=%i, minsize=%i"
 
-#: ..\src\choiceMC.cpp:384
+#: ..\src\choiceMC.cpp:388
 #, c-format
 msgid "ChoiceMC::SetPopupWidth() size=%i, columns=%u, width=%i"
 msgstr "ChoiceMC::SetPopupWidth() size=%i, colommen=%u, breedte=%i"
@@ -685,6 +687,7 @@ msgstr "EIND KORREKTIES: '-' of '*' voor 'score': zittingscore telt niet mee in 
 msgid "Overview of endcorrections for '%s'%s"
 msgstr "Overzicht van de eindcorrecties voor '%s'%s"
 
+#. TRANSLATORS: 'mp' MatchPoints
 #: ..\src\correctionsSession.cpp:51 ..\src\correctionsSession.cpp:278
 msgid "mp"
 msgstr "mp"
@@ -2593,3 +2596,8 @@ msgstr "1 januari 2024"
 #: ..\src\version.h:15
 msgid "monday"
 msgstr "maandag"
+
+#, fuzzy, c-format
+#~| msgid "\"%s\" version %s, %s"
+#~ msgid "\"%s\" %s %s, %s"
+#~ msgstr "\"%s\" versie %s, %s"

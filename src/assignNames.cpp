@@ -34,9 +34,9 @@ AssignNames::AssignNames(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParen
     #define SIZE_PAIRNR_PIX   (SIZE_PAIRNR_CHARS  * charSize)
     #define SIZE_ID_PIX       (SIZE_ID_CHARS      * charSize)
     m_theGrid->SetColSize(COL_PAIRNAME             , SIZE_PAIRNAME_PIX); m_theGrid->SetColLabelValue(COL_PAIRNAME           , _("pairname"));
-    m_theGrid->SetColSize(COL_PAIRNR_SESSION       , SIZE_PAIRNR_PIX  ); m_theGrid->SetColLabelValue(COL_PAIRNR_SESSION     , _("pair no" ));
+    m_theGrid->SetColSize(COL_PAIRNR_SESSION       , SIZE_PAIRNR_PIX  ); m_theGrid->SetColLabelValue(COL_PAIRNR_SESSION     , _("pair no" ));   // TRANSLATORS: 'S' is first char of Session
     m_theGrid->SetColSize(COL_PAIRNR_SESSION_PREV  , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_PAIRNR_SESSION_PREV, _("pair S-1"));
-    m_theGrid->SetColSize(COL_RANK_TOTAL_PREV      , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_RANK_TOTAL_PREV    , _("rank"    ));
+    m_theGrid->SetColSize(COL_RANK_TOTAL_PREV      , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_RANK_TOTAL_PREV    , _("rank"    ));   // TRANSLATORS: 'S' is first char of Session
     m_theGrid->SetColSize(COL_RANK_SESSION_PREV    , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_RANK_SESSION_PREV  , _("rank S-1"));
 
     std::vector<MyGrid::SortMethod> methods;

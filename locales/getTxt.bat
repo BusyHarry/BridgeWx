@@ -8,6 +8,8 @@
 set test_4dos=%@EVAL[1]
 if [1] == [%test_4dos%] echo 4dos running, re-starting cmd & set test_4dos=& cmd.exe /c %0 %* & exit /b
 
+:: all commandline params are handed over to xgettext.exe
+
 pushd .
 cd %~dp0
 
@@ -39,7 +41,7 @@ if exist "%gt%" goto ok
   goto end
 
 :ok
-set gt="%gt%"
+set gt="%gt%"  %*
 set potfile=BridgeWx.pot
 del %potfile% >nul 2>&1
 echo Getting translatable text through %gt%

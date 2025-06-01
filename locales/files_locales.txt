@@ -1,3 +1,4 @@
 files_locales.txt
 nl.po
 getTxt.bat
+getTxtNoLines.bat

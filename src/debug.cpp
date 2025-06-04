@@ -1399,7 +1399,9 @@ void Debug::DoCommand(const wxString& a_cmd)
                 else
                 {
                     int id=0;
-                    wxSingleChoiceDialog sc(this,_("choose a schema"), ES, schemas);
+                    wxSingleChoiceDialog sc;
+                    sc.SetFont(GetFont());  // child does not inherit fontsize of its parent!
+                    sc.Create(this, _("choose a schema"), ES, schemas);
                     m_pConsole->AsyncTextOutBegin();  // pause the prompt
                     if ( wxID_OK == sc.ShowModal() )
                         id = sc.GetSelection();

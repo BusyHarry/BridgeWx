@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-01 16:00+0200\n"
-"PO-Revision-Date: 2025-06-01 16:01+0200\n"
+"POT-Creation-Date: 2025-06-05 12:51+0200\n"
+"PO-Revision-Date: 2025-06-05 12:51+0200\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -717,6 +717,12 @@ msgstr "Aanmaak/printen van gidsbriefjes"
 msgid "Guides"
 msgstr "Gidsbriefjes"
 
+msgid "Export schema"
+msgstr "Exporteer schema"
+
+msgid "export current schema to .asc file"
+msgstr "exporteer huidig schema naar .asc bestand"
+
 msgid "Creation/print of scoreslips"
 msgstr "Aanmaak/printen van scoreslips"
 
@@ -834,8 +840,8 @@ msgstr "ronde %u, spellen %s, paren %2u (NZ) + %2u (OW)  %s\n"
 msgid "Current group is within match-schema, take group > %u\n"
 msgstr "Huidige groep zit in wedstrijd schema, neem groep > %u\n"
 
-msgid " init of guidedata failed\n"
-msgstr " initgidsdata mislukt\n"
+msgid " no matching schemas found!\n"
+msgstr " geen passende schema's gevonden!\n"
 
 msgid "choose a schema"
 msgstr "kies een schema"
@@ -986,31 +992,6 @@ msgstr "%u paren, %u rondes, %u spellen"
 
 msgid "Schemaoverview"
 msgstr "Schemaoverzicht"
-
-msgid "doubled"
-msgstr "gedubbeld"
-
-msgid "redoubled"
-msgstr "geredubbeld"
-
-msgid "Clubs/Diamonds"
-msgstr "Klaveren/Ruiten"
-
-msgid "Hearts/Spades"
-msgstr "Harten/Schoppen"
-
-msgid "NoTrump"
-msgstr "SansAtout"
-
-msgid "more down then contract-tricks??\n"
-msgstr "meer down dan te behalen aantal slagen??\n"
-
-#, c-format
-msgid "%i down %s"
-msgstr "%i down %s"
-
-msgid "more tricks then possible in a game??\n"
-msgstr "meer slagen dan er in een spel zijn??\n"
 
 msgid ""
 "Active match closed.\n"
@@ -1549,6 +1530,16 @@ msgstr "MyLinePrinter::EndPrint(): flushing error"
 msgid "page"
 msgstr "pagina"
 
+#, c-format
+msgid "Error reading schema '%s' in line: '%s'"
+msgstr "Fout bij inlezen schema '%s' in regel: '%s'"
+
+msgid "Schematable is full, can't add new schemas"
+msgstr "Schematabel is vol, kan geen nieuwe schemas toevoegen"
+
+msgid "Select a folder to store schema"
+msgstr "Selecteer een map voor het opslaan van schema"
+
 msgid "NP"
 msgstr "NG"
 
@@ -1564,8 +1555,33 @@ msgstr "Harten"
 msgid "Spades"
 msgstr "Schoppen"
 
+msgid "NoTrump"
+msgstr "SansAtout"
+
 msgid "Pass"
 msgstr "Pas"
+
+msgid "Clubs/Diamonds"
+msgstr "Klaveren/Ruiten"
+
+msgid "Hearts/Spades"
+msgstr "Harten/Schoppen"
+
+msgid "doubled"
+msgstr "gedubbeld"
+
+msgid "redoubled"
+msgstr "geredubbeld"
+
+msgid "more down then contract-tricks??\n"
+msgstr "meer down dan te behalen aantal slagen??\n"
+
+msgid "more tricks then possible in a game??\n"
+msgstr "meer slagen dan er in een spel zijn??\n"
+
+#, c-format
+msgid "%i down %s"
+msgstr "%i down %s"
 
 msgid ""
 "-x[*[*]] or y'SUIT'[[+|-]x][*[*]]   calculate the score for:\n"

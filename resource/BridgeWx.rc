@@ -63,19 +63,19 @@ FILESUBTYPE         0x0L
     {
         BLOCK "040904b0"
         {
-            VALUE "Comments"            , "geen kommentaar!"
-                VALUE "CompanyName"     , "hle"
-                VALUE "FileDescription" , "bridge uitslag berekening"
+            VALUE "Comments"            , "No comment!"
+                VALUE "CompanyName"     , "BusyHarry"
+                VALUE "FileDescription" , "game of bridge result calculation"
                 VALUE "FileVersion"     , __VERSION__
                 VALUE "InternalName"    , __PRG_NAME__
-                VALUE "LegalCopyright"  , "(c)hl/tc"
+                VALUE "LegalCopyright"  , "(c)hl/tc " __YEAR__
                 VALUE "OriginalFilename", __PRG_NAME__ ".exe"
                 VALUE "ProductName"     , __PRG_NAME__
                 VALUE "ProductVersion"  , __VERSION_MAIN__
         }
     }
     BLOCK "VarFileInfo"
-    {
-        VALUE "Translation", 0x0413, 1200   // dutch, unicode
+    {	// 0x0413 == Dutch
+        VALUE "Translation", 0x0409, 1200   // English (US), unicode
     }
 }

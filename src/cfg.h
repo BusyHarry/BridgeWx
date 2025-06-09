@@ -9,6 +9,7 @@
 #include <vector>
 
 #include <wx/string.h>
+#include <wx/filename.h>
 
 #include "utils.h"
 #include "schemaInfo.h"

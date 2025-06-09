@@ -16,11 +16,12 @@ namespace schema
     extern const char*  defaultSchema;
     extern const int    defaultId;
 
-    INT_VECTOR  FindSchema(UINT rounds, UINT pairs, wxArrayString* schemaNames = 0);// return a vector of id's (and names) for schema's matching rounds and pairs
+    void        FindSchema(UINT rounds, UINT pairs, INT_VECTOR& ids, wxArrayString* schemaNames = nullptr);// return a vector of id's (and names) for schema's matching rounds and pairs
     int         GetId(const wxString& schema);                                // return the id of the wanted schema, SCHEMA_ID_NONE if not found
     wxString    GetName(int id);                                              // get name on base of its id
     UINT        GetMaxRound();                                                // get the maximum nr of rounds of the available schemas
-    bool        ImportSchema(const wxString& a_file, bool bDeleteDup=false);  // import a schema from a testfile
+    bool        ImportSchema(const wxString& file, bool bPreloading=false);   //  bPreloading true: import during startup                        // import a schema from a .asc file
+    bool        ExportSchema(const wxString& schema, const wxString& file="");// export a schema to a .asc file, show dlg if file is empty
     void        DebuggingSchemaData();                                        // testing only
 
     struct NS_EW{ UINT ns = 0; UINT ew = 0;};

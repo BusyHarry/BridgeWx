@@ -8,7 +8,6 @@
 #include <wx/textctrl.h>
 #include <wx/msgdlg.h>
 
-#include <wx/filename.h>
 #include <numeric>
 
 #include "cfg.h"

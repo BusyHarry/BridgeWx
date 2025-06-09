@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <filesystem>
 
 #include "importExportSchema.h"
 
@@ -29,12 +30,14 @@ static bool GetNonEmptyLine(std::ifstream& a_file, std::string& a_line)
 
 #define CHECK_VALUE(value,max) if ((value) < 1 || (value) > (max)) return false
 
-namespace import
+namespace importExportSchema
 {
     /*
     * Next is the code for importing a (new) schema.
     * This is the same as the export from the Dutch NBB scoring program.
     * Empty lines and lines starting with ';' are ignored: comments
+    * Remark: sets can be a number (1,2,3..) or a character(A,B,C,...)
+    * Remark: only spaces are supported as separators
     * Syntax:
 
     8 4 5 5 0                   ; pairs tables rounds sets schema-type (0=pair schema, 1=individual schema)
@@ -46,7 +49,7 @@ namespace import
     #<name>Short Howell 8</name>    ; descriptive name for this schema
     */
 
-    bool ReadFileSchemaDataNBB(const std::string& a_file, NEW_SCHEMA& a_schemaData, std::string& a_line)
+    bool ImportSchemaNBB(const std::string& a_file, NEW_SCHEMA& a_schemaData, std::string& a_line)
     {
         a_schemaData.tableData.clear();
         a_schemaData.name.clear();
@@ -72,8 +75,17 @@ namespace import
             for (int table = 1; table <= a_schemaData.tables; ++table)
             {
                 NewTableInfo tableData;
-                char dash; // for the inbetween char '-'
-                ss >> tableData.pairNS >> dash >> tableData.pairEW >> tableData.set;
+                char        dash;   // for the inbetween char '-'
+                std::string set;    // for the set as char or as integer
+                ss >> tableData.pairNS >> dash >> tableData.pairEW >> set;
+                if (set.length())
+                {   // should always be true!
+                    auto firstChar = static_cast<unsigned char>(*set.begin());
+                    if (std::isdigit(firstChar))
+                        tableData.set = static_cast<NewSchemaDataType>(std::stoi(set));
+                    else
+                        tableData.set = static_cast<NewSchemaDataType>(std::toupper(firstChar) - 'A' + 1);
+                }
                 if (tableData.pairNS == 0 && tableData.pairEW == 0 && tableData.set == 0)
                 {
                     ;   // no play at this table in this round, so don't check.....
@@ -87,30 +99,57 @@ namespace import
                 roundData.push_back(tableData);
             }
             a_schemaData.tableData.push_back(roundData);
-        }   // all rounds/tables handled, now get the name
-        if (!GetNonEmptyLine(file, a_line)) return false;
-        // line should contain: #<name>Short Howell 8</name>    ; descriptive name for this schema
-        std::string     startName = "#<name>";
-        const size_t    startLen  = startName.size();
-        size_t          start     = a_line.find(startName);
-        if (std::string::npos == start) return false;
-        start += startLen;
-        //    std::cout << "line='"  << line << "\n" << "start =" << start ;
-        size_t end = a_line.find("</name>", start);
-        if (std::string::npos == end) return false;
-        a_schemaData.name = a_line.substr(start, end - start);
-        //    std::cout << ", end=" << end << ", name='" << a_schemaData.schemaName << "'\n";
-        file.close();
+        }
+        // all rounds/tables handled, now get the schema-name
+        while (GetNonEmptyLine(file, a_line))
+        {
+            // line could contain: #<name>Short Howell 8</name>    ; descriptive name for this schema
+            std::string     startName = "#<name>";
+            const size_t    startLen  = startName.size();
+            size_t          start     = a_line.find(startName);
+            if (std::string::npos != start)
+            {
+                start += startLen;
+                size_t end = a_line.find("</name>", start);
+                if (std::string::npos == end) return false; // partially correct tag!
+                a_schemaData.name = a_line.substr(start, end - start);
+                return true;
+            }
+        }   // finding name-tag
+        // no name-tag found, use filename as schema-name.
+        std::filesystem::path path(a_file);
+        // path.filename().string();                // "file.ext"
+        a_schemaData.name = path.stem().string();   // "file"
         return true;
-    }   // ReadFileSchemaDataNBB()
+    }   // ImportSchemaNBB()
 
-}   // namespace import
+
+    static const auto nl('\n');
+    bool ExportSchemaNBB(const std::string& a_file, const NEW_SCHEMA& schema)
+    {
+        std::ofstream out(a_file);
+
+        if (!out.is_open()) return false;
+        out << schema.pairs << ' ' << schema.tables << ' ' << schema.rounds << ' ' << schema.sets << ' ' << schema.schemaType << nl;
+        for (int round = 1; round <= schema.rounds; ++round)
+        {
+            for (int table = 1; table <= schema.tables; ++table)
+            {
+                out << std::format("{:2}-{:<2} {:2} ", schema.tableData[round][table].pairNS, schema.tableData[round][table].pairEW, schema.tableData[round][table].set);
+            }
+            out << nl;
+        }
+        out << "#<name>" << schema.name << "</name>" << std::endl;
+        return true;
+    }   // ExportSchemaNbb()
+
+}   // namespace importExportSchema
 
 int main()
 {
     NEW_SCHEMA schema;
     std::string errorLine;
-    bool bResult = import::ReadFileSchemaDataNBB("schema.txt", schema, errorLine);
+    bool bResult = importExportSchema::ImportSchemaNBB("schema.txt", schema, errorLine);
     if (!bResult)
         std::cout << "error in line: '" << errorLine << "'\n";
     // Print the results

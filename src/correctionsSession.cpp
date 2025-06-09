@@ -6,8 +6,6 @@
 #include <wx/grid.h>
 #include <wx/msgdlg.h>
 
-#include <wx/filename.h>
-
 #include "cfg.h"
 #include "names.h"
 #include "correctionsSession.h"

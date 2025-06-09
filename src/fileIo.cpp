@@ -1,7 +1,6 @@
 ﻿// Copyright(c) 2024-present, BusyHarry/h.levels & BridgeWx contributors.
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
-#include <wx/filename.h>
 #include <wx/filedlg.h>
 
 #include "fileIo.h"

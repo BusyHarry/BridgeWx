@@ -7,11 +7,16 @@
 
 #include <wx/string.h>
 #include <wx/arrstr.h>
+#include <wx/translation.h>
+#include <wx/dirdlg.h>
+#include <wx/filename.h>
+
 
 #include "NewSchemaData.h"
 #include "schemaInfo.h"
 #include "MyLog.h"
 #include "importExportSchema.h"
+#include "baseframe.h"
 
 #define   SET(round,table) (*m_pSchema).tableData[round][table].set
 
@@ -20,28 +25,26 @@ namespace schema
     const char* defaultSchema = "6multi14";
     const int   defaultId     = schema::GetId(defaultSchema);
 
-    INT_VECTOR FindSchema(UINT a_rounds, UINT a_pairs, wxArrayString* a_names)
+    void FindSchema(UINT a_rounds, UINT a_pairs, INT_VECTOR& a_ids, wxArrayString* a_names)
     {
-        INT_VECTOR result;
-
+        a_ids.clear();
         if (a_names) a_names->clear();
-        for (int ii = 0; ii < newSchemaTable.size(); ++ii)
+        for (const auto& table : newSchemaTable)
         {
-            if ((a_rounds == newSchemaTable[ii]->rounds) && (a_pairs == newSchemaTable[ii]->pairs))
+            if ((a_rounds == table.rounds) && (a_pairs == table.pairs))
             {
-                result.push_back(ii);
-                if (a_names) a_names->push_back(newSchemaTable[ii]->name);
+                auto id = &table - &newSchemaTable[0];  // index of schema
+                a_ids.push_back(id);
+                if (a_names) a_names->push_back(table.name);
             }
         }
-
-        return result;
-    }
+    }   // FindSchema()
 
     int GetId(const wxString& a_name)
     {
         for (int ii = 0; ii < newSchemaTable.size(); ++ii)
         {
-            if ( a_name == newSchemaTable[ii]->name)
+            if ( a_name == newSchemaTable[ii].name)
                 return ii;
         }
 
@@ -51,19 +54,16 @@ namespace schema
     wxString GetName(int a_id)
     {
         if (a_id >= 0 && a_id < newSchemaTable.size())
-            return newSchemaTable[a_id]->name;
+            return newSchemaTable[a_id].name;
         return wxEmptyString;
     }   // GetName()
 
     UINT GetMaxRound()
     {
-        UINT maxRound = 0;
-        for (int ii = 0; ii < newSchemaTable.size(); ++ii)
+        NewSchemaDataType maxRound = 0;
+        for (const auto& table : newSchemaTable)
         {
-            if ( maxRound < newSchemaTable[ii]->rounds )
-            {
-                maxRound = newSchemaTable[ii]->rounds;
-            }
+            maxRound = std::max(maxRound, table.rounds);
         }
 
         return maxRound;
@@ -81,49 +81,59 @@ namespace schema
         si.GetRoundInfo( a_round, a_bGameOrder, a_info);
     }   // GetRoundInfo()
 
-static class ImportCleanup
-{
-public:
-    ~ImportCleanup()
+    bool ImportSchema(const wxString& a_file, bool a_bPreloading)
     {
-        for (auto it : m_toClean)
-        {
-#ifdef _DEBUG
-            std::cout << "destructing imported schema: <" << it->name << ">\n";
-#endif
-            delete it;
+        if (a_bPreloading)
+        {   // 20250602: default size = 161
+            if (newSchemaTable.capacity() < 255)
+                newSchemaTable.reserve(255);
         }
-    }
-    void Add(NEW_SCHEMA* pToClean){m_toClean.push_back(pToClean);}
-private:
-    std::vector<NEW_SCHEMA*> m_toClean;
-} myCleanup;
 
-bool ImportSchema(const wxString& a_file, bool a_bDeleteDup)
-{
-    std::string     errorLine;
-    NEW_SCHEMA*     pImportSchema = new NEW_SCHEMA;
-    bool bResult = import::ReadFileSchemaDataNBB(a_file.ToStdString(), *pImportSchema, errorLine);
-    if (!bResult)
+        std::string     errorLine;
+        NEW_SCHEMA      importSchema;
+        bool bResult = importExportSchema::ImportSchemaNBB(a_file.ToStdString(), importSchema, errorLine);
+        if (!bResult)
+        {
+            wxString errorL(errorLine);
+            MyLogError(_("Error reading schema '%s' in line: '%s'"), a_file, errorL);
+            MyMessageBox(errorL, _("Error"));
+            return false;
+        }
+        // All ok, transform importdata to local data
+        // All tables/pairs/sets are within limits!
+        // Now check if its a new schema or a replacement of an existing one.
+        auto dup = std::find(newSchemaTable.begin(), newSchemaTable.end(), importSchema);
+        if (dup != newSchemaTable.end())
+            *dup = importSchema;                    // update it
+        else
+        {   // add new schema
+            if (a_bPreloading || newSchemaTable.size() < newSchemaTable.capacity())
+                newSchemaTable.push_back(importSchema); // add the new schema
+            else
+            {   // INCREASE the reserve-value at the start of this function
+                // On re-allocation we get exceptions if we have active schema-pointers
+                wxString msg = _("Schematable is full, can't add new schemas");
+                MyLogError("%s", msg);
+                MyMessageBox(msg, _("Warning"));
+            }
+        }
+        return true;
+    }   // ImportSchema()
+
+    bool ExportSchema(const wxString& a_schema, const wxString& a_file)
     {
-        wxString errorL(errorLine);
-        MyLogError("Error reading schema '%s' in line: '%s'", a_file, errorL);
-//        MyMessageBox(errorL, _("Error"));
-        delete pImportSchema;
-        return false;
-    }
-    // All ok, transform importdata to local data
-    // All tables/pairs/sets are within limits!
-    if (a_bDeleteDup)
-    {   // delete duplicates when importing manually
-        auto duplicate = std::find_if(newSchemaTable.begin(), newSchemaTable.end(), [pImportSchema](const auto left) {return left->name == pImportSchema->name;});
-        if (duplicate != newSchemaTable.end())
-            newSchemaTable.erase(duplicate);
-    }
-    newSchemaTable.push_back(pImportSchema);  // we have a new schema!
-    myCleanup.Add(pImportSchema); // free data at program-exit
-    return true;
-}   // ImportSchema()
+        int id = GetId(a_schema);
+        if (id == ID_NONE) return false;
+        wxString fileName(a_file);
+        if (fileName.empty())
+        {
+            wxDirDialog dlg(nullptr, FMT("%s '%s.asc'", _("Select a folder to store schema"), a_schema));
+            if (wxID_OK != dlg.ShowModal()) return false;
+            wxFileName name(dlg.GetPath(), a_schema, "asc");
+            fileName = name.GetFullPath();
+        }
+        return importExportSchema::ExportSchemaNBB(fileName.ToStdString(), newSchemaTable[id]);
+    }   // ExportSchema()
 
 }   // end namespace schema
 
@@ -135,7 +145,7 @@ SchemaInfo::SchemaInfo()
 bool SchemaInfo::SetId(int a_schemaId)
 {
     m_tableSize = newSchemaTable.size();
-    m_id = a_schemaId;
+    m_id = a_schemaId;  // limit checked in Init()
     Init();
     return m_bSchemaInitOk;
 }   // SetId()
@@ -230,7 +240,7 @@ void SchemaInfo::Init()
     }
     else
     {
-        m_pSchema       = newSchemaTable[m_id];
+        m_pSchema       = &newSchemaTable[m_id];
         m_rounds        = m_pSchema->rounds;
         m_pairs         = m_pSchema->pairs;
         m_tables        = m_pSchema->tables;  
@@ -320,23 +330,6 @@ UINT SchemaInfo::GetOpponent(UINT pair, UINT round) const
 //// testing new schema setup
 #include <fstream>
 static const auto nl('\n');
-static void ExportSchemaNBB(const NEW_SCHEMA& schema, std::ostream& os)
-{
-    wxString tmp = FMT("%u %u %u %u %u\n",schema.pairs, schema.tables, schema.rounds, schema.sets, schema.schemaType);
-    os << tmp;
-
-    for (UINT round = 1; round <= schema.rounds; ++round)
-    {
-        for (UINT table = 1; table <= schema.tables; ++table)
-        {
-            tmp = FMT("%2u-%2u %u ", schema.tableData[round][table].pairNS, schema.tableData[round][table].pairEW, schema.tableData[round][table].set);
-            os << tmp;
-        }
-        os << nl;
-    }
-    os << "#<name>" << schema.name << "</name>\n" << std::endl;
-}   // ExportSchemaNbb()
-
 void DoConvertActive2NewSchemaData(const SchemaInfo& oldSchema, NEW_SCHEMA& newSchema)
 {
     UINT rounds = oldSchema.Rounds();
@@ -368,10 +361,10 @@ void DoConvertActive2NewSchemaData(const SchemaInfo& oldSchema, NEW_SCHEMA& newS
     newSchema.sets = sets;
 }   // DoConvertActive2NewSchemaData()
 
-static void CreateNewSchemaDataCpp()
+static void CreateNewSchemaDataCppOld()
 {
     std::filebuf fb;
-    fb.open ("f:/NewSchemaData.cpp",std::ios::out | std::ios::trunc);
+    fb.open ("f:/NewSchemaDataOld.cpp",std::ios::out | std::ios::trunc);
     std::ostream fp(&fb);
     const unsigned char bom[] = {0xEF,0xBB,0xBF,0};
     fp << bom <<
@@ -420,13 +413,66 @@ static void CreateNewSchemaDataCpp()
     }   // schema's
 
     // now create the vector of pointers to these schema's
-    fp << "\nstd::vector<const NEW_SCHEMA*> newSchemaTable\n{\n";
+    fp << "\nstd::vector<const NEW_SCHEMA*> newSchemaTableOld\n{\n";
     char comma{' '};
     for (const auto& schema : schemas)
     {
         fp << "    " << comma << " &" << schema << nl;
         comma = ',';
     }
+    fp << "};\n";
+}   // CreateNewSchemaDataCppOld()
+
+static void CreateNewSchemaDataCpp()
+{
+    std::filebuf fb;
+    fb.open ("f:/NewSchemaData.cpp",std::ios::out | std::ios::trunc);
+    std::ostream fp(&fb);
+    const unsigned char bom[] = {0xEF,0xBB,0xBF,0};
+    fp << bom <<
+        "// Copyright(c) 2024-present, BusyHarry/h.levels & BridgeWx contributors.\n"
+        "// Distributed under the MIT License (http://opensource.org/licenses/MIT)\n"
+        "\n"
+        "#include \"NewSchemaData.h\"\n";
+
+    // now create the vector of schema's
+    fp << "\nstd::vector<NEW_SCHEMA> newSchemaTable\n{\n";
+    char comma{' '};
+
+    SchemaInfo oldSchema;
+    size_t tblSize = newSchemaTable.size();
+    for (UINT index = 0; index < tblSize; ++index)
+    {
+        oldSchema.SetId(index);
+        NEW_SCHEMA newSchema;
+        DoConvertActive2NewSchemaData(oldSchema, newSchema);
+        fp  << " " << comma << " { "
+            << newSchema.pairs      <<  " /*pairs*/, "
+            << newSchema.tables     <<  " /*tables*/, "
+            << newSchema.rounds     <<  " /*rounds*/, "
+            << newSchema.sets       <<  " /*sets*/, "
+            << newSchema.schemaType <<  " /*schema type: 0=pair schema, 1=individual schema*/, \""
+            << newSchema.name       <<  "\" /*schemaName*/,\n"
+            "     {\n"
+            "         {/*dummy round 0*/}          //NS,EW,SET,SetFromTable\n";
+        for (UINT round = 1; round <= newSchema.rounds; ++round)
+        {
+            fp << FMT("       , {/*r%-2u*/ {/*dummy table 0*/}", round);
+            for (UINT table = 1; table <= newSchema.tables; ++table)
+            {
+                fp << FMT( ", {%2u,%2u,%2u,%2u}"
+                    , (UINT)newSchema.tableData[round][table].pairNS
+                    , (UINT)newSchema.tableData[round][table].pairEW
+                    , (UINT)newSchema.tableData[round][table].set
+                    , (UINT)newSchema.tableData[round][table].setFromTable
+                );
+            }   // tables
+            fp << "   }\n";
+        }   // rounds
+        fp << "     }\n   }\n";
+        comma = ',';
+    }   // schema's
+
     fp << "};\n";
 }   // CreateNewSchemaDataCpp()
 
@@ -437,19 +483,14 @@ namespace schema
     void DebuggingSchemaData()
     {   // for testing only
 #if TESTING_IMPORT_EXPORT
-        SchemaInfo oldSchema("mpx NBB '93");
+        SchemaInfo oldSchema("5tin08");
         //    oldSchema.SetId(0);    // first schema
         NEW_SCHEMA newSchema;
         DoConvertActive2NewSchemaData(oldSchema, newSchema);
-
-        std::filebuf fb;
-        fb.open("f:/schemas.txt", std::ios::out);
-        std::ostream fp(&fb);
-        ExportSchemaNBB(newSchema, fp);
-        ExportSchemaNBB(newSchema, std::cout);
+        importExportSchema::ExportSchemaNBB("f:/testschema1.asc", newSchema);
+        importExportSchema::ExportSchemaNBB("f:/testschema2.asc", newSchemaTable[1]);
         CreateNewSchemaDataCpp();
-
-        auto schema0 = newSchemaTable[0]; schema0;
+        CreateNewSchemaDataCppOld();
 #endif
     }   // DebuggingSchemaData()
 

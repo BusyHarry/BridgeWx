@@ -9,8 +9,8 @@
 #include <wx/textdlg.h> 
 #include <wx/checkbox.h>
 #include <wx/filedlg.h>
-
 #include <wx/choicdlg.h>
+
 #include "cfg.h"
 #include "names.h"
 #include "printer.h"
@@ -33,7 +33,7 @@ meer:
     Slagen          : Tricks
     Contract        : Contract
     Score           : Score
-    sitlzit tafel   : Sit-out table or Dummy table
+    stilzit tafel   : Sit-out table or Dummy table
     Spellen lenen   : Borrow the cards from a table, Take the cards from a table
     frequentiestaat : frequency table or "hand distribution"
     reken programma : scoring program
@@ -428,6 +428,14 @@ Debug::Debug(wxWindow* a_pParent, UINT a_pageId, DebugType a_type) :Baseframe(a_
             m_pStatusBarInfo = _("Creation/print of guides");
             windowText       = _("Guides");
             m_description    = "DebugGuides";
+            {
+                auto pButtonExportSchema = new wxButton(this, wxID_ANY, Unique(_("Export schema")));
+                pButtonExportSchema->SetToolTip(_("export current schema to .asc file"));
+                pButtonExportSchema->Bind(wxEVT_BUTTON, &Debug::OnExportSchema, this);
+                m_pHsizerGuides->AddSpacer(80);
+                m_pHsizerGuides->Add(pButtonExportSchema);
+                AUTOTEST_ADD_WINDOW(pButtonExportSchema , "ExportSchema");
+            }
             AUTOTEST_ADD_WINDOW(m_pPairChoice , PAIR_CHOICE );
             AUTOTEST_ADD_WINDOW(m_pGroupChoice, GROUP_CHOICE);
             break;
@@ -1393,9 +1401,10 @@ void Debug::DoCommand(const wxString& a_cmd)
                 rounds = wxAtoi(pBuf); SkipDigits(pBuf);
                 pairs  = wxAtoi(pBuf); SkipDigits(pBuf);
                 wxArrayString schemas;
-                INT_VECTOR nameIds = schema::FindSchema(rounds, pairs, &schemas);
+                INT_VECTOR    nameIds;
+                schema::FindSchema(rounds, pairs, nameIds, &schemas);
                 if (nameIds.size() == 0)
-                    OUTPUT_TEXT(_(" init of guidedata failed\n"));
+                    OUTPUT_TEXT(_(" no matching schemas found!\n"));
                 else
                 {
                     int id=0;
@@ -1455,10 +1464,6 @@ void Debug::CalcScore(const wxChar* pBuf)
             OUTPUT_TEXT_FORMATTED(_(", score vulnerable: %i, not vulnerable: %i\n"), scoreV, scoreNv);
         }
     }
-    #define CALC_OLD 0
-    #if CALC_OLD
-        CalcScoreOld(pBuf); // use (also) 'old' result calculation
-    #endif
 }   // CalcScore()
 
 void Debug::Usage()
@@ -2133,194 +2138,8 @@ wxString Debug::CenterText(const wxString& a_text, size_t a_length)
     return wxString(' ', dif/2) + a_text;   // add spaces to the front of the string
 }   // CenterText()
 
-#if CALC_OLD
-static void SkipChars(const wxChar* &pBuf)        // skip alpha
-{
-    while (std::isalpha(*pBuf)) pBuf++;
-    SkipWhite(pBuf);
-}   // SkipChars()
-
-void Debug::CalcScoreOld(const wxChar* pBuf)
-{
-    enum CardTypes
-    {
-        CLUBS       = 0
-        , HEARTS      = 1
-        , NO_TRUMP    = 2
-    };
-
-    const char*  doubledNames     [] = {"", _("doubled"), _("redoubled")};
-    const char*  contractTypeNames[] = {_("Clubs/Diamonds"), _("Hearts/Spades"), _("NoTrump")};
-    static int const   typeValue  [] = { 20                 , 30                  , 30 };
-    int     type        = 0;    // clubs/diamonds = 0, hearts/spades=1,no-trump=2
-    int     doubled     = 0;
-    int     contract    = 7;    // if only down-tricks, default to 7
-    int     tricks      = 0;
-    int     vulnerableScore;
-    int     nonVulnerableScore;
-
-    //lint --e{438}    Last value assigned to variable 'buf' not used
-    if (isdigit(*pBuf))
-    {
-        contract = wxAtoi(pBuf);    // determine the bid
-        SkipDigits(pBuf);           // skip digits
-        switch (*pBuf)
-        {
-        case 'K': case 'R':
-            type = CLUBS;
-            break;
-        case 'H':
-            type = HEARTS;
-            break;
-        case 'S':
-            if (pBuf[1] == 'A')  // did you mean no-trump??
-                type = NO_TRUMP;
-            else
-                type = HEARTS;  // s of spades.....
-            break;
-        case 'Z':
-            type = NO_TRUMP;
-            break;
-        default:
-            Usage();
-            return;
-        }
-        SkipChars(++pBuf);
-        if (*pBuf == '*'){++doubled; SkipWhite(++pBuf);} // doubled score
-        if (*pBuf == '*'){++doubled; ++pBuf;}            // redoubled score
-        if (*pBuf)
-        {
-            SkipWhite(pBuf);
-            tricks = wxAtoi(pBuf);
-            SkipDigits(++pBuf);
-            if (*pBuf == '*'){++doubled; SkipWhite(++pBuf);}
-            if (*pBuf == '*'){++doubled; ++pBuf;}
-        }
-    }
-    else
-    {
-        if (*pBuf == '-')                    // only down-tricks
-        {
-            tricks = wxAtoi(pBuf);
-            if (tricks == 0) { Usage(); return;}    // '-0' ????
-            SkipDigits(++pBuf);
-            if (*pBuf == '*'){++doubled; SkipWhite(++pBuf);}
-            if (*pBuf == '*'){++doubled; /*++pBuf;*/ }
-        }
-        else
-        {
-            Usage();
-            return;
-        }
-    }
-
-    // type and count are determined
-    // now calculate score
-    if (doubled > 2) doubled = 2;     // more then ** not possible...
-    if (tricks < 0)     // down
-    {
-        if (contract + 6 + tricks < 0)
-        {
-            OUTPUT_TEXT(_("more down then contract-tricks??\n"));
-            return;
-        }
-        tricks = -tricks;
-        wxString sDbl = FMT(_("%i down %s"), tricks, doubledNames[doubled]);
-        OUTPUT_TEXT(sDbl.Trim(true));
-        if (doubled == 0)
-        {
-            vulnerableScore    = 100*tricks;
-            nonVulnerableScore =  50*tricks;
-        }
-        else
-        {
-            vulnerableScore = tricks*300-100;
-            if (tricks >= 4)
-                nonVulnerableScore = 800+300*(tricks-4);
-            else
-                nonVulnerableScore = 200*tricks-100;
-        }
-        vulnerableScore    = -vulnerableScore;
-        nonVulnerableScore = -nonVulnerableScore;
-        if (doubled == 2)
-        {
-            vulnerableScore    *= 2;
-            nonVulnerableScore *= 2;
-        }
-    }
-    else
-    {
-        if (contract + 6 + tricks > 13)
-        {
-            OUTPUT_TEXT(_("more tricks then possible in a game??\n"));
-            return;
-        }
-        wxString sDoubled = FMT(" %s", doubledNames[doubled]); sDoubled.Trim(true); // if not (re-)doubled, remove space
-        OUTPUT_TEXT_FORMATTED("%d %s %+d%s",
-            contract, contractTypeNames[type],
-            tricks,   sDoubled);
-        switch (contract)
-        {
-            case 7:
-                vulnerableScore     = 2000; nonVulnerableScore = 1300;
-                break;
-            case 6: vulnerableScore = 1250; nonVulnerableScore = 800;
-                break;
-            case 5: vulnerableScore =  500; nonVulnerableScore = 300;
-                break;
-            case 4:
-                if ((type != CLUBS) || doubled)
-                {
-                    vulnerableScore = 500; nonVulnerableScore = 300;
-                }
-                else
-                {
-                    vulnerableScore = 50; nonVulnerableScore = 50;
-                }
-                break;
-            case 3:
-                if (doubled || (type == NO_TRUMP) )
-                {   vulnerableScore = 500; nonVulnerableScore = 300;}
-                else
-                {   vulnerableScore =  50; nonVulnerableScore =  50;}
-                break;
-            case 2:
-                if ((doubled && (type != CLUBS)) || (doubled == 2))
-                {   vulnerableScore = 500; nonVulnerableScore = 300;}
-                else
-                {   vulnerableScore =  50; nonVulnerableScore =  50;}
-                break;
-            default:    // not possible...
-            case 1:
-                if ((doubled == 2) && (type != CLUBS))
-                {   vulnerableScore = 500; nonVulnerableScore = 300;}
-                else
-                {   vulnerableScore =  50; nonVulnerableScore =  50;}
-                break;
-        }
-        int trickValue;
-        if (type == NO_TRUMP)
-            trickValue = 10+5*doubled*(1+doubled);    // 10, 20, 40
-        else
-            trickValue = 0;
-        switch (doubled)
-        {
-            case 0: trickValue += (contract+tricks)*typeValue[type];
-                break;
-            case 1: nonVulnerableScore += tricks*100;
-                vulnerableScore += tricks*200;
-                trickValue +=  50+2*contract*typeValue[type];
-                break;
-            case 2: nonVulnerableScore += tricks*200;
-                vulnerableScore += tricks*400;
-                trickValue += 100+4*contract*typeValue[type];
-                break;
-            default:
-                break;
-        }
-        vulnerableScore    += trickValue;
-        nonVulnerableScore += trickValue;
-    }   // end not down
-    OUTPUT_TEXT_FORMATTED(_(", score vulnerable: %i, not vulnerable: %i\n"), vulnerableScore, nonVulnerableScore);
-}   // CalcScoreOld()
-#endif
+void Debug::OnExportSchema(wxCommandEvent&)
+{   // export active group-schema
+    bool bResult = schema::ExportSchema(m_pActiveGroupInfo->schema);
+    if (!bResult) {}
+}   // OnExportSchema()

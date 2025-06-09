@@ -1,5 +1,14 @@
 # Releasenotes
-#V10.7.0  .....
+#V10.7.0  Monday June 9, 2025
+ - easier translation (more)
+ - wxCombobox sometimes truncates content (old problem again)
+ - import of schema's: 'rounds' and 'sets' were swapped
+ - set vs19 project settings to use x64 tools (x86 caused: C1060, compiler is out of heap space)
+ - added a ./locales/getTxtNoLines.bat that produces translation files without linenumbers: much less differences!
+ - force fontsize of dialog to size of its parent (last one I missed?)
+ - added 'export schema' in the guides page
+ - redesign/update of schema-data stuf
+ - adaptations for wxWidgets V3.3.0
 
 
 #V10.6.0  Tuesday 20 May 2025
@@ -38,12 +47,12 @@
  - when scaling is used, also MyMessageBox(), MyLog(), BusyBox() and wxSystemInformationFrame() are scaled
    - apparently wxDialog and wxFrame do NOT inherit the fontsize of there parent
  - added butler score calculation
-   - scaling added/updated in:
-     - language selection (wxGetSingleChoiceIndex --> MyGetSingleChoiceIndex)
-     - row/column lables of wxGrid
-     - MyMessageBox
-     - BusyBox
-     - size of mainframe
+ - scaling added/updated in:
+   - language selection (wxGetSingleChoiceIndex --> MyGetSingleChoiceIndex)
+   - row/column lables of wxGrid
+   - MyMessageBox
+   - BusyBox
+   - size of mainframe
 
 #V10.3.0  Monday Januari 20 2025:
  - adaptation from c++17 to c++20

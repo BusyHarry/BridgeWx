@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-18 14:20+0200\n"
-"PO-Revision-Date: 2025-05-18 14:20+0200\n"
+"POT-Creation-Date: 2025-06-05 12:51+0200\n"
+"PO-Revision-Date: 2025-06-05 12:51+0200\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -19,97 +19,69 @@ msgstr ""
 "X-Generator: Poedit 3.5\n"
 "X-Source-Language: en\n"
 
-#: ..\src\Corrections.cpp:73
 #, c-format
 msgid "Invalid session-correction data <%s>, will be ignored."
 msgstr "Ongeldige zitting-correctie data <%s>, wordt niet meegenomen."
 
-#: ..\src\Corrections.cpp:108
 #, c-format
 msgid "Invalid total-correction/end data <%s> will be ignored.\n"
 msgstr "Ongeldige totaal-correctie/uitslag data <%s> wordt niet meegenomen.\n"
 
-#: ..\src\Corrections.cpp:109 ..\src\calcScore.cpp:743 ..\src\calcScore.cpp:857
-#: ..\src\calcScore.cpp:924 ..\src\calcScore.cpp:1667
-#: ..\src\correctionsEnd.cpp:246 ..\src\debug.cpp:996
 msgid "score"
 msgstr "score"
 
-#: ..\src\Corrections.cpp:110 ..\src\calcScore.cpp:1484
-#: ..\src\correctionsEnd.cpp:38
 msgid "bonus"
 msgstr "bonus"
 
-#: ..\src\Corrections.cpp:111
 msgid "globalPair"
 msgstr "globaalPaar"
 
-#: ..\src\Corrections.cpp:112 ..\src\calcScore.cpp:923
-#: ..\src\correctionsEnd.cpp:39 ..\src\correctionsSession.cpp:54
-#: ..\src\debug.cpp:1927 ..\src\debug.cpp:2060
 msgid "games"
 msgstr "spellen"
 
-#: ..\src\assignNames.cpp:36 ..\src\calcScore.cpp:854 ..\src\calcScore.cpp:921
-#: ..\src\calcScore.cpp:1482 ..\src\correctionsEnd.cpp:36
-#: ..\src\correctionsSession.cpp:49 ..\src\nameEditor.cpp:30
 msgid "pairname"
 msgstr "paarnaam"
 
-#: ..\src\assignNames.cpp:37
 msgid "pair no"
 msgstr "paar nr"
 
-#: ..\src\assignNames.cpp:38
+#. TRANSLATORS: 'S' is first char of Session
 msgid "pair S-1"
 msgstr "paar Z-1"
 
-#: ..\src\assignNames.cpp:39 ..\src\calcScore.cpp:852 ..\src\calcScore.cpp:919
-#: ..\src\calcScore.cpp:1481 ..\src\calcScore.cpp:1664
 msgid "rank"
 msgstr "rang"
 
-#: ..\src\assignNames.cpp:40
+#. TRANSLATORS: 'S' is first char of Session
 msgid "rank S-1"
 msgstr "rang Z-1"
 
-#: ..\src\assignNames.cpp:50
 msgid "Assign pairnames on base of:  "
 msgstr "Paarnamen toekennen op basis van:  "
 
-#: ..\src\assignNames.cpp:51
 msgid "Original nr"
 msgstr "Origineel nr"
 
-#: ..\src\assignNames.cpp:52
 msgid "Rank total"
 msgstr "Rang totaal"
 
-#: ..\src\assignNames.cpp:53
 msgid "Rank S-1"
 msgstr "Rang Z-1"
 
-#: ..\src\assignNames.cpp:54 ..\src\debug.cpp:136
 msgid "Clear"
 msgstr "Wissen"
 
-#: ..\src\assignNames.cpp:74
 msgid "Assign pairnames"
 msgstr "Toekennen paarnamen"
 
-#: ..\src\assignNames.cpp:133
 #, c-format
 msgid "AssignNames:: row %d, column %d changes from <%s> to <%s>"
 msgstr "AssignNames:: row %d, column %d changes from <%s> to <%s>"
 
-#: ..\src\assignNames.cpp:325 ..\src\calcScore.cpp:709
-#: ..\src\calcScore.cpp:1755 ..\src\calcScore.cpp:1857
-#: ..\src\correctionsEnd.cpp:273 ..\src\correctionsSession.cpp:358
 #, c-format
 msgid ", session %u"
 msgstr ", zitting %u"
 
-#: ..\src\assignNames.cpp:327
 #, c-format
 msgid ""
 "Pairname assignment for '%s'%s\n"
@@ -120,409 +92,307 @@ msgstr ""
 "\n"
 "Paar naam"
 
-#: ..\src\baseframe.cpp:79
 #, c-format
 msgid "Baseframe:: row %d, column %d changes from <%s> to <%s>"
 msgstr "Baseframe:: rij %d, kolom %d verandert van <%s> in <%s>"
 
-#: ..\src\baseframe.cpp:94 ..\src\debug.cpp:124
 msgid "Save"
 msgstr "Opslaan"
 
-#: ..\src\baseframe.cpp:95
 msgid "save changed data"
 msgstr "gewijzigde data opslaan"
 
-#: ..\src\baseframe.cpp:96
 msgid "Undo"
 msgstr "Herstel"
 
-#: ..\src\baseframe.cpp:97
 msgid "undo changes"
 msgstr "wijzigingen terugdraaien"
 
-#: ..\src\baseframe.cpp:127
 msgid "OnCancel()"
 msgstr "OnCancel()"
 
-#: ..\src\baseframe.cpp:157
 msgid "Search"
 msgstr "Zoek"
 
-#: ..\src\baseframe.cpp:158
 msgid "Text to search:"
 msgstr "Te zoeken tekst:"
 
-#: ..\src\baseframe.cpp:756
 msgid "Ok"
 msgstr "Ok"
 
-#: ..\src\baseframe.cpp:757
 msgid "Yes"
 msgstr "Ja"
 
-#: ..\src\baseframe.cpp:758
 msgid "No"
 msgstr "Nee"
 
-#: ..\src\baseframe.cpp:759
 msgid "Cancel"
 msgstr "Afbreken"
 
-#: ..\src\baseframe.h:245
 msgid "Busy..."
 msgstr "Bezig..."
 
-#: ..\src\calcScore.cpp:168 ..\src\debug.cpp:398
 msgid "Print"
 msgstr "Afdrukken"
 
-#: ..\src\calcScore.cpp:169
 msgid "print current window content"
 msgstr "druk huidige inhoud van het venster af"
 
-#: ..\src\calcScore.cpp:172
 msgid "Result:"
 msgstr "Resultaat:"
 
-#: ..\src\calcScore.cpp:172
 msgid "show result of the calculations"
 msgstr "toon het resultaat van de berekeningen"
 
-#: ..\src\calcScore.cpp:175
 msgid "Pair:"
 msgstr "Paar:"
 
-#: ..\src\calcScore.cpp:175 ..\src\calcScore.cpp:258
 msgid "Result per pair"
 msgstr "Uitslag per paar"
 
-#: ..\src\calcScore.cpp:178 ..\src\scoreEntry.cpp:91
 msgid "Game:"
 msgstr "Spel:"
 
-#: ..\src\calcScore.cpp:178 ..\src\calcScore.cpp:262
 msgid "Result per game"
 msgstr "Uitslag per spel"
 
-#: ..\src\calcScore.cpp:193
 msgid "Score calculations"
 msgstr "Score berekeningen"
 
-#: ..\src\calcScore.cpp:230 ..\src\calcScore.cpp:1592
 msgid "Session result"
 msgstr "Zitting uitslag"
 
-#: ..\src\calcScore.cpp:234
 msgid "Session result on name"
 msgstr "Zitting uitslag op naam"
 
-#: ..\src\calcScore.cpp:238 ..\src\calcScore.cpp:1592
 msgid "Final result"
 msgstr "Totaal uitslag"
 
-#: ..\src\calcScore.cpp:242
 msgid "Frequency tables"
 msgstr "Frequentie staten"
 
-#: ..\src\calcScore.cpp:246
 msgid "Group result"
 msgstr "Groep uitslag"
 
-#: ..\src\calcScore.cpp:250
 msgid "Club result total"
 msgstr "Club uitslag totaal"
 
-#: ..\src\calcScore.cpp:254
 msgid "Club result session"
 msgstr "Club uitslag zitting"
 
-#: ..\src\calcScore.cpp:267
 msgid "Unknown type"
 msgstr "Onbekend type"
 
-#: ..\src\calcScore.cpp:289
 msgid "frequencytables"
 msgstr "frequentiestaten"
 
-#: ..\src\calcScore.cpp:289 ..\src\setupSchema.cpp:290
 msgid "group"
 msgstr "groep"
 
-#: ..\src\calcScore.cpp:289 ..\src\main.cpp:746
 msgid "session"
 msgstr "zitting"
 
-#: ..\src\calcScore.cpp:289
 msgid "session on name"
 msgstr "zitting op naam"
 
-#: ..\src\calcScore.cpp:298
 msgid "final"
 msgstr "totaal"
 
-#: ..\src\calcScore.cpp:304
 msgid "club session"
 msgstr "club zitting"
 
-#: ..\src\calcScore.cpp:308
 msgid "club total"
 msgstr "club totaal"
 
-#: ..\src\calcScore.cpp:334 ..\src\main.cpp:933
 msgid "Error"
 msgstr "Fout"
 
-#: ..\src\calcScore.cpp:710
 #, c-format
 msgid "Group-result of match '%s'%s"
 msgstr "Groep-uitslag van wedstrijd '%s'%s"
 
-#: ..\src\calcScore.cpp:737
 msgid "games :"
 msgstr "spellen :"
 
-#: ..\src\calcScore.cpp:739 ..\src\correctionsSession.cpp:53
 msgid "extra"
 msgstr "extra"
 
-#: ..\src\calcScore.cpp:740 ..\src\calcScore.cpp:741
 msgid "cor"
 msgstr "kor"
 
-#: ..\src\calcScore.cpp:742
 msgid "tot"
 msgstr "tot"
 
-#: ..\src\calcScore.cpp:755
 msgid "(imps/game)"
 msgstr "(imps/spel)"
 
-#: ..\src\calcScore.cpp:762 ..\src\calcScore.cpp:1768
 msgid "absent"
 msgstr "afwezig paar"
 
-#: ..\src\calcScore.cpp:764
 msgid "NOT PLAYED"
 msgstr "HEEFT NIET GESPEELD"
 
-#: ..\src\calcScore.cpp:853 ..\src\calcScore.cpp:920
-#: ..\src\correctionsEnd.cpp:35 ..\src\correctionsSession.cpp:48
-#: ..\src\main.cpp:747
 msgid "pair"
 msgstr "paar"
 
-#: ..\src\calcScore.cpp:855
 msgid "tot."
 msgstr "tot."
 
-#: ..\src\calcScore.cpp:856 ..\src\correctionsSession.cpp:52
 msgid "max"
 msgstr "max"
 
-#: ..\src\calcScore.cpp:858 ..\src\calcScore.cpp:925
 msgid "corr."
 msgstr "korr."
 
-#: ..\src\calcScore.cpp:922 ..\src\calcScore.cpp:1108 ..\src\calcScore.cpp:1111
-#: ..\src\correctionsEnd.cpp:241 ..\src\correctionsSession.cpp:265
-#: ..\src\setupGame.cpp:216
 msgid "imps"
 msgstr "imps"
 
-#: ..\src\calcScore.cpp:1084 ..\src\scoreEntry.cpp:45
 msgid "game"
 msgstr "spel"
 
-#: ..\src\calcScore.cpp:1088 ..\src\calcScore.cpp:1109
-#: ..\src\calcScore.cpp:1146 ..\src\calcScore.cpp:1801
-#: ..\src\calcScore.cpp:1883 ..\src\debug.cpp:1027 ..\src\debug.cpp:1703
 msgid "EW"
 msgstr "OW"
 
-#: ..\src\calcScore.cpp:1088 ..\src\calcScore.cpp:1106
-#: ..\src\calcScore.cpp:1145 ..\src\calcScore.cpp:1801
-#: ..\src\calcScore.cpp:1882 ..\src\debug.cpp:1027 ..\src\debug.cpp:1703
 msgid "NS"
 msgstr "NZ"
 
-#: ..\src\calcScore.cpp:1088
 msgid "datumscore"
 msgstr "datumscore"
 
-#: ..\src\calcScore.cpp:1107 ..\src\calcScore.cpp:1110
 msgid "delta"
 msgstr "delta"
 
-#: ..\src\calcScore.cpp:1144
 msgid "scoreNS"
 msgstr "scoreNZ"
 
-#: ..\src\calcScore.cpp:1151
 msgid "top:"
 msgstr "top:"
 
-#: ..\src\calcScore.cpp:1220
 #, c-format
 msgid "result of session %u"
 msgstr "uitslag van zitting %u"
 
-#: ..\src\calcScore.cpp:1222
 msgid "result"
 msgstr "uitslag"
 
-#: ..\src\calcScore.cpp:1240
 #, c-format
 msgid "Pair '%s' has played, but was NOT assigned to a global name"
 msgstr "Paar '%s' heeft gespeeld, maar is nog niet gekoppeld aan een globale paarnaam"
 
-#: ..\src\calcScore.cpp:1242 ..\src\scoreEntry.cpp:553 ..\src\setupGame.cpp:209
-#: ..\src\setupSchema.cpp:265
 msgid "Warning"
 msgstr "Waarschuwing"
 
-#: ..\src\calcScore.cpp:1327
 msgid "No names entered yet!"
 msgstr "Nog geen namen ingevoerd!"
 
-#: ..\src\calcScore.cpp:1453
 msgid " (weighted average)"
 msgstr " (gewogen gemiddelde)"
 
-#: ..\src\calcScore.cpp:1453
 #, c-format
 msgid "Final result%s"
 msgstr "Totaal uitslag%s"
 
 #. TRANSLATORS: "total", translation max length = 7
-#: ..\src\calcScore.cpp:1485
 msgid "total"
 msgstr "totaal"
 
 #. TRANSLATORS: "avg.", translation max length = 5
-#: ..\src\calcScore.cpp:1486 ..\src\calcScore.cpp:1668
 msgid "avg."
 msgstr "gem."
 
 #. TRANSLATORS: 'S' is first character of 'Session'
-#: ..\src\calcScore.cpp:1494
 #, c-format
 msgid "S%u"
 msgstr "Z%u"
 
-#: ..\src\calcScore.cpp:1592
 #, c-format
 msgid "Result of session %u"
 msgstr "Uitslag van zitting %u"
 
-#: ..\src\calcScore.cpp:1633
 #, c-format
 msgid "%s of the clubs for '%s'"
 msgstr "%s van de clubs voor '%s'"
 
-#: ..\src\calcScore.cpp:1636
 #, c-format
 msgid "minimum number of pairs : %u"
 msgstr "minimum aantal paren : %u"
 
-#: ..\src\calcScore.cpp:1639
 #, c-format
 msgid "maxsimum number of pairs: %u"
 msgstr "maksimum aantal paren: %u"
 
-#: ..\src\calcScore.cpp:1641
 msgid "Scores are in imps, results and average in imps/pair"
 msgstr "Scores zijn in imps, resultaten en gemiddelde in imps/paar"
 
-#: ..\src\calcScore.cpp:1641
 msgid "Scores, results and average are in %"
 msgstr "Scores, resultaten en gemiddelde zijn in %"
 
-#: ..\src\calcScore.cpp:1665
 msgid "count"
 msgstr "aantal"
 
-#: ..\src\calcScore.cpp:1666
 msgid "club-name"
 msgstr "club-naam"
 
-#: ..\src\calcScore.cpp:1669
 msgid "totalscore"
 msgstr "totaal score"
 
-#: ..\src\calcScore.cpp:1716
 #, c-format
 msgid "individual pairs: %u, score: %6s (%5s)"
 msgstr "individuele paren: %u, score: %6s (%5s)"
 
-#: ..\src\calcScore.cpp:1735
 #, c-format
 msgid " set-score: %ld (%s imps/game)"
 msgstr " set-score: %ld (%s imps/spel)"
 
-#: ..\src\calcScore.cpp:1737
 #, c-format
 msgid " set-score: %s(%u%%)"
 msgstr " set-score: %s(%u%%)"
 
-#: ..\src\calcScore.cpp:1762
 #, c-format
 msgid "Result of pair %s '%s' for '%s'%s"
 msgstr "Uitslag van paar %s '%s' voor '%s'%s"
 
-#: ..\src\calcScore.cpp:1770
 msgid "Pair has not played (yet)"
 msgstr "Paar heeft (nog) niet gespeeld"
 
-#: ..\src\calcScore.cpp:1780
 #, c-format
 msgid "Game %2u: "
 msgstr "Spel %2u: "
 
-#: ..\src\calcScore.cpp:1784
 msgid "not played"
 msgstr "niet gespeeld"
 
-#: ..\src\calcScore.cpp:1802
 #, c-format
 msgid ", score: %5s"
 msgstr ", score: %5s"
 
-#: ..\src\calcScore.cpp:1804
 #, c-format
 msgid ", imps %3ld"
 msgstr ", imps %3ld"
 
-#: ..\src\calcScore.cpp:1807
 #, c-format
 msgid ", points%6s"
 msgstr ", punten%6s"
 
-#: ..\src\calcScore.cpp:1812
 #, c-format
 msgid " Played against (%s): %s"
 msgstr " Tegenpaar (%s): %s"
 
-#: ..\src\calcScore.cpp:1828
 #, c-format
 msgid "imps: %ld, games: %u, sessionscore: %s imps/game%s, rank: %u"
 msgstr "imps: %ld, spellen: %u, zittingscore: %s imps/spel%s, rang: %u"
 
-#: ..\src\calcScore.cpp:1838
 #, c-format
 msgid "points: %s (%i), games: %u, sessionscore: %s%%%s, rank: %u"
 msgstr "aantal punten: %s (%i), spellen: %u, zittingscore: %s%%%s, rang: %u"
 
-#: ..\src\calcScore.cpp:1863
 #, c-format
 msgid "Result of game %u for '%s'%s"
 msgstr "Uitslag van spel %u voor '%s'%s"
 
-#: ..\src\calcScore.cpp:1884
 msgid "SCORE"
 msgstr "SCORE"
 
-#: ..\src\calcScore.cpp:1968
 msgid ""
 "In game results:\n"
 "\n"
@@ -530,12 +400,10 @@ msgstr ""
 "In de scores:\n"
 "\n"
 
-#: ..\src\calcScore.cpp:1973
 #, c-format
 msgid "Pairnr out of range:%3u, score(s) found for this pair.\n"
 msgstr "Paarnummer te groot:%3u, score(s) gevonden voor dit paar.\n"
 
-#: ..\src\calcScore.cpp:1989
 msgid ""
 "\n"
 "Did you lower the number of players in any group?"
@@ -543,7 +411,6 @@ msgstr ""
 "\n"
 "Heeft U het aantal spelers verlaagd in een groep?"
 
-#: ..\src\calcScore.cpp:1990
 #, c-format
 msgid ""
 "\n"
@@ -552,7 +419,6 @@ msgstr ""
 "\n"
 "Maximum paar nr: %u (== som van alle paren in alle groepen)."
 
-#: ..\src\calcScore.cpp:1991
 msgid ""
 "\n"
 "Better remove scores of pairs you want to remove."
@@ -560,7 +426,6 @@ msgstr ""
 "\n"
 "U kunt beter eerst de scores verwijderen van de paren die U wilt verwijderen."
 
-#: ..\src\calcScore.cpp:1992
 msgid ""
 "\n"
 "Results are NOT reliable!"
@@ -568,38 +433,30 @@ msgstr ""
 "\n"
 "De resultaten zijn niet betrouwbaar!"
 
-#: ..\src\cfg.cpp:116
 msgid "<no description yet>"
 msgstr "<nog geen beschrijving>"
 
-#: ..\src\cfg.cpp:333 ..\src\cfg.cpp:335
-#, c-format
-msgid "\"%s\" version %s, %s"
-msgstr "\"%s\" versie %s, %s"
+msgid "version"
+msgstr "versie"
 
-#: ..\src\cfg.cpp:409
+#. TRANSLATORS: 'S' is first char of Session
 #, c-format
 msgid ":S%u"
 msgstr ":Z%u"
 
-#: ..\src\cfg.cpp:900
 #, c-format
 msgid "Unknown/faulty/missing parameter <%s>\n"
 msgstr "Onbekende/foute/ontbrekende parameter <%s>\n"
 
-#: ..\src\cfg.cpp:907
 msgid "Error in parameter: "
 msgstr "Fout in parameter: "
 
-#: ..\src\cfg.cpp:909
 msgid " of "
 msgstr " van "
 
-#: ..\src\cfg.cpp:909 ..\src\main.cpp:671
 msgid ", version "
 msgstr ", versie "
 
-#: ..\src\cfg.cpp:911
 msgid ""
 "\n"
 "  activation: BridgeWx [-ax] [-bx] [-gx] [-kx] [-lx] [-nx] [-rx] [-wx] [-fx] [-qx] [-d] [-u]\n"
@@ -635,70 +492,56 @@ msgstr ""
 "  qx: verhoog fontgrootte met x%\n"
 "  u : Unittest/Autotest\n"
 
-#: ..\src\choiceMC.cpp:156
 #, c-format
 msgid "ChoiceMC: item %i activated"
 msgstr "ChoiceMC: item %i geactiveerd"
 
-#: ..\src\choiceMC.cpp:181
 msgid "ChoiceMC->mouseclick(timer running)"
 msgstr "ChoiceMC->mouseclick(timer running)"
 
-#: ..\src\choiceMC.cpp:187
 msgid "ChoiceMC->mouseclick(show)"
 msgstr "ChoiceMC->mouseclick(show)"
 
-#: ..\src\choiceMC.cpp:209
 #, c-format
 msgid "ChoiceMC() comboMinSize=%i, charWidth=%i"
 msgstr "ChoiceMC() comboMinSize=%i, charWidth=%i"
 
-#: ..\src\choiceMC.cpp:248
 #, c-format
 msgid "CheckAutoSize(%i): SetMinSize: txt+offset=%i, minsize=%i"
 msgstr "CheckAutoSize(%i): SetMinSize: txt+offset=%i, minsize=%i"
 
-#: ..\src\choiceMC.cpp:384
 #, c-format
 msgid "ChoiceMC::SetPopupWidth() size=%i, columns=%u, width=%i"
 msgstr "ChoiceMC::SetPopupWidth() size=%i, colommen=%u, breedte=%i"
 
-#: ..\src\correctionsEnd.cpp:58
 msgid "Entry of sessioncorrections for endresult"
 msgstr "Ingave zitting correcties tbv einduitslag"
 
-#: ..\src\correctionsEnd.cpp:131
 #, c-format
 msgid "CorrectionsEnd:: row %d, column %d changes from <%s> to <%s>"
 msgstr "CorrectionsEnd:: row %d, column %d changes from <%s> to <%s>"
 
-#: ..\src\correctionsEnd.cpp:242
 msgid "END CORRECTIONS: '-' or '*' for 'imps': sessionsscore is ignored for total result"
 msgstr "EIND KORREKTIES: '-' of '*' voor 'imps': zittingscore telt niet mee in einduitslag"
 
-#: ..\src\correctionsEnd.cpp:247
 msgid "END CORRECTIONS: '-' or '*' for 'score': sessionsscore is ignored for total result"
 msgstr "EIND KORREKTIES: '-' of '*' voor 'score': zittingscore telt niet mee in einduitslag"
 
-#: ..\src\correctionsEnd.cpp:274
 #, c-format
 msgid "Overview of endcorrections for '%s'%s"
 msgstr "Overzicht van de eindcorrecties voor '%s'%s"
 
-#: ..\src\correctionsSession.cpp:51 ..\src\correctionsSession.cpp:278
+#. TRANSLATORS: 'mp' == MatchPoints
 msgid "mp"
 msgstr "mp"
 
-#: ..\src\correctionsSession.cpp:75
 msgid "Entry of session corrections"
 msgstr "Ingave zitting correcties"
 
-#: ..\src\correctionsSession.cpp:166
 #, c-format
 msgid "CorrectionsSession:: row %d, column %d changes from <%s> to <%s>"
 msgstr "CorrectionsSession:: row %d, column %d changes from <%s> to <%s>"
 
-#: ..\src\correctionsSession.cpp:259
 msgid ""
 "combi-table:\n"
 "extra: the imp's earned\n"
@@ -708,11 +551,9 @@ msgstr ""
 "extra  : de verdiende imp's\n"
 "spellen: het aantal spellen aan die combi-tafel"
 
-#: ..\src\correctionsSession.cpp:266
 msgid "SESSION CORRECTIONS in imps and results from a combi-table"
 msgstr "ZITTING KORREKTIES in imps en (mogelijk) resulaat van een combi-tafel"
 
-#: ..\src\correctionsSession.cpp:271
 msgid ""
 "combi-table:\n"
 "max  : maximum mp's to get\n"
@@ -724,26 +565,21 @@ msgstr ""
 "extra  : de verdiende mp's\n"
 "spellen: het aantal spellen aan die combi-tafel"
 
-#: ..\src\correctionsSession.cpp:279
 #, c-format
 msgid "SESSION CORRECTIONS in full % or mp (matchpoints) and results from a combi-table"
 msgstr "ZITTING KORREKTIES in hele % of mp (matchpunten) en resultaat van een combi-tafel"
 
-#: ..\src\correctionsSession.cpp:296
 msgid "No session data yet.."
 msgstr "Nog geen sessie gegevens.."
 
-#: ..\src\correctionsSession.cpp:359
 #, c-format
 msgid "Overview of the sessioncorrections for '%s'%s"
 msgstr "Overzicht van de zittingcorrecties voor '%s'%s"
 
-#: ..\src\database.cpp:130
 #, c-format
 msgid "Database version error, expected <= %ld, found %ld"
 msgstr "Database versie error, verwacht <= %ld, aanwezig %ld"
 
-#: ..\src\database.cpp:155
 msgid ""
 ": is not accessable!\n"
 "Path set to: "
@@ -751,42 +587,34 @@ msgstr ""
 ": is niet toegankelijk!\n"
 "Opslaglocatie nu in map: "
 
-#: ..\src\database.cpp:218
 #, c-format
 msgid "Reading pairnames: pairnr <%s> too high!"
 msgstr "Inlezen paarnamen: paarnr <%s> te groot!"
 
-#: ..\src\database.cpp:224
 #, c-format
 msgid "Reading pairnames: <%s = %s> invalid!"
 msgstr "Inlezen paarnamen: <%s = %s> ongeldig!"
 
-#: ..\src\database.cpp:248
 #, c-format
 msgid "Reading clubnames: clubnr <%u> too high!"
 msgstr "Inlezen clubnamen: clubnr <%u> te groot!"
 
-#: ..\src\database.cpp:253
 #, c-format
 msgid "Rading clubnames: <%s = %s> invalid!"
 msgstr "Inlezen clubnamen: <%s = %s> ongeldig!"
 
-#: ..\src\database.cpp:307
 #, c-format
 msgid "Reading scores: gamenr <%s> too high!"
 msgstr "Inlezen scores: spelnr <%s> te groot!"
 
-#: ..\src\database.cpp:328
 #, c-format
 msgid "Reading scores: game %u: <%s> invalid!"
 msgstr "Inlezen scores: spel %u: <%s> ongeldig!"
 
-#: ..\src\database.cpp:471 ..\src\database.cpp:497
 #, c-format
 msgid "Error while reading schema <%s>"
 msgstr "Fout bij inlezen schema <%s>"
 
-#: ..\src\database.cpp:785
 #, c-format
 msgid ""
 " Error in database <%s> value in key <%s>: <%i> higher then max <%u>\n"
@@ -795,172 +623,136 @@ msgstr ""
 " Fout in database <%s> waarde in sleutel '%s': '%i' groter dan max '%u'\n"
 "Wordt genegeerd."
 
-#: ..\src\database.cpp:789
 msgid "database error"
 msgstr "database fout"
 
-#: ..\src\debug.cpp:125
 msgid "save window-content"
 msgstr "inhoud van venster opslaan"
 
-#: ..\src\debug.cpp:129
 msgid "Choose a file to save the text to"
 msgstr "Kies een bestand om de tekst op te slaan"
 
-#: ..\src\debug.cpp:137
 msgid "clear window-content"
 msgstr "inhoud van venster wissen"
 
-#: ..\src\debug.cpp:288
 msgid "prompt>"
 msgstr "prompt>"
 
-#: ..\src\debug.cpp:298
 #, c-format
 msgid "Console::OnChar(unikey=0x%04X, key=0x%04X, prompt at %u, insert at %u)"
 msgstr "Console::OnChar(unikey=0x%04X, key=0x%04X, prompt at %u, insert at %u)"
 
-#: ..\src\debug.cpp:351
 msgid "print next output"
 msgstr "print volgende output"
 
-#: ..\src\debug.cpp:352
 msgid "Output of next command will (also) be printed"
 msgstr "Output van volgend commando wordt (ook) geprint"
 
-#: ..\src\debug.cpp:357
 msgid "Group:  "
 msgstr "Groep:  "
 
-#: ..\src\debug.cpp:357
 msgid "Guides for this group"
 msgstr "Gidsbriefjes voor deze groep"
 
-#: ..\src\debug.cpp:360
 msgid "Guides for choosen pair/all pairs"
 msgstr "Gidsbriefje voor gekozen paar/alle paren"
 
-#: ..\src\debug.cpp:360
 msgid "Pair: "
 msgstr "Paar: "
 
-#: ..\src\debug.cpp:364
 msgid "Schema"
 msgstr "Schema"
 
-#: ..\src\debug.cpp:365
 msgid "show/print schema-overview"
 msgstr "toon/print schema-overzicht"
 
-#: ..\src\debug.cpp:371 ..\src\setupSchema.cpp:55
 msgid "Number of games per table"
 msgstr "Aantal spellen per tafel"
 
-#: ..\src\debug.cpp:371
 msgid "Setsize:"
 msgstr "Setgrootte:"
 
-#: ..\src\debug.cpp:374
 msgid "First set:"
 msgstr "Eerste set:"
 
-#: ..\src\debug.cpp:374
 msgid "Starting with this set, scoreslips will be printed"
 msgstr "Vanaf deze set worden de scoreslips afgedrukt"
 
-#: ..\src\debug.cpp:377
 msgid "Number of sets that will be printed"
 msgstr "Aantal opeenvolgende sets die afgedrukt worden"
 
-#: ..\src\debug.cpp:377
 msgid "Number of sets:"
 msgstr "Aantal sets:"
 
-#: ..\src\debug.cpp:380
 msgid "Count:"
 msgstr "Exemplaren:"
 
-#: ..\src\debug.cpp:380
 msgid "Number of times the selection should be printed"
 msgstr "Aantal keer dat gekozen selectie afgedrukt moet worden"
 
-#: ..\src\debug.cpp:388
 msgid "Any additional text such as 'green group'"
 msgstr "Eventuele extra text zoals 'groene groep'"
 
-#: ..\src\debug.cpp:390
 msgid "Additional text:"
 msgstr "Extra text:"
 
-#: ..\src\debug.cpp:393
 msgid "Example"
 msgstr "Voorbeeld"
 
-#: ..\src\debug.cpp:394
 msgid "show choosen selection"
 msgstr "toon gekozen selectie"
 
-#: ..\src\debug.cpp:399
 msgid "print choosen selection"
 msgstr "druk gekozen selectie af"
 
-#: ..\src\debug.cpp:415
 msgid "Guides via cmd: '[@]px', where 'x' is the (first) pair. '@' : all pairs starting with 'x'"
 msgstr "Gidsbriefjes via cmd: '[@]px', waarbij 'x' het (eerste) paar is. '@' : alle paren vanaf"
 
-#: ..\src\debug.cpp:416
 msgid "Debug console"
 msgstr "Debug console"
 
-#: ..\src\debug.cpp:428
 msgid "Creation/print of guides"
 msgstr "Aanmaak/printen van gidsbriefjes"
 
-#: ..\src\debug.cpp:429 ..\src\debug.cpp:1947
 msgid "Guides"
 msgstr "Gidsbriefjes"
 
-#: ..\src\debug.cpp:441
+msgid "Export schema"
+msgstr "Exporteer schema"
+
+msgid "export current schema to .asc file"
+msgstr "exporteer huidig schema naar .asc bestand"
+
 msgid "Creation/print of scoreslips"
 msgstr "Aanmaak/printen van scoreslips"
 
-#: ..\src\debug.cpp:442 ..\src\debug.cpp:1718 ..\src\debug.cpp:1826
 msgid "Scoreslips"
 msgstr "Scoreslips"
 
-#: ..\src\debug.cpp:527 ..\src\debug.cpp:1221 ..\src\debug.cpp:1514
 msgid "No schema available for these data"
 msgstr "Geen schema voorhanden"
 
-#: ..\src\debug.cpp:592
 msgid "debug window of "
 msgstr "debug window van "
 
-#: ..\src\debug.cpp:869
 msgid "     ----> round error <---, default round 1\n"
 msgstr "     ----> ronde fout <---, default ronde 1\n"
 
-#: ..\src\debug.cpp:882
 msgid "     ----> pair error <---, default pair 1\n"
 msgstr "     ----> paar fout <---, default paar 1\n"
 
-#: ..\src\debug.cpp:893 ..\src\debug.cpp:1378
 msgid "     ----> group error <---, default group 1\n"
 msgstr "     ----> groep fout <---, default groep 1\n"
 
-#: ..\src\debug.cpp:904
 msgid "     ----> table error <---\n"
 msgstr "     ----> tafel fout <---\n"
 
-#: ..\src\debug.cpp:915
 msgid "     ----> game error <---, default game 1\n"
 msgstr "     ----> spel fout <---, default spel 1\n"
 
-#: ..\src\debug.cpp:924
 msgid "group "
 msgstr "groep "
 
-#: ..\src\debug.cpp:935
 #, c-format
 msgid ""
 "\n"
@@ -969,132 +761,105 @@ msgstr ""
 "\n"
 "test-mode, groep %u (%u)\n"
 
-#: ..\src\debug.cpp:980
 msgid "all"
 msgstr "alle"
 
 #. TRANSLATORS: 'B' -> table to 'B'orrow boards from (same boards on different tables)
-#: ..\src\debug.cpp:1059
 #, c-format
 msgid "B%u"
 msgstr "L%u"
 
-#: ..\src\debug.cpp:1093
 msgid "any text above each schema:"
 msgstr "eventuele tekst boven ieder schema:"
 
-#: ..\src\debug.cpp:1232
 #, c-format
 msgid "pair %u, round %u, table %u, direction %s, games %s, opponent %u\n"
 msgstr "paar %u, ronde %u, tafel %u, richting %s, spellen %s, tegenpaar %u\n"
 
-#: ..\src\debug.cpp:1240
 #, c-format
 msgid "pair %u, game %u:\n"
 msgstr "paar %u, spel %u:\n"
 
-#: ..\src\debug.cpp:1246
 #, c-format
 msgid "pair %u, games %s, table %u, direction %s, round %u, opponent %u\n"
 msgstr "paar %u, spellen %s, tafel %u, richting %s, ronde %u, tegenpaar %u\n"
 
-#: ..\src\debug.cpp:1254
 #, c-format
 msgid "pair %u, table %u:\n"
 msgstr "paar %u, tafel %u:\n"
 
-#: ..\src\debug.cpp:1258
 #, c-format
 msgid "pair %u, table %u, round %u, direction %s, games %s, opponent %u\n"
 msgstr "paar %u, tafel %u, ronde %u, richting %s, spellen %s, tegenpaar %u\n"
 
-#: ..\src\debug.cpp:1266
 #, c-format
 msgid "Round %u:\n"
 msgstr "Ronde %u:\n"
 
-#: ..\src\debug.cpp:1270
 #, c-format
 msgid "pair %2u, direction %s, table %2u, games %s\n"
 msgstr "paar %2u, richting %s, tafel %2u, spellen %s\n"
 
-#: ..\src\debug.cpp:1277
 #, c-format
 msgid "Round %u, game %u:\n"
 msgstr "Ronde %u, spel %u:\n"
 
-#: ..\src\debug.cpp:1288
 #, c-format
 msgid "round %u, games %s, pair %2u, direction %s, table %u\n"
 msgstr "ronde %u, spellen %s, paar %2u, richting %s, tafel %u\n"
 
-#: ..\src\debug.cpp:1297
 #, c-format
 msgid "games %s are not played in round %u\n"
 msgstr "spellen %s worden in ronde %u niet gespeeld\n"
 
-#: ..\src\debug.cpp:1302
 #, c-format
 msgid "Round %u, table %u:\n"
 msgstr "Ronde %u, tafel %u:\n"
 
-#: ..\src\debug.cpp:1306
 #, c-format
 msgid "round %u, table %u, games %s, pairs %u (NS) + %u (EW)\n"
 msgstr "ronde %u, tafel %u, spellen %s, paren %u (NZ) + %u (OW)\n"
 
-#: ..\src\debug.cpp:1313
 #, c-format
 msgid "Game %u:\n"
 msgstr "Spel %u:\n"
 
-#: ..\src\debug.cpp:1322
 #, c-format
 msgid "round %u, table %u, pairs %2u (NS) + %2u (EW)\n"
 msgstr "ronde %u, tafel %u, paren %2u (NZ) + %2u (OW)\n"
 
-#: ..\src\debug.cpp:1330
 #, c-format
 msgid "Table %u:\n"
 msgstr "Tafel %u:\n"
 
-#: ..\src\debug.cpp:1336
 #, c-format
 msgid "round %u, games %s, pairs %2u (NS) + %2u (EW)  %s\n"
 msgstr "ronde %u, spellen %s, paren %2u (NZ) + %2u (OW)  %s\n"
 
-#: ..\src\debug.cpp:1390
 #, c-format
 msgid "Current group is within match-schema, take group > %u\n"
 msgstr "Huidige groep zit in wedstrijd schema, neem groep > %u\n"
 
-#: ..\src\debug.cpp:1398
-msgid " init of guidedata failed\n"
-msgstr " initgidsdata mislukt\n"
+msgid " no matching schemas found!\n"
+msgstr " geen passende schema's gevonden!\n"
 
-#: ..\src\debug.cpp:1402
 msgid "choose a schema"
 msgstr "kies een schema"
 
-#: ..\src\debug.cpp:1426
 msgid "off"
 msgstr "uit"
 
-#: ..\src\debug.cpp:1426
 msgid "on"
 msgstr "aan"
 
-#: ..\src\debug.cpp:1426
 #, c-format
 msgid "testing is now %s for TestRSP()\n"
 msgstr "testen staat nu %s voor TestRSP()\n"
 
-#: ..\src\debug.cpp:1453 ..\src\debug.cpp:2319
 #, c-format
 msgid ", score vulnerable: %i, not vulnerable: %i\n"
 msgstr ", score kwetsbaar: %i, niet kwetsbaar: %i\n"
 
-#: ..\src\debug.cpp:1466
 msgid ""
 "^-- unknown command\n"
 "   [l]Rx[@]PySzTq = list [Round x] [Pair y] [Game z] [Table q]\n"
@@ -1112,61 +877,49 @@ msgstr ""
 "   d         = debug: test schema's\n"
 "   o         = overzicht aktief schema\n"
 
-#: ..\src\debug.cpp:1491
 msgid "this group is not initialized (yet), defaults:\n"
 msgstr "deze groep is (nog) niet geinitialiseerd, defaults:\n"
 
-#: ..\src\debug.cpp:1500
 #, c-format
 msgid "rounds %u, pairs %u, tables %u (%s)\n"
 msgstr "rondes %u, paren %u, tafels %u (%s)\n"
 
-#: ..\src\debug.cpp:1646
 #, c-format
 msgid "schema for %2u tables, %2u rounds, %2u pairs (%s)\n"
 msgstr "schema voor %2u tafels, %2u rondes, %2u paren (%s)\n"
 
-#: ..\src\debug.cpp:1658
 #, c-format
 msgid "pair %u has no opponent in round %u\n"
 msgstr "paar %u heeft geen tegenpaar in ronde %u\n"
 
-#: ..\src\debug.cpp:1663
 #, c-format
 msgid "pair %u has too high opponent %u in round %u\n"
 msgstr "paar %u heeft te groot tegenpaar %u in ronde %u\n"
 
-#: ..\src\debug.cpp:1668
 #, c-format
 msgid "pair %u plays %u times against pair %u\n"
 msgstr "paar %u speelt %u keer tegen paar %u\n"
 
-#: ..\src\debug.cpp:1672
 #, c-format
 msgid "pair %u has a too large gameset %u in round %u\n"
 msgstr "paar %u heeft te grote spelset %u in ronde %u\n"
 
-#: ..\src\debug.cpp:1677
 #, c-format
 msgid "pair %u has unknown gameset %u in round %u\n"
 msgstr "paar %u heeft onbekende spelset %u in ronde %u\n"
 
-#: ..\src\debug.cpp:1682
 #, c-format
 msgid "pair %u playes %u times set %u\n"
 msgstr "paar %u speelt %u keer set %u\n"
 
-#: ..\src\debug.cpp:1685
 #, c-format
 msgid "pair %u playes only %u times\n"
 msgstr "paar %u speelt maar %u keer\n"
 
-#: ..\src\debug.cpp:1702
 #, c-format
 msgid "in round %u, table %u pair %u and %u are playing in the same direction (%s)\n"
 msgstr "in ronde %u, tafel %u spelen paar %u en %u in dezelfde richting (%s)\n"
 
-#: ..\src\debug.cpp:1717
 #, c-format
 msgid ""
 "Set-size(%u) too large,\n"
@@ -1175,134 +928,71 @@ msgstr ""
 "Set-grootte(%u) is te hoog,\n"
 "maximum is 6"
 
-#: ..\src\debug.cpp:1789
 msgid "ROUND :"
 msgstr "RONDE :"
 
 #. TRANSLATORS: translated strings 'ROUND :' , 'TABLE :', '   NS :' and '   EW :' should have SAME size!
-#: ..\src\debug.cpp:1790
 msgid "TABLE :"
 msgstr "TAFEL :"
 
 #. TRANSLATORS: translated strings 'ROUND :' , 'TABLE :', '   NS :' and '   EW :' should have SAME size!
-#: ..\src\debug.cpp:1791
 msgid "   NS :"
 msgstr "   NZ :"
 
 #. TRANSLATORS: translated strings 'ROUND :' , 'TABLE :', '   NS :' and '   EW :' should have SAME size!
-#: ..\src\debug.cpp:1792
 msgid "   EW :"
 msgstr "   OW :"
 
-#: ..\src\debug.cpp:1793
 msgid "ini.NS"
 msgstr "par.NZ"
 
-#: ..\src\debug.cpp:1794
 msgid "ini.EW"
 msgstr "par.OW"
 
-#: ..\src\debug.cpp:1795
 msgid "Game"
 msgstr "Spel"
 
-#: ..\src\debug.cpp:1796
 msgid "Contract"
 msgstr "Contract"
 
 #. TRANSLATORS: translated string should have SAME size as original text!
-#: ..\src\debug.cpp:1797
 msgid "NS       EW"
 msgstr "NZ       OW"
 
-#: ..\src\debug.cpp:1798
 msgid "Result"
 msgstr "Resultaat"
 
-#: ..\src\debug.cpp:1799
 msgid "NS score + or -"
 msgstr "NZ score + of -"
 
-#: ..\src\debug.cpp:1924
 msgid "round"
 msgstr "ronde"
 
-#: ..\src\debug.cpp:1925
 msgid "table"
 msgstr "tafel"
 
 # no error
-#: ..\src\debug.cpp:1926
 msgid "opp."
 msgstr "tegen"
 
-#: ..\src\debug.cpp:1929
-#, c-format
-msgid "schema: %22s"
-msgstr "schema: %22s"
-
 #. TRANSLATORS: translated string should have SAME size as original!
-#: ..\src\debug.cpp:1956
 #, c-format
 msgid "Pair %2s%-2u             %2u pairs"
 msgstr "Paar %2s%-2u             %2u paren"
 
-#: ..\src\debug.cpp:2059
 msgid "round ->"
 msgstr "ronde ->"
 
-#: ..\src\debug.cpp:2061
 msgid "tbl"
 msgstr "tfl"
 
-#: ..\src\debug.cpp:2062
 #, c-format
 msgid "%u pairs, %u rounds, %u games"
 msgstr "%u paren, %u rondes, %u spellen"
 
-#: ..\src\debug.cpp:2063
-#, c-format
-msgid "Schema: %s"
-msgstr "Schema: %s"
-
-#: ..\src\debug.cpp:2117
 msgid "Schemaoverview"
 msgstr "Schemaoverzicht"
 
-#: ..\src\debug.cpp:2147 ..\src\score.cpp:399
-msgid "doubled"
-msgstr "gedubbeld"
-
-#: ..\src\debug.cpp:2147 ..\src\score.cpp:399
-msgid "redoubled"
-msgstr "geredubbeld"
-
-#: ..\src\debug.cpp:2148 ..\src\score.cpp:398
-msgid "Clubs/Diamonds"
-msgstr "Klaveren/Ruiten"
-
-#: ..\src\debug.cpp:2148 ..\src\score.cpp:398
-msgid "Hearts/Spades"
-msgstr "Harten/Schoppen"
-
-#: ..\src\debug.cpp:2148 ..\src\score.cpp:394 ..\src\score.cpp:398
-msgid "NoTrump"
-msgstr "SansAtout"
-
-#: ..\src\debug.cpp:2219 ..\src\score.cpp:461 ..\src\score.cpp:474
-msgid "more down then contract-tricks??\n"
-msgstr "meer down dan te behalen aantal slagen??\n"
-
-#: ..\src\debug.cpp:2223 ..\src\score.cpp:597
-#, c-format
-msgid "%i down %s"
-msgstr "%i down %s"
-
-#: ..\src\debug.cpp:2250 ..\src\score.cpp:469 ..\src\score.cpp:489
-msgid "more tricks then possible in a game??\n"
-msgstr "meer slagen dan er in een spel zijn??\n"
-
-#: ..\src\fileIo.cpp:21
 msgid ""
 "Active match closed.\n"
 "Setup new match"
@@ -1310,11 +1000,9 @@ msgstr ""
 "Aktuele wedstrijd afgesloten.\n"
 "Open nieuwe wedstrijd"
 
-#: ..\src\fileIo.cpp:111
 msgid "Check"
 msgstr "Controle"
 
-#: ..\src\fileIo.cpp:111
 #, c-format
 msgid ""
 "Target file <%s> exists.\n"
@@ -1323,306 +1011,231 @@ msgstr ""
 "Doelbestand <%s> bestaat al.\n"
 "Verwijderen?"
 
-#: ..\src\fileIo.cpp:119
 msgid "db files (*.db)|*.db"
 msgstr "db bestanden (*.db)|*.db"
 
-#: ..\src\fileIo.cpp:119
 msgid "ini files (*.ini)|*.ini"
 msgstr "ini bestanden (*.ini)|*.ini"
 
-#: ..\src\fileIo.cpp:120
 msgid "'Bridge' Datafiles"
 msgstr "Bridge Databestanden"
 
-#: ..\src\main.cpp:64
 msgid "Help, new busy request while previous not yet handled by Idle???"
 msgstr "Help, new busy request while previous not yet handled by Idle???"
 
-#: ..\src\main.cpp:364
 msgid "Use buildin language: 'English'"
 msgstr "Gebruik interne taal: 'Engels'"
 
-#: ..\src\main.cpp:370
 #, c-format
 msgid "Search for languages, folder found: '%s'"
 msgstr "Zoeken naar talen, folder gevonden: '%s'"
 
-#: ..\src\main.cpp:429
 #, c-format
 msgid "Systemlanguage: id=%d, %s"
 msgstr "Systeemtaal: id=%d, %s"
 
-#: ..\src\main.cpp:431
 msgid "Systemlanguage: the default system language"
 msgstr "Systeemtaal: de default systeem taal"
 
-#: ..\src\main.cpp:476
 msgid "MyApp::OnInit() finished, showing startup picture"
 msgstr "MyApp::OnInit() finished, showing startup picture"
 
-#: ..\src\main.cpp:481
 msgid "'Bridge' scoring program"
 msgstr "Bridge rekenprogramma"
 
-#: ..\src\main.cpp:550
 #, c-format
 msgid "Mainwindow position: {%i,%i}, size: %i*%i"
 msgstr "Mainwindow position: {%i,%i}, size: %i*%i"
 
-#: ..\src\main.cpp:565
 msgid "&New match/session"
 msgstr "&Nieuwe wedstrijd/zitting"
 
-#: ..\src\main.cpp:565
 msgid "Match/session entry"
 msgstr "Wedstrijd/zitting ingave"
 
-#: ..\src\main.cpp:566
 msgid "&Printer choice"
 msgstr "&Printerkeuze"
 
-#: ..\src\main.cpp:566
 msgid "Printer choice and setup"
 msgstr "Printer keuze en instellingen"
 
-#: ..\src\main.cpp:567
 msgid "Print current page"
 msgstr "Print huidige pagina"
 
-#: ..\src\main.cpp:567
 msgid "print pa&Ge"
 msgstr "print pa&Gina"
 
-#: ..\src\main.cpp:568
 msgid "Print a file"
 msgstr "Print een bestand"
 
-#: ..\src\main.cpp:568
 msgid "print &File"
 msgstr "print &Bestand"
 
-#: ..\src\main.cpp:571
 msgid "&Exit"
 msgstr "&Afsluiten"
 
-#: ..\src\main.cpp:571
 msgid "This will end the program"
 msgstr "Dit zal het programma beeindigen"
 
-#: ..\src\main.cpp:574
 msgid "&Match"
 msgstr "&Wedstrijd"
 
-#: ..\src\main.cpp:574
 msgid "Setup for the active match"
 msgstr "Instellingen tbv de aktieve wedstrijd"
 
-#: ..\src\main.cpp:575
 msgid "&Schema"
-msgstr "Schema"
+msgstr "&Schema"
 
-#: ..\src\main.cpp:575
 msgid "Entry/change of schema"
 msgstr "Ingave/wijzigen van schema"
 
-#: ..\src\main.cpp:576 ..\src\nameEditor.cpp:51
 msgid "Entry/change of pair/clubnames"
 msgstr "Ingave/wijzigen van paar/club namen"
 
-#: ..\src\main.cpp:576
 msgid "pairnames &Entry/change"
 msgstr "paarnamen &Ingeven/wijzigen"
 
-#: ..\src\main.cpp:577
 msgid "Connect a global pairname to a sessionpairnumber"
 msgstr "Paarnaam koppelen aan paarnummer van zitting"
 
-#: ..\src\main.cpp:577
 msgid "pairnames &Assigment"
 msgstr "paarnamen &Toekennen"
 
-#: ..\src\main.cpp:581
 msgid "Entry/change of scores"
 msgstr "Ingeven/aanpassen scores"
 
-#: ..\src\main.cpp:581
 msgid "s&Core-entry"
 msgstr "&Score ingave"
 
-#: ..\src\main.cpp:582
 msgid "&Sessioncorrections"
 msgstr "&Zitting correcties"
 
-#: ..\src\main.cpp:582
 msgid "Entry/change of session corrections"
 msgstr "Ingeven/aanpassen correcties tbv een zitting"
 
-#: ..\src\main.cpp:583
 msgid "&Endcorrections"
 msgstr "&Eind correcties"
 
-#: ..\src\main.cpp:583
 msgid "Entry/change of end corrections"
 msgstr "Ingeven/aanpassen correcties voor de einduitslag"
 
-#: ..\src\main.cpp:584
 msgid "&Results"
 msgstr "&Uitslag"
 
-#: ..\src\main.cpp:584
 msgid "Calculation of session/end result"
 msgstr "Berekenen van de zitting/eind uitslag"
 
-#: ..\src\main.cpp:587
 msgid "&Log window"
 msgstr "&Log window"
 
-#: ..\src\main.cpp:587
 msgid "Enable/disable logging window"
 msgstr "Aan / uitzetten van log window"
 
-#: ..\src\main.cpp:588
 msgid "&Debug window"
 msgstr "&Debug window"
 
-#: ..\src\main.cpp:588
 msgid "Debug window for all kind of stuff"
 msgstr "Debug window voor allerlei zaken"
 
-#: ..\src\main.cpp:589
 msgid "&Guides"
 msgstr "&Gidsbriefjes"
 
-#: ..\src\main.cpp:589
 msgid "Creation of guides"
 msgstr "Aanmaak van gidsbriefjes"
 
-#: ..\src\main.cpp:590
 msgid "&Scoreslips"
 msgstr "&Scoreslips"
 
-#: ..\src\main.cpp:590
 msgid "Creation of scoreslips"
 msgstr "Aanmaak van scoreslips"
 
-#: ..\src\main.cpp:591
 msgid "&Import schema"
 msgstr "&Importeer schema"
 
-#: ..\src\main.cpp:591
 msgid "Import a new schema (.asc) for playing"
 msgstr "Importeer een nieuw (.asc) speelschema"
 
-#: ..\src\main.cpp:593
 msgid "&Old -> database"
 msgstr "&Oud -> database"
 
-#: ..\src\main.cpp:593
 msgid "Convert 'old' .ini/data files to single new .db file"
 msgstr "Omzetten van 'oude' .ini/data bestanden naar een enkel .db bestand"
 
-#: ..\src\main.cpp:594
 msgid "&Database -> old"
 msgstr "&Database -> oud"
 
-#: ..\src\main.cpp:594
 msgid "Convert .db file to 'old' .ini/data files"
 msgstr "Omzetten van .db bestand naar 'oude' .ini/data bestanden"
 
-#: ..\src\main.cpp:595
 msgid "&Convert data"
 msgstr "&Converteren data"
 
-#: ..\src\main.cpp:595
 msgid "convert match-data between old/new types"
 msgstr "wedstrijdgegevens omzetten van het ene type naar het andere"
 
-#: ..\src\main.cpp:597
 msgid "&Old datatype (.ini)"
 msgstr "&Oud bestandstype (.ini)"
 
-#: ..\src\main.cpp:597
 msgid "Use 'old' .ini/data files for data storage"
 msgstr "Gebruik van 'oude' .ini/data bestanden voor opslag"
 
-#: ..\src\main.cpp:598
 msgid "&New datatype (.db)"
 msgstr "&Nieuw bestandstype (.db)"
 
-#: ..\src\main.cpp:598
 msgid "Use new .db file for data storage"
 msgstr "Gebruik van nieuw .db bestand voor opslag"
 
-#: ..\src\main.cpp:599
 msgid "s&Witch between datatypes"
 msgstr "&Wissel van bestandstype"
 
-#: ..\src\main.cpp:599
 msgid "switch between the two datatypes"
 msgstr "omschakelen van het ene opslagtype naar het andere"
 
-#: ..\src\main.cpp:600
 msgid "&Language"
 msgstr "&Taal"
 
-#: ..\src\main.cpp:600
 msgid "language of the userinterface"
 msgstr "taal van de gebruikers interface"
 
-#: ..\src\main.cpp:603
 msgid "&System info"
 msgstr "&Systeem info"
 
-#: ..\src\main.cpp:603
 msgid "Info about the version of wxWidgets"
 msgstr "Info over versie van wxWidgets"
 
-#: ..\src\main.cpp:604
 msgid "&About "
 msgstr "&Over "
 
-#: ..\src\main.cpp:607 ..\src\mylog.cpp:114
 msgid "&File"
 msgstr "&Bestand"
 
-#: ..\src\main.cpp:608
 msgid "&Settings"
 msgstr "&Instellingen"
 
-#: ..\src\main.cpp:609
 msgid "s&Cores"
 msgstr "&Scores"
 
-#: ..\src\main.cpp:610
 msgid "&Tools"
 msgstr "&Extra"
 
-#: ..\src\main.cpp:611
 msgid "&Help"
 msgstr "&Help"
 
-#: ..\src\main.cpp:620
 msgid "Welcome at "
 msgstr "Welkom bij "
 
-#: ..\src\main.cpp:642
 msgid "hello in the console!"
 msgstr "hallo in de console!"
 
-#: ..\src\main.cpp:645
 msgid "Debug active"
 msgstr "Debug active"
 
-#: ..\src\main.cpp:661
 msgid "PrintPage()"
 msgstr "PrintPage()"
 
-#: ..\src\main.cpp:671
 msgid ", from "
 msgstr ", uit "
 
-#: ..\src\main.cpp:672
 #, c-format
 msgid ""
 "\n"
@@ -1643,247 +1256,190 @@ msgstr ""
 "\n"
 "(c) wxSystemInformationFrame, PB: https://github.com/PBfordev"
 
-#: ..\src\main.cpp:679
 msgid "About "
 msgstr "Over "
 
-#: ..\src\main.cpp:723
 msgid "MenuNewMatch      := \"fn\"       ; File: New match/session"
 msgstr "MenuNewMatch      := \"bn\"       ; Bestand: Nieuw"
 
-#: ..\src\main.cpp:724
 msgid "MenuShutdown      := \"fe\"       ; File: Exit"
 msgstr "MenuShutdown      := \"ba\"       ; Bestand: Afsluiten"
 
-#: ..\src\main.cpp:725
 msgid "MenuPrinter       := \"fp\"       ; File: Printer choice"
 msgstr "MenuPrinter       := \"bp\"       ; Bestand: Printer"
 
-#: ..\src\main.cpp:726
 msgid "MenuPrintPage     := \"fg\"       ; File: print paGe"
 msgstr "MenuPrintPage     := \"bg\"       ; Bestand: printpaGina"
 
-#: ..\src\main.cpp:727
 msgid "MenuSetupMatch    := \"sm\"       ; Settings: setup Match"
 msgstr "MenuSetupMatch    := \"iw\"       ; Instellingen: Wedstrijd"
 
-#: ..\src\main.cpp:728
 msgid "MenuSetupSchema   := \"ss\"       ; Settings: setup Schema"
 msgstr "MenuSetupSchema   := \"is\"       ; Instellingen: Schema"
 
-#: ..\src\main.cpp:729
 msgid "MenuNamesInit     := \"se\"       ; Settings: pairnames Entry/change"
 msgstr "MenuNamesInit     := \"ii\"       ; Instellingen: Ingeven"
 
-#: ..\src\main.cpp:730
 msgid "MenuNamesAssign   := \"sa\"       ; Settings: pairnames Assignment"
 msgstr "MenuNamesAssign   := \"it\"       ; Instellingen: Toekennen"
 
-#: ..\src\main.cpp:731
 msgid "MenuScoreEntry    := \"cc\"       ; sCores: sCoreentry"
 msgstr "MenuScoreEntry    := \"ss\"       ; Scores: Scores"
 
-#: ..\src\main.cpp:732
 msgid "MenuCorSession    := \"cs\"       ; sCores: entry Sesssioncorrections"
 msgstr "MenuCorSession    := \"sz\"       ; Scores: Zittingcorrecties"
 
-#: ..\src\main.cpp:733
 msgid "MenuCorEnd        := \"ce\"       ; sCores: entry Endcorrections"
 msgstr "MenuCorEnd        := \"se\"       ; Scores: Eindcorrecties"
 
-#: ..\src\main.cpp:734
 msgid "MenuResult        := \"cr\"       ; sCores: calculate Results"
 msgstr "MenuResult        := \"su\"       ; Scores: Uitslag"
 
-#: ..\src\main.cpp:735
 msgid "MenuDebug         := \"td\"       ; Tools: Debug window"
 msgstr "MenuDebug         := \"ed\"       ; Extra: Debug window"
 
-#: ..\src\main.cpp:736
 msgid "MenuGuides        := \"tg\"       ; Tools: Guide creation"
 msgstr "MenuGuides        := \"eg\"       ; Extra: Gidsbriefjes"
 
-#: ..\src\main.cpp:737
 msgid "MenuScoreSlips    := \"ts\"       ; Tools: Scoreslip creation"
 msgstr "MenuScoreSlips    := \"es\"       ; Extra: Scoreslips aanmaken"
 
-#: ..\src\main.cpp:738
 msgid "MenuImportSchema  := \"ti\"       ; Tools: Import a new playing-schema"
 msgstr "MenuImportSchema  := \"ei\"       ; Extra: Importeren van een nieuw speelschema"
 
-#: ..\src\main.cpp:739
 msgid "MenuDbType        := \"twn\"      ; Tools: sWitch between datatypes: New datatype"
 msgstr "MenuDbType        := \"ewn\"      ; Extra: Wissel Nieuw"
 
-#: ..\src\main.cpp:740
 msgid "MenuOldType       := \"two\"      ; Tools: sWitch between datatypes: Old datatype"
 msgstr "MenuOldType       := \"ewo\"      ; Extra: Wissel Oud"
 
-#: ..\src\main.cpp:741
 msgid "AllMenus          := [\"fn\",\"fp\",\"fg\",\"sm\",\"ss\",\"se\",\"sa\",\"cc\",\"cs\",\"ce\",\"cr\",\"two\",\"twn\"]"
 msgstr "AllMenus          := [\"bn\",\"bp\",\"bg\",\"iw\",\"is\",\"ii\",\"it\",\"ss\",\"sz\",\"se\",\"su\",\"ewo\",\"ewn\"]"
 
-#: ..\src\main.cpp:745
 msgid "changed"
 msgstr "gewijzigd"
 
-#: ..\src\main.cpp:786
 #, c-format
 msgid "Menu backup current(%u: %s)"
 msgstr "Menu backup current(%u: %s)"
 
-#: ..\src\main.cpp:797
 #, c-format
 msgid "Menu old page(%u: %s)"
 msgstr "Menu old page(%u: %s)"
 
-#: ..\src\main.cpp:805
 #, c-format
 msgid "Menu old show(%u)"
 msgstr "Menu old show(%u)"
 
-#: ..\src\main.cpp:811
 #, c-format
 msgid "Menu new page(%u)"
 msgstr "Menu new page(%u)"
 
-#: ..\src\main.cpp:854
 #, c-format
 msgid "OnMenu(%u), id unknown!"
 msgstr "OnMenu(%u), id unknown!"
 
-#: ..\src\main.cpp:858
 #, c-format
 msgid "Menu new show(%u: %s)"
 msgstr "Menu new show(%u: %s)"
 
-#: ..\src\main.cpp:887
 msgid "Choose a language (and restart)"
 msgstr "Kies een taal (en start opnieuw op)"
 
-#: ..\src\main.cpp:887
 msgid "Language selection"
 msgstr "Taalselectie"
 
-#: ..\src\main.cpp:897
 #, c-format
 msgid "Languagechoice: id=%d, name=%s"
 msgstr "Taalkeuze: id=%d, naam=%s"
 
-#: ..\src\main.cpp:904
 msgid "Choose a file for printing"
 msgstr "Kies een bestand om te printen"
 
-#: ..\src\main.cpp:908
 #, c-format
 msgid "Printing file <%s>"
 msgstr "Afdrukken van bestand <%s>"
 
-#: ..\src\main.cpp:918
 msgid "Choose a schema file to import"
 msgstr "Kies een schemabestand om te importeren"
 
-#: ..\src\main.cpp:927
 #, c-format
 msgid "Importing file <%s>"
 msgstr "Bestand importeren <%s>"
 
-#: ..\src\main.cpp:931
 msgid "Don't import a schema from the basefolder itself!"
 msgstr "Je kunt geen schema importeren uit de basefolder zelf!"
 
-#: ..\src\mygrid.cpp:173
 #, c-format
 msgid "MyGrid::OnLeftClickLabel(column: %i)"
 msgstr "MyGrid::OnLeftClickLabel(kolom: %i)"
 
-#: ..\src\mygrid.cpp:300
 #, c-format
 msgid "MyGrid::SortOnLeftClickLabel(column: %i)"
 msgstr "MyGrid::SortOnLeftClickLabel(kolom: %i)"
 
-#: ..\src\mygrid.cpp:378
 #, c-format
 msgid "MyGrid::OnSortColumn(column: %i)"
 msgstr "MyGrid::OnSortColumn(kolom: %i)"
 
-#: ..\src\mylog.cpp:47
 msgid "MyLog window"
 msgstr "MyLog window"
 
-#: ..\src\mylog.cpp:108
 msgid "Save in logfile"
 msgstr "Sla log op in een bestand"
 
-#: ..\src\mylog.cpp:108
 msgid "save &As..."
 msgstr "opslaan &Als..."
 
-#: ..\src\mylog.cpp:109
 msgid "&Clear"
 msgstr "&Wissen"
 
-#: ..\src\mylog.cpp:109
 msgid "Clear logwindow"
 msgstr "Wis het logwindow"
 
-#: ..\src\mylog.cpp:111
 msgid "&Close"
 msgstr "&Sluiten"
 
-#: ..\src\mylog.cpp:111
 msgid "Close (hide) the logwindow"
 msgstr "Sluit het logwindow"
 
-#: ..\src\mylog.cpp:161
 #, c-format
 msgid "Log saved to file '%s'."
 msgstr "Log saved to file '%s'."
 
-#: ..\src\nameEditor.cpp:31
 msgid "clubname"
 msgstr "clubnaam"
 
-#: ..\src\nameEditor.cpp:32
 msgid "club id"
 msgstr "club id"
 
-#: ..\src\nameEditor.cpp:42
 msgid "Add name"
 msgstr "Naam toevoegen"
 
-#: ..\src\nameEditor.cpp:89
 #, c-format
 msgid "NameEditor: row %d, column %d changes from <%s> to <%s>"
 msgstr "NameEditor:: row %d, column %d changes from <%s> to <%s>"
 
-#: ..\src\nameEditor.cpp:219
 #, c-format
 msgid "pair %d"
 msgstr "paar %d"
 
-#: ..\src\nameEditor.cpp:289
 msgid "playerlist of "
 msgstr "deelnemers lijst van "
 
-#: ..\src\names.cpp:273
 msgid "Problem with the pairname file: "
 msgstr "Probleem met paarnamenbestand: "
 
-#: ..\src\names.cpp:274
 #, c-format
 msgid "Problem with database '%s' at reading names."
 msgstr "Probleem met database '%s' bij lezen namen."
 
-#: ..\src\names.cpp:304 ..\src\names.cpp:348
 msgid "bad index"
 msgstr "foute index"
 
-#: ..\src\names.cpp:481
 msgid "no names assigned yet"
 msgstr "nog geen paarnamen toegekend"
 
-#: ..\src\names.cpp:490
 msgid ""
 "InitializePairNames(): config not changed (yet) but sizeof(pairnames) == 0 ?????\n"
 " results in vector access errors"
@@ -1891,29 +1447,23 @@ msgstr ""
 "InitializePairNames(): config not changed (yet) but sizeof(pairnames) == 0 ?????\n"
 " results in vector access errors"
 
-#: ..\src\orgInterface.cpp:305
 #, c-format
 msgid "groupcount: %u, schema: <%s>"
 msgstr "groepaantal: %u, schema: <%s>"
 
-#: ..\src\orgInterface.cpp:306
 msgid "error in schema/groupchars"
 msgstr "fout in schema/groepletters"
 
-#: ..\src\orgInterface.cpp:379
 msgid "Cannot open file for write: "
 msgstr "Kan bestand niet openen om te schrijven: "
 
-#: ..\src\orgInterface.cpp:415
 msgid "Error(s) at writing to file: "
 msgstr "Fout(en) bij schrijven naar bestand: "
 
-#: ..\src\orgInterface.cpp:580
 #, c-format
 msgid "wrong syntax clubname: <%s>"
 msgstr "foute syntax clubnaam: <%s>"
 
-#: ..\src\orgInterface.cpp:599
 #, c-format
 msgid ""
 "; definition of the clubnames and there id.\n"
@@ -1924,105 +1474,115 @@ msgstr ""
 "; syntax: <club nr> , <clubnaam>\n"
 "; lengte clubnaam maximaal %u karakters."
 
-#: ..\src\orgInterface.cpp:710 ..\src\utils.cpp:313
 msgid ": readerror"
 msgstr ": leesfout"
 
-#: ..\src\orgInterface.cpp:753
 msgid ": unknown type"
 msgstr ": onbekend type"
 
-#: ..\src\orgInterface.cpp:762
 msgid "Problem reading score-file"
 msgstr "Probleem bij inlezen score-file"
 
-#: ..\src\orgInterface.cpp:778
 msgid ": open error"
 msgstr ": openfout"
 
-#: ..\src\orgInterface.cpp:778
 msgid "Problem opening score-file"
 msgstr "Probleem bij openen score-file"
 
-#: ..\src\orgInterface.cpp:824 ..\src\utils.cpp:259 ..\src\utils.cpp:288
 msgid ": write error"
 msgstr ": schrijffout"
 
-#: ..\src\orgInterface.cpp:824
 msgid "Problem writing score-file"
 msgstr "Probleem bij wegschrijven score-file"
 
-#: ..\src\orgInterface.cpp:896 ..\src\orgInterface.cpp:998
 #, c-format
 msgid "Unable to write corrections to: %s"
 msgstr "Kan korrecties niet wegschrijven naar: %s"
 
-#: ..\src\orgInterface.cpp:902
 msgid ";score.2 glbpair bonus.2 games   pairname"
 msgstr ";score.2 glbpaar bonus.2 spellen paarnaam"
 
-#: ..\src\orgInterface.cpp:1005
 msgid ";<correction><type> <session pairnr> <extra.1> <max extra> <pairname>"
 msgstr ";<correctie><type> <sessie paarnr> <extra.1> <max extra> <paarnaam>"
 
-#: ..\src\orgInterface.cpp:1070
 msgid ";score 'glb pair' s<games>   name"
 msgstr ";score 'glb paar' s<spellen> naam"
 
-#: ..\src\printer.cpp:73
 msgid "Fax"
 msgstr "Fax"
 
-#: ..\src\printer.cpp:74
 msgid "Microsoft XPS Document Writer"
 msgstr "Microsoft XPS Document Writer"
 
-#: ..\src\printer.cpp:75
 msgid "OneNote"
 msgstr "OneNote"
 
-#: ..\src\printer.cpp:85
 #, c-format
 msgid "Printer %u found, flags: 0x%08x, name: <%s>"
 msgstr "Printer %u found, flags: 0x%08x, name: <%s>"
 
-#: ..\src\printer.cpp:350
 msgid "Cant print a file to a file!"
 msgstr "Kan geen bestand naar bestand printen!"
 
-#: ..\src\printer.cpp:682
 msgid "MyLinePrinter::EndPrint(): flushing error"
 msgstr "MyLinePrinter::EndPrint(): flushing error"
 
-#: ..\src\printer.cpp:761
 msgid "page"
 msgstr "pagina"
 
-#: ..\src\score.cpp:129 ..\src\score.cpp:169
+#, c-format
+msgid "Error reading schema '%s' in line: '%s'"
+msgstr "Fout bij inlezen schema '%s' in regel: '%s'"
+
+msgid "Schematable is full, can't add new schemas"
+msgstr "Schematabel is vol, kan geen nieuwe schemas toevoegen"
+
+msgid "Select a folder to store schema"
+msgstr "Selecteer een map voor het opslaan van schema"
+
 msgid "NP"
 msgstr "NG"
 
-#: ..\src\score.cpp:390
 msgid "Clubs"
 msgstr "Klaveren"
 
-#: ..\src\score.cpp:391
 msgid "Diamonds"
 msgstr "Ruiten"
 
-#: ..\src\score.cpp:392
 msgid "Hearts"
 msgstr "Harten"
 
-#: ..\src\score.cpp:393
 msgid "Spades"
 msgstr "Schoppen"
 
-#: ..\src\score.cpp:395
+msgid "NoTrump"
+msgstr "SansAtout"
+
 msgid "Pass"
 msgstr "Pas"
 
-#: ..\src\score.cpp:617
+msgid "Clubs/Diamonds"
+msgstr "Klaveren/Ruiten"
+
+msgid "Hearts/Spades"
+msgstr "Harten/Schoppen"
+
+msgid "doubled"
+msgstr "gedubbeld"
+
+msgid "redoubled"
+msgstr "geredubbeld"
+
+msgid "more down then contract-tricks??\n"
+msgstr "meer down dan te behalen aantal slagen??\n"
+
+msgid "more tricks then possible in a game??\n"
+msgstr "meer slagen dan er in een spel zijn??\n"
+
+#, c-format
+msgid "%i down %s"
+msgstr "%i down %s"
+
 msgid ""
 "-x[*[*]] or y'SUIT'[[+|-]x][*[*]]   calculate the score for:\n"
 "      'x'    = the number of over/under tricks.\n"
@@ -2036,132 +1596,100 @@ msgstr ""
 "      '*'    = gedubbeld en '**' is geredubbeld\n"
 "      'KLEUR'= het type contract (of, bij afkorting, de eerste overeenkomst in de kaart-namen)\n"
 
-#: ..\src\score.cpp:623
 msgid "SUIT"
 msgstr "KLEUR"
 
-#: ..\src\scoreEntry.cpp:46
 msgid "ns"
 msgstr "nz"
 
-#: ..\src\scoreEntry.cpp:47
 msgid "ew"
 msgstr "ow"
 
-#: ..\src\scoreEntry.cpp:48
 msgid "score ns"
 msgstr "score nz"
 
-#: ..\src\scoreEntry.cpp:49
 msgid "score ew"
 msgstr "score ow"
 
-#: ..\src\scoreEntry.cpp:50
 msgid "name ns"
 msgstr "naam nz"
 
-#: ..\src\scoreEntry.cpp:51
 msgid "name ew"
 msgstr "naam ow"
 
-#: ..\src\scoreEntry.cpp:52
 msgid "contract ns"
 msgstr "contract nz"
 
-#: ..\src\scoreEntry.cpp:53
 msgid "contract ew"
 msgstr "contract ow"
 
-#: ..\src\scoreEntry.cpp:77
 msgid "Score slip"
 msgstr "Score slip"
 
-#: ..\src\scoreEntry.cpp:78
 msgid "Game number "
 msgstr "Spel nummer "
 
-#: ..\src\scoreEntry.cpp:79
 msgid "Entry order:"
 msgstr "Ingave volgorde:"
 
-#: ..\src\scoreEntry.cpp:82
 msgid "Game number"
 msgstr "Spel nummer"
 
-#: ..\src\scoreEntry.cpp:83
 msgid "NS number"
 msgstr "NZ nummer"
 
-#: ..\src\scoreEntry.cpp:84
 msgid "Score slip order:"
 msgstr "Score slip volgorde:"
 
-#: ..\src\scoreEntry.cpp:87
 msgid "Round:"
 msgstr "Ronde:"
 
-#: ..\src\scoreEntry.cpp:87
 msgid "Scores for this round"
 msgstr "Scores voor deze ronde"
 
-#: ..\src\scoreEntry.cpp:91
 msgid "Scores for this game"
 msgstr "Scores voor dit spel"
 
-#: ..\src\scoreEntry.cpp:98
 msgid "++empty score"
 msgstr "++lege score"
 
-#: ..\src\scoreEntry.cpp:100
 msgid "jumps to next empty score"
 msgstr "gaat naar volgende lege score"
 
-#: ..\src\scoreEntry.cpp:102
 msgid "ns<-->ew"
 msgstr "nz<-->ow"
 
-#: ..\src\scoreEntry.cpp:104
 msgid "switch NS pair with EW pair: wrong direction"
 msgstr "wissel NZ paar met OW paar: draaitafel"
 
-#: ..\src\scoreEntry.cpp:106
 msgid "contract entry"
 msgstr "contract invoer"
 
-#: ..\src\scoreEntry.cpp:108
 msgid "Enter contracts like: -x[*[*]] or y'SUIT'[[+|-]x][*[*]]"
 msgstr "Geef contracten in zoals: -x[*[*]] of y'KLEUR'[[+|-]x][*[*]]"
 
-#: ..\src\scoreEntry.cpp:125
 msgid "Entry/Change scores"
 msgstr "Ingave/Wijzigen scores"
 
-#: ..\src\scoreEntry.cpp:197
 msgid "Can't interpret contract!"
 msgstr "Begrijp het contract niet!"
 
-#: ..\src\scoreEntry.cpp:220
 #, c-format
 msgid "ScoreEntry:: row %2d, column %d changing from <%s> to <%s>"
 msgstr "ScoreEntry:: rij %2d, colom %d verandert van <%s> naar <%s>"
 
-#: ..\src\scoreEntry.cpp:248
 msgid "unexpected/special score, accept anyway?"
 msgstr "onverwachte/bijzondere score, toch accepteren?"
 
-#: ..\src\scoreEntry.cpp:249
 msgid "invalid score, accept anyway?"
 msgstr "ongeldige score, toch accepteren?"
 
-#: ..\src\scoreEntry.cpp:547
 msgid "Scoreentry: normal: <score>, adjusted: '%'<score> or 'r'<score> or 'np'=not played, contract: <y>'SUIT'[[+|-]<x>][*[*]]"
 msgstr "Ingave scores: normaal: <score>, arbitraal: '%'<score> of 'r'<score> of 'ng'=niet gespeeld, contract: <y>'KLEUR'[[+|-]<x>][*[*]]"
 
-#: ..\src\scoreEntry.cpp:551 ..\src\setupSchema.cpp:263
 msgid "not all groups have a valid schema"
 msgstr "niet alle groepen hebben een geldig schema"
 
-#: ..\src\scoreEntry.cpp:612
 #, c-format
 msgid ""
 "'%s-%s' exchange with '%s-%s', are you sure?\n"
@@ -2172,233 +1700,177 @@ msgstr ""
 "\n"
 " "
 
-#: ..\src\scoreEntry.cpp:613
 msgid "wrong direction"
 msgstr "draaihand"
 
-#: ..\src\scoreEntry.cpp:668
 #, c-format
 msgid " of session %u"
 msgstr " van zitting %u"
 
-#: ..\src\scoreEntry.cpp:669
 #, c-format
 msgid "game %u"
 msgstr "spel %u"
 
-#: ..\src\scoreEntry.cpp:669
 #, c-format
 msgid "round %u"
 msgstr "ronde %u"
 
-#: ..\src\scoreEntry.cpp:670
 #, c-format
 msgid "Overview of the scores%s for '%s', %s"
 msgstr "Overzicht van de scores%s voor '%s', %s"
 
-#: ..\src\setupGame.cpp:29
 msgid "Description:"
 msgstr "Beschrijving:"
 
-#: ..\src\setupGame.cpp:30
 msgid "Short description for this match"
 msgstr "Korte beschrijving van deze wedstrijd"
 
-#: ..\src\setupGame.cpp:45
 msgid "Min/Max clubpairs:"
 msgstr "Min/Max clubparen:"
 
-#: ..\src\setupGame.cpp:52
 msgid "min:"
 msgstr "min:"
 
-#: ..\src\setupGame.cpp:57
 msgid "max:"
 msgstr "max:"
 
-#: ..\src\setupGame.cpp:70
 msgid "Minimun and maximum nr of pairs that count for the clubresult"
 msgstr "Minimum en maximum aantal paren om mee te tellen voor de clubuitslag"
 
-#: ..\src\setupGame.cpp:75 ..\src\setupGame.cpp:221
 msgid "Neuberg"
 msgstr "Neuberg"
 
-#: ..\src\setupGame.cpp:77
 msgid "Neuberg calculation of sessionresult on adjusted scores"
 msgstr "Neuberg berekening bij arbitrale scores"
 
-#: ..\src\setupGame.cpp:80 ..\src\setupGame.cpp:222
 msgid "Weighted average"
 msgstr "Gewogen gemiddelde"
 
-#: ..\src\setupGame.cpp:81
 msgid "Weighted average calculation in results over multiple sessions"
 msgstr "Gewogen gemiddelde berekening in uitslag over meerdere zittingen"
 
-#: ..\src\setupGame.cpp:83 ..\src\setupGame.cpp:223
 msgid "Groupresult"
 msgstr "Groepuitslag"
 
-#: ..\src\setupGame.cpp:84
 msgid "Result for the group, sorted on pairnr, and results per game"
 msgstr "Uitslag voor de groep op paarnummer en uitslagen per spel"
 
-#: ..\src\setupGame.cpp:86
 msgid "Global name database"
 msgstr "Centraal namen bestand"
 
-#: ..\src\setupGame.cpp:87
 msgid "Use of a global name-database i.s.o names per match"
 msgstr "Gebruik van een globaal namenbestand ipv namen per wedstrijd"
 
-#: ..\src\setupGame.cpp:89 ..\src\setupGame.cpp:225
 msgid "Clock"
 msgstr "Klok"
 
-#: ..\src\setupGame.cpp:90
 msgid "Display a clock in the statusbar"
 msgstr "Display van een klok in de statusbalk"
 
-#: ..\src\setupGame.cpp:105
 msgid "General settings for this match "
 msgstr "Algemene instellingen voor deze wedstrijd "
 
-#: ..\src\setupGame.cpp:155
 msgid "Maximum imps/game when absent:"
 msgstr "Maximum imps/spel bij afwezigheid:"
 
-#: ..\src\setupGame.cpp:156
 msgid "Maximum imps/game you get in the end/total result when not playing a session"
 msgstr "Maximum imps/spel die je krijgt in de totaal uitslag voor een afwezige zitting"
 
-#: ..\src\setupGame.cpp:162
 #, no-c-format
 msgid "Maximum % when absent:"
 msgstr "Maximum % bij afwezigheid:"
 
-#: ..\src\setupGame.cpp:163
 msgid "Maximum % you get in the end/total result when not playing a session"
 msgstr "Maximum % dat je krijgt in de totaal uitslag voor een afwezige zitting"
 
-#: ..\src\setupGame.cpp:209
 msgid "Changing from/to globalname use, while there are already pairnames!"
 msgstr "Wisselen van/naar centrale namen, terwijl er al paren zijn!"
 
-#: ..\src\setupGame.cpp:216
 #, c-format
 msgid "Max %s absent"
 msgstr "Max %s afwezig"
 
-#: ..\src\setupGame.cpp:217
 msgid "Gamesettings page:\n"
 msgstr "Wedstrijdinstellingen pagina:\n"
 
-#: ..\src\setupGame.cpp:218
 msgid "Description"
 msgstr "Beschrijving"
 
-#: ..\src\setupGame.cpp:220
 msgid "MinMax clubpairs"
 msgstr "MinMax clubparen"
 
-#: ..\src\setupGame.cpp:224
 msgid "Global names"
 msgstr "Centrale namen"
 
-#: ..\src\setupNewMatch.cpp:20
 msgid "Folder for matchdata:   "
 msgstr "Map voor wedstrijddata:   "
 
-#: ..\src\setupNewMatch.cpp:29
 msgid "Choose folder to save matchdata."
 msgstr "Kies map om wedstrijddata in op te slaan."
 
-#: ..\src\setupNewMatch.cpp:34
 msgid "Choose here the folder where you want to store the matchdata."
 msgstr "Kies hier de map waar je de wedstrijddata wilt opslaan."
 
-#: ..\src\setupNewMatch.cpp:36
 msgid "Matchname:"
 msgstr "Wedstrijd naam:"
 
-#: ..\src\setupNewMatch.cpp:38
 msgid "Name of the (new) match"
 msgstr "Naam van de (nieuwe) wedstrijd"
 
-#: ..\src\setupNewMatch.cpp:40
 msgid "Session:"
 msgstr "Zitting:"
 
-#: ..\src\setupNewMatch.cpp:42
 msgid "The number of the session, 0 if the match exist of one session"
 msgstr "Het nummer van de zitting, 0 als de wedstrijd uit één zitting bestaat"
 
-#: ..\src\setupNewMatch.cpp:45
 msgid "Database type:"
 msgstr "Bestands type:"
 
-#: ..\src\setupNewMatch.cpp:49 ..\src\setupNewMatch.cpp:168
 msgid "Butler"
 msgstr "Butler"
 
-#: ..\src\setupNewMatch.cpp:50
 msgid "Type of calculation: percent or butler"
 msgstr "Type berekening: percent of butler"
 
-#: ..\src\setupNewMatch.cpp:66
 msgid "Setup for the active match:"
 msgstr "Instellen van de aktieve wedstrijd:"
 
-#: ..\src\setupNewMatch.cpp:157
 msgid "SetupNewMatch::Cancel()"
 msgstr "SetupNewMatch::Afbreken()"
 
-#: ..\src\setupNewMatch.cpp:162
 msgid "New match page:\n"
 msgstr "Nieuwewedstrijd pagina:\n"
 
-#: ..\src\setupNewMatch.cpp:164
 msgid "Matchfolder"
 msgstr "Wedstrijdmap"
 
-#: ..\src\setupNewMatch.cpp:165
 msgid "Match"
 msgstr "Wedstrijd"
 
-#: ..\src\setupNewMatch.cpp:166
 msgid "Session"
 msgstr "Zitting"
 
-#: ..\src\setupNewMatch.cpp:167
 msgid "Databasetype"
 msgstr "Opslagtype"
 
-#: ..\src\setupPrinter.cpp:20
 msgid "Printer choice, 'list' means 'print to file' with name list"
 msgstr "Printer keuze, 'list' betekent 'print naar bestand'"
 
-#: ..\src\setupPrinter.cpp:27
 msgid "Printer:"
 msgstr "Printer:"
 
-#: ..\src\setupPrinter.cpp:28
 msgid "Lines per page:"
 msgstr "Regels per blz:"
 
-#: ..\src\setupPrinter.cpp:30
 msgid "FormFeed after each print command"
 msgstr "FormFeed na elke print"
 
-#: ..\src\setupPrinter.cpp:31
 msgid "FF after each single printcommand i.s.o when the page is full"
 msgstr "FF na elke losse printopdracht ipv wanneer de pagina vol is"
 
-#: ..\src\setupPrinter.cpp:33
 msgid "Network printers"
 msgstr "Netwerk printers"
 
-#: ..\src\setupPrinter.cpp:34
 msgid ""
 "Also show printers in the network\n"
 "\n"
@@ -2408,201 +1880,154 @@ msgstr ""
 "\n"
 "LET OP: SYSTEEM KAN GAAN HANGEN!"
 
-#: ..\src\setupPrinter.cpp:43
 msgid "Font choice"
 msgstr "Font keuze"
 
-#: ..\src\setupPrinter.cpp:44
 msgid "choice of another/larger/smaller font for the printer output"
 msgstr "kiezen van ander/groter/kleiner font tbv printer output"
 
-#: ..\src\setupPrinter.cpp:55
 msgid "Printer settings"
 msgstr "Instellingen printer"
 
-#: ..\src\setupPrinter.cpp:101
 msgid "SetupPrinter::OnOk()"
 msgstr "SetupPrinter::Overnemen()"
 
-#: ..\src\setupPrinter.cpp:110
 msgid "SetupPrinter::OnCancel()"
 msgstr "SetupPrinter::Afbreken()"
 
-#: ..\src\setupPrinter.cpp:121
 msgid "Printersettings page:\n"
 msgstr "Printerinstellingen pagina:\n"
 
-#: ..\src\setupPrinter.cpp:122
 msgid "Printer"
 msgstr "Printer"
 
-#: ..\src\setupPrinter.cpp:123
 msgid "Lines/page"
 msgstr "Regels per blz"
 
-#: ..\src\setupPrinter.cpp:124
 msgid "Formfeed"
 msgstr "Formfeed"
 
-#: ..\src\setupPrinter.cpp:125
 msgid "Networkprinter"
 msgstr "Netwerkprinter"
 
-#: ..\src\setupSchema.cpp:25
 msgid "Rounds:"
 msgstr "Rondes:"
 
-#: ..\src\setupSchema.cpp:27
 msgid "Number of rounds in this session"
 msgstr "Aantal rondes in deze zitting"
 
-#: ..\src\setupSchema.cpp:32
 msgid "Games:"
 msgstr "Spellen:"
 
-#: ..\src\setupSchema.cpp:34
 #, c-format
 msgid "Number of games to play in this session (max=%u)"
 msgstr "Aantal te spelen spellen voor deze zitting (max=%u)"
 
-#: ..\src\setupSchema.cpp:36
 msgid "First game:"
 msgstr "Eerste spel:"
 
-#: ..\src\setupSchema.cpp:38
 msgid "Number of the first game (1, or f.e. 17 for session 2)"
 msgstr "Nummer van het eerste spel (1, of bijv 17 voor zitting 2)"
 
-#: ..\src\setupSchema.cpp:53
 msgid "Games per table:"
 msgstr "Spellen per tafel:"
 
-#: ..\src\setupSchema.cpp:67
 msgid "Groups:"
 msgstr "Groepen:"
 
-#: ..\src\setupSchema.cpp:69
 msgid "Number of groups that play the same games"
 msgstr "Aantal groepen die dezelfde spellen spelen"
 
-#: ..\src\setupSchema.cpp:79
 msgid "Group:"
 msgstr "Groep:"
 
-#: ..\src\setupSchema.cpp:79
 msgid "Info of the different groups"
 msgstr "Info van de verschillende groepen"
 
-#: ..\src\setupSchema.cpp:82
 msgid "++group"
 msgstr "++groep"
 
-#: ..\src\setupSchema.cpp:83
 msgid "Info for the next group"
 msgstr "Info voor volgende groep"
 
-#: ..\src\setupSchema.cpp:91
 msgid "Group characters:  "
 msgstr "Groep letters:  "
 
-#: ..\src\setupSchema.cpp:97
 msgid "Number of pairs:  "
 msgstr "Aantal paren:  "
 
-#: ..\src\setupSchema.cpp:103
 msgid "Schema for this group"
 msgstr "Schema voor deze groep"
 
-#: ..\src\setupSchema.cpp:103
-msgid "Schema:"
-msgstr "Schema:"
-
-#: ..\src\setupSchema.cpp:106
 msgid "Absent pair:  "
 msgstr "Afwezig paar:  "
 
-#: ..\src\setupSchema.cpp:122
 msgid "Schema entry for this session"
 msgstr "Ingave schema voor deze zitting"
 
-#: ..\src\setupSchema.cpp:251
 msgid "scores/assignments adapted as result of changes in schema"
 msgstr "scores/paarnaam-toekenning zijn aangepast als gevolg van wijzigingen in het schema"
 
-#: ..\src\setupSchema.cpp:279
 msgid "Schemasetup page:\n"
 msgstr "Opzettenschema pagina:\n"
 
-#: ..\src\setupSchema.cpp:281
 msgid "Rounds"
 msgstr "Rondes"
 
-#: ..\src\setupSchema.cpp:282
 msgid "Games"
 msgstr "Spellen"
 
-#: ..\src\setupSchema.cpp:283
 msgid "First game"
 msgstr "Eerste spel"
 
-#: ..\src\setupSchema.cpp:286
 msgid "Games/table"
 msgstr "Spellen/tafel"
 
-#: ..\src\setupSchema.cpp:287
 msgid "Groups"
 msgstr "Groepen"
 
-#: ..\src\setupSchema.cpp:291
 msgid "groupchars"
 msgstr "groepletters"
 
-#: ..\src\setupSchema.cpp:292
 msgid "pairs"
 msgstr "paren"
 
-#: ..\src\setupSchema.cpp:293
 msgid "schema"
 msgstr "schema"
 
-#: ..\src\setupSchema.cpp:294
 msgid "absent pair"
 msgstr "afwezig paar"
 
-#: ..\src\setupSchema.cpp:535
 #, c-format
 msgid "Equal groupcharacters for group %u and %u"
 msgstr "Gelijke groepletters voor groep %u en %u"
 
 #. TRANSLATORS: Set order of types to your country order
-#: ..\src\utils.cpp:228
 msgid "%A %B %d, %G %X"
 msgstr "%A %d %B %G %X"
 
-#: ..\src\utils.cpp:267
 msgid ": error writing to file"
 msgstr ": fout bij schrijven bestand"
 
-#: ..\src\utils.cpp:306
 msgid ": wrong size"
 msgstr ": foute grootte"
 
-#: ..\src\utils.cpp:321
 msgid ": error reading file"
 msgstr ": fout bij lezen bestand"
 
-#: ..\src\utils.cpp:328
 msgid "no"
 msgstr "nee"
 
-#: ..\src\utils.cpp:328
 msgid "yes"
 msgstr "ja"
 
-#: ..\src\version.h:13
 msgid "januari 1 2024"
 msgstr "1 januari 2024"
 
-#: ..\src\version.h:15
 msgid "monday"
 msgstr "maandag"
+
+#, fuzzy, c-format
+#~| msgid "\"%s\" version %s, %s"
+#~ msgid "\"%s\" %s %s, %s"
+#~ msgstr "\"%s\" versie %s, %s"

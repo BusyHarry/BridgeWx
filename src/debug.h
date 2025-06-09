@@ -59,6 +59,7 @@ private:
     void OnSelectPair           (wxCommandEvent&);
     void OnPrint                (wxCommandEvent&);
     void OnExample              (wxCommandEvent&);
+    void OnExportSchema         (wxCommandEvent&);
     void PrintOrExample();
     void SetFocusAfter          (wxCommandEvent&);  // set focus back to console-window
     void InitGuideStuff         ();

@@ -220,16 +220,20 @@ bool ChoiceMC::SetSelection(int a_selection)
     * redistributable package for VS.
     * Setting size of combocontrol only gets active AFTER/DURING the next idle loop.
     * So we need a 'CallAfter' for SetValueByUser() to be sure the text will fit...
+    * Helas, bad again may 2025, so back to CallAfter() :(
     */
     bool bResult = m_pPopup->SetSelection(a_selection);
-    SetValueByUser(bResult ? GetStringSelection() : ES);    // show in editctrl
+//  SetValueByUser(bResult ? GetStringSelection() : ES);    // show in editctrl
+    CallAfter([this, bResult] {SetValueByUser(bResult ? GetStringSelection() : ES);});  // show in editctrl
     return bResult;
 }   // SetSelection()
 
 bool ChoiceMC::SetStringSelection(const wxString& a_sel)
 {
     bool bResult = m_pPopup->SetStringSelection(a_sel);
-    SetValueByUser(bResult ? a_sel : ES);   // show in editctrl
+//  SetValueByUser(bResult ? a_sel : ES);   // show in editctrl
+//  Helas, bad again may 2025, so back to CallAfter() :(
+    CallAfter([this, bResult, &a_sel]{SetValueByUser(bResult ? a_sel : ES);});  // show in editctrl
     return bResult;
 }   // SetStringSelection()
 

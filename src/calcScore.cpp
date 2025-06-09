@@ -326,7 +326,7 @@ void CalcScore::RefreshInfo()
     }
 
     m_pPairSelect->Set(pairNames);
-    m_pGameSelect->Init(score::GetNumberOfGames(), (0U-1U));
+    m_pGameSelect->Init(score::GetNumberOfGames(), (UINT)(-1));
     cfg::FLushConfigs();            // write all to disk
     Layout();
     if (FindBadGameData())
@@ -1038,7 +1038,7 @@ void CalcScore::ApplySessionCorrections(void)
             }
             if (cs.maxExtra)    // can ONLY be true, if no butler!
             {   // f.i. from a combi-table, calculated separately!
-                svSessionResult[pair].points   += cs.extra;
+                svSessionResult[pair].points   += cs.extra; //todo: upscale (max)extra
                 svSessionResult[pair].maxScore += cs.maxExtra;
             }
             // assume cs.games only has a non-zero value if we have butler OR cs.maxExtra

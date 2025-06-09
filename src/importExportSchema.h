@@ -5,12 +5,14 @@
 #define _IMPORTEXPORTSCHEMA_H_
 
 #include "NewSchemaData.h"
-namespace import
+
+namespace importExportSchema
 {
     /*
     * Read a textfile containing a schema.
     * The format is the same as the export from the Dutch NBB scoring program.
     */
-    bool ReadFileSchemaDataNBB(const std::string& a_file, NEW_SCHEMA& a_schemaData, std::string& a_line);
+    bool ImportSchemaNBB(const std::string& a_file, NEW_SCHEMA& a_schemaData, std::string& a_line);
+    bool ExportSchemaNBB(const std::string& a_file, const NEW_SCHEMA& schema);
 }   // namespace import
 #endif

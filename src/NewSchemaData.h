@@ -23,11 +23,23 @@ public:
     NewSchemaDataType    tables = 0;
     NewSchemaDataType    sets   = 0;
     NewSchemaDataType    rounds = 0;
-    NewSchemaDataType    dummy  = 0;
+    NewSchemaDataType    schemaType  = 0;   // 0=pair schema, 1=individual schema
     std::string name;
     std::vector< std::vector<NewTableInfo> > tableData; // [round][table] NB 1-based: round 0 and table 0 are dummies!
+    static const NewSchemaDataType SCHEMA_DELETED = 9999;
+    inline bool operator == (const NEW_SCHEMA& rhs) const
+    {
+        return     pairs   == rhs.pairs
+                && tables  == rhs.tables
+                && sets    == rhs.sets
+                && rounds  == rhs.rounds
+                && name    == rhs.name
+                // schemaType ALWAYS 0
+                ;
+    }
+    inline bool operator != (const NEW_SCHEMA& rhs) const { return !(*this == rhs); }
 };
 
-extern std::vector<const NEW_SCHEMA*> newSchemaTable;   // vector of pointers to schema's
+extern std::vector<NEW_SCHEMA> newSchemaTable;   // vector of schema's
 
 #endif

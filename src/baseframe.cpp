@@ -15,6 +15,7 @@
 #include "wx/regex.h"
 #include <wx/filepicker.h>
 #include <wx/generic/stattextg.h>
+#include <wx/radiobut.h>
 
 #include "cfg.h"
 #include "baseframe.h"
@@ -238,16 +239,17 @@ static void AutotestAddWindowPos(MyTextFile* a_pFile, const wxWindow* a_pWindow,
     AutotestAddPos(a_pFile, a_pWindow, sWinTL, winRect.width, winRect.height, a_positionName);
 }   //  AutotestAddWindowPos()
 
-#include "wx/msw/subwin.h"
-
 bool Baseframe::AutotestAddMousePos(MyTextFile* a_pFile, const wxWindow* a_pWindow, const wxString& a_positionName)
 {   // s* vars are Screen positions, w* vars are appwindow-relative positions
     class MyRadioBox: public wxRadioBox
     {   // helper class, only to get at the msw-whnd inside the wxRadiobox
     public:
+#if wxMAJOR_VERSION >= 3 && wxMINOR_VERSION >= 3
+        HWND GetHwnd_(UINT index) const {return m_radioButtons[index]->GetHWND();};
+#else
         HWND GetHwnd_(UINT index) const {return m_radioButtons->Get(index);}
+#endif
     };
-
     assert(a_pWindow);  // stupid C6011 warning: possible use of nullptr
     auto pRadio = static_cast<const MyRadioBox*>(dynamic_cast<const wxRadioBox*> (a_pWindow));
     if (pRadio)

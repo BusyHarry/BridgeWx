@@ -100,7 +100,7 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
     m_pTxtCtrlPairs->Bind(wxEVT_KILL_FOCUS,         &SetupSchema::OnLostFocusNrOfPairs, this );
     m_pTxtCtrlPairs->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterPairs        , this );
 
-    m_pChoiceBoxSchemas = new MyChoiceMC(this, _("Schema:"), _("Schema for this group"), Unique(CHOICE_SCHEMA));
+    m_pChoiceBoxSchemas = new MyChoiceMC(this, _("Schema")+':', _("Schema for this group"), Unique(CHOICE_SCHEMA));
     m_pChoiceBoxSchemas->Bind(wxEVT_CHOICE, &SetupSchema::OnSelectSchema, this );
 
     auto absent = new wxStaticText(this, wxID_ANY, _("Absent pair:  "));
@@ -341,8 +341,9 @@ void SetupSchema::RefreshInfoGroup(int a_index)
     m_pChoiceBoxGroup->Init(m_groupData.size(), a_index);
 
     wxArrayString   schemas;
+    INT_VECTOR      nameIds;
     UINT            rounds  = wxAtoi(m_pTxtCtrlNrOfRounds->GetValue());
-    INT_VECTOR      nameIds = schema::FindSchema(rounds, m_groupData[a_index].pairs, &schemas); if (nameIds.size()){;}
+    schema::FindSchema(rounds, m_groupData[a_index].pairs, nameIds, &schemas); if (nameIds.size()){;}
 
     m_pChoiceBoxSchemas ->Init(schemas, m_groupData[a_index].schema);   // (try to) set original name as preset
     m_pTxtCtrlGroupChars->SetValue( m_groupData[a_index].groupChars);

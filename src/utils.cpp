@@ -9,7 +9,6 @@
 
 #include <wx/filefn.h>
 #include <wx/valgen.h>
-#include <wx/filename.h>
 #include <wx/ffile.h>
 
 #include "utils.h"

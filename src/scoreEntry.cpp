@@ -9,8 +9,6 @@
 #include <wx/msgdlg.h>
 #include "wx/radiobox.h"
 
-#include <wx/filename.h>
-
 #include "cfg.h"
 #include "names.h"
 #include "mygrid.h"

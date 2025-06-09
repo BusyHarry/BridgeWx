@@ -6,7 +6,6 @@
 #include <wx/image.h>
 #include "wx/uilocale.h"
 #include <map>
-#include <wx/filename.h>
 #include <wx/stdpaths.h>
 
 // my own includes
@@ -924,7 +923,7 @@ void MyFrame::OnImportSchema(wxCommandEvent& )
 
     if ( !schemaFile.IsEmpty() )
     {
-        LogMessage(_("Importing file <%s>"), schemaFile);
+        MyLogMessage(_("Importing file <%s>"), schemaFile);
         wxFileName fn(schemaFile);
         if (0 == cfg::GetBaseFolder().CmpNoCase(fn.GetPath()))
         {
@@ -933,9 +932,9 @@ void MyFrame::OnImportSchema(wxCommandEvent& )
             MyMessageBox(error, _("Error"));
         } else
         {   // only import if folders are different!
-            if (schema::ImportSchema(schemaFile, true))
-            {   // copy/overwrite file to the basefolder: load all schemafiles at startup from here
-                wxString basename = cfg::GetBaseFolder()+PS+fn.GetFullName();
+            if (schema::ImportSchema(schemaFile))
+            {   // copy/overwrite file to/in the basefolder: load all schemafiles at startup from here
+                wxString basename = wxFileName(cfg::GetBaseFolder(), fn.GetFullName()).GetFullPath();
                 if (!wxCopyFile(schemaFile, basename, true))
                 {
                     MyLogError("Could not copy <%s> to <%s>", schemaFile, basename);
@@ -952,7 +951,7 @@ void MyFrame::LoadExistingSchemaFiles()
     (void)wxDir::GetAllFiles(cfg::GetBaseFolder(), &schemas, wild, wxDIR_FILES);
     for (const auto& schema : schemas)
     {
-        (void)schema::ImportSchema(schema);
+        (void)schema::ImportSchema(schema, true);   // always force-load schema's during startup!
     }
     schema::DebuggingSchemaData();  // for debugging....
 }   // LoadExistingSchemaFiles()

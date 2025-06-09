@@ -33,9 +33,9 @@ I used SciTE4AutoHotkey ( https://www.autohotkey.com/scite4ahk/ ) to edit/debug 
 Another edit/debug tool: Visual Studio Code with extension AutoHotkey Plus Plus (AHK++) ( https://marketplace.visualstudio.com/items?itemName=mark-wiemer.vscode-autohotkey-plus-plus )
 
 
-# Running WxBridge
+# Running BridgeWx
 
-If you run WxBridge for the first time from the binairy on a clean win10 installation you may get errors when starting:
+If you run BridgeWx for the first time from the binairy on a clean win10 installation you may get errors when starting:
   - missing VCRUNTIME140.dll
   - missing MSVCP140.dll
   - missing VCRUNTIME140_1.dll
@@ -43,6 +43,7 @@ If you run WxBridge for the first time from the binairy on a clean win10 install
 These .dll's are needed when running BridgeWx (compiled with VS2019/VS2022). 
 Download/install the redistributable package from: https://aka.ms/vs/17/release/vc_redist.x64.exe
 (for x86: https://aka.ms/vs/17/release/vc_redist.x86.exe )
+As from V10.3.0 on, these dll's are included in the BridgeWxBin_Vxxx.zip 
 
 ## Language
 
@@ -60,8 +61,8 @@ Used names:
 - \<language\>		: the wanted display language
 
 There are provisions for translation: all translatable text have the _(..) macro.
-I have used Poedit to retrieve these text to \<BridgeWx.pot\>. From there I have made an English translation \<en.po\> and compiled it to \<en.mo\> (all in the \<BridgeWxBase\>/locales' folder)
-You may use the './locales/gettxt.bat' to
+I have used Poedit to retrieve these text to \<BridgeWx.pot\>. From there I have made a Dutch translation \<nl.po\> and compiled it to \<nl.mo\> (all in the \<BridgeWxBase\>/locales' folder)
+You may use the './locales/gettxt.bat' or './locales/getTxtNoLines.bat' to:
   - update \<BridgeWx.pot\> from the sources
   - update/create a \<language\>.po from the .pot file
   - change/add translations
@@ -76,21 +77,24 @@ To get the text from wxWidgets itself in your language:
 To get your BridgeWx translation:
  - copy '\<BridgeWxBase\>/locales/\<language\>.mo' to '\<exeDir\>/locales/\<language\>/BridgeWx.mo'
 
+Remark: English is buildin, so for this language you don't need to do anything
+
+
 # Building:
 
  - I have only build/tested everything in MicrosoftWindows 10 with VisualStudio2019!
- - the gui is based on wxWidgets V3.2.8 (V3.2.7, V3.2.6, V3.2.5 is also ok)
+ - the gui is based on wxWidgets V3.3.0 (V3.2.5 --> V3.2.8 also ok)
  - I only used the x64 version (also for wxWidgets)
  - copy the tools from the release BridgeWxBin_v\*.zip[BridgeWx/tools/*.exe] to the '\<BridgeWxBase\>/tools' folder 
- - add a global env-variable '\<wxwin\>' or
- - from a cmd-prompt: set environment variable '\<wxwin\>' to wxWidgets basefolder:
- 	- set wxwin=d:\wxWidgets_3.2.8  ( == \<wxBase\
-  - start BridgeWx.sln (from the base folder where the repo is located)
+ - add  global env-variables '\<wxwin\>' and '\<wx_version\>' or
+ - from a cmd-prompt: set environment variable '\<wxwin\>' to wxWidgets basefolder and '\<wx_version\>' to the MajorMinor wx-version:
+    - set wxwin=d:\wxWidgets_3.3.0  ( == \<wxBase\> )
+    - set wx_version=33             ( for V3.3.* (default) and '32' for V3.2.*)
+ - start BridgeWx.sln (from the base folder where the repo is located)
 
- - initially to have the English language available for the compiled executable:
-     - create the folder(s) for the Dutch/English language (automaticaly done when building in VS):
-       - '\<BridgeWxBase\>vc_x64_mswu[d]/locales/en' and
-       - '\<BridgeWxBase\>vc_x64_mswu[d]/locales/nl'
+ - initially to have the Dutch language available for the locally compiled executable:
+     - create the folder(s) for the Dutch language (automaticaly done when building in VS):
+       '\<BridgeWxBase\>vc_x64_mswu[d]/locales/nl'
    and copy the *mo files from the BridgeWxBin_v\*.zip to there corresponding locations
 
 # Licence

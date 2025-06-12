@@ -19,6 +19,7 @@ MyGrid::MyGrid(Baseframe* a_pParent, const wxString& a_ahkLabel) : wxGrid(a_pPar
     if (a_pParent) SetLabelFont(a_pParent->GetFont());  // just incase the parent font is NOT standard
     SetColLabelAlignment(wxALIGN_LEFT, wxALIGN_CENTER);
     SetTabBehaviour(Tab_Wrap);  // wrap to next/previous row: till end/begin
+    UseNativeColHeader(true);   // V3.3.*: disables highlight of columnheader when a cell is selected
     Bind(wxEVT_GRID_CELL_CHANGING,    &MyGrid::OnCellChanging,   this, wxID_ANY);   // check for changes and signal owner
     Bind(wxEVT_GRID_LABEL_LEFT_CLICK, &MyGrid::OnLeftClickLabel, this, wxID_ANY);
 

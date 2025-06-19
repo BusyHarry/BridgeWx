@@ -38,6 +38,7 @@ AssignNames::AssignNames(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParen
     m_theGrid->SetColSize(COL_RANK_TOTAL_PREV      , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_RANK_TOTAL_PREV    , _("rank"    ));   // TRANSLATORS: 'S' is first char of Session
     m_theGrid->SetColSize(COL_RANK_SESSION_PREV    , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_RANK_SESSION_PREV  , _("rank S-1"));
 
+#ifdef MY_GRIDSORT
     std::vector<MyGrid::SortMethod> methods;
     methods.push_back(MyGrid::SORT_STRING);
     methods.push_back(MyGrid::SORT_SESSIONNAME);
@@ -45,7 +46,8 @@ AssignNames::AssignNames(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParen
     methods.push_back(MyGrid::SORT_INTNUMBER);
     methods.push_back(MyGrid::SORT_INTNUMBER);
     m_theGrid->SetSortMethod(methods);          // set sort hints: without this, plain string compare is done
-
+    m_theGrid->SetSortEnable(true);
+#endif
     auto pStaticText    = new wxStaticText(this, wxID_ANY, _("Assign pairnames on base of:  "));
     auto pButtonOrg     = new wxButton    (this, wxID_ANY, _("Original nr"));
     m_pButtonRankTotal  = new wxButton    (this, wxID_ANY, _("Rank total" ));

@@ -91,6 +91,9 @@ Remark: English is buildin, so for this language you don't need to do anything
     - set wxwin=d:\wxWidgets_3.3.0  ( == \<wxBase\> )
     - set wx_version=33             ( for V3.3.* (default) and '32' for V3.2.*)
  - start BridgeWx.sln (from the base folder where the repo is located)
+    - from version V10.8.0 onwards, you can also use the BridgeWx.props file i.s.o the environment variable(s)
+       - adjust the value(s) in it so they match your situation
+       - the environment has priority above the .props file
 
  - initially to have the Dutch language available for the locally compiled executable:
      - create the folder(s) for the Dutch language (automaticaly done when building in VS):

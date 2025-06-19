@@ -11,7 +11,7 @@ echo PreBuild.bat: Debug/Release = '%~1', outdir = '%~2', wxwin = '%~3'
 SETLOCAL EnableExtensions
 
 if not [%3] == [] if exist "%~3\locale" goto OkWxwin
-  .\tools\msgbox.exe ERROR! "variable 'wxwin' ('%~3') is empty or does not exist" "" "its needed for building!" "use environment variables or BridgeWx.props"
+  .\tools\msgbox.exe ERROR! "environment var wxwin '%~3' is empty or does not exist" "" "its needed for building!"
   exit /B 1
 :OkWxwin
 
@@ -20,7 +20,6 @@ set p1=%~1
 set p2=%~2
 set p3=%~3
 
-set builddateLanguage=en-UK
 set msgbox=.\tools\msgbox.exe
 set language=nl
 call :setupLanguage
@@ -67,7 +66,7 @@ goto builddate
 if /I [%p1%] == [Debug]     goto DoneBuildDate
 if /I [%p1%] == [DLL Debug] goto DoneBuildDate
   echo creating .\src\builddate.h
-  .\tools\builddate.exe %builddateLanguage% > .\src\buildDate.h
+  .\tools\builddate.exe > .\src\buildDate.h
 :DoneBuildDate
 
 set       p1=

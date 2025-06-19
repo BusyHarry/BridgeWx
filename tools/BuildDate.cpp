@@ -5,8 +5,8 @@
 // static const char* buildDate = "zaterdag 20 juli 2024 @ 16:07:36";  
 
 // locale to use when no commandline argument is given
-// #define DEFAULT_LOCALE "en-UK"
-#define DEFAULT_LOCALE GetSystemLocale()
+#define DEFAULT_LOCALE "en-UK"
+//#define DEFAULT_LOCALE GetSystemLocale()
 
 #include <Windows.h>
 #include <ctime>

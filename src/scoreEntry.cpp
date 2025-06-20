@@ -39,7 +39,7 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     #define SIZE_PAIRNR     (6 * sizeOne)                       /* "AB12 *"             */
     #define SIZE_ID         (5 * sizeOne)                       /* just numbers 1-120   */
     #define SIZE_SCORE      (8 * sizeOne)                       /* 'score nz' / 'R-9999'*/
-    #define SIZE_CONTRACT   (9 * sizeOne)                       /* 3sa+3** */
+    #define SIZE_CONTRACT   (10* sizeOne)                       /* 3sa+3** */
     m_theGrid->SetColSize(COL_GAME       , SIZE_ID      ); m_theGrid->SetColLabelValue(COL_GAME       , _("game"       ));
     m_theGrid->SetColSize(COL_NS         , SIZE_PAIRNR  ); m_theGrid->SetColLabelValue(COL_NS         , _("ns"         ));
     m_theGrid->SetColSize(COL_EW         , SIZE_PAIRNR  ); m_theGrid->SetColLabelValue(COL_EW         , _("ew"         ));

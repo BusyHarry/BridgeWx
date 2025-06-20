@@ -19,6 +19,8 @@ MyGrid::MyGrid(Baseframe* a_pParent, const wxString& a_ahkLabel) : wxGrid(a_pPar
     if (a_pParent) SetLabelFont(a_pParent->GetFont());  // just incase the parent font is NOT standard
     SetColLabelAlignment(wxALIGN_LEFT, wxALIGN_CENTER);
     SetTabBehaviour(Tab_Wrap);  // wrap to next/previous row: till end/begin
+//    UseNativeColHeader(true);   // V3.3.*: disables highlight of columnheader when a cell is selected
+    SetUseNativeColLabels(true);    // V3.3.*: disables highlight of columnheader when a cell is selected
     Bind(wxEVT_GRID_CELL_CHANGING,    &MyGrid::OnCellChanging,   this, wxID_ANY);   // check for changes and signal owner
     Bind(wxEVT_GRID_LABEL_LEFT_CLICK, &MyGrid::OnLeftClickLabel, this, wxID_ANY);
 
@@ -26,7 +28,7 @@ MyGrid::MyGrid(Baseframe* a_pParent, const wxString& a_ahkLabel) : wxGrid(a_pPar
     Bind(wxEVT_GRID_COL_SORT,         &MyGrid::OnSortColumn    , this, wxID_ANY);   // sorting
     m_sortedCol     = wxNOT_FOUND;
     m_sortType      = SORT_NONE;
-    m_bEnableSort   = true;
+    m_bEnableSort   = false;
     CallAfter(&MyGrid::BindLate);
     //    SetUseNativeColLabels(true);    // for sorting indication
 #endif
@@ -171,8 +173,8 @@ void MyGrid::OnLeftClickLabel(wxGridEvent& a_event)
 {   // eat it, if its a column label: no whole column selection
     int col = a_event.GetCol();
     LogMessage(_("MyGrid::OnLeftClickLabel(column: %i)"), col);
-    if ( col == wxNOT_FOUND)
-        a_event.Skip(); // passtrough if its not a column header
+//    if ( col == wxNOT_FOUND)    // left-edge -> select all
+//        a_event.Skip(); // passtrough if its not a column header
 }   // OnLeftClickLabel()
 
 const MyGrid::GridInfo& MyGrid::GetGridInfo()
@@ -280,7 +282,7 @@ bool MyGrid::AppendRows(int a_numRows, bool a_updateLabels)
     return wxGrid::AppendRows(a_numRows, a_updateLabels);
 }   // AppendRows()
 
-[[maybe_unused]] bool MyGrid::GridSortEnable(bool a_bEnable)
+bool MyGrid::SetSortEnable(bool a_bEnable)
 {
     if ( !a_bEnable && (m_sortType != SORT_NONE) )
     {   // undo sorting
@@ -293,7 +295,7 @@ bool MyGrid::AppendRows(int a_numRows, bool a_updateLabels)
     m_bEnableSort = a_bEnable;
 
     return bOldSort;
-}   // GridSortEnable()
+}   // SetSortEnable()
 
 void MyGrid::SortOnLeftClickLabel(wxGridEvent& a_event)
 {
@@ -375,8 +377,6 @@ bool MyCompare(const wxString& s1, const wxString& s2, MyGrid::SortMethod a_sort
 
 void MyGrid::OnSortColumn(wxGridEvent& a_event)
 {
-    LogMessage(_("MyGrid::OnSortColumn(column: %i)"), a_event.GetCol());
-
     int rows    = GetNumberRows();
     int sortCol = a_event.GetCol();
 
@@ -385,6 +385,8 @@ void MyGrid::OnSortColumn(wxGridEvent& a_event)
         a_event.Skip(); // we don't handle this one
         return;
     }
+
+    LogMessage(_("MyGrid::OnSortColumn(column: %i)"), a_event.GetCol());
 
     int cols = GetNumberCols();
     std::vector< std::vector<wxString> > data;
@@ -410,6 +412,27 @@ void MyGrid::OnSortColumn(wxGridEvent& a_event)
         m_sortedCol= sortCol;
         m_sortType = next[0];
     }
+
+    // We get this event FIRST (on purpose!), but when finished here, the event will also be processed
+    // by the system and will result in setting the 'wxGrid::m_sortCol' from 'wxNOT_FOUND' to 'sortCol' again
+    // and that will result in getting a 'sort_up' icon again :-(
+    // So be sure that we are the LAST person processing...
+    CallAfter([this]
+                {
+                    switch (m_sortType)
+                    {   // update the sort icon
+                        case SORT_UP:
+                            SetSortingColumn (m_sortedCol, true);
+                            break;
+                        case SORT_DOWN:
+                            SetSortingColumn (m_sortedCol, false);
+                            break;
+                        default:
+                            UnsetSortingColumn();
+                            break;
+                    }
+                }
+        );
 
     m_sortedRows.resize(rows);
     std::iota (m_sortedRows.begin(), m_sortedRows.end(), 0); // Fill with 0, 1, ..., i.e. non-sorted! 0->0, 1->1 etc

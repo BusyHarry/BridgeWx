@@ -4,6 +4,10 @@
 // will output to console and file <.\buildDate.h> a string like:
 // static const char* buildDate = "zaterdag 20 juli 2024 @ 16:07:36";  
 
+// locale to use when no commandline argument is given
+// #define DEFAULT_LOCALE "en-UK"
+#define DEFAULT_LOCALE GetSystemLocale()
+
 #include <Windows.h>
 #include <ctime>
 #include <iostream>
@@ -97,7 +101,7 @@ void DateTime2(const char* pLocale)
     //"vrijdag 9 juli 2024 @ 20:51:51";
     std::time_t tm = std::time(nullptr);
     std::locale::global(std::locale(pLocale));
-    std::strftime(build, sizeof(build), "static const char* buildDate = \"%A %e %B %Y @ %T\";", std::localtime(&tm));
+    std::strftime(build, sizeof(build), "static const char* buildDate = \"%A, %x @ %X\";", std::localtime(&tm));
     /*
     * For non-latin languages we need to do something like:
     *   static const wchar_t* buildDate = L"xyz";
@@ -111,11 +115,16 @@ void DateTime2(const char* pLocale)
 const char compiletime[] ="<buildtime: " __DATE__ ", " __TIME__ ">";
 int main(int argc, const char* argv[])
 {
+    char buf[1000]={0};
+    if (argc > 1) sprintf(buf, ", now using <%s>", argv[1]);
+    fprintf(stderr, "%s [locale], default <%s>%s\n", argv[0], DEFAULT_LOCALE, buf);
+    fprintf(stderr, "Generates a string/file containing the buildtime in utf8.\n\n");
+
     compiletime;
     const char* utf8    = ".utf8";
-    char*       pBuf    = nullptr;   
-    auto        pLocale = (argc > 1) ? argv[1] : GetSystemLocale();
-    if (pLocale[0] == 0) pLocale = "nl-NL";
+    char*       pBuf    = nullptr;
+    auto        pLocale = (argc > 1) ? argv[1] : DEFAULT_LOCALE;
+
     if (strstr(pLocale, utf8) == nullptr)
     {   // add .utf8 for locale, so we can handle non-latin languages
         pBuf = new char[strlen(pLocale)+strlen(utf8)+1];
@@ -123,8 +132,6 @@ int main(int argc, const char* argv[])
         strcat(pBuf, utf8);
         pLocale = pBuf;
     }
-    fprintf(stderr, "%s [locale], default <%s>\n", argv[0], pLocale);
-    fprintf(stderr, "Generates a string/file containing the buildtime in utf8.\n\n");
 //    DateTime1();
 //    printf("%s", build);    // console output
 //    puts("");

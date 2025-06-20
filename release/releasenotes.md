@@ -1,4 +1,14 @@
 # Releasenotes
+#V10.8.0  ....
+ - disabled v3.3.0 feature to show highlighted grid columnlabel on activating a cell
+ - when producing builddate.h, 'prebuild.bat' now defaults to 'en_UK' locales for date and time
+ - use ./build/msw/wx_setup.props to get the version-dependend names of some wx libraries
+ - added 'BridgeWx.props' to set needed variable(s): wxwin (base of wxWidgets version)
+   - remark: if 'wxwin'is set in the environment, the BridgeWx.props file is not loaded
+ - changed disabled feature: 
+   - bad side effect: columnheaders got a much larger margin, so many texts did not fit anymore
+   - new implementation has nice side effect of having sort-icons available in the column headers
+
 #V10.7.0  Monday June 9, 2025
  - easier translation (more)
  - wxCombobox sometimes truncates content (old problem again)

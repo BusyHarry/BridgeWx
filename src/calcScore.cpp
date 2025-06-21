@@ -761,7 +761,7 @@ void CalcScore::SaveGroupResult()
             if (cfg::IsSessionPairAbsent(pair))
                 tmp.Printf("%3u --> %s", pair,  _("absent"));
             else
-                tmp.Printf("%3u %s --> %s", pair, names::PairnrSession2GlobalText(pair), _("NOT PLAYED"));  //???? kan niet, is "paar heeft niet gespeeld : afwezig..."
+                tmp.Printf("%3u %s --> %s", pair, names::PairnrSession2GlobalText(pair), _("NOT PLAYED"));  // ???? not possible if session ready!
             m_txtFileResultGroup.AddLine(tmp);
             continue;                   // pair didn't play
         }
@@ -1260,8 +1260,8 @@ static long GetResultScore(UINT a_sessionPairnr, bool a_bSession)
 
 wxString CalcScore::GetGroupResultString(UINT a_sessionPair, const std::vector<UINT>* a_pRankIndex, bool a_bSession)
 {
-    // on init: 2 chars per group, empty if only one group:  "BLYEREGR" for group BLue YEllow REd and GReen
-    // for a pair: the rank in its group, a '.' if none   :  " . . 7 ." for pair being rank 7 in group 'RE'
+    // on init: 3 chars per group, empty if only one group:  " BL YE RE GR" for group BLue YEllow REd and GReen
+    // for a pair: the rank in its group, a '.' if none   :  "  .  .  7  ." for pair being rank 7 in group 'RE'
     static std::vector<UINT> svGroupRank;   // rank within group for sessionPair
     const auto& groupInfo  = *cfg::GetGroupData();
 
@@ -1299,17 +1299,17 @@ wxString CalcScore::GetGroupResultString(UINT a_sessionPair, const std::vector<U
             }
         }
         // also init the group-string
-        for (const auto& it : groupInfo) {result += FMT("%2s", it.groupChars);}
-        return result;  // "BLGRYEOR" : 2 chars per group
+        for (const auto& it : groupInfo) {result += FMT("%3s", it.groupChars);}
+        return result;  // " BL GR YE OR" : 3 chars per group
     }
 
-    // create string showing rank within group:  " . . 5 . ." --> 2 chars per group: rank or " ."
+    // create string showing rank within group:  "  .  .  5  .  ." --> 3 chars per group: rank or "  ."
     for (const auto& itGroup : groupInfo)
     {
         auto minPair = itGroup.groupOffset;
         auto maxPair = minPair + itGroup.pairs;
         result += ( (a_sessionPair > minPair) && (a_sessionPair <= maxPair) ) ?
-            FMT("%2u", svGroupRank[a_sessionPair]) : wxString(" .");
+            FMT("%3u", svGroupRank[a_sessionPair]) : wxString("  .");
     }
 
     return result;

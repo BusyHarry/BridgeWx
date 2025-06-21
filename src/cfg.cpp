@@ -193,12 +193,10 @@ namespace cfg
 
     bool IsSessionPairAbsent(UINT a_sessionPair)
     {
-        UINT pair = 0;
         for (const auto& it : sSessionInfo.groupData)
         {
-            pair += it.groupOffset;
-            if (pair > a_sessionPair) break;
-            if (pair + it.absent == a_sessionPair)
+            if (it.groupOffset > a_sessionPair) break;
+            if (it.groupOffset + it.absent == a_sessionPair)
                 return true;
         }
         return false;

@@ -163,8 +163,20 @@ static void RankIndexToPairIndex(UINT_VECTOR& a_uiV)
 {   // a_uiv[rank] = globalPairNr, change to: a_uiv[globalPairNr] = rank
     UINT_VECTOR dst;
     dst.resize(a_uiV.size(),0);
-    for ( UINT rank = 0; rank < a_uiV.size(); ++rank)
-        dst[a_uiV[rank]] = rank;
+//    UINT maxRank = std::max(cfg::GetNrOfSessionPairs(), names::GetNumberOfGlobalPairs());
+    UINT maxRank = cfg::GetNrOfSessionPairs();  // don't need more then this number of assignments
+    for (UINT rank = 1; rank <= maxRank; ++rank)
+    {
+        UINT globalPair = a_uiV[rank];
+        if ( globalPair == 0 )
+        {   // only non-ranked players left
+            // assign lowest non-ranked player this rank
+            auto it0 = std::find(dst.begin()+1, dst.end(), 0U);
+            *it0 = rank;    // no check needed, iterator IS valid
+        }
+        else
+            dst[globalPair] = rank;
+    }
     if (dst.size()) dst[0] = 0;
     a_uiV = dst;
 }   // RankIndexToPairIndex()
@@ -210,7 +222,7 @@ void AssignNames::RefreshInfo()
     int pairs = pairInfo.size() - 1;
     m_theGrid->AppendRows(pairs);
 
-    for (long long ii = 0; ii < pairs; ++ii)
+    for (int ii = 0; ii < pairs; ++ii)
     {
         m_theGrid->SetCellValue(ii, COL_PAIRNAME      , pairInfo[ii+1].pairName );
         m_theGrid->SetCellValue(ii, COL_PAIRNR_SESSION, names::PairnrGlobal2SessionText(ii+1));

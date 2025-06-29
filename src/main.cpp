@@ -123,20 +123,27 @@ public:
         m_timeStamp         = 0;
         m_previousTimeStamp = 0;
         m_previousChar      = 0;
-        m_keys2String[0x0008] = "{BS}";
-        m_keys2String['\r'  ] = "{ENTER}";
-        m_keys2String[0x0009] = "{TAB}";
-        m_keys2String[0x001b] = "{ESC}";
-        m_keys2String[0x007f] = "{DEL}";
-        m_keys2String[0x0132] = "{SHIFT}";
-        m_keys2String[0x0133] = "{ALT}";
-        m_keys2String[0x0134] = "{CTRL}";
-        m_keys2String[0x0138] = "{END}";
-        m_keys2String[0x0139] = "{HOME}";
-        m_keys2String[0x013a] = "{LEFT}";
-        m_keys2String[0x013b] = "{UP}";
-        m_keys2String[0x013c] = "{RIGHT}";
-        m_keys2String[0x013d] = "{DOWN}";
+        m_keys2String[WXK_BACK        ] = "{BS}";
+        m_keys2String[WXK_RETURN      ] = "{ENTER}";
+        m_keys2String[WXK_TAB         ] = "{TAB}";
+        m_keys2String[WXK_ESCAPE      ] = "{ESC}";
+        m_keys2String[WXK_DELETE      ] = "{DEL}";
+        m_keys2String[WXK_SHIFT       ] = "{SHIFT}";
+        m_keys2String[WXK_ALT         ] = "{ALT}";
+        m_keys2String[WXK_CONTROL     ] = "{CTRL}";
+        m_keys2String[WXK_END         ] = "{END}";
+        m_keys2String[WXK_HOME        ] = "{HOME}";
+        m_keys2String[WXK_LEFT        ] = "{LEFT}";
+        m_keys2String[WXK_UP          ] = "{UP}";
+        m_keys2String[WXK_RIGHT       ] = "{RIGHT}";
+        m_keys2String[WXK_DOWN        ] = "{DOWN}";
+        m_keys2String[WXK_NUMPAD_HOME ] = "{NUM_HOME}";
+        m_keys2String[WXK_NUMPAD_END  ] = "{NUM_END}";
+        m_keys2String[WXK_NUMPAD_UP   ] = "{NUM_UP}";
+        m_keys2String[WXK_NUMPAD_DOWN ] = "{NUM_DOWN}";
+        m_keys2String[WXK_NUMPAD_LEFT ] = "{NUM_LEFT}";
+        m_keys2String[WXK_NUMPAD_RIGHT] = "{NUM_RIGHT}";
+        m_keys2String[WXK_NUMPAD_ENTER] = "{NUM_ENTER}";
     }
 
     virtual ~EventCatcher()

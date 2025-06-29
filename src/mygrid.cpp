@@ -282,12 +282,19 @@ bool MyGrid::AppendRows(int a_numRows, bool a_updateLabels)
     return wxGrid::AppendRows(a_numRows, a_updateLabels);
 }   // AppendRows()
 
+void MyGrid::UndoSort()
+{   // display unsorted grid, but leave sort enabled if it was before
+    if ( SetSortEnable(false) )
+        (void)SetSortEnable(true);
+}   // UndoSort()
+
 bool MyGrid::SetSortEnable(bool a_bEnable)
 {
     if ( !a_bEnable && (m_sortType != SORT_NONE) )
     {   // undo sorting
         m_sortType = SORT_MAX;
-        wxGridEvent dummy;
+
+        wxGridEvent dummy(0, 0, nullptr, -1, m_sortedCol);
         OnSortColumn(dummy);
     }
 

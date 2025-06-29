@@ -43,6 +43,7 @@ public:
     int         GridRowToIntern         ( int row ) const;      // if sorting: translate external row to internal row nr
     bool        AppendRows              ( int numRows = 1, bool updateLabels = true);    // if sorting, extend the sort-array
     bool        SetSortEnable           ( bool enable = true);  // enable/disable row-sorting, return previous setting
+    void        UndoSort                ();                     // set data in unsorted state
     void        SetRowBackground        ( int row, const wxColour& colour); //sets the background colour for a whole row
 #endif
 

@@ -193,7 +193,9 @@ void AssignNames::RefreshInfo()
     m_bDataChanged = false;
     names::InitializePairNames();
     UINT activeSession = cfg::GetActiveSession();
-
+#ifdef MY_GRIDSORT
+    m_theGrid->UndoSort();
+#endif
     if (activeSession <= 1)
     {   //no extra colums needed
         m_theGrid->HideCol(COL_PAIRNR_SESSION_PREV);
@@ -318,6 +320,9 @@ void AssignNames::OnClear(wxCommandEvent&)
 void AssignNames::UpdateColumnAssign(std::vector<unsigned int>& a_newAssign)
 {
     AUTOTEST_BUSY("updateAssign");
+#ifdef MY_GRIDSORT
+    m_theGrid->UndoSort();
+#endif
     RankIndexToPairIndex(a_newAssign);
     auto rows = m_theGrid->GetNumberRows();
     for (auto ii = 0; ii < rows; ++ii)

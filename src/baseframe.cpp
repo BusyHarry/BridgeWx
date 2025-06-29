@@ -171,7 +171,7 @@ void Baseframe::OnSearch(wxCommandEvent& )
 {
     AUTOTEST_BUSY("search");
     wxString theString = m_pTxtCtrlSearchBox->GetValue();
-    BusyBox();
+    //BusyBox();    // V3.3.0+ --> too much flicker
     DoSearch(theString);
 }   // OnSearch()
 

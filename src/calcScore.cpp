@@ -1053,7 +1053,7 @@ void CalcScore::ApplySessionCorrections(void)
         {
             svSessionResult[pair].procentScore = // for now: too many things depend on it
             svSessionResult[pair].mpPerGame = RoundLong(butlerCorMp + svSessionResult[pair].butlerMp * 100 , (int)svSessionResult[pair].nrOfGames);
-            svSessionResult[pair].butlerMp += (butlerCorMp+50)/100;
+            svSessionResult[pair].butlerMp += RoundLong(butlerCorMp, 100);
 //            svSessionResult[pair].maxScore=1;svSessionResult[pair].points=1;  // many things depend on this too!
         }
         else

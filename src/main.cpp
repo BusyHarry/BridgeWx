@@ -2,10 +2,11 @@
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
 // Start of wxWidgets Bridge calc Program
-
+#ifdef _MSC_VER
+#include <msvc/wx/setup.h>      // all kinds of defines and force include of needed wx-libs
+#endif
 #include <wx/image.h>
-#include "wx/uilocale.h"
-#include <map>
+#include <wx/uilocale.h>
 #include <wx/stdpaths.h>
 
 // my own includes

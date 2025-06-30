@@ -711,7 +711,7 @@ void CalcScore::SaveGroupResult()
     m_txtFileResultGroup.AddLine(tmp);
     m_txtFileResultGroup.AddLine(ES);
 
-    const size_t SIZE_GRP_PAIR       (3);
+    const size_t SIZE_GRP_PAIR       (4);
     const size_t SIZE_GRP_NAME       (cfg::MAX_NAME_SIZE);
     const size_t SIZE_GRP_SCORE      (5);
     const size_t SIZE_GRP_EXTRA      (6);
@@ -759,13 +759,13 @@ void CalcScore::SaveGroupResult()
         if (svSessionResult[pair].nrOfGames == 0)
         {
             if (cfg::IsSessionPairAbsent(pair))
-                tmp.Printf("%3u --> %s", pair,  _("absent"));
+                tmp.Printf("%*s --> %s", (int)SIZE_GRP_PAIR, names::PairnrSession2SessionText(pair,true),  _("absent"));
             else
-                tmp.Printf("%3u %s --> %s", pair, names::PairnrSession2GlobalText(pair), _("NOT PLAYED"));  // ???? not possible if session ready!
+                tmp.Printf("%*s %s --> %s", (int)SIZE_GRP_PAIR, names::PairnrSession2SessionText(pair), names::PairnrSession2GlobalText(pair), _("NOT PLAYED"));  // ???? not possible if session ready!
             m_txtFileResultGroup.AddLine(tmp);
             continue;                   // pair didn't play
         }
-        std::vector<wxString> rowInfo = {U2String(pair), DottedName(names::PairnrSession2GlobalText(pair))};
+        std::vector<wxString> rowInfo = {names::PairnrSession2SessionText(pair), DottedName(names::PairnrSession2GlobalText(pair))};
 
         for (UINT ii = 0; ii < sets; ++ii)
         {

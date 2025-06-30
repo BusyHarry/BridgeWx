@@ -72,7 +72,7 @@ namespace cor
         {
             wxString msg = FMT(_("Invalid session-correction data <%s>, will be ignored."), a_input);
             MyLogError("%s",a_input);
-            MyMessageBox(msg);
+            GetMainframe()->CallAfter([msg]{MyMessageBox(msg);});   // wait till page is shown
             return false;
         }
 

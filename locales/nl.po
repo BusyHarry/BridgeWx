@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-05 12:51+0200\n"
-"PO-Revision-Date: 2025-06-05 12:51+0200\n"
+"POT-Creation-Date: 2025-06-30 11:22+0200\n"
+"PO-Revision-Date: 2025-06-30 11:22+0200\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -211,14 +211,11 @@ msgstr "Fout"
 msgid "Group-result of match '%s'%s"
 msgstr "Groep-uitslag van wedstrijd '%s'%s"
 
-msgid "games :"
-msgstr "spellen :"
+msgid "combi"
+msgstr "combi"
 
-msgid "extra"
-msgstr "extra"
-
-msgid "cor"
-msgstr "kor"
+msgid "corr."
+msgstr "korr."
 
 msgid "tot"
 msgstr "tot"
@@ -241,11 +238,14 @@ msgstr "tot."
 msgid "max"
 msgstr "max"
 
-msgid "corr."
-msgstr "korr."
-
 msgid "imps"
 msgstr "imps"
+
+msgid "Combi-table results for non-combi player ignored"
+msgstr "Combi-tafel resultaten voor niet stilzitter genegeerd"
+
+msgid "Warning"
+msgstr "Waarschuwing"
 
 msgid "game"
 msgstr "spel"
@@ -278,9 +278,6 @@ msgstr "uitslag"
 #, c-format
 msgid "Pair '%s' has played, but was NOT assigned to a global name"
 msgstr "Paar '%s' heeft gespeeld, maar is nog niet gekoppeld aan een globale paarnaam"
-
-msgid "Warning"
-msgstr "Waarschuwing"
 
 msgid "No names entered yet!"
 msgstr "Nog geen namen ingevoerd!"
@@ -534,6 +531,9 @@ msgstr "Overzicht van de eindcorrecties voor '%s'%s"
 #. TRANSLATORS: 'mp' == MatchPoints
 msgid "mp"
 msgstr "mp"
+
+msgid "extra"
+msgstr "extra"
 
 msgid "Entry of session corrections"
 msgstr "Ingave zitting correcties"
@@ -2026,8 +2026,3 @@ msgstr "1 januari 2024"
 
 msgid "monday"
 msgstr "maandag"
-
-#, fuzzy, c-format
-#~| msgid "\"%s\" version %s, %s"
-#~ msgid "\"%s\" %s %s, %s"
-#~ msgstr "\"%s\" versie %s, %s"

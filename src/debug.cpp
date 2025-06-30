@@ -1928,7 +1928,7 @@ void Debug::PrintGuideNew(UINT a_pair)
 
     wxString schema = _("Schema");
     schema = schema.Left(12);     // assume reasonable size!
-    schema += FMT(": %*s", 30 - 2 - static_cast<int>(schema.length()), m_pActiveGroupInfo->schema);
+    schema += FMT(": %*s", 30 - 2 - static_cast<int>(schema.Len()), m_pActiveGroupInfo->schema);
     prn::table::Text texts[]=
     {
           {{G_H0+1,G_V2+1}, CenterText(_("round"),  5)}

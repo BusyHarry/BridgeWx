@@ -416,9 +416,9 @@ Overzicht van de zittingcorrecties voor '<auto-test, zitting 1>', zitting 1
 
     paar  paarnaam                        imps  extra spellen
   1 A1    paar 1                                2     4
-  2 A2    paar 2                                -5    4
   3 A3    paar 3                          10
   5 A5    gewijzigd paar 5                -3
+  9 B1    paar 9                                -5    4
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -433,24 +433,24 @@ Zitting uitslag
 '<auto-test, zitting 1>'
 uitslag van zitting 1
 
-rang paar paarnaam                       imps spellen  score korr.     A B
-   1   A3 paar 3 . . . . . . . . . . . .   99      28   3.54 ( +10i)   1 .
-   2   B7 paar 15  . . . . . . . . . . .   62      24   2.58           . 1
-   3   A1 paar 1 . . . . . . . . . . . .   39      32   1.22 (  +2i)   2 .
-   4   B5 paar 13  . . . . . . . . . . .   33      28   1.18           . 2
-   5   A8 paar 8 . . . . . . . . . . . .   28      28   1.00           3 .
-   6   A4 paar 4 . . . . . . . . . . . .   18      28   0.64           4 .
-   7   B9 paar 17  . . . . . . . . . . .   12      24   0.50           . 3
-   8   A7 paar 7 . . . . . . . . . . . .   13      28   0.46           5 .
-   9   B1 paar 9 . . . . . . . . . . . .   10      24   0.42           . 4
-  10  B10 paar 18  . . . . . . . . . . .    8      24   0.33           . 5
-  11   B6 paar 14  . . . . . . . . . . .    0      24   0.00           . 6
-  12   B3 paar 11  . . . . . . . . . . .   -4      24  -0.17           . 7
-  13   B4 paar 12  . . . . . . . . . . .  -39      28  -1.39           . 8
-  14   A5 gewijzigd paar 5 . . . . . . .  -48      28  -1.75 (  -3i)   6 .
-  14   A6 paar 6 . . . . . . . . . . . .  -49      28  -1.75           6 .
-  16   A2 paar 2 . . . . . . . . . . . .  -80      32  -2.53 (  -5i)   8 .
-  17   B2 paar 10  . . . . . . . . . . .  -78      24  -3.25           . 9
+rang paar paarnaam                       imps spellen  score  combi  korr.   A  B
+   1   A3 paar 3 . . . . . . . . . . . .   99    28     3.54          10i    1  .
+   2   B7 paar 15  . . . . . . . . . . .   62    24     2.58                 .  1
+   3   A1 paar 1 . . . . . . . . . . . .   37    28     1.32                 2  .
+   4   B5 paar 13  . . . . . . . . . . .   33    28     1.18                 .  2
+   5   A8 paar 8 . . . . . . . . . . . .   28    28     1.00                 3  .
+   6   A4 paar 4 . . . . . . . . . . . .   18    28     0.64                 4  .
+   7   B9 paar 17  . . . . . . . . . . .   12    24     0.50                 .  3
+   8   A7 paar 7 . . . . . . . . . . . .   13    28     0.46                 5  .
+   9  B10 paar 18  . . . . . . . . . . .    8    24     0.33                 .  4
+  10   B1 paar 9 . . . . . . . . . . . .    5    28     0.18  -5i            .  5
+  11   B6 paar 14  . . . . . . . . . . .    0    24     0.00                 .  6
+  12   B3 paar 11  . . . . . . . . . . .   -4    24    -0.17                 .  7
+  13   B4 paar 12  . . . . . . . . . . .  -39    28    -1.39                 .  8
+  14   A5 gewijzigd paar 5 . . . . . . .  -49    28    -1.75          -3i    6  .
+  14   A6 paar 6 . . . . . . . . . . . .  -49    28    -1.75                 6  .
+  16   A2 paar 2 . . . . . . . . . . . .  -76    28    -2.71                 8  .
+  17   B2 paar 10  . . . . . . . . . . .  -78    24    -3.25                 .  9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -458,25 +458,25 @@ Zitting uitslag op naam
 '<auto-test, zitting 1>'
 uitslag van zitting 1
 
-rang paar paarnaam                       imps spellen  score korr.     A B
-   3   A1 paar 1 . . . . . . . . . . . .   39      32   1.22 (  +2i)   2 .
-  16   A2 paar 2 . . . . . . . . . . . .  -80      32  -2.53 (  -5i)   8 .
-   1   A3 paar 3 . . . . . . . . . . . .   99      28   3.54 ( +10i)   1 .
-   6   A4 paar 4 . . . . . . . . . . . .   18      28   0.64           4 .
-  14   A5 gewijzigd paar 5 . . . . . . .  -48      28  -1.75 (  -3i)   6 .
-  14   A6 paar 6 . . . . . . . . . . . .  -49      28  -1.75           6 .
-   8   A7 paar 7 . . . . . . . . . . . .   13      28   0.46           5 .
-   5   A8 paar 8 . . . . . . . . . . . .   28      28   1.00           3 .
-   9   B1 paar 9 . . . . . . . . . . . .   10      24   0.42           . 4
-  17   B2 paar 10  . . . . . . . . . . .  -78      24  -3.25           . 9
-  12   B3 paar 11  . . . . . . . . . . .   -4      24  -0.17           . 7
-  13   B4 paar 12  . . . . . . . . . . .  -39      28  -1.39           . 8
-   4   B5 paar 13  . . . . . . . . . . .   33      28   1.18           . 2
-  11   B6 paar 14  . . . . . . . . . . .    0      24   0.00           . 6
-   2   B7 paar 15  . . . . . . . . . . .   62      24   2.58           . 1
+rang paar paarnaam                       imps spellen  score  combi  korr.   A  B
+   3   A1 paar 1 . . . . . . . . . . . .   37    28     1.32                 2  .
+  16   A2 paar 2 . . . . . . . . . . . .  -76    28    -2.71                 8  .
+   1   A3 paar 3 . . . . . . . . . . . .   99    28     3.54          10i    1  .
+   6   A4 paar 4 . . . . . . . . . . . .   18    28     0.64                 4  .
+  14   A5 gewijzigd paar 5 . . . . . . .  -49    28    -1.75          -3i    6  .
+  14   A6 paar 6 . . . . . . . . . . . .  -49    28    -1.75                 6  .
+   8   A7 paar 7 . . . . . . . . . . . .   13    28     0.46                 5  .
+   5   A8 paar 8 . . . . . . . . . . . .   28    28     1.00                 3  .
+  10   B1 paar 9 . . . . . . . . . . . .    5    28     0.18  -5i            .  5
+  17   B2 paar 10  . . . . . . . . . . .  -78    24    -3.25                 .  9
+  12   B3 paar 11  . . . . . . . . . . .   -4    24    -0.17                 .  7
+  13   B4 paar 12  . . . . . . . . . . .  -39    28    -1.39                 .  8
+   4   B5 paar 13  . . . . . . . . . . .   33    28     1.18                 .  2
+  11   B6 paar 14  . . . . . . . . . . .    0    24     0.00                 .  6
+   2   B7 paar 15  . . . . . . . . . . .   62    24     2.58                 .  1
 
-   7   B9 paar 17  . . . . . . . . . . .   12      24   0.50           . 3
-  10  B10 paar 18  . . . . . . . . . . .    8      24   0.33           . 5
+   7   B9 paar 17  . . . . . . . . . . .   12    24     0.50                 .  3
+   9  B10 paar 18  . . . . . . . . . . .    8    24     0.33                 .  4
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -671,25 +671,25 @@ Groep uitslag
 
 Groep-uitslag van wedstrijd '<auto-test, zitting 1>', zitting 1
 
-                         spellen :  1-4   5-8  9-12  13-16 17-20 21-24 25-28 extra   kor     tot score (imps/spel)
-  1 paar 1 . . . . . . . . . . . .   2     9   -17    26   -12     6    23    +2i             39  1.22
-  2 paar 2 . . . . . . . . . . . .  -3   -12   -21   -10   -11   -14    -5    -5i            -80 -2.53
-  3 paar 3 . . . . . . . . . . . .  18    12    13    41    11   -10     4           10i      99  3.54
-  4 paar 4 . . . . . . . . . . . .   9   -12    11   -27    -8    13    32                    18  0.64
-  5 gewijzigd paar 5 . . . . . . . -19    -9    17     8    -6    -5   -32           -3i     -48 -1.75
-  6 paar 6 . . . . . . . . . . . .   9    -4   -18   -42     8    -7     5                   -49 -1.75
-  7 paar 7 . . . . . . . . . . . . -10    12    20    -1     6     9   -23                    13  0.46
-  8 paar 8 . . . . . . . . . . . .   9    12   -12     0    12    11    -4                    28  1.00
-  9 paar 9 . . . . . . . . . . . .  20   -16   -----  -4    29   -11    -8                    10  0.42
- 10 paar 10  . . . . . . . . . . . -21   -53     3   -19   -----  21    -9                   -78 -3.25
- 11 paar 11  . . . . . . . . . . .  12    29   -16   -21   -17   -----   9                    -4 -0.17
- 12 paar 12  . . . . . . . . . . . -20   -29    -1    18   -13    10    -4                   -39 -1.39
- 13 paar 13  . . . . . . . . . . .  -7    17    -8    32    13   -22     8                    33  1.18
- 14 paar 14  . . . . . . . . . . .  20   -----   7    20   -29    -9    -9                     0  0.00
- 15 paar 15  . . . . . . . . . . .   5    16    10   -----  17     5     9                    62  2.58
- 16 --> afwezig paar
- 17 paar 17  . . . . . . . . . . . -13    53     0   -27    -9     8   -----                  12  0.50
- 18 paar 18  . . . . . . . . . . . ----- -17    15     3     9    -6     4                     8  0.33
+                          spellen :  1-4   5-8  9-12  13-16 17-20 21-24 25-28  combi  korr. spellen    tot score (imps/spel)
+  A1 paar 1 . . . . . . . . . . . .   2     9   -17    26   -12     6    23                    28       37  1.32
+  A2 paar 2 . . . . . . . . . . . .  -3   -12   -21   -10   -11   -14    -5                    28      -76 -2.71
+  A3 paar 3 . . . . . . . . . . . .  18    12    13    41    11   -10     4            10i     28       99  3.54
+  A4 paar 4 . . . . . . . . . . . .   9   -12    11   -27    -8    13    32                    28       18  0.64
+  A5 gewijzigd paar 5 . . . . . . . -19    -9    17     8    -6    -5   -32            -3i     28      -49 -1.75
+  A6 paar 6 . . . . . . . . . . . .   9    -4   -18   -42     8    -7     5                    28      -49 -1.75
+  A7 paar 7 . . . . . . . . . . . . -10    12    20    -1     6     9   -23                    28       13  0.46
+  A8 paar 8 . . . . . . . . . . . .   9    12   -12     0    12    11    -4                    28       28  1.00
+  B1 paar 9 . . . . . . . . . . . .  20   -16   -----  -4    29   -11    -8    -5i             28        5  0.18
+  B2 paar 10  . . . . . . . . . . . -21   -53     3   -19   -----  21    -9                    24      -78 -3.25
+  B3 paar 11  . . . . . . . . . . .  12    29   -16   -21   -17   -----   9                    24       -4 -0.17
+  B4 paar 12  . . . . . . . . . . . -20   -29    -1    18   -13    10    -4                    28      -39 -1.39
+  B5 paar 13  . . . . . . . . . . .  -7    17    -8    32    13   -22     8                    28       33  1.18
+  B6 paar 14  . . . . . . . . . . .  20   -----   7    20   -29    -9    -9                    24        0  0.00
+  B7 paar 15  . . . . . . . . . . .   5    16    10   -----  17     5     9                    24       62  2.58
+  B8 --> afwezig paar
+  B9 paar 17  . . . . . . . . . . . -13    53     0   -27    -9     8   -----                  24       12  0.50
+ B10 paar 18  . . . . . . . . . . . ----- -17    15     3     9    -6     4                    24        8  0.33
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -697,24 +697,24 @@ Totaal uitslag
 <auto-test, zitting 1>
 Totaal uitslag
 
-rang paarnaam                         Z1      totaal  gem.  A B
-   1 paar 2 . . . . . . . . . . . .   4.00      4.00  4.00  1 .
-   2 paar 3 . . . . . . . . . . . .   3.54      3.54  3.54  2 .
-   3 paar 15  . . . . . . . . . . .   2.58      2.58  2.58  . 1
-   4 paar 1 . . . . . . . . . . . .   1.22      1.22  1.22  3 .
-   5 paar 13  . . . . . . . . . . .   1.18      1.18  1.18  . 2
-   6 paar 8 . . . . . . . . . . . .   1.00      1.00  1.00  4 .
-   7 paar 4 . . . . . . . . . . . .   0.64      0.64  0.64  5 .
-   8 paar 17  . . . . . . . . . . .   0.50      0.50  0.50  . 3
-   9 paar 7 . . . . . . . . . . . .   0.46      0.46  0.46  6 .
-  10 paar 9 . . . . . . . . . . . .   0.42      0.42  0.42  . 4
-  11 paar 18  . . . . . . . . . . .   0.33      0.33  0.33  . 5
-  12 paar 14  . . . . . . . . . . .   0.00      0.00  0.00  . 6
-  13 paar 11  . . . . . . . . . . .  -0.17     -0.17 -0.17  . 7
-  14 paar 12  . . . . . . . . . . .  -1.39     -1.39 -1.39  . 8
-  15 gewijzigd paar 5 . . . . . . .  -1.75     -1.75 -1.75  7 .
-  15 paar 6 . . . . . . . . . . . .  -1.75     -1.75 -1.75  7 .
-  17 paar 10  . . . . . . . . . . .  -3.25     -3.25 -3.25  . 9
+rang paarnaam                         Z1      totaal  gem.   A  B
+   1 paar 2 . . . . . . . . . . . .   4.00      4.00  4.00   1  .
+   2 paar 3 . . . . . . . . . . . .   3.54      3.54  3.54   2  .
+   3 paar 15  . . . . . . . . . . .   2.58      2.58  2.58   .  1
+   4 paar 1 . . . . . . . . . . . .   1.32      1.32  1.32   3  .
+   5 paar 13  . . . . . . . . . . .   1.18      1.18  1.18   .  2
+   6 paar 8 . . . . . . . . . . . .   1.00      1.00  1.00   4  .
+   7 paar 4 . . . . . . . . . . . .   0.64      0.64  0.64   5  .
+   8 paar 17  . . . . . . . . . . .   0.50      0.50  0.50   .  3
+   9 paar 7 . . . . . . . . . . . .   0.46      0.46  0.46   6  .
+  10 paar 18  . . . . . . . . . . .   0.33      0.33  0.33   .  4
+  11 paar 9 . . . . . . . . . . . .   0.18      0.18  0.18   .  5
+  12 paar 14  . . . . . . . . . . .   0.00      0.00  0.00   .  6
+  13 paar 11  . . . . . . . . . . .  -0.17     -0.17 -0.17   .  7
+  14 paar 12  . . . . . . . . . . .  -1.39     -1.39 -1.39   .  8
+  15 gewijzigd paar 5 . . . . . . .  -1.75     -1.75 -1.75   7  .
+  15 paar 6 . . . . . . . . . . . .  -1.75     -1.75 -1.75   7  .
+  17 paar 10  . . . . . . . . . . .  -3.25     -3.25 -3.25   .  9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -757,7 +757,7 @@ Spel 26: OW, score:   130, imps   6
 Spel 27: OW, score:   130, imps   6
 Spel 28: OW, score:   130, imps   5 set-score: 23 (5.75 imps/spel)
 
-imps: 39, spellen: 32, zittingscore: 1.22 imps/spel (+2i), rang: 3
+imps: 37, spellen: 28, zittingscore: 1.32 imps/spel, rang: 3
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -800,7 +800,7 @@ Spel 26: OW, score:  -120, imps  -1
 Spel 27: OW, score:  -130, imps  -1
 Spel 28: OW, score:  -140, imps  -2 set-score: -5 (-1.25 imps/spel)
 
-imps: -80, spellen: 32, zittingscore: -2.53 imps/spel (-5i), rang: 16
+imps: -76, spellen: 28, zittingscore: -2.71 imps/spel, rang: 16
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -843,7 +843,7 @@ Spel 26: NZ, score:   120, imps   1
 Spel 27: NZ, score:   120, imps   1
 Spel 28: NZ, score:   120, imps   1 set-score: 4 (1.00 imps/spel)
 
-imps: 99, spellen: 28, zittingscore: 3.54 imps/spel (+10i), rang: 1
+imps: 99, spellen: 28, zittingscore: 3.54 imps/spel (10i), rang: 1
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -929,7 +929,7 @@ Spel 26: NZ, score:  -240, imps  -8
 Spel 27: NZ, score:  -250, imps  -8
 Spel 28: NZ, score:  -260, imps  -8 set-score: -32 (-8.00 imps/spel)
 
-imps: -48, spellen: 28, zittingscore: -1.75 imps/spel (-3i), rang: 14
+imps: -49, spellen: 28, zittingscore: -1.75 imps/spel (-3i), rang: 14
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -1101,7 +1101,7 @@ Spel 26: OW, score:  -150, imps  -2
 Spel 27: OW, score:  -150, imps  -2
 Spel 28: OW, score:  -150, imps  -2 set-score: -8 (-2.00 imps/spel)
 
-imps: 10, spellen: 24, zittingscore: 0.42 imps/spel, rang: 9
+imps: 5, spellen: 28, zittingscore: 0.18 imps/spel (-5i), rang: 10
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -1453,7 +1453,7 @@ Spel 26: NZ, score:   140, imps   2
 Spel 27: NZ, score:   140, imps   1
 Spel 28: NZ, score:    50, imps  -1 set-score: 4 (1.00 imps/spel)
 
-imps: 8, spellen: 24, zittingscore: 0.33 imps/spel, rang: 10
+imps: 8, spellen: 24, zittingscore: 0.33 imps/spel, rang: 9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2107,12 +2107,12 @@ Paar naam
   A6 paar 4
   A7 paar 2
   A8 paar 7
-  B1 paar 17
-  B2 gewijzigd paar 5
+  B1 paar 18
+  B2 paar 9
   B3 paar 14
   B4 paar 11
   B5 paar 12
-  B6 paar 9
+  B6 gewijzigd paar 5
   B7 paar 6
  ??? 
   B9 paar 10
@@ -2123,20 +2123,20 @@ Paar naam
   2 paar 2                          A7      A2         1       16
   3 paar 3                          A1      A3         2        1
   4 paar 4                          A6      A4         7        6
-  5 gewijzigd paar 5                B2      A5        15       14
+  5 gewijzigd paar 5                B6      A5        15       14
   6 paar 6                          B7      A6        16       15
   7 paar 7                          A8      A7         9        8
   8 paar 8                          A5      A8         6        5
-  9 paar 9                          B6      B1        10        9
+  9 paar 9                          B2      B1        11       10
  10 paar 10                         B9      B2        17       17
  11 paar 11                         B4      B3        13       12
  12 paar 12                         B5      B4        14       13
  13 paar 13                         A4      B5         5        4
  14 paar 14                         B3      B6        12       11
  15 paar 15                         A2      B7         3        2
- 16 paar 16                         B10     ???        0        0
- 17 paar 17                         B1      B9         8        7
- 18 paar 18                         ???     B10       11       10
+ 16 paar 16                         B10     ???       18       18
+ 17 paar 17                         ???     B9         8        7
+ 18 paar 18                         B1      B10       10        9
  19 paar 19                         ???     ???        0        0
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
@@ -2160,7 +2160,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 1
  14  14    A7     A8    180
  15  15   *A7     A8    190
  16  16    A7    *A8    200
- 17   1    B1     B2    210               paar 17                         gewijzigd paar 5
+ 17   1    B1     B2    210               paar 18                         paar 9
  18   2   *B1     B2    230
  19   3    B1    *B2    240
  20   4   *B1    *B2    260
@@ -2168,7 +2168,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 1
  22   6    B3    *B4    340
  23   7   *B3    *B4    300
  24   8    B3     B4    340
- 25   9    B5    *B6    -50               paar 12                         paar 9
+ 25   9    B5    *B6    -50               paar 12                         gewijzigd paar 5
  26  10   *B5    *B6    -70
  27  11    B5     B6    -80
  28  12   *B5     B6    -90
@@ -2198,7 +2198,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 2
  14  14    A6     A3    -280
  15  15   *A6     A3    -300
  16  16    A6    *A3    -340
- 17   5   *B2     B9    -600              gewijzigd paar 5                paar 10
+ 17   5   *B2     B9    -600              paar 9                          paar 10
  18   6    B2    *B9    -800
  19   7   *B2    *B9    -1000
  20   8    B2     B9    -1100
@@ -2206,7 +2206,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 2
  22  18   *B5     B4    300
  23  19    B5    *B4    400
  24  20   *B5    *B4    500
- 25  13   *B6    *B3    600               paar 9                          paar 14
+ 25  13   *B6    *B3    600               gewijzigd paar 5                paar 14
  26  14    B6     B3    800
  27  15   *B6     B3    120
  28  16    B6    *B3    150
@@ -2236,7 +2236,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 3
  14   6    A6    *A7    -600
  15   7   *A6    *A7    -150
  16   8    A6     A7    %70      %70
- 17   9    B2    *B7    -50               gewijzigd paar 5                paar 6
+ 17   9    B2    *B7    -50               paar 9                          paar 6
  18  10   *B2    *B7    0
  19  11    B2     B7    90
  20  12   *B2     B7    %60      R630
@@ -2244,7 +2244,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 3
  22  14    B5     B9    600
  23  15   *B5     B9    500
  24  16    B5    *B9    R300     %50
- 25  17    B6     B1    -150              paar 9                          paar 17
+ 25  17    B6     B1    -150              gewijzigd paar 5                paar 18
  26  18   *B6     B1    -800
  27  19    B6    *B1    -600
  28  20   *B6    *B1    -120
@@ -2274,11 +2274,11 @@ Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 4
  14  18   *A7     A5    -420
  15  19    A7    *A5    420
  16  20   *A7    *A5    620
- 17  13   *B4    *B2    800               paar 11                         gewijzigd paar 5
+ 17  13   *B4    *B2    800               paar 11                         paar 9
  18  14    B4     B2    200
  19  15   *B4     B2    300
  20  16    B4    *B2    300
- 21  25    B5    *B1    150               paar 12                         paar 17
+ 21  25    B5    *B1    150               paar 12                         paar 18
  22  26   *B5    *B1    150
  23  27    B5     B1    150
  24  28   *B5     B1    150
@@ -2286,7 +2286,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 4
  26  18   *B7     B3    110
  27  19    B7    *B3    120
  28  20   *B7    *B3    130
- 29  21   *B9     B6    130               paar 10                         paar 9
+ 29  21   *B9     B6    130               paar 10                         gewijzigd paar 5
  30  22    B9    *B6    120
  31  23   *B9    *B6    110
  32  24    B9     B6    100
@@ -2316,7 +2316,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 5
  18   2   *B3     B9    140
  19   3    B3    *B9    140
  20   4   *B3    *B9    140
- 21  21   *B4     B1    150               paar 11                         paar 17
+ 21  21   *B4     B1    150               paar 11                         paar 18
  22  22    B4    *B1    150
  23  23   *B4    *B1    150
  24  24    B4     B1    150
@@ -2324,7 +2324,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 5
  26   6    B5    *B10   160
  27   7   *B5    *B10   160
  28   8    B5     B10   160
- 29  25    B7    *B6    170               paar 6                          paar 9
+ 29  25    B7    *B6    170               paar 6                          gewijzigd paar 5
  30  26   *B7    *B6    170
  31  27    B7     B6    170
  32  28   *B7     B6    170
@@ -2350,7 +2350,7 @@ Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 6
  14  26   *A7    *A1    -130
  15  27    A7     A1    -130
  16  28   *A7     A1    -130
- 17   5   *B1     B7    -140              paar 17                         paar 6
+ 17   5   *B1     B7    -140              paar 18                         paar 6
  18   6    B1    *B7    -140
  19   7   *B1    *B7    -140
  20   8    B1     B7    -140
@@ -2358,11 +2358,11 @@ Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 6
  22  10   *B3    *B10   -150
  23  11    B3     B10   -150
  24  12   *B3     B10   -150
- 25   1    B4     B6    -160              paar 11                         paar 9
+ 25   1    B4     B6    -160              paar 11                         gewijzigd paar 5
  26   2   *B4     B6    -160
  27   3    B4    *B6    -160
  28   4   *B4    *B6    -160
- 29  21   *B5     B2    -170              paar 12                         gewijzigd paar 5
+ 29  21   *B5     B2    -170              paar 12                         paar 9
  30  22    B5    *B2    -170
  31  23   *B5    *B2    -170
  32  24    B5     B2    -170
@@ -2388,11 +2388,11 @@ Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 7
  14  22    A7    *A3    130
  15  23   *A7    *A3    140
  16  24    A7     A3    150
- 17  13   *B1    *B10   130               paar 17                         paar 16
+ 17  13   *B1    *B10   130               paar 18                         paar 16
  18  14    B1     B10   140
  19  15   *B1     B10   150
  20  16    B1    *B10   160
- 21  25    B3    *B2    140               paar 14                         gewijzigd paar 5
+ 21  25    B3    *B2    140               paar 14                         paar 9
  22  26   *B3    *B2    150
  23  27    B3     B2    160
  24  28   *B3     B2    170
@@ -2411,24 +2411,24 @@ Zitting uitslag
 '<auto-test, zitting 2>'
 uitslag van zitting 2
 
-rang paar paarnaam                       imps spellen  score    A B
-   1   A3 paar 1 . . . . . . . . . . . .   89      28   3.18    1 .
-   2   B7 paar 6 . . . . . . . . . . . .   61      24   2.54    . 1
-   3   A1 paar 3 . . . . . . . . . . . .   37      28   1.32    2 .
-   4   B5 paar 12  . . . . . . . . . . .   33      28   1.18    . 2
-   5   A8 paar 7 . . . . . . . . . . . .   28      28   1.00    3 .
-   6   A4 paar 13  . . . . . . . . . . .   18      28   0.64    4 .
-   7   B9 paar 10  . . . . . . . . . . .   12      24   0.50    . 3
-   8   A7 paar 2 . . . . . . . . . . . .   13      28   0.46    5 .
-   9   B1 paar 17  . . . . . . . . . . .    9      24   0.38    . 4
-  10  B10 paar 16  . . . . . . . . . . .    8      24   0.33    . 5
-  11   B6 paar 9 . . . . . . . . . . . .    1      24   0.04    . 6
-  12   B3 paar 14  . . . . . . . . . . .   -3      24  -0.13    . 7
-  13   B4 paar 11  . . . . . . . . . . .  -39      28  -1.39    . 8
-  14   A5 paar 8 . . . . . . . . . . . .  -46      28  -1.64    6 .
-  15   A6 paar 4 . . . . . . . . . . . .  -49      28  -1.75    7 .
-  16   A2 paar 15  . . . . . . . . . . .  -76      28  -2.71    8 .
-  17   B2 gewijzigd paar 5 . . . . . . .  -78      24  -3.25    . 9
+rang paar paarnaam                       imps spellen  score     A  B
+   1   A3 paar 1 . . . . . . . . . . . .   89    28     3.18     1  .
+   2   B7 paar 6 . . . . . . . . . . . .   61    24     2.54     .  1
+   3   A1 paar 3 . . . . . . . . . . . .   37    28     1.32     2  .
+   4   B5 paar 12  . . . . . . . . . . .   33    28     1.18     .  2
+   5   A8 paar 7 . . . . . . . . . . . .   28    28     1.00     3  .
+   6   A4 paar 13  . . . . . . . . . . .   18    28     0.64     4  .
+   7   B9 paar 10  . . . . . . . . . . .   12    24     0.50     .  3
+   8   A7 paar 2 . . . . . . . . . . . .   13    28     0.46     5  .
+   9   B1 paar 18  . . . . . . . . . . .    9    24     0.38     .  4
+  10  B10 paar 16  . . . . . . . . . . .    8    24     0.33     .  5
+  11   B6 gewijzigd paar 5 . . . . . . .    1    24     0.04     .  6
+  12   B3 paar 14  . . . . . . . . . . .   -3    24    -0.13     .  7
+  13   B4 paar 11  . . . . . . . . . . .  -39    28    -1.39     .  8
+  14   A5 paar 8 . . . . . . . . . . . .  -46    28    -1.64     6  .
+  15   A6 paar 4 . . . . . . . . . . . .  -49    28    -1.75     7  .
+  16   A2 paar 15  . . . . . . . . . . .  -76    28    -2.71     8  .
+  17   B2 paar 9 . . . . . . . . . . . .  -78    24    -3.25     .  9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2436,25 +2436,25 @@ Zitting uitslag op naam
 '<auto-test, zitting 2>'
 uitslag van zitting 2
 
-rang paar paarnaam                       imps spellen  score    A B
-   3   A1 paar 3 . . . . . . . . . . . .   37      28   1.32    2 .
-  16   A2 paar 15  . . . . . . . . . . .  -76      28  -2.71    8 .
-   1   A3 paar 1 . . . . . . . . . . . .   89      28   3.18    1 .
-   6   A4 paar 13  . . . . . . . . . . .   18      28   0.64    4 .
-  14   A5 paar 8 . . . . . . . . . . . .  -46      28  -1.64    6 .
-  15   A6 paar 4 . . . . . . . . . . . .  -49      28  -1.75    7 .
-   8   A7 paar 2 . . . . . . . . . . . .   13      28   0.46    5 .
-   5   A8 paar 7 . . . . . . . . . . . .   28      28   1.00    3 .
-   9   B1 paar 17  . . . . . . . . . . .    9      24   0.38    . 4
-  17   B2 gewijzigd paar 5 . . . . . . .  -78      24  -3.25    . 9
-  12   B3 paar 14  . . . . . . . . . . .   -3      24  -0.13    . 7
-  13   B4 paar 11  . . . . . . . . . . .  -39      28  -1.39    . 8
-   4   B5 paar 12  . . . . . . . . . . .   33      28   1.18    . 2
-  11   B6 paar 9 . . . . . . . . . . . .    1      24   0.04    . 6
-   2   B7 paar 6 . . . . . . . . . . . .   61      24   2.54    . 1
+rang paar paarnaam                       imps spellen  score     A  B
+   3   A1 paar 3 . . . . . . . . . . . .   37    28     1.32     2  .
+  16   A2 paar 15  . . . . . . . . . . .  -76    28    -2.71     8  .
+   1   A3 paar 1 . . . . . . . . . . . .   89    28     3.18     1  .
+   6   A4 paar 13  . . . . . . . . . . .   18    28     0.64     4  .
+  14   A5 paar 8 . . . . . . . . . . . .  -46    28    -1.64     6  .
+  15   A6 paar 4 . . . . . . . . . . . .  -49    28    -1.75     7  .
+   8   A7 paar 2 . . . . . . . . . . . .   13    28     0.46     5  .
+   5   A8 paar 7 . . . . . . . . . . . .   28    28     1.00     3  .
+   9   B1 paar 18  . . . . . . . . . . .    9    24     0.38     .  4
+  17   B2 paar 9 . . . . . . . . . . . .  -78    24    -3.25     .  9
+  12   B3 paar 14  . . . . . . . . . . .   -3    24    -0.13     .  7
+  13   B4 paar 11  . . . . . . . . . . .  -39    28    -1.39     .  8
+   4   B5 paar 12  . . . . . . . . . . .   33    28     1.18     .  2
+  11   B6 gewijzigd paar 5 . . . . . . .    1    24     0.04     .  6
+   2   B7 paar 6 . . . . . . . . . . . .   61    24     2.54     .  1
 
-   7   B9 paar 10  . . . . . . . . . . .   12      24   0.50    . 3
-  10  B10 paar 16  . . . . . . . . . . .    8      24   0.33    . 5
+   7   B9 paar 10  . . . . . . . . . . .   12    24     0.50     .  3
+  10  B10 paar 16  . . . . . . . . . . .    8    24     0.33     .  5
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2650,25 +2650,25 @@ Groep uitslag
 
 Groep-uitslag van wedstrijd '<auto-test, zitting 2>', zitting 2
 
-                         spellen :  1-4   5-8  9-12  13-16 17-20 21-24 25-28       tot score (imps/spel)
-  1 paar 3 . . . . . . . . . . . .   2     9   -17    26   -12     6    23          37  1.32
-  2 paar 15  . . . . . . . . . . .  -3   -12   -21   -10   -11   -14    -5         -76 -2.71
-  3 paar 1 . . . . . . . . . . . .  18    12    13    41    11   -10     4          89  3.18
-  4 paar 13  . . . . . . . . . . .   9   -12    11   -27    -8    13    32          18  0.64
-  5 paar 8 . . . . . . . . . . . . -19    -9    17     8    -6    -5   -32         -46 -1.64
-  6 paar 4 . . . . . . . . . . . .   9    -4   -18   -42     8    -7     5         -49 -1.75
-  7 paar 2 . . . . . . . . . . . . -10    12    20    -1     6     9   -23          13  0.46
-  8 paar 7 . . . . . . . . . . . .   9    12   -12     0    12    11    -4          28  1.00
-  9 paar 17  . . . . . . . . . . .  20   -16   -----  -4    28   -11    -8           9  0.38
- 10 gewijzigd paar 5 . . . . . . . -21   -53     3   -19   -----  21    -9         -78 -3.25
- 11 paar 14  . . . . . . . . . . .  12    29   -16   -21   -16   -----   9          -3 -0.13
- 12 paar 11  . . . . . . . . . . . -20   -29    -1    18   -13    10    -4         -39 -1.39
- 13 paar 12  . . . . . . . . . . .  -7    17    -8    32    13   -22     8          33  1.18
- 14 paar 9 . . . . . . . . . . . .  20   -----   7    20   -28    -9    -9           1  0.04
- 15 paar 6 . . . . . . . . . . . .   5    16    10   -----  16     5     9          61  2.54
- 16 --> afwezig paar
- 17 paar 10  . . . . . . . . . . . -13    53     0   -27    -9     8   -----        12  0.50
- 18 paar 16  . . . . . . . . . . . ----- -17    15     3     9    -6     4           8  0.33
+                          spellen :  1-4   5-8  9-12  13-16 17-20 21-24 25-28   spellen    tot score (imps/spel)
+  A1 paar 3 . . . . . . . . . . . .   2     9   -17    26   -12     6    23        28       37  1.32
+  A2 paar 15  . . . . . . . . . . .  -3   -12   -21   -10   -11   -14    -5        28      -76 -2.71
+  A3 paar 1 . . . . . . . . . . . .  18    12    13    41    11   -10     4        28       89  3.18
+  A4 paar 13  . . . . . . . . . . .   9   -12    11   -27    -8    13    32        28       18  0.64
+  A5 paar 8 . . . . . . . . . . . . -19    -9    17     8    -6    -5   -32        28      -46 -1.64
+  A6 paar 4 . . . . . . . . . . . .   9    -4   -18   -42     8    -7     5        28      -49 -1.75
+  A7 paar 2 . . . . . . . . . . . . -10    12    20    -1     6     9   -23        28       13  0.46
+  A8 paar 7 . . . . . . . . . . . .   9    12   -12     0    12    11    -4        28       28  1.00
+  B1 paar 18  . . . . . . . . . . .  20   -16   -----  -4    28   -11    -8        24        9  0.38
+  B2 paar 9 . . . . . . . . . . . . -21   -53     3   -19   -----  21    -9        24      -78 -3.25
+  B3 paar 14  . . . . . . . . . . .  12    29   -16   -21   -16   -----   9        24       -3 -0.13
+  B4 paar 11  . . . . . . . . . . . -20   -29    -1    18   -13    10    -4        28      -39 -1.39
+  B5 paar 12  . . . . . . . . . . .  -7    17    -8    32    13   -22     8        28       33  1.18
+  B6 gewijzigd paar 5 . . . . . . .  20   -----   7    20   -28    -9    -9        24        1  0.04
+  B7 paar 6 . . . . . . . . . . . .   5    16    10   -----  16     5     9        24       61  2.54
+  B8 --> afwezig paar
+  B9 paar 10  . . . . . . . . . . . -13    53     0   -27    -9     8   -----      24       12  0.50
+ B10 paar 16  . . . . . . . . . . . ----- -17    15     3     9    -6     4        24        8  0.33
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2676,25 +2676,25 @@ Totaal uitslag
 <auto-test, zitting 2>
 Totaal uitslag
 
-rang paarnaam                         Z1     Z2      totaal  gem.  A B
-   1 paar 3 . . . . . . . . . . . .   3.54   1.32      4.86  2.43  1 .
-   2 paar 2 . . . . . . . . . . . .   4.00   0.46      4.46  2.23  2 .
-   3 paar 1 . . . . . . . . . . . .   1.22   3.18      4.40  2.20  3 .
-   4 paar 13  . . . . . . . . . . .   1.18   0.64      1.82  0.91  4 .
-   5 paar 7 . . . . . . . . . . . .   0.46   1.00      1.46  0.73  5 .
-   6 paar 17  . . . . . . . . . . .   0.50   0.38      0.88  0.44  . 1
-   7 paar 6 . . . . . . . . . . . .  -1.75   2.54      0.79  0.40  . 2
-   8 paar 16  . . . . . . . . . . .   0.33a  0.33      0.66  0.33  . 3
-   8 paar 18  . . . . . . . . . . .   0.33   0.33a     0.66  0.33  . .
-  10 paar 9 . . . . . . . . . . . .   0.42   0.04      0.46  0.23  . 4
-  11 paar 14  . . . . . . . . . . .   0.00  -0.13     -0.13 -0.07  . 5
-  11 paar 15  . . . . . . . . . . .   2.58  -2.71     -0.13 -0.07  6 .
-  13 paar 12  . . . . . . . . . . .  -1.39   1.18     -0.21 -0.11  . 6
-  14 paar 8 . . . . . . . . . . . .   1.00  -1.64     -0.64 -0.32  7 .
-  15 paar 4 . . . . . . . . . . . .   0.64  -1.75     -1.11 -0.56  8 .
-  16 paar 11  . . . . . . . . . . .  -0.17  -1.39     -1.56 -0.78  . 7
-  17 paar 10  . . . . . . . . . . .  -3.25   0.50     -2.75 -1.38  . 8
-  18 gewijzigd paar 5 . . . . . . .  -1.75  -3.25     -5.00 -2.50  . 9
+rang paarnaam                         Z1     Z2      totaal  gem.   A  B
+   1 paar 3 . . . . . . . . . . . .   3.54   1.32      4.86  2.43   1  .
+   2 paar 1 . . . . . . . . . . . .   1.32   3.18      4.50  2.25   2  .
+   3 paar 2 . . . . . . . . . . . .   4.00   0.46      4.46  2.23   3  .
+   4 paar 13  . . . . . . . . . . .   1.18   0.64      1.82  0.91   4  .
+   5 paar 7 . . . . . . . . . . . .   0.46   1.00      1.46  0.73   5  .
+   6 paar 17  . . . . . . . . . . .   0.50   0.50a     1.00  0.50   .  .
+   7 paar 6 . . . . . . . . . . . .  -1.75   2.54      0.79  0.40   .  1
+   8 paar 18  . . . . . . . . . . .   0.33   0.38      0.71  0.36   .  2
+   9 paar 16  . . . . . . . . . . .   0.33a  0.33      0.66  0.33   .  3
+  10 paar 14  . . . . . . . . . . .   0.00  -0.13     -0.13 -0.07   .  4
+  10 paar 15  . . . . . . . . . . .   2.58  -2.71     -0.13 -0.07   6  .
+  12 paar 12  . . . . . . . . . . .  -1.39   1.18     -0.21 -0.11   .  5
+  13 paar 8 . . . . . . . . . . . .   1.00  -1.64     -0.64 -0.32   7  .
+  14 paar 4 . . . . . . . . . . . .   0.64  -1.75     -1.11 -0.56   8  .
+  15 paar 11  . . . . . . . . . . .  -0.17  -1.39     -1.56 -0.78   .  6
+  16 gewijzigd paar 5 . . . . . . .  -1.75   0.04     -1.71 -0.86   .  7
+  17 paar 10  . . . . . . . . . . .  -3.25   0.50     -2.75 -1.38   .  8
+  18 paar 9 . . . . . . . . . . . .   0.18  -3.25     -3.07 -1.54   .  9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -3044,9 +3044,9 @@ imps: 28, spellen: 28, zittingscore: 1.00 imps/spel, rang: 5
 
 Uitslag per paar
 
-Uitslag van paar B1 'paar 17' voor '<auto-test, zitting 2>', zitting 2
+Uitslag van paar B1 'paar 18' voor '<auto-test, zitting 2>', zitting 2
 
-Spel  1: NZ, score:   210, imps   5 Tegenpaar (B2): gewijzigd paar 5
+Spel  1: NZ, score:   210, imps   5 Tegenpaar (B2): paar 9
 Spel  2: NZ, score:   230, imps   5
 Spel  3: NZ, score:   240, imps   5
 Spel  4: NZ, score:   260, imps   5 set-score: 20 (5.00 imps/spel)
@@ -3066,7 +3066,7 @@ Spel 14: NZ, score:   140, imps  -3
 Spel 15: NZ, score:   150, imps   2
 Spel 16: NZ, score:   160, imps   2 set-score: -4 (-1.00 imps/spel)
 
-Spel 17: OW, score:   150, imps   0 Tegenpaar (B6): paar 9
+Spel 17: OW, score:   150, imps   0 Tegenpaar (B6): gewijzigd paar 5
 Spel 18: OW, score:   800, imps  12
 Spel 19: OW, score:   600, imps  12
 Spel 20: OW, score:   120, imps   4 set-score: 28 (7.00 imps/spel)
@@ -3087,9 +3087,9 @@ imps: 9, spellen: 24, zittingscore: 0.38 imps/spel, rang: 9
 
 Uitslag per paar
 
-Uitslag van paar B2 'gewijzigd paar 5' voor '<auto-test, zitting 2>', zitting 2
+Uitslag van paar B2 'paar 9' voor '<auto-test, zitting 2>', zitting 2
 
-Spel  1: OW, score:  -210, imps  -5 Tegenpaar (B1): paar 17
+Spel  1: OW, score:  -210, imps  -5 Tegenpaar (B1): paar 18
 Spel  2: OW, score:  -230, imps  -5
 Spel  3: OW, score:  -240, imps  -5
 Spel  4: OW, score:  -260, imps  -6 set-score: -21 (-5.25 imps/spel)
@@ -3147,7 +3147,7 @@ Spel 10: NZ, score:  -150, imps  -4
 Spel 11: NZ, score:  -150, imps  -5
 Spel 12: NZ, score:  -150, imps  -3 set-score: -16 (-4.00 imps/spel)
 
-Spel 13: OW, score:  -600, imps  -6 Tegenpaar (B6): paar 9
+Spel 13: OW, score:  -600, imps  -6 Tegenpaar (B6): gewijzigd paar 5
 Spel 14: OW, score:  -800, imps -11
 Spel 15: OW, score:  -120, imps  -1
 Spel 16: OW, score:  -150, imps  -3 set-score: -21 (-5.25 imps/spel)
@@ -3162,7 +3162,7 @@ Spel 22: niet gespeeld
 Spel 23: niet gespeeld
 Spel 24: niet gespeeld
 
-Spel 25: NZ, score:   140, imps   2 Tegenpaar (B2): gewijzigd paar 5
+Spel 25: NZ, score:   140, imps   2 Tegenpaar (B2): paar 9
 Spel 26: NZ, score:   150, imps   2
 Spel 27: NZ, score:   160, imps   2
 Spel 28: NZ, score:   170, imps   3 set-score: 9 (2.25 imps/spel)
@@ -3175,7 +3175,7 @@ Uitslag per paar
 
 Uitslag van paar B4 'paar 11' voor '<auto-test, zitting 2>', zitting 2
 
-Spel  1: NZ, score:  -160, imps  -5 Tegenpaar (B6): paar 9
+Spel  1: NZ, score:  -160, imps  -5 Tegenpaar (B6): gewijzigd paar 5
 Spel  2: NZ, score:  -160, imps  -5
 Spel  3: NZ, score:  -160, imps  -5
 Spel  4: NZ, score:  -160, imps  -5 set-score: -20 (-5.00 imps/spel)
@@ -3190,7 +3190,7 @@ Spel 10: OW, score:     0, imps   0
 Spel 11: OW, score:     0, imps   1
 Spel 12: OW, score:     0, imps  -2 set-score: -1 (-0.25 imps/spel)
 
-Spel 13: NZ, score:   800, imps  10 Tegenpaar (B2): gewijzigd paar 5
+Spel 13: NZ, score:   800, imps  10 Tegenpaar (B2): paar 9
 Spel 14: NZ, score:   200, imps  -2
 Spel 15: NZ, score:   300, imps   5
 Spel 16: NZ, score:   300, imps   5 set-score: 18 (4.50 imps/spel)
@@ -3200,7 +3200,7 @@ Spel 18: OW, score:  -300, imps  -9
 Spel 19: OW, score:  -400, imps  -8
 Spel 20: OW, score:  -500, imps -10 set-score: -13 (-3.25 imps/spel)
 
-Spel 21: NZ, score:   150, imps   1 Tegenpaar (B1): paar 17
+Spel 21: NZ, score:   150, imps   1 Tegenpaar (B1): paar 18
 Spel 22: NZ, score:   150, imps   3
 Spel 23: NZ, score:   150, imps   4
 Spel 24: NZ, score:   150, imps   2 set-score: 10 (2.50 imps/spel)
@@ -3228,7 +3228,7 @@ Spel  6: NZ, score:   160, imps   6
 Spel  7: NZ, score:   160, imps   4
 Spel  8: NZ, score:   160, imps   3 set-score: 17 (4.25 imps/spel)
 
-Spel  9: NZ, score:   -50, imps  -1 Tegenpaar (B6): paar 9
+Spel  9: NZ, score:   -50, imps  -1 Tegenpaar (B6): gewijzigd paar 5
 Spel 10: NZ, score:   -70, imps  -2
 Spel 11: NZ, score:   -80, imps  -3
 Spel 12: NZ, score:   -90, imps  -2 set-score: -8 (-2.00 imps/spel)
@@ -3243,12 +3243,12 @@ Spel 18: NZ, score:   300, imps   9
 Spel 19: NZ, score:   400, imps   8
 Spel 20: NZ, score:   500, imps  10 set-score: 13 (3.25 imps/spel)
 
-Spel 21: NZ, score:  -170, imps  -7 Tegenpaar (B2): gewijzigd paar 5
+Spel 21: NZ, score:  -170, imps  -7 Tegenpaar (B2): paar 9
 Spel 22: NZ, score:  -170, imps  -5
 Spel 23: NZ, score:  -170, imps  -4
 Spel 24: NZ, score:  -170, imps  -6 set-score: -22 (-5.50 imps/spel)
 
-Spel 25: NZ, score:   150, imps   2 Tegenpaar (B1): paar 17
+Spel 25: NZ, score:   150, imps   2 Tegenpaar (B1): paar 18
 Spel 26: NZ, score:   150, imps   2
 Spel 27: NZ, score:   150, imps   2
 Spel 28: NZ, score:   150, imps   2 set-score: 8 (2.00 imps/spel)
@@ -3259,7 +3259,7 @@ imps: 33, spellen: 28, zittingscore: 1.18 imps/spel, rang: 4
 
 Uitslag per paar
 
-Uitslag van paar B6 'paar 9' voor '<auto-test, zitting 2>', zitting 2
+Uitslag van paar B6 'gewijzigd paar 5' voor '<auto-test, zitting 2>', zitting 2
 
 Spel  1: OW, score:   160, imps   5 Tegenpaar (B4): paar 11
 Spel  2: OW, score:   160, imps   5
@@ -3281,7 +3281,7 @@ Spel 14: NZ, score:   800, imps  11
 Spel 15: NZ, score:   120, imps   1
 Spel 16: NZ, score:   150, imps   2 set-score: 20 (5.00 imps/spel)
 
-Spel 17: NZ, score:  -150, imps   0 Tegenpaar (B1): paar 17
+Spel 17: NZ, score:  -150, imps   0 Tegenpaar (B1): paar 18
 Spel 18: NZ, score:  -800, imps -12
 Spel 19: NZ, score:  -600, imps -12
 Spel 20: NZ, score:  -120, imps  -4 set-score: -28 (-7.00 imps/spel)
@@ -3309,12 +3309,12 @@ Spel  2: OW, score:     0, imps   2
 Spel  3: OW, score:     0, imps   2
 Spel  4: OW, score:     0, imps   0 set-score: 5 (1.25 imps/spel)
 
-Spel  5: OW, score:   140, imps   5 Tegenpaar (B1): paar 17
+Spel  5: OW, score:   140, imps   5 Tegenpaar (B1): paar 18
 Spel  6: OW, score:   140, imps   2
 Spel  7: OW, score:   140, imps   4
 Spel  8: OW, score:   140, imps   5 set-score: 16 (4.00 imps/spel)
 
-Spel  9: OW, score:    50, imps   1 Tegenpaar (B2): gewijzigd paar 5
+Spel  9: OW, score:    50, imps   1 Tegenpaar (B2): paar 9
 Spel 10: OW, score:     0, imps   0
 Spel 11: OW, score:   -90, imps  -2
 Spel 12: OW, score:  R630, imps  11 set-score: 10 (2.50 imps/spel)
@@ -3334,7 +3334,7 @@ Spel 22: OW, score:   120, imps   4
 Spel 23: OW, score:   100, imps   3
 Spel 24: OW, score:  -100, imps  -2 set-score: 5 (1.25 imps/spel)
 
-Spel 25: NZ, score:   170, imps   2 Tegenpaar (B6): paar 9
+Spel 25: NZ, score:   170, imps   2 Tegenpaar (B6): gewijzigd paar 5
 Spel 26: NZ, score:   170, imps   2
 Spel 27: NZ, score:   170, imps   2
 Spel 28: NZ, score:   170, imps   3 set-score: 9 (2.25 imps/spel)
@@ -3360,7 +3360,7 @@ Spel  2: OW, score:  -140, imps  -3
 Spel  3: OW, score:  -140, imps  -3
 Spel  4: OW, score:  -140, imps  -4 set-score: -13 (-3.25 imps/spel)
 
-Spel  5: OW, score:   600, imps  12 Tegenpaar (B2): gewijzigd paar 5
+Spel  5: OW, score:   600, imps  12 Tegenpaar (B2): paar 9
 Spel  6: OW, score:   800, imps  12
 Spel  7: OW, score:  1000, imps  14
 Spel  8: OW, score:  1100, imps  15 set-score: 53 (13.25 imps/spel)
@@ -3380,7 +3380,7 @@ Spel 18: NZ, score:  -110, imps  -1
 Spel 19: NZ, score:  -120, imps  -5
 Spel 20: NZ, score:  -130, imps  -4 set-score: -9 (-2.25 imps/spel)
 
-Spel 21: NZ, score:   130, imps   1 Tegenpaar (B6): paar 9
+Spel 21: NZ, score:   130, imps   1 Tegenpaar (B6): gewijzigd paar 5
 Spel 22: NZ, score:   120, imps   3
 Spel 23: NZ, score:   110, imps   3
 Spel 24: NZ, score:   100, imps   1 set-score: 8 (2.00 imps/spel)
@@ -3413,7 +3413,7 @@ Spel 10: OW, score:   150, imps   4
 Spel 11: OW, score:   150, imps   5
 Spel 12: OW, score:   150, imps   2 set-score: 15 (3.75 imps/spel)
 
-Spel 13: OW, score:  -130, imps   5 Tegenpaar (B1): paar 17
+Spel 13: OW, score:  -130, imps   5 Tegenpaar (B1): paar 18
 Spel 14: OW, score:  -140, imps   3
 Spel 15: OW, score:  -150, imps  -2
 Spel 16: OW, score:  -160, imps  -3 set-score: 3 (0.75 imps/spel)
@@ -4081,43 +4081,43 @@ Paarnaam toekenning voor '<auto-test, zitting 3>', zitting 3
 
 Paar naam
   A1 paar 3
-  A2 paar 2
-  A3 paar 1
+  A2 paar 1
+  A3 paar 2
   A4 paar 13
   A5 paar 7
   A6 paar 17
   A7 paar 6
-  A8 paar 16
-  B1 paar 18
-  B2 paar 9
-  B3 paar 14
-  B4 paar 15
-  B5 paar 12
-  B6 paar 8
-  B7 paar 4
+  A8 paar 18
+  B1 paar 16
+  B2 paar 14
+  B3 paar 15
+  B4 paar 12
+  B5 paar 8
+  B6 paar 4
+  B7 paar 11
  ??? 
   B9 paar 10
- B10 gewijzigd paar 5
+ B10 paar 9
 
     paarnaam                        paar nr paar Z-1 rang     rang Z-1
-  1 paar 1                          A3      A3         3        3
-  2 paar 2                          A2      A7         2       16
+  1 paar 1                          A2      A3         2        3
+  2 paar 2                          A3      A7         3       16
   3 paar 3                          A1      A1         1        1
-  4 paar 4                          B7      A6        15        6
-  5 gewijzigd paar 5                B10     B2        18       14
+  4 paar 4                          B6      A6        14        6
+  5 gewijzigd paar 5                ???     B6        16       14
   6 paar 6                          A7      B7         7       15
   7 paar 7                          A5      A8         5        8
-  8 paar 8                          B6      A5        14        5
-  9 paar 9                          B2      B6        10        9
+  8 paar 8                          B5      A5        13        5
+  9 paar 9                          B10     B2        18        9
  10 paar 10                         B9      B9        17       17
- 11 paar 11                         ???     B4        16       12
- 12 paar 12                         B5      B5        13       13
+ 11 paar 11                         B7      B4        15       12
+ 12 paar 12                         B4      B5        12       13
  13 paar 13                         A4      A4         4        4
- 14 paar 14                         B3      B3        11       11
- 15 paar 15                         B4      A2        12        2
- 16 paar 16                         A8      B10        8        0
- 17 paar 17                         A6      B1         6        7
- 18 paar 18                         B1      ???        9       10
+ 14 paar 14                         B2      B3        10       11
+ 15 paar 15                         B3      A2        11        2
+ 16 paar 16                         B1      B10        9       18
+ 17 paar 17                         A6      ???        6        7
+ 18 paar 18                         A8      B1         8       10
  19 paar 19                         ???     ???        0        0
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
@@ -4125,11 +4125,11 @@ Paar naam
 Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 1
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1   1    A1     A2    0                 paar 3                          paar 2
+  1   1    A1     A2    0                 paar 3                          paar 1
   2   2   *A1     A2    70
   3   3    A1    *A2    70
   4   4   *A1    *A2    80
-  5   5   *A3     A4    90                paar 1                          paar 13
+  5   5   *A3     A4    90                paar 2                          paar 13
   6   6    A3    *A4    100
   7   7   *A3    *A4    110
   8   8    A3     A4    120
@@ -4137,23 +4137,23 @@ Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 1
  10  10   *A5    *A6    140
  11  11    A5     A6    150
  12  12   *A5     A6    160
- 13  13   *A7    *A8    170               paar 6                          paar 16
+ 13  13   *A7    *A8    170               paar 6                          paar 18
  14  14    A7     A8    180
  15  15   *A7     A8    190
  16  16    A7    *A8    200
- 17   1    B1     B2    210               paar 18                         paar 9
+ 17   1    B1     B2    210               paar 16                         paar 14
  18   2   *B1     B2    230
  19   3    B1    *B2    240
  20   4   *B1    *B2    260
- 21   5   *B3     B4    270               paar 14                         paar 15
+ 21   5   *B3     B4    270               paar 15                         paar 12
  22   6    B3    *B4    340
  23   7   *B3    *B4    300
  24   8    B3     B4    340
- 25   9    B5    *B6    -50               paar 12                         paar 8
+ 25   9    B5    *B6    -50               paar 8                          paar 4
  26  10   *B5    *B6    -70
  27  11    B5     B6    -80
  28  12   *B5     B6    -90
- 29  17    B9     B10   -100              paar 10                         gewijzigd paar 5
+ 29  17    B9     B10   -100              paar 10                         paar 9
  30  18   *B9     B10   -110
  31  19    B9    *B10   -120
  32  20   *B9    *B10   -130
@@ -4163,11 +4163,11 @@ Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 1
 Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 2
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  17    A1     A8    -140              paar 3                          paar 16
+  1  17    A1     A8    -140              paar 3                          paar 18
   2  18   *A1     A8    -150
   3  19    A1    *A8    -160
   4  20   *A1    *A8    -170
-  5   9    A2    *A7    -180              paar 2                          paar 6
+  5   9    A2    *A7    -180              paar 1                          paar 6
   6  10   *A2    *A7    -190
   7  11    A2     A7    -200
   8  12   *A2     A7    -210
@@ -4175,23 +4175,23 @@ Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 2
  10  26   *A5    *A4    -240
  11  27    A5     A4    -250
  12  28   *A5     A4    -260
- 13  13   *A6    *A3    -270              paar 17                         paar 1
+ 13  13   *A6    *A3    -270              paar 17                         paar 2
  14  14    A6     A3    -280
  15  15   *A6     A3    -300
  16  16    A6    *A3    -340
- 17   5   *B2     B9    -600              paar 9                          paar 10
+ 17   5   *B2     B9    -600              paar 14                         paar 10
  18   6    B2    *B9    -800
  19   7   *B2    *B9    -1000
  20   8    B2     B9    -1100
- 21  17    B5     B4    -1200             paar 12                         paar 15
+ 21  17    B5     B4    -1200             paar 8                          paar 12
  22  18   *B5     B4    300
  23  19    B5    *B4    400
  24  20   *B5    *B4    500
- 25  13   *B6    *B3    600               paar 8                          paar 14
+ 25  13   *B6    *B3    600               paar 4                          paar 15
  26  14    B6     B3    800
  27  15   *B6     B3    120
  28  16    B6    *B3    150
- 29  21   *B10    B7    110               gewijzigd paar 5                paar 4
+ 29  21   *B10    B7    110               paar 9                          paar 11
  30  22    B10   *B7    -120
  31  23   *B10   *B7    -100
  32  24    B10    B7    100
@@ -4201,7 +4201,7 @@ Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 2
 Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 3
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  17    A3     A2    150               paar 1                          paar 2
+  1  17    A3     A2    150               paar 2                          paar 1
   2  18   *A3     A2    150
   3  19    A3    *A2    170
   4  20   *A3    *A2    -170
@@ -4209,7 +4209,7 @@ Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 3
   6  14    A4     A1    300
   7  15   *A4     A1    -500
   8  16    A4    *A1    -500
-  9  21   *A5     A8    160               paar 7                          paar 16
+  9  21   *A5     A8    160               paar 7                          paar 18
  10  22    A5    *A8    -160
  11  23   *A5    *A8    -160
  12  24    A5     A8    R150     R110
@@ -4217,19 +4217,19 @@ Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 3
  14   6    A6    *A7    -600
  15   7   *A6    *A7    -150
  16   8    A6     A7    %70      %70
- 17   9    B2    *B7    -50               paar 9                          paar 4
+ 17   9    B2    *B7    -50               paar 14                         paar 11
  18  10   *B2    *B7    0
  19  11    B2     B7    90
  20  12   *B2     B7    %60      R630
- 21  13   *B5    *B9    800               paar 12                         paar 10
+ 21  13   *B5    *B9    800               paar 8                          paar 10
  22  14    B5     B9    600
  23  15   *B5     B9    500
  24  16    B5    *B9    R300     %50
- 25  17    B6     B1    -150              paar 8                          paar 18
+ 25  17    B6     B1    -150              paar 4                          paar 16
  26  18   *B6     B1    -800
  27  19    B6    *B1    -600
  28  20   *B6    *B1    -120
- 29  25    B10   *B4    150               gewijzigd paar 5                paar 15
+ 29  25    B10   *B4    150               paar 9                          paar 12
  30  26   *B10   *B4    140
  31  27    B10    B4    140
  32  28   *B10    B4    50
@@ -4239,15 +4239,15 @@ Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 3
 Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 4
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  21   *A2     A4    50                paar 2                          paar 13
+  1  21   *A2     A4    50                paar 1                          paar 13
   2  22    A2    *A4    100
   3  23   *A2    *A4    -200
   4  24    A2     A4    -300
-  5   9    A3    *A1    100               paar 1                          paar 3
+  5   9    A3    *A1    100               paar 2                          paar 3
   6  10   *A3    *A1    200
   7  11    A3     A1    300
   8  12   *A3     A1    %40      %40
-  9   1    A6     A8    70                paar 17                         paar 16
+  9   1    A6     A8    70                paar 17                         paar 18
  10   2   *A6     A8    80
  11   3    A6    *A8    90
  12   4   *A6    *A8    %80      R620
@@ -4255,19 +4255,19 @@ Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 4
  14  18   *A7     A5    -420
  15  19    A7    *A5    420
  16  20   *A7    *A5    620
- 17  13   *B4    *B2    800               paar 15                         paar 9
+ 17  13   *B4    *B2    800               paar 12                         paar 14
  18  14    B4     B2    200
  19  15   *B4     B2    300
  20  16    B4    *B2    300
- 21  25    B5    *B1    150               paar 12                         paar 18
+ 21  25    B5    *B1    150               paar 8                          paar 16
  22  26   *B5    *B1    150
  23  27    B5     B1    150
  24  28   *B5     B1    150
- 25  17    B7     B3    100               paar 4                          paar 14
+ 25  17    B7     B3    100               paar 11                         paar 15
  26  18   *B7     B3    110
  27  19    B7    *B3    120
  28  20   *B7    *B3    130
- 29  21   *B9     B6    130               paar 10                         paar 8
+ 29  21   *B9     B6    130               paar 10                         paar 4
  30  22    B9    *B6    120
  31  23   *B9    *B6    110
  32  24    B9     B6    100
@@ -4281,11 +4281,11 @@ Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 5
   2  22    A1    *A6    100
   3  23   *A1    *A6    100
   4  24    A1     A6    100
-  5  13   *A2    *A5    110               paar 2                          paar 7
+  5  13   *A2    *A5    110               paar 1                          paar 7
   6  14    A2     A5    110
   7  15   *A2     A5    110
   8  16    A2    *A5    110
-  9  25    A3    *A8    120               paar 1                          paar 16
+  9  25    A3    *A8    120               paar 2                          paar 18
  10  26   *A3    *A8    120
  11  27    A3     A8    120
  12  28   *A3     A8    120
@@ -4293,19 +4293,19 @@ Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 5
  14   2   *A4     A7    130
  15   3    A4    *A7    130
  16   4   *A4    *A7    130
- 17   1    B3     B9    140               paar 14                         paar 10
+ 17   1    B3     B9    140               paar 15                         paar 10
  18   2   *B3     B9    140
  19   3    B3    *B9    140
  20   4   *B3    *B9    140
- 21  21   *B4     B1    150               paar 15                         paar 18
+ 21  21   *B4     B1    150               paar 12                         paar 16
  22  22    B4    *B1    150
  23  23   *B4    *B1    150
  24  24    B4     B1    150
- 25   5   *B5     B10   160               paar 12                         gewijzigd paar 5
+ 25   5   *B5     B10   160               paar 8                          paar 9
  26   6    B5    *B10   160
  27   7   *B5    *B10   160
  28   8    B5     B10   160
- 29  25    B7    *B6    170               paar 4                          paar 8
+ 29  25    B7    *B6    170               paar 11                         paar 4
  30  26   *B7    *B6    170
  31  27    B7     B6    170
  32  28   *B7     B6    170
@@ -4315,7 +4315,7 @@ Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 5
 Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 6
 
     spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1   5   *A2     A8    -100              paar 2                          paar 16
+  1   5   *A2     A8    -100              paar 1                          paar 18
   2   6    A2    *A8    -100
   3   7   *A2    *A8    -100
   4   8    A2     A8    -100
@@ -4323,7 +4323,7 @@ Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 6
   6  18   *A4     A6    -110
   7  19    A4    *A6    -110
   8  20   *A4    *A6    -110
-  9   1    A5     A3    -120              paar 7                          paar 1
+  9   1    A5     A3    -120              paar 7                          paar 2
  10   2   *A5     A3    -120
  11   3    A5    *A3    -120
  12   4   *A5    *A3    -120
@@ -4331,19 +4331,19 @@ Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 6
  14  26   *A7    *A1    -130
  15  27    A7     A1    -130
  16  28   *A7     A1    -130
- 17   5   *B1     B7    -140              paar 18                         paar 4
+ 17   5   *B1     B7    -140              paar 16                         paar 11
  18   6    B1    *B7    -140
  19   7   *B1    *B7    -140
  20   8    B1     B7    -140
- 21   9    B3    *B10   -150              paar 14                         gewijzigd paar 5
+ 21   9    B3    *B10   -150              paar 15                         paar 9
  22  10   *B3    *B10   -150
  23  11    B3     B10   -150
  24  12   *B3     B10   -150
- 25   1    B4     B6    -160              paar 15                         paar 8
+ 25   1    B4     B6    -160              paar 12                         paar 4
  26   2   *B4     B6    -160
  27   3    B4    *B6    -160
  28   4   *B4    *B6    -160
- 29  21   *B5     B2    -170              paar 12                         paar 9
+ 29  21   *B5     B2    -170              paar 8                          paar 14
  30  22    B5    *B2    -170
  31  23   *B5    *B2    -170
  32  24    B5     B2    -170
@@ -4357,31 +4357,31 @@ Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 7
   2   6    A1    *A5    100
   3   7   *A1    *A5    150
   4   8    A1     A5    200
-  5   9    A4    *A8    70                paar 13                         paar 16
+  5   9    A4    *A8    70                paar 13                         paar 18
   6  10   *A4    *A8    90
   7  11    A4     A8    100
   8  12   *A4     A8    110
-  9  25    A6    *A2    110               paar 17                         paar 2
+  9  25    A6    *A2    110               paar 17                         paar 1
  10  26   *A6    *A2    120
  11  27    A6     A2    130
  12  28   *A6     A2    140
- 13  21   *A7     A3    120               paar 6                          paar 1
+ 13  21   *A7     A3    120               paar 6                          paar 2
  14  22    A7    *A3    130
  15  23   *A7    *A3    140
  16  24    A7     A3    150
- 17  13   *B1    *B10   130               paar 18                         gewijzigd paar 5
+ 17  13   *B1    *B10   130               paar 16                         paar 9
  18  14    B1     B10   140
  19  15   *B1     B10   150
  20  16    B1    *B10   160
- 21  25    B3    *B2    140               paar 14                         paar 9
+ 21  25    B3    *B2    140               paar 15                         paar 14
  22  26   *B3    *B2    150
  23  27    B3     B2    160
  24  28   *B3     B2    170
- 25   1    B5     B7    0                 paar 12                         paar 4
+ 25   1    B5     B7    0                 paar 8                          paar 11
  26   2   *B5     B7    0
  27   3    B5    *B7    0
  28   4   *B5    *B7    0
- 29   9    B9    *B4    0                 paar 10                         paar 15
+ 29   9    B9    *B4    0                 paar 10                         paar 12
  30  10   *B9    *B4    0
  31  11    B9     B4    0
  32  12   *B9     B4    0
@@ -4392,24 +4392,24 @@ Zitting uitslag
 '<auto-test, zitting 3>'
 uitslag van zitting 3
 
-rang paar paarnaam                       imps spellen  score    A B
-   1   A3 paar 1 . . . . . . . . . . . .   89      28   3.18    1 .
-   2   B7 paar 4 . . . . . . . . . . . .   61      24   2.54    . 1
-   3   A1 paar 3 . . . . . . . . . . . .   37      28   1.32    2 .
-   4   B5 paar 12  . . . . . . . . . . .   33      28   1.18    . 2
-   5   A8 paar 16  . . . . . . . . . . .   28      28   1.00    3 .
-   6   A4 paar 13  . . . . . . . . . . .   18      28   0.64    4 .
-   7   B9 paar 10  . . . . . . . . . . .   12      24   0.50    . 3
-   8   A7 paar 6 . . . . . . . . . . . .   13      28   0.46    5 .
-   9   B1 paar 18  . . . . . . . . . . .    9      24   0.38    . 4
-  10  B10 gewijzigd paar 5 . . . . . . .    8      24   0.33    . 5
-  11   B6 paar 8 . . . . . . . . . . . .    1      24   0.04    . 6
-  12   B3 paar 14  . . . . . . . . . . .   -3      24  -0.13    . 7
-  13   B4 paar 15  . . . . . . . . . . .  -39      28  -1.39    . 8
-  14   A5 paar 7 . . . . . . . . . . . .  -46      28  -1.64    6 .
-  15   A6 paar 17  . . . . . . . . . . .  -49      28  -1.75    7 .
-  16   A2 paar 2 . . . . . . . . . . . .  -76      28  -2.71    8 .
-  17   B2 paar 9 . . . . . . . . . . . .  -78      24  -3.25    . 9
+rang paar paarnaam                       imps spellen  score     A  B
+   1   A3 paar 2 . . . . . . . . . . . .   89    28     3.18     1  .
+   2   B7 paar 11  . . . . . . . . . . .   61    24     2.54     .  1
+   3   A1 paar 3 . . . . . . . . . . . .   37    28     1.32     2  .
+   4   B5 paar 8 . . . . . . . . . . . .   33    28     1.18     .  2
+   5   A8 paar 18  . . . . . . . . . . .   28    28     1.00     3  .
+   6   A4 paar 13  . . . . . . . . . . .   18    28     0.64     4  .
+   7   B9 paar 10  . . . . . . . . . . .   12    24     0.50     .  3
+   8   A7 paar 6 . . . . . . . . . . . .   13    28     0.46     5  .
+   9   B1 paar 16  . . . . . . . . . . .    9    24     0.38     .  4
+  10  B10 paar 9 . . . . . . . . . . . .    8    24     0.33     .  5
+  11   B6 paar 4 . . . . . . . . . . . .    1    24     0.04     .  6
+  12   B3 paar 15  . . . . . . . . . . .   -3    24    -0.13     .  7
+  13   B4 paar 12  . . . . . . . . . . .  -39    28    -1.39     .  8
+  14   A5 paar 7 . . . . . . . . . . . .  -46    28    -1.64     6  .
+  15   A6 paar 17  . . . . . . . . . . .  -49    28    -1.75     7  .
+  16   A2 paar 1 . . . . . . . . . . . .  -76    28    -2.71     8  .
+  17   B2 paar 14  . . . . . . . . . . .  -78    24    -3.25     .  9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4417,25 +4417,25 @@ Zitting uitslag op naam
 '<auto-test, zitting 3>'
 uitslag van zitting 3
 
-rang paar paarnaam                       imps spellen  score    A B
-   3   A1 paar 3 . . . . . . . . . . . .   37      28   1.32    2 .
-  16   A2 paar 2 . . . . . . . . . . . .  -76      28  -2.71    8 .
-   1   A3 paar 1 . . . . . . . . . . . .   89      28   3.18    1 .
-   6   A4 paar 13  . . . . . . . . . . .   18      28   0.64    4 .
-  14   A5 paar 7 . . . . . . . . . . . .  -46      28  -1.64    6 .
-  15   A6 paar 17  . . . . . . . . . . .  -49      28  -1.75    7 .
-   8   A7 paar 6 . . . . . . . . . . . .   13      28   0.46    5 .
-   5   A8 paar 16  . . . . . . . . . . .   28      28   1.00    3 .
-   9   B1 paar 18  . . . . . . . . . . .    9      24   0.38    . 4
-  17   B2 paar 9 . . . . . . . . . . . .  -78      24  -3.25    . 9
-  12   B3 paar 14  . . . . . . . . . . .   -3      24  -0.13    . 7
-  13   B4 paar 15  . . . . . . . . . . .  -39      28  -1.39    . 8
-   4   B5 paar 12  . . . . . . . . . . .   33      28   1.18    . 2
-  11   B6 paar 8 . . . . . . . . . . . .    1      24   0.04    . 6
-   2   B7 paar 4 . . . . . . . . . . . .   61      24   2.54    . 1
+rang paar paarnaam                       imps spellen  score     A  B
+   3   A1 paar 3 . . . . . . . . . . . .   37    28     1.32     2  .
+  16   A2 paar 1 . . . . . . . . . . . .  -76    28    -2.71     8  .
+   1   A3 paar 2 . . . . . . . . . . . .   89    28     3.18     1  .
+   6   A4 paar 13  . . . . . . . . . . .   18    28     0.64     4  .
+  14   A5 paar 7 . . . . . . . . . . . .  -46    28    -1.64     6  .
+  15   A6 paar 17  . . . . . . . . . . .  -49    28    -1.75     7  .
+   8   A7 paar 6 . . . . . . . . . . . .   13    28     0.46     5  .
+   5   A8 paar 18  . . . . . . . . . . .   28    28     1.00     3  .
+   9   B1 paar 16  . . . . . . . . . . .    9    24     0.38     .  4
+  17   B2 paar 14  . . . . . . . . . . .  -78    24    -3.25     .  9
+  12   B3 paar 15  . . . . . . . . . . .   -3    24    -0.13     .  7
+  13   B4 paar 12  . . . . . . . . . . .  -39    28    -1.39     .  8
+   4   B5 paar 8 . . . . . . . . . . . .   33    28     1.18     .  2
+  11   B6 paar 4 . . . . . . . . . . . .    1    24     0.04     .  6
+   2   B7 paar 11  . . . . . . . . . . .   61    24     2.54     .  1
 
-   7   B9 paar 10  . . . . . . . . . . .   12      24   0.50    . 3
-  10  B10 gewijzigd paar 5 . . . . . . .    8      24   0.33    . 5
+   7   B9 paar 10  . . . . . . . . . . .   12    24     0.50     .  3
+  10  B10 paar 9 . . . . . . . . . . . .    8    24     0.33     .  5
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4631,25 +4631,25 @@ Groep uitslag
 
 Groep-uitslag van wedstrijd '<auto-test, zitting 3>', zitting 3
 
-                         spellen :  1-4   5-8  9-12  13-16 17-20 21-24 25-28       tot score (imps/spel)
-  1 paar 3 . . . . . . . . . . . .   2     9   -17    26   -12     6    23          37  1.32
-  2 paar 2 . . . . . . . . . . . .  -3   -12   -21   -10   -11   -14    -5         -76 -2.71
-  3 paar 1 . . . . . . . . . . . .  18    12    13    41    11   -10     4          89  3.18
-  4 paar 13  . . . . . . . . . . .   9   -12    11   -27    -8    13    32          18  0.64
-  5 paar 7 . . . . . . . . . . . . -19    -9    17     8    -6    -5   -32         -46 -1.64
-  6 paar 17  . . . . . . . . . . .   9    -4   -18   -42     8    -7     5         -49 -1.75
-  7 paar 6 . . . . . . . . . . . . -10    12    20    -1     6     9   -23          13  0.46
-  8 paar 16  . . . . . . . . . . .   9    12   -12     0    12    11    -4          28  1.00
-  9 paar 18  . . . . . . . . . . .  20   -16   -----  -4    28   -11    -8           9  0.38
- 10 paar 9 . . . . . . . . . . . . -21   -53     3   -19   -----  21    -9         -78 -3.25
- 11 paar 14  . . . . . . . . . . .  12    29   -16   -21   -16   -----   9          -3 -0.13
- 12 paar 15  . . . . . . . . . . . -20   -29    -1    18   -13    10    -4         -39 -1.39
- 13 paar 12  . . . . . . . . . . .  -7    17    -8    32    13   -22     8          33  1.18
- 14 paar 8 . . . . . . . . . . . .  20   -----   7    20   -28    -9    -9           1  0.04
- 15 paar 4 . . . . . . . . . . . .   5    16    10   -----  16     5     9          61  2.54
- 16 --> afwezig paar
- 17 paar 10  . . . . . . . . . . . -13    53     0   -27    -9     8   -----        12  0.50
- 18 gewijzigd paar 5 . . . . . . . ----- -17    15     3     9    -6     4           8  0.33
+                          spellen :  1-4   5-8  9-12  13-16 17-20 21-24 25-28   spellen    tot score (imps/spel)
+  A1 paar 3 . . . . . . . . . . . .   2     9   -17    26   -12     6    23        28       37  1.32
+  A2 paar 1 . . . . . . . . . . . .  -3   -12   -21   -10   -11   -14    -5        28      -76 -2.71
+  A3 paar 2 . . . . . . . . . . . .  18    12    13    41    11   -10     4        28       89  3.18
+  A4 paar 13  . . . . . . . . . . .   9   -12    11   -27    -8    13    32        28       18  0.64
+  A5 paar 7 . . . . . . . . . . . . -19    -9    17     8    -6    -5   -32        28      -46 -1.64
+  A6 paar 17  . . . . . . . . . . .   9    -4   -18   -42     8    -7     5        28      -49 -1.75
+  A7 paar 6 . . . . . . . . . . . . -10    12    20    -1     6     9   -23        28       13  0.46
+  A8 paar 18  . . . . . . . . . . .   9    12   -12     0    12    11    -4        28       28  1.00
+  B1 paar 16  . . . . . . . . . . .  20   -16   -----  -4    28   -11    -8        24        9  0.38
+  B2 paar 14  . . . . . . . . . . . -21   -53     3   -19   -----  21    -9        24      -78 -3.25
+  B3 paar 15  . . . . . . . . . . .  12    29   -16   -21   -16   -----   9        24       -3 -0.13
+  B4 paar 12  . . . . . . . . . . . -20   -29    -1    18   -13    10    -4        28      -39 -1.39
+  B5 paar 8 . . . . . . . . . . . .  -7    17    -8    32    13   -22     8        28       33  1.18
+  B6 paar 4 . . . . . . . . . . . .  20   -----   7    20   -28    -9    -9        24        1  0.04
+  B7 paar 11  . . . . . . . . . . .   5    16    10   -----  16     5     9        24       61  2.54
+  B8 --> afwezig paar
+  B9 paar 10  . . . . . . . . . . . -13    53     0   -27    -9     8   -----      24       12  0.50
+ B10 paar 9 . . . . . . . . . . . . ----- -17    15     3     9    -6     4        24        8  0.33
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4657,25 +4657,25 @@ Totaal uitslag
 <auto-test, zitting 3>
 Totaal uitslag
 
-rang paarnaam                         Z1     Z2     Z3      totaal  gem.  A B
-   1 paar 1 . . . . . . . . . . . .   1.22   3.18   3.18      7.58  2.53  1 .
-   2 paar 3 . . . . . . . . . . . .   3.54   1.32   1.32      6.18  2.06  2 .
-   3 paar 13  . . . . . . . . . . .   1.18   0.64   0.64      2.46  0.82  3 .
-   4 paar 16  . . . . . . . . . . .   0.67a  0.33   1.00      2.00  0.67  4 .
-   5 paar 2 . . . . . . . . . . . .   4.00   0.46  -2.71      1.75  0.58  5 .
-   6 paar 4 . . . . . . . . . . . .   0.64  -1.75   2.54      1.43  0.48  . 1
-   7 paar 6 . . . . . . . . . . . .  -1.75   2.54   0.46      1.25  0.42  6 .
-   8 paar 18  . . . . . . . . . . .   0.33   0.36a  0.38      1.07  0.36  . 2
-   9 paar 12  . . . . . . . . . . .  -1.39   1.18   1.18      0.97  0.32  . 3
-  10 paar 7 . . . . . . . . . . . .   0.46   1.00  -1.64     -0.18 -0.06  7 .
-  11 paar 14  . . . . . . . . . . .   0.00  -0.13  -0.13     -0.26 -0.09  . 4
-  12 paar 8 . . . . . . . . . . . .   1.00  -1.64   0.04     -0.60 -0.20  . 5
-  13 paar 17  . . . . . . . . . . .   0.50   0.38  -1.75     -0.87 -0.29  8 .
-  14 paar 15  . . . . . . . . . . .   2.58  -2.71  -1.39     -1.52 -0.51  . 6
-  15 paar 10  . . . . . . . . . . .  -3.25   0.50   0.50     -2.25 -0.75  . 7
-  16 paar 11  . . . . . . . . . . .  -0.17  -1.39  -0.78a    -2.34 -0.78  . .
-  17 paar 9 . . . . . . . . . . . .   0.42   0.04  -3.25     -2.79 -0.93  . 8
-  18 gewijzigd paar 5 . . . . . . .  -1.75  -3.25   0.33     -4.67 -1.56  . 9
+rang paarnaam                         Z1     Z2     Z3      totaal  gem.   A  B
+   1 paar 2 . . . . . . . . . . . .   4.00   0.46   3.18      7.64  2.55   1  .
+   2 paar 3 . . . . . . . . . . . .   3.54   1.32   1.32      6.18  2.06   2  .
+   3 paar 13  . . . . . . . . . . .   1.18   0.64   0.64      2.46  0.82   3  .
+   4 paar 1 . . . . . . . . . . . .   1.32   3.18  -2.71      1.79  0.60   4  .
+   5 paar 18  . . . . . . . . . . .   0.33   0.38   1.00      1.71  0.57   5  .
+   6 paar 6 . . . . . . . . . . . .  -1.75   2.54   0.46      1.25  0.42   6  .
+   7 paar 16  . . . . . . . . . . .   0.36a  0.33   0.38      1.07  0.36   .  1
+   8 paar 11  . . . . . . . . . . .  -0.17  -1.39   2.54      0.98  0.33   .  2
+   9 paar 8 . . . . . . . . . . . .   1.00  -1.64   1.18      0.54  0.18   .  3
+  10 paar 7 . . . . . . . . . . . .   0.46   1.00  -1.64     -0.18 -0.06   7  .
+  11 paar 15  . . . . . . . . . . .   2.58  -2.71  -0.13     -0.26 -0.09   .  4
+  12 paar 4 . . . . . . . . . . . .   0.64  -1.75   0.04     -1.07 -0.36   .  5
+  13 paar 12  . . . . . . . . . . .  -1.39   1.18  -1.39     -1.60 -0.53   .  6
+  14 paar 17  . . . . . . . . . . .   0.50  -0.63a -1.75     -1.88 -0.63   8  .
+  15 paar 10  . . . . . . . . . . .  -3.25   0.50   0.50     -2.25 -0.75   .  7
+  16 gewijzigd paar 5 . . . . . . .  -1.75   0.04  -0.86a    -2.57 -0.86   .  .
+  17 paar 9 . . . . . . . . . . . .   0.18  -3.25   0.33     -2.74 -0.91   .  8
+  18 paar 14  . . . . . . . . . . .   0.00  -0.13  -3.25     -3.38 -1.13   .  9
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -4683,7 +4683,7 @@ Uitslag per paar
 
 Uitslag van paar A1 'paar 3' voor '<auto-test, zitting 3>', zitting 3
 
-Spel  1: NZ, score:     0, imps  -1 Tegenpaar (A2): paar 2
+Spel  1: NZ, score:     0, imps  -1 Tegenpaar (A2): paar 1
 Spel  2: NZ, score:    70, imps   1
 Spel  3: NZ, score:    70, imps   1
 Spel  4: NZ, score:    80, imps   1 set-score: 2 (0.50 imps/spel)
@@ -4693,7 +4693,7 @@ Spel  6: NZ, score:   100, imps   5
 Spel  7: NZ, score:   150, imps   4
 Spel  8: NZ, score:   200, imps   4 set-score: 9 (2.25 imps/spel)
 
-Spel  9: OW, score:  -100, imps  -3 Tegenpaar (A3): paar 1
+Spel  9: OW, score:  -100, imps  -3 Tegenpaar (A3): paar 2
 Spel 10: OW, score:  -200, imps  -5
 Spel 11: OW, score:  -300, imps  -7
 Spel 12: OW, score:   %40, imps  -2 set-score: -17 (-4.25 imps/spel)
@@ -4703,7 +4703,7 @@ Spel 14: OW, score:  -300, imps  -1
 Spel 15: OW, score:   500, imps  12
 Spel 16: OW, score:   500, imps  11 set-score: 26 (6.50 imps/spel)
 
-Spel 17: NZ, score:  -140, imps   0 Tegenpaar (A8): paar 16
+Spel 17: NZ, score:  -140, imps   0 Tegenpaar (A8): paar 18
 Spel 18: NZ, score:  -150, imps  -2
 Spel 19: NZ, score:  -160, imps  -5
 Spel 20: NZ, score:  -170, imps  -5 set-score: -12 (-3.00 imps/spel)
@@ -4724,14 +4724,14 @@ imps: 37, spellen: 28, zittingscore: 1.32 imps/spel, rang: 3
 
 Uitslag per paar
 
-Uitslag van paar A2 'paar 2' voor '<auto-test, zitting 3>', zitting 3
+Uitslag van paar A2 'paar 1' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: OW, score:     0, imps   1 Tegenpaar (A1): paar 3
 Spel  2: OW, score:   -70, imps  -1
 Spel  3: OW, score:   -70, imps  -1
 Spel  4: OW, score:   -80, imps  -2 set-score: -3 (-0.75 imps/spel)
 
-Spel  5: NZ, score:  -100, imps  -4 Tegenpaar (A8): paar 16
+Spel  5: NZ, score:  -100, imps  -4 Tegenpaar (A8): paar 18
 Spel  6: NZ, score:  -100, imps  -1
 Spel  7: NZ, score:  -100, imps  -3
 Spel  8: NZ, score:  -100, imps  -4 set-score: -12 (-3.00 imps/spel)
@@ -4746,7 +4746,7 @@ Spel 14: NZ, score:   110, imps  -4
 Spel 15: NZ, score:   110, imps   0
 Spel 16: NZ, score:   110, imps   0 set-score: -10 (-2.50 imps/spel)
 
-Spel 17: OW, score:  -150, imps  -7 Tegenpaar (A3): paar 1
+Spel 17: OW, score:  -150, imps  -7 Tegenpaar (A3): paar 2
 Spel 18: OW, score:  -150, imps  -6
 Spel 19: OW, score:  -170, imps  -3
 Spel 20: OW, score:   170, imps   5 set-score: -11 (-2.75 imps/spel)
@@ -4767,7 +4767,7 @@ imps: -76, spellen: 28, zittingscore: -2.71 imps/spel, rang: 16
 
 Uitslag per paar
 
-Uitslag van paar A3 'paar 1' voor '<auto-test, zitting 3>', zitting 3
+Uitslag van paar A3 'paar 2' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: OW, score:   120, imps   4 Tegenpaar (A5): paar 7
 Spel  2: OW, score:   120, imps   5
@@ -4789,7 +4789,7 @@ Spel 14: OW, score:   280, imps  11
 Spel 15: OW, score:   300, imps   9
 Spel 16: OW, score:   340, imps   9 set-score: 41 (10.25 imps/spel)
 
-Spel 17: NZ, score:   150, imps   7 Tegenpaar (A2): paar 2
+Spel 17: NZ, score:   150, imps   7 Tegenpaar (A2): paar 1
 Spel 18: NZ, score:   150, imps   6
 Spel 19: NZ, score:   170, imps   3
 Spel 20: NZ, score:  -170, imps  -5 set-score: 11 (2.75 imps/spel)
@@ -4799,7 +4799,7 @@ Spel 22: OW, score:  -130, imps  -3
 Spel 23: OW, score:  -140, imps  -4
 Spel 24: OW, score:  -150, imps  -3 set-score: -10 (-2.50 imps/spel)
 
-Spel 25: NZ, score:   120, imps   1 Tegenpaar (A8): paar 16
+Spel 25: NZ, score:   120, imps   1 Tegenpaar (A8): paar 18
 Spel 26: NZ, score:   120, imps   1
 Spel 27: NZ, score:   120, imps   1
 Spel 28: NZ, score:   120, imps   1 set-score: 4 (1.00 imps/spel)
@@ -4817,12 +4817,12 @@ Spel  2: NZ, score:   130, imps   2
 Spel  3: NZ, score:   130, imps   2
 Spel  4: NZ, score:   130, imps   2 set-score: 9 (2.25 imps/spel)
 
-Spel  5: OW, score:   -90, imps  -2 Tegenpaar (A3): paar 1
+Spel  5: OW, score:   -90, imps  -2 Tegenpaar (A3): paar 2
 Spel  6: OW, score:  -100, imps  -5
 Spel  7: OW, score:  -110, imps  -3
 Spel  8: OW, score:  -120, imps  -2 set-score: -12 (-3.00 imps/spel)
 
-Spel  9: NZ, score:    70, imps   2 Tegenpaar (A8): paar 16
+Spel  9: NZ, score:    70, imps   2 Tegenpaar (A8): paar 18
 Spel 10: NZ, score:    90, imps   3
 Spel 11: NZ, score:   100, imps   2
 Spel 12: NZ, score:   110, imps   4 set-score: 11 (2.75 imps/spel)
@@ -4837,7 +4837,7 @@ Spel 18: NZ, score:  -110, imps  -1
 Spel 19: NZ, score:  -110, imps  -4
 Spel 20: NZ, score:  -110, imps  -4 set-score: -8 (-2.00 imps/spel)
 
-Spel 21: OW, score:   -50, imps   2 Tegenpaar (A2): paar 2
+Spel 21: OW, score:   -50, imps   2 Tegenpaar (A2): paar 1
 Spel 22: OW, score:  -100, imps  -2
 Spel 23: OW, score:   200, imps   5
 Spel 24: OW, score:   300, imps   8 set-score: 13 (3.25 imps/spel)
@@ -4855,7 +4855,7 @@ Uitslag per paar
 
 Uitslag van paar A5 'paar 7' voor '<auto-test, zitting 3>', zitting 3
 
-Spel  1: NZ, score:  -120, imps  -4 Tegenpaar (A3): paar 1
+Spel  1: NZ, score:  -120, imps  -4 Tegenpaar (A3): paar 2
 Spel  2: NZ, score:  -120, imps  -5
 Spel  3: NZ, score:  -120, imps  -5
 Spel  4: NZ, score:  -120, imps  -5 set-score: -19 (-4.75 imps/spel)
@@ -4870,7 +4870,7 @@ Spel 10: NZ, score:   140, imps   4
 Spel 11: NZ, score:   150, imps   4
 Spel 12: NZ, score:   160, imps   5 set-score: 17 (4.25 imps/spel)
 
-Spel 13: OW, score:  -110, imps   6 Tegenpaar (A2): paar 2
+Spel 13: OW, score:  -110, imps   6 Tegenpaar (A2): paar 1
 Spel 14: OW, score:  -110, imps   4
 Spel 15: OW, score:  -110, imps   0
 Spel 16: OW, score:  -110, imps  -2 set-score: 8 (2.00 imps/spel)
@@ -4880,7 +4880,7 @@ Spel 18: OW, score:   420, imps   8
 Spel 19: OW, score:  -420, imps  -9
 Spel 20: OW, score:  -620, imps -12 set-score: -6 (-1.50 imps/spel)
 
-Spel 21: NZ, score:   160, imps   2 Tegenpaar (A8): paar 16
+Spel 21: NZ, score:   160, imps   2 Tegenpaar (A8): paar 18
 Spel 22: NZ, score:  -160, imps  -5
 Spel 23: NZ, score:  -160, imps  -4
 Spel 24: NZ, score:  R150, imps   2 set-score: -5 (-1.25 imps/spel)
@@ -4898,7 +4898,7 @@ Uitslag per paar
 
 Uitslag van paar A6 'paar 17' voor '<auto-test, zitting 3>', zitting 3
 
-Spel  1: NZ, score:    70, imps   1 Tegenpaar (A8): paar 16
+Spel  1: NZ, score:    70, imps   1 Tegenpaar (A8): paar 18
 Spel  2: NZ, score:    80, imps   1
 Spel  3: NZ, score:    90, imps   1
 Spel  4: NZ, score:   %80, imps   6 set-score: 9 (2.25 imps/spel)
@@ -4913,7 +4913,7 @@ Spel 10: OW, score:  -140, imps  -4
 Spel 11: OW, score:  -150, imps  -4
 Spel 12: OW, score:  -160, imps  -6 set-score: -18 (-4.50 imps/spel)
 
-Spel 13: NZ, score:  -270, imps -12 Tegenpaar (A3): paar 1
+Spel 13: NZ, score:  -270, imps -12 Tegenpaar (A3): paar 2
 Spel 14: NZ, score:  -280, imps -11
 Spel 15: NZ, score:  -300, imps  -9
 Spel 16: NZ, score:  -340, imps -10 set-score: -42 (-10.50 imps/spel)
@@ -4928,7 +4928,7 @@ Spel 22: OW, score:  -100, imps  -2
 Spel 23: OW, score:  -100, imps  -3
 Spel 24: OW, score:  -100, imps  -2 set-score: -7 (-1.75 imps/spel)
 
-Spel 25: NZ, score:   110, imps   1 Tegenpaar (A2): paar 2
+Spel 25: NZ, score:   110, imps   1 Tegenpaar (A2): paar 1
 Spel 26: NZ, score:   120, imps   1
 Spel 27: NZ, score:   130, imps   1
 Spel 28: NZ, score:   140, imps   2 set-score: 5 (1.25 imps/spel)
@@ -4951,12 +4951,12 @@ Spel  6: OW, score:   600, imps  11
 Spel  7: OW, score:   150, imps   4
 Spel  8: OW, score:   %70, imps   4 set-score: 12 (3.00 imps/spel)
 
-Spel  9: OW, score:   180, imps   5 Tegenpaar (A2): paar 2
+Spel  9: OW, score:   180, imps   5 Tegenpaar (A2): paar 1
 Spel 10: OW, score:   190, imps   5
 Spel 11: OW, score:   200, imps   6
 Spel 12: OW, score:   210, imps   4 set-score: 20 (5.00 imps/spel)
 
-Spel 13: NZ, score:   170, imps  -5 Tegenpaar (A8): paar 16
+Spel 13: NZ, score:   170, imps  -5 Tegenpaar (A8): paar 18
 Spel 14: NZ, score:   180, imps  -2
 Spel 15: NZ, score:   190, imps   3
 Spel 16: NZ, score:   200, imps   3 set-score: -1 (-0.25 imps/spel)
@@ -4966,7 +4966,7 @@ Spel 18: NZ, score:  -420, imps  -8
 Spel 19: NZ, score:   420, imps   9
 Spel 20: NZ, score:   620, imps  12 set-score: 6 (1.50 imps/spel)
 
-Spel 21: NZ, score:   120, imps   0 Tegenpaar (A3): paar 1
+Spel 21: NZ, score:   120, imps   0 Tegenpaar (A3): paar 2
 Spel 22: NZ, score:   130, imps   3
 Spel 23: NZ, score:   140, imps   4
 Spel 24: NZ, score:   150, imps   2 set-score: 9 (2.25 imps/spel)
@@ -4982,14 +4982,14 @@ imps: 13, spellen: 28, zittingscore: 0.46 imps/spel, rang: 8
 
 Uitslag per paar
 
-Uitslag van paar A8 'paar 16' voor '<auto-test, zitting 3>', zitting 3
+Uitslag van paar A8 'paar 18' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: OW, score:   -70, imps  -1 Tegenpaar (A6): paar 17
 Spel  2: OW, score:   -80, imps  -1
 Spel  3: OW, score:   -90, imps  -1
 Spel  4: OW, score:  R620, imps  12 set-score: 9 (2.25 imps/spel)
 
-Spel  5: OW, score:   100, imps   4 Tegenpaar (A2): paar 2
+Spel  5: OW, score:   100, imps   4 Tegenpaar (A2): paar 1
 Spel  6: OW, score:   100, imps   1
 Spel  7: OW, score:   100, imps   3
 Spel  8: OW, score:   100, imps   4 set-score: 12 (3.00 imps/spel)
@@ -5014,7 +5014,7 @@ Spel 22: OW, score:   160, imps   5
 Spel 23: OW, score:   160, imps   4
 Spel 24: OW, score:  R110, imps   4 set-score: 11 (2.75 imps/spel)
 
-Spel 25: OW, score:  -120, imps  -1 Tegenpaar (A3): paar 1
+Spel 25: OW, score:  -120, imps  -1 Tegenpaar (A3): paar 2
 Spel 26: OW, score:  -120, imps  -1
 Spel 27: OW, score:  -120, imps  -1
 Spel 28: OW, score:  -120, imps  -1 set-score: -4 (-1.00 imps/spel)
@@ -5025,14 +5025,14 @@ imps: 28, spellen: 28, zittingscore: 1.00 imps/spel, rang: 5
 
 Uitslag per paar
 
-Uitslag van paar B1 'paar 18' voor '<auto-test, zitting 3>', zitting 3
+Uitslag van paar B1 'paar 16' voor '<auto-test, zitting 3>', zitting 3
 
-Spel  1: NZ, score:   210, imps   5 Tegenpaar (B2): paar 9
+Spel  1: NZ, score:   210, imps   5 Tegenpaar (B2): paar 14
 Spel  2: NZ, score:   230, imps   5
 Spel  3: NZ, score:   240, imps   5
 Spel  4: NZ, score:   260, imps   5 set-score: 20 (5.00 imps/spel)
 
-Spel  5: NZ, score:  -140, imps  -5 Tegenpaar (B7): paar 4
+Spel  5: NZ, score:  -140, imps  -5 Tegenpaar (B7): paar 11
 Spel  6: NZ, score:  -140, imps  -2
 Spel  7: NZ, score:  -140, imps  -4
 Spel  8: NZ, score:  -140, imps  -5 set-score: -16 (-4.00 imps/spel)
@@ -5042,22 +5042,22 @@ Spel 10: niet gespeeld
 Spel 11: niet gespeeld
 Spel 12: niet gespeeld
 
-Spel 13: NZ, score:   130, imps  -5 Tegenpaar (B10): gewijzigd paar 5
+Spel 13: NZ, score:   130, imps  -5 Tegenpaar (B10): paar 9
 Spel 14: NZ, score:   140, imps  -3
 Spel 15: NZ, score:   150, imps   2
 Spel 16: NZ, score:   160, imps   2 set-score: -4 (-1.00 imps/spel)
 
-Spel 17: OW, score:   150, imps   0 Tegenpaar (B6): paar 8
+Spel 17: OW, score:   150, imps   0 Tegenpaar (B6): paar 4
 Spel 18: OW, score:   800, imps  12
 Spel 19: OW, score:   600, imps  12
 Spel 20: OW, score:   120, imps   4 set-score: 28 (7.00 imps/spel)
 
-Spel 21: OW, score:  -150, imps  -1 Tegenpaar (B4): paar 15
+Spel 21: OW, score:  -150, imps  -1 Tegenpaar (B4): paar 12
 Spel 22: OW, score:  -150, imps  -3
 Spel 23: OW, score:  -150, imps  -4
 Spel 24: OW, score:  -150, imps  -3 set-score: -11 (-2.75 imps/spel)
 
-Spel 25: OW, score:  -150, imps  -2 Tegenpaar (B5): paar 12
+Spel 25: OW, score:  -150, imps  -2 Tegenpaar (B5): paar 8
 Spel 26: OW, score:  -150, imps  -2
 Spel 27: OW, score:  -150, imps  -2
 Spel 28: OW, score:  -150, imps  -2 set-score: -8 (-2.00 imps/spel)
@@ -5068,9 +5068,9 @@ imps: 9, spellen: 24, zittingscore: 0.38 imps/spel, rang: 9
 
 Uitslag per paar
 
-Uitslag van paar B2 'paar 9' voor '<auto-test, zitting 3>', zitting 3
+Uitslag van paar B2 'paar 14' voor '<auto-test, zitting 3>', zitting 3
 
-Spel  1: OW, score:  -210, imps  -5 Tegenpaar (B1): paar 18
+Spel  1: OW, score:  -210, imps  -5 Tegenpaar (B1): paar 16
 Spel  2: OW, score:  -230, imps  -5
 Spel  3: OW, score:  -240, imps  -5
 Spel  4: OW, score:  -260, imps  -6 set-score: -21 (-5.25 imps/spel)
@@ -5080,12 +5080,12 @@ Spel  6: NZ, score:  -800, imps -12
 Spel  7: NZ, score: -1000, imps -14
 Spel  8: NZ, score: -1100, imps -15 set-score: -53 (-13.25 imps/spel)
 
-Spel  9: NZ, score:   -50, imps  -1 Tegenpaar (B7): paar 4
+Spel  9: NZ, score:   -50, imps  -1 Tegenpaar (B7): paar 11
 Spel 10: NZ, score:     0, imps   0
 Spel 11: NZ, score:    90, imps   2
 Spel 12: NZ, score:   %60, imps   2 set-score: 3 (0.75 imps/spel)
 
-Spel 13: OW, score:  -800, imps -10 Tegenpaar (B4): paar 15
+Spel 13: OW, score:  -800, imps -10 Tegenpaar (B4): paar 12
 Spel 14: OW, score:  -200, imps   2
 Spel 15: OW, score:  -300, imps  -5
 Spel 16: OW, score:  -300, imps  -6 set-score: -19 (-4.75 imps/spel)
@@ -5095,12 +5095,12 @@ Spel 18: niet gespeeld
 Spel 19: niet gespeeld
 Spel 20: niet gespeeld
 
-Spel 21: OW, score:   170, imps   7 Tegenpaar (B5): paar 12
+Spel 21: OW, score:   170, imps   7 Tegenpaar (B5): paar 8
 Spel 22: OW, score:   170, imps   5
 Spel 23: OW, score:   170, imps   4
 Spel 24: OW, score:   170, imps   5 set-score: 21 (5.25 imps/spel)
 
-Spel 25: OW, score:  -140, imps  -2 Tegenpaar (B3): paar 14
+Spel 25: OW, score:  -140, imps  -2 Tegenpaar (B3): paar 15
 Spel 26: OW, score:  -150, imps  -2
 Spel 27: OW, score:  -160, imps  -2
 Spel 28: OW, score:  -170, imps  -3 set-score: -9 (-2.25 imps/spel)
@@ -5111,29 +5111,29 @@ imps: -78, spellen: 24, zittingscore: -3.25 imps/spel, rang: 17
 
 Uitslag per paar
 
-Uitslag van paar B3 'paar 14' voor '<auto-test, zitting 3>', zitting 3
+Uitslag van paar B3 'paar 15' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: NZ, score:   140, imps   3 Tegenpaar (B9): paar 10
 Spel  2: NZ, score:   140, imps   3
 Spel  3: NZ, score:   140, imps   3
 Spel  4: NZ, score:   140, imps   3 set-score: 12 (3.00 imps/spel)
 
-Spel  5: NZ, score:   270, imps   6 Tegenpaar (B4): paar 15
+Spel  5: NZ, score:   270, imps   6 Tegenpaar (B4): paar 12
 Spel  6: NZ, score:   340, imps   9
 Spel  7: NZ, score:   300, imps   7
 Spel  8: NZ, score:   340, imps   7 set-score: 29 (7.25 imps/spel)
 
-Spel  9: NZ, score:  -150, imps  -4 Tegenpaar (B10): gewijzigd paar 5
+Spel  9: NZ, score:  -150, imps  -4 Tegenpaar (B10): paar 9
 Spel 10: NZ, score:  -150, imps  -4
 Spel 11: NZ, score:  -150, imps  -5
 Spel 12: NZ, score:  -150, imps  -3 set-score: -16 (-4.00 imps/spel)
 
-Spel 13: OW, score:  -600, imps  -6 Tegenpaar (B6): paar 8
+Spel 13: OW, score:  -600, imps  -6 Tegenpaar (B6): paar 4
 Spel 14: OW, score:  -800, imps -11
 Spel 15: OW, score:  -120, imps  -1
 Spel 16: OW, score:  -150, imps  -3 set-score: -21 (-5.25 imps/spel)
 
-Spel 17: OW, score:  -100, imps  -6 Tegenpaar (B7): paar 4
+Spel 17: OW, score:  -100, imps  -6 Tegenpaar (B7): paar 11
 Spel 18: OW, score:  -110, imps  -5
 Spel 19: OW, score:  -120, imps  -2
 Spel 20: OW, score:  -130, imps  -3 set-score: -16 (-4.00 imps/spel)
@@ -5143,7 +5143,7 @@ Spel 22: niet gespeeld
 Spel 23: niet gespeeld
 Spel 24: niet gespeeld
 
-Spel 25: NZ, score:   140, imps   2 Tegenpaar (B2): paar 9
+Spel 25: NZ, score:   140, imps   2 Tegenpaar (B2): paar 14
 Spel 26: NZ, score:   150, imps   2
 Spel 27: NZ, score:   160, imps   2
 Spel 28: NZ, score:   170, imps   3 set-score: 9 (2.25 imps/spel)
@@ -5154,14 +5154,14 @@ imps: -3, spellen: 24, zittingscore: -0.13 imps/spel, rang: 12
 
 Uitslag per paar
 
-Uitslag van paar B4 'paar 15' voor '<auto-test, zitting 3>', zitting 3
+Uitslag van paar B4 'paar 12' voor '<auto-test, zitting 3>', zitting 3
 
-Spel  1: NZ, score:  -160, imps  -5 Tegenpaar (B6): paar 8
+Spel  1: NZ, score:  -160, imps  -5 Tegenpaar (B6): paar 4
 Spel  2: NZ, score:  -160, imps  -5
 Spel  3: NZ, score:  -160, imps  -5
 Spel  4: NZ, score:  -160, imps  -5 set-score: -20 (-5.00 imps/spel)
 
-Spel  5: OW, score:  -270, imps  -6 Tegenpaar (B3): paar 14
+Spel  5: OW, score:  -270, imps  -6 Tegenpaar (B3): paar 15
 Spel  6: OW, score:  -340, imps  -9
 Spel  7: OW, score:  -300, imps  -7
 Spel  8: OW, score:  -340, imps  -7 set-score: -29 (-7.25 imps/spel)
@@ -5171,22 +5171,22 @@ Spel 10: OW, score:     0, imps   0
 Spel 11: OW, score:     0, imps   1
 Spel 12: OW, score:     0, imps  -2 set-score: -1 (-0.25 imps/spel)
 
-Spel 13: NZ, score:   800, imps  10 Tegenpaar (B2): paar 9
+Spel 13: NZ, score:   800, imps  10 Tegenpaar (B2): paar 14
 Spel 14: NZ, score:   200, imps  -2
 Spel 15: NZ, score:   300, imps   5
 Spel 16: NZ, score:   300, imps   5 set-score: 18 (4.50 imps/spel)
 
-Spel 17: OW, score:  1200, imps  14 Tegenpaar (B5): paar 12
+Spel 17: OW, score:  1200, imps  14 Tegenpaar (B5): paar 8
 Spel 18: OW, score:  -300, imps  -9
 Spel 19: OW, score:  -400, imps  -8
 Spel 20: OW, score:  -500, imps -10 set-score: -13 (-3.25 imps/spel)
 
-Spel 21: NZ, score:   150, imps   1 Tegenpaar (B1): paar 18
+Spel 21: NZ, score:   150, imps   1 Tegenpaar (B1): paar 16
 Spel 22: NZ, score:   150, imps   3
 Spel 23: NZ, score:   150, imps   4
 Spel 24: NZ, score:   150, imps   2 set-score: 10 (2.50 imps/spel)
 
-Spel 25: OW, score:  -150, imps  -2 Tegenpaar (B10): gewijzigd paar 5
+Spel 25: OW, score:  -150, imps  -2 Tegenpaar (B10): paar 9
 Spel 26: OW, score:  -140, imps  -2
 Spel 27: OW, score:  -140, imps  -1
 Spel 28: OW, score:   -50, imps   1 set-score: -4 (-1.00 imps/spel)
@@ -5197,19 +5197,19 @@ imps: -39, spellen: 28, zittingscore: -1.39 imps/spel, rang: 13
 
 Uitslag per paar
 
-Uitslag van paar B5 'paar 12' voor '<auto-test, zitting 3>', zitting 3
+Uitslag van paar B5 'paar 8' voor '<auto-test, zitting 3>', zitting 3
 
-Spel  1: NZ, score:     0, imps  -1 Tegenpaar (B7): paar 4
+Spel  1: NZ, score:     0, imps  -1 Tegenpaar (B7): paar 11
 Spel  2: NZ, score:     0, imps  -2
 Spel  3: NZ, score:     0, imps  -2
 Spel  4: NZ, score:     0, imps  -2 set-score: -7 (-1.75 imps/spel)
 
-Spel  5: NZ, score:   160, imps   4 Tegenpaar (B10): gewijzigd paar 5
+Spel  5: NZ, score:   160, imps   4 Tegenpaar (B10): paar 9
 Spel  6: NZ, score:   160, imps   6
 Spel  7: NZ, score:   160, imps   4
 Spel  8: NZ, score:   160, imps   3 set-score: 17 (4.25 imps/spel)
 
-Spel  9: NZ, score:   -50, imps  -1 Tegenpaar (B6): paar 8
+Spel  9: NZ, score:   -50, imps  -1 Tegenpaar (B6): paar 4
 Spel 10: NZ, score:   -70, imps  -2
 Spel 11: NZ, score:   -80, imps  -3
 Spel 12: NZ, score:   -90, imps  -2 set-score: -8 (-2.00 imps/spel)
@@ -5219,17 +5219,17 @@ Spel 14: NZ, score:   600, imps   8
 Spel 15: NZ, score:   500, imps   9
 Spel 16: NZ, score:  R300, imps   5 set-score: 32 (8.00 imps/spel)
 
-Spel 17: NZ, score: -1200, imps -14 Tegenpaar (B4): paar 15
+Spel 17: NZ, score: -1200, imps -14 Tegenpaar (B4): paar 12
 Spel 18: NZ, score:   300, imps   9
 Spel 19: NZ, score:   400, imps   8
 Spel 20: NZ, score:   500, imps  10 set-score: 13 (3.25 imps/spel)
 
-Spel 21: NZ, score:  -170, imps  -7 Tegenpaar (B2): paar 9
+Spel 21: NZ, score:  -170, imps  -7 Tegenpaar (B2): paar 14
 Spel 22: NZ, score:  -170, imps  -5
 Spel 23: NZ, score:  -170, imps  -4
 Spel 24: NZ, score:  -170, imps  -6 set-score: -22 (-5.50 imps/spel)
 
-Spel 25: NZ, score:   150, imps   2 Tegenpaar (B1): paar 18
+Spel 25: NZ, score:   150, imps   2 Tegenpaar (B1): paar 16
 Spel 26: NZ, score:   150, imps   2
 Spel 27: NZ, score:   150, imps   2
 Spel 28: NZ, score:   150, imps   2 set-score: 8 (2.00 imps/spel)
@@ -5240,9 +5240,9 @@ imps: 33, spellen: 28, zittingscore: 1.18 imps/spel, rang: 4
 
 Uitslag per paar
 
-Uitslag van paar B6 'paar 8' voor '<auto-test, zitting 3>', zitting 3
+Uitslag van paar B6 'paar 4' voor '<auto-test, zitting 3>', zitting 3
 
-Spel  1: OW, score:   160, imps   5 Tegenpaar (B4): paar 15
+Spel  1: OW, score:   160, imps   5 Tegenpaar (B4): paar 12
 Spel  2: OW, score:   160, imps   5
 Spel  3: OW, score:   160, imps   5
 Spel  4: OW, score:   160, imps   5 set-score: 20 (5.00 imps/spel)
@@ -5252,17 +5252,17 @@ Spel  6: niet gespeeld
 Spel  7: niet gespeeld
 Spel  8: niet gespeeld
 
-Spel  9: OW, score:    50, imps   1 Tegenpaar (B5): paar 12
+Spel  9: OW, score:    50, imps   1 Tegenpaar (B5): paar 8
 Spel 10: OW, score:    70, imps   2
 Spel 11: OW, score:    80, imps   3
 Spel 12: OW, score:    90, imps   1 set-score: 7 (1.75 imps/spel)
 
-Spel 13: NZ, score:   600, imps   6 Tegenpaar (B3): paar 14
+Spel 13: NZ, score:   600, imps   6 Tegenpaar (B3): paar 15
 Spel 14: NZ, score:   800, imps  11
 Spel 15: NZ, score:   120, imps   1
 Spel 16: NZ, score:   150, imps   2 set-score: 20 (5.00 imps/spel)
 
-Spel 17: NZ, score:  -150, imps   0 Tegenpaar (B1): paar 18
+Spel 17: NZ, score:  -150, imps   0 Tegenpaar (B1): paar 16
 Spel 18: NZ, score:  -800, imps -12
 Spel 19: NZ, score:  -600, imps -12
 Spel 20: NZ, score:  -120, imps  -4 set-score: -28 (-7.00 imps/spel)
@@ -5272,7 +5272,7 @@ Spel 22: OW, score:  -120, imps  -3
 Spel 23: OW, score:  -110, imps  -3
 Spel 24: OW, score:  -100, imps  -2 set-score: -9 (-2.25 imps/spel)
 
-Spel 25: OW, score:  -170, imps  -2 Tegenpaar (B7): paar 4
+Spel 25: OW, score:  -170, imps  -2 Tegenpaar (B7): paar 11
 Spel 26: OW, score:  -170, imps  -2
 Spel 27: OW, score:  -170, imps  -2
 Spel 28: OW, score:  -170, imps  -3 set-score: -9 (-2.25 imps/spel)
@@ -5283,19 +5283,19 @@ imps: 1, spellen: 24, zittingscore: 0.04 imps/spel, rang: 11
 
 Uitslag per paar
 
-Uitslag van paar B7 'paar 4' voor '<auto-test, zitting 3>', zitting 3
+Uitslag van paar B7 'paar 11' voor '<auto-test, zitting 3>', zitting 3
 
-Spel  1: OW, score:     0, imps   1 Tegenpaar (B5): paar 12
+Spel  1: OW, score:     0, imps   1 Tegenpaar (B5): paar 8
 Spel  2: OW, score:     0, imps   2
 Spel  3: OW, score:     0, imps   2
 Spel  4: OW, score:     0, imps   0 set-score: 5 (1.25 imps/spel)
 
-Spel  5: OW, score:   140, imps   5 Tegenpaar (B1): paar 18
+Spel  5: OW, score:   140, imps   5 Tegenpaar (B1): paar 16
 Spel  6: OW, score:   140, imps   2
 Spel  7: OW, score:   140, imps   4
 Spel  8: OW, score:   140, imps   5 set-score: 16 (4.00 imps/spel)
 
-Spel  9: OW, score:    50, imps   1 Tegenpaar (B2): paar 9
+Spel  9: OW, score:    50, imps   1 Tegenpaar (B2): paar 14
 Spel 10: OW, score:     0, imps   0
 Spel 11: OW, score:   -90, imps  -2
 Spel 12: OW, score:  R630, imps  11 set-score: 10 (2.50 imps/spel)
@@ -5305,17 +5305,17 @@ Spel 14: niet gespeeld
 Spel 15: niet gespeeld
 Spel 16: niet gespeeld
 
-Spel 17: NZ, score:   100, imps   6 Tegenpaar (B3): paar 14
+Spel 17: NZ, score:   100, imps   6 Tegenpaar (B3): paar 15
 Spel 18: NZ, score:   110, imps   5
 Spel 19: NZ, score:   120, imps   2
 Spel 20: NZ, score:   130, imps   3 set-score: 16 (4.00 imps/spel)
 
-Spel 21: OW, score:  -110, imps   0 Tegenpaar (B10): gewijzigd paar 5
+Spel 21: OW, score:  -110, imps   0 Tegenpaar (B10): paar 9
 Spel 22: OW, score:   120, imps   4
 Spel 23: OW, score:   100, imps   3
 Spel 24: OW, score:  -100, imps  -2 set-score: 5 (1.25 imps/spel)
 
-Spel 25: NZ, score:   170, imps   2 Tegenpaar (B6): paar 8
+Spel 25: NZ, score:   170, imps   2 Tegenpaar (B6): paar 4
 Spel 26: NZ, score:   170, imps   2
 Spel 27: NZ, score:   170, imps   2
 Spel 28: NZ, score:   170, imps   3 set-score: 9 (2.25 imps/spel)
@@ -5336,32 +5336,32 @@ Uitslag per paar
 
 Uitslag van paar B9 'paar 10' voor '<auto-test, zitting 3>', zitting 3
 
-Spel  1: OW, score:  -140, imps  -3 Tegenpaar (B3): paar 14
+Spel  1: OW, score:  -140, imps  -3 Tegenpaar (B3): paar 15
 Spel  2: OW, score:  -140, imps  -3
 Spel  3: OW, score:  -140, imps  -3
 Spel  4: OW, score:  -140, imps  -4 set-score: -13 (-3.25 imps/spel)
 
-Spel  5: OW, score:   600, imps  12 Tegenpaar (B2): paar 9
+Spel  5: OW, score:   600, imps  12 Tegenpaar (B2): paar 14
 Spel  6: OW, score:   800, imps  12
 Spel  7: OW, score:  1000, imps  14
 Spel  8: OW, score:  1100, imps  15 set-score: 53 (13.25 imps/spel)
 
-Spel  9: NZ, score:     0, imps   0 Tegenpaar (B4): paar 15
+Spel  9: NZ, score:     0, imps   0 Tegenpaar (B4): paar 12
 Spel 10: NZ, score:     0, imps   0
 Spel 11: NZ, score:     0, imps  -1
 Spel 12: NZ, score:     0, imps   1 set-score: 0 (0.00 imps/spel)
 
-Spel 13: OW, score:  -800, imps -10 Tegenpaar (B5): paar 12
+Spel 13: OW, score:  -800, imps -10 Tegenpaar (B5): paar 8
 Spel 14: OW, score:  -600, imps  -8
 Spel 15: OW, score:  -500, imps  -9
 Spel 16: OW, score:   %50, imps   0 set-score: -27 (-6.75 imps/spel)
 
-Spel 17: NZ, score:  -100, imps   1 Tegenpaar (B10): gewijzigd paar 5
+Spel 17: NZ, score:  -100, imps   1 Tegenpaar (B10): paar 9
 Spel 18: NZ, score:  -110, imps  -1
 Spel 19: NZ, score:  -120, imps  -5
 Spel 20: NZ, score:  -130, imps  -4 set-score: -9 (-2.25 imps/spel)
 
-Spel 21: NZ, score:   130, imps   1 Tegenpaar (B6): paar 8
+Spel 21: NZ, score:   130, imps   1 Tegenpaar (B6): paar 4
 Spel 22: NZ, score:   120, imps   3
 Spel 23: NZ, score:   110, imps   3
 Spel 24: NZ, score:   100, imps   1 set-score: 8 (2.00 imps/spel)
@@ -5377,24 +5377,24 @@ imps: 12, spellen: 24, zittingscore: 0.50 imps/spel, rang: 7
 
 Uitslag per paar
 
-Uitslag van paar B10 'gewijzigd paar 5' voor '<auto-test, zitting 3>', zitting 3
+Uitslag van paar B10 'paar 9' voor '<auto-test, zitting 3>', zitting 3
 
 Spel  1: niet gespeeld
 Spel  2: niet gespeeld
 Spel  3: niet gespeeld
 Spel  4: niet gespeeld
 
-Spel  5: OW, score:  -160, imps  -4 Tegenpaar (B5): paar 12
+Spel  5: OW, score:  -160, imps  -4 Tegenpaar (B5): paar 8
 Spel  6: OW, score:  -160, imps  -6
 Spel  7: OW, score:  -160, imps  -4
 Spel  8: OW, score:  -160, imps  -3 set-score: -17 (-4.25 imps/spel)
 
-Spel  9: OW, score:   150, imps   4 Tegenpaar (B3): paar 14
+Spel  9: OW, score:   150, imps   4 Tegenpaar (B3): paar 15
 Spel 10: OW, score:   150, imps   4
 Spel 11: OW, score:   150, imps   5
 Spel 12: OW, score:   150, imps   2 set-score: 15 (3.75 imps/spel)
 
-Spel 13: OW, score:  -130, imps   5 Tegenpaar (B1): paar 18
+Spel 13: OW, score:  -130, imps   5 Tegenpaar (B1): paar 16
 Spel 14: OW, score:  -140, imps   3
 Spel 15: OW, score:  -150, imps  -2
 Spel 16: OW, score:  -160, imps  -3 set-score: 3 (0.75 imps/spel)
@@ -5404,12 +5404,12 @@ Spel 18: OW, score:   110, imps   1
 Spel 19: OW, score:   120, imps   5
 Spel 20: OW, score:   130, imps   4 set-score: 9 (2.25 imps/spel)
 
-Spel 21: NZ, score:   110, imps   0 Tegenpaar (B7): paar 4
+Spel 21: NZ, score:   110, imps   0 Tegenpaar (B7): paar 11
 Spel 22: NZ, score:  -120, imps  -4
 Spel 23: NZ, score:  -100, imps  -3
 Spel 24: NZ, score:   100, imps   1 set-score: -6 (-1.50 imps/spel)
 
-Spel 25: NZ, score:   150, imps   2 Tegenpaar (B4): paar 15
+Spel 25: NZ, score:   150, imps   2 Tegenpaar (B4): paar 12
 Spel 26: NZ, score:   140, imps   2
 Spel 27: NZ, score:   140, imps   1
 Spel 28: NZ, score:    50, imps  -1 set-score: 4 (1.00 imps/spel)

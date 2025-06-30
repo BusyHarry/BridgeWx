@@ -253,6 +253,7 @@ namespace cfg
     bool        GetNetworkPrinting();                       // get the search for a network printer
     UINT        GetNrOfSessionPairs();                      // nr of pairs for current session
     bool        IsSessionPairAbsent(UINT sessionPair);      // check if 'sessionPair' is absent
+    const GROUP_DATA* GetGroupDataFromSessionPair(UINT sessionPair);// the groupinfo of this sessionpair, nullptr if bad pairnr
 
     wxString    GetCopyrightDateTime();                     // as said, with leading/ending '\n'
     wxString    GetBaseFolder();                            // main storage folder, fallback for non-writable folders 

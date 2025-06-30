@@ -964,6 +964,15 @@ namespace cfg
         return CFG_OK;
     }   // HandleCommandline()
 
+    const GROUP_DATA* GetGroupDataFromSessionPair(UINT a_sessionPair)
+    {
+        for (const auto& it : sSessionInfo.groupData)
+        {
+            if ( it.groupOffset + it.pairs >= a_sessionPair ) return &it;
+        }
+        return nullptr; // should not happen
+    }   // GetGroupDataFromSessionPair()
+
 }   // end namespace cfg
 
 //   Cleanup dtor

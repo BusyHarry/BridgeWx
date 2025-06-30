@@ -1,0 +1,21 @@
+Even if you are not a bridge enthousiast, there may be interesting parts in the sourcecode:
+ - a class for a console-window
+ - a class for a multicolumn 'wxChoice' (to prevent a high and small top-to-bottom window)
+ - a sortable grid (only visual, but for the programmer invisible)
+ - provisions for automatic testing
+   - synchronisation between the program and test-environment
+   - automatic creation of mousepositions/labels to use in the testscript
+ - a class for a log-window (yes, wx does have one, but gave me problems)
+ - an async 'busy'-window
+ - a messagebox, where all lines are of equal height and have the same color
+      (msgbox of wx has a very small font if you have more lines, and the text is red)
+ - a simple lineprinter class
+ - a simple method to show a startup image (with .jpg in the resource)
+ - automatic backup of changed data when activating another menu-entry
+ - logging of events in ms resolution (-u -d cmdline params).
+    - see the order of events
+    - wonder about missing events
+    - see unexpected events
+    - see multiple events for the the same action
+    - fe activate the loggger: just try and see what happens when activating a menu-entry by key: Alt F(ile) P(printer choice)
+ - a simpel table builder so you can easily organise your data in row/colums for listings/printing

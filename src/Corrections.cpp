@@ -111,7 +111,7 @@ namespace cor
                      msg += FMT(" %-11s: %u\n" , _("globalPair"), a_globalPair);
                      msg += FMT(" %s: %u, cfg::max: %u", _("games"), a_ce.games, cfg::MAX_GAMES); //cfg::GetNrOfGames());
             MyLogError("%s", msg);
-            MyMessageBox(msg);
+            GetMainframe()->CallAfter([msg] {MyMessageBox(msg);});  // wait till page is shown
             return false;
         }
 

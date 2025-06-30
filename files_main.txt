@@ -1,6 +1,7 @@
 files_main.txt
 .gitignore
 readme.md.txt
+usefulFunctions.md
 CompareAll.bat
 CompareCommon.bat
 delCompareLogs.bat

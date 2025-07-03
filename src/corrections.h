@@ -21,6 +21,9 @@ namespace cor
         CORRECTION_SESSION(char a_type, int a_correction, long a_extra, int a_maxExtra, UINT a_games)
         {type = a_type;correction = a_correction;extra = a_extra; maxExtra = a_maxExtra;games=a_games;}
         CORRECTION_SESSION() {type = '%'; correction = 0; extra = 0; maxExtra = 0; games = 0;}
+        bool operator == (const CORRECTION_SESSION& rhs) const
+        { return type == rhs.type && correction == rhs.correction && games == rhs.games && maxExtra == rhs.maxExtra && extra == rhs.extra;}
+        bool operator != (const CORRECTION_SESSION& rhs) const {return !(*this == rhs);}
         char    type;
         int     correction;
         long    extra;          //  long.1:  xx.x

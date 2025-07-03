@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-30 11:22+0200\n"
-"PO-Revision-Date: 2025-06-30 11:22+0200\n"
+"POT-Creation-Date: 2025-07-02 11:38+0200\n"
+"PO-Revision-Date: 2025-07-02 11:38+0200\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -22,6 +22,9 @@ msgstr ""
 #, c-format
 msgid "Invalid session-correction data <%s>, will be ignored."
 msgstr "Ongeldige zitting-correctie data <%s>, wordt niet meegenomen."
+
+msgid "Warning"
+msgstr "Waarschuwing"
 
 #, c-format
 msgid "Invalid total-correction/end data <%s> will be ignored.\n"
@@ -241,12 +244,6 @@ msgstr "max"
 msgid "imps"
 msgstr "imps"
 
-msgid "Combi-table results for non-combi player ignored"
-msgstr "Combi-tafel resultaten voor niet stilzitter genegeerd"
-
-msgid "Warning"
-msgstr "Waarschuwing"
-
 msgid "game"
 msgstr "spel"
 
@@ -429,6 +426,9 @@ msgid ""
 msgstr ""
 "\n"
 "De resultaten zijn niet betrouwbaar!"
+
+msgid "Bad data or combi-table results for non-combi player(s) ignored"
+msgstr "Incorrecte data of combi-tafel resultaten voor niet stilzitter(s) genegeerd"
 
 msgid "<no description yet>"
 msgstr "<nog geen beschrijving>"

@@ -19,7 +19,7 @@
 
 static const auto sButlerRemoveScoresPercent = 10;  // remove N % of highest/lowest scores
 static const auto sButlerMinimumScores       = 3;   // we want atleast N scores after removal
-static const auto sButlerMpPer10Procent      = 2;   // referee scores: each 10% above/below 50% equals N mps, ASSUME scores are multiple of 5%
+static const auto sButlerImpsPer10Procent    = 2;   // referee scores: each 10% above/below 50% equals N imps, ASSUME scores are multiple of 5%
 
 struct ButlerFkw{bool bInit = false; long scoreNs=0;long deltaNs=0; int impsNs=0; long scoreEw=0; long deltaEw=0;int impsEw=0;};
 
@@ -43,7 +43,7 @@ int ButlerGetMpsFromScore(int a_score, int a_datumScore)
     if (score::IsProcent(a_score))
     {   // for now, assume a procentscore is a multiple of 5%
         auto deltaProcent = score::Procentscore2Procent(a_score) - 50;
-        return sButlerMpPer10Procent*deltaProcent/10;
+        return sButlerImpsPer10Procent*deltaProcent/10;
     }
 
     // now we have a 'normal' score
@@ -80,7 +80,10 @@ struct TopsPerGame
 };
 
 static const vvScoreData*               spvGameSetData;
-static const cor::mCorrectionsSession*  spmCorSession;
+static       cor::mCorrectionsSession   smCorSessionValidated;          // contains ONLY correct (combi-)data, created in ValidateSessionCorrections()
+static bool                             sbHaveValidCombi { false };     // (re)set in ValidateSessionCorrections() for combi results
+static bool                             sbHaveValidNormal{ false };     // (re)set in ValidateSessionCorrections() for normal corrections
+
 static const cor::mCorrectionsEnd*      spmCorEnd;
 static std::vector<Total>               svSessionResult;        // session result for all pairs
 static std::vector<UINT>                svSessionRankToPair;    // index array for session results: [a]=b -> at rank 'a' is sessionpair 'b'
@@ -97,69 +100,37 @@ static int ScoreEwToNs(int score);  // convert ew-score to ns-score
 static void AddHeader(MyTextFile& a_file);
 static bool IsCombiCandidate (UINT sessionPair);    // true, if pair plays against 'absent pair'
 static UINT GetNumberOfRounds(UINT sessionPair);    // number of rounds according schema for this pair
+static void ValidateSessionCorrections(const cor::mCorrectionsSession* pNonvalidatedCorrections);   // create a validated set of corrections
 
 static void GetSessionCorrectionStrings(UINT a_sessionPair, wxString& a_sCombiResult, wxString& a_sCorrectionResult)
 {   // get combi/corrections for a sessionPair as strings
     a_sCombiResult.Clear();
     a_sCorrectionResult.Clear();
-    if ( !spmCorSession->size() ) return;           // no results, if no corrections at all
-    auto it = spmCorSession->find(a_sessionPair);
-    if ( it == spmCorSession->end() ) return;       // no results, if pair has no corrections
-
-    int     extra       = 0;
-    int     maxExtra    = 0;
-    UINT    games       = 0;
-
-    if ( IsCombiCandidate(a_sessionPair) )
-    {   // only now we can have extra's, i.e. combi table result
-        extra    = it->second.extra/10; // don't show fractional value!
-        maxExtra = it->second.maxExtra;
-        games    = it->second.games;
-    }
+    if ( !smCorSessionValidated.size() ) return;           // no results, if no corrections at all
+    auto it = smCorSessionValidated.find(a_sessionPair);
+    if ( it == smCorSessionValidated.end() ) return;       // no results, if pair has no corrections
 
     bool bButler = cfg::GetButler();
-
-    if ( games )
+    if ( it->second.games )
     {   // combi
         a_sCombiResult = bButler
-            ? FMT("%ii"  , extra)
-            : FMT("%d/%d", extra, maxExtra);
+            ? FMT("%ii"  , it->second.extra/10) // don't show fractional value!
+            : FMT("%d/%d", it->second.extra/10, it->second.maxExtra);
     }
 
     int correction = it->second.correction;
     if ( correction )
     {   // only non-zero is a real correction
-        a_sCorrectionResult = FMT("%d%s", correction,  it->second.type == '%'
-                                        ? "%"
-                                        : (bButler
+        a_sCorrectionResult = FMT("%d%s", correction
+                                        , it->second.type == '%'
+                                            ? "%"
+                                            : ( bButler
                                                     ? "i"
                                                     : "mp"
-                                          )
+                                              )
                                  );
     }
 }   // GetSessionCorrectionStrings()
-
-static bool ValidCombiTableResultPresent()
-{   // return true if we have at least one valid combi-table result
-    if ( !spmCorSession->size() ) return false; // no corrections at all
-    for (const auto& [sessionPair, correction] : *spmCorSession)
-    {
-        if ( correction.games && IsCombiCandidate(sessionPair) )
-            return true;
-    }
-    return false;
-}   // ValidCombiTableResult()
-
-static bool SessionCorrectionPresent()
-{   // return true if we have at least one non-combi-table correction
-    if ( !spmCorSession->size() ) return false; // no corrections at all
-    for (const auto& [sessionPair, correction] : *spmCorSession)
-    {
-        if ( correction.correction )
-            return true;
-    }
-    return false;
-}   // SessionCorrectionPresent()
 
 static void InitPairToRankVector(bool a_bSession)
 {
@@ -491,9 +462,9 @@ void CalcScore::InitializeAndCalcScores()
     if (!ConfigChanged()) return;
     names::InitializePairNames();                   // get all nameinfo
     cor::InitializeCorrections();                   //   and needed corrections
-    spvGameSetData  = score::GetScoreData();        //      and scsores
-    spmCorSession   = cor::GetCorrectionsSession();
+    spvGameSetData  = score::GetScoreData();        //      and scores
     spmCorEnd       = cor::GetCorrectionsEnd();
+    ValidateSessionCorrections(cor::GetCorrectionsSession());   // ouput in 'smCorSessionValidated'
 
     CalcSession();
     CalcTotal();
@@ -762,8 +733,8 @@ void CalcScore::SaveGroupResult()
               {SIZE_GRP_PAIR         , FormBuilder::Align::RIGHT       , ES, true}
             , {SIZE_GRP_NAME         , FormBuilder::Align::LEFT        , ES, true}
                 // setinfo added later
-            , {SIZE_GRP_COMBI        , FormBuilder::Align::CENTER      , ES, ValidCombiTableResultPresent()}
-            , {SIZE_GRP_CORRECTION   , FormBuilder::Align::RIGHT_SPACE1, ES, SessionCorrectionPresent()}
+            , {SIZE_GRP_COMBI        , FormBuilder::Align::CENTER      , ES, sbHaveValidCombi}
+            , {SIZE_GRP_CORRECTION   , FormBuilder::Align::RIGHT_SPACE1, ES, sbHaveValidNormal}
             , {SIZE_GRP_GAMES        , FormBuilder::Align::RIGHT_SPACE2, ES, true}
             , {SIZE_GRP_TOTAL        , FormBuilder::Align::RIGHT       , ES, true}
             , {SIZE_GRP_SCORE        , FormBuilder::Align::RIGHT       , ES, true}
@@ -849,8 +820,8 @@ void CalcScore::SaveSessionResultsProcent()
         , {SIZE_RP_TOTAL      , FormBuilder::Align::RIGHT       , ES , true}
         , {SIZE_RP_MAX        , FormBuilder::Align::RIGHT       , ES , true}
         , {SIZE_RP_SCORE      , FormBuilder::Align::RIGHT       , '%', true}
-        , {SIZE_RP_COMBI      , FormBuilder::Align::CENTER      , ES , ValidCombiTableResultPresent()}
-        , {SIZE_RP_CORRECTION , FormBuilder::Align::RIGHT_SPACE1, ES , SessionCorrectionPresent()}
+        , {SIZE_RP_COMBI      , FormBuilder::Align::CENTER      , ES , sbHaveValidCombi}
+        , {SIZE_RP_CORRECTION , FormBuilder::Align::RIGHT_SPACE1, ES , sbHaveValidNormal}
         , {SIZE_RP_GROUPRESULT, FormBuilder::Align::LEFT        , ES , true}
     };
 
@@ -923,8 +894,8 @@ void CalcScore::SaveSessionResultsButler()
         , {SIZE_RI_IMPS       , FormBuilder::Align::RIGHT       , ES , true}
         , {SIZE_RI_GAMES      , FormBuilder::Align::RIGHT_SPACE2, ES , true}
         , {SIZE_RI_SCORE      , FormBuilder::Align::RIGHT       , ES , true}
-        , {SIZE_RI_COMBI      , FormBuilder::Align::CENTER      , ES , ValidCombiTableResultPresent()}
-        , {SIZE_RI_CORRECTION , FormBuilder::Align::RIGHT_SPACE1, ES , SessionCorrectionPresent()}
+        , {SIZE_RI_COMBI      , FormBuilder::Align::CENTER      , ES , sbHaveValidCombi}
+        , {SIZE_RI_CORRECTION , FormBuilder::Align::RIGHT_SPACE1, ES , sbHaveValidNormal}
         , {SIZE_RI_GROUPRESULT, FormBuilder::Align::LEFT        , ES , true}
     };
 
@@ -1032,11 +1003,11 @@ void CalcScore::ApplySessionCorrections(void)
             continue;    // pair did not play any game, so no corrections possible
 
         int     correctionProcent   = 0;
-        auto    it                  = spmCorSession->find(pair);
-        long    butlerCorMp         = 0;    // corrections in mp for butler: 100* real value so mpPerGame can be calculated easy
+        auto    it                  = smCorSessionValidated.find(pair);
+        long    butlerCorImps       = 0;    // corrections in imps for butler: 100* real value so mpPerGame can be calculated easy
 
         m_maxPair = pair;
-        if (it != spmCorSession->end())
+        if (it != smCorSessionValidated.end())
         {
             cor::CORRECTION_SESSION cs = it->second;
             // now handle the different types of correction
@@ -1045,34 +1016,12 @@ void CalcScore::ApplySessionCorrections(void)
                 if (cs.type == '%')
                 {
                     correctionProcent = 100L*cs.correction;
-                    //butlerCorMp = 10*cs.correction*sButlerMpPer10Procent;   // 100*((cor/10)*sButlerMpPer10Procent)
+                    //butlerCorImps = 10*cs.correction*sButlerImpsPer10Procent;   // 100*((cor/10)*sButlerImpsPer10Procent)
                 }
                 else
                 {
                     svSessionResult[pair].points += 10L*cs.correction;
-                    butlerCorMp = cs.correction*100;
-                }
-            }
-
-            if ( cs.maxExtra || cs.extra || cs.games )
-            {   // only allowed for combi-table
-                if ( !IsCombiCandidate(pair) )
-                {   // should all have been zero, give a warning when not script-testing
-                    cs.maxExtra = 0;
-                    cs.extra    = 0;
-                    cs.games    = 0;
-
-                    if ( !cfg::IsScriptTesting() )
-                    {
-                        CallAfter([pair]
-                            {   // if not CallAfter() we get the msgbox on an empty page
-                                wxString msg=FMT("%s: %s"
-                                    , _("Combi-table results for non-combi player ignored")
-                                    , names::PairnrSession2SessionText(pair)
-                                );
-                                MyMessageBox(msg, _("Warning"), wxOK | wxICON_INFORMATION); 
-                            });
-                    }
+                    butlerCorImps = cs.correction*100;
                 }
             }
 
@@ -1086,7 +1035,7 @@ void CalcScore::ApplySessionCorrections(void)
                 svSessionResult[pair].maxScore += maxExtra;
             }
             else
-                butlerCorMp += cs.extra*10;     // extra: 2 decimals now
+                butlerCorImps += cs.extra*10;     // extra: 2 decimals now
 
             svSessionResult[pair].nrOfGames += cs.games;
         }   // end of correction calculation
@@ -1095,8 +1044,8 @@ void CalcScore::ApplySessionCorrections(void)
         if (m_bButler)
         {
             svSessionResult[pair].procentScore = // for now: too many things depend on it
-            svSessionResult[pair].mpPerGame = RoundLong(butlerCorMp + svSessionResult[pair].butlerMp * 100 , (int)svSessionResult[pair].nrOfGames);
-            svSessionResult[pair].butlerMp += RoundLong(butlerCorMp, 100);
+            svSessionResult[pair].mpPerGame = RoundLong(butlerCorImps + svSessionResult[pair].butlerMp * 100 , (int)svSessionResult[pair].nrOfGames);
+            svSessionResult[pair].butlerMp += RoundLong(butlerCorImps, 100);
         }
         else
             svSessionResult[pair].procentScore = correctionProcent + RoundLong(1000L*svSessionResult[pair].points, svSessionResult[pair].maxScore);
@@ -2061,6 +2010,92 @@ bool IsCombiCandidate(UINT a_sessionPair)
     SchemaInfo  si(pGroupData->schemaId);
     return si.AreOpponents(a_sessionPair - pGroupData->groupOffset, pGroupData->absent);
 }   // IsCombiCandidate()
+
+void ValidateSessionCorrections(const cor::mCorrectionsSession* a_pNonValidatedCorrections)
+{   // validate session corrections once, so we don't constantly need to check its validity
+    bool bButler      = cfg::GetButler();
+    sbHaveValidCombi  = false;
+    sbHaveValidNormal = false;
+    smCorSessionValidated.clear();
+    wxString errorMsg;
+
+    for (const auto& [pair, correction] : *a_pNonValidatedCorrections)
+    {
+        #define OK_NORMAL 1
+        #define OK_COMBI  2
+        UINT state = 0;
+        cor::CORRECTION_SESSION cs;
+
+        if ( pair > 0 && pair <= cfg::GetNrOfSessionPairs() )
+            cs = correction;
+        if ( cs.correction )
+        {   // 'normal' correction
+            if ( cs.type == '%' && bButler )
+            {   // butler can't have % correction
+                cs.correction = 0;
+            }
+            else
+                state |= OK_NORMAL;    // set valid normal state
+        }
+
+        if ( cs.maxExtra || cs.extra || cs.games )
+        {   // combi data
+            do
+            {
+                if ( !IsCombiCandidate(pair) )
+                {
+                    cs.maxExtra = cs.extra = cs.games = 0;
+                    break;
+                }
+                if ( cs.games == 0 )
+                {
+                    cs.maxExtra = cs.extra = 0;
+                    break;
+                }
+                if ( bButler )
+                {
+                    if ( cs.maxExtra )
+                        cs.maxExtra = cs.extra = cs.games = 0;
+                    else
+                        state |= OK_COMBI;
+                    break;
+                }
+                if ( (cs.maxExtra * 10 < cs.extra) || (cs.maxExtra == 0) || (cs.extra < 0) )
+                    cs.maxExtra = cs.extra = cs.games = 0;
+                else
+                    state |= OK_COMBI;
+            } while (0);
+        }
+
+        if ( state )    // some valid data
+        {
+            sbHaveValidNormal |= 0 != (state & OK_NORMAL);
+            sbHaveValidCombi  |= 0 != (state & OK_COMBI);
+            smCorSessionValidated[pair] = cs;
+        }
+
+        if ( cs != correction && !cfg::IsScriptTesting() )
+        {   // some bad data ignored, accumulate errors and show them all at once
+            errorMsg += FMT("\n: '%u, %+i%c, %s,%i,%u'"
+                                , pair
+                                , correction.correction
+                                , correction.type
+                                , LongToAscii1(correction.extra)
+                                , correction.maxExtra
+                                , correction.games
+                            );
+        }
+    }   // for()
+
+    if ( errorMsg.Len() )
+    {
+        GetMainframe()->CallAfter([errorMsg]
+            {   // if not CallAfter() we get the msgbox on an empty page
+                MyMessageBox(_("Bad data or combi-table results for non-combi player(s) ignored") + errorMsg
+                    , _("Warning"), wxOK | wxICON_INFORMATION); 
+            });
+    }
+}   // ValidateSessionCorrections()
 
 UINT GetNumberOfRounds(UINT a_sessionPair)
 {

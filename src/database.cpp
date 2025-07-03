@@ -613,13 +613,15 @@ bool CorrectionsSessionRead(cor::mCorrectionsSession& a_mCorrectionsSession, UIN
         auto entries = wxSscanf(it, " {%u ,%i %c , %10[^, ] ,%i, %u }"
                                 , &sessionPairnr, &cs.correction, &cs.type, extraBuf, &cs.maxExtra, &cs.games
                             );  // older db may NOT have games component
-        bool bErrorEntry = entries < 5;
-        cs.extra = AsciiTolong(extraBuf);
+        bool bErrorEntry = entries < 5; (void)bErrorEntry;
+        cs.extra = AsciiTolong(extraBuf, ExpectedDecimalDigits::DIGITS_1);
+#if 0   // don't remove (partly) bad input, application should do it
         if (!IsValidCorrectionSession(sessionPairnr, cs, it, bErrorEntry))
         {
             bResult = false;
         }
         else
+#endif
         {   // add info to map
             a_mCorrectionsSession[sessionPairnr] = cs;
         }

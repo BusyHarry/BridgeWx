@@ -15,6 +15,9 @@
 #include "wx/regex.h"
 #include <wx/filepicker.h>
 #include <wx/generic/stattextg.h>
+#if wxMAJOR_VERSION == 3 && wxMINOR_VERSION < 3
+#include <wx/msw/subwin.h>
+#endif
 #include <wx/radiobut.h>
 
 #include "cfg.h"

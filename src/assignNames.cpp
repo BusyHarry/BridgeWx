@@ -37,6 +37,11 @@ AssignNames::AssignNames(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParen
     m_theGrid->SetColSize(COL_PAIRNR_SESSION_PREV  , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_PAIRNR_SESSION_PREV, _("pair S-1"));
     m_theGrid->SetColSize(COL_RANK_TOTAL_PREV      , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_RANK_TOTAL_PREV    , _("rank"    ));   // TRANSLATORS: 'S' is first char of Session
     m_theGrid->SetColSize(COL_RANK_SESSION_PREV    , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_RANK_SESSION_PREV  , _("rank S-1"));
+                                                                         m_theGrid->SetColLabelAutoTest(COL_PAIRNAME           , "pairname");
+                                                                         m_theGrid->SetColLabelAutoTest(COL_PAIRNR_SESSION     , "pair no" );
+                                                                         m_theGrid->SetColLabelAutoTest(COL_PAIRNR_SESSION_PREV, "pair S-1");
+                                                                         m_theGrid->SetColLabelAutoTest(COL_RANK_TOTAL_PREV    , "rank"    );
+                                                                         m_theGrid->SetColLabelAutoTest(COL_RANK_SESSION_PREV  , "rank S-1");
 
 #ifdef MY_GRIDSORT
     std::vector<MyGrid::SortMethod> methods;

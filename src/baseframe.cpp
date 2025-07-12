@@ -310,6 +310,8 @@ void Baseframe::AutoTestAddGridInfo(MyTextFile* a_pFile, const wxString& a_pageN
 {   // add info about all collumns of first row
     AutotestAddMousePos(a_pFile, a_gridInfo.pGridWindow, a_pageName + "_Grid");
     UINT colNr = 0;
+    UINT colNrAuto = 0;
+    auto pGrid = (MyGrid*)a_gridInfo.pGridWindow;
     for (const auto& col : a_gridInfo.collumnInfo)
     {
         wxPoint wTL     = {col.x + a_gridInfo.rowLabelSize, col.y + a_gridInfo.colLabelSize};
@@ -317,8 +319,18 @@ void Baseframe::AutoTestAddGridInfo(MyTextFile* a_pFile, const wxString& a_pageN
         wxPoint sTL     = a_gridInfo.pGridWindow->ClientToScreen(wTL);
         wxPoint sBR     = a_gridInfo.pGridWindow->ClientToScreen(wBR);
         wxPoint sSize   = sBR - sTL;
-        wxString name   = FMT("%s_GridCol%u", a_pageName, colNr++);
+        wxString name = FMT("%s_GridCol%u", a_pageName, colNr);
         AutotestAddPos(a_pFile, a_gridInfo.pGridWindow, sTL, sSize.x, sSize.y, name);
+        if ( (a_gridInfo.ColumnLabelAutotest.size() > colNr) && pGrid->IsColShown(colNr) )
+        {   // columnlabel defenitions
+            ++colNrAuto;    // one based column values for non-hidden columns
+            wxString columnId = FMT("%s_Column_%s", a_pageName, a_gridInfo.ColumnLabelAutotest[colNr]);
+            columnId.Replace(" ", "_");
+            columnId.Replace("-", "_");
+            columnId.Replace("%", "procent");
+            a_pFile->AddLine(FMT("%-30s := %u", columnId, colNrAuto));
+        }
+        ++colNr;
     }
 }   // AutoTestAddGridInfo()
 

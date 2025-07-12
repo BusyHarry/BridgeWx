@@ -30,12 +30,12 @@ CorrectionsEnd::CorrectionsEnd(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_
     #define SIZE_PROCENT      (7 * sizeOne)                       /* -100.00 - 100.00  */
     #define SIZE_GAMES        (6 * sizeOne)                       /* like 32             */
     m_theGrid->SetRowLabelSize(SIZE_PAIRNR_SES);
-    m_theGrid->SetColSize(COL_PAIRNAME_SESSION, SIZE_PAIRNAME_SES ); m_theGrid->SetColLabelValue(COL_PAIRNAME_SESSION, _("pair"    ));
-    m_theGrid->SetColSize(COL_PAIRNAME_GLOBAL , SIZE_PAIRNAME     ); m_theGrid->SetColLabelValue(COL_PAIRNAME_GLOBAL , _("pairname"));
-    m_theGrid->SetColSize(COL_COR_SCORE       , SIZE_PROCENT      );// m_theGrid->SetColLabelValue(COL_COR_SCORE       , _("score"   ));
-    m_theGrid->SetColSize(COL_COR_BONUS       , SIZE_PROCENT      ); m_theGrid->SetColLabelValue(COL_COR_BONUS       , _("bonus"   ));
-    m_theGrid->SetColSize(COL_COR_GAMES       , SIZE_GAMES        ); m_theGrid->SetColLabelValue(COL_COR_GAMES       , _("games"   ));
-
+    m_theGrid->SetColSize(COL_PAIRNAME_SESSION, SIZE_PAIRNAME_SES ); m_theGrid->SetColLabelValue(COL_PAIRNAME_SESSION, _("pair"    )); m_theGrid->SetColLabelAutoTest(COL_PAIRNAME_SESSION, "pair");
+    m_theGrid->SetColSize(COL_PAIRNAME_GLOBAL , SIZE_PAIRNAME     ); m_theGrid->SetColLabelValue(COL_PAIRNAME_GLOBAL , _("pairname")); m_theGrid->SetColLabelAutoTest(COL_PAIRNAME_GLOBAL , "pairname");
+    m_theGrid->SetColSize(COL_COR_SCORE       , SIZE_PROCENT      );// m_theGrid->SetColLabelValue(COL_COR_SCORE       , _("score" ));
+    m_theGrid->SetColSize(COL_COR_BONUS       , SIZE_PROCENT      ); m_theGrid->SetColLabelValue(COL_COR_BONUS       , _("bonus"   )); m_theGrid->SetColLabelAutoTest(COL_COR_BONUS       , "bonus");
+    m_theGrid->SetColSize(COL_COR_GAMES       , SIZE_GAMES        ); m_theGrid->SetColLabelValue(COL_COR_GAMES       , _("games"   )); m_theGrid->SetColLabelAutoTest(COL_COR_GAMES       , "games");
+//    m_theGrid->SetColFormatNumber(COL_COR_GAMES);
     wxGridCellAttr* pAttr = new wxGridCellAttr; pAttr->SetAlignment(wxALIGN_LEFT, wxALIGN_CENTER_VERTICAL);
                       m_theGrid->SetColAttr(COL_PAIRNAME_SESSION, pAttr);
     pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_SCORE       , pAttr); 

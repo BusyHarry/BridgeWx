@@ -53,8 +53,10 @@ public:
         int         rowLabelSize= -1;
         int         colLabelSize= -1;
         std::vector<wxRect> collumnInfo;
+        std::vector<wxString> ColumnLabelAutotest;
     };
     const GridInfo& GetGridInfo();
+    void SetColLabelAutoTest(int col, const char* label);
 protected:
 
 private:

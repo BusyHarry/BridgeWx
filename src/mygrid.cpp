@@ -177,6 +177,12 @@ void MyGrid::OnLeftClickLabel(wxGridEvent& a_event)
 //        a_event.Skip(); // passtrough if its not a column header
 }   // OnLeftClickLabel()
 
+void MyGrid::SetColLabelAutoTest(int a_col, const char* a_label)
+{
+    m_gridInfo.ColumnLabelAutotest.resize(GetNumberCols());
+    m_gridInfo.ColumnLabelAutotest[a_col] = a_label;
+}
+
 const MyGrid::GridInfo& MyGrid::GetGridInfo()
 {   // info for creating mousepositions
     m_gridInfo.collumnInfo.clear();

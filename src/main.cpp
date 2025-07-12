@@ -511,7 +511,7 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
         m_pMyEventCatcher = new EventCatcher;           // we want early notice of mouseclick
 
         // create hotkey for generating mousepositions of controls for autotest in file "<matchfolder>/AutoTest.pos"
-        #define HOTKEY "!+a"    /* AHK2 definition*/
+        #define HOTKEY "!+a\"         ; SHIFT+ALT+A" /* AHK2 definition*/
         RegisterHotKey(0, wxMOD_ALT | wxMOD_SHIFT, 'A'); // wxMOD_CONTROL doesn't work...
         Bind(wxEVT_HOTKEY, [this](wxKeyEvent&){AutotestCreatePositions();});
     }
@@ -725,7 +725,7 @@ void MyFrame::AutotestCreatePositions()
     positionsFile.AddLine(    "WinTitle       := \"" + ssWinTitle       + "\"   ;window title of this program");
     positionsFile.AddLine(    "SystemComBox   := \"" + ssCheckBoxBusy   + "\"   ;name of the checkbox for communication between autohotkey and the program");
     positionsFile.AddLine(    "SystemComBoxMC := \"" + ssCheckBoxBusyMC + "\" ;name of the checkbox for communication between autohotkey and the program for ChoiceMC");
-    positionsFile.AddLine(    "HotkeyPos      := \""  HOTKEY  "\" ;hotkey to request mouse-positions to be generated");
+    positionsFile.AddLine(    "HotkeyPos      := \""  HOTKEY  ": hotkey to request mouse-positions to be generated");
     positionsFile.AddLine(    "; menu-definitions");
     positionsFile.AddLine(    _("MenuNewMatch      := \"fn\"       ; File: New match/session"               ));
     positionsFile.AddLine(    _("MenuShutdown      := \"fe\"       ; File: Exit"                            ));

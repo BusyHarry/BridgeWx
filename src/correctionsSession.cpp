@@ -50,7 +50,13 @@ CorrectionsSession::CorrectionsSession(wxWindow* a_pParent, UINT a_pageId) :Base
     m_theGrid->SetColSize(COL_COR_MAX         , SIZE_MP         ); m_theGrid->SetColLabelValue(COL_COR_MAX         , _("max"      ));
     m_theGrid->SetColSize(COL_COR_EXTRA       , SIZE_MP         ); m_theGrid->SetColLabelValue(COL_COR_EXTRA       , _("extra"    ));
     m_theGrid->SetColSize(COL_COR_GAMES       , SIZE_GAMES      ); m_theGrid->SetColLabelValue(COL_COR_GAMES       , _("games"    ));
-
+                                                                   m_theGrid->SetColLabelAutoTest(COL_PAIRNAME_SESSION, "pair");
+                                                                   m_theGrid->SetColLabelAutoTest(COL_PAIRNAME_GLOBAL , "pairname");
+                                                                   m_theGrid->SetColLabelAutoTest(COL_COR_PROCENT     ,   "%"     );
+                                                                   m_theGrid->SetColLabelAutoTest(COL_COR_MP          , "mp"      );
+                                                                   m_theGrid->SetColLabelAutoTest(COL_COR_MAX         , "max"     );
+                                                                   m_theGrid->SetColLabelAutoTest(COL_COR_EXTRA       , "extra"   );
+                                                                   m_theGrid->SetColLabelAutoTest(COL_COR_GAMES       , "games"   );
     wxGridCellAttr* pAttr = new wxGridCellAttr;
     pAttr->SetAlignment(wxALIGN_LEFT, wxALIGN_CENTER_VERTICAL);
                       m_theGrid->SetColAttr(COL_PAIRNAME_SESSION, pAttr);

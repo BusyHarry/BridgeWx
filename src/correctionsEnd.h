@@ -39,8 +39,8 @@ private:
           COL_ZERO = 0                      // label, first column = numerical session pairname
         , COL_PAIRNAME_SESSION = COL_ZERO   // session pairname
         , COL_PAIRNAME_GLOBAL               // global pairname
-        , COL_COR_SCORE                     // score in %
-        , COL_COR_BONUS                     // bonus in %
+        , COL_COR_BONUS                     // bonus in %/imps
+        , COL_COR_SCORE                     // score in %/imps
         , COL_COR_GAMES                     // nr of games for these corrections
         , COL_NR_OF                         // nr of columns in this grid
     };

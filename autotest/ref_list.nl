@@ -424,8 +424,8 @@ Overzicht van de zittingcorrecties voor '<auto-test, zitting 1>', zitting 1
 
 Overzicht van de eindcorrecties voor '<auto-test, zitting 1>', zitting 1
 
-    paar  paarnaam                        score   bonus   spellen
-  2 A2    paar 2                          50.00           28
+    paar  paarnaam                        bonus   score   spellen
+  2 A2    paar 2                                  50.00   28
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 

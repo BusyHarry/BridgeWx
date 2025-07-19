@@ -821,9 +821,9 @@ ScoresCorS1()
   MenuSelect(MenuCorEnd)
   GridPosition(CorEnd_Grid_L)            ; select the grid, goto first row/column
   if (bButler)
-    AddText_EW(   "{DOWN}{RIGHT 2}4") ; pair 2 gets 4 imps for total result
+    AddText_EW(   "{DOWN}{RIGHT 3}4") ; pair 2 gets 4 imps for total result
   else
-    AddText_EW(   "{DOWN}{RIGHT 2}50") ; pair 2 gets 50% for total result
+    AddText_EW(   "{DOWN}{RIGHT 3}50") ; pair 2 gets 50% for total result
   PrintPage()
 } ; ScoresCorS1()
 

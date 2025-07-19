@@ -424,8 +424,8 @@ Overview of the sessioncorrections for '<auto-test, session 1>', session 1
 
 Overview of endcorrections for '<auto-test, session 1>', session 1
 
-    pair  pairname                        score   bonus   games 
-  2 A2    pair 2                          50.00           28
+    pair  pairname                        bonus   score   games 
+  2 A2    pair 2                                  50.00   28
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 

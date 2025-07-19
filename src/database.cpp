@@ -664,9 +664,10 @@ bool CorrectionsEndRead(cor::mCorrectionsEnd& a_mCorrectionsEnd, UINT a_session,
         char bonusBuf[10+1]={0};
         UINT pairNr;
         bool bItemError = (4 != wxSscanf(it, " {%u , %10[^, ] , %10[^, ] ,%u }", &pairNr, scoreBuf, bonusBuf, &ce.games));
+        (void)bItemError;
         ce.score = AsciiTolong(scoreBuf, ExpectedDecimalDigits::DIGITS_2);
         ce.bonus = AsciiTolong(bonusBuf, ExpectedDecimalDigits::DIGITS_2);
-        if (cor::IsValidCorrectionEnd(pairNr, ce, it, bItemError) )
+//        if (cor::IsValidCorrectionEnd(pairNr, ce, it, bItemError) )   // let application handle this
         {   // only add result if editing (map == empty) or when pair exists in supplied map
             if ( a_bEdit || a_mCorrectionsEnd.find(pairNr) != a_mCorrectionsEnd.end())
             {
@@ -680,7 +681,7 @@ bool CorrectionsEndRead(cor::mCorrectionsEnd& a_mCorrectionsEnd, UINT a_session,
                     a_mCorrectionsEnd[pairNr] = ce;
             }
         }
-        else bOk = false;
+//        else bOk = false; // let application handle this
     }
     return bOk;
 }   // CorrectionsEndRead()

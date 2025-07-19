@@ -14,7 +14,7 @@ namespace cor
 {
     static bool CorrectionsSessionRead();
     static bool CorrectionsSessionWrite();
-    static bool CorrectionsEndRead();
+    static bool CorrectionsEndReadSession();
     static bool CorrectionsEndWrite();
 
 
@@ -22,7 +22,7 @@ namespace cor
     static bool bCorrectionsEndChanged     = false;
 
     static mCorrectionsSession  sm_correctionsSession;
-    static mCorrectionsEnd      sm_correctionsEnd;
+    static mCorrectionsEnd      sm_correctionsEndSession;
 
     void SaveCorrections()
     {
@@ -34,7 +34,7 @@ namespace cor
     {
         if (!ConfigChanged()) return;
         (void)CorrectionsSessionRead();
-        (void)CorrectionsEndRead();
+        (void)CorrectionsEndReadSession();
     }   // InitializeCorrections()
 
     const mCorrectionsSession* GetCorrectionsSession()
@@ -44,7 +44,7 @@ namespace cor
 
     const mCorrectionsEnd* GetCorrectionsEnd()
     {
-        return &sm_correctionsEnd;
+        return &sm_correctionsEndSession;
     }   // GetCorrectionsEnd()
 
     void SetCorrectionsSession(const mCorrectionsSession* pCorSession)
@@ -55,7 +55,7 @@ namespace cor
 
     void SetCorrectionsEnd(const mCorrectionsEnd* pCorEnd)
     {
-        sm_correctionsEnd = *pCorEnd;
+        sm_correctionsEndSession = *pCorEnd;
         bCorrectionsEndChanged = true;
     }   // SetCorrectionsEnd()
 
@@ -118,11 +118,11 @@ namespace cor
         return true;
     }   // IsValidCorrectionEnd()
 
-    bool CorrectionsEndRead()   //unconditional read for editing
+    bool CorrectionsEndReadSession()   //unconditional read for editing
     {
-        sm_correctionsEnd.clear();
-        return io::CorrectionsEndRead(sm_correctionsEnd, cfg::GetActiveSession(), true);
-    }   // CorrectionsEndRead()
+        sm_correctionsEndSession.clear();
+        return io::CorrectionsEndRead(sm_correctionsEndSession, cfg::GetActiveSession(), true);
+    }   // CorrectionsEndReadSession()
 
     bool CorrectionsEndWrite()
     {
@@ -130,6 +130,6 @@ namespace cor
         (void)ConfigChanged(true);      // refresh config
         bCorrectionsEndChanged = false; // set false, even if errors occur...
 
-        return io::CorrectionsEndWrite(sm_correctionsEnd, cfg::GetActiveSession());
+        return io::CorrectionsEndWrite(sm_correctionsEndSession, cfg::GetActiveSession());
     }
 }   // CorrectionsEndWrite()

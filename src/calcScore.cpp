@@ -84,7 +84,6 @@ static       cor::mCorrectionsSession   smCorSessionValidated;          // conta
 static bool                             sbHaveValidCombi { false };     // (re)set in ValidateSessionCorrections() for combi results
 static bool                             sbHaveValidNormal{ false };     // (re)set in ValidateSessionCorrections() for normal corrections
 
-static const cor::mCorrectionsEnd*      spmCorEnd;
 static std::vector<Total>               svSessionResult;        // session result for all pairs
 static std::vector<UINT>                svSessionRankToPair;    // index array for session results: [a]=b -> at rank 'a' is sessionpair 'b'
 static std::vector<UINT>                svSessionPairToRank;    // index array for session results: [a]=b -> sessionpair 'a' has rank 'b'
@@ -101,6 +100,7 @@ static void AddHeader(MyTextFile& a_file);
 static bool IsCombiCandidate (UINT sessionPair);    // true, if pair plays against 'absent pair'
 static UINT GetNumberOfRounds(UINT sessionPair);    // number of rounds according schema for this pair
 static void ValidateSessionCorrections(const cor::mCorrectionsSession* pNonvalidatedCorrections);   // create a validated set of corrections
+static void GetValidatedEndCorrections4Session(cor::mCorrectionsEnd& ce, UINT session);
 
 static void GetSessionCorrectionStrings(UINT a_sessionPair, wxString& a_sCombiResult, wxString& a_sCorrectionResult)
 {   // get combi/corrections for a sessionPair as strings
@@ -463,7 +463,6 @@ void CalcScore::InitializeAndCalcScores()
     names::InitializePairNames();                   // get all nameinfo
     cor::InitializeCorrections();                   //   and needed corrections
     spvGameSetData  = score::GetScoreData();        //      and scores
-    spmCorEnd       = cor::GetCorrectionsEnd();
     ValidateSessionCorrections(cor::GetCorrectionsSession());   // ouput in 'smCorSessionValidated'
 
     CalcSession();
@@ -1328,6 +1327,9 @@ void CalcScore::CalcTotal()
         //load session result
         (void)io::SessionResultRead(sessionResults[session], session);
         //append end-corrections
+        // get validated end-corrections for this session
+        cor::mCorrectionsEnd correctionsEnd;
+        GetValidatedEndCorrections4Session(correctionsEnd, session);
         (void)io::CorrectionsEndRead(sessionResults[session], session, false);
     }
 
@@ -2096,6 +2098,54 @@ void ValidateSessionCorrections(const cor::mCorrectionsSession* a_pNonValidatedC
             });
     }
 }   // ValidateSessionCorrections()
+
+void GetValidatedEndCorrections4Session(cor::mCorrectionsEnd& a_ce, UINT a_session)
+{
+    (void)io::CorrectionsEndRead( a_ce, a_session, true);
+    wxString errorMsg;
+    cor::mCorrectionsEnd ceTemp;
+    bool bButler = cfg::GetButler();
+    bool bTesting= cfg::IsScriptTesting();
+
+    for (const auto& [globalPair, ce] : a_ce)
+    {
+        if (
+               (ce.score < (bButler ? -10000 : 0 ))
+            || ((ce.score  > 10000) && (ce.score != SCORE_IGNORE && ce.score != SCORE_NO_TOTAL))  // between 0 and 100%  :10000 = 100.00%
+            || (ce.bonus   < -9999)
+            || (ce.bonus   > 9999)  // between -99.99% and +99.99% or imps
+            || (globalPair < 1)
+            || (globalPair > names::GetNumberOfGlobalPairs())
+            || (ce.games   > cfg::GetNrOfGames())
+            || (ce.bonus && (ce.games || ce.score))
+            )
+        {   // (some) incorrect value(s)
+            if ( !bTesting )
+            {
+                errorMsg += FMT("\n:  '%u,%s,%s,%u'"
+                                    , globalPair
+                                    , LongToAscii2(ce.score)
+                                    , LongToAscii2(ce.bonus)
+                                    , ce.games
+                               );
+            }
+        }
+        else
+            ceTemp[globalPair] = ce;
+    }   // for
+
+    if ( errorMsg.Len() )
+    {
+        GetMainframe()->CallAfter([errorMsg]
+            {   // if not CallAfter() we get the msgbox on an empty page
+                MyMessageBox(_("Invalid total-correction/end data, will be ignored")+ errorMsg
+                                , _("Warning"), wxOK | wxICON_INFORMATION
+                            ); 
+            });
+    }
+
+    a_ce = ceTemp;  // copy to destination what we have...
+}   // GetValidatedEndCorrections4Session();
 
 UINT GetNumberOfRounds(UINT a_sessionPair)
 {

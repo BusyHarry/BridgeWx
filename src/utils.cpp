@@ -90,6 +90,13 @@ long RoundLong(long a,int b)    // rounding when deviding long by int
     return xxx;
 }   // RoundLong()
 
+wxString LongToAscii(long value, ExpectedDecimalDigits precision)
+{
+    return precision == ExpectedDecimalDigits::DIGITS_1
+        ? LongToAscii1(value)
+        : LongToAscii2(value);
+}   // LongToAscii()
+
 wxString LongToAscii2(long score)
 {      // return "float" string to score as xxx.yy
     int beforeDp = (int)(score/100);
@@ -140,8 +147,8 @@ long AsciiTolong( StringBuf& a_buffer, ExpectedDecimalDigits a_longtype)
     }
     else if (buf[index] == '+') ++index;
 
-    for ( ; ; ++index)                      // handle all digits
-    {   if (buf[index] == '.')              // dp found
+    for ( ; ; ++index)                                      // handle all digits
+    {   if ( (buf[index] == '.') || (buf[index] == ',') )   // dp found
         {   dp = true;
             continue;
         }

@@ -9,6 +9,7 @@
 #include <wx/msgdlg.h>
 #include <wx/valtext.h>
 
+#include "validators.h"
 #include "cfg.h"
 #include "schemaInfo.h"
 #include "setupSchema.h"
@@ -23,7 +24,7 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
 {
 //rounds and nr of games for this match: 2*wxStaticText+wxTextCtrl
     auto nrOfRounds      = new wxStaticText(this, wxID_ANY, _("Rounds:"));
-    m_pTxtCtrlNrOfRounds = new MyTextCtrl  (this, wxID_ANY, "Rounds", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
+    m_pTxtCtrlNrOfRounds = new MyTextCtrlWithValidator  (this, wxID_ANY, "Rounds", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
     m_pTxtCtrlNrOfRounds->SetToolTip(_("Number of rounds in this session"));
     m_pTxtCtrlNrOfRounds->SetMinMax(1, schema::GetMaxRound());
     m_pTxtCtrlNrOfRounds->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusRoundsSetSize, this);
@@ -34,7 +35,7 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
     m_pTxtCtrlNrOfGames->SetToolTip(FMT(_("Number of games to play in this session (max=%u)"),cfg::MAX_GAMES));
 
     auto firstGame      = new wxStaticText(this, wxID_ANY, "    " + _("First game:"));
-    m_pTxtCtrlFirstGame = new MyTextCtrl(this, wxID_ANY, "FirstGame", MY_SIZE_TXTCTRL_NUM(2));
+    m_pTxtCtrlFirstGame = new MyTextCtrlWithValidator(this, wxID_ANY, "FirstGame", MY_SIZE_TXTCTRL_NUM(2));
     m_pTxtCtrlFirstGame->SetToolTip(_("Number of the first game (1, or f.e. 17 for session 2)"));
     m_pTxtCtrlFirstGame->SetMinMax(1, cfg::MAX_GAMES);
     m_pTxtCtrlFirstGame->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusRoundsSetSize, this);
@@ -51,7 +52,7 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
 
 //nr of games per table = setSize:  wxStaticText + wxTextCtrl
     auto setSize = new wxStaticText(this, wxID_ANY, _("Games per table:"));
-    m_pTxtCtrlSetSize = new MyTextCtrl(this, wxID_ANY, "GamesPerTable", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
+    m_pTxtCtrlSetSize = new MyTextCtrlWithValidator(this, wxID_ANY, "GamesPerTable", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
     m_pTxtCtrlSetSize->SetToolTip(_("Number of games per table"));
     m_pTxtCtrlSetSize->SetMinMax(1, cfg::MAX_GAMES);
 
@@ -65,7 +66,7 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
 
 //nr of groups:  wxStaticText + wxTextCtrl
     auto nrOfGroups      = new wxStaticText(this, wxID_ANY, _("Groups:"));
-    m_pTxtCtrlNrOfGroups = new MyTextCtrl(this, wxID_ANY,"Groups", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
+    m_pTxtCtrlNrOfGroups = new MyTextCtrlWithValidator(this, wxID_ANY,"Groups", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
     m_pTxtCtrlNrOfGroups->SetToolTip(_("Number of groups that play the same games"));
     m_pTxtCtrlNrOfGroups->SetMinMax(1, cfg::MAX_GROUPS);
     m_pTxtCtrlNrOfGroups->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusNrOfGroups, this);
@@ -95,7 +96,7 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
     m_pTxtCtrlGroupChars->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterGroupChars    , this );
 
     auto pairs = new wxStaticText(this, wxID_ANY, _("Number of pairs:  "));
-    m_pTxtCtrlPairs = new MyTextCtrl(this, wxID_ANY,"NrOfPairs", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
+    m_pTxtCtrlPairs = new MyTextCtrlWithValidator(this, wxID_ANY,"NrOfPairs", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
     m_pTxtCtrlPairs->SetMinMax(1, cfg::MAX_PAIRS_PER_GROUP);
     m_pTxtCtrlPairs->Bind(wxEVT_KILL_FOCUS,         &SetupSchema::OnLostFocusNrOfPairs, this );
     m_pTxtCtrlPairs->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterPairs        , this );
@@ -104,7 +105,7 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
     m_pChoiceBoxSchemas->Bind(wxEVT_CHOICE, &SetupSchema::OnSelectSchema, this );
 
     auto absent = new wxStaticText(this, wxID_ANY, _("Absent pair:  "));
-    m_pTxtCtrlAbsent = new MyTextCtrl(this, wxID_ANY, "AbsentPair", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
+    m_pTxtCtrlAbsent = new MyTextCtrlWithValidator(this, wxID_ANY, "AbsentPair", MY_SIZE_TXTCTRL_NUM(2), wxTE_PROCESS_ENTER);
     m_pTxtCtrlAbsent->SetMinMax(0, cfg::MAX_PAIRS_PER_GROUP);
     m_pTxtCtrlAbsent->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusAbsent, this );
     m_pTxtCtrlAbsent->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterAbsent    , this );
@@ -423,7 +424,7 @@ void SetupSchema::UpdateNrOfGames()
     if ( games + firstGame - 1 > cfg::MAX_GAMES)
     {
         m_pTxtCtrlNrOfGames->SetForegroundColour(*wxRED);
-        wxBell();
+        RingBell();
     }
     else
     {
@@ -519,7 +520,7 @@ void SetupSchema::HandleAbsent()
     {
         m_groupData[grp].absent = 0;
         m_pTxtCtrlAbsent->SetValue("0");
-        wxBell();
+        RingBell();
     }
 }   // HandleAbsent()
 
@@ -534,7 +535,7 @@ void SetupSchema::HandleGroupChars()
         if (m_groupData[ii].groupChars == grpChars)
         {
             MyLogError(_("Equal groupcharacters for group %u and %u"), ii+1, grp+1);
-            wxBell();
+            RingBell();
             m_pTxtCtrlGroupChars->SetValue(m_groupData[grp].groupChars);    //restore original value
             return;
         }

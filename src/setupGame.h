@@ -9,6 +9,7 @@
 #include "baseframe.h"
 
 class wxDirPickerCtrl;
+class MyTextCtrlWithValidator;
 
 class SetupGame : public Baseframe
 {
@@ -30,18 +31,18 @@ private:
     wxTextCtrl*         m_pTxtCtrlMatch;
     wxTextCtrl*         m_pTxtCtrlDescr;
     wxTextCtrl*         m_pTxtCtrlSession;
-    MyTextCtrl*         m_pTxtCtrlMin;
-    MyTextCtrl*         m_pTxtCtrlMax;
     wxCheckBox*         m_pChkBoxNeuberg;
     wxCheckBox*         m_pChkBoxWeightedMean;
     wxCheckBox*         m_pChkBoxFF;
     wxCheckBox*         m_pChkBoxClock;
-    MyTextCtrl*         m_pTxtCtrlMaxMean;
     wxTextCtrl*         m_pTxtCtrlLinesPP;
     wxCheckBox*         m_pChkBoxGroupResult;
     wxCheckBox*         m_pChkBoxGlobalNames;
     bool                m_bButler;
     wxStaticText*       m_pStaticTxtMaxMean;
+    MyTextCtrlWithValidator*    m_pTxtCtrlMaxMean;
+    MyTextCtrlWithValidator*    m_pTxtCtrlMin;
+    MyTextCtrlWithValidator*    m_pTxtCtrlMax;
 
     // vars to remember the original values
     wxString            m_sDirName;

@@ -18,6 +18,7 @@
 #include <wx/valgen.h>
 #include <wx/combobox.h>
 
+#include "validators.h"
 #include "setupGame.h"
 #include "cfg.h"
 #include "printer.h"
@@ -36,7 +37,7 @@ SetupGame::SetupGame(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a
 // max mean percentage/imps for session you have not played (in result over all sessions)
     m_bButler = !cfg::GetButler();  // init inverse of current setting, so RefreshInfo() will do initial setup!
     m_pStaticTxtMaxMean = new wxStaticText(this, wxID_ANY, "");
-    m_pTxtCtrlMaxMean = new MyTextCtrl(this, wxID_ANY, "MaxMean", MY_SIZE_TXTCTRL_NUM(5));
+    m_pTxtCtrlMaxMean = new MyTextCtrlWithValidator(this, wxID_ANY, "MaxMean", MY_SIZE_TXTCTRL_NUM(5));
     m_pTxtCtrlMaxMean->Clear(); // remove 'title' from input..
     fgs->Add(m_pStaticTxtMaxMean, 0, wxALIGN_CENTER_VERTICAL);
     fgs->Add(m_pTxtCtrlMaxMean, 0);
@@ -50,12 +51,12 @@ SetupGame::SetupGame(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a
     //20231201: seems to be resolved in 3.2.4, but only validation on loosing focus, not enter?????
 
     wxStaticText*   txtMin = new wxStaticText(this, wxID_ANY, _("min:") + "  ");
-    m_pTxtCtrlMin = new MyTextCtrl  (this, wxID_ANY, "Min", MY_SIZE_TXTCTRL_NUM(3), wxTE_PROCESS_ENTER);
+    m_pTxtCtrlMin = new MyTextCtrlWithValidator  (this, wxID_ANY, "Min", MY_SIZE_TXTCTRL_NUM(3), wxTE_PROCESS_ENTER);
     m_pTxtCtrlMin->SetMinMax(1, cfg::MAX_PAIRS);
     m_pTxtCtrlMin->Bind(wxEVT_KILL_FOCUS        , &SetupGame::OnFocusLostMin, this); //not needed because validator bug
     m_pTxtCtrlMin->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupGame::OnEnterMin    , this);
     wxStaticText*   txtMax = new wxStaticText(this, wxID_ANY, _("max:") + "  ");
-    m_pTxtCtrlMax = new MyTextCtrl  (this, wxID_ANY,"Max",  MY_SIZE_TXTCTRL_NUM(3), wxTE_PROCESS_ENTER);
+    m_pTxtCtrlMax = new MyTextCtrlWithValidator  (this, wxID_ANY,"Max",  MY_SIZE_TXTCTRL_NUM(3), wxTE_PROCESS_ENTER);
     m_pTxtCtrlMax->SetMinMax(1, cfg::MAX_PAIRS);
     m_pTxtCtrlMax->Bind(wxEVT_KILL_FOCUS        , &SetupGame::OnFocusLostMax, this);
     m_pTxtCtrlMax->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupGame::OnEnterMax    , this);
@@ -249,7 +250,7 @@ void SetupGame::HandleMin()
     // update the minimum value for maxclub
     int minClub = wxAtoi(m_pTxtCtrlMin->GetValue());
     siMinClub = minClub;
-    m_pTxtCtrlMax->SetMinMax(minClub, cfg::MAX_PAIRS);
+    m_pTxtCtrlMax->UpdateMin(minClub);
 }   // HandleMin()
 
 void SetupGame::HandleMax()
@@ -263,7 +264,7 @@ void SetupGame::HandleMax()
 //        m_pTxtCtrlMax->ChangeValue(U2String(maxClub));
     }
     siMaxClub = maxClub;
-    m_pTxtCtrlMin->SetMinMax(1, maxClub);
+    m_pTxtCtrlMin->UpdateMax(maxClub);
 }   // HandleMax()
 
 void SetupGame::OnFocusLostMin(wxFocusEvent& a_event)

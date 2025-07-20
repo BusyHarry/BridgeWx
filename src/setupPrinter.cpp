@@ -8,6 +8,7 @@
 #include <wx/valnum.h>
 #include <wx/filepicker.h>
 
+#include "validators.h"
 #include "cfg.h"
 #include "printer.h"
 #include "SetupPrinter.h"
@@ -18,7 +19,7 @@ SetupPrinter::SetupPrinter(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPa
 {
     //printer setup
     m_choiceBoxPrn          = new MY_CHOICE (this, "", _("Printer choice, 'list' means 'print to file' with name list"), CHOICE_PRINTER);
-    m_pTxtCtrlLinesPP       = new MyTextCtrl(this, wxID_ANY, "LinesPP", MY_SIZE_TXTCTRL_NUM(3));
+    m_pTxtCtrlLinesPP       = new MyTextCtrlWithValidator(this, wxID_ANY, "LinesPP", MY_SIZE_TXTCTRL_NUM(3));
     m_choiceBoxPrn->Bind(wxEVT_CHOICE, [this](auto&){AUTOTEST_BUSY("selectPrinter");});
 
     m_pTxtCtrlLinesPP->SetMinMax(1, 100);   // lines per page: 1-100

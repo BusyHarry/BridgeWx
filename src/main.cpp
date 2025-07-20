@@ -399,7 +399,7 @@ void MyApp::InitLanguage()
     m_pLocale->AddCatalogLookupPathPrefix(GetCatalogPath());
     m_pLocale->Init(language);
     m_pLocale->AddCatalog(__PRG_NAME__, wxLANGUAGE_DUTCH_NETHERLANDS);
-    wxSetlocale(LC_NUMERIC, "C" /*"en"*/);  // need '.' as decimal separator in float values in config files
+//    wxSetlocale(LC_NUMERIC, "C"); //"en_US.UTF-8");// "C" /*"en"*/);  // need '.' as decimal separator in float values in config files
 }   // InitLanguage()
 
 void MyApp::ReInitLanguage()

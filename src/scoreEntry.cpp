@@ -174,7 +174,7 @@ static int PopUp(MyGrid* pGrid, const CellInfo& a_cellInfo, const wxString& msg,
     pGrid->SetCellBackgroundColour(row, col, *wxRED );
     pGrid->SetCellValue(row, col, a_cellInfo.newData);
     pGrid->Refresh();
-    wxBell();
+    RingBell();
     int result = MyMessageBox(msg, "???", style);
     pGrid->SetCellBackgroundColour(row, col, org );
     pGrid->Refresh();
@@ -271,7 +271,7 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
         {
             if (!bNS)
             {   // EW should ALWAYS be adjusted!
-                wxBell();
+                RingBell();
                 m_theGrid->CallAfter([this,a_cellInfo](){this->m_theGrid->GoToCell(a_cellInfo.row, COL_SCORE_EW);});
                 return CELL_CHANGE_REJECTED;
             }

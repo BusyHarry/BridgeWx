@@ -7,6 +7,7 @@
 #include "baseframe.h"
 
 class wxWindow;
+class MyTextCtrlWithValidator;
 
 class SetupPrinter : public Baseframe
 {
@@ -23,7 +24,7 @@ protected:
     virtual void BackupData     () override final;
 private:
 
-    MyTextCtrl*         m_pTxtCtrlLinesPP;
+    MyTextCtrlWithValidator* m_pTxtCtrlLinesPP;
     MY_CHOICE*          m_choiceBoxPrn;
     wxCheckBox*         m_pChkBoxFF;
     wxCheckBox*         m_pChkBoxRemote;

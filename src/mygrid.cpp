@@ -3,6 +3,7 @@
 
 #include <wx/grid.h>
 
+#include "validators.h"
 #include "baseframe.h"
 #include "utils.h"
 #include "cfg.h"
@@ -35,6 +36,42 @@ MyGrid::MyGrid(Baseframe* a_pParent, const wxString& a_ahkLabel) : wxGrid(a_pPar
 }
 
 MyGrid::~MyGrid(){}
+
+void MyGrid::UpdateLimitMax(int a_row, int a_col, double a_newMax)
+{
+    auto pBase = GetCellEditor(a_row, a_col);
+    if ( pBase )
+    {
+        auto pCellEditor = dynamic_cast<MyGridCellEditorWithValidator*>(pBase);
+        if ( pCellEditor )
+            pCellEditor->UpdateMax(a_newMax);
+        pBase->DecRef();
+    }
+}   // MyGrid::UpdateLimitMax()
+
+void MyGrid::UpdateLimitMin(int a_row, int a_col, double a_newMin)
+{
+    auto pBase = GetCellEditor(a_row, a_col);
+    if ( pBase )
+    {
+        auto pCellEditor = dynamic_cast<MyGridCellEditorWithValidator*>(pBase);
+        if ( pCellEditor )
+            pCellEditor->UpdateMin(a_newMin);
+        pBase->DecRef();
+    }
+}   // MyGrid::UpdateLimitMin()
+
+void MyGrid::SetLimitMinMax(int a_row, int a_col, double a_min, double a_max)
+{
+    auto pBase = GetCellEditor(a_row, a_col);
+    if ( pBase )
+    {
+        auto pCellEditor = dynamic_cast<MyGridCellEditorWithValidator*>(pBase);
+        if ( pCellEditor )
+            pCellEditor->SetMinMax(a_min, a_max);
+        pBase->DecRef();
+    }
+}   // MyGrid::UpdateLimitMinMax()
 
 void MyGrid::PrintGrid( const wxString& a_title, UINT a_nrOfColumnsToPrint, UINT a_notEmptyfrom)
 {

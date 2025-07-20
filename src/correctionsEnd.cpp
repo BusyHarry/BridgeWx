@@ -14,6 +14,7 @@
 #include "score.h"
 #include "corrections.h"
 #include "database.h"
+#include "validators.h"
 
 CorrectionsEnd::CorrectionsEnd(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a_pageId), m_theGrid(0)
 {
@@ -35,8 +36,7 @@ CorrectionsEnd::CorrectionsEnd(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_
     m_theGrid->SetColSize(COL_COR_SCORE       , SIZE_PROCENT      );// m_theGrid->SetColLabelValue(COL_COR_SCORE       , _("score" ));
     m_theGrid->SetColSize(COL_COR_BONUS       , SIZE_PROCENT      ); m_theGrid->SetColLabelValue(COL_COR_BONUS       , _("bonus"   )); m_theGrid->SetColLabelAutoTest(COL_COR_BONUS       , "bonus");
     m_theGrid->SetColSize(COL_COR_GAMES       , SIZE_GAMES        ); m_theGrid->SetColLabelValue(COL_COR_GAMES       , _("games"   )); m_theGrid->SetColLabelAutoTest(COL_COR_GAMES       , "games");
-//    m_theGrid->SetColFormatNumber(COL_COR_GAMES);
-    wxGridCellAttr* pAttr = new wxGridCellAttr; pAttr->SetAlignment(wxALIGN_LEFT, wxALIGN_CENTER_VERTICAL);
+    wxGridCellAttr* pAttr = new wxGridCellAttr; pAttr->SetAlignment(wxALIGN_RIGHT, wxALIGN_CENTER_VERTICAL);
                       m_theGrid->SetColAttr(COL_PAIRNAME_SESSION, pAttr);
     pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_SCORE       , pAttr); 
     pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_BONUS       , pAttr); 
@@ -139,7 +139,8 @@ bool CorrectionsEnd::OnCellChanging(const CellInfo& a_cellInfo)
     int         col     = a_cellInfo.column;
     wxString    oldData = a_cellInfo.oldData;   (void)oldData;
     wxString    newData = a_cellInfo.newData;
-    wxString    updatedData;    // data to show for changing cell 
+    bool        bButler = cfg::GetButler();
+    wxString    updatedData;    // data to show for changing cell
 
     do
     {
@@ -160,7 +161,7 @@ bool CorrectionsEnd::OnCellChanging(const CellInfo& a_cellInfo)
         }
 
         // first filter special cases for bonus/score, then general handling
-        if ( (col == COL_COR_SCORE) && (newData.StartsWith('-') || newData.StartsWith('*')) )
+        if ( (col == COL_COR_SCORE) && ((!bButler && newData.StartsWith('-')) || newData.StartsWith('*')) )
         {   // sessionresult of this pair will NOT be added to the end score
             m_theGrid->SetCellValue(row, COL_COR_BONUS, ES);
             m_theGrid->SetCellValue(row, COL_COR_GAMES, ES);
@@ -176,7 +177,7 @@ bool CorrectionsEnd::OnCellChanging(const CellInfo& a_cellInfo)
 
         // 'normal' score/bonus
         // score and bonus are: xxx.yy, so 10000 = 100.00 for display
-        long minimum = (col == COL_COR_BONUS || cfg::GetButler()) ? -10000 : 0L;
+        long minimum = (col == COL_COR_BONUS || bButler) ? -10000 : 0L;
         long value = AsciiTolong(newData, ExpectedDecimalDigits::DIGITS_2);
         if ((value >= minimum) && (value <= 10000))
         {   // if inrange: don't show bonus data, if value = 0 or when we already have a score
@@ -210,17 +211,29 @@ void CorrectionsEnd::RefreshInfo()
     names::InitializePairNames();
     cor::InitializeCorrections();
     m_bDataChanged = false;
+    bool        bButler     = cfg::GetButler();
+    long        scoreMin;
+    long        scoreMax;
+    wxString    scoreExtra;
 
     static wxString explanation;    // MUST be initialized dynamically: translation
-    if (cfg::GetButler())
+    if ( bButler )
     {
-        m_theGrid->SetColLabelValue(COL_COR_SCORE, _("imps")); m_theGrid->SetColLabelAutoTest(COL_COR_SCORE, "imps");
-        explanation = _("END CORRECTIONS: '-' or '*' for 'imps': sessionsscore is ignored for total result");
+        m_theGrid->SetColLabelValue   (COL_COR_SCORE, _("imps"));
+        m_theGrid->SetColLabelAutoTest(COL_COR_SCORE, "imps");
+        explanation = _("END CORRECTIONS: '*' for 'imps': sessionsscore is ignored for total result");
+        scoreMin    = -10;
+        scoreMax    = +10;
+        scoreExtra  = "*";
     }
     else
-    {
-        m_theGrid->SetColLabelValue(COL_COR_SCORE, _("score"));  m_theGrid->SetColLabelAutoTest(COL_COR_SCORE, "score");
+    {   // '%' score
+        m_theGrid->SetColLabelValue   (COL_COR_SCORE, _("score"));
+        m_theGrid->SetColLabelAutoTest(COL_COR_SCORE, "score");
         explanation = _("END CORRECTIONS: '-' or '*' for 'score': sessionsscore is ignored for total result");
+        scoreMin    = 0;
+        scoreMax    = 100;
+        scoreExtra  = "*-";
     }
     SendEvent2Mainframe(this, ID_STATUSBAR_SETTEXT, &explanation);
 
@@ -238,8 +251,11 @@ void CorrectionsEnd::RefreshInfo()
         m_theGrid->SetCellValue (row, COL_PAIRNAME_GLOBAL ,       names::GetGlobalPairInfo(row+1).pairName);  // small separation with previous column
         m_theGrid->SetReadOnly  (row, COL_PAIRNAME_SESSION);
         m_theGrid->SetReadOnly  (row, COL_PAIRNAME_GLOBAL);
-
-        m_theGrid->SetCellEditor(row, COL_COR_GAMES, new wxGridCellNumberEditor(1, cfg::GetNrOfGames() ));
+        auto pValScore = new MyGridCellEditorWithValidator(scoreMin, scoreMax, 2 /*precision*/);
+        pValScore->SetExtraStartChars( scoreExtra );
+        m_theGrid->SetCellEditor(row, COL_COR_SCORE, pValScore);
+        m_theGrid->SetCellEditor(row, COL_COR_BONUS, new MyGridCellEditorWithValidator(-100, +100, 2 /*precision*/));
+        m_theGrid->SetCellEditor(row, COL_COR_GAMES, new MyGridCellEditorWithValidator(1, cfg::GetNrOfGames() ));
     }
 
     auto corrections = cor::GetCorrectionsEnd();

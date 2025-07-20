@@ -627,6 +627,7 @@
     <ClCompile Include="src\showStartImage.cpp" />
     <ClCompile Include="src\statusbar.cpp" />
     <ClCompile Include="src\utils.cpp" />
+    <ClCompile Include="src\validators.cpp" />
     <ClCompile Include="src\wxsysinfoframe.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -661,6 +662,7 @@
     <ClInclude Include="src\ShowStartImage.h" />
     <ClInclude Include="src\statusbar.h" />
     <ClInclude Include="src\utils.h" />
+    <ClInclude Include="src\validators.h" />
     <ClInclude Include="src\version.h" />
     <ClInclude Include="src\wxsysinfoframe.h" />
   </ItemGroup>

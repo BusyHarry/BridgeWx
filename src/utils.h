@@ -2,8 +2,7 @@
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
 #if !defined _UTILS_H_
-#define _UTILS_H
-#pragma once
+#define _UTILS_H_
 
 #include <wx/log.h>
 
@@ -19,6 +18,11 @@ bool IsInRange(const T& value, const T& low, const T& high)
 {
     return (value >= low) && (value <= high);
 }
+
+// enable/disable bellsound, return old value
+// default setting: !wxValidator::IsSilent() && !cfg::IsScriptTesting()
+bool EnableBell( bool bBell );
+void RingBell  ();              // ring the bell, if enabled
 
 struct StringBuf
 {   // buffer with a string and an index from where to start in the string

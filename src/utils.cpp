@@ -326,3 +326,18 @@ wxString BoolToString(bool a_bValue)
 {
     return a_bValue ? _("yes") : _("no");
 }   // BoolToString()
+
+static bool sbBellActive = !wxValidator::IsSilent() && !cfg::IsScriptTesting();
+bool EnableBell(bool a_bBell)
+{
+    bool bOld = sbBellActive;
+    sbBellActive = a_bBell;
+    return bOld;
+}   // EnableBell()
+
+void RingBell()
+{
+    if ( sbBellActive )
+        wxBell();
+}   // RingBell()
+

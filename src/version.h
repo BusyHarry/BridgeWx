@@ -2,7 +2,7 @@
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
 #define __PRG_NAME__            "BridgeWx"
-#define __VERSION__             "v10.8.0"           /* like "v2.0.0" */
+#define __VERSION__             "v10.9.0"           /* like "v2.0.0" */
 #define __VERSION_MAIN__        "v10"
 #define __VERSION_NR__          10,8,0,0
 #define __PRODUCT_VERSION__     10,8,0,0

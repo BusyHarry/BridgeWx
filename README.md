@@ -43,7 +43,7 @@ If you run BridgeWx for the first time from the binairy on a clean win10 install
 These .dll's are needed when running BridgeWx (compiled with VS2019/VS2022). 
 Download/install the redistributable package from: https://aka.ms/vs/17/release/vc_redist.x64.exe
 (for x86: https://aka.ms/vs/17/release/vc_redist.x86.exe )
-As from V10.3.0 on, these dll's are included in the BridgeWxBin_Vxxx.zip 
+ - As from V10.3.0 on, these dll's are included in the BridgeWxBin_Vxxx.zip 
 
 ## Language
 
@@ -90,6 +90,8 @@ Remark: English is buildin, so for this language you don't need to do anything
  - from a cmd-prompt: set environment variable '\<wxwin\>' to wxWidgets basefolder and '\<wx_version\>' to the MajorMinor wx-version:
     - set wxwin=d:\wxWidgets_3.3.0  ( == \<wxBase\> )
     - set wx_version=33             ( for V3.3.* (default) and '32' for V3.2.*)
+    - as from V10.8.0 the setting of 'wx_version' is not needed anymore
+
  - start BridgeWx.sln (from the base folder where the repo is located)
     - from version V10.8.0 onwards, you can also use the BridgeWx.props file i.s.o the environment variable(s)
        - adjust the value(s) in it so they match your situation

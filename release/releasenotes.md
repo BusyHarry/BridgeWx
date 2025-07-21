@@ -1,13 +1,24 @@
 # Releasenotes
-#V10.8.0  ....
+#V10.8.0  Monday Juli 21 2025
  - disabled v3.3.0 feature to show highlighted grid columnlabel on activating a cell
- - when producing builddate.h, 'prebuild.bat' now defaults to 'en_UK' locales for date and time
+ - when producing builddate.h, 'prebuild.bat' now defaults to 'en_GB' locales for date and time
  - use ./build/msw/wx_setup.props to get the version-dependend names of some wx libraries
+   - using '#include <msvc/wx/setup.h>' in main.cpp, all needed libs are auto-included, no need for above .props
  - added 'BridgeWx.props' to set needed variable(s): wxwin (base of wxWidgets version)
    - remark: if 'wxwin'is set in the environment, the BridgeWx.props file is not loaded
  - changed disabled feature: 
    - bad side effect: columnheaders got a much larger margin, so many texts did not fit anymore
    - new implementation has nice side effect of having sort-icons available in the column headers
+ - show messagebox after page has been setup to prevent msgbox on empty page
+ - implementation of combi-table results and optimization of table displays in result pages
+ - added an overview of (possible) useful functions for those not interested in the program itself
+ - optimization of session corrections (entry and result-calculation)
+ - autotest: added symbolic names for columns of a grid
+ - more logical column order in corrections for the total result
+ - optimization of end corrections (entry and result-calculation)
+ - updated/new validator for wxTextCtrl and grid-editor
+ - implemented new validator
+
 
 #V10.7.0  Monday June 9, 2025
  - easier translation (more)

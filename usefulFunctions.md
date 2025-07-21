@@ -19,3 +19,11 @@ Even if you are not a bridge enthousiast, there may be interesting parts in the 
     - see multiple events for the the same action
     - fe activate the loggger: just try and see what happens when activating a menu-entry by key: Alt F(ile) P(printer choice)
  - a simpel table builder so you can easily organise your data in row/colums for listings/printing
+ - a validator for any 'wxTextCtrl' (also as validating grid-editor)
+    - ',' and '.' are accepted as decimal point
+    - output for dp is always '.'
+    - validation on 'ENTER' and on 'LOST_FOCUS'
+    - empty lines are accepted (wx-validators return the minimum allowed value)
+    - example implementation for:
+      - MyTextCtrlWithValidator()
+      - MyGridCellEditorWithValidator()

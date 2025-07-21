@@ -55,11 +55,11 @@ bool MyValidator::IsValidStartKey(wxChar a_key)
     do
     {
         if ( !m_bValidate                                 ) break;
+        if ( a_key == ' '                                 ) break;
         if ( a_key == '-' && m_bSignOk                    ) break;
         if ( m_bIsFloat && (a_key == '.' || a_key == ',') ) break;
         if ( wxIsdigit(a_key) && (a_key - '0') <= m_dMax  ) break;
         if ( IsExtraChar(a_key)                           ) break;
-        if ( a_key == ' '                                 ) break;
         bValid = false;
     } while ( 0 );
     if ( !bValid )

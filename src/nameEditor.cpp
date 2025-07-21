@@ -30,6 +30,9 @@ NameEditor::NameEditor(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     m_theGrid->SetColSize(COL_PAIRNAME, PAIR_SIZE_PIX); m_theGrid->SetColLabelValue(COL_PAIRNAME, _("pairname"));
     m_theGrid->SetColSize(COL_CLUBNAME, CLUB_SIZE_PIX); m_theGrid->SetColLabelValue(COL_CLUBNAME, _("clubname"));
     m_theGrid->SetColSize(COL_CLUBID  , ID_SIZE_PIX  ); m_theGrid->SetColLabelValue(COL_CLUBID,   _("club id" ));
+                                                        m_theGrid->SetColLabelAutoTest(COL_PAIRNAME, "pairname");
+                                                        m_theGrid->SetColLabelAutoTest(COL_CLUBNAME, "clubname");
+                                                        m_theGrid->SetColLabelAutoTest(COL_CLUBID  , "club id" );
 //    m_theGrid->SetColFormatNumber(COL_CLUBID);  // what does this implicate?????
 
     std::vector<MyGrid::SortMethod> methods;

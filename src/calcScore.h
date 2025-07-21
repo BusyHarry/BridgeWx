@@ -90,7 +90,6 @@ private:
     wxString    m_txtBadGameData;               // info on bad gamedata
     UINT        m_numberOfSessionPairs;         // sum of pairs in all groups
 
-    bool        m_bSomeCorrection;
     bool        m_bButler;
     bool        m_bBadGameData;     // some bad pairnrs in gamedata
     UINT        m_maxPair;          // highest pairnr played in this session
@@ -120,7 +119,8 @@ private:
 class FormBuilder
 {   // class to create a table with a header and one or more rows of data
 public:
-    enum class Align{ // alignment in the columns of the header/rows
+    enum class Align
+    {   // alignment in the columns of the header/rows
           LEFT          // fillup with spaces after till wanted size
         , CENTER        // as much spaces before and after till wanted size
         , RIGHT         // as much spaces before till wanted size

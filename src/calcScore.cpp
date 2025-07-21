@@ -19,7 +19,7 @@
 
 static const auto sButlerRemoveScoresPercent = 10;  // remove N % of highest/lowest scores
 static const auto sButlerMinimumScores       = 3;   // we want atleast N scores after removal
-static const auto sButlerMpPer10Procent      = 2;   // referee scores: each 10% above/below 50% equals N mps, ASSUME scores are multiple of 5%
+static const auto sButlerImpsPer10Procent    = 2;   // referee scores: each 10% above/below 50% equals N imps, ASSUME scores are multiple of 5%
 
 struct ButlerFkw{bool bInit = false; long scoreNs=0;long deltaNs=0; int impsNs=0; long scoreEw=0; long deltaEw=0;int impsEw=0;};
 
@@ -43,7 +43,7 @@ int ButlerGetMpsFromScore(int a_score, int a_datumScore)
     if (score::IsProcent(a_score))
     {   // for now, assume a procentscore is a multiple of 5%
         auto deltaProcent = score::Procentscore2Procent(a_score) - 50;
-        return sButlerMpPer10Procent*deltaProcent/10;
+        return sButlerImpsPer10Procent*deltaProcent/10;
     }
 
     // now we have a 'normal' score
@@ -80,8 +80,10 @@ struct TopsPerGame
 };
 
 static const vvScoreData*               spvGameSetData;
-static const cor::mCorrectionsSession*  spmCorSession;
-static const cor::mCorrectionsEnd*      spmCorEnd;
+static       cor::mCorrectionsSession   smCorSessionValidated;          // contains ONLY correct (combi-)data, created in ValidateSessionCorrections()
+static bool                             sbHaveValidCombi { false };     // (re)set in ValidateSessionCorrections() for combi results
+static bool                             sbHaveValidNormal{ false };     // (re)set in ValidateSessionCorrections() for normal corrections
+
 static std::vector<Total>               svSessionResult;        // session result for all pairs
 static std::vector<UINT>                svSessionRankToPair;    // index array for session results: [a]=b -> at rank 'a' is sessionpair 'b'
 static std::vector<UINT>                svSessionPairToRank;    // index array for session results: [a]=b -> sessionpair 'a' has rank 'b'
@@ -95,32 +97,40 @@ static std::vector<std::vector<wxString> > svFrqstringTable;    // for each (int
 
 static int ScoreEwToNs(int score);  // convert ew-score to ns-score
 static void AddHeader(MyTextFile& a_file);
+static bool IsCombiCandidate (UINT sessionPair);    // true, if pair plays against 'absent pair'
+static UINT GetNumberOfRounds(UINT sessionPair);    // number of rounds according schema for this pair
+static void ValidateSessionCorrections(const cor::mCorrectionsSession* pNonvalidatedCorrections);   // create a validated set of corrections
+static void GetValidatedEndCorrections4Session(cor::mCorrectionsEnd& ce, UINT session);
 
-static wxString GetSessionCorrectionString(UINT a_sessionPair, bool a_bForceResult = false)
-{   // if a_bForceResult, then always return a non-empty string (spaces or real values)
-    wxString correction; 
-    if (a_bForceResult) correction = "       "; // result is always 7 chars
-    auto it = spmCorSession->find(a_sessionPair);
-    if (it != spmCorSession->end())
-    {   // some correction present
-        if (cfg::GetButler())
-        {   // for butler, there shouldn't be a % correction, so we just ignore it
-            if (it->second.type == '%' && it->second.games == 0 )
-                ;
-            else
-                correction.Printf("(%+4ldi)", it->second.correction + it->second.extra/10);
-        }
-        else
-        {   // % score calculation
-            if (it->second.correction)
-                correction.Printf("(%+4d%c)",it->second.correction,it->second.type);
-            else    // can't show both corrections
-                if (it->second.maxExtra)
-                    correction.Printf("(%5s)",LongToAscii2(RoundLong(10*it->second.extra,it->second.maxExtra)));
-        }
+static void GetSessionCorrectionStrings(UINT a_sessionPair, wxString& a_sCombiResult, wxString& a_sCorrectionResult)
+{   // get combi/corrections for a sessionPair as strings
+    a_sCombiResult.Clear();
+    a_sCorrectionResult.Clear();
+    if ( !smCorSessionValidated.size() ) return;           // no results, if no corrections at all
+    auto it = smCorSessionValidated.find(a_sessionPair);
+    if ( it == smCorSessionValidated.end() ) return;       // no results, if pair has no corrections
+
+    bool bButler = cfg::GetButler();
+    if ( it->second.games )
+    {   // combi
+        a_sCombiResult = bButler
+            ? FMT("%ii"  , it->second.extra/10) // don't show fractional value!
+            : FMT("%d/%d", it->second.extra/10, it->second.maxExtra);
     }
-    return correction;
-}   // GetSessionCorrectionString()
+
+    int correction = it->second.correction;
+    if ( correction )
+    {   // only non-zero is a real correction
+        a_sCorrectionResult = FMT("%d%s", correction
+                                        , it->second.type == '%'
+                                            ? "%"
+                                            : ( bButler
+                                                    ? "i"
+                                                    : "mp"
+                                              )
+                                 );
+    }
+}   // GetSessionCorrectionStrings()
 
 static void InitPairToRankVector(bool a_bSession)
 {
@@ -148,7 +158,6 @@ static void InitPairToRankVector(bool a_bSession)
 CalcScore::CalcScore(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, a_pageId)
 {
     m_bDataChanged      = false;
-    m_bSomeCorrection   = false;
     m_bButler           = cfg::GetButler();
     m_maxPair           = 1;
     m_maxGame           = 1;
@@ -453,9 +462,8 @@ void CalcScore::InitializeAndCalcScores()
     if (!ConfigChanged()) return;
     names::InitializePairNames();                   // get all nameinfo
     cor::InitializeCorrections();                   //   and needed corrections
-    spvGameSetData  = score::GetScoreData();        //      and scsores
-    spmCorSession   = cor::GetCorrectionsSession();
-    spmCorEnd       = cor::GetCorrectionsEnd();
+    spvGameSetData  = score::GetScoreData();        //      and scores
+    ValidateSessionCorrections(cor::GetCorrectionsSession());   // ouput in 'smCorSessionValidated'
 
     CalcSession();
     CalcTotal();
@@ -700,7 +708,6 @@ void CalcScore::SaveGroupResult()
     UINT setSize            = cfg::GetSetSize();
     UINT sets               = cfg::GetNrOfGames()/setSize;
     UINT offsetFirstGame    = cfg::GetFirstGame() - 1;
-    bool bHaveCorrections   = spmCorSession->size();
 
     m_txtFileResultGroup.MyCreate(cfg::ConstructFilename(cfg::EXT_RESULT_GROUP), MyTextFile::WRITE);
     m_txtFileResultGroup.AddLine(ES);
@@ -711,36 +718,37 @@ void CalcScore::SaveGroupResult()
     m_txtFileResultGroup.AddLine(tmp);
     m_txtFileResultGroup.AddLine(ES);
 
-    const size_t SIZE_GRP_PAIR       (3);
+    const size_t SIZE_GRP_PAIR       (4);
     const size_t SIZE_GRP_NAME       (cfg::MAX_NAME_SIZE);
     const size_t SIZE_GRP_SCORE      (5);
-    const size_t SIZE_GRP_EXTRA      (6);
-    const size_t SIZE_GRP_CORR       (4);
+    const size_t SIZE_GRP_COMBI      (6);
+    const size_t SIZE_GRP_CORRECTION (6);
+    const size_t SIZE_GRP_GAMES      (7);
     const size_t SIZE_GRP_TOTAL      (6);
 
     #define GRP_INSERT_POS ((size_t)2)   /*start index to insert set-info*/
     std::vector<FormBuilder::ColumnInfoRow> formInfo =
         {
-              {SIZE_GRP_PAIR         , FormBuilder::Align::RIGHT , ES, true}
-            , {SIZE_GRP_NAME         , FormBuilder::Align::LEFT  , ES, true}
+              {SIZE_GRP_PAIR         , FormBuilder::Align::RIGHT       , ES, true}
+            , {SIZE_GRP_NAME         , FormBuilder::Align::LEFT        , ES, true}
                 // setinfo added later
-            , {SIZE_GRP_EXTRA        , FormBuilder::Align::CENTER, ES, bHaveCorrections}
-            , {SIZE_GRP_CORR         , FormBuilder::Align::LEFT  , ES, bHaveCorrections && !m_bButler}
-            , {SIZE_GRP_CORR         , FormBuilder::Align::LEFT  , ES, bHaveCorrections}
-            , {SIZE_GRP_TOTAL        , FormBuilder::Align::RIGHT , ES, true}
-            , {SIZE_GRP_SCORE        , FormBuilder::Align::RIGHT , ES, true}
+            , {SIZE_GRP_COMBI        , FormBuilder::Align::CENTER      , ES, sbHaveValidCombi}
+            , {SIZE_GRP_CORRECTION   , FormBuilder::Align::RIGHT_SPACE1, ES, sbHaveValidNormal}
+            , {SIZE_GRP_GAMES        , FormBuilder::Align::RIGHT_SPACE2, ES, true}
+            , {SIZE_GRP_TOTAL        , FormBuilder::Align::RIGHT       , ES, true}
+            , {SIZE_GRP_SCORE        , FormBuilder::Align::RIGHT       , ES, true}
         };
     FormBuilder::Align alignScore = m_bButler ? FormBuilder::Align::RIGHT : FormBuilder::Align::RIGHT_SPACE2;
     std::vector<FormBuilder::ColumnInfoHeader> headerInfo =
     {   // as it says: info for the header, columnsize is taken from the form-info
-          {FormBuilder::Align::RIGHT, ES, ES          }
-        , {FormBuilder::Align::RIGHT, ES, _("games :")}
+          {FormBuilder::Align::RIGHT  , ES, ES          }
+        , {FormBuilder::Align::RIGHT  , ES, _("games") + " :"}
             // setinfo added later
-        , {FormBuilder::Align::LEFT , ES, _("extra"  )}
-        , {FormBuilder::Align::LEFT , ES, _("cor"    )}
-        , {FormBuilder::Align::LEFT , ES, _("cor"    )}
-        , {alignScore               , ES, _("tot"    )}
-        , {FormBuilder::Align::LEFT , ES, _("score"  )}
+        , {FormBuilder::Align::RIGHT  , ES, _("combi"  )}
+        , {FormBuilder::Align::RIGHT  , ES, _("corr."  )}
+        , {FormBuilder::Align::CENTER , ES, _("games"  )}
+        , {alignScore                 , ES, _("tot"    )}
+        , {FormBuilder::Align::LEFT   , ES, _("score"  )}
     };
 
     for (UINT ii = 0; ii < sets; ++ii)
@@ -759,13 +767,13 @@ void CalcScore::SaveGroupResult()
         if (svSessionResult[pair].nrOfGames == 0)
         {
             if (cfg::IsSessionPairAbsent(pair))
-                tmp.Printf("%3u --> %s", pair,  _("absent"));
+                tmp.Printf("%*s --> %s", (int)SIZE_GRP_PAIR, names::PairnrSession2SessionText(pair,true),  _("absent"));
             else
-                tmp.Printf("%3u %s --> %s", pair, names::PairnrSession2GlobalText(pair), _("NOT PLAYED"));  //???? kan niet, is "paar heeft niet gespeeld : afwezig..."
+                tmp.Printf("%*s %s --> %s", (int)SIZE_GRP_PAIR, names::PairnrSession2SessionText(pair), names::PairnrSession2GlobalText(pair), _("NOT PLAYED"));  // ???? not possible if session ready!
             m_txtFileResultGroup.AddLine(tmp);
             continue;                   // pair didn't play
         }
-        std::vector<wxString> rowInfo = {U2String(pair), DottedName(names::PairnrSession2GlobalText(pair))};
+        std::vector<wxString> rowInfo = {names::PairnrSession2SessionText(pair), DottedName(names::PairnrSession2GlobalText(pair))};
 
         for (UINT ii = 0; ii < sets; ++ii)
         {
@@ -776,46 +784,13 @@ void CalcScore::SaveGroupResult()
             else
                 rowInfo.push_back("-----");
         }
-        // now add corrections
-        if (bHaveCorrections)
-        {
-            int procent     = 0;
-            int mp          = 0;
-            int extra       = 0;
-            int maxExtra    = 0;
-            UINT games      = 0;
-            auto it = spmCorSession->find(pair);
-            if (it != spmCorSession->end())
-            {
-                extra    = it->second.extra/10;
-                maxExtra = it->second.maxExtra;
-                games    = it->second.games;
-                if (it->second.type == '%')
-                    procent = it->second.correction;
-                else
-                    mp = it->second.correction;
-            }
 
-            wxString sMp = m_bButler ? "i " : "mp";
-
-            tmp2.Clear();
-            if ( m_bButler && games   ) tmp2 = FMT("%+ii" , extra);
-            if (!m_bButler && maxExtra) tmp2 = FMT("%d/%d", extra, maxExtra );
-            rowInfo.push_back(tmp2);    // extra
-
-            tmp2.Clear();
-            if (!m_bButler && procent) tmp2 = FMT("%d%%", procent);
-            rowInfo.push_back(tmp2);  // cor %
-
-            tmp2.Clear();
-            if (mp) tmp2 = FMT( "%d%s"  , mp,sMp );
-            rowInfo.push_back(tmp2);
-        }
-        else
-        {   // table MUST be filled
-            rowInfo.push_back(ES); rowInfo.push_back(ES); rowInfo.push_back(ES);
-        }
-
+        wxString combi;
+        wxString correction;
+        GetSessionCorrectionStrings(pair, combi, correction);
+        rowInfo.push_back(combi);
+        rowInfo.push_back(correction);
+        rowInfo.push_back(U2String(svSessionResult[pair].nrOfGames));
         rowInfo.push_back(m_bButler ? L2String(svSessionResult[pair].butlerMp) : LongToAscii1(svSessionResult[pair].points));
         rowInfo.push_back(LongToAscii2(svSessionResult[pair].procentScore));
         m_txtFileResultGroup.AddLine(group.CreateRow(rowInfo));
@@ -832,19 +807,21 @@ void CalcScore::SaveSessionResultsProcent()
     const size_t SIZE_RP_TOTAL       (6);
     const size_t SIZE_RP_MAX         (5);
     const size_t SIZE_RP_SCORE       (6);
-    const size_t SIZE_RP_CORRECTION  (7);
+    const size_t SIZE_RP_COMBI       (6);
+    const size_t SIZE_RP_CORRECTION  (6);
     const size_t SIZE_RP_GROUPRESULT (FormBuilder::NO_LIMIT);
 
     std::vector<FormBuilder::ColumnInfoRow> formInfo =
     {
-          {SIZE_RP_RANK       , FormBuilder::Align::RIGHT, ES , true}
-        , {SIZE_RP_PAIR       , FormBuilder::Align::RIGHT, ES , true}
-        , {SIZE_RP_NAME       , FormBuilder::Align::LEFT , ES , true}
-        , {SIZE_RP_TOTAL      , FormBuilder::Align::RIGHT, ES , true}
-        , {SIZE_RP_MAX        , FormBuilder::Align::RIGHT, ES , true}
-        , {SIZE_RP_SCORE      , FormBuilder::Align::RIGHT, '%', true}
-        , {SIZE_RP_CORRECTION , FormBuilder::Align::LEFT , ' ', m_bSomeCorrection}
-        , {SIZE_RP_GROUPRESULT, FormBuilder::Align::LEFT , ES , true}
+          {SIZE_RP_RANK       , FormBuilder::Align::RIGHT       , ES , true}
+        , {SIZE_RP_PAIR       , FormBuilder::Align::RIGHT       , ES , true}
+        , {SIZE_RP_NAME       , FormBuilder::Align::LEFT        , ES , true}
+        , {SIZE_RP_TOTAL      , FormBuilder::Align::RIGHT       , ES , true}
+        , {SIZE_RP_MAX        , FormBuilder::Align::RIGHT       , ES , true}
+        , {SIZE_RP_SCORE      , FormBuilder::Align::RIGHT       , '%', true}
+        , {SIZE_RP_COMBI      , FormBuilder::Align::CENTER      , ES , sbHaveValidCombi}
+        , {SIZE_RP_CORRECTION , FormBuilder::Align::RIGHT_SPACE1, ES , sbHaveValidNormal}
+        , {SIZE_RP_GROUPRESULT, FormBuilder::Align::LEFT        , ES , true}
     };
 
     std::vector<FormBuilder::ColumnInfoHeader> headerInfo =
@@ -855,7 +832,8 @@ void CalcScore::SaveSessionResultsProcent()
         , {FormBuilder::Align::CENTER, ES , _("tot."    )}
         , {FormBuilder::Align::RIGHT , ES , _("max"     )}
         , {FormBuilder::Align::RIGHT , ' ', _("score"   )}
-        , {FormBuilder::Align::LEFT  , ' ', _("corr."   )}
+        , {FormBuilder::Align::RIGHT , ES , _("combi"   )}
+        , {FormBuilder::Align::RIGHT , ES , _("corr."   )}
         , {FormBuilder::Align::LEFT  , ES , GetGroupResultString(0, &svSessionRankToPair, GROUPRESULT_SESSION)}
     };
 
@@ -873,7 +851,10 @@ void CalcScore::SaveSessionResultsProcent()
         long score  = svSessionResult[pair].procentScore;
         if (svSessionResult[pair].maxScore == 0)
             continue;                   // pair didn't play
-        wxString correction = GetSessionCorrectionString(pair, m_bSomeCorrection);
+
+        wxString combi;
+        wxString correction;
+        GetSessionCorrectionStrings(pair, combi, correction);
         std::vector<wxString> rowInfo =
         {
               U2String(svSessionPairToRank[pair])
@@ -882,6 +863,7 @@ void CalcScore::SaveSessionResultsProcent()
             , LongToAscii1(svSessionResult[pair].points)
             , U2String(svSessionResult[pair].maxScore)
             , LongToAscii2(score)
+            , combi
             , correction
             , GetGroupResultString(pair)
         };
@@ -899,19 +881,21 @@ void CalcScore::SaveSessionResultsButler()
     const size_t SIZE_RI_IMPS        (4);
     const size_t SIZE_RI_GAMES       (7);
     const size_t SIZE_RI_SCORE       (6);
-    const size_t SIZE_RI_CORRECTION  (7);
+    const size_t SIZE_RI_COMBI       (6);
+    const size_t SIZE_RI_CORRECTION  (6);
     const size_t SIZE_RI_GROUPRESULT (FormBuilder::NO_LIMIT);
 
     std::vector<FormBuilder::ColumnInfoRow> formInfo =
     {   // column-size definition and info for all lines (except header)
-          {SIZE_RI_RANK       , FormBuilder::Align::RIGHT, ES , true}
-        , {SIZE_RI_PAIR       , FormBuilder::Align::RIGHT, ES , true}
-        , {SIZE_RI_NAME       , FormBuilder::Align::LEFT , ES , true}
-        , {SIZE_RI_IMPS       , FormBuilder::Align::RIGHT, ES , true}
-        , {SIZE_RI_GAMES      , FormBuilder::Align::RIGHT, ES , true}
-        , {SIZE_RI_SCORE      , FormBuilder::Align::RIGHT, ES , true}
-        , {SIZE_RI_CORRECTION , FormBuilder::Align::LEFT , ' ', m_bSomeCorrection}
-        , {SIZE_RI_GROUPRESULT, FormBuilder::Align::LEFT , ES , true}
+          {SIZE_RI_RANK       , FormBuilder::Align::RIGHT       , ES , true}
+        , {SIZE_RI_PAIR       , FormBuilder::Align::RIGHT       , ES , true}
+        , {SIZE_RI_NAME       , FormBuilder::Align::LEFT        , ES , true}
+        , {SIZE_RI_IMPS       , FormBuilder::Align::RIGHT       , ES , true}
+        , {SIZE_RI_GAMES      , FormBuilder::Align::RIGHT_SPACE2, ES , true}
+        , {SIZE_RI_SCORE      , FormBuilder::Align::RIGHT       , ES , true}
+        , {SIZE_RI_COMBI      , FormBuilder::Align::CENTER      , ES , sbHaveValidCombi}
+        , {SIZE_RI_CORRECTION , FormBuilder::Align::RIGHT_SPACE1, ES , sbHaveValidNormal}
+        , {SIZE_RI_GROUPRESULT, FormBuilder::Align::LEFT        , ES , true}
     };
 
     std::vector<FormBuilder::ColumnInfoHeader> headerInfo =
@@ -922,7 +906,8 @@ void CalcScore::SaveSessionResultsButler()
         , {FormBuilder::Align::CENTER, ES , _("imps"    )}
         , {FormBuilder::Align::RIGHT , ES , _("games"   )}
         , {FormBuilder::Align::RIGHT , ES , _("score"   )}
-        , {FormBuilder::Align::LEFT  , ' ', _("corr."   )}
+        , {FormBuilder::Align::RIGHT , ES , _("combi"   )}
+        , {FormBuilder::Align::RIGHT , ES , _("corr."   )}
         , {FormBuilder::Align::LEFT  , ES , GetGroupResultString(0, &svSessionRankToPair, GROUPRESULT_SESSION)}
     };
 
@@ -940,7 +925,10 @@ void CalcScore::SaveSessionResultsButler()
         long score  = svSessionResult[pair].mpPerGame;
         if (svSessionResult[pair].nrOfGames == 0)
             continue;                   // pair didn't play
-        wxString correction = GetSessionCorrectionString(pair, m_bSomeCorrection);
+
+        wxString combi;
+        wxString correction;
+        GetSessionCorrectionStrings(pair, combi, correction);
         std::vector<wxString> rowInfo =
         {
               U2String(svSessionPairToRank[pair])
@@ -949,6 +937,7 @@ void CalcScore::SaveSessionResultsButler()
             , L2String(svSessionResult[pair].butlerMp)
             , U2String(svSessionResult[pair].nrOfGames)
             , LongToAscii2(score)
+            , combi
             , correction
             , GetGroupResultString(pair)
         };
@@ -1006,7 +995,6 @@ long CalcScore::NeubergPoints(long points, UINT gameCount, UINT comparableCount)
 void CalcScore::ApplySessionCorrections(void)
 {
     m_maxPair = 1;
-    m_bSomeCorrection = false;  // reset flag, else it could inherit a 'true' from a previous session
 
     for (UINT pair = 1; pair < svSessionResult.size(); ++pair)
     {
@@ -1014,47 +1002,49 @@ void CalcScore::ApplySessionCorrections(void)
             continue;    // pair did not play any game, so no corrections possible
 
         int     correctionProcent   = 0;
-        auto    it                  = spmCorSession->find(pair);
-        long    butlerCorMp         = 0;    // corrections in mp for butler: 100* real value so mpPerGame can be calculated easy
+        auto    it                  = smCorSessionValidated.find(pair);
+        long    butlerCorImps       = 0;    // corrections in imps for butler: 100* real value so mpPerGame can be calculated easy
 
         m_maxPair = pair;
-        if (it != spmCorSession->end())
+        if (it != smCorSessionValidated.end())
         {
             cor::CORRECTION_SESSION cs = it->second;
-            m_bSomeCorrection = true;
             // now handle the different types of correction
             if (cs.correction)
             {   // some correction in 'mp' or '% '
                 if (cs.type == '%')
                 {
                     correctionProcent = 100L*cs.correction;
-                    //butlerCorMp = 10*cs.correction*sButlerMpPer10Procent;   // 100*((cor/10)*sButlerMpPer10Procent)
+                    //butlerCorImps = 10*cs.correction*sButlerImpsPer10Procent;   // 100*((cor/10)*sButlerImpsPer10Procent)
                 }
                 else
                 {
                     svSessionResult[pair].points += 10L*cs.correction;
-                    butlerCorMp = cs.correction*100;
+                    butlerCorImps = cs.correction*100;
                 }
             }
-            if (cs.maxExtra)    // can ONLY be true, if no butler!
-            {   // f.i. from a combi-table, calculated separately!
-                svSessionResult[pair].points   += cs.extra; //todo: upscale (max)extra
-                svSessionResult[pair].maxScore += cs.maxExtra;
-            }
-            // assume cs.games only has a non-zero value if we have butler OR cs.maxExtra
-            svSessionResult[pair].nrOfGames += cs.games;
-            if (m_bButler)
-                butlerCorMp += cs.extra*10;
 
-        }
+            if (cs.maxExtra)    // can ONLY be true, if no butler!
+            {   // from a combi-table, calculated separately!
+                UINT combiTop  = 2 * (GetNumberOfRounds(pair) - 1);
+                UINT normalTop = cfg::GetNrOfSessionPairs() - 2 - 2;
+                long extra     = RoundLong(normalTop * cs.extra   , combiTop);
+                int  maxExtra  = RoundLong(normalTop * cs.maxExtra, combiTop);
+                svSessionResult[pair].points   += extra;
+                svSessionResult[pair].maxScore += maxExtra;
+            }
+            else
+                butlerCorImps += cs.extra*10;     // extra: 2 decimals now
+
+            svSessionResult[pair].nrOfGames += cs.games;
+        }   // end of correction calculation
 
         //  now all corrections are handled: mp and combinationtables are in (max)points, the '%' waits in scoreProcent
-        if (m_bButler)    // temporary, testing
+        if (m_bButler)
         {
             svSessionResult[pair].procentScore = // for now: too many things depend on it
-            svSessionResult[pair].mpPerGame = RoundLong(butlerCorMp + svSessionResult[pair].butlerMp * 100 , (int)svSessionResult[pair].nrOfGames);
-            svSessionResult[pair].butlerMp += (butlerCorMp+50)/100;
-//            svSessionResult[pair].maxScore=1;svSessionResult[pair].points=1;  // many things depend on this too!
+            svSessionResult[pair].mpPerGame = RoundLong(butlerCorImps + svSessionResult[pair].butlerMp * 100 , (int)svSessionResult[pair].nrOfGames);
+            svSessionResult[pair].butlerMp += RoundLong(butlerCorImps, 100);
         }
         else
             svSessionResult[pair].procentScore = correctionProcent + RoundLong(1000L*svSessionResult[pair].points, svSessionResult[pair].maxScore);
@@ -1260,8 +1250,8 @@ static long GetResultScore(UINT a_sessionPairnr, bool a_bSession)
 
 wxString CalcScore::GetGroupResultString(UINT a_sessionPair, const std::vector<UINT>* a_pRankIndex, bool a_bSession)
 {
-    // on init: 2 chars per group, empty if only one group:  "BLYEREGR" for group BLue YEllow REd and GReen
-    // for a pair: the rank in its group, a '.' if none   :  " . . 7 ." for pair being rank 7 in group 'RE'
+    // on init: 3 chars per group, empty if only one group:  " BL YE RE GR" for group BLue YEllow REd and GReen
+    // for a pair: the rank in its group, a '.' if none   :  "  .  .  7  ." for pair being rank 7 in group 'RE'
     static std::vector<UINT> svGroupRank;   // rank within group for sessionPair
     const auto& groupInfo  = *cfg::GetGroupData();
 
@@ -1299,17 +1289,17 @@ wxString CalcScore::GetGroupResultString(UINT a_sessionPair, const std::vector<U
             }
         }
         // also init the group-string
-        for (const auto& it : groupInfo) {result += FMT("%2s", it.groupChars);}
-        return result;  // "BLGRYEOR" : 2 chars per group
+        for (const auto& it : groupInfo) {result += FMT("%3s", it.groupChars);}
+        return result;  // " BL GR YE OR" : 3 chars per group
     }
 
-    // create string showing rank within group:  " . . 5 . ." --> 2 chars per group: rank or " ."
+    // create string showing rank within group:  "  .  .  5  .  ." --> 3 chars per group: rank or "  ."
     for (const auto& itGroup : groupInfo)
     {
         auto minPair = itGroup.groupOffset;
         auto maxPair = minPair + itGroup.pairs;
         result += ( (a_sessionPair > minPair) && (a_sessionPair <= maxPair) ) ?
-            FMT("%2u", svGroupRank[a_sessionPair]) : wxString(" .");
+            FMT("%3u", svGroupRank[a_sessionPair]) : wxString("  .");
     }
 
     return result;
@@ -1337,6 +1327,9 @@ void CalcScore::CalcTotal()
         //load session result
         (void)io::SessionResultRead(sessionResults[session], session);
         //append end-corrections
+        // get validated end-corrections for this session
+        cor::mCorrectionsEnd correctionsEnd;
+        GetValidatedEndCorrections4Session(correctionsEnd, session);
         (void)io::CorrectionsEndRead(sessionResults[session], session, false);
     }
 
@@ -1461,7 +1454,7 @@ void CalcScore::CalcTotal()
     const size_t SIZE_RT_TOTAL       (7);
     const size_t SIZE_RT_AVG         (5);
     const size_t SIZE_RI_SCORE       (6);
-    const size_t SIZE_RT_CORRECTION  (7);
+    const size_t SIZE_RT_CORRECTION  (5);
     const size_t SIZE_RT_GROUPRESULT (FormBuilder::NO_LIMIT);
 
     #define RT_INSERT_POS ((size_t)2)   /*start index to insert session info*/
@@ -1819,10 +1812,28 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
             ADDLINE(tmp);
     }
 
-    long        score       = svSessionResult[pair].procentScore;
-    wxString    corrections = GetSessionCorrectionString(pair);
-    corrections.Replace(" ", ES, true);
-    if (!corrections.IsEmpty()) corrections = ' ' + corrections;
+    wxString combiString;
+    wxString correctionString;
+    wxString corrections;
+
+    GetSessionCorrectionStrings(pair, combiString, correctionString);
+    UINT state = 0;
+    if ( combiString     .Len() ) state  = 1;
+    if ( correctionString.Len() ) state |= 2;
+
+    switch (state)
+    {
+        case 1:
+            corrections = " (" + combiString + ')';
+            break;
+        case 2:
+            corrections = " (" + correctionString + ')';
+            break;
+        case 3:
+            corrections = " (" + combiString + ", " + correctionString + ')';
+    }
+
+    long score = svSessionResult[pair].procentScore;
     if (m_bButler)
     {
         ADDLINE(FMT(_("imps: %ld, games: %u, sessionscore: %s imps/game%s, rank: %u"),
@@ -1948,15 +1959,15 @@ void CalcScore::CalcButlerFkw(UINT a_game)
     }
     svButlerFkw[a_game] = gameMap;
 
-    if (0) for ( const auto& it : svButlerFkw[a_game])
+    if (0) for ( const auto& [score, data] : svButlerFkw[a_game])
         MyLogDebug("Game=%2u, scoreNs=%6s, delta=%5ld, imps=%3i, scoreEw=%6s, delta=%5ld, imps=%3i"
             , a_game
-            , score::ScoreToString(it.second.scoreNs)
-            , it.second.deltaNs
-            , it.second.impsNs
-            , score::ScoreToString(it.second.scoreEw)
-            , it.second.deltaEw
-            , it.second.impsEw
+            , score::ScoreToString(data.scoreNs)
+            , data.deltaNs
+            , data.impsNs
+            , score::ScoreToString(data.scoreEw)
+            , data.deltaEw
+            , data.impsEw
         );
 
 }   //CalcButlerFkw()
@@ -1995,6 +2006,154 @@ bool CalcScore::FindBadGameData()
 #undef CHECK_PAIR
 }   // CheckGameData()
 
+bool IsCombiCandidate(UINT a_sessionPair)
+{
+    auto        pGroupData = cfg::GetGroupDataFromSessionPair(a_sessionPair);
+    SchemaInfo  si(pGroupData->schemaId);
+    return si.AreOpponents(a_sessionPair - pGroupData->groupOffset, pGroupData->absent);
+}   // IsCombiCandidate()
+
+void ValidateSessionCorrections(const cor::mCorrectionsSession* a_pNonValidatedCorrections)
+{   // validate session corrections once, so we don't constantly need to check its validity
+    bool bButler      = cfg::GetButler();
+    sbHaveValidCombi  = false;
+    sbHaveValidNormal = false;
+    smCorSessionValidated.clear();
+    wxString errorMsg;
+
+    for (const auto& [pair, correction] : *a_pNonValidatedCorrections)
+    {
+        #define OK_NORMAL 1
+        #define OK_COMBI  2
+        UINT state = 0;
+        cor::CORRECTION_SESSION cs;
+
+        if ( pair > 0 && pair <= cfg::GetNrOfSessionPairs() )
+            cs = correction;
+        if ( cs.correction )
+        {   // 'normal' correction
+            if ( cs.type == '%' && bButler )
+            {   // butler can't have % correction
+                cs.correction = 0;
+            }
+            else
+                state |= OK_NORMAL;    // set valid normal state
+        }
+
+        if ( cs.maxExtra || cs.extra || cs.games )
+        {   // combi data
+            do
+            {
+                if ( !IsCombiCandidate(pair) )
+                {
+                    cs.maxExtra = cs.extra = cs.games = 0;
+                    break;
+                }
+                if ( cs.games == 0 )
+                {
+                    cs.maxExtra = cs.extra = 0;
+                    break;
+                }
+                if ( bButler )
+                {
+                    if ( cs.maxExtra )
+                        cs.maxExtra = cs.extra = cs.games = 0;
+                    else
+                        state |= OK_COMBI;
+                    break;
+                }
+                if ( (cs.maxExtra * 10 < cs.extra) || (cs.maxExtra == 0) || (cs.extra < 0) )
+                    cs.maxExtra = cs.extra = cs.games = 0;
+                else
+                    state |= OK_COMBI;
+            } while (0);
+        }
+
+        if ( state )    // some valid data
+        {
+            sbHaveValidNormal |= 0 != (state & OK_NORMAL);
+            sbHaveValidCombi  |= 0 != (state & OK_COMBI);
+            smCorSessionValidated[pair] = cs;
+        }
+
+        if ( cs != correction && !cfg::IsScriptTesting() )
+        {   // some bad data ignored, accumulate errors and show them all at once
+            errorMsg += FMT("\n: '%u, %+i%c, %s,%i,%u'"
+                                , pair
+                                , correction.correction
+                                , correction.type
+                                , LongToAscii1(correction.extra)
+                                , correction.maxExtra
+                                , correction.games
+                            );
+        }
+    }   // for()
+
+    if ( errorMsg.Len() )
+    {
+        GetMainframe()->CallAfter([errorMsg]
+            {   // if not CallAfter() we get the msgbox on an empty page
+                MyMessageBox(_("Bad data or combi-table results for non-combi player(s) ignored") + errorMsg
+                    , _("Warning"), wxOK | wxICON_INFORMATION); 
+            });
+    }
+}   // ValidateSessionCorrections()
+
+void GetValidatedEndCorrections4Session(cor::mCorrectionsEnd& a_ce, UINT a_session)
+{
+    (void)io::CorrectionsEndRead( a_ce, a_session, true);
+    wxString errorMsg;
+    cor::mCorrectionsEnd ceTemp;
+    bool bButler = cfg::GetButler();
+    bool bTesting= cfg::IsScriptTesting();
+
+    for (const auto& [globalPair, ce] : a_ce)
+    {
+        if (
+               (ce.score < (bButler ? -10000 : 0 ))
+            || ((ce.score  > 10000) && (ce.score != SCORE_IGNORE && ce.score != SCORE_NO_TOTAL))  // between 0 and 100%  :10000 = 100.00%
+            || (ce.bonus   < -9999)
+            || (ce.bonus   > 9999)  // between -99.99% and +99.99% or imps
+            || (globalPair < 1)
+            || (globalPair > names::GetNumberOfGlobalPairs())
+            || (ce.games   > cfg::GetNrOfGames())
+            || (ce.bonus && (ce.games || ce.score))
+            )
+        {   // (some) incorrect value(s)
+            if ( !bTesting )
+            {
+                errorMsg += FMT("\n:  '%u,%s,%s,%u'"
+                                    , globalPair
+                                    , LongToAscii2(ce.score)
+                                    , LongToAscii2(ce.bonus)
+                                    , ce.games
+                               );
+            }
+        }
+        else
+            ceTemp[globalPair] = ce;
+    }   // for
+
+    if ( errorMsg.Len() )
+    {
+        GetMainframe()->CallAfter([errorMsg]
+            {   // if not CallAfter() we get the msgbox on an empty page
+                MyMessageBox(_("Invalid total-correction/end data, will be ignored")+ errorMsg
+                                , _("Warning"), wxOK | wxICON_INFORMATION
+                            ); 
+            });
+    }
+
+    a_ce = ceTemp;  // copy to destination what we have...
+}   // GetValidatedEndCorrections4Session();
+
+UINT GetNumberOfRounds(UINT a_sessionPair)
+{
+    auto        pGroupData = cfg::GetGroupDataFromSessionPair(a_sessionPair);
+    SchemaInfo  si(pGroupData->schemaId);
+    return si.GetNumberOfRounds();
+}   // GetNumberOfRounds()
+
 wxString FormBuilder::CreateHeader(const std::vector<ColumnInfoHeader>& a_headerInfo)
 {   // creation of the header, called once
     auto size = a_headerInfo.size();
@@ -2010,8 +2169,9 @@ wxString FormBuilder::CreateHeader(const std::vector<ColumnInfoHeader>& a_header
                 result += column.header;
             else
                 result += CreateColumn(column.header, rowInfo->size, column.align);
+            result += column.extra;
         }
-        result += column.extra + FormBuilder::SEPERATOR;   // always add the 'extra' and a separator between colums
+        result += FormBuilder::SEPERATOR;   // add a separator between colums
         ++rowInfo;
     }
     return result.RemoveLast(); // remove last separator
@@ -2032,8 +2192,9 @@ wxString FormBuilder::CreateRow(const std::vector<wxString>& a_columsContent)
                 result += *content;
             else
                 result += CreateColumn(*content, column.size, column.align);
+            result += column.extra;
         }
-        result += column.extra + FormBuilder::SEPERATOR;   // always add the 'extra' and a separator between colums
+        result += FormBuilder::SEPERATOR;   // add a separator between colums
         ++content;
     }
     return result.RemoveLast(); // remove last separator

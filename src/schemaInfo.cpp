@@ -326,6 +326,16 @@ UINT SchemaInfo::GetOpponent(UINT pair, UINT round) const
     return opponent > m_pairs ? 0 : opponent;
 }   // GetOpponent()
 
+bool SchemaInfo::AreOpponents(UINT a_pair1, UINT a_pair2)
+{
+    for (UINT round = 1; round <= m_rounds; ++round)
+    {
+        if ( GetOpponent(a_pair1, round) == a_pair2)
+            return true;
+    }
+    return false;
+}   // AreOpponents()
+
 #if TESTING_IMPORT_EXPORT
 //// testing new schema setup
 #include <fstream>

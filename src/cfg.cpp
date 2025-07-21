@@ -193,12 +193,10 @@ namespace cfg
 
     bool IsSessionPairAbsent(UINT a_sessionPair)
     {
-        UINT pair = 0;
         for (const auto& it : sSessionInfo.groupData)
         {
-            pair += it.groupOffset;
-            if (pair > a_sessionPair) break;
-            if (pair + it.absent == a_sessionPair)
+            if (it.groupOffset > a_sessionPair) break;
+            if (it.groupOffset + it.absent == a_sessionPair)
                 return true;
         }
         return false;
@@ -965,6 +963,15 @@ namespace cfg
 
         return CFG_OK;
     }   // HandleCommandline()
+
+    const GROUP_DATA* GetGroupDataFromSessionPair(UINT a_sessionPair)
+    {
+        for (const auto& it : sSessionInfo.groupData)
+        {
+            if ( it.groupOffset + it.pairs >= a_sessionPair ) return &it;
+        }
+        return nullptr; // should not happen
+    }   // GetGroupDataFromSessionPair()
 
 }   // end namespace cfg
 

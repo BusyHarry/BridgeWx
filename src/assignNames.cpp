@@ -37,6 +37,11 @@ AssignNames::AssignNames(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParen
     m_theGrid->SetColSize(COL_PAIRNR_SESSION_PREV  , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_PAIRNR_SESSION_PREV, _("pair S-1"));
     m_theGrid->SetColSize(COL_RANK_TOTAL_PREV      , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_RANK_TOTAL_PREV    , _("rank"    ));   // TRANSLATORS: 'S' is first char of Session
     m_theGrid->SetColSize(COL_RANK_SESSION_PREV    , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_RANK_SESSION_PREV  , _("rank S-1"));
+                                                                         m_theGrid->SetColLabelAutoTest(COL_PAIRNAME           , "pairname");
+                                                                         m_theGrid->SetColLabelAutoTest(COL_PAIRNR_SESSION     , "pair no" );
+                                                                         m_theGrid->SetColLabelAutoTest(COL_PAIRNR_SESSION_PREV, "pair S-1");
+                                                                         m_theGrid->SetColLabelAutoTest(COL_RANK_TOTAL_PREV    , "rank"    );
+                                                                         m_theGrid->SetColLabelAutoTest(COL_RANK_SESSION_PREV  , "rank S-1");
 
 #ifdef MY_GRIDSORT
     std::vector<MyGrid::SortMethod> methods;
@@ -163,8 +168,20 @@ static void RankIndexToPairIndex(UINT_VECTOR& a_uiV)
 {   // a_uiv[rank] = globalPairNr, change to: a_uiv[globalPairNr] = rank
     UINT_VECTOR dst;
     dst.resize(a_uiV.size(),0);
-    for ( UINT rank = 0; rank < a_uiV.size(); ++rank)
-        dst[a_uiV[rank]] = rank;
+//    UINT maxRank = std::max(cfg::GetNrOfSessionPairs(), names::GetNumberOfGlobalPairs());
+    UINT maxRank = cfg::GetNrOfSessionPairs();  // don't need more then this number of assignments
+    for (UINT rank = 1; rank <= maxRank; ++rank)
+    {
+        UINT globalPair = a_uiV[rank];
+        if ( globalPair == 0 )
+        {   // only non-ranked players left
+            // assign lowest non-ranked player this rank
+            auto it0 = std::find(dst.begin()+1, dst.end(), 0U);
+            *it0 = rank;    // no check needed, iterator IS valid
+        }
+        else
+            dst[globalPair] = rank;
+    }
     if (dst.size()) dst[0] = 0;
     a_uiV = dst;
 }   // RankIndexToPairIndex()
@@ -181,7 +198,9 @@ void AssignNames::RefreshInfo()
     m_bDataChanged = false;
     names::InitializePairNames();
     UINT activeSession = cfg::GetActiveSession();
-
+#ifdef MY_GRIDSORT
+    m_theGrid->UndoSort();
+#endif
     if (activeSession <= 1)
     {   //no extra colums needed
         m_theGrid->HideCol(COL_PAIRNR_SESSION_PREV);
@@ -210,7 +229,7 @@ void AssignNames::RefreshInfo()
     int pairs = pairInfo.size() - 1;
     m_theGrid->AppendRows(pairs);
 
-    for (long long ii = 0; ii < pairs; ++ii)
+    for (int ii = 0; ii < pairs; ++ii)
     {
         m_theGrid->SetCellValue(ii, COL_PAIRNAME      , pairInfo[ii+1].pairName );
         m_theGrid->SetCellValue(ii, COL_PAIRNR_SESSION, names::PairnrGlobal2SessionText(ii+1));
@@ -306,6 +325,9 @@ void AssignNames::OnClear(wxCommandEvent&)
 void AssignNames::UpdateColumnAssign(std::vector<unsigned int>& a_newAssign)
 {
     AUTOTEST_BUSY("updateAssign");
+#ifdef MY_GRIDSORT
+    m_theGrid->UndoSort();
+#endif
     RankIndexToPairIndex(a_newAssign);
     auto rows = m_theGrid->GetNumberRows();
     for (auto ii = 0; ii < rows; ++ii)

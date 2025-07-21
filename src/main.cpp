@@ -2,10 +2,11 @@
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
 // Start of wxWidgets Bridge calc Program
-
+#ifdef _MSC_VER
+#include <msvc/wx/setup.h>      // all kinds of defines and force include of needed wx-libs
+#endif
 #include <wx/image.h>
-#include "wx/uilocale.h"
-#include <map>
+#include <wx/uilocale.h>
 #include <wx/stdpaths.h>
 
 // my own includes
@@ -122,20 +123,27 @@ public:
         m_timeStamp         = 0;
         m_previousTimeStamp = 0;
         m_previousChar      = 0;
-        m_keys2String[0x0008] = "{BS}";
-        m_keys2String['\r'  ] = "{ENTER}";
-        m_keys2String[0x0009] = "{TAB}";
-        m_keys2String[0x001b] = "{ESC}";
-        m_keys2String[0x007f] = "{DEL}";
-        m_keys2String[0x0132] = "{SHIFT}";
-        m_keys2String[0x0133] = "{ALT}";
-        m_keys2String[0x0134] = "{CTRL}";
-        m_keys2String[0x0138] = "{END}";
-        m_keys2String[0x0139] = "{HOME}";
-        m_keys2String[0x013a] = "{LEFT}";
-        m_keys2String[0x013b] = "{UP}";
-        m_keys2String[0x013c] = "{RIGHT}";
-        m_keys2String[0x013d] = "{DOWN}";
+        m_keys2String[WXK_BACK        ] = "{BS}";
+        m_keys2String[WXK_RETURN      ] = "{ENTER}";
+        m_keys2String[WXK_TAB         ] = "{TAB}";
+        m_keys2String[WXK_ESCAPE      ] = "{ESC}";
+        m_keys2String[WXK_DELETE      ] = "{DEL}";
+        m_keys2String[WXK_SHIFT       ] = "{SHIFT}";
+        m_keys2String[WXK_ALT         ] = "{ALT}";
+        m_keys2String[WXK_CONTROL     ] = "{CTRL}";
+        m_keys2String[WXK_END         ] = "{END}";
+        m_keys2String[WXK_HOME        ] = "{HOME}";
+        m_keys2String[WXK_LEFT        ] = "{LEFT}";
+        m_keys2String[WXK_UP          ] = "{UP}";
+        m_keys2String[WXK_RIGHT       ] = "{RIGHT}";
+        m_keys2String[WXK_DOWN        ] = "{DOWN}";
+        m_keys2String[WXK_NUMPAD_HOME ] = "{NUM_HOME}";
+        m_keys2String[WXK_NUMPAD_END  ] = "{NUM_END}";
+        m_keys2String[WXK_NUMPAD_UP   ] = "{NUM_UP}";
+        m_keys2String[WXK_NUMPAD_DOWN ] = "{NUM_DOWN}";
+        m_keys2String[WXK_NUMPAD_LEFT ] = "{NUM_LEFT}";
+        m_keys2String[WXK_NUMPAD_RIGHT] = "{NUM_RIGHT}";
+        m_keys2String[WXK_NUMPAD_ENTER] = "{NUM_ENTER}";
     }
 
     virtual ~EventCatcher()
@@ -391,7 +399,7 @@ void MyApp::InitLanguage()
     m_pLocale->AddCatalogLookupPathPrefix(GetCatalogPath());
     m_pLocale->Init(language);
     m_pLocale->AddCatalog(__PRG_NAME__, wxLANGUAGE_DUTCH_NETHERLANDS);
-    wxSetlocale(LC_NUMERIC, "C" /*"en"*/);  // need '.' as decimal separator in float values in config files
+//    wxSetlocale(LC_NUMERIC, "C"); //"en_US.UTF-8");// "C" /*"en"*/);  // need '.' as decimal separator in float values in config files
 }   // InitLanguage()
 
 void MyApp::ReInitLanguage()
@@ -503,7 +511,7 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
         m_pMyEventCatcher = new EventCatcher;           // we want early notice of mouseclick
 
         // create hotkey for generating mousepositions of controls for autotest in file "<matchfolder>/AutoTest.pos"
-        #define HOTKEY "!+a"    /* AHK2 definition*/
+        #define HOTKEY "!+a\"         ; SHIFT+ALT+A" /* AHK2 definition*/
         RegisterHotKey(0, wxMOD_ALT | wxMOD_SHIFT, 'A'); // wxMOD_CONTROL doesn't work...
         Bind(wxEVT_HOTKEY, [this](wxKeyEvent&){AutotestCreatePositions();});
     }
@@ -717,7 +725,7 @@ void MyFrame::AutotestCreatePositions()
     positionsFile.AddLine(    "WinTitle       := \"" + ssWinTitle       + "\"   ;window title of this program");
     positionsFile.AddLine(    "SystemComBox   := \"" + ssCheckBoxBusy   + "\"   ;name of the checkbox for communication between autohotkey and the program");
     positionsFile.AddLine(    "SystemComBoxMC := \"" + ssCheckBoxBusyMC + "\" ;name of the checkbox for communication between autohotkey and the program for ChoiceMC");
-    positionsFile.AddLine(    "HotkeyPos      := \""  HOTKEY  "\" ;hotkey to request mouse-positions to be generated");
+    positionsFile.AddLine(    "HotkeyPos      := \""  HOTKEY  ": hotkey to request mouse-positions to be generated");
     positionsFile.AddLine(    "; menu-definitions");
     positionsFile.AddLine(    _("MenuNewMatch      := \"fn\"       ; File: New match/session"               ));
     positionsFile.AddLine(    _("MenuShutdown      := \"fe\"       ; File: Exit"                            ));

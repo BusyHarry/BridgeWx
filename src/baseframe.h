@@ -106,7 +106,6 @@ public:
     void            DeleteConfig() { delete m_pConfig; m_pConfig = 0; }
     virtual void    RefreshInfo() = 0;  // (re)populate the current info
     virtual void    PrintPage();        // derived class should print current page if applicable
-    unsigned int    ValidateNumValUINT( wxTextCtrl* pTextCtrl );        // if txtctrl has an UINT validator, force value in range
     virtual void    BackupData()=0;     // called if active panel is hidden. You should save changed data!
     const wxString& GetDescription()const;   // get description of this frame
     virtual void    AutotestRequestMousePositions(MyTextFile* pFile);   // request to add usefull mousepositions for autotesting
@@ -198,51 +197,10 @@ private:
     wxBoxSizer* m_pBoxSizer;
 };
 
-//**************** begin of MyTextCtrl ***************************
-
-// MyTextCtrl has its own integer validator, acting on charInput, enterKey and killfocus
-class MyTextCtrl : public wxTextCtrl
-{
-public:
-    MyTextCtrl(wxWindow *parent, wxWindowID id,
-        const wxString&       value = wxEmptyString,
-        const wxPoint&          pos = wxDefaultPosition,
-        const wxSize&          size = wxDefaultSize,
-        long                  style = 0);
-    void SetMinMax(long min, long max);
-    void SetMinMax(double min, double max, int decimalPlaces);
-    void SetValue (const wxString& value);
-    virtual ~MyTextCtrl() {}
-private:    // for validator
-    bool DoValidate(bool bForceInRange = false);                         // return true if accepted
-    void OnLostFocus(wxFocusEvent&   event);
-    void OnChar     (wxKeyEvent&     event);
-
-    bool IsMinusOk  (const wxString& val, int pos) const;
-    bool IsCharOk   (const wxString& val, int pos, wxChar chr);
-    void GetCurrentValueAndInsertionPoint(wxString& val, int& pos);
-
-    long        m_iMin;
-    long        m_iMax;
-    double      m_dMin;
-    double      m_dMax;
-    double      m_dResult;
-    int         m_iDecimalPlaces;
-    bool        m_bIsFloat;
-    bool        m_bValidate;
-    wxString    m_sValOriginal;
-    bool        m_bSignOk;
-};
-
-// if you don't need ENTER, use DummyEnter(MyTextControl*) to prevent beep
-#define DummyEnter(x)     x->Bind(wxEVT_TEXT_ENTER,[](wxCommandEvent& ){;})
-
-//**************** end MyTextCtrl ***************************
-
 // wxMessageBox has quirks: different fontsize/color if you have more lines
 int MyMessageBox(const wxString& message, const wxString& caption = ES, long style=wxOK|wxCENTER, const wxPoint& position = wxDefaultPosition);
 
-void  BusyBox(const wxString& message = _("Busy..."), int milisecondsShow = 800, const wxPoint& position = wxDefaultPosition);
+void BusyBox(const wxString& message = _("Busy..."), int milisecondsShow = 800, const wxPoint& position = wxDefaultPosition);
 
 class MyTextFile : public wxTextFile
 {   // wrapper around wxTextFile with buildin CP437 conversion for read/write

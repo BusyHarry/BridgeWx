@@ -613,13 +613,15 @@ bool CorrectionsSessionRead(cor::mCorrectionsSession& a_mCorrectionsSession, UIN
         auto entries = wxSscanf(it, " {%u ,%i %c , %10[^, ] ,%i, %u }"
                                 , &sessionPairnr, &cs.correction, &cs.type, extraBuf, &cs.maxExtra, &cs.games
                             );  // older db may NOT have games component
-        bool bErrorEntry = entries < 5;
-        cs.extra = AsciiTolong(extraBuf);
+        bool bErrorEntry = entries < 5; (void)bErrorEntry;
+        cs.extra = AsciiTolong(extraBuf, ExpectedDecimalDigits::DIGITS_1);
+#if 0   // don't remove (partly) bad input, application should do it
         if (!IsValidCorrectionSession(sessionPairnr, cs, it, bErrorEntry))
         {
             bResult = false;
         }
         else
+#endif
         {   // add info to map
             a_mCorrectionsSession[sessionPairnr] = cs;
         }
@@ -662,9 +664,10 @@ bool CorrectionsEndRead(cor::mCorrectionsEnd& a_mCorrectionsEnd, UINT a_session,
         char bonusBuf[10+1]={0};
         UINT pairNr;
         bool bItemError = (4 != wxSscanf(it, " {%u , %10[^, ] , %10[^, ] ,%u }", &pairNr, scoreBuf, bonusBuf, &ce.games));
+        (void)bItemError;
         ce.score = AsciiTolong(scoreBuf, ExpectedDecimalDigits::DIGITS_2);
         ce.bonus = AsciiTolong(bonusBuf, ExpectedDecimalDigits::DIGITS_2);
-        if (cor::IsValidCorrectionEnd(pairNr, ce, it, bItemError) )
+//        if (cor::IsValidCorrectionEnd(pairNr, ce, it, bItemError) )   // let application handle this
         {   // only add result if editing (map == empty) or when pair exists in supplied map
             if ( a_bEdit || a_mCorrectionsEnd.find(pairNr) != a_mCorrectionsEnd.end())
             {
@@ -678,7 +681,7 @@ bool CorrectionsEndRead(cor::mCorrectionsEnd& a_mCorrectionsEnd, UINT a_session,
                     a_mCorrectionsEnd[pairNr] = ce;
             }
         }
-        else bOk = false;
+//        else bOk = false; // let application handle this
     }
     return bOk;
 }   // CorrectionsEndRead()

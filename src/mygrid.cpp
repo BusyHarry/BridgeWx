@@ -3,6 +3,7 @@
 
 #include <wx/grid.h>
 
+#include "validators.h"
 #include "baseframe.h"
 #include "utils.h"
 #include "cfg.h"
@@ -35,6 +36,42 @@ MyGrid::MyGrid(Baseframe* a_pParent, const wxString& a_ahkLabel) : wxGrid(a_pPar
 }
 
 MyGrid::~MyGrid(){}
+
+void MyGrid::UpdateLimitMax(int a_row, int a_col, double a_newMax)
+{
+    auto pBase = GetCellEditor(a_row, a_col);
+    if ( pBase )
+    {
+        auto pCellEditor = dynamic_cast<MyGridCellEditorWithValidator*>(pBase);
+        if ( pCellEditor )
+            pCellEditor->UpdateMax(a_newMax);
+        pBase->DecRef();
+    }
+}   // MyGrid::UpdateLimitMax()
+
+void MyGrid::UpdateLimitMin(int a_row, int a_col, double a_newMin)
+{
+    auto pBase = GetCellEditor(a_row, a_col);
+    if ( pBase )
+    {
+        auto pCellEditor = dynamic_cast<MyGridCellEditorWithValidator*>(pBase);
+        if ( pCellEditor )
+            pCellEditor->UpdateMin(a_newMin);
+        pBase->DecRef();
+    }
+}   // MyGrid::UpdateLimitMin()
+
+void MyGrid::SetLimitMinMax(int a_row, int a_col, double a_min, double a_max)
+{
+    auto pBase = GetCellEditor(a_row, a_col);
+    if ( pBase )
+    {
+        auto pCellEditor = dynamic_cast<MyGridCellEditorWithValidator*>(pBase);
+        if ( pCellEditor )
+            pCellEditor->SetMinMax(a_min, a_max);
+        pBase->DecRef();
+    }
+}   // MyGrid::UpdateLimitMinMax()
 
 void MyGrid::PrintGrid( const wxString& a_title, UINT a_nrOfColumnsToPrint, UINT a_notEmptyfrom)
 {
@@ -177,6 +214,12 @@ void MyGrid::OnLeftClickLabel(wxGridEvent& a_event)
 //        a_event.Skip(); // passtrough if its not a column header
 }   // OnLeftClickLabel()
 
+void MyGrid::SetColLabelAutoTest(int a_col, const char* a_label)
+{
+    m_gridInfo.ColumnLabelAutotest.resize(GetNumberCols());
+    m_gridInfo.ColumnLabelAutotest[a_col] = a_label;
+}
+
 const MyGrid::GridInfo& MyGrid::GetGridInfo()
 {   // info for creating mousepositions
     m_gridInfo.collumnInfo.clear();
@@ -282,12 +325,19 @@ bool MyGrid::AppendRows(int a_numRows, bool a_updateLabels)
     return wxGrid::AppendRows(a_numRows, a_updateLabels);
 }   // AppendRows()
 
+void MyGrid::UndoSort()
+{   // display unsorted grid, but leave sort enabled if it was before
+    if ( SetSortEnable(false) )
+        (void)SetSortEnable(true);
+}   // UndoSort()
+
 bool MyGrid::SetSortEnable(bool a_bEnable)
 {
     if ( !a_bEnable && (m_sortType != SORT_NONE) )
     {   // undo sorting
         m_sortType = SORT_MAX;
-        wxGridEvent dummy;
+
+        wxGridEvent dummy(0, 0, nullptr, -1, m_sortedCol);
         OnSortColumn(dummy);
     }
 

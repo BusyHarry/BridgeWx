@@ -56,7 +56,7 @@ namespace names
     wxString            PairnrGlobal2GlobalText(UINT globalPair);                           // convert global pairnr to its global name 57 -> "HH Janssen - Pietersen"
     UINT                PairnrSession2GlobalPairnr(UINT sessionPairNr);                     // get global pairnr from sessionPairNr
     UINT                PairnrGlobal2SessionPairnr(UINT globalPairNr);                      // get session pairnr from globalPairNr
-    wxString            PairnrSession2SessionText(UINT sessionPair);                        // convert session pairnr to session string:1-14 ->BB14
+    wxString            PairnrSession2SessionText(UINT sessionPair, bool bForceAbsent=false);// convert session pairnr to session string:1-14 ->BB14
     wxString            PairnrGlobal2SessionText(UINT globalPair, const std::vector<unsigned int>* table = nullptr);   // convert global pairnr to sessionstring: 75 ->DD15
     UINT                PairnrSessionText2SessionPairnr(const wxString& sessionName);       // convert session name to session pair
     bool                ValidateSessionPairName (wxString& name, UINT& sessionPair);        // validates a session pairname and returns the sessionpairnr

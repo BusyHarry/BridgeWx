@@ -49,6 +49,15 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     m_theGrid->SetColSize(COL_NAME_EW    , SIZE_PAIRNAME); m_theGrid->SetColLabelValue(COL_NAME_EW    , _("name ew"    ));
     m_theGrid->SetColSize(COL_CONTRACT_NS, SIZE_CONTRACT); m_theGrid->SetColLabelValue(COL_CONTRACT_NS, _("contract ns"));
     m_theGrid->SetColSize(COL_CONTRACT_EW, SIZE_CONTRACT); m_theGrid->SetColLabelValue(COL_CONTRACT_EW, _("contract ew"));
+                                                           m_theGrid->SetColLabelAutoTest(COL_GAME       , "game"       );
+                                                           m_theGrid->SetColLabelAutoTest(COL_NS         , "ns"         );
+                                                           m_theGrid->SetColLabelAutoTest(COL_EW         , "ew"         );
+                                                           m_theGrid->SetColLabelAutoTest(COL_SCORE_NS   , "score ns"   );
+                                                           m_theGrid->SetColLabelAutoTest(COL_SCORE_EW   , "score ew"   );
+                                                           m_theGrid->SetColLabelAutoTest(COL_NAME_NS    , "name ns"    );
+                                                           m_theGrid->SetColLabelAutoTest(COL_NAME_EW    , "name ew"    );
+                                                           m_theGrid->SetColLabelAutoTest(COL_CONTRACT_NS, "contract ns");
+                                                           m_theGrid->SetColLabelAutoTest(COL_CONTRACT_EW, "contract ew");
 
     wxGridCellAttr* pAttr = new wxGridCellAttr;
     // apparently can be used only once
@@ -165,7 +174,7 @@ static int PopUp(MyGrid* pGrid, const CellInfo& a_cellInfo, const wxString& msg,
     pGrid->SetCellBackgroundColour(row, col, *wxRED );
     pGrid->SetCellValue(row, col, a_cellInfo.newData);
     pGrid->Refresh();
-    wxBell();
+    RingBell();
     int result = MyMessageBox(msg, "???", style);
     pGrid->SetCellBackgroundColour(row, col, org );
     pGrid->Refresh();
@@ -262,7 +271,7 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
         {
             if (!bNS)
             {   // EW should ALWAYS be adjusted!
-                wxBell();
+                RingBell();
                 m_theGrid->CallAfter([this,a_cellInfo](){this->m_theGrid->GoToCell(a_cellInfo.row, COL_SCORE_EW);});
                 return CELL_CHANGE_REJECTED;
             }

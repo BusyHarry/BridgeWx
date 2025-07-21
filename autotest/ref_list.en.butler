@@ -416,16 +416,16 @@ Overview of the sessioncorrections for '<auto-test, session 1>', session 1
 
     pair  pairname                        imps  extra games  
   1 A1    pair 1                                2     4
-  2 A2    pair 2                                -5    4
   3 A3    pair 3                          10
   5 A5    changed pair 5                  -3
+  9 B1    pair 9                                -5    4
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
 Overview of endcorrections for '<auto-test, session 1>', session 1
 
-    pair  pairname                        imps    bonus   games 
-  2 A2    pair 2                          4.00            28
+    pair  pairname                        bonus   imps    games 
+  2 A2    pair 2                                  4.00    28
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -433,24 +433,24 @@ Session result
 '<auto-test, session 1>'
 result of session 1
 
-rank pair pairname                       imps   games  score corr.     A B
-   1   A3 pair 3 . . . . . . . . . . . .   99      28   3.54 ( +10i)   1 .
-   2   B7 pair 15  . . . . . . . . . . .   62      24   2.58           . 1
-   3   A1 pair 1 . . . . . . . . . . . .   39      32   1.22 (  +2i)   2 .
-   4   B5 pair 13  . . . . . . . . . . .   33      28   1.18           . 2
-   5   A8 pair 8 . . . . . . . . . . . .   28      28   1.00           3 .
-   6   A4 pair 4 . . . . . . . . . . . .   18      28   0.64           4 .
-   7   B9 pair 17  . . . . . . . . . . .   12      24   0.50           . 3
-   8   A7 pair 7 . . . . . . . . . . . .   13      28   0.46           5 .
-   9   B1 pair 9 . . . . . . . . . . . .   10      24   0.42           . 4
-  10  B10 pair 18  . . . . . . . . . . .    8      24   0.33           . 5
-  11   B6 pair 14  . . . . . . . . . . .    0      24   0.00           . 6
-  12   B3 pair 11  . . . . . . . . . . .   -4      24  -0.17           . 7
-  13   B4 pair 12  . . . . . . . . . . .  -39      28  -1.39           . 8
-  14   A5 changed pair 5 . . . . . . . .  -48      28  -1.75 (  -3i)   6 .
-  14   A6 pair 6 . . . . . . . . . . . .  -49      28  -1.75           6 .
-  16   A2 pair 2 . . . . . . . . . . . .  -80      32  -2.53 (  -5i)   8 .
-  17   B2 pair 10  . . . . . . . . . . .  -78      24  -3.25           . 9
+rank pair pairname                       imps   games  score  combi  corr.   A  B
+   1   A3 pair 3 . . . . . . . . . . . .   99    28     3.54          10i    1  .
+   2   B7 pair 15  . . . . . . . . . . .   62    24     2.58                 .  1
+   3   A1 pair 1 . . . . . . . . . . . .   37    28     1.32                 2  .
+   4   B5 pair 13  . . . . . . . . . . .   33    28     1.18                 .  2
+   5   A8 pair 8 . . . . . . . . . . . .   28    28     1.00                 3  .
+   6   A4 pair 4 . . . . . . . . . . . .   18    28     0.64                 4  .
+   7   B9 pair 17  . . . . . . . . . . .   12    24     0.50                 .  3
+   8   A7 pair 7 . . . . . . . . . . . .   13    28     0.46                 5  .
+   9  B10 pair 18  . . . . . . . . . . .    8    24     0.33                 .  4
+  10   B1 pair 9 . . . . . . . . . . . .    5    28     0.18  -5i            .  5
+  11   B6 pair 14  . . . . . . . . . . .    0    24     0.00                 .  6
+  12   B3 pair 11  . . . . . . . . . . .   -4    24    -0.17                 .  7
+  13   B4 pair 12  . . . . . . . . . . .  -39    28    -1.39                 .  8
+  14   A5 changed pair 5 . . . . . . . .  -49    28    -1.75          -3i    6  .
+  14   A6 pair 6 . . . . . . . . . . . .  -49    28    -1.75                 6  .
+  16   A2 pair 2 . . . . . . . . . . . .  -76    28    -2.71                 8  .
+  17   B2 pair 10  . . . . . . . . . . .  -78    24    -3.25                 .  9
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -458,25 +458,25 @@ Session result on name
 '<auto-test, session 1>'
 result of session 1
 
-rank pair pairname                       imps   games  score corr.     A B
-   3   A1 pair 1 . . . . . . . . . . . .   39      32   1.22 (  +2i)   2 .
-  16   A2 pair 2 . . . . . . . . . . . .  -80      32  -2.53 (  -5i)   8 .
-   1   A3 pair 3 . . . . . . . . . . . .   99      28   3.54 ( +10i)   1 .
-   6   A4 pair 4 . . . . . . . . . . . .   18      28   0.64           4 .
-  14   A5 changed pair 5 . . . . . . . .  -48      28  -1.75 (  -3i)   6 .
-  14   A6 pair 6 . . . . . . . . . . . .  -49      28  -1.75           6 .
-   8   A7 pair 7 . . . . . . . . . . . .   13      28   0.46           5 .
-   5   A8 pair 8 . . . . . . . . . . . .   28      28   1.00           3 .
-   9   B1 pair 9 . . . . . . . . . . . .   10      24   0.42           . 4
-  17   B2 pair 10  . . . . . . . . . . .  -78      24  -3.25           . 9
-  12   B3 pair 11  . . . . . . . . . . .   -4      24  -0.17           . 7
-  13   B4 pair 12  . . . . . . . . . . .  -39      28  -1.39           . 8
-   4   B5 pair 13  . . . . . . . . . . .   33      28   1.18           . 2
-  11   B6 pair 14  . . . . . . . . . . .    0      24   0.00           . 6
-   2   B7 pair 15  . . . . . . . . . . .   62      24   2.58           . 1
+rank pair pairname                       imps   games  score  combi  corr.   A  B
+   3   A1 pair 1 . . . . . . . . . . . .   37    28     1.32                 2  .
+  16   A2 pair 2 . . . . . . . . . . . .  -76    28    -2.71                 8  .
+   1   A3 pair 3 . . . . . . . . . . . .   99    28     3.54          10i    1  .
+   6   A4 pair 4 . . . . . . . . . . . .   18    28     0.64                 4  .
+  14   A5 changed pair 5 . . . . . . . .  -49    28    -1.75          -3i    6  .
+  14   A6 pair 6 . . . . . . . . . . . .  -49    28    -1.75                 6  .
+   8   A7 pair 7 . . . . . . . . . . . .   13    28     0.46                 5  .
+   5   A8 pair 8 . . . . . . . . . . . .   28    28     1.00                 3  .
+  10   B1 pair 9 . . . . . . . . . . . .    5    28     0.18  -5i            .  5
+  17   B2 pair 10  . . . . . . . . . . .  -78    24    -3.25                 .  9
+  12   B3 pair 11  . . . . . . . . . . .   -4    24    -0.17                 .  7
+  13   B4 pair 12  . . . . . . . . . . .  -39    28    -1.39                 .  8
+   4   B5 pair 13  . . . . . . . . . . .   33    28     1.18                 .  2
+  11   B6 pair 14  . . . . . . . . . . .    0    24     0.00                 .  6
+   2   B7 pair 15  . . . . . . . . . . .   62    24     2.58                 .  1
 
-   7   B9 pair 17  . . . . . . . . . . .   12      24   0.50           . 3
-  10  B10 pair 18  . . . . . . . . . . .    8      24   0.33           . 5
+   7   B9 pair 17  . . . . . . . . . . .   12    24     0.50                 .  3
+   9  B10 pair 18  . . . . . . . . . . .    8    24     0.33                 .  4
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -671,25 +671,25 @@ Group result
 
 Group-result of match '<auto-test, session 1>', session 1
 
-                           games :  1-4   5-8  9-12  13-16 17-20 21-24 25-28 extra   cor     tot score (imps/game)
-  1 pair 1 . . . . . . . . . . . .   2     9   -17    26   -12     6    23    +2i             39  1.22
-  2 pair 2 . . . . . . . . . . . .  -3   -12   -21   -10   -11   -14    -5    -5i            -80 -2.53
-  3 pair 3 . . . . . . . . . . . .  18    12    13    41    11   -10     4           10i      99  3.54
-  4 pair 4 . . . . . . . . . . . .   9   -12    11   -27    -8    13    32                    18  0.64
-  5 changed pair 5 . . . . . . . . -19    -9    17     8    -6    -5   -32           -3i     -48 -1.75
-  6 pair 6 . . . . . . . . . . . .   9    -4   -18   -42     8    -7     5                   -49 -1.75
-  7 pair 7 . . . . . . . . . . . . -10    12    20    -1     6     9   -23                    13  0.46
-  8 pair 8 . . . . . . . . . . . .   9    12   -12     0    12    11    -4                    28  1.00
-  9 pair 9 . . . . . . . . . . . .  20   -16   -----  -4    29   -11    -8                    10  0.42
- 10 pair 10  . . . . . . . . . . . -21   -53     3   -19   -----  21    -9                   -78 -3.25
- 11 pair 11  . . . . . . . . . . .  12    29   -16   -21   -17   -----   9                    -4 -0.17
- 12 pair 12  . . . . . . . . . . . -20   -29    -1    18   -13    10    -4                   -39 -1.39
- 13 pair 13  . . . . . . . . . . .  -7    17    -8    32    13   -22     8                    33  1.18
- 14 pair 14  . . . . . . . . . . .  20   -----   7    20   -29    -9    -9                     0  0.00
- 15 pair 15  . . . . . . . . . . .   5    16    10   -----  17     5     9                    62  2.58
- 16 --> absent
- 17 pair 17  . . . . . . . . . . . -13    53     0   -27    -9     8   -----                  12  0.50
- 18 pair 18  . . . . . . . . . . . ----- -17    15     3     9    -6     4                     8  0.33
+                            games :  1-4   5-8  9-12  13-16 17-20 21-24 25-28  combi  corr.  games     tot score (imps/game)
+  A1 pair 1 . . . . . . . . . . . .   2     9   -17    26   -12     6    23                    28       37  1.32
+  A2 pair 2 . . . . . . . . . . . .  -3   -12   -21   -10   -11   -14    -5                    28      -76 -2.71
+  A3 pair 3 . . . . . . . . . . . .  18    12    13    41    11   -10     4            10i     28       99  3.54
+  A4 pair 4 . . . . . . . . . . . .   9   -12    11   -27    -8    13    32                    28       18  0.64
+  A5 changed pair 5 . . . . . . . . -19    -9    17     8    -6    -5   -32            -3i     28      -49 -1.75
+  A6 pair 6 . . . . . . . . . . . .   9    -4   -18   -42     8    -7     5                    28      -49 -1.75
+  A7 pair 7 . . . . . . . . . . . . -10    12    20    -1     6     9   -23                    28       13  0.46
+  A8 pair 8 . . . . . . . . . . . .   9    12   -12     0    12    11    -4                    28       28  1.00
+  B1 pair 9 . . . . . . . . . . . .  20   -16   -----  -4    29   -11    -8    -5i             28        5  0.18
+  B2 pair 10  . . . . . . . . . . . -21   -53     3   -19   -----  21    -9                    24      -78 -3.25
+  B3 pair 11  . . . . . . . . . . .  12    29   -16   -21   -17   -----   9                    24       -4 -0.17
+  B4 pair 12  . . . . . . . . . . . -20   -29    -1    18   -13    10    -4                    28      -39 -1.39
+  B5 pair 13  . . . . . . . . . . .  -7    17    -8    32    13   -22     8                    28       33  1.18
+  B6 pair 14  . . . . . . . . . . .  20   -----   7    20   -29    -9    -9                    24        0  0.00
+  B7 pair 15  . . . . . . . . . . .   5    16    10   -----  17     5     9                    24       62  2.58
+  B8 --> absent
+  B9 pair 17  . . . . . . . . . . . -13    53     0   -27    -9     8   -----                  24       12  0.50
+ B10 pair 18  . . . . . . . . . . . ----- -17    15     3     9    -6     4                    24        8  0.33
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -697,24 +697,24 @@ Final result
 <auto-test, session 1>
 Final result
 
-rank pairname                         S1       total  avg.  A B
-   1 pair 2 . . . . . . . . . . . .   4.00      4.00  4.00  1 .
-   2 pair 3 . . . . . . . . . . . .   3.54      3.54  3.54  2 .
-   3 pair 15  . . . . . . . . . . .   2.58      2.58  2.58  . 1
-   4 pair 1 . . . . . . . . . . . .   1.22      1.22  1.22  3 .
-   5 pair 13  . . . . . . . . . . .   1.18      1.18  1.18  . 2
-   6 pair 8 . . . . . . . . . . . .   1.00      1.00  1.00  4 .
-   7 pair 4 . . . . . . . . . . . .   0.64      0.64  0.64  5 .
-   8 pair 17  . . . . . . . . . . .   0.50      0.50  0.50  . 3
-   9 pair 7 . . . . . . . . . . . .   0.46      0.46  0.46  6 .
-  10 pair 9 . . . . . . . . . . . .   0.42      0.42  0.42  . 4
-  11 pair 18  . . . . . . . . . . .   0.33      0.33  0.33  . 5
-  12 pair 14  . . . . . . . . . . .   0.00      0.00  0.00  . 6
-  13 pair 11  . . . . . . . . . . .  -0.17     -0.17 -0.17  . 7
-  14 pair 12  . . . . . . . . . . .  -1.39     -1.39 -1.39  . 8
-  15 changed pair 5 . . . . . . . .  -1.75     -1.75 -1.75  7 .
-  15 pair 6 . . . . . . . . . . . .  -1.75     -1.75 -1.75  7 .
-  17 pair 10  . . . . . . . . . . .  -3.25     -3.25 -3.25  . 9
+rank pairname                         S1       total  avg.   A  B
+   1 pair 2 . . . . . . . . . . . .   4.00      4.00  4.00   1  .
+   2 pair 3 . . . . . . . . . . . .   3.54      3.54  3.54   2  .
+   3 pair 15  . . . . . . . . . . .   2.58      2.58  2.58   .  1
+   4 pair 1 . . . . . . . . . . . .   1.32      1.32  1.32   3  .
+   5 pair 13  . . . . . . . . . . .   1.18      1.18  1.18   .  2
+   6 pair 8 . . . . . . . . . . . .   1.00      1.00  1.00   4  .
+   7 pair 4 . . . . . . . . . . . .   0.64      0.64  0.64   5  .
+   8 pair 17  . . . . . . . . . . .   0.50      0.50  0.50   .  3
+   9 pair 7 . . . . . . . . . . . .   0.46      0.46  0.46   6  .
+  10 pair 18  . . . . . . . . . . .   0.33      0.33  0.33   .  4
+  11 pair 9 . . . . . . . . . . . .   0.18      0.18  0.18   .  5
+  12 pair 14  . . . . . . . . . . .   0.00      0.00  0.00   .  6
+  13 pair 11  . . . . . . . . . . .  -0.17     -0.17 -0.17   .  7
+  14 pair 12  . . . . . . . . . . .  -1.39     -1.39 -1.39   .  8
+  15 changed pair 5 . . . . . . . .  -1.75     -1.75 -1.75   7  .
+  15 pair 6 . . . . . . . . . . . .  -1.75     -1.75 -1.75   7  .
+  17 pair 10  . . . . . . . . . . .  -3.25     -3.25 -3.25   .  9
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -757,7 +757,7 @@ Game 26: EW, score:   130, imps   6
 Game 27: EW, score:   130, imps   6
 Game 28: EW, score:   130, imps   5 set-score: 23 (5.75 imps/game)
 
-imps: 39, games: 32, sessionscore: 1.22 imps/game (+2i), rank: 3
+imps: 37, games: 28, sessionscore: 1.32 imps/game, rank: 3
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -800,7 +800,7 @@ Game 26: EW, score:  -120, imps  -1
 Game 27: EW, score:  -130, imps  -1
 Game 28: EW, score:  -140, imps  -2 set-score: -5 (-1.25 imps/game)
 
-imps: -80, games: 32, sessionscore: -2.53 imps/game (-5i), rank: 16
+imps: -76, games: 28, sessionscore: -2.71 imps/game, rank: 16
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -843,7 +843,7 @@ Game 26: NS, score:   120, imps   1
 Game 27: NS, score:   120, imps   1
 Game 28: NS, score:   120, imps   1 set-score: 4 (1.00 imps/game)
 
-imps: 99, games: 28, sessionscore: 3.54 imps/game (+10i), rank: 1
+imps: 99, games: 28, sessionscore: 3.54 imps/game (10i), rank: 1
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -929,7 +929,7 @@ Game 26: NS, score:  -240, imps  -8
 Game 27: NS, score:  -250, imps  -8
 Game 28: NS, score:  -260, imps  -8 set-score: -32 (-8.00 imps/game)
 
-imps: -48, games: 28, sessionscore: -1.75 imps/game (-3i), rank: 14
+imps: -49, games: 28, sessionscore: -1.75 imps/game (-3i), rank: 14
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -1101,7 +1101,7 @@ Game 26: EW, score:  -150, imps  -2
 Game 27: EW, score:  -150, imps  -2
 Game 28: EW, score:  -150, imps  -2 set-score: -8 (-2.00 imps/game)
 
-imps: 10, games: 24, sessionscore: 0.42 imps/game, rank: 9
+imps: 5, games: 28, sessionscore: 0.18 imps/game (-5i), rank: 10
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -1453,7 +1453,7 @@ Game 26: NS, score:   140, imps   2
 Game 27: NS, score:   140, imps   1
 Game 28: NS, score:    50, imps  -1 set-score: 4 (1.00 imps/game)
 
-imps: 8, games: 24, sessionscore: 0.33 imps/game, rank: 10
+imps: 8, games: 24, sessionscore: 0.33 imps/game, rank: 9
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2107,12 +2107,12 @@ Pair name
   A6 pair 4
   A7 pair 2
   A8 pair 7
-  B1 pair 17
-  B2 changed pair 5
+  B1 pair 18
+  B2 pair 9
   B3 pair 14
   B4 pair 11
   B5 pair 12
-  B6 pair 9
+  B6 changed pair 5
   B7 pair 6
  ??? 
   B9 pair 10
@@ -2123,20 +2123,20 @@ Pair name
   2 pair 2                          A7      A2         1       16
   3 pair 3                          A1      A3         2        1
   4 pair 4                          A6      A4         7        6
-  5 changed pair 5                  B2      A5        15       14
+  5 changed pair 5                  B6      A5        15       14
   6 pair 6                          B7      A6        16       15
   7 pair 7                          A8      A7         9        8
   8 pair 8                          A5      A8         6        5
-  9 pair 9                          B6      B1        10        9
+  9 pair 9                          B2      B1        11       10
  10 pair 10                         B9      B2        17       17
  11 pair 11                         B4      B3        13       12
  12 pair 12                         B5      B4        14       13
  13 pair 13                         A4      B5         5        4
  14 pair 14                         B3      B6        12       11
  15 pair 15                         A2      B7         3        2
- 16 pair 16                         B10     ???        0        0
- 17 pair 17                         B1      B9         8        7
- 18 pair 18                         ???     B10       11       10
+ 16 pair 16                         B10     ???       18       18
+ 17 pair 17                         ???     B9         8        7
+ 18 pair 18                         B1      B10       10        9
  19 pair 19                         ???     ???        0        0
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
@@ -2160,7 +2160,7 @@ Overview of the scores of session 2 for '<auto-test, session 2>', round 1
  14  14    A7     A8    180
  15  15   *A7     A8    190
  16  16    A7    *A8    200
- 17   1    B1     B2    210               pair 17                         changed pair 5
+ 17   1    B1     B2    210               pair 18                         pair 9
  18   2   *B1     B2    230
  19   3    B1    *B2    240
  20   4   *B1    *B2    260
@@ -2168,7 +2168,7 @@ Overview of the scores of session 2 for '<auto-test, session 2>', round 1
  22   6    B3    *B4    340
  23   7   *B3    *B4    300
  24   8    B3     B4    340
- 25   9    B5    *B6    -50               pair 12                         pair 9
+ 25   9    B5    *B6    -50               pair 12                         changed pair 5
  26  10   *B5    *B6    -70
  27  11    B5     B6    -80
  28  12   *B5     B6    -90
@@ -2198,7 +2198,7 @@ Overview of the scores of session 2 for '<auto-test, session 2>', round 2
  14  14    A6     A3    -280
  15  15   *A6     A3    -300
  16  16    A6    *A3    -340
- 17   5   *B2     B9    -600              changed pair 5                  pair 10
+ 17   5   *B2     B9    -600              pair 9                          pair 10
  18   6    B2    *B9    -800
  19   7   *B2    *B9    -1000
  20   8    B2     B9    -1100
@@ -2206,7 +2206,7 @@ Overview of the scores of session 2 for '<auto-test, session 2>', round 2
  22  18   *B5     B4    300
  23  19    B5    *B4    400
  24  20   *B5    *B4    500
- 25  13   *B6    *B3    600               pair 9                          pair 14
+ 25  13   *B6    *B3    600               changed pair 5                  pair 14
  26  14    B6     B3    800
  27  15   *B6     B3    120
  28  16    B6    *B3    150
@@ -2236,7 +2236,7 @@ Overview of the scores of session 2 for '<auto-test, session 2>', round 3
  14   6    A6    *A7    -600
  15   7   *A6    *A7    -150
  16   8    A6     A7    %70      %70
- 17   9    B2    *B7    -50               changed pair 5                  pair 6
+ 17   9    B2    *B7    -50               pair 9                          pair 6
  18  10   *B2    *B7    0
  19  11    B2     B7    90
  20  12   *B2     B7    %60      R630
@@ -2244,7 +2244,7 @@ Overview of the scores of session 2 for '<auto-test, session 2>', round 3
  22  14    B5     B9    600
  23  15   *B5     B9    500
  24  16    B5    *B9    R300     %50
- 25  17    B6     B1    -150              pair 9                          pair 17
+ 25  17    B6     B1    -150              changed pair 5                  pair 18
  26  18   *B6     B1    -800
  27  19    B6    *B1    -600
  28  20   *B6    *B1    -120
@@ -2274,11 +2274,11 @@ Overview of the scores of session 2 for '<auto-test, session 2>', round 4
  14  18   *A7     A5    -420
  15  19    A7    *A5    420
  16  20   *A7    *A5    620
- 17  13   *B4    *B2    800               pair 11                         changed pair 5
+ 17  13   *B4    *B2    800               pair 11                         pair 9
  18  14    B4     B2    200
  19  15   *B4     B2    300
  20  16    B4    *B2    300
- 21  25    B5    *B1    150               pair 12                         pair 17
+ 21  25    B5    *B1    150               pair 12                         pair 18
  22  26   *B5    *B1    150
  23  27    B5     B1    150
  24  28   *B5     B1    150
@@ -2286,7 +2286,7 @@ Overview of the scores of session 2 for '<auto-test, session 2>', round 4
  26  18   *B7     B3    110
  27  19    B7    *B3    120
  28  20   *B7    *B3    130
- 29  21   *B9     B6    130               pair 10                         pair 9
+ 29  21   *B9     B6    130               pair 10                         changed pair 5
  30  22    B9    *B6    120
  31  23   *B9    *B6    110
  32  24    B9     B6    100
@@ -2316,7 +2316,7 @@ Overview of the scores of session 2 for '<auto-test, session 2>', round 5
  18   2   *B3     B9    140
  19   3    B3    *B9    140
  20   4   *B3    *B9    140
- 21  21   *B4     B1    150               pair 11                         pair 17
+ 21  21   *B4     B1    150               pair 11                         pair 18
  22  22    B4    *B1    150
  23  23   *B4    *B1    150
  24  24    B4     B1    150
@@ -2324,7 +2324,7 @@ Overview of the scores of session 2 for '<auto-test, session 2>', round 5
  26   6    B5    *B10   160
  27   7   *B5    *B10   160
  28   8    B5     B10   160
- 29  25    B7    *B6    170               pair 6                          pair 9
+ 29  25    B7    *B6    170               pair 6                          changed pair 5
  30  26   *B7    *B6    170
  31  27    B7     B6    170
  32  28   *B7     B6    170
@@ -2350,7 +2350,7 @@ Overview of the scores of session 2 for '<auto-test, session 2>', round 6
  14  26   *A7    *A1    -130
  15  27    A7     A1    -130
  16  28   *A7     A1    -130
- 17   5   *B1     B7    -140              pair 17                         pair 6
+ 17   5   *B1     B7    -140              pair 18                         pair 6
  18   6    B1    *B7    -140
  19   7   *B1    *B7    -140
  20   8    B1     B7    -140
@@ -2358,11 +2358,11 @@ Overview of the scores of session 2 for '<auto-test, session 2>', round 6
  22  10   *B3    *B10   -150
  23  11    B3     B10   -150
  24  12   *B3     B10   -150
- 25   1    B4     B6    -160              pair 11                         pair 9
+ 25   1    B4     B6    -160              pair 11                         changed pair 5
  26   2   *B4     B6    -160
  27   3    B4    *B6    -160
  28   4   *B4    *B6    -160
- 29  21   *B5     B2    -170              pair 12                         changed pair 5
+ 29  21   *B5     B2    -170              pair 12                         pair 9
  30  22    B5    *B2    -170
  31  23   *B5    *B2    -170
  32  24    B5     B2    -170
@@ -2388,11 +2388,11 @@ Overview of the scores of session 2 for '<auto-test, session 2>', round 7
  14  22    A7    *A3    130
  15  23   *A7    *A3    140
  16  24    A7     A3    150
- 17  13   *B1    *B10   130               pair 17                         pair 16
+ 17  13   *B1    *B10   130               pair 18                         pair 16
  18  14    B1     B10   140
  19  15   *B1     B10   150
  20  16    B1    *B10   160
- 21  25    B3    *B2    140               pair 14                         changed pair 5
+ 21  25    B3    *B2    140               pair 14                         pair 9
  22  26   *B3    *B2    150
  23  27    B3     B2    160
  24  28   *B3     B2    170
@@ -2411,24 +2411,24 @@ Session result
 '<auto-test, session 2>'
 result of session 2
 
-rank pair pairname                       imps   games  score    A B
-   1   A3 pair 1 . . . . . . . . . . . .   89      28   3.18    1 .
-   2   B7 pair 6 . . . . . . . . . . . .   61      24   2.54    . 1
-   3   A1 pair 3 . . . . . . . . . . . .   37      28   1.32    2 .
-   4   B5 pair 12  . . . . . . . . . . .   33      28   1.18    . 2
-   5   A8 pair 7 . . . . . . . . . . . .   28      28   1.00    3 .
-   6   A4 pair 13  . . . . . . . . . . .   18      28   0.64    4 .
-   7   B9 pair 10  . . . . . . . . . . .   12      24   0.50    . 3
-   8   A7 pair 2 . . . . . . . . . . . .   13      28   0.46    5 .
-   9   B1 pair 17  . . . . . . . . . . .    9      24   0.38    . 4
-  10  B10 pair 16  . . . . . . . . . . .    8      24   0.33    . 5
-  11   B6 pair 9 . . . . . . . . . . . .    1      24   0.04    . 6
-  12   B3 pair 14  . . . . . . . . . . .   -3      24  -0.13    . 7
-  13   B4 pair 11  . . . . . . . . . . .  -39      28  -1.39    . 8
-  14   A5 pair 8 . . . . . . . . . . . .  -46      28  -1.64    6 .
-  15   A6 pair 4 . . . . . . . . . . . .  -49      28  -1.75    7 .
-  16   A2 pair 15  . . . . . . . . . . .  -76      28  -2.71    8 .
-  17   B2 changed pair 5 . . . . . . . .  -78      24  -3.25    . 9
+rank pair pairname                       imps   games  score     A  B
+   1   A3 pair 1 . . . . . . . . . . . .   89    28     3.18     1  .
+   2   B7 pair 6 . . . . . . . . . . . .   61    24     2.54     .  1
+   3   A1 pair 3 . . . . . . . . . . . .   37    28     1.32     2  .
+   4   B5 pair 12  . . . . . . . . . . .   33    28     1.18     .  2
+   5   A8 pair 7 . . . . . . . . . . . .   28    28     1.00     3  .
+   6   A4 pair 13  . . . . . . . . . . .   18    28     0.64     4  .
+   7   B9 pair 10  . . . . . . . . . . .   12    24     0.50     .  3
+   8   A7 pair 2 . . . . . . . . . . . .   13    28     0.46     5  .
+   9   B1 pair 18  . . . . . . . . . . .    9    24     0.38     .  4
+  10  B10 pair 16  . . . . . . . . . . .    8    24     0.33     .  5
+  11   B6 changed pair 5 . . . . . . . .    1    24     0.04     .  6
+  12   B3 pair 14  . . . . . . . . . . .   -3    24    -0.13     .  7
+  13   B4 pair 11  . . . . . . . . . . .  -39    28    -1.39     .  8
+  14   A5 pair 8 . . . . . . . . . . . .  -46    28    -1.64     6  .
+  15   A6 pair 4 . . . . . . . . . . . .  -49    28    -1.75     7  .
+  16   A2 pair 15  . . . . . . . . . . .  -76    28    -2.71     8  .
+  17   B2 pair 9 . . . . . . . . . . . .  -78    24    -3.25     .  9
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2436,25 +2436,25 @@ Session result on name
 '<auto-test, session 2>'
 result of session 2
 
-rank pair pairname                       imps   games  score    A B
-   3   A1 pair 3 . . . . . . . . . . . .   37      28   1.32    2 .
-  16   A2 pair 15  . . . . . . . . . . .  -76      28  -2.71    8 .
-   1   A3 pair 1 . . . . . . . . . . . .   89      28   3.18    1 .
-   6   A4 pair 13  . . . . . . . . . . .   18      28   0.64    4 .
-  14   A5 pair 8 . . . . . . . . . . . .  -46      28  -1.64    6 .
-  15   A6 pair 4 . . . . . . . . . . . .  -49      28  -1.75    7 .
-   8   A7 pair 2 . . . . . . . . . . . .   13      28   0.46    5 .
-   5   A8 pair 7 . . . . . . . . . . . .   28      28   1.00    3 .
-   9   B1 pair 17  . . . . . . . . . . .    9      24   0.38    . 4
-  17   B2 changed pair 5 . . . . . . . .  -78      24  -3.25    . 9
-  12   B3 pair 14  . . . . . . . . . . .   -3      24  -0.13    . 7
-  13   B4 pair 11  . . . . . . . . . . .  -39      28  -1.39    . 8
-   4   B5 pair 12  . . . . . . . . . . .   33      28   1.18    . 2
-  11   B6 pair 9 . . . . . . . . . . . .    1      24   0.04    . 6
-   2   B7 pair 6 . . . . . . . . . . . .   61      24   2.54    . 1
+rank pair pairname                       imps   games  score     A  B
+   3   A1 pair 3 . . . . . . . . . . . .   37    28     1.32     2  .
+  16   A2 pair 15  . . . . . . . . . . .  -76    28    -2.71     8  .
+   1   A3 pair 1 . . . . . . . . . . . .   89    28     3.18     1  .
+   6   A4 pair 13  . . . . . . . . . . .   18    28     0.64     4  .
+  14   A5 pair 8 . . . . . . . . . . . .  -46    28    -1.64     6  .
+  15   A6 pair 4 . . . . . . . . . . . .  -49    28    -1.75     7  .
+   8   A7 pair 2 . . . . . . . . . . . .   13    28     0.46     5  .
+   5   A8 pair 7 . . . . . . . . . . . .   28    28     1.00     3  .
+   9   B1 pair 18  . . . . . . . . . . .    9    24     0.38     .  4
+  17   B2 pair 9 . . . . . . . . . . . .  -78    24    -3.25     .  9
+  12   B3 pair 14  . . . . . . . . . . .   -3    24    -0.13     .  7
+  13   B4 pair 11  . . . . . . . . . . .  -39    28    -1.39     .  8
+   4   B5 pair 12  . . . . . . . . . . .   33    28     1.18     .  2
+  11   B6 changed pair 5 . . . . . . . .    1    24     0.04     .  6
+   2   B7 pair 6 . . . . . . . . . . . .   61    24     2.54     .  1
 
-   7   B9 pair 10  . . . . . . . . . . .   12      24   0.50    . 3
-  10  B10 pair 16  . . . . . . . . . . .    8      24   0.33    . 5
+   7   B9 pair 10  . . . . . . . . . . .   12    24     0.50     .  3
+  10  B10 pair 16  . . . . . . . . . . .    8    24     0.33     .  5
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2650,25 +2650,25 @@ Group result
 
 Group-result of match '<auto-test, session 2>', session 2
 
-                           games :  1-4   5-8  9-12  13-16 17-20 21-24 25-28       tot score (imps/game)
-  1 pair 3 . . . . . . . . . . . .   2     9   -17    26   -12     6    23          37  1.32
-  2 pair 15  . . . . . . . . . . .  -3   -12   -21   -10   -11   -14    -5         -76 -2.71
-  3 pair 1 . . . . . . . . . . . .  18    12    13    41    11   -10     4          89  3.18
-  4 pair 13  . . . . . . . . . . .   9   -12    11   -27    -8    13    32          18  0.64
-  5 pair 8 . . . . . . . . . . . . -19    -9    17     8    -6    -5   -32         -46 -1.64
-  6 pair 4 . . . . . . . . . . . .   9    -4   -18   -42     8    -7     5         -49 -1.75
-  7 pair 2 . . . . . . . . . . . . -10    12    20    -1     6     9   -23          13  0.46
-  8 pair 7 . . . . . . . . . . . .   9    12   -12     0    12    11    -4          28  1.00
-  9 pair 17  . . . . . . . . . . .  20   -16   -----  -4    28   -11    -8           9  0.38
- 10 changed pair 5 . . . . . . . . -21   -53     3   -19   -----  21    -9         -78 -3.25
- 11 pair 14  . . . . . . . . . . .  12    29   -16   -21   -16   -----   9          -3 -0.13
- 12 pair 11  . . . . . . . . . . . -20   -29    -1    18   -13    10    -4         -39 -1.39
- 13 pair 12  . . . . . . . . . . .  -7    17    -8    32    13   -22     8          33  1.18
- 14 pair 9 . . . . . . . . . . . .  20   -----   7    20   -28    -9    -9           1  0.04
- 15 pair 6 . . . . . . . . . . . .   5    16    10   -----  16     5     9          61  2.54
- 16 --> absent
- 17 pair 10  . . . . . . . . . . . -13    53     0   -27    -9     8   -----        12  0.50
- 18 pair 16  . . . . . . . . . . . ----- -17    15     3     9    -6     4           8  0.33
+                            games :  1-4   5-8  9-12  13-16 17-20 21-24 25-28    games     tot score (imps/game)
+  A1 pair 3 . . . . . . . . . . . .   2     9   -17    26   -12     6    23        28       37  1.32
+  A2 pair 15  . . . . . . . . . . .  -3   -12   -21   -10   -11   -14    -5        28      -76 -2.71
+  A3 pair 1 . . . . . . . . . . . .  18    12    13    41    11   -10     4        28       89  3.18
+  A4 pair 13  . . . . . . . . . . .   9   -12    11   -27    -8    13    32        28       18  0.64
+  A5 pair 8 . . . . . . . . . . . . -19    -9    17     8    -6    -5   -32        28      -46 -1.64
+  A6 pair 4 . . . . . . . . . . . .   9    -4   -18   -42     8    -7     5        28      -49 -1.75
+  A7 pair 2 . . . . . . . . . . . . -10    12    20    -1     6     9   -23        28       13  0.46
+  A8 pair 7 . . . . . . . . . . . .   9    12   -12     0    12    11    -4        28       28  1.00
+  B1 pair 18  . . . . . . . . . . .  20   -16   -----  -4    28   -11    -8        24        9  0.38
+  B2 pair 9 . . . . . . . . . . . . -21   -53     3   -19   -----  21    -9        24      -78 -3.25
+  B3 pair 14  . . . . . . . . . . .  12    29   -16   -21   -16   -----   9        24       -3 -0.13
+  B4 pair 11  . . . . . . . . . . . -20   -29    -1    18   -13    10    -4        28      -39 -1.39
+  B5 pair 12  . . . . . . . . . . .  -7    17    -8    32    13   -22     8        28       33  1.18
+  B6 changed pair 5 . . . . . . . .  20   -----   7    20   -28    -9    -9        24        1  0.04
+  B7 pair 6 . . . . . . . . . . . .   5    16    10   -----  16     5     9        24       61  2.54
+  B8 --> absent
+  B9 pair 10  . . . . . . . . . . . -13    53     0   -27    -9     8   -----      24       12  0.50
+ B10 pair 16  . . . . . . . . . . . ----- -17    15     3     9    -6     4        24        8  0.33
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -2676,25 +2676,25 @@ Final result
 <auto-test, session 2>
 Final result
 
-rank pairname                         S1     S2       total  avg.  A B
-   1 pair 3 . . . . . . . . . . . .   3.54   1.32      4.86  2.43  1 .
-   2 pair 2 . . . . . . . . . . . .   4.00   0.46      4.46  2.23  2 .
-   3 pair 1 . . . . . . . . . . . .   1.22   3.18      4.40  2.20  3 .
-   4 pair 13  . . . . . . . . . . .   1.18   0.64      1.82  0.91  4 .
-   5 pair 7 . . . . . . . . . . . .   0.46   1.00      1.46  0.73  5 .
-   6 pair 17  . . . . . . . . . . .   0.50   0.38      0.88  0.44  . 1
-   7 pair 6 . . . . . . . . . . . .  -1.75   2.54      0.79  0.40  . 2
-   8 pair 16  . . . . . . . . . . .   0.33a  0.33      0.66  0.33  . 3
-   8 pair 18  . . . . . . . . . . .   0.33   0.33a     0.66  0.33  . .
-  10 pair 9 . . . . . . . . . . . .   0.42   0.04      0.46  0.23  . 4
-  11 pair 14  . . . . . . . . . . .   0.00  -0.13     -0.13 -0.07  . 5
-  11 pair 15  . . . . . . . . . . .   2.58  -2.71     -0.13 -0.07  6 .
-  13 pair 12  . . . . . . . . . . .  -1.39   1.18     -0.21 -0.11  . 6
-  14 pair 8 . . . . . . . . . . . .   1.00  -1.64     -0.64 -0.32  7 .
-  15 pair 4 . . . . . . . . . . . .   0.64  -1.75     -1.11 -0.56  8 .
-  16 pair 11  . . . . . . . . . . .  -0.17  -1.39     -1.56 -0.78  . 7
-  17 pair 10  . . . . . . . . . . .  -3.25   0.50     -2.75 -1.38  . 8
-  18 changed pair 5 . . . . . . . .  -1.75  -3.25     -5.00 -2.50  . 9
+rank pairname                         S1     S2       total  avg.   A  B
+   1 pair 3 . . . . . . . . . . . .   3.54   1.32      4.86  2.43   1  .
+   2 pair 1 . . . . . . . . . . . .   1.32   3.18      4.50  2.25   2  .
+   3 pair 2 . . . . . . . . . . . .   4.00   0.46      4.46  2.23   3  .
+   4 pair 13  . . . . . . . . . . .   1.18   0.64      1.82  0.91   4  .
+   5 pair 7 . . . . . . . . . . . .   0.46   1.00      1.46  0.73   5  .
+   6 pair 17  . . . . . . . . . . .   0.50   0.50a     1.00  0.50   .  .
+   7 pair 6 . . . . . . . . . . . .  -1.75   2.54      0.79  0.40   .  1
+   8 pair 18  . . . . . . . . . . .   0.33   0.38      0.71  0.36   .  2
+   9 pair 16  . . . . . . . . . . .   0.33a  0.33      0.66  0.33   .  3
+  10 pair 14  . . . . . . . . . . .   0.00  -0.13     -0.13 -0.07   .  4
+  10 pair 15  . . . . . . . . . . .   2.58  -2.71     -0.13 -0.07   6  .
+  12 pair 12  . . . . . . . . . . .  -1.39   1.18     -0.21 -0.11   .  5
+  13 pair 8 . . . . . . . . . . . .   1.00  -1.64     -0.64 -0.32   7  .
+  14 pair 4 . . . . . . . . . . . .   0.64  -1.75     -1.11 -0.56   8  .
+  15 pair 11  . . . . . . . . . . .  -0.17  -1.39     -1.56 -0.78   .  6
+  16 changed pair 5 . . . . . . . .  -1.75   0.04     -1.71 -0.86   .  7
+  17 pair 10  . . . . . . . . . . .  -3.25   0.50     -2.75 -1.38   .  8
+  18 pair 9 . . . . . . . . . . . .   0.18  -3.25     -3.07 -1.54   .  9
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -3044,9 +3044,9 @@ imps: 28, games: 28, sessionscore: 1.00 imps/game, rank: 5
 
 Result per pair
 
-Result of pair B1 'pair 17' for '<auto-test, session 2>', session 2
+Result of pair B1 'pair 18' for '<auto-test, session 2>', session 2
 
-Game  1: NS, score:   210, imps   5 Played against (B2): changed pair 5
+Game  1: NS, score:   210, imps   5 Played against (B2): pair 9
 Game  2: NS, score:   230, imps   5
 Game  3: NS, score:   240, imps   5
 Game  4: NS, score:   260, imps   5 set-score: 20 (5.00 imps/game)
@@ -3066,7 +3066,7 @@ Game 14: NS, score:   140, imps  -3
 Game 15: NS, score:   150, imps   2
 Game 16: NS, score:   160, imps   2 set-score: -4 (-1.00 imps/game)
 
-Game 17: EW, score:   150, imps   0 Played against (B6): pair 9
+Game 17: EW, score:   150, imps   0 Played against (B6): changed pair 5
 Game 18: EW, score:   800, imps  12
 Game 19: EW, score:   600, imps  12
 Game 20: EW, score:   120, imps   4 set-score: 28 (7.00 imps/game)
@@ -3087,9 +3087,9 @@ imps: 9, games: 24, sessionscore: 0.38 imps/game, rank: 9
 
 Result per pair
 
-Result of pair B2 'changed pair 5' for '<auto-test, session 2>', session 2
+Result of pair B2 'pair 9' for '<auto-test, session 2>', session 2
 
-Game  1: EW, score:  -210, imps  -5 Played against (B1): pair 17
+Game  1: EW, score:  -210, imps  -5 Played against (B1): pair 18
 Game  2: EW, score:  -230, imps  -5
 Game  3: EW, score:  -240, imps  -5
 Game  4: EW, score:  -260, imps  -6 set-score: -21 (-5.25 imps/game)
@@ -3147,7 +3147,7 @@ Game 10: NS, score:  -150, imps  -4
 Game 11: NS, score:  -150, imps  -5
 Game 12: NS, score:  -150, imps  -3 set-score: -16 (-4.00 imps/game)
 
-Game 13: EW, score:  -600, imps  -6 Played against (B6): pair 9
+Game 13: EW, score:  -600, imps  -6 Played against (B6): changed pair 5
 Game 14: EW, score:  -800, imps -11
 Game 15: EW, score:  -120, imps  -1
 Game 16: EW, score:  -150, imps  -3 set-score: -21 (-5.25 imps/game)
@@ -3162,7 +3162,7 @@ Game 22: not played
 Game 23: not played
 Game 24: not played
 
-Game 25: NS, score:   140, imps   2 Played against (B2): changed pair 5
+Game 25: NS, score:   140, imps   2 Played against (B2): pair 9
 Game 26: NS, score:   150, imps   2
 Game 27: NS, score:   160, imps   2
 Game 28: NS, score:   170, imps   3 set-score: 9 (2.25 imps/game)
@@ -3175,7 +3175,7 @@ Result per pair
 
 Result of pair B4 'pair 11' for '<auto-test, session 2>', session 2
 
-Game  1: NS, score:  -160, imps  -5 Played against (B6): pair 9
+Game  1: NS, score:  -160, imps  -5 Played against (B6): changed pair 5
 Game  2: NS, score:  -160, imps  -5
 Game  3: NS, score:  -160, imps  -5
 Game  4: NS, score:  -160, imps  -5 set-score: -20 (-5.00 imps/game)
@@ -3190,7 +3190,7 @@ Game 10: EW, score:     0, imps   0
 Game 11: EW, score:     0, imps   1
 Game 12: EW, score:     0, imps  -2 set-score: -1 (-0.25 imps/game)
 
-Game 13: NS, score:   800, imps  10 Played against (B2): changed pair 5
+Game 13: NS, score:   800, imps  10 Played against (B2): pair 9
 Game 14: NS, score:   200, imps  -2
 Game 15: NS, score:   300, imps   5
 Game 16: NS, score:   300, imps   5 set-score: 18 (4.50 imps/game)
@@ -3200,7 +3200,7 @@ Game 18: EW, score:  -300, imps  -9
 Game 19: EW, score:  -400, imps  -8
 Game 20: EW, score:  -500, imps -10 set-score: -13 (-3.25 imps/game)
 
-Game 21: NS, score:   150, imps   1 Played against (B1): pair 17
+Game 21: NS, score:   150, imps   1 Played against (B1): pair 18
 Game 22: NS, score:   150, imps   3
 Game 23: NS, score:   150, imps   4
 Game 24: NS, score:   150, imps   2 set-score: 10 (2.50 imps/game)
@@ -3228,7 +3228,7 @@ Game  6: NS, score:   160, imps   6
 Game  7: NS, score:   160, imps   4
 Game  8: NS, score:   160, imps   3 set-score: 17 (4.25 imps/game)
 
-Game  9: NS, score:   -50, imps  -1 Played against (B6): pair 9
+Game  9: NS, score:   -50, imps  -1 Played against (B6): changed pair 5
 Game 10: NS, score:   -70, imps  -2
 Game 11: NS, score:   -80, imps  -3
 Game 12: NS, score:   -90, imps  -2 set-score: -8 (-2.00 imps/game)
@@ -3243,12 +3243,12 @@ Game 18: NS, score:   300, imps   9
 Game 19: NS, score:   400, imps   8
 Game 20: NS, score:   500, imps  10 set-score: 13 (3.25 imps/game)
 
-Game 21: NS, score:  -170, imps  -7 Played against (B2): changed pair 5
+Game 21: NS, score:  -170, imps  -7 Played against (B2): pair 9
 Game 22: NS, score:  -170, imps  -5
 Game 23: NS, score:  -170, imps  -4
 Game 24: NS, score:  -170, imps  -6 set-score: -22 (-5.50 imps/game)
 
-Game 25: NS, score:   150, imps   2 Played against (B1): pair 17
+Game 25: NS, score:   150, imps   2 Played against (B1): pair 18
 Game 26: NS, score:   150, imps   2
 Game 27: NS, score:   150, imps   2
 Game 28: NS, score:   150, imps   2 set-score: 8 (2.00 imps/game)
@@ -3259,7 +3259,7 @@ imps: 33, games: 28, sessionscore: 1.18 imps/game, rank: 4
 
 Result per pair
 
-Result of pair B6 'pair 9' for '<auto-test, session 2>', session 2
+Result of pair B6 'changed pair 5' for '<auto-test, session 2>', session 2
 
 Game  1: EW, score:   160, imps   5 Played against (B4): pair 11
 Game  2: EW, score:   160, imps   5
@@ -3281,7 +3281,7 @@ Game 14: NS, score:   800, imps  11
 Game 15: NS, score:   120, imps   1
 Game 16: NS, score:   150, imps   2 set-score: 20 (5.00 imps/game)
 
-Game 17: NS, score:  -150, imps   0 Played against (B1): pair 17
+Game 17: NS, score:  -150, imps   0 Played against (B1): pair 18
 Game 18: NS, score:  -800, imps -12
 Game 19: NS, score:  -600, imps -12
 Game 20: NS, score:  -120, imps  -4 set-score: -28 (-7.00 imps/game)
@@ -3309,12 +3309,12 @@ Game  2: EW, score:     0, imps   2
 Game  3: EW, score:     0, imps   2
 Game  4: EW, score:     0, imps   0 set-score: 5 (1.25 imps/game)
 
-Game  5: EW, score:   140, imps   5 Played against (B1): pair 17
+Game  5: EW, score:   140, imps   5 Played against (B1): pair 18
 Game  6: EW, score:   140, imps   2
 Game  7: EW, score:   140, imps   4
 Game  8: EW, score:   140, imps   5 set-score: 16 (4.00 imps/game)
 
-Game  9: EW, score:    50, imps   1 Played against (B2): changed pair 5
+Game  9: EW, score:    50, imps   1 Played against (B2): pair 9
 Game 10: EW, score:     0, imps   0
 Game 11: EW, score:   -90, imps  -2
 Game 12: EW, score:  R630, imps  11 set-score: 10 (2.50 imps/game)
@@ -3334,7 +3334,7 @@ Game 22: EW, score:   120, imps   4
 Game 23: EW, score:   100, imps   3
 Game 24: EW, score:  -100, imps  -2 set-score: 5 (1.25 imps/game)
 
-Game 25: NS, score:   170, imps   2 Played against (B6): pair 9
+Game 25: NS, score:   170, imps   2 Played against (B6): changed pair 5
 Game 26: NS, score:   170, imps   2
 Game 27: NS, score:   170, imps   2
 Game 28: NS, score:   170, imps   3 set-score: 9 (2.25 imps/game)
@@ -3360,7 +3360,7 @@ Game  2: EW, score:  -140, imps  -3
 Game  3: EW, score:  -140, imps  -3
 Game  4: EW, score:  -140, imps  -4 set-score: -13 (-3.25 imps/game)
 
-Game  5: EW, score:   600, imps  12 Played against (B2): changed pair 5
+Game  5: EW, score:   600, imps  12 Played against (B2): pair 9
 Game  6: EW, score:   800, imps  12
 Game  7: EW, score:  1000, imps  14
 Game  8: EW, score:  1100, imps  15 set-score: 53 (13.25 imps/game)
@@ -3380,7 +3380,7 @@ Game 18: NS, score:  -110, imps  -1
 Game 19: NS, score:  -120, imps  -5
 Game 20: NS, score:  -130, imps  -4 set-score: -9 (-2.25 imps/game)
 
-Game 21: NS, score:   130, imps   1 Played against (B6): pair 9
+Game 21: NS, score:   130, imps   1 Played against (B6): changed pair 5
 Game 22: NS, score:   120, imps   3
 Game 23: NS, score:   110, imps   3
 Game 24: NS, score:   100, imps   1 set-score: 8 (2.00 imps/game)
@@ -3413,7 +3413,7 @@ Game 10: EW, score:   150, imps   4
 Game 11: EW, score:   150, imps   5
 Game 12: EW, score:   150, imps   2 set-score: 15 (3.75 imps/game)
 
-Game 13: EW, score:  -130, imps   5 Played against (B1): pair 17
+Game 13: EW, score:  -130, imps   5 Played against (B1): pair 18
 Game 14: EW, score:  -140, imps   3
 Game 15: EW, score:  -150, imps  -2
 Game 16: EW, score:  -160, imps  -3 set-score: 3 (0.75 imps/game)
@@ -4081,43 +4081,43 @@ Pairname assignment for '<auto-test, session 3>', session 3
 
 Pair name
   A1 pair 3
-  A2 pair 2
-  A3 pair 1
+  A2 pair 1
+  A3 pair 2
   A4 pair 13
   A5 pair 7
   A6 pair 17
   A7 pair 6
-  A8 pair 16
-  B1 pair 18
-  B2 pair 9
-  B3 pair 14
-  B4 pair 15
-  B5 pair 12
-  B6 pair 8
-  B7 pair 4
+  A8 pair 18
+  B1 pair 16
+  B2 pair 14
+  B3 pair 15
+  B4 pair 12
+  B5 pair 8
+  B6 pair 4
+  B7 pair 11
  ??? 
   B9 pair 10
- B10 changed pair 5
+ B10 pair 9
 
     pairname                        pair no pair S-1 rank     rank S-1
-  1 pair 1                          A3      A3         3        3
-  2 pair 2                          A2      A7         2       16
+  1 pair 1                          A2      A3         2        3
+  2 pair 2                          A3      A7         3       16
   3 pair 3                          A1      A1         1        1
-  4 pair 4                          B7      A6        15        6
-  5 changed pair 5                  B10     B2        18       14
+  4 pair 4                          B6      A6        14        6
+  5 changed pair 5                  ???     B6        16       14
   6 pair 6                          A7      B7         7       15
   7 pair 7                          A5      A8         5        8
-  8 pair 8                          B6      A5        14        5
-  9 pair 9                          B2      B6        10        9
+  8 pair 8                          B5      A5        13        5
+  9 pair 9                          B10     B2        18        9
  10 pair 10                         B9      B9        17       17
- 11 pair 11                         ???     B4        16       12
- 12 pair 12                         B5      B5        13       13
+ 11 pair 11                         B7      B4        15       12
+ 12 pair 12                         B4      B5        12       13
  13 pair 13                         A4      A4         4        4
- 14 pair 14                         B3      B3        11       11
- 15 pair 15                         B4      A2        12        2
- 16 pair 16                         A8      B10        8        0
- 17 pair 17                         A6      B1         6        7
- 18 pair 18                         B1      ???        9       10
+ 14 pair 14                         B2      B3        10       11
+ 15 pair 15                         B3      A2        11        2
+ 16 pair 16                         B1      B10        9       18
+ 17 pair 17                         A6      ???        6        7
+ 18 pair 18                         A8      B1         8       10
  19 pair 19                         ???     ???        0        0
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
@@ -4125,11 +4125,11 @@ Pair name
 Overview of the scores of session 3 for '<auto-test, session 3>', round 1
 
     game  ns     ew     score ns score ew name ns                         name ew                        
-  1   1    A1     A2    0                 pair 3                          pair 2
+  1   1    A1     A2    0                 pair 3                          pair 1
   2   2   *A1     A2    70
   3   3    A1    *A2    70
   4   4   *A1    *A2    80
-  5   5   *A3     A4    90                pair 1                          pair 13
+  5   5   *A3     A4    90                pair 2                          pair 13
   6   6    A3    *A4    100
   7   7   *A3    *A4    110
   8   8    A3     A4    120
@@ -4137,23 +4137,23 @@ Overview of the scores of session 3 for '<auto-test, session 3>', round 1
  10  10   *A5    *A6    140
  11  11    A5     A6    150
  12  12   *A5     A6    160
- 13  13   *A7    *A8    170               pair 6                          pair 16
+ 13  13   *A7    *A8    170               pair 6                          pair 18
  14  14    A7     A8    180
  15  15   *A7     A8    190
  16  16    A7    *A8    200
- 17   1    B1     B2    210               pair 18                         pair 9
+ 17   1    B1     B2    210               pair 16                         pair 14
  18   2   *B1     B2    230
  19   3    B1    *B2    240
  20   4   *B1    *B2    260
- 21   5   *B3     B4    270               pair 14                         pair 15
+ 21   5   *B3     B4    270               pair 15                         pair 12
  22   6    B3    *B4    340
  23   7   *B3    *B4    300
  24   8    B3     B4    340
- 25   9    B5    *B6    -50               pair 12                         pair 8
+ 25   9    B5    *B6    -50               pair 8                          pair 4
  26  10   *B5    *B6    -70
  27  11    B5     B6    -80
  28  12   *B5     B6    -90
- 29  17    B9     B10   -100              pair 10                         changed pair 5
+ 29  17    B9     B10   -100              pair 10                         pair 9
  30  18   *B9     B10   -110
  31  19    B9    *B10   -120
  32  20   *B9    *B10   -130
@@ -4163,11 +4163,11 @@ Overview of the scores of session 3 for '<auto-test, session 3>', round 1
 Overview of the scores of session 3 for '<auto-test, session 3>', round 2
 
     game  ns     ew     score ns score ew name ns                         name ew                        
-  1  17    A1     A8    -140              pair 3                          pair 16
+  1  17    A1     A8    -140              pair 3                          pair 18
   2  18   *A1     A8    -150
   3  19    A1    *A8    -160
   4  20   *A1    *A8    -170
-  5   9    A2    *A7    -180              pair 2                          pair 6
+  5   9    A2    *A7    -180              pair 1                          pair 6
   6  10   *A2    *A7    -190
   7  11    A2     A7    -200
   8  12   *A2     A7    -210
@@ -4175,23 +4175,23 @@ Overview of the scores of session 3 for '<auto-test, session 3>', round 2
  10  26   *A5    *A4    -240
  11  27    A5     A4    -250
  12  28   *A5     A4    -260
- 13  13   *A6    *A3    -270              pair 17                         pair 1
+ 13  13   *A6    *A3    -270              pair 17                         pair 2
  14  14    A6     A3    -280
  15  15   *A6     A3    -300
  16  16    A6    *A3    -340
- 17   5   *B2     B9    -600              pair 9                          pair 10
+ 17   5   *B2     B9    -600              pair 14                         pair 10
  18   6    B2    *B9    -800
  19   7   *B2    *B9    -1000
  20   8    B2     B9    -1100
- 21  17    B5     B4    -1200             pair 12                         pair 15
+ 21  17    B5     B4    -1200             pair 8                          pair 12
  22  18   *B5     B4    300
  23  19    B5    *B4    400
  24  20   *B5    *B4    500
- 25  13   *B6    *B3    600               pair 8                          pair 14
+ 25  13   *B6    *B3    600               pair 4                          pair 15
  26  14    B6     B3    800
  27  15   *B6     B3    120
  28  16    B6    *B3    150
- 29  21   *B10    B7    110               changed pair 5                  pair 4
+ 29  21   *B10    B7    110               pair 9                          pair 11
  30  22    B10   *B7    -120
  31  23   *B10   *B7    -100
  32  24    B10    B7    100
@@ -4201,7 +4201,7 @@ Overview of the scores of session 3 for '<auto-test, session 3>', round 2
 Overview of the scores of session 3 for '<auto-test, session 3>', round 3
 
     game  ns     ew     score ns score ew name ns                         name ew                        
-  1  17    A3     A2    150               pair 1                          pair 2
+  1  17    A3     A2    150               pair 2                          pair 1
   2  18   *A3     A2    150
   3  19    A3    *A2    170
   4  20   *A3    *A2    -170
@@ -4209,7 +4209,7 @@ Overview of the scores of session 3 for '<auto-test, session 3>', round 3
   6  14    A4     A1    300
   7  15   *A4     A1    -500
   8  16    A4    *A1    -500
-  9  21   *A5     A8    160               pair 7                          pair 16
+  9  21   *A5     A8    160               pair 7                          pair 18
  10  22    A5    *A8    -160
  11  23   *A5    *A8    -160
  12  24    A5     A8    R150     R110
@@ -4217,19 +4217,19 @@ Overview of the scores of session 3 for '<auto-test, session 3>', round 3
  14   6    A6    *A7    -600
  15   7   *A6    *A7    -150
  16   8    A6     A7    %70      %70
- 17   9    B2    *B7    -50               pair 9                          pair 4
+ 17   9    B2    *B7    -50               pair 14                         pair 11
  18  10   *B2    *B7    0
  19  11    B2     B7    90
  20  12   *B2     B7    %60      R630
- 21  13   *B5    *B9    800               pair 12                         pair 10
+ 21  13   *B5    *B9    800               pair 8                          pair 10
  22  14    B5     B9    600
  23  15   *B5     B9    500
  24  16    B5    *B9    R300     %50
- 25  17    B6     B1    -150              pair 8                          pair 18
+ 25  17    B6     B1    -150              pair 4                          pair 16
  26  18   *B6     B1    -800
  27  19    B6    *B1    -600
  28  20   *B6    *B1    -120
- 29  25    B10   *B4    150               changed pair 5                  pair 15
+ 29  25    B10   *B4    150               pair 9                          pair 12
  30  26   *B10   *B4    140
  31  27    B10    B4    140
  32  28   *B10    B4    50
@@ -4239,15 +4239,15 @@ Overview of the scores of session 3 for '<auto-test, session 3>', round 3
 Overview of the scores of session 3 for '<auto-test, session 3>', round 4
 
     game  ns     ew     score ns score ew name ns                         name ew                        
-  1  21   *A2     A4    50                pair 2                          pair 13
+  1  21   *A2     A4    50                pair 1                          pair 13
   2  22    A2    *A4    100
   3  23   *A2    *A4    -200
   4  24    A2     A4    -300
-  5   9    A3    *A1    100               pair 1                          pair 3
+  5   9    A3    *A1    100               pair 2                          pair 3
   6  10   *A3    *A1    200
   7  11    A3     A1    300
   8  12   *A3     A1    %40      %40
-  9   1    A6     A8    70                pair 17                         pair 16
+  9   1    A6     A8    70                pair 17                         pair 18
  10   2   *A6     A8    80
  11   3    A6    *A8    90
  12   4   *A6    *A8    %80      R620
@@ -4255,19 +4255,19 @@ Overview of the scores of session 3 for '<auto-test, session 3>', round 4
  14  18   *A7     A5    -420
  15  19    A7    *A5    420
  16  20   *A7    *A5    620
- 17  13   *B4    *B2    800               pair 15                         pair 9
+ 17  13   *B4    *B2    800               pair 12                         pair 14
  18  14    B4     B2    200
  19  15   *B4     B2    300
  20  16    B4    *B2    300
- 21  25    B5    *B1    150               pair 12                         pair 18
+ 21  25    B5    *B1    150               pair 8                          pair 16
  22  26   *B5    *B1    150
  23  27    B5     B1    150
  24  28   *B5     B1    150
- 25  17    B7     B3    100               pair 4                          pair 14
+ 25  17    B7     B3    100               pair 11                         pair 15
  26  18   *B7     B3    110
  27  19    B7    *B3    120
  28  20   *B7    *B3    130
- 29  21   *B9     B6    130               pair 10                         pair 8
+ 29  21   *B9     B6    130               pair 10                         pair 4
  30  22    B9    *B6    120
  31  23   *B9    *B6    110
  32  24    B9     B6    100
@@ -4281,11 +4281,11 @@ Overview of the scores of session 3 for '<auto-test, session 3>', round 5
   2  22    A1    *A6    100
   3  23   *A1    *A6    100
   4  24    A1     A6    100
-  5  13   *A2    *A5    110               pair 2                          pair 7
+  5  13   *A2    *A5    110               pair 1                          pair 7
   6  14    A2     A5    110
   7  15   *A2     A5    110
   8  16    A2    *A5    110
-  9  25    A3    *A8    120               pair 1                          pair 16
+  9  25    A3    *A8    120               pair 2                          pair 18
  10  26   *A3    *A8    120
  11  27    A3     A8    120
  12  28   *A3     A8    120
@@ -4293,19 +4293,19 @@ Overview of the scores of session 3 for '<auto-test, session 3>', round 5
  14   2   *A4     A7    130
  15   3    A4    *A7    130
  16   4   *A4    *A7    130
- 17   1    B3     B9    140               pair 14                         pair 10
+ 17   1    B3     B9    140               pair 15                         pair 10
  18   2   *B3     B9    140
  19   3    B3    *B9    140
  20   4   *B3    *B9    140
- 21  21   *B4     B1    150               pair 15                         pair 18
+ 21  21   *B4     B1    150               pair 12                         pair 16
  22  22    B4    *B1    150
  23  23   *B4    *B1    150
  24  24    B4     B1    150
- 25   5   *B5     B10   160               pair 12                         changed pair 5
+ 25   5   *B5     B10   160               pair 8                          pair 9
  26   6    B5    *B10   160
  27   7   *B5    *B10   160
  28   8    B5     B10   160
- 29  25    B7    *B6    170               pair 4                          pair 8
+ 29  25    B7    *B6    170               pair 11                         pair 4
  30  26   *B7    *B6    170
  31  27    B7     B6    170
  32  28   *B7     B6    170
@@ -4315,7 +4315,7 @@ Overview of the scores of session 3 for '<auto-test, session 3>', round 5
 Overview of the scores of session 3 for '<auto-test, session 3>', round 6
 
     game  ns     ew     score ns score ew name ns                         name ew                        
-  1   5   *A2     A8    -100              pair 2                          pair 16
+  1   5   *A2     A8    -100              pair 1                          pair 18
   2   6    A2    *A8    -100
   3   7   *A2    *A8    -100
   4   8    A2     A8    -100
@@ -4323,7 +4323,7 @@ Overview of the scores of session 3 for '<auto-test, session 3>', round 6
   6  18   *A4     A6    -110
   7  19    A4    *A6    -110
   8  20   *A4    *A6    -110
-  9   1    A5     A3    -120              pair 7                          pair 1
+  9   1    A5     A3    -120              pair 7                          pair 2
  10   2   *A5     A3    -120
  11   3    A5    *A3    -120
  12   4   *A5    *A3    -120
@@ -4331,19 +4331,19 @@ Overview of the scores of session 3 for '<auto-test, session 3>', round 6
  14  26   *A7    *A1    -130
  15  27    A7     A1    -130
  16  28   *A7     A1    -130
- 17   5   *B1     B7    -140              pair 18                         pair 4
+ 17   5   *B1     B7    -140              pair 16                         pair 11
  18   6    B1    *B7    -140
  19   7   *B1    *B7    -140
  20   8    B1     B7    -140
- 21   9    B3    *B10   -150              pair 14                         changed pair 5
+ 21   9    B3    *B10   -150              pair 15                         pair 9
  22  10   *B3    *B10   -150
  23  11    B3     B10   -150
  24  12   *B3     B10   -150
- 25   1    B4     B6    -160              pair 15                         pair 8
+ 25   1    B4     B6    -160              pair 12                         pair 4
  26   2   *B4     B6    -160
  27   3    B4    *B6    -160
  28   4   *B4    *B6    -160
- 29  21   *B5     B2    -170              pair 12                         pair 9
+ 29  21   *B5     B2    -170              pair 8                          pair 14
  30  22    B5    *B2    -170
  31  23   *B5    *B2    -170
  32  24    B5     B2    -170
@@ -4357,31 +4357,31 @@ Overview of the scores of session 3 for '<auto-test, session 3>', round 7
   2   6    A1    *A5    100
   3   7   *A1    *A5    150
   4   8    A1     A5    200
-  5   9    A4    *A8    70                pair 13                         pair 16
+  5   9    A4    *A8    70                pair 13                         pair 18
   6  10   *A4    *A8    90
   7  11    A4     A8    100
   8  12   *A4     A8    110
-  9  25    A6    *A2    110               pair 17                         pair 2
+  9  25    A6    *A2    110               pair 17                         pair 1
  10  26   *A6    *A2    120
  11  27    A6     A2    130
  12  28   *A6     A2    140
- 13  21   *A7     A3    120               pair 6                          pair 1
+ 13  21   *A7     A3    120               pair 6                          pair 2
  14  22    A7    *A3    130
  15  23   *A7    *A3    140
  16  24    A7     A3    150
- 17  13   *B1    *B10   130               pair 18                         changed pair 5
+ 17  13   *B1    *B10   130               pair 16                         pair 9
  18  14    B1     B10   140
  19  15   *B1     B10   150
  20  16    B1    *B10   160
- 21  25    B3    *B2    140               pair 14                         pair 9
+ 21  25    B3    *B2    140               pair 15                         pair 14
  22  26   *B3    *B2    150
  23  27    B3     B2    160
  24  28   *B3     B2    170
- 25   1    B5     B7    0                 pair 12                         pair 4
+ 25   1    B5     B7    0                 pair 8                          pair 11
  26   2   *B5     B7    0
  27   3    B5    *B7    0
  28   4   *B5    *B7    0
- 29   9    B9    *B4    0                 pair 10                         pair 15
+ 29   9    B9    *B4    0                 pair 10                         pair 12
  30  10   *B9    *B4    0
  31  11    B9     B4    0
  32  12   *B9     B4    0
@@ -4392,24 +4392,24 @@ Session result
 '<auto-test, session 3>'
 result of session 3
 
-rank pair pairname                       imps   games  score    A B
-   1   A3 pair 1 . . . . . . . . . . . .   89      28   3.18    1 .
-   2   B7 pair 4 . . . . . . . . . . . .   61      24   2.54    . 1
-   3   A1 pair 3 . . . . . . . . . . . .   37      28   1.32    2 .
-   4   B5 pair 12  . . . . . . . . . . .   33      28   1.18    . 2
-   5   A8 pair 16  . . . . . . . . . . .   28      28   1.00    3 .
-   6   A4 pair 13  . . . . . . . . . . .   18      28   0.64    4 .
-   7   B9 pair 10  . . . . . . . . . . .   12      24   0.50    . 3
-   8   A7 pair 6 . . . . . . . . . . . .   13      28   0.46    5 .
-   9   B1 pair 18  . . . . . . . . . . .    9      24   0.38    . 4
-  10  B10 changed pair 5 . . . . . . . .    8      24   0.33    . 5
-  11   B6 pair 8 . . . . . . . . . . . .    1      24   0.04    . 6
-  12   B3 pair 14  . . . . . . . . . . .   -3      24  -0.13    . 7
-  13   B4 pair 15  . . . . . . . . . . .  -39      28  -1.39    . 8
-  14   A5 pair 7 . . . . . . . . . . . .  -46      28  -1.64    6 .
-  15   A6 pair 17  . . . . . . . . . . .  -49      28  -1.75    7 .
-  16   A2 pair 2 . . . . . . . . . . . .  -76      28  -2.71    8 .
-  17   B2 pair 9 . . . . . . . . . . . .  -78      24  -3.25    . 9
+rank pair pairname                       imps   games  score     A  B
+   1   A3 pair 2 . . . . . . . . . . . .   89    28     3.18     1  .
+   2   B7 pair 11  . . . . . . . . . . .   61    24     2.54     .  1
+   3   A1 pair 3 . . . . . . . . . . . .   37    28     1.32     2  .
+   4   B5 pair 8 . . . . . . . . . . . .   33    28     1.18     .  2
+   5   A8 pair 18  . . . . . . . . . . .   28    28     1.00     3  .
+   6   A4 pair 13  . . . . . . . . . . .   18    28     0.64     4  .
+   7   B9 pair 10  . . . . . . . . . . .   12    24     0.50     .  3
+   8   A7 pair 6 . . . . . . . . . . . .   13    28     0.46     5  .
+   9   B1 pair 16  . . . . . . . . . . .    9    24     0.38     .  4
+  10  B10 pair 9 . . . . . . . . . . . .    8    24     0.33     .  5
+  11   B6 pair 4 . . . . . . . . . . . .    1    24     0.04     .  6
+  12   B3 pair 15  . . . . . . . . . . .   -3    24    -0.13     .  7
+  13   B4 pair 12  . . . . . . . . . . .  -39    28    -1.39     .  8
+  14   A5 pair 7 . . . . . . . . . . . .  -46    28    -1.64     6  .
+  15   A6 pair 17  . . . . . . . . . . .  -49    28    -1.75     7  .
+  16   A2 pair 1 . . . . . . . . . . . .  -76    28    -2.71     8  .
+  17   B2 pair 14  . . . . . . . . . . .  -78    24    -3.25     .  9
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4417,25 +4417,25 @@ Session result on name
 '<auto-test, session 3>'
 result of session 3
 
-rank pair pairname                       imps   games  score    A B
-   3   A1 pair 3 . . . . . . . . . . . .   37      28   1.32    2 .
-  16   A2 pair 2 . . . . . . . . . . . .  -76      28  -2.71    8 .
-   1   A3 pair 1 . . . . . . . . . . . .   89      28   3.18    1 .
-   6   A4 pair 13  . . . . . . . . . . .   18      28   0.64    4 .
-  14   A5 pair 7 . . . . . . . . . . . .  -46      28  -1.64    6 .
-  15   A6 pair 17  . . . . . . . . . . .  -49      28  -1.75    7 .
-   8   A7 pair 6 . . . . . . . . . . . .   13      28   0.46    5 .
-   5   A8 pair 16  . . . . . . . . . . .   28      28   1.00    3 .
-   9   B1 pair 18  . . . . . . . . . . .    9      24   0.38    . 4
-  17   B2 pair 9 . . . . . . . . . . . .  -78      24  -3.25    . 9
-  12   B3 pair 14  . . . . . . . . . . .   -3      24  -0.13    . 7
-  13   B4 pair 15  . . . . . . . . . . .  -39      28  -1.39    . 8
-   4   B5 pair 12  . . . . . . . . . . .   33      28   1.18    . 2
-  11   B6 pair 8 . . . . . . . . . . . .    1      24   0.04    . 6
-   2   B7 pair 4 . . . . . . . . . . . .   61      24   2.54    . 1
+rank pair pairname                       imps   games  score     A  B
+   3   A1 pair 3 . . . . . . . . . . . .   37    28     1.32     2  .
+  16   A2 pair 1 . . . . . . . . . . . .  -76    28    -2.71     8  .
+   1   A3 pair 2 . . . . . . . . . . . .   89    28     3.18     1  .
+   6   A4 pair 13  . . . . . . . . . . .   18    28     0.64     4  .
+  14   A5 pair 7 . . . . . . . . . . . .  -46    28    -1.64     6  .
+  15   A6 pair 17  . . . . . . . . . . .  -49    28    -1.75     7  .
+   8   A7 pair 6 . . . . . . . . . . . .   13    28     0.46     5  .
+   5   A8 pair 18  . . . . . . . . . . .   28    28     1.00     3  .
+   9   B1 pair 16  . . . . . . . . . . .    9    24     0.38     .  4
+  17   B2 pair 14  . . . . . . . . . . .  -78    24    -3.25     .  9
+  12   B3 pair 15  . . . . . . . . . . .   -3    24    -0.13     .  7
+  13   B4 pair 12  . . . . . . . . . . .  -39    28    -1.39     .  8
+   4   B5 pair 8 . . . . . . . . . . . .   33    28     1.18     .  2
+  11   B6 pair 4 . . . . . . . . . . . .    1    24     0.04     .  6
+   2   B7 pair 11  . . . . . . . . . . .   61    24     2.54     .  1
 
-   7   B9 pair 10  . . . . . . . . . . .   12      24   0.50    . 3
-  10  B10 changed pair 5 . . . . . . . .    8      24   0.33    . 5
+   7   B9 pair 10  . . . . . . . . . . .   12    24     0.50     .  3
+  10  B10 pair 9 . . . . . . . . . . . .    8    24     0.33     .  5
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4631,25 +4631,25 @@ Group result
 
 Group-result of match '<auto-test, session 3>', session 3
 
-                           games :  1-4   5-8  9-12  13-16 17-20 21-24 25-28       tot score (imps/game)
-  1 pair 3 . . . . . . . . . . . .   2     9   -17    26   -12     6    23          37  1.32
-  2 pair 2 . . . . . . . . . . . .  -3   -12   -21   -10   -11   -14    -5         -76 -2.71
-  3 pair 1 . . . . . . . . . . . .  18    12    13    41    11   -10     4          89  3.18
-  4 pair 13  . . . . . . . . . . .   9   -12    11   -27    -8    13    32          18  0.64
-  5 pair 7 . . . . . . . . . . . . -19    -9    17     8    -6    -5   -32         -46 -1.64
-  6 pair 17  . . . . . . . . . . .   9    -4   -18   -42     8    -7     5         -49 -1.75
-  7 pair 6 . . . . . . . . . . . . -10    12    20    -1     6     9   -23          13  0.46
-  8 pair 16  . . . . . . . . . . .   9    12   -12     0    12    11    -4          28  1.00
-  9 pair 18  . . . . . . . . . . .  20   -16   -----  -4    28   -11    -8           9  0.38
- 10 pair 9 . . . . . . . . . . . . -21   -53     3   -19   -----  21    -9         -78 -3.25
- 11 pair 14  . . . . . . . . . . .  12    29   -16   -21   -16   -----   9          -3 -0.13
- 12 pair 15  . . . . . . . . . . . -20   -29    -1    18   -13    10    -4         -39 -1.39
- 13 pair 12  . . . . . . . . . . .  -7    17    -8    32    13   -22     8          33  1.18
- 14 pair 8 . . . . . . . . . . . .  20   -----   7    20   -28    -9    -9           1  0.04
- 15 pair 4 . . . . . . . . . . . .   5    16    10   -----  16     5     9          61  2.54
- 16 --> absent
- 17 pair 10  . . . . . . . . . . . -13    53     0   -27    -9     8   -----        12  0.50
- 18 changed pair 5 . . . . . . . . ----- -17    15     3     9    -6     4           8  0.33
+                            games :  1-4   5-8  9-12  13-16 17-20 21-24 25-28    games     tot score (imps/game)
+  A1 pair 3 . . . . . . . . . . . .   2     9   -17    26   -12     6    23        28       37  1.32
+  A2 pair 1 . . . . . . . . . . . .  -3   -12   -21   -10   -11   -14    -5        28      -76 -2.71
+  A3 pair 2 . . . . . . . . . . . .  18    12    13    41    11   -10     4        28       89  3.18
+  A4 pair 13  . . . . . . . . . . .   9   -12    11   -27    -8    13    32        28       18  0.64
+  A5 pair 7 . . . . . . . . . . . . -19    -9    17     8    -6    -5   -32        28      -46 -1.64
+  A6 pair 17  . . . . . . . . . . .   9    -4   -18   -42     8    -7     5        28      -49 -1.75
+  A7 pair 6 . . . . . . . . . . . . -10    12    20    -1     6     9   -23        28       13  0.46
+  A8 pair 18  . . . . . . . . . . .   9    12   -12     0    12    11    -4        28       28  1.00
+  B1 pair 16  . . . . . . . . . . .  20   -16   -----  -4    28   -11    -8        24        9  0.38
+  B2 pair 14  . . . . . . . . . . . -21   -53     3   -19   -----  21    -9        24      -78 -3.25
+  B3 pair 15  . . . . . . . . . . .  12    29   -16   -21   -16   -----   9        24       -3 -0.13
+  B4 pair 12  . . . . . . . . . . . -20   -29    -1    18   -13    10    -4        28      -39 -1.39
+  B5 pair 8 . . . . . . . . . . . .  -7    17    -8    32    13   -22     8        28       33  1.18
+  B6 pair 4 . . . . . . . . . . . .  20   -----   7    20   -28    -9    -9        24        1  0.04
+  B7 pair 11  . . . . . . . . . . .   5    16    10   -----  16     5     9        24       61  2.54
+  B8 --> absent
+  B9 pair 10  . . . . . . . . . . . -13    53     0   -27    -9     8   -----      24       12  0.50
+ B10 pair 9 . . . . . . . . . . . . ----- -17    15     3     9    -6     4        24        8  0.33
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4657,25 +4657,25 @@ Final result
 <auto-test, session 3>
 Final result
 
-rank pairname                         S1     S2     S3       total  avg.  A B
-   1 pair 1 . . . . . . . . . . . .   1.22   3.18   3.18      7.58  2.53  1 .
-   2 pair 3 . . . . . . . . . . . .   3.54   1.32   1.32      6.18  2.06  2 .
-   3 pair 13  . . . . . . . . . . .   1.18   0.64   0.64      2.46  0.82  3 .
-   4 pair 16  . . . . . . . . . . .   0.67a  0.33   1.00      2.00  0.67  4 .
-   5 pair 2 . . . . . . . . . . . .   4.00   0.46  -2.71      1.75  0.58  5 .
-   6 pair 4 . . . . . . . . . . . .   0.64  -1.75   2.54      1.43  0.48  . 1
-   7 pair 6 . . . . . . . . . . . .  -1.75   2.54   0.46      1.25  0.42  6 .
-   8 pair 18  . . . . . . . . . . .   0.33   0.36a  0.38      1.07  0.36  . 2
-   9 pair 12  . . . . . . . . . . .  -1.39   1.18   1.18      0.97  0.32  . 3
-  10 pair 7 . . . . . . . . . . . .   0.46   1.00  -1.64     -0.18 -0.06  7 .
-  11 pair 14  . . . . . . . . . . .   0.00  -0.13  -0.13     -0.26 -0.09  . 4
-  12 pair 8 . . . . . . . . . . . .   1.00  -1.64   0.04     -0.60 -0.20  . 5
-  13 pair 17  . . . . . . . . . . .   0.50   0.38  -1.75     -0.87 -0.29  8 .
-  14 pair 15  . . . . . . . . . . .   2.58  -2.71  -1.39     -1.52 -0.51  . 6
-  15 pair 10  . . . . . . . . . . .  -3.25   0.50   0.50     -2.25 -0.75  . 7
-  16 pair 11  . . . . . . . . . . .  -0.17  -1.39  -0.78a    -2.34 -0.78  . .
-  17 pair 9 . . . . . . . . . . . .   0.42   0.04  -3.25     -2.79 -0.93  . 8
-  18 changed pair 5 . . . . . . . .  -1.75  -3.25   0.33     -4.67 -1.56  . 9
+rank pairname                         S1     S2     S3       total  avg.   A  B
+   1 pair 2 . . . . . . . . . . . .   4.00   0.46   3.18      7.64  2.55   1  .
+   2 pair 3 . . . . . . . . . . . .   3.54   1.32   1.32      6.18  2.06   2  .
+   3 pair 13  . . . . . . . . . . .   1.18   0.64   0.64      2.46  0.82   3  .
+   4 pair 1 . . . . . . . . . . . .   1.32   3.18  -2.71      1.79  0.60   4  .
+   5 pair 18  . . . . . . . . . . .   0.33   0.38   1.00      1.71  0.57   5  .
+   6 pair 6 . . . . . . . . . . . .  -1.75   2.54   0.46      1.25  0.42   6  .
+   7 pair 16  . . . . . . . . . . .   0.36a  0.33   0.38      1.07  0.36   .  1
+   8 pair 11  . . . . . . . . . . .  -0.17  -1.39   2.54      0.98  0.33   .  2
+   9 pair 8 . . . . . . . . . . . .   1.00  -1.64   1.18      0.54  0.18   .  3
+  10 pair 7 . . . . . . . . . . . .   0.46   1.00  -1.64     -0.18 -0.06   7  .
+  11 pair 15  . . . . . . . . . . .   2.58  -2.71  -0.13     -0.26 -0.09   .  4
+  12 pair 4 . . . . . . . . . . . .   0.64  -1.75   0.04     -1.07 -0.36   .  5
+  13 pair 12  . . . . . . . . . . .  -1.39   1.18  -1.39     -1.60 -0.53   .  6
+  14 pair 17  . . . . . . . . . . .   0.50  -0.63a -1.75     -1.88 -0.63   8  .
+  15 pair 10  . . . . . . . . . . .  -3.25   0.50   0.50     -2.25 -0.75   .  7
+  16 changed pair 5 . . . . . . . .  -1.75   0.04  -0.86a    -2.57 -0.86   .  .
+  17 pair 9 . . . . . . . . . . . .   0.18  -3.25   0.33     -2.74 -0.91   .  8
+  18 pair 14  . . . . . . . . . . .   0.00  -0.13  -3.25     -3.38 -1.13   .  9
 
 (c)opyright 1991-2024 hl/tc, monday januari 1 2024 12:00:00
 
@@ -4683,7 +4683,7 @@ Result per pair
 
 Result of pair A1 'pair 3' for '<auto-test, session 3>', session 3
 
-Game  1: NS, score:     0, imps  -1 Played against (A2): pair 2
+Game  1: NS, score:     0, imps  -1 Played against (A2): pair 1
 Game  2: NS, score:    70, imps   1
 Game  3: NS, score:    70, imps   1
 Game  4: NS, score:    80, imps   1 set-score: 2 (0.50 imps/game)
@@ -4693,7 +4693,7 @@ Game  6: NS, score:   100, imps   5
 Game  7: NS, score:   150, imps   4
 Game  8: NS, score:   200, imps   4 set-score: 9 (2.25 imps/game)
 
-Game  9: EW, score:  -100, imps  -3 Played against (A3): pair 1
+Game  9: EW, score:  -100, imps  -3 Played against (A3): pair 2
 Game 10: EW, score:  -200, imps  -5
 Game 11: EW, score:  -300, imps  -7
 Game 12: EW, score:   %40, imps  -2 set-score: -17 (-4.25 imps/game)
@@ -4703,7 +4703,7 @@ Game 14: EW, score:  -300, imps  -1
 Game 15: EW, score:   500, imps  12
 Game 16: EW, score:   500, imps  11 set-score: 26 (6.50 imps/game)
 
-Game 17: NS, score:  -140, imps   0 Played against (A8): pair 16
+Game 17: NS, score:  -140, imps   0 Played against (A8): pair 18
 Game 18: NS, score:  -150, imps  -2
 Game 19: NS, score:  -160, imps  -5
 Game 20: NS, score:  -170, imps  -5 set-score: -12 (-3.00 imps/game)
@@ -4724,14 +4724,14 @@ imps: 37, games: 28, sessionscore: 1.32 imps/game, rank: 3
 
 Result per pair
 
-Result of pair A2 'pair 2' for '<auto-test, session 3>', session 3
+Result of pair A2 'pair 1' for '<auto-test, session 3>', session 3
 
 Game  1: EW, score:     0, imps   1 Played against (A1): pair 3
 Game  2: EW, score:   -70, imps  -1
 Game  3: EW, score:   -70, imps  -1
 Game  4: EW, score:   -80, imps  -2 set-score: -3 (-0.75 imps/game)
 
-Game  5: NS, score:  -100, imps  -4 Played against (A8): pair 16
+Game  5: NS, score:  -100, imps  -4 Played against (A8): pair 18
 Game  6: NS, score:  -100, imps  -1
 Game  7: NS, score:  -100, imps  -3
 Game  8: NS, score:  -100, imps  -4 set-score: -12 (-3.00 imps/game)
@@ -4746,7 +4746,7 @@ Game 14: NS, score:   110, imps  -4
 Game 15: NS, score:   110, imps   0
 Game 16: NS, score:   110, imps   0 set-score: -10 (-2.50 imps/game)
 
-Game 17: EW, score:  -150, imps  -7 Played against (A3): pair 1
+Game 17: EW, score:  -150, imps  -7 Played against (A3): pair 2
 Game 18: EW, score:  -150, imps  -6
 Game 19: EW, score:  -170, imps  -3
 Game 20: EW, score:   170, imps   5 set-score: -11 (-2.75 imps/game)
@@ -4767,7 +4767,7 @@ imps: -76, games: 28, sessionscore: -2.71 imps/game, rank: 16
 
 Result per pair
 
-Result of pair A3 'pair 1' for '<auto-test, session 3>', session 3
+Result of pair A3 'pair 2' for '<auto-test, session 3>', session 3
 
 Game  1: EW, score:   120, imps   4 Played against (A5): pair 7
 Game  2: EW, score:   120, imps   5
@@ -4789,7 +4789,7 @@ Game 14: EW, score:   280, imps  11
 Game 15: EW, score:   300, imps   9
 Game 16: EW, score:   340, imps   9 set-score: 41 (10.25 imps/game)
 
-Game 17: NS, score:   150, imps   7 Played against (A2): pair 2
+Game 17: NS, score:   150, imps   7 Played against (A2): pair 1
 Game 18: NS, score:   150, imps   6
 Game 19: NS, score:   170, imps   3
 Game 20: NS, score:  -170, imps  -5 set-score: 11 (2.75 imps/game)
@@ -4799,7 +4799,7 @@ Game 22: EW, score:  -130, imps  -3
 Game 23: EW, score:  -140, imps  -4
 Game 24: EW, score:  -150, imps  -3 set-score: -10 (-2.50 imps/game)
 
-Game 25: NS, score:   120, imps   1 Played against (A8): pair 16
+Game 25: NS, score:   120, imps   1 Played against (A8): pair 18
 Game 26: NS, score:   120, imps   1
 Game 27: NS, score:   120, imps   1
 Game 28: NS, score:   120, imps   1 set-score: 4 (1.00 imps/game)
@@ -4817,12 +4817,12 @@ Game  2: NS, score:   130, imps   2
 Game  3: NS, score:   130, imps   2
 Game  4: NS, score:   130, imps   2 set-score: 9 (2.25 imps/game)
 
-Game  5: EW, score:   -90, imps  -2 Played against (A3): pair 1
+Game  5: EW, score:   -90, imps  -2 Played against (A3): pair 2
 Game  6: EW, score:  -100, imps  -5
 Game  7: EW, score:  -110, imps  -3
 Game  8: EW, score:  -120, imps  -2 set-score: -12 (-3.00 imps/game)
 
-Game  9: NS, score:    70, imps   2 Played against (A8): pair 16
+Game  9: NS, score:    70, imps   2 Played against (A8): pair 18
 Game 10: NS, score:    90, imps   3
 Game 11: NS, score:   100, imps   2
 Game 12: NS, score:   110, imps   4 set-score: 11 (2.75 imps/game)
@@ -4837,7 +4837,7 @@ Game 18: NS, score:  -110, imps  -1
 Game 19: NS, score:  -110, imps  -4
 Game 20: NS, score:  -110, imps  -4 set-score: -8 (-2.00 imps/game)
 
-Game 21: EW, score:   -50, imps   2 Played against (A2): pair 2
+Game 21: EW, score:   -50, imps   2 Played against (A2): pair 1
 Game 22: EW, score:  -100, imps  -2
 Game 23: EW, score:   200, imps   5
 Game 24: EW, score:   300, imps   8 set-score: 13 (3.25 imps/game)
@@ -4855,7 +4855,7 @@ Result per pair
 
 Result of pair A5 'pair 7' for '<auto-test, session 3>', session 3
 
-Game  1: NS, score:  -120, imps  -4 Played against (A3): pair 1
+Game  1: NS, score:  -120, imps  -4 Played against (A3): pair 2
 Game  2: NS, score:  -120, imps  -5
 Game  3: NS, score:  -120, imps  -5
 Game  4: NS, score:  -120, imps  -5 set-score: -19 (-4.75 imps/game)
@@ -4870,7 +4870,7 @@ Game 10: NS, score:   140, imps   4
 Game 11: NS, score:   150, imps   4
 Game 12: NS, score:   160, imps   5 set-score: 17 (4.25 imps/game)
 
-Game 13: EW, score:  -110, imps   6 Played against (A2): pair 2
+Game 13: EW, score:  -110, imps   6 Played against (A2): pair 1
 Game 14: EW, score:  -110, imps   4
 Game 15: EW, score:  -110, imps   0
 Game 16: EW, score:  -110, imps  -2 set-score: 8 (2.00 imps/game)
@@ -4880,7 +4880,7 @@ Game 18: EW, score:   420, imps   8
 Game 19: EW, score:  -420, imps  -9
 Game 20: EW, score:  -620, imps -12 set-score: -6 (-1.50 imps/game)
 
-Game 21: NS, score:   160, imps   2 Played against (A8): pair 16
+Game 21: NS, score:   160, imps   2 Played against (A8): pair 18
 Game 22: NS, score:  -160, imps  -5
 Game 23: NS, score:  -160, imps  -4
 Game 24: NS, score:  R150, imps   2 set-score: -5 (-1.25 imps/game)
@@ -4898,7 +4898,7 @@ Result per pair
 
 Result of pair A6 'pair 17' for '<auto-test, session 3>', session 3
 
-Game  1: NS, score:    70, imps   1 Played against (A8): pair 16
+Game  1: NS, score:    70, imps   1 Played against (A8): pair 18
 Game  2: NS, score:    80, imps   1
 Game  3: NS, score:    90, imps   1
 Game  4: NS, score:   %80, imps   6 set-score: 9 (2.25 imps/game)
@@ -4913,7 +4913,7 @@ Game 10: EW, score:  -140, imps  -4
 Game 11: EW, score:  -150, imps  -4
 Game 12: EW, score:  -160, imps  -6 set-score: -18 (-4.50 imps/game)
 
-Game 13: NS, score:  -270, imps -12 Played against (A3): pair 1
+Game 13: NS, score:  -270, imps -12 Played against (A3): pair 2
 Game 14: NS, score:  -280, imps -11
 Game 15: NS, score:  -300, imps  -9
 Game 16: NS, score:  -340, imps -10 set-score: -42 (-10.50 imps/game)
@@ -4928,7 +4928,7 @@ Game 22: EW, score:  -100, imps  -2
 Game 23: EW, score:  -100, imps  -3
 Game 24: EW, score:  -100, imps  -2 set-score: -7 (-1.75 imps/game)
 
-Game 25: NS, score:   110, imps   1 Played against (A2): pair 2
+Game 25: NS, score:   110, imps   1 Played against (A2): pair 1
 Game 26: NS, score:   120, imps   1
 Game 27: NS, score:   130, imps   1
 Game 28: NS, score:   140, imps   2 set-score: 5 (1.25 imps/game)
@@ -4951,12 +4951,12 @@ Game  6: EW, score:   600, imps  11
 Game  7: EW, score:   150, imps   4
 Game  8: EW, score:   %70, imps   4 set-score: 12 (3.00 imps/game)
 
-Game  9: EW, score:   180, imps   5 Played against (A2): pair 2
+Game  9: EW, score:   180, imps   5 Played against (A2): pair 1
 Game 10: EW, score:   190, imps   5
 Game 11: EW, score:   200, imps   6
 Game 12: EW, score:   210, imps   4 set-score: 20 (5.00 imps/game)
 
-Game 13: NS, score:   170, imps  -5 Played against (A8): pair 16
+Game 13: NS, score:   170, imps  -5 Played against (A8): pair 18
 Game 14: NS, score:   180, imps  -2
 Game 15: NS, score:   190, imps   3
 Game 16: NS, score:   200, imps   3 set-score: -1 (-0.25 imps/game)
@@ -4966,7 +4966,7 @@ Game 18: NS, score:  -420, imps  -8
 Game 19: NS, score:   420, imps   9
 Game 20: NS, score:   620, imps  12 set-score: 6 (1.50 imps/game)
 
-Game 21: NS, score:   120, imps   0 Played against (A3): pair 1
+Game 21: NS, score:   120, imps   0 Played against (A3): pair 2
 Game 22: NS, score:   130, imps   3
 Game 23: NS, score:   140, imps   4
 Game 24: NS, score:   150, imps   2 set-score: 9 (2.25 imps/game)
@@ -4982,14 +4982,14 @@ imps: 13, games: 28, sessionscore: 0.46 imps/game, rank: 8
 
 Result per pair
 
-Result of pair A8 'pair 16' for '<auto-test, session 3>', session 3
+Result of pair A8 'pair 18' for '<auto-test, session 3>', session 3
 
 Game  1: EW, score:   -70, imps  -1 Played against (A6): pair 17
 Game  2: EW, score:   -80, imps  -1
 Game  3: EW, score:   -90, imps  -1
 Game  4: EW, score:  R620, imps  12 set-score: 9 (2.25 imps/game)
 
-Game  5: EW, score:   100, imps   4 Played against (A2): pair 2
+Game  5: EW, score:   100, imps   4 Played against (A2): pair 1
 Game  6: EW, score:   100, imps   1
 Game  7: EW, score:   100, imps   3
 Game  8: EW, score:   100, imps   4 set-score: 12 (3.00 imps/game)
@@ -5014,7 +5014,7 @@ Game 22: EW, score:   160, imps   5
 Game 23: EW, score:   160, imps   4
 Game 24: EW, score:  R110, imps   4 set-score: 11 (2.75 imps/game)
 
-Game 25: EW, score:  -120, imps  -1 Played against (A3): pair 1
+Game 25: EW, score:  -120, imps  -1 Played against (A3): pair 2
 Game 26: EW, score:  -120, imps  -1
 Game 27: EW, score:  -120, imps  -1
 Game 28: EW, score:  -120, imps  -1 set-score: -4 (-1.00 imps/game)
@@ -5025,14 +5025,14 @@ imps: 28, games: 28, sessionscore: 1.00 imps/game, rank: 5
 
 Result per pair
 
-Result of pair B1 'pair 18' for '<auto-test, session 3>', session 3
+Result of pair B1 'pair 16' for '<auto-test, session 3>', session 3
 
-Game  1: NS, score:   210, imps   5 Played against (B2): pair 9
+Game  1: NS, score:   210, imps   5 Played against (B2): pair 14
 Game  2: NS, score:   230, imps   5
 Game  3: NS, score:   240, imps   5
 Game  4: NS, score:   260, imps   5 set-score: 20 (5.00 imps/game)
 
-Game  5: NS, score:  -140, imps  -5 Played against (B7): pair 4
+Game  5: NS, score:  -140, imps  -5 Played against (B7): pair 11
 Game  6: NS, score:  -140, imps  -2
 Game  7: NS, score:  -140, imps  -4
 Game  8: NS, score:  -140, imps  -5 set-score: -16 (-4.00 imps/game)
@@ -5042,22 +5042,22 @@ Game 10: not played
 Game 11: not played
 Game 12: not played
 
-Game 13: NS, score:   130, imps  -5 Played against (B10): changed pair 5
+Game 13: NS, score:   130, imps  -5 Played against (B10): pair 9
 Game 14: NS, score:   140, imps  -3
 Game 15: NS, score:   150, imps   2
 Game 16: NS, score:   160, imps   2 set-score: -4 (-1.00 imps/game)
 
-Game 17: EW, score:   150, imps   0 Played against (B6): pair 8
+Game 17: EW, score:   150, imps   0 Played against (B6): pair 4
 Game 18: EW, score:   800, imps  12
 Game 19: EW, score:   600, imps  12
 Game 20: EW, score:   120, imps   4 set-score: 28 (7.00 imps/game)
 
-Game 21: EW, score:  -150, imps  -1 Played against (B4): pair 15
+Game 21: EW, score:  -150, imps  -1 Played against (B4): pair 12
 Game 22: EW, score:  -150, imps  -3
 Game 23: EW, score:  -150, imps  -4
 Game 24: EW, score:  -150, imps  -3 set-score: -11 (-2.75 imps/game)
 
-Game 25: EW, score:  -150, imps  -2 Played against (B5): pair 12
+Game 25: EW, score:  -150, imps  -2 Played against (B5): pair 8
 Game 26: EW, score:  -150, imps  -2
 Game 27: EW, score:  -150, imps  -2
 Game 28: EW, score:  -150, imps  -2 set-score: -8 (-2.00 imps/game)
@@ -5068,9 +5068,9 @@ imps: 9, games: 24, sessionscore: 0.38 imps/game, rank: 9
 
 Result per pair
 
-Result of pair B2 'pair 9' for '<auto-test, session 3>', session 3
+Result of pair B2 'pair 14' for '<auto-test, session 3>', session 3
 
-Game  1: EW, score:  -210, imps  -5 Played against (B1): pair 18
+Game  1: EW, score:  -210, imps  -5 Played against (B1): pair 16
 Game  2: EW, score:  -230, imps  -5
 Game  3: EW, score:  -240, imps  -5
 Game  4: EW, score:  -260, imps  -6 set-score: -21 (-5.25 imps/game)
@@ -5080,12 +5080,12 @@ Game  6: NS, score:  -800, imps -12
 Game  7: NS, score: -1000, imps -14
 Game  8: NS, score: -1100, imps -15 set-score: -53 (-13.25 imps/game)
 
-Game  9: NS, score:   -50, imps  -1 Played against (B7): pair 4
+Game  9: NS, score:   -50, imps  -1 Played against (B7): pair 11
 Game 10: NS, score:     0, imps   0
 Game 11: NS, score:    90, imps   2
 Game 12: NS, score:   %60, imps   2 set-score: 3 (0.75 imps/game)
 
-Game 13: EW, score:  -800, imps -10 Played against (B4): pair 15
+Game 13: EW, score:  -800, imps -10 Played against (B4): pair 12
 Game 14: EW, score:  -200, imps   2
 Game 15: EW, score:  -300, imps  -5
 Game 16: EW, score:  -300, imps  -6 set-score: -19 (-4.75 imps/game)
@@ -5095,12 +5095,12 @@ Game 18: not played
 Game 19: not played
 Game 20: not played
 
-Game 21: EW, score:   170, imps   7 Played against (B5): pair 12
+Game 21: EW, score:   170, imps   7 Played against (B5): pair 8
 Game 22: EW, score:   170, imps   5
 Game 23: EW, score:   170, imps   4
 Game 24: EW, score:   170, imps   5 set-score: 21 (5.25 imps/game)
 
-Game 25: EW, score:  -140, imps  -2 Played against (B3): pair 14
+Game 25: EW, score:  -140, imps  -2 Played against (B3): pair 15
 Game 26: EW, score:  -150, imps  -2
 Game 27: EW, score:  -160, imps  -2
 Game 28: EW, score:  -170, imps  -3 set-score: -9 (-2.25 imps/game)
@@ -5111,29 +5111,29 @@ imps: -78, games: 24, sessionscore: -3.25 imps/game, rank: 17
 
 Result per pair
 
-Result of pair B3 'pair 14' for '<auto-test, session 3>', session 3
+Result of pair B3 'pair 15' for '<auto-test, session 3>', session 3
 
 Game  1: NS, score:   140, imps   3 Played against (B9): pair 10
 Game  2: NS, score:   140, imps   3
 Game  3: NS, score:   140, imps   3
 Game  4: NS, score:   140, imps   3 set-score: 12 (3.00 imps/game)
 
-Game  5: NS, score:   270, imps   6 Played against (B4): pair 15
+Game  5: NS, score:   270, imps   6 Played against (B4): pair 12
 Game  6: NS, score:   340, imps   9
 Game  7: NS, score:   300, imps   7
 Game  8: NS, score:   340, imps   7 set-score: 29 (7.25 imps/game)
 
-Game  9: NS, score:  -150, imps  -4 Played against (B10): changed pair 5
+Game  9: NS, score:  -150, imps  -4 Played against (B10): pair 9
 Game 10: NS, score:  -150, imps  -4
 Game 11: NS, score:  -150, imps  -5
 Game 12: NS, score:  -150, imps  -3 set-score: -16 (-4.00 imps/game)
 
-Game 13: EW, score:  -600, imps  -6 Played against (B6): pair 8
+Game 13: EW, score:  -600, imps  -6 Played against (B6): pair 4
 Game 14: EW, score:  -800, imps -11
 Game 15: EW, score:  -120, imps  -1
 Game 16: EW, score:  -150, imps  -3 set-score: -21 (-5.25 imps/game)
 
-Game 17: EW, score:  -100, imps  -6 Played against (B7): pair 4
+Game 17: EW, score:  -100, imps  -6 Played against (B7): pair 11
 Game 18: EW, score:  -110, imps  -5
 Game 19: EW, score:  -120, imps  -2
 Game 20: EW, score:  -130, imps  -3 set-score: -16 (-4.00 imps/game)
@@ -5143,7 +5143,7 @@ Game 22: not played
 Game 23: not played
 Game 24: not played
 
-Game 25: NS, score:   140, imps   2 Played against (B2): pair 9
+Game 25: NS, score:   140, imps   2 Played against (B2): pair 14
 Game 26: NS, score:   150, imps   2
 Game 27: NS, score:   160, imps   2
 Game 28: NS, score:   170, imps   3 set-score: 9 (2.25 imps/game)
@@ -5154,14 +5154,14 @@ imps: -3, games: 24, sessionscore: -0.13 imps/game, rank: 12
 
 Result per pair
 
-Result of pair B4 'pair 15' for '<auto-test, session 3>', session 3
+Result of pair B4 'pair 12' for '<auto-test, session 3>', session 3
 
-Game  1: NS, score:  -160, imps  -5 Played against (B6): pair 8
+Game  1: NS, score:  -160, imps  -5 Played against (B6): pair 4
 Game  2: NS, score:  -160, imps  -5
 Game  3: NS, score:  -160, imps  -5
 Game  4: NS, score:  -160, imps  -5 set-score: -20 (-5.00 imps/game)
 
-Game  5: EW, score:  -270, imps  -6 Played against (B3): pair 14
+Game  5: EW, score:  -270, imps  -6 Played against (B3): pair 15
 Game  6: EW, score:  -340, imps  -9
 Game  7: EW, score:  -300, imps  -7
 Game  8: EW, score:  -340, imps  -7 set-score: -29 (-7.25 imps/game)
@@ -5171,22 +5171,22 @@ Game 10: EW, score:     0, imps   0
 Game 11: EW, score:     0, imps   1
 Game 12: EW, score:     0, imps  -2 set-score: -1 (-0.25 imps/game)
 
-Game 13: NS, score:   800, imps  10 Played against (B2): pair 9
+Game 13: NS, score:   800, imps  10 Played against (B2): pair 14
 Game 14: NS, score:   200, imps  -2
 Game 15: NS, score:   300, imps   5
 Game 16: NS, score:   300, imps   5 set-score: 18 (4.50 imps/game)
 
-Game 17: EW, score:  1200, imps  14 Played against (B5): pair 12
+Game 17: EW, score:  1200, imps  14 Played against (B5): pair 8
 Game 18: EW, score:  -300, imps  -9
 Game 19: EW, score:  -400, imps  -8
 Game 20: EW, score:  -500, imps -10 set-score: -13 (-3.25 imps/game)
 
-Game 21: NS, score:   150, imps   1 Played against (B1): pair 18
+Game 21: NS, score:   150, imps   1 Played against (B1): pair 16
 Game 22: NS, score:   150, imps   3
 Game 23: NS, score:   150, imps   4
 Game 24: NS, score:   150, imps   2 set-score: 10 (2.50 imps/game)
 
-Game 25: EW, score:  -150, imps  -2 Played against (B10): changed pair 5
+Game 25: EW, score:  -150, imps  -2 Played against (B10): pair 9
 Game 26: EW, score:  -140, imps  -2
 Game 27: EW, score:  -140, imps  -1
 Game 28: EW, score:   -50, imps   1 set-score: -4 (-1.00 imps/game)
@@ -5197,19 +5197,19 @@ imps: -39, games: 28, sessionscore: -1.39 imps/game, rank: 13
 
 Result per pair
 
-Result of pair B5 'pair 12' for '<auto-test, session 3>', session 3
+Result of pair B5 'pair 8' for '<auto-test, session 3>', session 3
 
-Game  1: NS, score:     0, imps  -1 Played against (B7): pair 4
+Game  1: NS, score:     0, imps  -1 Played against (B7): pair 11
 Game  2: NS, score:     0, imps  -2
 Game  3: NS, score:     0, imps  -2
 Game  4: NS, score:     0, imps  -2 set-score: -7 (-1.75 imps/game)
 
-Game  5: NS, score:   160, imps   4 Played against (B10): changed pair 5
+Game  5: NS, score:   160, imps   4 Played against (B10): pair 9
 Game  6: NS, score:   160, imps   6
 Game  7: NS, score:   160, imps   4
 Game  8: NS, score:   160, imps   3 set-score: 17 (4.25 imps/game)
 
-Game  9: NS, score:   -50, imps  -1 Played against (B6): pair 8
+Game  9: NS, score:   -50, imps  -1 Played against (B6): pair 4
 Game 10: NS, score:   -70, imps  -2
 Game 11: NS, score:   -80, imps  -3
 Game 12: NS, score:   -90, imps  -2 set-score: -8 (-2.00 imps/game)
@@ -5219,17 +5219,17 @@ Game 14: NS, score:   600, imps   8
 Game 15: NS, score:   500, imps   9
 Game 16: NS, score:  R300, imps   5 set-score: 32 (8.00 imps/game)
 
-Game 17: NS, score: -1200, imps -14 Played against (B4): pair 15
+Game 17: NS, score: -1200, imps -14 Played against (B4): pair 12
 Game 18: NS, score:   300, imps   9
 Game 19: NS, score:   400, imps   8
 Game 20: NS, score:   500, imps  10 set-score: 13 (3.25 imps/game)
 
-Game 21: NS, score:  -170, imps  -7 Played against (B2): pair 9
+Game 21: NS, score:  -170, imps  -7 Played against (B2): pair 14
 Game 22: NS, score:  -170, imps  -5
 Game 23: NS, score:  -170, imps  -4
 Game 24: NS, score:  -170, imps  -6 set-score: -22 (-5.50 imps/game)
 
-Game 25: NS, score:   150, imps   2 Played against (B1): pair 18
+Game 25: NS, score:   150, imps   2 Played against (B1): pair 16
 Game 26: NS, score:   150, imps   2
 Game 27: NS, score:   150, imps   2
 Game 28: NS, score:   150, imps   2 set-score: 8 (2.00 imps/game)
@@ -5240,9 +5240,9 @@ imps: 33, games: 28, sessionscore: 1.18 imps/game, rank: 4
 
 Result per pair
 
-Result of pair B6 'pair 8' for '<auto-test, session 3>', session 3
+Result of pair B6 'pair 4' for '<auto-test, session 3>', session 3
 
-Game  1: EW, score:   160, imps   5 Played against (B4): pair 15
+Game  1: EW, score:   160, imps   5 Played against (B4): pair 12
 Game  2: EW, score:   160, imps   5
 Game  3: EW, score:   160, imps   5
 Game  4: EW, score:   160, imps   5 set-score: 20 (5.00 imps/game)
@@ -5252,17 +5252,17 @@ Game  6: not played
 Game  7: not played
 Game  8: not played
 
-Game  9: EW, score:    50, imps   1 Played against (B5): pair 12
+Game  9: EW, score:    50, imps   1 Played against (B5): pair 8
 Game 10: EW, score:    70, imps   2
 Game 11: EW, score:    80, imps   3
 Game 12: EW, score:    90, imps   1 set-score: 7 (1.75 imps/game)
 
-Game 13: NS, score:   600, imps   6 Played against (B3): pair 14
+Game 13: NS, score:   600, imps   6 Played against (B3): pair 15
 Game 14: NS, score:   800, imps  11
 Game 15: NS, score:   120, imps   1
 Game 16: NS, score:   150, imps   2 set-score: 20 (5.00 imps/game)
 
-Game 17: NS, score:  -150, imps   0 Played against (B1): pair 18
+Game 17: NS, score:  -150, imps   0 Played against (B1): pair 16
 Game 18: NS, score:  -800, imps -12
 Game 19: NS, score:  -600, imps -12
 Game 20: NS, score:  -120, imps  -4 set-score: -28 (-7.00 imps/game)
@@ -5272,7 +5272,7 @@ Game 22: EW, score:  -120, imps  -3
 Game 23: EW, score:  -110, imps  -3
 Game 24: EW, score:  -100, imps  -2 set-score: -9 (-2.25 imps/game)
 
-Game 25: EW, score:  -170, imps  -2 Played against (B7): pair 4
+Game 25: EW, score:  -170, imps  -2 Played against (B7): pair 11
 Game 26: EW, score:  -170, imps  -2
 Game 27: EW, score:  -170, imps  -2
 Game 28: EW, score:  -170, imps  -3 set-score: -9 (-2.25 imps/game)
@@ -5283,19 +5283,19 @@ imps: 1, games: 24, sessionscore: 0.04 imps/game, rank: 11
 
 Result per pair
 
-Result of pair B7 'pair 4' for '<auto-test, session 3>', session 3
+Result of pair B7 'pair 11' for '<auto-test, session 3>', session 3
 
-Game  1: EW, score:     0, imps   1 Played against (B5): pair 12
+Game  1: EW, score:     0, imps   1 Played against (B5): pair 8
 Game  2: EW, score:     0, imps   2
 Game  3: EW, score:     0, imps   2
 Game  4: EW, score:     0, imps   0 set-score: 5 (1.25 imps/game)
 
-Game  5: EW, score:   140, imps   5 Played against (B1): pair 18
+Game  5: EW, score:   140, imps   5 Played against (B1): pair 16
 Game  6: EW, score:   140, imps   2
 Game  7: EW, score:   140, imps   4
 Game  8: EW, score:   140, imps   5 set-score: 16 (4.00 imps/game)
 
-Game  9: EW, score:    50, imps   1 Played against (B2): pair 9
+Game  9: EW, score:    50, imps   1 Played against (B2): pair 14
 Game 10: EW, score:     0, imps   0
 Game 11: EW, score:   -90, imps  -2
 Game 12: EW, score:  R630, imps  11 set-score: 10 (2.50 imps/game)
@@ -5305,17 +5305,17 @@ Game 14: not played
 Game 15: not played
 Game 16: not played
 
-Game 17: NS, score:   100, imps   6 Played against (B3): pair 14
+Game 17: NS, score:   100, imps   6 Played against (B3): pair 15
 Game 18: NS, score:   110, imps   5
 Game 19: NS, score:   120, imps   2
 Game 20: NS, score:   130, imps   3 set-score: 16 (4.00 imps/game)
 
-Game 21: EW, score:  -110, imps   0 Played against (B10): changed pair 5
+Game 21: EW, score:  -110, imps   0 Played against (B10): pair 9
 Game 22: EW, score:   120, imps   4
 Game 23: EW, score:   100, imps   3
 Game 24: EW, score:  -100, imps  -2 set-score: 5 (1.25 imps/game)
 
-Game 25: NS, score:   170, imps   2 Played against (B6): pair 8
+Game 25: NS, score:   170, imps   2 Played against (B6): pair 4
 Game 26: NS, score:   170, imps   2
 Game 27: NS, score:   170, imps   2
 Game 28: NS, score:   170, imps   3 set-score: 9 (2.25 imps/game)
@@ -5336,32 +5336,32 @@ Result per pair
 
 Result of pair B9 'pair 10' for '<auto-test, session 3>', session 3
 
-Game  1: EW, score:  -140, imps  -3 Played against (B3): pair 14
+Game  1: EW, score:  -140, imps  -3 Played against (B3): pair 15
 Game  2: EW, score:  -140, imps  -3
 Game  3: EW, score:  -140, imps  -3
 Game  4: EW, score:  -140, imps  -4 set-score: -13 (-3.25 imps/game)
 
-Game  5: EW, score:   600, imps  12 Played against (B2): pair 9
+Game  5: EW, score:   600, imps  12 Played against (B2): pair 14
 Game  6: EW, score:   800, imps  12
 Game  7: EW, score:  1000, imps  14
 Game  8: EW, score:  1100, imps  15 set-score: 53 (13.25 imps/game)
 
-Game  9: NS, score:     0, imps   0 Played against (B4): pair 15
+Game  9: NS, score:     0, imps   0 Played against (B4): pair 12
 Game 10: NS, score:     0, imps   0
 Game 11: NS, score:     0, imps  -1
 Game 12: NS, score:     0, imps   1 set-score: 0 (0.00 imps/game)
 
-Game 13: EW, score:  -800, imps -10 Played against (B5): pair 12
+Game 13: EW, score:  -800, imps -10 Played against (B5): pair 8
 Game 14: EW, score:  -600, imps  -8
 Game 15: EW, score:  -500, imps  -9
 Game 16: EW, score:   %50, imps   0 set-score: -27 (-6.75 imps/game)
 
-Game 17: NS, score:  -100, imps   1 Played against (B10): changed pair 5
+Game 17: NS, score:  -100, imps   1 Played against (B10): pair 9
 Game 18: NS, score:  -110, imps  -1
 Game 19: NS, score:  -120, imps  -5
 Game 20: NS, score:  -130, imps  -4 set-score: -9 (-2.25 imps/game)
 
-Game 21: NS, score:   130, imps   1 Played against (B6): pair 8
+Game 21: NS, score:   130, imps   1 Played against (B6): pair 4
 Game 22: NS, score:   120, imps   3
 Game 23: NS, score:   110, imps   3
 Game 24: NS, score:   100, imps   1 set-score: 8 (2.00 imps/game)
@@ -5377,24 +5377,24 @@ imps: 12, games: 24, sessionscore: 0.50 imps/game, rank: 7
 
 Result per pair
 
-Result of pair B10 'changed pair 5' for '<auto-test, session 3>', session 3
+Result of pair B10 'pair 9' for '<auto-test, session 3>', session 3
 
 Game  1: not played
 Game  2: not played
 Game  3: not played
 Game  4: not played
 
-Game  5: EW, score:  -160, imps  -4 Played against (B5): pair 12
+Game  5: EW, score:  -160, imps  -4 Played against (B5): pair 8
 Game  6: EW, score:  -160, imps  -6
 Game  7: EW, score:  -160, imps  -4
 Game  8: EW, score:  -160, imps  -3 set-score: -17 (-4.25 imps/game)
 
-Game  9: EW, score:   150, imps   4 Played against (B3): pair 14
+Game  9: EW, score:   150, imps   4 Played against (B3): pair 15
 Game 10: EW, score:   150, imps   4
 Game 11: EW, score:   150, imps   5
 Game 12: EW, score:   150, imps   2 set-score: 15 (3.75 imps/game)
 
-Game 13: EW, score:  -130, imps   5 Played against (B1): pair 18
+Game 13: EW, score:  -130, imps   5 Played against (B1): pair 16
 Game 14: EW, score:  -140, imps   3
 Game 15: EW, score:  -150, imps  -2
 Game 16: EW, score:  -160, imps  -3 set-score: 3 (0.75 imps/game)
@@ -5404,12 +5404,12 @@ Game 18: EW, score:   110, imps   1
 Game 19: EW, score:   120, imps   5
 Game 20: EW, score:   130, imps   4 set-score: 9 (2.25 imps/game)
 
-Game 21: NS, score:   110, imps   0 Played against (B7): pair 4
+Game 21: NS, score:   110, imps   0 Played against (B7): pair 11
 Game 22: NS, score:  -120, imps  -4
 Game 23: NS, score:  -100, imps  -3
 Game 24: NS, score:   100, imps   1 set-score: -6 (-1.50 imps/game)
 
-Game 25: NS, score:   150, imps   2 Played against (B4): pair 15
+Game 25: NS, score:   150, imps   2 Played against (B4): pair 12
 Game 26: NS, score:   140, imps   2
 Game 27: NS, score:   140, imps   1
 Game 28: NS, score:    50, imps  -1 set-score: 4 (1.00 imps/game)

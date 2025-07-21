@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-05 12:51+0200\n"
-"PO-Revision-Date: 2025-06-05 12:51+0200\n"
+"POT-Creation-Date: 2025-07-20 14:19+0200\n"
+"PO-Revision-Date: 2025-07-20 14:19+0200\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -22,6 +22,9 @@ msgstr ""
 #, c-format
 msgid "Invalid session-correction data <%s>, will be ignored."
 msgstr "Ongeldige zitting-correctie data <%s>, wordt niet meegenomen."
+
+msgid "Warning"
+msgstr "Waarschuwing"
 
 #, c-format
 msgid "Invalid total-correction/end data <%s> will be ignored.\n"
@@ -211,14 +214,11 @@ msgstr "Fout"
 msgid "Group-result of match '%s'%s"
 msgstr "Groep-uitslag van wedstrijd '%s'%s"
 
-msgid "games :"
-msgstr "spellen :"
+msgid "combi"
+msgstr "combi"
 
-msgid "extra"
-msgstr "extra"
-
-msgid "cor"
-msgstr "kor"
+msgid "corr."
+msgstr "korr."
 
 msgid "tot"
 msgstr "tot"
@@ -240,9 +240,6 @@ msgstr "tot."
 
 msgid "max"
 msgstr "max"
-
-msgid "corr."
-msgstr "korr."
 
 msgid "imps"
 msgstr "imps"
@@ -278,9 +275,6 @@ msgstr "uitslag"
 #, c-format
 msgid "Pair '%s' has played, but was NOT assigned to a global name"
 msgstr "Paar '%s' heeft gespeeld, maar is nog niet gekoppeld aan een globale paarnaam"
-
-msgid "Warning"
-msgstr "Waarschuwing"
 
 msgid "No names entered yet!"
 msgstr "Nog geen namen ingevoerd!"
@@ -433,6 +427,12 @@ msgstr ""
 "\n"
 "De resultaten zijn niet betrouwbaar!"
 
+msgid "Bad data or combi-table results for non-combi player(s) ignored"
+msgstr "Incorrecte data of combi-tafel resultaten voor niet stilzitter(s) genegeerd"
+
+msgid "Invalid total-correction/end data, will be ignored"
+msgstr "Ongeldige totaal-correctie/uitslag data, wordt niet meegenomen."
+
 msgid "<no description yet>"
 msgstr "<nog geen beschrijving>"
 
@@ -521,8 +521,8 @@ msgstr "Ingave zitting correcties tbv einduitslag"
 msgid "CorrectionsEnd:: row %d, column %d changes from <%s> to <%s>"
 msgstr "CorrectionsEnd:: row %d, column %d changes from <%s> to <%s>"
 
-msgid "END CORRECTIONS: '-' or '*' for 'imps': sessionsscore is ignored for total result"
-msgstr "EIND KORREKTIES: '-' of '*' voor 'imps': zittingscore telt niet mee in einduitslag"
+msgid "END CORRECTIONS: '*' for 'imps': sessionsscore is ignored for total result"
+msgstr "EIND KORREKTIES: '*' voor 'imps': zittingscore telt niet mee in einduitslag"
 
 msgid "END CORRECTIONS: '-' or '*' for 'score': sessionsscore is ignored for total result"
 msgstr "EIND KORREKTIES: '-' of '*' voor 'score': zittingscore telt niet mee in einduitslag"
@@ -534,6 +534,9 @@ msgstr "Overzicht van de eindcorrecties voor '%s'%s"
 #. TRANSLATORS: 'mp' == MatchPoints
 msgid "mp"
 msgstr "mp"
+
+msgid "extra"
+msgstr "extra"
 
 msgid "Entry of session corrections"
 msgstr "Ingave zitting correcties"
@@ -2026,8 +2029,3 @@ msgstr "1 januari 2024"
 
 msgid "monday"
 msgstr "maandag"
-
-#, fuzzy, c-format
-#~| msgid "\"%s\" version %s, %s"
-#~ msgid "\"%s\" %s %s, %s"
-#~ msgstr "\"%s\" versie %s, %s"

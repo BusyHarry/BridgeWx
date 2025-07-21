@@ -631,17 +631,20 @@ InitNamesS2()
   MenuSelect(MenuNamesAssign)
     ButtonClick_L(AssignNames_OnRankPrev_L)
     ; pairnames for current session
-    GridPosition(AssignNames_Grid_L, 5, 2)
-    AddText_EW("b2")            ;SendEvent("b2{ENTER}")            ; pair 5 -> B2
-    AddText_EW("{ENTER 10}b10") ;SendEvent("{ENTER 10}b10{ENTER}") ; pair 16 -> B10
-    AddText_EW("b1")            ;SendEvent("b1{ENTER}")            ; pair 17 -> B1
     if (bButler)
     {
       GridPosition(AssignNames_Grid_L, 2, 2)
-        AddText_EW("a7")        ; pair 2 -> A7
-      GridPosition(AssignNames_Grid_L, 9, 2)
-        AddText_EW("b6")        ; pair 9 -> B6
+        AddText_EW("a7")        ; p2: ??? -> A7, p17 A7 -> ???
     }
+    else
+    {
+      GridPosition(AssignNames_Grid_L, 5, 2)
+        AddText_EW("b10")           ;SendEvent("b10{ENTER}")           ; p5  B2  -> B10, p16: B2 -> ???
+        AddText_EW("{ENTER 10}b2")  ;SendEvent("{ENTER 10}b2{ENTER}")  ; p16 B10 -> B2
+        AddText_EW("a8")            ;SendEvent("a8{ENTER}")            ; p17 B3  -> A8 , p18: A8 -> ???
+        AddText_EW("b3")            ;SendEvent("b3{ENTER}")            ; p18 A8  -> B3
+    }
+
     ButtonClick_L(AssignNames_Ok_L)
     PrintPage()
 } ; InitNamesS2()
@@ -801,25 +804,26 @@ ScoresCorS1()
   GridPosition(CorSession_Grid_L)      ; select the grid, goto first row/column
   if (bButler)
   {
-    AddText_EW(  "{RIGHT 3} 2{TAB} 4"                 ) ; pair 1, combi: imps=2, games=4
-    AddText_EW(  "^{HOME}{DOWN 1}{RIGHT 3} -5{TAB} 4" ) ; pair 2, combi: imps-5, games 4
-    AddText_EW(  "^{HOME}{DOWN 2}{RIGHT 2} 10"        ) ; pair 3, +10imps
-    AddText_EW(  "^{HOME}{DOWN 4}{RIGHT 2} -3"        ) ; pair 5, -3imps
+    AddText_EW(  "{RIGHT 3} 2{TAB} 4"                 ) ; pair A1, combi: imps=2, games=4, bad, will normally popup
+    AddText_EW(  "^{HOME}{DOWN 8}{RIGHT 3} -5{TAB} 4" ) ; pair B1, combi: imps-5, games 4
+    AddText_EW(  "^{HOME}{DOWN 2}{RIGHT 2} 10"        ) ; pair A3, +10imps
+    AddText_EW(  "^{HOME}{DOWN 4}{RIGHT 2} -3"        ) ; pair A5, -3imps
   }
   else
   {
-    AddText_EW(  "{RIGHT 4}2{TAB}1")            ; pair 1, combi: max=2, extra=1
-    AddText_EW(  "^{HOME}{DOWN 2}{RIGHT 3}10" ) ; pair 3, +10m
-    AddText_EW(  "^{HOME}{DOWN 4}{RIGHT 2}3"  ) ; pair 5, +3%
+    AddText_EW(  "{RIGHT 4}48{TAB}16")                  ; pair A1, combi: max=4*12, extra=16, bad will normally popup
+    AddText_EW(  "^{HOME}{DOWN 8}{RIGHT 4}48{TAB}32")   ; pair B1, combi: max=4*12, extra=32
+    AddText_EW(  "^{HOME}{DOWN 2}{RIGHT 3}10" )         ; pair A3, +10mp
+    AddText_EW(  "^{HOME}{DOWN 4}{RIGHT 2}3"  )         ; pair A5, +3%
   }
   PrintPage()
   ;
   MenuSelect(MenuCorEnd)
   GridPosition(CorEnd_Grid_L)            ; select the grid, goto first row/column
   if (bButler)
-    AddText_EW(   "{DOWN}{RIGHT 2}4") ; pair 2 gets 4 imps for total result
+    AddText_EW(   "{DOWN}{RIGHT 3}4") ; pair 2 gets 4 imps for total result
   else
-    AddText_EW(   "{DOWN}{RIGHT 2}50") ; pair 2 gets 50% for total result
+    AddText_EW(   "{DOWN}{RIGHT 3}50") ; pair 2 gets 50% for total result
   PrintPage()
 } ; ScoresCorS1()
 

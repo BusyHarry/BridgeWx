@@ -26,7 +26,7 @@ protected:
     bool        OnCellChanging  (const CellInfo& cellInfo) override final;
     virtual void BackupData     () override final;  // called if active panel is about to be hidden. You may save changed data!
     void        InitButlerProcent();    // init columns for butler or percentage calculation
-
+    void        ClearCombiData  (int row);
 private:
 
     MyGrid*     m_theGrid;

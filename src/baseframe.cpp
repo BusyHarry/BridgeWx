@@ -15,6 +15,9 @@
 #include "wx/regex.h"
 #include <wx/filepicker.h>
 #include <wx/generic/stattextg.h>
+#if wxMAJOR_VERSION == 3 && wxMINOR_VERSION < 3
+#include <wx/msw/subwin.h>
+#endif
 #include <wx/radiobut.h>
 
 #include "cfg.h"
@@ -171,31 +174,13 @@ void Baseframe::OnSearch(wxCommandEvent& )
 {
     AUTOTEST_BUSY("search");
     wxString theString = m_pTxtCtrlSearchBox->GetValue();
-    BusyBox();
+    //BusyBox();    // V3.3.0+ --> too much flicker
     DoSearch(theString);
 }   // OnSearch()
 
 /* virtual */ void Baseframe::DoSearch(wxString&)
 {
 }
-
-[[maybe_unused]] UINT Baseframe::ValidateNumValUINT( wxTextCtrl* a_pTextCtrl )
-{
-    UINT newVal = wxAtoi(a_pTextCtrl->GetValue());
-    wxIntegerValidator<UINT>* pValidator = reinterpret_cast<wxIntegerValidator<UINT>*> (a_pTextCtrl->GetValidator());
-    if (pValidator)
-    {
-        UINT orgVal = newVal;
-        newVal = std::clamp(newVal, pValidator->GetMin(), pValidator->GetMax());
-        if (newVal != orgVal)
-        {   // value was out of range, correct it
-            a_pTextCtrl->SetValue(FMT("%u", newVal));
-            a_pTextCtrl->SetInsertionPointEnd();
-        }
-    }
-
-    return newVal;
-}   // ValidateNumValUINT()
 
 wxRadioBox* Baseframe::CreateRadioBox(const wxString& a_title, const wxArrayString& a_choices, pEventHandler a_pHandler, const wxString& a_autoName)
 {
@@ -307,6 +292,8 @@ void Baseframe::AutoTestAddGridInfo(MyTextFile* a_pFile, const wxString& a_pageN
 {   // add info about all collumns of first row
     AutotestAddMousePos(a_pFile, a_gridInfo.pGridWindow, a_pageName + "_Grid");
     UINT colNr = 0;
+    UINT colNrAuto = 0;
+    auto pGrid = (MyGrid*)a_gridInfo.pGridWindow;
     for (const auto& col : a_gridInfo.collumnInfo)
     {
         wxPoint wTL     = {col.x + a_gridInfo.rowLabelSize, col.y + a_gridInfo.colLabelSize};
@@ -314,323 +301,23 @@ void Baseframe::AutoTestAddGridInfo(MyTextFile* a_pFile, const wxString& a_pageN
         wxPoint sTL     = a_gridInfo.pGridWindow->ClientToScreen(wTL);
         wxPoint sBR     = a_gridInfo.pGridWindow->ClientToScreen(wBR);
         wxPoint sSize   = sBR - sTL;
-        wxString name   = FMT("%s_GridCol%u", a_pageName, colNr++);
+        wxString name = FMT("%s_GridCol%u", a_pageName, colNr);
         AutotestAddPos(a_pFile, a_gridInfo.pGridWindow, sTL, sSize.x, sSize.y, name);
+        if ( (a_gridInfo.ColumnLabelAutotest.size() > colNr) && pGrid->IsColShown(colNr) )
+        {   // columnlabel defenitions
+            ++colNrAuto;    // one based column values for non-hidden columns
+            wxString columnId = FMT("%s_Column_%s", a_pageName, a_gridInfo.ColumnLabelAutotest[colNr]);
+            columnId.Replace(" ", "_");
+            columnId.Replace("-", "_");
+            columnId.Replace("%", "procent");
+            a_pFile->AddLine(FMT("%-30s := %u", columnId, colNrAuto));
+        }
+        ++colNr;
     }
 }   // AutoTestAddGridInfo()
 
 /*****************************************************************/
 
-/***************** validator stuf **********************************/
-void MyTextCtrl::OnLostFocus(wxFocusEvent& a_event)
-{
-    a_event.Skip();     // MUST be done...... else strange things happen
-    if (!DoValidate(true))
-    {
-#if 0
-        // this way, we get the focus back via the 'official' way...  
-        CallAfter([this] { m_pParent->SetFocus(); } );
-#endif
-        wxBell();
-    }
-}   // OnLostFocus()
-
-void MyTextCtrl::OnChar(wxKeyEvent& a_event)
-{
-    a_event.Skip();   // default: let system handle char
-    wxChar chr;
-#if wxUSE_UNICODE
-    chr = a_event.GetUnicodeKey();
-    if ( chr == WXK_NONE )
-    {
-        // It's a character without any Unicode equivalent at all, e.g. cursor
-        // arrow or function key, we never filter those.
-        return;
-    }
-#else
-    chr = a_event.GetKeyCode();
-    if ( chr > WXK_DELETE )
-    {
-        // Not a character either.
-        return;
-    }
-#endif
-
-    if ( chr == WXK_RETURN || chr == WXK_NUMPAD_ENTER )
-    {
-        if (!DoValidate())
-        {
-            if ( !wxValidator::IsSilent() )
-                wxBell();
-            a_event.Skip(false);    // Do not skip the event in this case, stop handling it here.
-        }
-
-        return;
-    }
-
-    if ( chr < WXK_SPACE || chr == WXK_DELETE )
-    {
-        // Allow ASCII control characters and Delete.
-        return;
-    }
-
-    if ( a_event.GetModifiers() & ~wxMOD_SHIFT )
-    {
-        // Keys using modifiers other than Shift don't change the number, so
-        // ignore them.
-        return;
-    }
-
-    wxString tmp;
-    int pos;
-    GetCurrentValueAndInsertionPoint(tmp, pos);
-    bool ok = (chr == '-') ? IsMinusOk(tmp, pos) : IsCharOk(tmp, pos, chr);
-    if (ok)
-    {
-        tmp.insert(pos,1,chr);  // get 'new' string
-        if (m_bIsFloat)
-        {
-            double xx = wxAtof(tmp);    //    perhaps: tmp.ToCDouble(&xx);
-            if ( m_bSignOk && xx < m_dMin){ok=false;} // too small
-            if (!m_bSignOk && xx > m_dMax){ok=false;} // too large
-
-        }
-        else
-        {
-            long xx = wxAtol(tmp);
-            if ( m_bSignOk && xx < m_iMin){ok=false;} // too  small
-            if (!m_bSignOk && xx > m_iMax){ok=false;} // too large
-        }
-    }
-    if ( !ok )
-    {
-        if ( !wxValidator::IsSilent() )
-            wxBell();
-
-        // Do not skip the event in this case, stop handling it here.
-        a_event.Skip(false);
-    }
-}   // OnChar()
-
-static void UpdateDouble(MyTextCtrl* pText, const wxString& current, const double& val, int decimalPlaces )
-{
-    wxString result = FMT("%.*f", decimalPlaces, val);
-    //perhaps: wxString res = wxString::FromCDouble(val, decimalPlaces);
-    if (result != current)                   // show result in wanted format
-        pText->wxTextCtrl::SetValue(result); // NB Bypass parent to prevent recursion
-}   // UpdateDouble()
-
-bool MyTextCtrl::DoValidate(bool a_bForceInRange)
-{
-    if (!m_bValidate) return true;          // no validator, so all ok
-    const wxString currentVal = GetValue();
-    if (currentVal.IsEmpty()) return true;  // empty, so all ok
-
-    if (m_bIsFloat)
-    {
-        const double epsilon= 1e-5; // assume that min/max are 'much' larger then this...
-        double xx = wxAtof(currentVal);//     perhaps: double yy;currentVal.ToCDouble(&yy);
-        if ( xx >= m_dMin-epsilon && xx <= m_dMax+epsilon)
-        {   // in range
-            UpdateDouble(this, currentVal, xx, m_iDecimalPlaces);
-            return true;
-        }
-
-        if (a_bForceInRange)
-        {
-            xx = std::clamp(xx, m_dMin, m_dMax);
-            UpdateDouble( this, currentVal, xx, m_iDecimalPlaces);
-        }
-    }
-    else
-    {
-        long xx = wxAtol(currentVal);
-        if (xx >= m_iMin && xx <= m_iMax) return true;
-        if (a_bForceInRange)
-        {
-            xx = std::clamp(xx, m_iMin, m_iMax);
-            wxTextCtrl::SetValue(I2String(xx)); // NB Bypass parent to prevent recursion
-        }
-    }
-
-    return false;
-}   // DoValidate()
-
-void MyTextCtrl::GetCurrentValueAndInsertionPoint(wxString& val, int& pos)
-{
-    val = GetValue();
-    pos = GetInsertionPoint();
-
-    long selFrom, selTo;
-    GetSelection(&selFrom, &selTo);
-
-    const long selLen = selTo - selFrom;
-    if ( selLen )
-    {
-        // Remove selected text because pressing a key would make it disappear.
-        val.erase(selFrom, selLen);
-
-        // And adjust the insertion point to have correct position in the new
-        // string.
-        if ( pos > selFrom )
-        {
-            if ( pos >= selTo )
-                pos -= selLen;
-            else
-                pos = selFrom;
-        }
-    }
-}   // GetCurrentValueAndInsertionPoint()
-
-bool MyTextCtrl::IsMinusOk(const wxString& val, int pos) const
-{
-    // We need to know if we accept negative numbers at all.
-    if ( !m_bSignOk )
-        return false;
-
-    // Minus is only ever accepted in the beginning of the string.
-    if ( pos != 0 )
-        return false;
-
-    // And then only if there is no existing minus sign there.
-    if ( !val.IsEmpty() && val[0] == '-' )
-        return false;
-
-    // Notice that entering '-' can make our value invalid, for example if
-    // we're limited to -5..15 range and the current value is 12, then the
-    // new value would be (invalid) -12. We consider it better to let the
-    // user do this because perhaps he is going to press Delete key next to
-    // make it -2 and forcing him to delete 1 first would be unnatural.
-    //
-    // TODO: It would be nice to indicate that the current control contents
-    //       is invalid (if it's indeed going to be the case) once
-    //       wxValidator supports doing this non-intrusively.
-    return true;
-}   // IsMinusOk()
-
-bool MyTextCtrl::IsCharOk(const wxString& val, int pos, wxChar chr)
-{
-    if (!m_bIsFloat) return ( chr >= '0' && chr <= '9' );
-    //    const wxChar separator = wxNumberFormatter::GetDecimalSeparator();
-#define separator '.'
-    if ( chr == separator )
-    {
-        if ( val.find(separator) != wxString::npos )
-        {
-            // There is already a decimal separator, can't insert another one.
-            return false;
-        }
-
-        // Prepending a separator before the minus sign isn't allowed.
-        if ( pos == 0 && !val.IsEmpty() && val[0] == '-' )
-            return false;
-
-        // Otherwise always accept it, adding a decimal separator doesn't
-        // change the number value and, in particular, can't make it invalid.
-        // OTOH the checks below might not pass because strings like "." or
-        // "-." are not valid numbers so parsing them would fail, hence we need
-        // to treat it specially here.
-        return true;
-    }
-
-    // Must be a digit then.
-    if ( chr < '0' || chr > '9')
-        return false;
-
-    // Check whether the value we'd obtain if we accepted this key passes some
-    // basic checks.
-    //    const wxString newval(GetValueAfterInsertingChar(val, pos, chr));
-    wxString newval(val); newval.insert(pos,1,chr);
-#if 0
-    LongestValueType value;
-    if ( !FromString(newval, &value) )
-        return false;
-#endif
-    // Also check that it doesn't have too many decimal digits.
-    const size_t posSep = newval.find(separator);
-    if ( posSep != wxString::npos && newval.Len() - posSep - 1 > static_cast<size_t>(m_iDecimalPlaces) )
-        return false;
-
-    // Note that we do _not_ check if it's in range here, see the comment in
-    // wxIntegerValidatorBase::IsCharOk().
-    return true;
-}   // IsCharOk()
-
-void MyTextCtrl::SetMinMax(long a_min, long a_max)
-{
-    if (!m_bValidate)
-    {   // TRY to get the event first..
-        CallAfter([this] {Bind(wxEVT_CHAR      , &MyTextCtrl::OnChar     , this);});
-        CallAfter([this] {Bind(wxEVT_KILL_FOCUS, &MyTextCtrl::OnLostFocus, this);});
-    }
-
-    if ( a_min > a_max ) std::swap( a_min, a_max );
-    m_iMin      = a_min;
-    m_iMax      = a_max;
-    m_bIsFloat  = false;
-    m_bValidate = true;
-    m_bSignOk   = (m_iMin < 0) ;
-
-    (void) DoValidate();
-}   // SetMinMax()
-
-void MyTextCtrl::SetMinMax(double a_min, double a_max, int a_decimalPlaces)
-{
-    if (!m_bValidate)
-    {   // TRY to get the event first..
-        CallAfter([this] {Bind(wxEVT_CHAR      , &MyTextCtrl::OnChar     , this);});
-        CallAfter([this] {Bind(wxEVT_KILL_FOCUS, &MyTextCtrl::OnLostFocus, this);});
-    }
-
-    if ( a_min > a_max ) std::swap( a_min, a_max );
-    m_bSignOk           = (a_min < 0) ;
-    m_dMin              = a_min;
-    m_dMax              = a_max;
-    m_iDecimalPlaces    = std::min(std::abs(a_decimalPlaces), 5);   // max 5 digits after dp
-    m_bIsFloat          = true;
-    m_bValidate         = true;
-
-    (void) DoValidate();
-}   // SetMinMax()
-
-//**************** end of MyValidator ***************************
-
-//**************** begin of MyTextCtrl ***************************
-// MyTextCtrl has its own integer/float validator, acting on charInput, enterKey and killfocus
-MyTextCtrl::MyTextCtrl(wxWindow *parent, wxWindowID id, const wxString& value,
-                        const wxPoint& pos, const wxSize& size, long style
-                      ): wxTextCtrl(parent, id, value, pos, size, style | wxTE_PROCESS_ENTER, wxDefaultValidator)
-// we need the wxTE_PROCESS_ENTER else we don't get the \n char at all!
-{
-    if (!(style & wxTE_PROCESS_ENTER)) // derived class does not want/need enter-event
-        this->Bind(wxEVT_TEXT_ENTER,[](wxCommandEvent& ){;});   // dummy handler to consume event (prevent bell)
-
-    // validator stuf
-    m_dMin              = 0.0;
-    m_dMax              = 0.0;
-    m_dResult           = 0.0;
-    m_iDecimalPlaces    = 0;
-    m_iMin              = 0;
-    m_iMax              = 0;
-    m_bIsFloat          = false;
-    m_bValidate         = false;
-    m_bSignOk           = false;
-}   // MyTextCtrl()
-
-void MyTextCtrl::SetValue(const wxString& a_value)
-{
-    static bool bValidating = false;
-    wxTextCtrl::SetValue(a_value);
-    m_sValOriginal = a_value;
-    if (!bValidating)
-    {
-        bValidating = true;
-        DoValidate(true); // could call SetValue() if ok, prevent recursion
-    }
-    bValidating = false;
-}   // SetValue()
-
-//**************** end of MyTextCtrl ***************************
 
 /*********************************************************/
 MyChoice::MyChoice(wxWindow* a_parent, const wxString& a_staticText, const wxString& a_tooltip, const wxString& a_ahkLabel)

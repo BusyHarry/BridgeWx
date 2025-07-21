@@ -10,6 +10,7 @@
 #include <wx/valnum.h>
 #include <wx/combobox.h>
 
+#include "validators.h"
 #include "cfg.h"
 #include "setupNewMatch.h"
 #include "fileio.h"
@@ -38,12 +39,12 @@ SetupNewMatch::SetupNewMatch(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_p
     m_pComboBoxMatch->SetToolTip(_("Name of the (new) match"));
 // the session of the match
     auto txtSession = new wxStaticText(this, wxID_ANY, _("Session:"));
-    m_pTxtCtrlSession = new MyTextCtrl(this, wxID_ANY, "Session", MY_SIZE_TXTCTRL_NUM(2));
+    m_pTxtCtrlSession = new MyTextCtrlWithValidator(this, wxID_ANY, "Session", MY_SIZE_TXTCTRL_NUM(2));
     m_pTxtCtrlSession->SetToolTip(_("The number of the session, 0 if the match exist of one session"));
     m_pTxtCtrlSession->SetMinMax(0, cfg::MAX_SESSIONS);
 // database type
     auto txtDbType = new wxStaticText(this, wxID_ANY, _("Database type:"));
-    m_pTxtCtrlDbType = new MyTextCtrl(this, wxID_ANY, "DbaseType",MY_SIZE_TXTCTRL_NUM(4), wxTE_READONLY);
+    m_pTxtCtrlDbType = new wxTextCtrl(this, wxID_ANY, "DbaseType",MY_SIZE_TXTCTRL_NUM(4), wxTE_READONLY);
 
 // butler or precent score
     m_pChkBoxButler = new wxCheckBox(this, wxID_ANY, _("Butler"));

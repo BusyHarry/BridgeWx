@@ -147,7 +147,7 @@ void GetRestorePoint()
     }
 }   // GetRestorePoint()
 
-wxString PairnrSession2SessionText(UINT a_sessionPair)
+wxString PairnrSession2SessionText(UINT a_sessionPair, bool a_bForceAbsent)
 {
     if (0 == a_sessionPair) return ssNotSet;
 
@@ -166,7 +166,7 @@ wxString PairnrSession2SessionText(UINT a_sessionPair)
     {
         if ( it.groupOffset+it.pairs >= a_sessionPair)
         {   // found group
-            if (it.groupOffset + it.absent == a_sessionPair)
+            if ( !a_bForceAbsent && it.groupOffset + it.absent == a_sessionPair )
                 return ssNotSet;
             wxString result = FMT("%s%u", it.groupChars.c_str(), a_sessionPair - it.groupOffset);
             return result;

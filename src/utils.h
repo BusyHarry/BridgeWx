@@ -2,8 +2,7 @@
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
 #if !defined _UTILS_H_
-#define _UTILS_H
-#pragma once
+#define _UTILS_H_
 
 #include <wx/log.h>
 
@@ -19,6 +18,11 @@ bool IsInRange(const T& value, const T& low, const T& high)
 {
     return (value >= low) && (value <= high);
 }
+
+// enable/disable bellsound, return old value
+// default setting: !wxValidator::IsSilent() && !cfg::IsScriptTesting()
+bool EnableBell( bool bBell );
+void RingBell  ();              // ring the bell, if enabled
 
 struct StringBuf
 {   // buffer with a string and an index from where to start in the string
@@ -38,6 +42,7 @@ enum class ExpectedDecimalDigits
 long     RoundLong   (long a,int b);            // rounding when deviding long by int
 wxString LongToAscii2(long score);              // return "float" string to score as xxx.yy
 wxString LongToAscii1(long score);              // return "float" string to score as xxx.y or xxx if input is multiple of 10
+wxString LongToAscii (long value, ExpectedDecimalDigits precision); // LongToAscii<precision>()
 int      Ascii1ToInt (StringBuf& stringBuffer); // convert "float" with 1 expected decimal digit to int and update "used chars" index
 long     AsciiTolong (StringBuf& stringBuffer,ExpectedDecimalDigits longtype);                                  // "float" string to long
 long     AsciiTolong (const wxString& string, ExpectedDecimalDigits longtype=ExpectedDecimalDigits::DIGITS_1);  // "float" string to long

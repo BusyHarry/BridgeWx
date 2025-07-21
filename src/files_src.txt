@@ -29,6 +29,7 @@ setupSchema.cpp
 showStartImage.cpp
 statusbar.cpp
 utils.cpp
+validators.cpp
 wxsysinfoframe.cpp
 assignNames.h
 baseframe.h
@@ -61,5 +62,6 @@ setupSchema.h
 ShowStartImage.h
 statusbar.h
 utils.h
+validators.h
 version.h
 wxsysinfoframe.h

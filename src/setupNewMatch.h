@@ -9,6 +9,7 @@
 class wxWindow;
 class wxDirPickerCtrl;
 class wxTextCtrl;
+class MyTextCtrlWithValidator;
 
 class SetupNewMatch : public Baseframe
 {
@@ -26,11 +27,11 @@ protected:
     virtual void BackupData () override final;
 
 private:
-    wxDirPickerCtrl*    m_pDirPicker;
-    MyTextCtrl*         m_pTxtCtrlSession;
-    MywxComboBox*       m_pComboBoxMatch;
-    MyTextCtrl*         m_pTxtCtrlDbType;
-    wxCheckBox*         m_pChkBoxButler;
+    wxDirPickerCtrl*            m_pDirPicker;
+    MyTextCtrlWithValidator*    m_pTxtCtrlSession;
+    MywxComboBox*               m_pComboBoxMatch;
+    wxTextCtrl*                 m_pTxtCtrlDbType;
+    wxCheckBox*                 m_pChkBoxButler;
 };
 
 #endif

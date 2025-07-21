@@ -8,6 +8,7 @@
 
 class wxWindow;
 class MyChoice;
+class MyTextCtrlWithValidator;
 
 class SetupSchema : public Baseframe
 {
@@ -42,15 +43,15 @@ protected:
 private:
     // all the controls in this setup page, assumed to be initialised in ctor.
     wxTextCtrl*                     m_pTxtCtrlNrOfGames;
-    MyTextCtrl*                     m_pTxtCtrlNrOfRounds;
-    MyTextCtrl*                     m_pTxtCtrlSetSize;
-    MyTextCtrl*                     m_pTxtCtrlNrOfGroups;
+    MyTextCtrlWithValidator*        m_pTxtCtrlNrOfRounds;
+    MyTextCtrlWithValidator*        m_pTxtCtrlSetSize;
+    MyTextCtrlWithValidator*        m_pTxtCtrlNrOfGroups;
     MY_CHOICE*                      m_pChoiceBoxGroup;
     MyChoiceMC*                     m_pChoiceBoxSchemas;
-    MyTextCtrl*                     m_pTxtCtrlPairs;
+    MyTextCtrlWithValidator*        m_pTxtCtrlPairs;
     wxTextCtrl*                     m_pTxtCtrlGroupChars;
-    MyTextCtrl*                     m_pTxtCtrlAbsent;
-    MyTextCtrl*                     m_pTxtCtrlFirstGame;
+    MyTextCtrlWithValidator*        m_pTxtCtrlAbsent;
+    MyTextCtrlWithValidator*        m_pTxtCtrlFirstGame;
     wxButton*                       m_pButtonNextGroup;
     std::vector<cfg::GROUP_DATA>    m_groupData;
 

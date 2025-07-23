@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
     <!--  You can use environment variables for the following item(s), or use this property sheet -->
-    <wxwin>D:\wxWidgets_3.3.0</wxwin>  <!--  the base directory of the used wxWidgets version -->
+    <wxwin>D:\wxWidgets_3.3.1</wxwin>  <!--  the base directory of the used wxWidgets version -->
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />

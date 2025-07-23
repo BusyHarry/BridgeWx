@@ -4,8 +4,6 @@
 #if !defined _UTILS_H_
 #define _UTILS_H_
 
-#include <wx/log.h>
-
 typedef unsigned int UINT;
 #define FMT wxString::Format
 extern const wxString ES;       // an Empty String
@@ -19,9 +17,7 @@ bool IsInRange(const T& value, const T& low, const T& high)
     return (value >= low) && (value <= high);
 }
 
-// enable/disable bellsound, return old value
-// default setting: !wxValidator::IsSilent() && !cfg::IsScriptTesting()
-bool EnableBell( bool bBell );
+bool EnableBell( bool bBell );  // enable/disable bellsound, return old value
 void RingBell  ();              // ring the bell, if enabled
 
 struct StringBuf
@@ -67,6 +63,7 @@ wxString GetDateTime();                         // get current datetime as : Get
 
 #else   // my own stuf AND wx stuf
 // log to wxLog and Mylog
+#include <wx/log.h>
 #define LogMessage(msg,...) do {wxLogMessage(msg, __VA_ARGS__); MyLogMessage(msg, __VA_ARGS__);} while (0)
 #define LogWarning(msg,...) do {wxLogWarning(msg, __VA_ARGS__); MyLogWarning(msg, __VA_ARGS__);} while (0)
 #define   LogError(msg,...) do {  wxLogError(msg, __VA_ARGS__);   MyLogError(msg, __VA_ARGS__);} while (0)

@@ -4,6 +4,9 @@
 #ifndef _MY_LOG_H_
 #define _MY_LOG_H_
 
+class wxWindow;
+class wxString;
+
 /**
     - instantiate this class in your mainframe/dialog: MyLog m_myLog;
     - show/hide it via MyLog::Show() (initially its hidden)

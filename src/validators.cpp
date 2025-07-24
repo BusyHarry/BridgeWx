@@ -1,24 +1,22 @@
 ﻿// Copyright(c) 2024-present, BusyHarry/h.levels & BridgeWx contributors.
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
-#include <wx/grid.h>
-
 #include "validators.h"
 
 ///***************** begin of implementation for MyGridCellEditorWithValidator ********************
 MyGridCellEditorWithValidator::MyGridCellEditorWithValidator(double a_min, double a_max, int a_precision) : wxGridCellTextEditor()
 {
-    m_validator.SetMinMax(a_min, a_max, a_precision);
+    MyValidator::SetMinMax(a_min, a_max, a_precision);
 }   // MyGridCellEditorWithValidator()
 
 bool MyGridCellEditorWithValidator::IsAcceptedKey(wxKeyEvent& a_event)
 {   // called by grid-editor to check if a key is allowed to start the editor
-    return m_validator.IsValidStartKey(a_event.GetUnicodeKey());
+    return MyValidator::IsValidStartKey(a_event.GetUnicodeKey());
 }   // MyGridCellEditorWithValidator::IsAcceptedKey()
 
 void MyGridCellEditorWithValidator::BeginEdit(int a_row, int a_col, wxGrid* a_pGrid)
 {   // only now we can get the attached wxTextCtrl!
-    m_validator.SetTextCtrl(Text());
+    MyValidator::SetTextCtrl(Text());
     wxGridCellTextEditor::BeginEdit(a_row, a_col, a_pGrid);
 }   // MyGridCellEditorWithValidator::BeginEdit()
 
@@ -32,25 +30,14 @@ MyTextCtrlWithValidator::MyTextCtrlWithValidator(wxWindow *a_parent, wxWindowID 
 {
     if ( !(a_style & wxTE_PROCESS_ENTER) )                      // derived class does not want/need enter-event
         this->Bind(wxEVT_TEXT_ENTER,[](wxCommandEvent& ){;});   // dummy handler to consume event (prevent bell)
-    m_validator.SetTextCtrl(this);
+    MyValidator::SetTextCtrl(this);
 }   // MyTextCtrlWithValidator()
 ///******************* end of implementation for MyTextCtrlWithValidator *******************************
 
 ///**************** begin of implementation for MyValidator  ***************************
-MyValidator::~MyValidator()
-{
-    if ( m_bBindDone )
-    {
-        bool b1 = m_pTextCtrl->Unbind(wxEVT_CHAR      , &MyValidator::OnChar     , this);
-        bool b2 = m_pTextCtrl->Unbind(wxEVT_KILL_FOCUS, &MyValidator::OnLostFocus, this);
-        MY_UNUSED(b1);
-        MY_UNUSED(b2);
-        m_bBindDone = false;
-    }
-}   // MyValidator::~MyValidator()
-
 bool MyValidator::IsValidStartKey(wxChar a_key)
 {   // first key does not arrive via OnChar() but via IsAcceptedKey() when we have a grid-editor
+    m_bIsGrid = true;
     bool bValid = true;
     do
     {
@@ -128,12 +115,15 @@ void MyValidator::OnChar(wxKeyEvent& a_event)
     do
     {   // just a dummy loop: easy 'jump' to end of it
         GetCurrentValueAndInsertionPoint(currentVal, pos);
-
-        if ( chr == '-' && IsMinusOk(currentVal, pos) ) break;
+        currentVal.Replace(',', '.');
+        if ( chr == '-' )
+        {
+            bOk = IsMinusOk(currentVal, pos);
+            break;
+        }
         if ( IsExtraChar(chr) )
         {
-            if ( pos == 0 && currentVal.IsEmpty() ) break;  // only allow special char at position 0
-            bOk = false;
+            bOk = (pos == 0) && currentVal.IsEmpty();   // only allow special char at position 0
             break;
         }
 
@@ -143,23 +133,23 @@ void MyValidator::OnChar(wxKeyEvent& a_event)
             break;
         }
 
-        bool bIsComma(false);
-        if ( chr == ',' && m_bIsFloat ) { chr = '.'; bIsComma = true; }
+        if ( chr == ',' && m_bIsFloat ) chr = '.';
         bOk = IsCharOk(currentVal, pos, chr);
         if ( !bOk ) break;
 
         currentVal.insert(pos, 1, chr);  // get 'new' string
-        if ( bIsComma )
-        {   // can't get EmuLateKeyPress() working :( --> wxKeyEvent keyEvent(wxEVT_KEY_DOWN); keyEvent.m_keyCode = keyEvent.m_rawCode = keyEvent.m_uniChar = '.'; m_pTextCtrl->EmulateKeyPress(keyEvent);
-//            m_pTextCtrl->CallAfter([this, currentVal, pos] {m_pTextCtrl->ChangeValue(currentVal); m_pTextCtrl->SetInsertionPoint(pos + 1); });
-            m_pTextCtrl->ChangeValue(currentVal); m_pTextCtrl->SetInsertionPoint(pos + 1);
-            a_event.Skip(false);
+        if ( chr == '.' )
+        {
+            m_pTextCtrl->ChangeValue(currentVal);       // replace ',' in ctrl with '.'
+            m_pTextCtrl->SetInsertionPoint(pos + 1);    // and adjust insertion point
+            a_event.Skip(false);                        // we handled it, so ctrl can be skipped
             return;
         }
         double xx;
-        currentVal.ToCDouble(&xx); // dp is ALWAYS '.' here
-        if ( m_bSignOk   && xx < m_dMin ) { bOk = false; }  // too small: smaller then negative minimum
-        if ( m_dMax >= 0 && xx > m_dMax ) { bOk = false; }  // too large: larger  then positive maximum
+        bOk = currentVal.ToCDouble(&xx);                // dp is ALWAYS '.' here
+        if ( !bOk ) break;
+        if ( m_bSignOk   && xx < m_dMin ) { bOk = false; break;}    // too small: smaller then negative minimum
+        if ( m_dMax >= 0 && xx > m_dMax ) { bOk = false; break;}    // too large: larger  then positive maximum
     } while ( 0 );
 
     if ( !bOk )
@@ -174,21 +164,32 @@ void MyValidator::UpdateDouble(const wxString& a_current, const double& a_val)
 {
     wxString result = wxString::FromCDouble(a_val, m_iPrecision); // we ALWAYS want a '.' as decimalpoint
     if ( result != a_current )              // show result in wanted format
-        m_pTextCtrl->SetValue(result);      // NB Bypass parent to prevent recursion
+        m_pTextCtrl->ChangeValue(result);
 }   // MyValidator::UpdateDouble()
 
 bool MyValidator::DoValidate(bool a_bForceInRange)
 {
     if ( !m_bValidate || nullptr == m_pTextCtrl ) return true;  // no validator, so all ok
-    const wxString currentVal = m_pTextCtrl->GetValue();
-    if ( currentVal.IsEmpty() ) return true;                    // empty, so all ok
-    if ( m_sStartChars.Find(currentVal[0]) != wxString::npos )  // special start char
+    wxString currentVal = m_pTextCtrl->GetValue();
+    auto len = currentVal.Len();
+    if ( len == 0 ) return true;                                // empty, so all ok
+    currentVal.Replace(',', '.');                               // ',' -> '.'
+    wxChar char0 = currentVal[0];
+    if (    ( (len == 1) && (char0 == ' '  ||   char0         == '.' || char0         == '-') )
+         || ( (len == 2  &&  char0 == ' ') && ( currentVal[1] == '.' || currentVal[1] == '-') )
+       )
+    {   // a single space or '.'or '-' will clear the value and return ok
+        m_pTextCtrl->ChangeValue("");
+        return true;
+    }
+    if ( IsExtraChar(char0) )       // special start char
         return true;
     if ( m_bIsFloat )
     {
         const double epsilon= 1e-5; // assume that min/max are 'much' larger then this...
         double xx;
-        currentVal.ToCDouble(&xx);   // c-locale: dp == '.'
+        bool bResult = currentVal.ToCDouble(&xx);   // c-locale: dp == '.'
+        MY_UNUSED(bResult);
         if ( xx >= m_dMin-epsilon && xx <= m_dMax+epsilon )
         {   // in range
             UpdateDouble(currentVal, xx);
@@ -208,7 +209,7 @@ bool MyValidator::DoValidate(bool a_bForceInRange)
         if ( a_bForceInRange )
         {
             xx = std::clamp(xx, m_dMin, m_dMax);
-            m_pTextCtrl->SetValue(L2String((long)xx)); // NB Bypass parent to prevent recursion
+            m_pTextCtrl->ChangeValue(L2String((long)xx));
         }
     }
 
@@ -358,5 +359,43 @@ void MyValidator::SetTextCtrl(wxTextCtrl* a_pTextCtrl)
         // DON't force a validate: let user change/correct value if wrong!
     }
 }   // MyValidator::SetTextCtrl()
+
+#if 0
+static bool MyString2Double(wxString& a_string, double& a_value);
+
+bool MyString2Double(wxString& a_string, double& a_value)
+{   // return true if we found a valid number
+    // valid:  [ ]*[+-][digits][.,][digits]
+    a_value = 0.0;
+    auto pChar = a_string.wc_str();
+    while ( *pChar && *pChar == ' ' ) ++pChar;      // skip leading spaces
+    if ( *pChar == 0 ) return false;                // empty string
+    bool bSign = (*pChar == '-');                   // determine sign
+    if ( *pChar == '-' || *pChar == '+' ) ++pChar;  // skip sign
+    if ( *pChar == 0 ) return false;                // only sign
+    if ( (*pChar == ',' || *pChar == '.' ) && pChar[1] == 0 ) return false; // only decimal point
+    bool bDecimalPoint = false;
+    double factor = 1.0;
+    for ( ; *pChar ; ++pChar )
+    {
+        if ( isdigit(*pChar) )
+        {
+            a_value = a_value*10 + (*pChar - '0');
+            if ( bDecimalPoint ) factor *= 10.0;
+        }
+        else
+            if ( *pChar == ',' || *pChar == '.' )
+            {
+                if ( bDecimalPoint ) return false;  // can't have two of them
+                bDecimalPoint = true;
+            }
+            else return false;                      // unknown char
+    }
+
+    a_value /= factor;
+    if ( bSign ) a_value = -a_value;
+    return true;
+}   // MyString2Double()
+#endif 
 
 //**************** end of implementation for MyValidator  ***************************

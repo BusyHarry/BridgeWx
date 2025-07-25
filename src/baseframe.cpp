@@ -293,7 +293,7 @@ void Baseframe::AutoTestAddGridInfo(MyTextFile* a_pFile, const wxString& a_pageN
     AutotestAddMousePos(a_pFile, a_gridInfo.pGridWindow, a_pageName + "_Grid");
     UINT colNr = 0;
     UINT colNrAuto = 0;
-    auto pGrid = (MyGrid*)a_gridInfo.pGridWindow;
+    auto pGrid = reinterpret_cast<const MyGrid*>(a_gridInfo.pGridWindow);
     for (const auto& col : a_gridInfo.collumnInfo)
     {
         wxPoint wTL     = {col.x + a_gridInfo.rowLabelSize, col.y + a_gridInfo.colLabelSize};

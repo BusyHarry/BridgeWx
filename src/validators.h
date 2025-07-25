@@ -15,10 +15,10 @@ class MyValidator
     // empty results are ok. Decimal point: both ',' and '.' are accepted, display is only '.'
 public:
     MyValidator(){}
-    MyValidator(wxTextCtrl* pTextCtrl) {SetTextCtrl(pTextCtrl);}
+    explicit MyValidator(wxTextCtrl* pTextCtrl) {SetTextCtrl(pTextCtrl);}
     MyValidator(wxTextCtrl* pTextCtrl, double min, double max, int precision = -1) {SetTextCtrl(pTextCtrl); SetMinMax(min, max, precision);}
     MyValidator(double min, double max, int precision = -1) {SetMinMax(min, max, precision);}
-    virtual ~MyValidator(); // Unbind() events
+    virtual ~MyValidator() {};
 
     bool IsValidStartKey    (wxChar key);               // is 'key' allowed to start edit (grid-editor only)
     void SetExtraStartChars (const wxString& startChars) {m_sStartChars = startChars;} // additional valid start chars
@@ -45,30 +45,25 @@ private:
     bool        m_bValidate         = false;        // true, if min/max is set
     bool        m_bSignOk           = false;        // true if '-' is an allowed char
     bool        m_bBindDone         = false;        // true if we have binded the wanted events, so validation can work
+    bool        m_bIsGrid           = false;        // true if we have a grid-editor
     wxTextCtrl* m_pTextCtrl         = nullptr;      // the textctrl we are working with
     wxString    m_sStartChars;                      // extra char(s) allowed to start edit: no chars further allowed
 };  // class MyValidator
 
 //// A GridEditor with validator of type MyValidator
-class MyGridCellEditorWithValidator : public wxGridCellTextEditor
+class MyGridCellEditorWithValidator : public MyValidator, public wxGridCellTextEditor
 {
 public:
     explicit MyGridCellEditorWithValidator(double min, double max, int precision = -1);
              MyGridCellEditorWithValidator() {}
-            ~MyGridCellEditorWithValidator() {}
+    virtual ~MyGridCellEditorWithValidator() override {}
     virtual void    BeginEdit           (int row, int col, wxGrid* grid) override;  // needed to get attached wxTextCtrl
     virtual bool    IsAcceptedKey       (wxKeyEvent& event);                        // check if key can start edit
-    void            SetMinMax           (double min, double max, int precision=-1) { m_validator.SetMinMax          (min, max, precision);} // init/update min/max/precision
-    void            SetExtraStartChars  (const wxString& startChars )           { m_validator.SetExtraStartChars    (startChars); }         // additional valid start chars
-    void            UpdateMin           (double min)                            { m_validator.UpdateMin             (min);}                 // update minimum and force value inrange
-    void            UpdateMax           (double max)                            { m_validator.UpdateMax             (max);}                 // update maximum and force value inrange
-    void            UpdatePrecision     (int precision)                         { m_validator.UpdatePrecision       (precision); }          // update precision and force value inrange
 private:
-    MyValidator m_validator;        // the 'real' validator
 };  // class MyGridCellEditorWithValidator
 
 // A TextCtrl with validator of type MyValidator
-class MyTextCtrlWithValidator : public wxTextCtrl
+class MyTextCtrlWithValidator : public MyValidator, public wxTextCtrl
 {
 public:
     MyTextCtrlWithValidator(wxWindow *parent, wxWindowID id,
@@ -76,14 +71,8 @@ public:
         const wxPoint&          pos = wxDefaultPosition,
         const wxSize&          size = wxDefaultSize,
         long                  style = 0);
-    void SetMinMax          (double min, double max, int precision=-1) { m_validator.SetMinMax(min, max,precision); }
-    void SetExtraStartChars (const wxString& startChars )              { m_validator.SetExtraStartChars(startChars); }  // additional valid start chars
-    void UpdateMin          (double min)                               { m_validator.UpdateMin(min); }                  // update minimum and force value inrange
-    void UpdateMax          (double max)                               { m_validator.UpdateMax(max); }                  // update maximum and force value inrange
-    void UpdatePrecision    (int precision)                            { m_validator.UpdatePrecision(precision); }      // update precision and force value inrange
-    virtual ~MyTextCtrlWithValidator() {}
-private:    // for validator
-    MyValidator m_validator;
+    virtual ~MyTextCtrlWithValidator() override {}
+private:
 };  // class MyTextCtrlWithValidator
 
 #endif

@@ -31,6 +31,24 @@ static wxString                 sDbFile;                // current database, emp
 static std::map<enum keyId,wxString>   dbKeys;          // map, translating db_id to key
 static const wxChar             theSeparator = '@';     // default separator
 
+static struct { char input; wxString replace; } charEncoding[] = { {'"',  "&quot;"} };
+static wxString EncodeString(const wxString& a_string)
+{   // encode special char in a string
+    wxString result(a_string);
+
+    for (const auto& it : charEncoding)
+        result.Replace(it.input, it.replace);
+    return result;
+}   // EncodeString()
+
+static wxString DecodeString(const wxString& a_string)
+{   // decode special char in a string
+    wxString result(a_string);
+
+    for (const auto& it : charEncoding)
+        result.Replace(it.replace, it.input);
+    return result;
+}   // DecodeString()
 
 class ReadConfigGroup
 {   // support class for easy getting all entries in a group
@@ -193,7 +211,7 @@ bool PairnamesWrite(const names::PairInfoData& pairInfo)
     bool bResult = true;
     for (const auto& it : pairInfo)
     {
-        if (index) if (!s_pConfig->Write(FMT("%u",index), FMT("{\"%s\",%u}", it.pairName, it.clubIndex))) bResult = false;
+        if (index) if (!s_pConfig->Write(FMT("%u",index), FMT("{\"%s\",%u}", EncodeString(it.pairName), it.clubIndex))) bResult = false;
         ++index;
     }
     InitGlobalNames();  // back to local db
@@ -224,7 +242,7 @@ bool PairnamesRead(names::PairInfoData& pairInfo)
             MyLogError(_("Reading pairnames: <%s = %s> invalid!"), key, value);
             continue;
         }
-        info.pairName = name;
+        info.pairName = DecodeString(name);
         pairInfo[pair]=info;
     }
     InitGlobalNames();  // back to local db
@@ -253,7 +271,7 @@ bool ClubnamesRead(std::vector<wxString>& clubNames, UINT& uMaxId)
             MyLogError(_("Rading clubnames: <%s = %s> invalid!"), key, value);
             continue;
         }
-        clubNames[club]=name;
+        clubNames[club] = DecodeString(name);
         if (club > uMaxId)
             uMaxId = club;
     }
@@ -273,7 +291,7 @@ bool ClubnamesWrite(const std::vector<wxString>& clubNames)
     for (const auto& it : clubNames)
     {
         if (index && !it.IsEmpty()) 
-            if (!s_pConfig->Write(FMT("%u",index), FMT("\"%s\"", it))) bResult = false;;
+            if (!s_pConfig->Write(FMT("%u",index), FMT("\"%s\"", EncodeString(it)))) bResult = false;;
         ++index;
     }
 
@@ -414,7 +432,7 @@ void InitSdb()
 wxString ReadValue(keyId id, const wxString& defaultValue, UINT session)
 {
     if (!s_pConfig) return defaultValue;
-    return s_pConfig->Read(MakePath(id,session), defaultValue);
+    return DecodeString(s_pConfig->Read(MakePath(id,session), defaultValue));
 }   // ReadValue()
 
 bool ReadValueBool(keyId id, bool defaultValue, UINT session)
@@ -438,7 +456,7 @@ UINT ReadValueUINT(keyId id, UINT defaultValue, UINT session)
 bool WriteValue(keyId id, const wxString& value, UINT session)
 {
     if (!s_pConfig) return false;
-    return s_pConfig->Write(MakePath(id,session), value);
+    return s_pConfig->Write(MakePath(id,session), EncodeString(value));
 }   // WriteValue()
 
 bool WriteValue(keyId id, bool value, UINT session)

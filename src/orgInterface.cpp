@@ -711,7 +711,7 @@ namespace  org
 
         a_scoreData.clear();                    // remove old data
         a_scoreData.resize(MAX_GAMES3+1);       //  and assure room voor all games. We depend on the entries of this vector!
-        FILE* fp = fopen(scoreFile, "rb");
+        FILE* fp; auto err = fopen_s(&fp, scoreFile, "rb"); MY_UNUSED(err);
         if (fp != nullptr)                      /*file exists*/
         {
             if (fread(gamesetdata,sizeof(gamesetdata),1,fp) != 1)      //read header
@@ -772,7 +772,7 @@ namespace  org
     {
         wxString scoreFile = _ConstructFilename( cfg::EXT_SESSION_SCORE );
 
-        FILE* fp = fopen(scoreFile, "wb");
+        FILE* fp; auto err = fopen_s(&fp, scoreFile, "wb"); MY_UNUSED(err);
         if (fp == nullptr)
         {
             MyMessageBox(scoreFile + _(": open error"), _("Problem opening score-file"));

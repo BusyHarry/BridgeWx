@@ -134,7 +134,7 @@ void SetupNewMatch::RefreshInfo()
 
 void SetupNewMatch::BackupData()
 {
-    wxArrayString argv;      // 0=reserved, 1=match, 2=path, 3=session
+    wxArrayString argv;     // 0=reserved, 1=path, 2=match, 3=session
     argv.push_back(ES);
     argv.push_back("-f" + m_pDirPicker     ->GetTextCtrlValue());
     argv.push_back("-w" + m_pComboBoxMatch ->GetValue());

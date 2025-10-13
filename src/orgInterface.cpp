@@ -625,7 +625,7 @@ namespace  org
         for (UINT pair = 0; (pair < a_names.size()) && (pair <= MAX_PAIRS3); ++pair)
         {
             // remark: (const char*) is a function cast: it will return a temp char pointer of the wxString
-            strcpy(names[pair], (const char*)a_names[pair]);
+            strncpy(names[pair], a_names[pair].mb_str(wxConvUTF8),5);
         }
 
         return WriteFileBinairy(_ConstructFilename(cfg::EXT_SESSION_ASSIGNMENT_NAME), names, sizeof(names));

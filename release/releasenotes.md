@@ -1,7 +1,10 @@
 # Releasenotes
 
 #V10.9.0  ....
-
+ - added encode/decode strings for special characters when saving the database
+ - replace deprecated fopen() with fopen_s()
+ - cppcheck remarks removed
+ - correction of wrong comment
 #V10.8.0  Monday Juli 21 2025
  - disabled v3.3.0 feature to show highlighted grid columnlabel on activating a cell
  - when producing builddate.h, 'prebuild.bat' now defaults to 'en_GB' locales for date and time

@@ -331,7 +331,7 @@ bool MyLinePrinter::OpenDiskfile4Print()
     {
         wxString fileName  = cfg::GetActiveMatchPath()+cfg::GetFilePrinterName();
         bool     bWriteBom = !wxFileExists(fileName);
-        m_fp               = fopen(fileName.char_str(), "a");
+        auto err           = fopen_s(&m_fp, fileName.char_str(), "a"); MY_UNUSED(err);
         if (m_fp == nullptr)
             m_bPrint2File = false;
         else if (bWriteBom)
@@ -371,7 +371,7 @@ bool MyLinePrinter::PrintAFile(const wxString& a_fileName, const wxString& a_tit
             break;
         }
 
-        fp = fopen(a_fileName.char_str(), "rb");
+        auto err = fopen_s(&fp, a_fileName.char_str(), "rb"); MY_UNUSED(err);
         if (!fp)
         {
             bResult = false;   // can't open file: no file or not allowed

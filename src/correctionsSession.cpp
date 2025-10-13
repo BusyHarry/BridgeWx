@@ -145,9 +145,9 @@ static wxString Long12ToString(long a_value, int a_nrOfDecimals = 1)
     {
         if ((a_value % 10) == 0)
             return FMT("%ld  ", a_value/ 10);
-        return FMT("%ld.%01ld", a_value/ 10, std::abs(a_value) %  10);
+        return FMT("%ld.%01ld", a_value/ 10, std::abs(a_value) %  10L);
     }
-    return     FMT("%ld.%02ld", a_value/100, std::abs(a_value) % 100);
+    return     FMT("%ld.%02ld", a_value/100, std::abs(a_value) % 100L);
 }   // Long12ToString()
 
 static wxString ForceInRange( const wxString& val2Check, int a_minVal, int a_maxVal, bool a_bIntType = false)

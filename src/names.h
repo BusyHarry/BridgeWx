@@ -48,6 +48,7 @@ namespace names
     void                WriteClubNames          ();                                         // save the clubnames to  disk
     void                WritePairNames          ();                                         // save the pairnames todisk
     void                InitializePairNames     ();                                         // read all pairnames related files
+    void                InitNames4Conversion    (UINT session);
 
     int                 GetFreeClubIndex        ();                                         // get an unused id for clubnames, 0 if non available
     void                SetRestorePoint         ();                                         // save current names/club info

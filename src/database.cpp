@@ -754,8 +754,9 @@ bool SessionResultWrite(const cor::mCorrectionsEnd& a_mSessionResult, UINT a_ses
     if (!s_pConfig) return false;
     wxString result;
     wxChar separator = ' ';
-    for (const auto& it : a_mSessionResult)              // save score of all pairs
-    {   
+    for (const auto& it : a_mSessionResult)             // save score of all pairs
+    {
+        if ( it.second.games == 0 ) continue;           // only present on conversion old --> db
         result += FMT("%c{%u,%s,%u}"
                     , separator
                     , it.first                          // global pairnr

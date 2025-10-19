@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-20 14:19+0200\n"
-"PO-Revision-Date: 2025-07-20 14:19+0200\n"
+"POT-Creation-Date: 2025-10-19 13:01+0200\n"
+"PO-Revision-Date: 2025-10-19 13:03+0200\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -431,7 +431,7 @@ msgid "Bad data or combi-table results for non-combi player(s) ignored"
 msgstr "Incorrecte data of combi-tafel resultaten voor niet stilzitter(s) genegeerd"
 
 msgid "Invalid total-correction/end data, will be ignored"
-msgstr "Ongeldige totaal-correctie/uitslag data, wordt niet meegenomen."
+msgstr "Ongeldige totaal-correctie/uitslag data, wordt niet meegenomen"
 
 msgid "<no description yet>"
 msgstr "<nog geen beschrijving>"
@@ -1477,11 +1477,18 @@ msgstr ""
 "; syntax: <club nr> , <clubnaam>\n"
 "; lengte clubnaam maximaal %u karakters."
 
-msgid ": readerror"
-msgstr ": leesfout"
+#, c-format
+msgid "file %s has unknown size %u"
+msgstr "bestand %s heeft een onbekende grootte %u"
 
-msgid ": unknown type"
-msgstr ": onbekend type"
+msgid "unhandled scoreformat"
+msgstr "onbekend score-formaat"
+
+msgid "readerror"
+msgstr "leesfout"
+
+msgid "unknown type"
+msgstr "onbekend type"
 
 msgid "Problem reading score-file"
 msgstr "Probleem bij inlezen score-file"
@@ -2012,11 +2019,8 @@ msgstr "%A %d %B %G %X"
 msgid ": error writing to file"
 msgstr ": fout bij schrijven bestand"
 
-msgid ": wrong size"
-msgstr ": foute grootte"
-
-msgid ": error reading file"
-msgstr ": fout bij lezen bestand"
+msgid "wrong size"
+msgstr "foute grootte"
 
 msgid "no"
 msgstr "nee"

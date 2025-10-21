@@ -161,7 +161,7 @@ bool SchemaInfo::GetTableRoundInfo(UINT a_table, UINT a_round, schema::GameInfo&
     set = SET(a_round, a_table);
     info.round  = a_round;
     info.set    = set;
-    info.pairs  = GetPairs(a_round, a_table);
+    info.pairs  = GetPairs(a_table, a_round);
     if (info.pairs.ns == 0)   // 0: table not played this round
         bResult = false;
 
@@ -209,7 +209,7 @@ void SchemaInfo::GetSetInfo(UINT a_set, schema::vGameInfo& a_info) const
                 schema::GameInfo gi;
                 gi.round        = round;
                 gi.set          = set;
-                gi.pairs        = GetPairs(round, table);
+                gi.pairs        = GetPairs(table, round);
                 if (gi.pairs.ns != 0)   // 0: table not played this round
                     a_info.push_back(gi);
             }
@@ -249,7 +249,7 @@ void SchemaInfo::Init()
     }
 }   // Init()
 
-schema::NS_EW SchemaInfo::GetPairs(UINT a_round, UINT a_table) const
+schema::NS_EW SchemaInfo::GetPairs(UINT a_table, UINT a_round) const
 {
     schema::NS_EW pairs;
 
@@ -358,7 +358,7 @@ void DoConvertActive2NewSchemaData(const SchemaInfo& oldSchema, NEW_SCHEMA& newS
         newSchema.tableData[round].resize(tables+size1); // 1 based
         for (UINT table = 1; table <= tables; ++table)
         {
-            auto pairInfo = oldSchema.GetPairs(round, table);
+            auto pairInfo = oldSchema.GetPairs(table, round);
             NewTableInfo tblInfo;
             tblInfo.pairNS      = pairInfo.ns;
             tblInfo.pairEW      = pairInfo.ew;

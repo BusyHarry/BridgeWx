@@ -64,7 +64,7 @@ public:
     bool IsOk               ()const { return m_bSchemaInitOk; }
     bool GetTableRoundInfo  (const UINT table, UINT round, schema::GameInfo& info) const;
     bool AreOpponents       (UINT pair1, UINT pair2);
-    schema::NS_EW GetPairs  ( UINT round, UINT table)const;
+    schema::NS_EW GetPairs  (UINT table, UINT round) const;
 private:
     void Init();
 

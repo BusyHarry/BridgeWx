@@ -125,13 +125,13 @@ namespace io
         {
         public:
             BackUpCfg()
-            {   // backup essential values}
+            {   // backup essential values: activeMatch, activeMatchPath, session
                 cfg::DataConversionBackup();
                 //bOldGlobalNames = cfg::GetGlobalNameUse();
                 //cfg::SetGlobalNameUse(false);   // we want match specific values for <match>.nm
             }
             ~BackUpCfg()
-            {   // restore essential values}
+            {   // restore essential values
                 cfg::DataConversionRestore();
                 //cfg::SetGlobalNameUse(bOldGlobalNames);
             }
@@ -176,24 +176,28 @@ namespace io
                    org::MinMaxClubRead(tmpU                 , tmpU2); db::MinMaxClubWrite (tmpU                   , tmpU2);
             tmpB = org::ReadValueBool (KEY_MATCH_FF         , false); db::WriteValue      (KEY_MATCH_FF           , tmpB);
             tmpB = org::ReadValueBool (KEY_MATCH_GLOBALNAMES, false); db::WriteValue      (KEY_MATCH_GLOBALNAMES  , tmpB);
+                                                                      db::WriteValue      (KEY_MATCH_BUTLER       , false);
                    org::PairnamesRead(pairNames);                     db::PairnamesWrite  (pairNames);
                    org::ClubnamesRead(clubNames,tmpU);                db::ClubnamesWrite  (clubNames);
             // transfer session data of <match>.<x><session> data to <match>.db
             for (UINT session = 0; session <= cfg::MAX_SESSIONS; ++session)
             {
+                        if (!wxFile::Exists(cfg::ConstructFilename(cfg::EXT_SESSION_INI, session))) continue;    // only existing data
                         cfg::DataConversionSetSession(session);     // datafiles use cfg-local sessionId
-                        if (!wxFile::Exists(cfg::ConstructFilename(cfg::EXT_SESSION_INI))) continue;    // only existing data
-                        org::DatabaseOpen           (DB_SESSION, CFG_WRITE);
+                        names::InitNames4Conversion(session);       // need actual names/assignments for scores/corrections
+                        ce.clear();
+                        cs.clear();
+                        org::DatabaseOpen           (DB_SESSION, CFG_ONLY_READ);
                 tmpS =  org::ReadValue              (KEY_SESSION_DISCR , ES, session ); db::WriteValue              (KEY_SESSION_DISCR , tmpS, session );
                         org::SchemaRead             (si     , session );                db::SchemaWrite             (si    , session);
                         org::ScoresRead             (scores , session);                 db::ScoresWrite             (scores, session);
-                        org::SessionRankRead        (uintV  , session);                 db::SessionRankWrite        (uintV , session);
                         org::Session2GlobalIdsRead  (uintV  , session);                 db::Session2GlobalIdsWrite  (uintV , session);
-                        org::TotalRankRead          (uintV  , session);                 db::TotalRankWrite          (uintV , session);
+                        org::SessionNamesRead       (arrayS , session);                 db::SessionNamesWrite       (arrayS, session);
                         org::CorrectionsSessionRead (cs     , session);                 db::CorrectionsSessionWrite (cs    , session);
                         org::CorrectionsEndRead     (ce     , session, true);           db::CorrectionsEndWrite     (ce    , session);
-                        org::SessionNamesRead       (arrayS , session);                 db::SessionNamesWrite       (arrayS, session);
+                        org::SessionRankRead        (uintV  , session);                 db::SessionRankWrite        (uintV , session);
                         org::SessionResultRead      (ce     , session);                 db::SessionResultWrite      (ce     , session);
+                        org::TotalRankRead          (uintV  , session);                 db::TotalRankWrite          (uintV , session);
             }
         }
         else
@@ -227,9 +231,12 @@ namespace io
              for (UINT session = 0; session <= cfg::MAX_SESSIONS; ++session)
              {
                 if (!db::ExistSession(session)) continue;
-                        cfg::DataConversionSetSession(session);     // datafiles use cfg-local sessionId
-                        wxString sessionIni = cfg::ConstructFilename(cfg::EXT_SESSION_INI);
-                        wxRemoveFile(sessionIni);   // remove, if  there: we don't want (partially) old data
+                names::InitNames4Conversion(session);               // need actual names/assignments for scores/corrections
+                cfg::DataConversionSetSession(session);             // datafiles use cfg-local sessionId
+                wxString sessionIni = cfg::ConstructFilename(cfg::EXT_SESSION_INI, session);
+                wxRemoveFile(sessionIni);   // remove, if  there: we don't want (partially) old data
+                ce.clear();
+                cs.clear();
                         org::DatabaseOpen           (DB_SESSION, CFG_WRITE);
                  tmpS =  db::ReadValue              (KEY_SESSION_DISCR , ES, session ); org::WriteValue              (KEY_SESSION_DISCR , tmpS, session );
                          db::SchemaRead             (si     , session );                org::SchemaWrite             (si    , session);
@@ -240,6 +247,8 @@ namespace io
                          db::CorrectionsSessionRead (cs     , session);                 org::CorrectionsSessionWrite (cs    , session);
                          db::CorrectionsEndRead     (ce     , session, true);           org::CorrectionsEndWrite     (ce    , session);
                          db::SessionNamesRead       (arrayS , session);                 org::SessionNamesWrite       (arrayS, session);
+                ce.clear();    // preset pairnr's
+                for (UINT pair = 1; pair <= names::GetNumberOfGlobalPairs(); ++pair) ce[pair] = cor::CORRECTION_END();  // init ce map
                          db::SessionResultRead      (ce     , session);                 org::SessionResultWrite      (ce     , session);
              }
         }

@@ -482,6 +482,14 @@ wxString PairnrSession2GlobalText(UINT a_sessionPair)
     return svGlobalPairInfo[svuPairnrSession2Global[a_sessionPair]].pairName;
 }   // PairnrSession2GlobalText()
 
+void InitNames4Conversion(UINT a_session)
+{
+    ReadClubNames();
+    ReadPairNames();
+    io::Session2GlobalIdsRead(svuPairnrSession2Global, a_session);
+    XformPairnrFromSession2GlobleVicaVersa(svuPairnrSession2Global, svuPairnrGlobal2Session);
+}   // InitNames4Conversion()
+
 void InitializePairNames()
 {
     if (!ConfigChanged())

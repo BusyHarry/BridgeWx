@@ -774,6 +774,20 @@ namespace cfg
         return CFG_OK;
     }   // UpdateConfigMain()
 
+#if 0
+    static bool IsInputRedirected()
+    {
+        // Attempt to read from standard input
+        auto chr = getc(stdin);
+        if ( chr != EOF ) //_read(_fileno(stdin), &buffer, 1) == 1 )
+        {   // If reading was successful, assume input was redirected
+            (void)ungetc(chr, stdin);   // push char back
+            return true;
+        }
+        return false;
+    }   // IsInputRedirected()
+#endif
+
     int HandleCommandline( const wxArrayString& a_argv, bool a_bInit )
     {
         // first we check if we are autotesting:

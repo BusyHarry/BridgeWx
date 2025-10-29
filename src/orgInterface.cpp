@@ -24,9 +24,8 @@ namespace  org
     constexpr UINT MAX_CLUBID_UNION3= 60;   //cfg::MAX_CLUBID_UNION
     constexpr UINT MAX_CLUB_SIZE3   = 25;   //cfg::MAX_CLUB_SIZE
 
-
-    static wxFileConfig*    spConfigMatch    = 0;   // match global configuration items
-    static wxFileConfig*    spConfigSession  = 0;   // session specific configuration items
+    static wxFileConfig*    spConfigMatch    = nullptr;     // match global configuration items
+    static wxFileConfig*    spConfigSession  = nullptr;     // session specific configuration items
     static wxString currentIniMatch;
     static wxString currentIniSession;
 
@@ -130,7 +129,8 @@ namespace  org
             delete *fileCfg;
             //remark: stupid default of wxConfig mangles some strings on write, but does not unmangle them on read???
             *fileCfg = new wxFileConfig(wxEmptyString, wxEmptyString, newIni, wxEmptyString, wxCONFIG_USE_LOCAL_FILE | wxCONFIG_USE_NO_ESCAPE_CHARACTERS);
-            (*fileCfg)->SetRecordDefaults();   //write all requested entries to the file, if not present
+            if ( a_how2Open == CFG_WRITE )
+                (*fileCfg)->SetRecordDefaults();   //write all requested entries to the file, if not present
         }
 
         return CFG_OK;
@@ -286,13 +286,33 @@ namespace  org
                 tmp.absent      = absent;
                 tmp.groupOffset = groupOffset;
                 groupOffset    += pairs;    // next group starts at current+pairs
-                size_t start, end;
+                size_t start;
                 start = a_schemaString.find('"', offset);   // find begin of schema definition
-                if (start == wxString::npos) { bError = true; break; }
-                end = a_schemaString.find('"', start+1);    // find end of schema definition
-                if (end == wxString::npos) { bError = true; break; }
-                tmp.schema  = a_schemaString.substr(start + 1, end - start - 1);
-                tmp.schemaId= schema::GetId(tmp.schema);
+                if ( start == wxString::npos )
+                {   // could be very old description with separate schema text
+                    UINT rounds = nrOfGames/setSize;
+                    INT_VECTOR ids;
+                    wxArrayString names;
+                    schema::FindSchema(rounds, pairs, ids, &names);
+                    if ( ids.size() )
+                    {   // arbitrarily take first
+                        tmp.schema = names[0];
+                        tmp.schemaId = ids[0];
+                    }
+                    else
+                    {
+                        tmp.schema = "dummy";
+                        tmp.schemaId = schema::ID_NONE;
+                    }
+                }
+                else
+                {
+                    size_t end;
+                    end = a_schemaString.find('"', start + 1);    // find end of schema definition
+                    if ( end == wxString::npos ) { bError = true; break; }
+                    tmp.schema = a_schemaString.substr(start + 1, end - start - 1);
+                    tmp.schemaId = schema::GetId(tmp.schema);
+                }
                 groupData.push_back(tmp);
                 ++group;
                 offset = a_schemaString.find('P', offset + 1);  // find start of next definition
@@ -319,14 +339,31 @@ namespace  org
 
         wxString tmp = pCfg->Read(GetKeyName(KEY_SESSION_SCHEMA), "S24S4P14A0\"6multi14\"");// "S24S4P14A0\"6multi14\"P16A3\"6t14\"" ); // <-- change to ""
         Handleschema(tmp, a_sessionInfo);
-        a_sessionInfo.firstGame = pCfg->Read(GetKeyName(KEY_SESSION_FIRSTGAME), a_sessionInfo.firstGame );
+        a_sessionInfo.firstGame = pCfg->Read(GetKeyName(KEY_SESSION_FIRSTGAME), 1);
         // now add groupletters, if present
-        tmp = pCfg->Read(GetKeyName(KEY_SESSION_GROUPLETTERS), "");// "AA BB"      );             // <-- change to ES
+        tmp = pCfg->Read(GetKeyName(KEY_SESSION_GROUPLETTERS), ""); // "AA BB CC" || "ABC"
         wxArrayString groupChars = wxSplit(tmp, ' ');
-        for (UINT index = 0; index < a_sessionInfo.groupData.size(); ++index)
-        {
-            if (index >= groupChars.size()) break;
-            a_sessionInfo.groupData[index].groupChars = groupChars[index];
+        auto nrOfGroups          = a_sessionInfo.groupData.size();
+        auto nrOfGroupChars      = groupChars.size();
+        if ( nrOfGroups > 1 && nrOfGroupChars != nrOfGroups && nrOfGroupChars == 1 && groupChars[0].length() == nrOfGroups )
+        {   // assume 'old' setting with 1 char per group and no space between groupchars
+            wxString chars = groupChars[0];
+            groupChars.Clear(); // rebuild the groupChars array
+            for ( UINT group = 0; group < nrOfGroups; ++group )
+            {
+                groupChars.push_back(chars[group]);
+            }
+        }
+
+        if ( nrOfGroups > 1 )
+        {   // need/want group-chars
+            for ( UINT group = 0; group < nrOfGroups; ++group )
+            {
+                wxString chars = (group >= groupChars.size())
+                    ? wxString((char)('Z' - group)) // force group chars when not available
+                    : groupChars[group];
+                a_sessionInfo.groupData[group].groupChars = chars;
+            }
         }
 
         return true;
@@ -387,26 +424,26 @@ namespace  org
             {
                 NAMES_CURRENT   pairInfo;
                 UINT16          pairs;
-            } theData{0};
+            } thePairData{0};
 
-#define MY_NAMESIZE sizeof(theData.pairInfo.name)
-#define MY_BUFSIZE  sizeof(theData.pairInfo)
+            const auto MY_NAMESIZE = sizeof(thePairData.pairInfo.name);
+            const auto MY_BUFSIZE  = sizeof(thePairData.pairInfo);
 
             if ( ii == 0 )
             {   // first entry has only a 16 bit active pair count
-                theData.pairs =  a_pairInfo.size()-1;
+                thePairData.pairs =  a_pairInfo.size()-1;
             }
             else
             {
                 if ( ii < a_pairInfo.size())
                 {
-                    int count = Unicode2Ascii(a_pairInfo[ii].pairName, theData.pairInfo.name, MY_NAMESIZE);
+                    int count = Unicode2Ascii(a_pairInfo[ii].pairName, thePairData.pairInfo.name, MY_NAMESIZE);
                     MY_UNUSED(count);
-                    theData.pairInfo.clubindex = a_pairInfo[ii].clubIndex;
+                    thePairData.pairInfo.clubindex = a_pairInfo[ii].clubIndex;
                 }
             }
 
-            if (MY_BUFSIZE != fn.Write(&theData.pairInfo, MY_BUFSIZE) )
+            if (MY_BUFSIZE != fn.Write(&thePairData.pairInfo, MY_BUFSIZE) )
                 ++iErrors;
         }
 
@@ -420,8 +457,6 @@ namespace  org
         return true;
     }   // PairnamesWrite()
 
-    bool PairnamesRead(names::PairInfoData& a_pairInfo)
-    {
 #ifdef _WIN32       // for VS (32/64 bit) we need 1 byte packing for the storage to be compatible
 #pragma pack(1)
 #endif
@@ -452,15 +487,17 @@ namespace  org
             UINT16          pairs;
         } theData;
 
-        UINT o1Size = sizeof(theData.old1);     MY_UNUSED(o1Size);
-        UINT o2Size = sizeof(theData.old2);     MY_UNUSED(o2Size);
-        UINT o3Size = sizeof(theData.old3);     MY_UNUSED(o3Size);
-        UINT oSize  = sizeof(theData);          MY_UNUSED(oSize);
 
 #ifdef _WIN32
 #pragma pack()
 #endif
 
+    bool PairnamesRead(names::PairInfoData& a_pairInfo)
+    {
+        UINT o1Size = sizeof(theData.old1);     MY_UNUSED(o1Size);
+        UINT o2Size = sizeof(theData.old2);     MY_UNUSED(o2Size);
+        UINT o3Size = sizeof(theData.old3);     MY_UNUSED(o3Size);
+        UINT oSize  = sizeof(theData);          MY_UNUSED(oSize);
         UINT nrOfPairs = 0;
 
         a_pairInfo.clear();
@@ -497,7 +534,7 @@ namespace  org
 
                 for (UINT ii=1; ii <= nrOfPairs; ++ii)
                 {
-                    a_pairInfo.push_back(names::PairInfo(Ascii2Unicode(theData.old2[ii].name), names::DetermineClubIndex(theData.old2[ii].club))); 
+                    a_pairInfo.push_back(names::PairInfo(Ascii2Unicode(theData.old2[ii].name), theData.old2[ii].clubindex)); 
                 }
             }
             else
@@ -518,6 +555,27 @@ namespace  org
 
         return bHandled;
     }   // PairnamesRead()
+
+    static void TryOldSpec4Clubs(std::vector<wxString>& a_clubNames)
+    {   // check if we have an 'old' name-file with included clubnames
+        // input is already resized to its max
+        wxString pairNames = _ConstructFilename(cfg::EXT_NAMES);
+        wxFFile fn;
+        fn.Open(pairNames, "rb");
+        if ( !fn.IsOpened() )
+            return;
+
+        size_t fileSize = fn.Length();
+        if ( FILE_LENGTH_NAMES_OLD2 != fileSize ) return;           // not the expected file..
+        fn.Read(&theData, fileSize);
+        UINT nrOfPairs = std::min((UINT)theData.pairs, AP_OLD2);    // nr of active pairs in data
+        for (UINT pair = 1; pair <= nrOfPairs; ++pair)
+        {
+            auto clubIndex = (UINT)theData.old2[pair].clubindex;
+            if ( clubIndex < a_clubNames.size() )
+                a_clubNames[clubIndex] = Ascii2Unicode(theData.old2[pair].club); 
+        }
+    }   // TryOldSpec4Clubs()
 
     bool Session2GlobalIdsRead(UINT_VECTOR& vuPairnrSession2Global, UINT /*session*/)
     {
@@ -556,7 +614,11 @@ namespace  org
         a_clubNames.resize(MAX_CLUBNAMES3 + 1 );  //allways sized upto reserved count
         a_uMaxId = MAX_CLUBID_UNION3;    // 'free' added clubnames get an id starting here
 
-        if (!wxFileExists(clubNames)) return true;  // prevent popup error-window from logging :(
+        if ( !wxFileExists(clubNames) )
+        {   // check if we have an 'old' name-file with included clubnames
+            TryOldSpec4Clubs(a_clubNames);
+            return true;  // prevent popup error-window from logging :(
+        }
         wxTextFile tf ;
         tf.Open(clubNames, wxCSConv(wxFONTENCODING_CP437));
         if (!tf.IsOpened())
@@ -590,6 +652,8 @@ namespace  org
 
     bool ClubnamesWrite(const std::vector<wxString>& a_clubNames)
     {
+        if ( a_clubNames.end() == std::find_if(a_clubNames.begin(), a_clubNames.end(), [](const auto& name){return !name.IsEmpty();}) )
+            return true;    // don't create empty file
         wxString fileName = _ConstructFilename(cfg::EXT_NAMES_CLUB);
         wxRemoveFile(fileName);
         wxTextFile tf;
@@ -643,16 +707,33 @@ namespace  org
         {
             char old[MAX_PAIRS3+1][4];
             char cur[MAX_PAIRS3+1][5];
+            char xxx[MAX_PAIRS3+1][6];  // does also exist! see 'tr171125'
         };
         assignments buf;
-        bool bNew = (size == sizeof(buf.cur));
+        enum class AssignType{old=0,cur=1,xxx=2,unknown=3};
+        AssignType type;
+        switch ( size )
+        {
+            case sizeof(buf.old): type = AssignType::old;break;
+            case sizeof(buf.cur): type = AssignType::cur;break;
+            case sizeof(buf.xxx): type = AssignType::xxx;break;
+            default:
+                type = AssignType::unknown;
+                MyMessageBox(FMT(_("file %s has unknown size %u"), file, (UINT)size));
+                return false;
+        }
 
         if (! ReadFileBinairy(file, &buf, size))
             return false;
         
         for (UINT pair = 0; pair <= MAX_PAIRS3; ++pair)
         {
-            a_assignmentsName[pair] = bNew ? buf.cur[pair] : buf.old[pair];
+            a_assignmentsName[pair] = 
+                  type == AssignType::old
+                ? buf.old[pair]
+                : type == AssignType::cur
+                  ? buf.cur[pair]
+                  : buf.xxx[pair];
         }
         return true;
     }   // SessionNamesRead()
@@ -676,6 +757,15 @@ namespace  org
         INT16   scoreEW;        // so pairs were limited to 127
     };
 
+    struct GameSetDataOrg_
+    {   // very old type
+        UINT8   pairNS;         // database used 8bit variables to preserve space (640Kb in DOS!)
+        UINT8   pairEW;         // so we were limited by this to 255 pairs
+        INT16   scoreNS;        // Schemadata used 8bit signed pairs (+ -> NS, - -> EW)
+        INT16   scoreEW;        // so pairs were limited to 127
+        INT16   dummy;
+    };
+
     struct DESCRIPTION
     {
         INT16   dataType;
@@ -689,6 +779,13 @@ namespace  org
         UINT8   nrOfSets;
     };
 
+    struct SetCount_
+    {   // very old type
+        UINT8   dummy[2];
+        UINT8   nrOfSets;
+        INT16   dummy2;
+    };
+
     union Scores
     {
         GameSetDataOrg  setData;
@@ -696,25 +793,63 @@ namespace  org
         SetCount        setCount;
     };
 
+    union Scores_
+    {   // very old type
+        GameSetDataOrg_ setData;
+        SetCount_       setCount;
+    };
 #ifdef _WIN32
     #pragma pack()
 #endif
 
+    static bool TryOldFormat(vvScoreData& a_scoreData, FILE* a_fp, UINT a_nrOfGames, wxString& a_errorMsg, size_t a_headerSize)
+    {   // old format has extra INT16 in setCount and setData
+        // return true on success
+        if ( 0 != fseek(a_fp, a_headerSize, SEEK_SET) )
+            return false;
+        a_scoreData.clear();
+        a_scoreData.resize(MAX_GAMES3+1);       //  and assure room voor all games. We depend on the entries of this vector!
+        Scores_ gamesetdata[MAX_PAIRS3/2+1];
+        std::vector<score::GameSetData> scores;
+        for (UINT game = 1; game <= a_nrOfGames; ++game)
+        {
+            if (fread(&gamesetdata[0],sizeof(gamesetdata[0]),1,a_fp) != 1)
+                { a_errorMsg = _("unhandled scoreformat"); return false; }
+            UINT nrOfSets = gamesetdata[0].setCount.nrOfSets;
+            if ( nrOfSets > MAX_PAIRS3 / 2 )    // bad data
+                { a_errorMsg = _("unhandled scoreformat"); return false; }
+            if (fread(&gamesetdata[1], sizeof(gamesetdata[0]), nrOfSets, a_fp) != nrOfSets)
+                { return false; }
+            scores.clear();
+            for (UINT sets = 1; sets <= nrOfSets; ++sets)
+            {
+                score::GameSetData newData;    // old to new
+                newData.pairNS  = gamesetdata[sets].setData.pairNS;
+                newData.pairEW  = gamesetdata[sets].setData.pairEW;
+                newData.scoreNS = gamesetdata[sets].setData.scoreNS;
+                newData.scoreEW = gamesetdata[sets].setData.scoreEW;
+                scores.push_back(newData);
+            }
+            a_scoreData[game] = scores;
+        }
+        return true;
+    }   // TryOldFormat();
 
     static constexpr int    CURRENT_TYPE = 1;        // version of datastorage
-    bool ScoresRead(vvScoreData& a_scoreData, UINT /*a_session*/)
+    bool ScoresRead(vvScoreData& a_scoreData, UINT a_session)
     {
         Scores      gamesetdata[MAX_PAIRS3/2+1];
-        wxString    scoreFile   = _ConstructFilename( cfg::EXT_SESSION_SCORE );
+        wxString    scoreFile   = _ConstructFilename( cfg::EXT_SESSION_SCORE, a_session );
         bool        bError      = false;
-        wxString    errorMsg    = _(": readerror");
+        wxString    errorMsg    = _("readerror");
 
         a_scoreData.clear();                    // remove old data
         a_scoreData.resize(MAX_GAMES3+1);       //  and assure room voor all games. We depend on the entries of this vector!
         FILE* fp; auto err = fopen_s(&fp, scoreFile, "rb"); MY_UNUSED(err);
         if (fp != nullptr)                      /*file exists*/
         {
-            if (fread(gamesetdata,sizeof(gamesetdata),1,fp) != 1)      //read header
+            size_t headerSize = sizeof(gamesetdata);
+            if (fread(gamesetdata, headerSize, 1, fp) != 1) //read header
             {
                 bError = true;
                 goto error;
@@ -725,17 +860,23 @@ namespace  org
                 {
                     std::vector<score::GameSetData> scores;
                     UINT nrOfGames = gamesetdata[0].description.nrOfGamesWithData;
-                    assert(nrOfGames <= MAX_GAMES3);
+                    if ( nrOfGames > MAX_GAMES3 )
+                        { bError = true; errorMsg = _("unhandled scoreformat"); goto error; }
                     for (UINT game = 1; game <= nrOfGames; ++game)
                     {
                         if (fread(&gamesetdata[0],sizeof(gamesetdata[0]),1,fp) != 1)
-                        {    bError = true; goto error; }
+                            { bError = true; errorMsg = _("unhandled scoreformat"); goto error; }
 
                         UINT nrOfSets = gamesetdata[0].setCount.nrOfSets;
-                        assert(nrOfSets <= MAX_PAIRS3/2);
+                        if ( nrOfSets > MAX_PAIRS3 / 2 )    // bad data, possibly old set-data with 'group' included
+                            { bError = true; errorMsg = _("unhandled scoreformat"); goto error; }
                         if (fread(&gamesetdata[1], sizeof(gamesetdata[0]), nrOfSets, fp) != nrOfSets)
-                        {    bError = true; goto error; }
-
+                            { bError = true; goto error; }
+                        if ( gamesetdata[1].setData.pairNS == 0 && gamesetdata[1].setData.pairEW == 0 )
+                        {   // hm, we DO have a very old format with INT16 'group' after the score/nrOfSets
+                            bError = !TryOldFormat(a_scoreData, fp, nrOfGames, errorMsg, headerSize);
+                            goto error; // always stop....
+                        }
                         scores.clear();
                         for (UINT sets = 1; sets <= nrOfSets; ++sets)
                         {
@@ -750,7 +891,7 @@ namespace  org
                     }
                 }
                 break;
-                default: bError = true; errorMsg = _(": unknown type");
+                default: bError = true; errorMsg = _("unknown type");
             }
 
         error:
@@ -759,7 +900,7 @@ namespace  org
                 // on error: keep what we could read.
                 // svGameSetData.clear();
                 // svGameSetData.resize(MAX_GAMES3+1); //  and assure room voor all games. We depend on the entries of this vector!
-                MyMessageBox(scoreFile+errorMsg, _("Problem reading score-file"));
+                MyMessageBox(scoreFile + ": " + errorMsg, _("Problem reading score-file"));
             }
 
             if (fp) (void)fclose(fp);
@@ -768,9 +909,9 @@ namespace  org
         return !bError;
     }   //ScoresRead()
 
-    bool ScoresWrite(const vvScoreData& a_scoreData, UINT /*a_session*/)
+    bool ScoresWrite(const vvScoreData& a_scoreData, UINT a_session)
     {
-        wxString scoreFile = _ConstructFilename( cfg::EXT_SESSION_SCORE );
+        wxString scoreFile = _ConstructFilename( cfg::EXT_SESSION_SCORE, a_session );
 
         FILE* fp; auto err = fopen_s(&fp, scoreFile, "wb"); MY_UNUSED(err);
         if (fp == nullptr)
@@ -783,7 +924,8 @@ namespace  org
         bool        bError      = false;
         UINT        restSize    = 0;
         UINT        nrOfGames   = score::GetNumberOfGames(&a_scoreData);
-
+        
+//      UINT        rst = std::accumulate(a_scoreData.begin() + 1, a_scoreData.begin() + nrOfGames + 1, 0U, [](UINT rst, const auto& data) {return rst + data.size(); });
         for (UINT game = 1; game <= nrOfGames; ++game)
             restSize += 1+a_scoreData[game].size();
         restSize *= sizeof(Scores);
@@ -847,13 +989,20 @@ namespace  org
         UINT size = MyGetFilesize(a_file);
         if (size == UINT_MAX) return false;  // file does not exist
 
-        UINT16 buf[MAX_PAIRS3+1];
+        union { UINT16 cur[MAX_PAIRS3 + 1]; UINT32 xxx[MAX_PAIRS3 + 1]; } buf;
+        int type = (size == sizeof(buf.cur)) ? 0 : (size == sizeof(buf.xxx)) ? 1 : 2;
+        if ( type == 2 )
+        {
+            MyMessageBox(FMT(_("file %s has unknown size %u"), a_file, (UINT)size));
+            return false;
+        }
+
         if (!ReadFileBinairy(a_file, &buf, size))
             return false;
 
         for (UINT ii = 0; ii <= MAX_PAIRS3; ++ii)
         {
-            a_vUINT[ii] = std::min((UINT)buf[ii],MAX_PAIRS3);
+            a_vUINT[ii] = std::min((UINT) type == 0 ? buf.cur[ii] : buf.xxx[ii], MAX_PAIRS3);
         }
 
         return true;
@@ -879,6 +1028,9 @@ namespace  org
 
     bool TotalRankWrite(const UINT_VECTOR& a_vuRank, UINT a_session)
     {
+        if ( a_vuRank.end() == std::find_if(a_vuRank.begin(), a_vuRank.end(), [](UINT rank){return rank != 0U;}) )
+            return true;  // no results, so just return success
+
         wxString file = _ConstructFilename(cfg::EXT_SESSION_RANK_TOTAL, a_session);
         return WriteBinairyUSHORT(a_vuRank, file);
     }   // TotalRankWrite()
@@ -887,7 +1039,7 @@ namespace  org
     {
         // ;score.2 glbpaar bonus.2 spellen paarnaam
         // 100.00     1     11.00   s16     xxx - xxx
-
+        if ( a_correctionsEnd.size() == 0 ) return true;    // don't create empty file
         wxString correctionFile = _ConstructFilename( cfg::EXT_SESSION_CORRECTION_END, a_session ); 
         MyTextFile file(correctionFile, MyTextFile::WRITE);
 
@@ -914,7 +1066,6 @@ namespace  org
 
         return true;
     }   // CorrectionsEndWrite()
-
 
     static bool CorrectionsEndRead(const wxString& a_fileName, cor::mCorrectionsEnd& a_correctionsEnd, bool a_bCorrections, bool a_bForceAdd)
     {
@@ -954,11 +1105,15 @@ namespace  org
             }
             if ( (count != 5) || ((charS != 's') && (charS != 'S')) )
             {
-                bLineError = true;
+                if ( count == 4 && ce.games == 0 )
+                    ce.games = 24;      // older versions do not have S<n> info, so set games to 24 default
+                else
+                    bLineError = true;
             }
 
             ce.score = AsciiTolong( scoreBuf, ExpectedDecimalDigits::DIGITS_2);
             ce.bonus = AsciiTolong( bonusBuf, ExpectedDecimalDigits::DIGITS_2);
+            if ( ce == cor::CORRECTION_END() ) continue;    // only during conversion old --> db
 
             if (cor::IsValidCorrectionEnd(pairnr, ce, str, bLineError))
             {   // add info to map
@@ -985,12 +1140,12 @@ namespace  org
         return CorrectionsEndRead(fileName, a_correctionsEnd, true, a_bEdit);
     }   // CorrectionsEndRead()
 
-    bool CorrectionsSessionWrite(const cor::mCorrectionsSession& a_correctionsSession, UINT /*a_session*/)
+    bool CorrectionsSessionWrite(const cor::mCorrectionsSession& a_correctionsSession, UINT a_session)
     {
         //;<correctie><type> <sessie paarnr> <extra.1> <max extra> <paarnaam
         //    +3        %      1              0           0      paar 28
-
-        wxString correctionFile = _ConstructFilename( cfg::EXT_SESSION_CORRECTION );
+        if ( a_correctionsSession.size() == 0 ) return true;    // don't create empty file
+        wxString correctionFile = _ConstructFilename( cfg::EXT_SESSION_CORRECTION, a_session );
         MyTextFile file(correctionFile, MyTextFile::WRITE);
 
         if (!file.IsOk())
@@ -1063,13 +1218,16 @@ namespace  org
         return bError;
     }   //  CorrectionsSessionRead()
 
-    bool SessionResultWrite(const cor::mCorrectionsEnd& a_mSessionResult, UINT /*a_session*/)
+    bool SessionResultWrite(const cor::mCorrectionsEnd& a_mSessionResult, UINT a_session)
     {   // write and read: different params!
-        MyTextFile file(_ConstructFilename(cfg::EXT_SESSION_RESULT), MyTextFile::WRITE);
+        if ( a_mSessionResult.end() == std::find_if(a_mSessionResult.begin(), a_mSessionResult.end(), [](const auto& res){return res.second.games != 0U;}))
+              return true;  // no results, so just return success
+        MyTextFile file(_ConstructFilename(cfg::EXT_SESSION_RESULT, a_session), MyTextFile::WRITE);
         if (!file.IsOk()) return false;
         file.AddLine(_(";score 'glb pair' s<games>   name"));
         for (const auto& it : a_mSessionResult)              // save score of all pairs
         {
+            if ( it.second.games == 0 ) continue;           // pair has not played
             wxString tmp;
             tmp.Printf("%5s %3u  s%-2u %s",
                 LongToAscii2(it.second.score),              // score

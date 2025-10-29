@@ -35,6 +35,7 @@ typedef unsigned char       UINT8;
 typedef short               INT16;
 typedef unsigned short      UINT16;
 typedef unsigned int        UINT;
+typedef unsigned int        UINT32;
 typedef std::vector<UINT> UINT_VECTOR;
 
 #define wxEVT_USER          wxEVT_MENU

@@ -309,22 +309,23 @@ bool ReadFileBinairy(const wxString& a_file, void* a_buffer, UINT a_bufSize)
         if (fileSize != a_bufSize)
         {
             bOk = false;
-            sError = _(": wrong size");
+            sError = _("wrong size");
         }
         else
         {
             if (a_bufSize != fn.Read(a_buffer, a_bufSize))
             {
                 bOk = false;
-                sError = _(": readerror");
+                sError = _("readerror");
             }
         }
     }
 
     if (!bOk)
     {
-        LogError(a_file+sError);
-        MyMessageBox(a_file+_(": error reading file"));
+        sError = a_file + ": " + sError;
+        LogError(sError);
+        MyMessageBox(sError);
     }
     return bOk;
 }   // ReadFileBinairy()

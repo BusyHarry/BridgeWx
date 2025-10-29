@@ -331,7 +331,7 @@ bool MyLinePrinter::OpenDiskfile4Print()
     {
         wxString fileName  = cfg::GetActiveMatchPath()+cfg::GetFilePrinterName();
         bool     bWriteBom = !wxFileExists(fileName);
-        auto err           = fopen_s(&m_fp, fileName.char_str(), "a"); MY_UNUSED(err);
+        m_fp = _fsopen(fileName.mb_str(wxConvUTF8), "a", _SH_DENYWR);   // fopen_s() does not allow read for other apps
         if (m_fp == nullptr)
             m_bPrint2File = false;
         else if (bWriteBom)

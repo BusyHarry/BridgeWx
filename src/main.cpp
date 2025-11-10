@@ -28,6 +28,7 @@
 #include "database.h"
 #include "fileIo.h"
 #include "version.h"
+#include "main.h"
 
 static wxWindow* spMainframe = nullptr;      // to reach mainframe from clients
 wxWindow* GetMainframe(){return spMainframe;}
@@ -303,6 +304,7 @@ public:
     void UpdateStatusbarText(wxCommandEvent& a_event);
     UINT GetCurrentMenuId() {return m_oldId;}
     void SetClock(wxCommandEvent& event=s_dummy);
+    MyStatusBar* StatusBar() {return m_pStatusbar;}
     wxMenuBar* m_pMenuBar;
 
 private:
@@ -694,7 +696,7 @@ void MyFrame::OnSystemInfo(wxCommandEvent& )
 //    wxInfoMessageBox(0);
 }   // OnSystemInfo()
 
-void MyFrame::UpdateStatusbarInfo(wxCommandEvent& )
+void SetStatusbarInfo()
 {
     wxString tmp = cfg::GetActiveMatchAndSession() + ", ";
     wxString prn = cfg::GetPrinterName();
@@ -702,8 +704,18 @@ void MyFrame::UpdateStatusbarInfo(wxCommandEvent& )
         tmp +=  cfg::GetFilePrinterName();
     else
         tmp += cfg::GetWinPrintPrefix();
-    m_pStatusbar->SetInfo(tmp);
+    reinterpret_cast<MyFrame*>(spMainframe)->StatusBar()->SetInfo(tmp);
+}   // SetStatusbarInfo()
+
+void MyFrame::UpdateStatusbarInfo(wxCommandEvent& )
+{
+    SetStatusbarInfo();
 }   //  UpdateStatusbarInfo()
+
+void SetStatusbarText(const wxString& a_msg)
+{
+    reinterpret_cast<MyFrame*>(spMainframe)->StatusBar()->SetStatusText(a_msg);
+}   // SetStatusbarText()
 
 void MyFrame::UpdateStatusbarText(wxCommandEvent& a_event)
 {
@@ -963,3 +975,20 @@ void MyFrame::LoadExistingSchemaFiles()
     }
     schema::DebuggingSchemaData();  // for debugging....
 }   // LoadExistingSchemaFiles()
+
+void SendEvent2Mainframe(int a_id, void* a_pClientData)
+{
+    if (GetMainframe())
+    {
+        wxCommandEvent event(wxEVT_USER, a_id);
+        event.SetClientData(a_pClientData);
+        GetMainframe()->GetEventHandler()->AddPendingEvent(event);
+    }
+}   // SendEvent2Mainframe()
+
+void SendEvent2Mainframe(wxWindow* a_pWindow, int a_id, void* const a_pClientData)
+{
+    wxCommandEvent event(wxEVT_USER, a_id);
+    event.SetClientData(a_pClientData);
+    a_pWindow->GetEventHandler()->AddPendingEvent(event);
+}   // SendEvent2Mainframe()

@@ -16,6 +16,7 @@
 #include "printer.h"
 #include "debug.h"
 #include "score.h"
+#include "main.h"
 
 /*
 * according 'bard'/'gemini

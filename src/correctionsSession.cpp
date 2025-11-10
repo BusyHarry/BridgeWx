@@ -14,6 +14,7 @@
 #include "printer.h"
 #include "score.h"
 #include "corrections.h"
+#include "main.h"
 
 static constexpr auto COR_MP_MIN        = -25;
 static constexpr auto COR_MP_MAX        = +25;

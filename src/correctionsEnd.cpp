@@ -15,6 +15,7 @@
 #include "corrections.h"
 #include "database.h"
 #include "validators.h"
+#include "main.h"
 
 CorrectionsEnd::CorrectionsEnd(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a_pageId), m_theGrid(0)
 {

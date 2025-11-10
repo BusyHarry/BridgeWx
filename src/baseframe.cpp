@@ -23,6 +23,7 @@
 #include "cfg.h"
 #include "baseframe.h"
 #include "mygrid.h"
+#include "main.h"
 
 static const wxWindow* GetTopLevelWindow(const wxWindow* a_pWindow)
 {

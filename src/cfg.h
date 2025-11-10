@@ -17,15 +17,6 @@
 class wxWindow;
 class wxTextCtrl;
 
-/*
-    communicate with mainframe on the base of a menu-event
-    @param id the value for the command handler
-    @param pClientData optional pointer to extra data for this command
-*/
-void SendEvent2Mainframe(int id, void* const pClientData = nullptr);
-void SendEvent2Mainframe(wxWindow* pWindows, int id, void* const pClientData = nullptr);
-wxWindow* GetMainframe();   // only needed here, comes from ctor of the mainframe.
-
 enum CfgFileEnum{ CFG_OK, CFG_ERROR, CFG_ONLY_READ, CFG_WRITE };  // used for handling config files
 
 constexpr auto TRIM_LEFT  = false;

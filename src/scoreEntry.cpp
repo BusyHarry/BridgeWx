@@ -14,6 +14,7 @@
 #include "mygrid.h"
 #include "printer.h"
 #include "score.h"
+#include "main.h"
 
 #include "scoreEntry.h"
 

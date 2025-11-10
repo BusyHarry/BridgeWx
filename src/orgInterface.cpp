@@ -718,7 +718,7 @@ namespace  org
             case sizeof(buf.cur): type = AssignType::cur;break;
             case sizeof(buf.xxx): type = AssignType::xxx;break;
             default:
-                type = AssignType::unknown;
+                // type = AssignType::unknown;
                 MyMessageBox(FMT(_("file %s has unknown size %u"), file, (UINT)size));
                 return false;
         }

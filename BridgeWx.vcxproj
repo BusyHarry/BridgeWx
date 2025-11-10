@@ -644,6 +644,7 @@
     <ClInclude Include="src\debug.h" />
     <ClInclude Include="src\fileIo.h" />
     <ClInclude Include="src\importExportSchema.h" />
+    <ClInclude Include="src\main.h" />
     <ClInclude Include="src\mylog.h" />
     <ClInclude Include="src\mygrid.h" />
     <ClInclude Include="src\choiceMC.h" />

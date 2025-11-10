@@ -9,6 +9,7 @@
 #include "database.h"
 #include "fileIo.h"
 #include "corrections.h"
+#include "main.h"
 
 namespace cor
 {

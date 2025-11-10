@@ -16,6 +16,7 @@
 #include "utils.h"
 #include "database.h"
 #include "fileIo.h"
+#include "main.h"
 
 static const auto sButlerRemoveScoresPercent = 10;  // remove N % of highest/lowest scores
 static const auto sButlerMinimumScores       = 3;   // we want atleast N scores after removal

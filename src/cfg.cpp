@@ -14,25 +14,9 @@
 #include "scoreEntry.h"
 #include "fileIo.h"
 #include "database.h"
+#include "main.h"
 
 #include <iostream>
-
-void SendEvent2Mainframe(int a_id, void* a_pClientData)
-{
-    if (GetMainframe())
-    {
-        wxCommandEvent event(wxEVT_USER, a_id);
-        event.SetClientData(a_pClientData);
-        GetMainframe()->GetEventHandler()->AddPendingEvent(event);
-    }
-}   // SendEvent2Mainframe()
-
-void SendEvent2Mainframe(wxWindow* a_pWindow, int a_id, void* const a_pClientData)
-{
-    wxCommandEvent event(wxEVT_USER, a_id);
-    event.SetClientData(a_pClientData);
-    a_pWindow->GetEventHandler()->AddPendingEvent(event);
-}   // SendEvent2Mainframe()
 
 namespace cfg
 {

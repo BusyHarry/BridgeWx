@@ -64,6 +64,7 @@ enum MY_IDS
     ID_MENU_DEBUG_GUIDES,
     ID_MENU_DEBUG_SCORE_SLIPS,
     ID_MENU_CALC_SCORES,
+    ID_MENU_SLIP_SERVER,
     ID_MENU_SETUP_LAST,		// last id used to create new pages
 
     ID_MENU_PRINTPAGE,

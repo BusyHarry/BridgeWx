@@ -26,6 +26,7 @@
 #include "calcScore.h"
 #include "showStartImage.h"
 #include "database.h"
+#include "slipServer.h"
 #include "fileIo.h"
 #include "version.h"
 #include "main.h"
@@ -606,6 +607,7 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     otherDb->AppendRadioItem(ID_MENU_OLD_DBASE, _("&Old datatype (.ini)"       ), _("Use 'old' .ini/data files for data storage"           ));
     otherDb->AppendRadioItem(ID_MENU_NEW_DBASE, _("&New datatype (.db)"        ), _("Use new .db file for data storage"                    ));
     menuExtra->AppendSubMenu(otherDb          , _("s&Witch between datatypes"  ), _("switch between the two datatypes"                     ));
+    menuExtra->Append(ID_MENU_SLIP_SERVER     , _("&Slip server"               ), _("Server for receiving slip-data"                       ));
     menuExtra->Append(ID_MENU_LANGUAGE        , _("&Language"                  ), _("language of the userinterface"                        ));
 
     wxMenu *menuHelp = new wxMenu;
@@ -868,6 +870,9 @@ void MyFrame::OnMenuChoice(wxCommandEvent& a_event)
                 break;
             case ID_MENU_CALC_SCORES:
                 m_pActivePage = new CalcScore(this,ID_MENU_CALC_SCORES);
+                break;
+            case ID_MENU_SLIP_SERVER:
+                m_pActivePage = new SlipServer(this,ID_MENU_SLIP_SERVER);
                 break;
             default:
                 MyLogError(_("OnMenu(%u), id unknown!"), id);

@@ -1,0 +1,11 @@
+bridge.jpg
+calcScore.js
+files_slipServer.txt
+iniLocalHost.bat
+login.php
+nextSlip.php
+read.me
+ready.php
+slip.css
+slip.js
+slip.php

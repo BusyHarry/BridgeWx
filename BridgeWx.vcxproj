@@ -625,6 +625,8 @@
     <ClCompile Include="src\setupGame.cpp" />
     <ClCompile Include="src\setupSchema.cpp" />
     <ClCompile Include="src\showStartImage.cpp" />
+    <ClCompile Include="src\slipServer.cpp" />
+    <ClCompile Include="src\socketServer.cpp" />
     <ClCompile Include="src\statusbar.cpp" />
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\validators.cpp" />
@@ -661,6 +663,7 @@
     <ClInclude Include="src\setupGame.h" />
     <ClInclude Include="src\setupSchema.h" />
     <ClInclude Include="src\ShowStartImage.h" />
+    <ClInclude Include="src\slipServer.h" />
     <ClInclude Include="src\statusbar.h" />
     <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\validators.h" />

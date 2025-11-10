@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-19 13:01+0200\n"
-"PO-Revision-Date: 2025-10-19 13:03+0200\n"
+"POT-Creation-Date: 2025-11-10 12:22+0100\n"
+"PO-Revision-Date: 2025-11-10 12:23+0100\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -1194,6 +1194,12 @@ msgstr "&Wissel van bestandstype"
 msgid "switch between the two datatypes"
 msgstr "omschakelen van het ene opslagtype naar het andere"
 
+msgid "&Slip server"
+msgstr "&Slip server"
+
+msgid "Server for receiving slip-data"
+msgstr "Server voor verwerking van slip-data"
+
 msgid "&Language"
 msgstr "&Taal"
 
@@ -2011,6 +2017,203 @@ msgstr "afwezig paar"
 #, c-format
 msgid "Equal groupcharacters for group %u and %u"
 msgstr "Gelijke groepletters voor groep %u en %u"
+
+msgid "The info for this round"
+msgstr "Het overzicht voor deze ronde"
+
+msgid "file"
+msgstr "bestand"
+
+msgid "network"
+msgstr "netwerk"
+
+msgid "select input method"
+msgstr "kies invoermethode"
+
+#, c-format
+msgid "data is coming from file '%s' in the match-folder"
+msgstr "gegevens komen uit het bestand '%s' in de wedstrijdmap"
+
+msgid "data is coming through the network, directly from the php-server"
+msgstr "gegevens komen via het netwerk, direct van de php-server"
+
+msgid "++round"
+msgstr "++ronde"
+
+msgid "Info for the next round"
+msgstr "Info voor volgende ronde"
+
+msgid "clear log"
+msgstr "log wissen"
+
+msgid "Clear the log window"
+msgstr "Wis het logwindow"
+
+msgid "html slip data"
+msgstr "html slip data"
+
+msgid "generate configuration data for score entry through a html-page"
+msgstr "genereer configuratie data voor ingave van scores via een html-pagina"
+
+msgid "Slip server, automatic handling of slip-data"
+msgstr "Slip server, automatische verwerking van slip-data"
+
+msgid "ready"
+msgstr "klaar"
+
+msgid "slip-info of"
+msgstr "slipinformatie van"
+
+msgid "ok"
+msgstr "ok"
+
+msgid "accept input and de-select the game"
+msgstr "accepteer de ingave en de-selecteer het spel"
+
+msgid "bad input - data..."
+msgstr "foute ingaves..."
+
+msgid "East"
+msgstr "Oost"
+
+msgid "North"
+msgstr "Noord"
+
+msgid "Bye"
+msgstr "Rondpas"
+
+msgid "South"
+msgstr "Zuid"
+
+msgid "West"
+msgstr "West"
+
+msgid "probably a browser refresh activated"
+msgstr "waarschijnlijk een refresh van de browser gedaan"
+
+msgid "check for ok"
+msgstr "vink aan voor akkoord"
+
+msgid "clear"
+msgstr "wissen"
+
+msgid "Declarer"
+msgstr "Leider"
+
+msgid "Doubled"
+msgstr "Gedubbeld"
+
+msgid "Error opening network"
+msgstr "Fout bij openen netwerk"
+
+msgid "unexpected response from server"
+msgstr "onverwacht antwoord van de server"
+
+msgid "full screen"
+msgstr "volledig scherm"
+
+msgid "Match ready!"
+msgstr "Wedstrijd gereed!"
+
+msgid "cannot be started directly!"
+msgstr "mag niet direct gestart worden!"
+
+msgid "Not all games have data!"
+msgstr "Niet all spellen hebben gegevens!"
+
+msgid "NS result"
+msgstr "NZ resultaat"
+
+msgid "Score entry for"
+msgstr "Score ingave voor"
+
+msgid "Select your group and table:"
+msgstr "Kies je groep en tafel:"
+
+msgid "setting session data for"
+msgstr "zetten van zitting data voor"
+
+msgid "Select a game to add data"
+msgstr "Selecteer een spel om de score in te voeren"
+
+msgid "submit"
+msgstr "opsturen"
+
+msgid "Start..."
+msgstr "Start..."
+
+msgid "Suit"
+msgstr "Kleur"
+
+msgid "Incorrect input, enter again"
+msgstr "Incorrecte ingave, vul opnieuw in"
+
+msgid "login score-slips"
+msgstr "login voor score-slips"
+
+msgid "Tricks"
+msgstr "Slagen"
+
+msgid "unexpected input data"
+msgstr "onverwachte ingave"
+
+msgid "language.php generated"
+msgstr "language.php gegenereerd"
+
+msgid "Watching resultfile"
+msgstr "Resultaten komen via bestand"
+
+msgid "^-- bad input data"
+msgstr "^-- foute gegevens"
+
+msgid "error opening results file"
+msgstr "probleem bij openen score-file"
+
+msgid "Creating networkwatcher"
+msgstr "Resultaten komen via het netwerk"
+
+#, c-format
+msgid "Creating server at %s:%u"
+msgstr "Server aanmaak op %s:%u"
+
+msgid "Could not listen at the specified port!"
+msgstr "Kan niet luisteren op de opgegeven poort!"
+
+msgid "ERROR: couldn't get the address we bound to"
+msgstr "FOUT: kan het adres niet krijgen van de verbonden poort"
+
+#, c-format
+msgid "Server listening at %s:%u"
+msgstr "Server luistert op %s:%u"
+
+msgid "Deleting networkwatcher"
+msgstr "Netwerk-input wordt afgezet"
+
+msgid "Unexpected event!"
+msgstr "Onverwachte event!"
+
+#, c-format
+msgid "Unknown messageId(0x%02X) received from client"
+msgstr "Onbekend berichtid(0x%02X) ontvangen van client"
+
+msgid "Deleting socket."
+msgstr "Socket wordt verwijderd."
+
+msgid "New connection from unknown client accepted."
+msgstr "Nieuwe connectie van onbekende client geaccepteerd."
+
+#, c-format
+msgid "New client connection from %s:%u accepted"
+msgstr "Nieuwe client verbinding van %s:%u geaccepteerd"
+
+msgid "Error: couldn't accept a new connection"
+msgstr "Fout: kan geen nieuwe connectie accepteren"
+
+msgid "received"
+msgstr "ontvangen"
+
+msgid "Got the data, sending the result"
+msgstr "Data ontvangen, het resultaat wordt teruggestuurd"
 
 #. TRANSLATORS: Set order of types to your country order
 msgid "%A %B %d, %G %X"

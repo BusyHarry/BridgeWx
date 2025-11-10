@@ -1,0 +1,189 @@
+/***
+   Copyright(c) 2024-present, BusyHarry/h.levels & BridgeWx contributors.
+   Distributed under the MIT License (http://opensource.org/licenses/MIT)
+***/
+/* document.body.style.background = "Gainsboro"; */
+html, body { background:Gainsboro; }
+
+/******
+body
+{
+  background-image: url("bridge.jpg");
+  background-repeat: no-repeat;
+  background-size: cover; 
+} ****/
+
+/* #<name> means: style is used for item with id <name> */
+#IDB_fullScreen{ background-color:red}
+
+table.slip
+{
+/*    border-collapse:collapse; */
+  overflow: hidden; /* lowest selected row will NOT bleed trough! */
+  border: solid black 4px;
+  border-radius: 1.5vw; /*12px;*/
+  border-spacing: 0px;
+  background-color: LightSteelBlue;
+  width: 100%; height: 25%; font-size: 2.8vw /* 20px; */
+}
+
+table.slip td, table.slip th, table.slip thead
+{
+  border-left:solid black 1px;
+  border-top:solid black 1px;
+  text-align:center;
+}
+
+table.slip tr td:first-child
+{
+  text-align: left;
+}
+
+table.slip th
+{
+  /* background-color: blue; */
+    border-top: none;
+    width:14%; /* 7 columns */
+  /**
+     (fixed) relative size, else columns are resized when data is entered
+     and new text-size changes from larger <--> smaller then label size
+     and you could see 'old' borders shine through in the newly painted columns!
+  **/
+}
+
+table.slip td:first-child, table.slip th:first-child
+{
+  border-left: none;
+}
+
+/*
+table.slip th, table.slip td {
+  border: 1px solid black;
+}
+*/
+
+/********** begin tooltip .css  ************/
+/**  https://stackoverflow.com/questions/2011142/how-to-change-the-style-of-the-title-attribute *****/
+a.tooltip
+{
+  position: relative;
+}
+
+a.tooltip span
+{
+  display: none;    
+}
+
+a.tooltip:hover span, a.tooltip:focus span
+{
+  display:block;
+  position:absolute;
+  top:-1em; /* <0 --> above parent, >0 --> below parent */
+  left:3em; /* offset from parent item */
+  padding: 0.2em 0.6em;
+  border:1px solid #996633;
+  border-radius: 4px;
+  z-index: 99999;   /* on top of 'all' */
+  background-color:lightgreen;
+  color:#000;
+}
+/********** end tooltip .css  ************/
+
+#IDC_checkOk, #IDB_submit, #IDB_apply, #IDB_clear, #IDB_fullScreen
+{
+  font-size:3.5vw/*1.5vw*/;  /* 15px;*/
+}
+
+.btnOkClear
+{
+  height:25%;
+  border-radius: 1vw;
+}
+
+.spacer
+{
+  height:30%;
+/*  border: solid 1px blue; */
+}
+
+.spacerSmall
+{
+  height:8%;
+/*  border: solid 1px blue; */
+}
+
+.flexStyle
+{
+  display:flex;
+  /*align-items: flex-start / *flex-end*/;
+  /*justify-content: / *space-around;* / space-between; */
+}
+
+.ok_clear_check
+{
+  text-align:center;
+  width:15%;
+  min-height:30%;
+   /* border: solid 1px red; */
+}
+
+table.bidding
+{
+  border: 2px solid black;
+  border-radius: 1.5vw; /*12px; */
+  background-color: LightSteelBlue;
+  font-size: 2.8vw; /* 40px;*/
+  width: 100%;
+  text-align:center;
+}
+
+table.bidding th { border:none; width:20%; /*background-color:red;*/ }
+table.bidding td { border:none; width:20%; }
+
+.buttonDeclarer, .buttonContract, .button_p0m7,
+.buttonSuit,     .buttonTricks,  .buttonDoubled
+{
+  width:auto;
+  font-size:90%; /* 50% */
+  border-radius: 1vw;/*10px;*/
+}
+
+.buttonDeclarer
+{
+  min-width:50% /*25%*/; /* 70px */
+}
+
+.buttonContract
+{
+  min-width:40%   /*40px; */
+}
+
+.buttonSuit
+{
+  min-width:30%; /*40px;*/
+}
+
+.buttonTricks
+{
+  min-width:30% /*15%*/;    /*50px;*/
+/*  background-color : red; */
+}
+
+.buttonDoubled
+{
+  min-width: 45% /*15%*/ /*50px;*/
+}
+
+.div_p0m7
+{ /* button '=' and '-7': only 2 buttons in cell, so align them flex */
+  display:flex; justify-content:/*space-around;*/ space-between;
+  margin-left: 2.3%;
+  margin-right: 2.3%;
+}
+
+.button_p0m7
+{
+  width: 31.8%; /* (100 - 2.3 - 2.3)/3 = 31.8 */
+/*  margin-left: 2.3%;*/
+/*  margin-right: 2.3%;*/
+}

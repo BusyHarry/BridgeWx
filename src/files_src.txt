@@ -27,6 +27,8 @@ setupNewMatch.cpp
 setupPrinter.cpp
 setupSchema.cpp
 showStartImage.cpp
+slipServer.cpp
+socketServer.cpp
 statusbar.cpp
 utils.cpp
 validators.cpp
@@ -61,6 +63,7 @@ setupNewMatch.h
 setupPrinter.h
 setupSchema.h
 ShowStartImage.h
+slipServer.h
 statusbar.h
 utils.h
 validators.h

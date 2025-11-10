@@ -1,0 +1,29 @@
+Score data can be entered in the menu item 'scores/score-entry'.
+With the newly added 'slipServer', data can also be entered by users during the gameplay.
+You need a tablet/phone per table to login on the local server to set the group/table/round you are playing at.
+From that point forward, the pagedisplay will show the games to be played at this table together with the player-names.
+To enter data, just click on the game number you want enter data for. The game is highlighted and with the buttons below you can enter the declarer, the contract and its result.
+When all games have data (could be 'bye' or 'not played') and the players have signed for ok, a submit button appears. Pressing it will send the data to the server and then the info for the next round for this group/table will show.
+When the last round is played, a 'ready' picture will be shown.
+
+As webserver I have only tested xamp version 8.2.12, downloaded from https://www.apachefriends.org/download.html
+ - determine a location for the webserver fe C:\xamp (== 'root')
+ - unpack the downloaded xamp zip file in 'root'
+ - copy the slipServer-files to 'root\htdocs'
+ - copy root\htdocs\login.php to root\htdocs\index.php
+ - in BridgWx.exe goto 'extra/slip server' and press the button 'html slip data'. A file 'language.php' is generated in the match-folder, containing configuration data and texts in the current language. Copy this file to 'root\htdocs'
+ - go to the 'root'
+ - start the webserver with: 'setup_xampp.bat'
+ - the webserver is setup to listen at localhost on the host computer
+ - determine your ip on the local network like 'server_ip' (you can use 'ipconfig' in a commandbox and check the output)
+   - you can also use "http://<name>/", where <name> is the name of the webservers-computer
+   - the first line of the logwindow (when running the slipserver) shows the <name> and its ipv4
+ - now each play-table can login to the webserver when entering the 'server_ip' as target in the browser
+ - if the server has access to the active match-folder, it will append all incoming data to the file 'matchfolder\matchname.slipdata'
+ - if this folder is not accessable, the result-file is created in 'root\htdocs'
+ - a log file 'matchname.log' is created on the same location as the result file.
+ - the BridgeWx program checks for changes in the resultfile and applyes them to the local database
+ - if the resultfile is not in the matchfolder, you have to manually copy now.and.then the resultfile to the match folder
+ - if you select 'network' as inputtype, then the webserver will try to send the results through a network-connection. This is a bit faster then through a resultfile.
+   - the webserver uses as target the value of '$ins_laptopName' in 'language.php' (this may also be a 'normal' ipv4 address)
+ - as savety, the results are ALWAYS added to the resultfile, so when loosing network-connection, no data is lost. Just select 'file' as input, and all results in it are handled.

@@ -1,10 +1,25 @@
 # Releasenotes
 
 #V10.9.0  ....
- - added encode/decode strings for special characters when saving the database
+ - added encode/decode strings containing special characters when storing/retreiving the database
+ - updated reference test outputs because of encode/decode strings in the database
  - replace deprecated fopen() with fopen_s()
+ - undone above for logfile: fopen_s() does NOT support read-access by other apps!
  - cppcheck remarks removed
  - correction of wrong comment
+ - corrections/extensions in conversion 'old' --> 'new' format:
+    - don't show pairs in result that did not play
+    - initialise pairnames for use in results/corrections
+    - ignore zero results/corrections to prevent unneeded error popups
+    - add missing schema/group descriptions
+    - added read of 'very old' matchdata
+    - to <old> : don't create empty files
+ - Added main.h and moved some functions (communication with mainframe) from cfg to main 
+ - added possibility to add scores through a web-page, using a server in the local network
+    - this can replace the use of paper score-slips
+    - needs a tablet/phone/laptop per table
+
+
 #V10.8.0  Monday Juli 21 2025
  - disabled v3.3.0 feature to show highlighted grid columnlabel on activating a cell
  - when producing builddate.h, 'prebuild.bat' now defaults to 'en_GB' locales for date and time

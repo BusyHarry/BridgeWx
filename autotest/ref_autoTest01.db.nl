@@ -17,7 +17,7 @@
 [info_end]
 [main]
 databaseVersion=100
-programVersion="BridgeWx" versie x9.99, 1 januari 2024
+programVersion=&quot;BridgeWx&quot; versie x9.99, 1 januari 2024
 comment=(c)opyright 1991-2024 hl/tc
 description=<auto-test, zitting 1>
 session=3

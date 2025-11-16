@@ -288,6 +288,7 @@ void SlipServer::UpdateTableInfo(UINT a_round, bool a_bUpdateDisplay)
 
 void SlipServer::OnSelectRound(wxCommandEvent&)
 {
+    AUTOTEST_BUSY("OnSelectRound");
     m_activeRound = 1 + m_pChoiceBoxRound->GetSelection();
     LogMessage("SlipServer::SelectRound(%u)", m_activeRound);
     RefreshInfo();
@@ -316,6 +317,7 @@ void SlipServer::OnNextRound(wxCommandEvent&)
 
 void SlipServer::OnOk()
 {
+    AUTOTEST_BUSY("OnOk");
     BackupData();
     cfg::FLushConfigs();    // update diskfiles
 }   // OnOk()
@@ -324,6 +326,7 @@ void SlipServer::OnCancel()
 {   // does not make much sense!
     // reload of resultfile will get you the same data!
     // only manual changes will be removed, but thats not what you expect, do you????
+    AUTOTEST_BUSY("OnCancel");
     m_bCancelInProgress = true;     // force reload of gamedata
     RefreshInfo();
     m_linesReadInResult = 0;        // force reload of resultfile
@@ -344,6 +347,7 @@ void SlipServer::PrintPage()
 
 void SlipServer::OnGenHtmlSlipData(wxCommandEvent&)
 {
+    AUTOTEST_BUSY("OnGenHtmlSlipData");
 #define __(x) EscapeHtmlChars((x))
     BusyBox();
     if ( 0 == cfg::GetGroupData()->size() )
@@ -556,6 +560,7 @@ wxString SlipServer::DateYMD()
 
 void SlipServer::OnInputChoice(wxCommandEvent& a_event)
 {
+    AUTOTEST_BUSY("OnInputChoice");
     auto id = a_event.GetSelection();
     HandleInputSelection(id);
 }   // OnInputChoice()

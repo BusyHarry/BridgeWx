@@ -10,6 +10,7 @@
 
 #include <wx/string.h>
 #include <wx/filename.h>
+#include <wx/colour.h>
 
 #include "utils.h"
 #include "schemaInfo.h"
@@ -196,6 +197,7 @@ namespace cfg
     int         GetConfigHash();                            // identification of active confuguration
 
     bool        GetFF();                                    // FF wanted after each printout?
+    wxColor     GetLightOrDark(const wxColor& lightColor);  // return 'lightColor' if non darkmode, else 255-x per color
     UINT        GetMaxAbsent();                             // max times allowed to be not present
     UINT        GetMaxClubcount();                          // maximum nr of players for the club result
     UINT        GetMaxMean();                               // max mean when absent
@@ -205,6 +207,7 @@ namespace cfg
     bool        GetWeightedAvg();                           // the type of calculation over more matches
 
     int         HandleCommandline(const wxArrayString& argv, bool bInit = true);  //...
+    bool        IsDark();                                   // return true if darmode is active
     bool        IsDebug();                                  // true if we want some extra output
     bool        IsScriptTesting();                          // true if running auto-tests
     wxString    MaxMeanToString();                          // get this value as string

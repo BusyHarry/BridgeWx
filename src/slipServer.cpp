@@ -168,6 +168,7 @@ void SlipServer::SetupGrid()
     const auto& groupData = *cfg::GetGroupData();
     m_groups = groupData.size();
     m_theGrid->AppendCols(1+m_groups);                  // need 1 column for each group, column 0 is used as tablenr/label
+    m_theGrid->SetColLabelAlignment(wxALIGN_CENTER, wxALIGN_CENTER);
     m_theGrid->SetColLabelValue(0, _("table"));
     m_theGrid->SetRowLabelSize(0);                      // we don't use row-labels: can't suppress row-selection
     wxGridCellAttr* pAttribC0 = new(wxGridCellAttr);    // SetColAttr() takes ownership!
@@ -177,7 +178,6 @@ void SlipServer::SetupGrid()
     const auto COLUMN_SIZE = 10 * GetCharWidth();
     for ( UINT group = 1; group <= m_groups; ++group )
     {
-        m_theGrid->SetColLabelAlignment(wxALIGN_CENTER, wxALIGN_CENTER);
         m_theGrid->SetColSize(group, COLUMN_SIZE);
         m_theGrid->SetColLabelValue(group, m_groups == 1 ? wxString("1") : groupData[group-1].groupChars);
         wxGridCellAttr* pAttrib = new(wxGridCellAttr);  // SetColAttr() takes ownership!
@@ -196,7 +196,7 @@ void SlipServer::SetupGrid()
         m_maxTable = std::max(m_maxTable, tables);
     }
 
-    auto tableColor = wxColor(220,220,220,255); // just a bit different from default label-color
+    auto tableColor = cfg::GetLightOrDark({ 220,220,220,255 }); // just a bit different from default label-color
     for ( UINT table = 1; table <= m_maxTable; ++table )
     {   // create for each table its columns, column 0 is simulated row-label!
         m_theGrid->AppendRows(1);
@@ -241,12 +241,11 @@ void SlipServer::AutotestRequestMousePositions(MyTextFile* a_pFile)
 
 void SlipServer::RefreshInfo()
 {   // update grid with actual info
-//    LogMessage("SlipServer::RefreshInfo()");
-    m_theGrid->BeginBatch();            // no screenupdates for a while
+    // LogMessage("SlipServer::RefreshInfo()");
+    // BeginBatch()/EndBatch() results in columnlabels A B C etc ????
     if ( ConfigChanged() || m_bCancelInProgress )
         SetupGrid();                    // dynamically change row/column info
     UpdateTableInfo(m_activeRound);     // get/show updated data
-    m_theGrid->EndBatch();              // now you can show the changes
     Refresh();
     Layout();
 }   // RefreshInfo()
@@ -288,6 +287,7 @@ void SlipServer::UpdateTableInfo(UINT a_round, bool a_bUpdateDisplay)
 
 void SlipServer::OnSelectRound(wxCommandEvent&)
 {
+    AUTOTEST_BUSY("OnSelectRound");
     m_activeRound = 1 + m_pChoiceBoxRound->GetSelection();
     LogMessage("SlipServer::SelectRound(%u)", m_activeRound);
     RefreshInfo();
@@ -316,6 +316,7 @@ void SlipServer::OnNextRound(wxCommandEvent&)
 
 void SlipServer::OnOk()
 {
+    AUTOTEST_BUSY("OnOk");
     BackupData();
     cfg::FLushConfigs();    // update diskfiles
 }   // OnOk()
@@ -324,6 +325,7 @@ void SlipServer::OnCancel()
 {   // does not make much sense!
     // reload of resultfile will get you the same data!
     // only manual changes will be removed, but thats not what you expect, do you????
+    AUTOTEST_BUSY("OnCancel");
     m_bCancelInProgress = true;     // force reload of gamedata
     RefreshInfo();
     m_linesReadInResult = 0;        // force reload of resultfile
@@ -344,6 +346,7 @@ void SlipServer::PrintPage()
 
 void SlipServer::OnGenHtmlSlipData(wxCommandEvent&)
 {
+    AUTOTEST_BUSY("OnGenHtmlSlipData");
 #define __(x) EscapeHtmlChars((x))
     BusyBox();
     if ( 0 == cfg::GetGroupData()->size() )
@@ -556,6 +559,7 @@ wxString SlipServer::DateYMD()
 
 void SlipServer::OnInputChoice(wxCommandEvent& a_event)
 {
+    AUTOTEST_BUSY("OnInputChoice");
     auto id = a_event.GetSelection();
     HandleInputSelection(id);
 }   // OnInputChoice()
@@ -583,7 +587,7 @@ void SlipServer::DisplayTableReady(UINT a_group, UINT a_table, TableBackground t
 {
     int row          = (int)a_table - 1;
     int col          = (int)a_group;
-    auto color       = *wxWHITE;
+    auto color       = cfg::GetLightOrDark(*wxWHITE);
     wxString celText = "";
 
     switch ( tbg )

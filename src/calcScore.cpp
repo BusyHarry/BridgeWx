@@ -165,10 +165,15 @@ CalcScore::CalcScore(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, 
     m_choiceResult      = ResultSession;
     m_findPos           = -1;
 
-    m_pListBox = new wxListView(this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
-      /* wxLC_LIST*/ wxLC_REPORT | wxLC_HRULES);//| wxLC_NO_HEADER);
     wxItemAttr bb;
     bb.SetFont(wxFontInfo(14).Italic());
+    long flags = wxLC_REPORT | wxLC_HRULES /* | wxLC_LIST | wxLC_NO_HEADER */;
+    if ( cfg::IsDark() )
+    {
+        flags &= ~wxLC_HRULES;      // in darkmode, the h-rules disappear on mouseover
+        bb.SetTextColour(*wxWHITE); // should be done by the system???
+    }
+    m_pListBox = new wxListView(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, flags);
     bool bResult = m_pListBox->SetHeaderAttr(bb); MY_UNUSED(bResult);
     int size = m_pListBox->GetFont().GetPointSize();
     wxFont  celFont (size, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL); //wxFONTWEIGHT_SEMIBOLD);

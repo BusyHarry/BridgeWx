@@ -23,7 +23,7 @@ NameEditor::NameEditor(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     int charSize = GetCharWidth();
     #define PAIR_SIZE_CHARS (cfg::MAX_NAME_SIZE+1)
     #define CLUB_SIZE_CHARS (cfg::MAX_CLUB_SIZE+1)
-    #define ID_SIZE_CHARS   6
+    #define ID_SIZE_CHARS   8
     #define PAIR_SIZE_PIX (PAIR_SIZE_CHARS * charSize)
     #define CLUB_SIZE_PIX (CLUB_SIZE_CHARS * charSize)
     #define ID_SIZE_PIX   (ID_SIZE_CHARS   * charSize)

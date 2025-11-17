@@ -2,7 +2,7 @@
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
 #include <wx/string.h>
-#include "utils.h"
+#include "cfg.h"
 #include "choiceMC.h"
 
 #define TEST 0        /* for testing*/
@@ -190,7 +190,7 @@ ChoiceMC::ChoiceMC(wxWindow* a_pParent, const wxString& a_textCtrlTitle) : wxCom
                 }
             });
     m_pTxtctrl->Bind(wxEVT_SET_FOCUS,[this](wxFocusEvent&){});      // eat all focus events: don't select anything, don't show cursor
-    m_pTxtctrl->SetBackgroundColour({220,220,220});                 // now it looks like wxChoice
+    m_pTxtctrl->SetBackgroundColour(cfg::GetLightOrDark({ 220,220,220 }));                 // now it looks like wxChoice
     //GetButton()->SetBackgroundColour({220,220,220});  // GetButton() ALWAYS nullptr
     //SetBackgroundColour({220,220,220});               // doesn't work for button to set background of mainwindow
     m_currentColumnWidth    = 0;

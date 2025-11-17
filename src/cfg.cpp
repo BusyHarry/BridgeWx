@@ -5,6 +5,7 @@
 #include <wx/event.h>
 #include <wx/stdpaths.h>
 #include <wx/app.h>
+#include <wx/settings.h>
 
 #include "cfg.h"
 #include "utils.h"
@@ -971,6 +972,30 @@ namespace cfg
         return nullptr; // should not happen
     }   // GetGroupDataFromSessionPair()
 
+    bool IsDark()
+    {
+        static bool bIsInit = false;
+        static bool bIsDark = false;
+        if ( !bIsInit )
+        {
+            bIsInit = true;
+            bIsDark = wxSystemSettings::GetAppearance().IsDark();
+        }
+        return bIsDark;
+    }   // IsDark()
+
+    wxColor GetLightOrDark(const wxColor& a_lightColor)
+    {
+        #define UC(x) (static_cast<unsigned char>(255U - (x)))
+        if ( IsDark() ) // get complement color
+            return wxColor({  UC(a_lightColor.GetRed())
+                            , UC(a_lightColor.GetGreen())
+                            , UC(a_lightColor.GetBlue())
+                            , (unsigned char)a_lightColor.GetAlpha()
+                           });
+        return a_lightColor;
+        #undef UC
+    }   // GetLightOrDark()
 }   // end namespace cfg
 
 //   Cleanup dtor

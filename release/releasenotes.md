@@ -18,6 +18,16 @@
  - added possibility to add scores through a web-page, using a server in the local network
     - this can replace the use of paper score-slips
     - needs a tablet/phone/laptop per table
+ - added dark-mode support
+   - use dark (complementary) colors where colors are explicitly set
+     - trough 'GetLightOrDark(const wxColor& lightColor)' -> in=light, out=light or dark, depending on dark-mode
+   - changed SetUseNativeColLabels() to UseNativeColHeader() for wxGrid
+     - SetUseNativeColLabels() has unchangeable white columnlabel background in dark-mode -> unreadable text
+     - UseNativeColHeader() has less space for label -> enlarge many column sizes
+     - UseNativeColHeader(): SetColLabelValue() has no effect within Begin/EndBatch() (just: 'A' 'B' 'C' ..) -> remove Begin/EndBatch()
+   - wxListCtrl needs explicit SetTextColour(*wxWHITE) for columnheaders in dark-mode when using SetHeaderAttr()
+     - dark-mode: no row highlight when hovering mouse (label ok!)
+     - dark-mode: if using 'wxLC_HRULES', the lines disappear when hovering mouse over them
 
 
 #V10.8.0  Monday Juli 21 2025

@@ -26,11 +26,11 @@ CorrectionsEnd::CorrectionsEnd(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_
 //    ;score.2 paar bonus.2 spellen paarnaam
 //    100.00     1  11.00   s16     xxx-xxx
     int sizeOne = GetCharWidth();
-    #define SIZE_PAIRNR_SES   (4 * sizeOne)
-    #define SIZE_PAIRNAME_SES (5 * sizeOne)
+    #define SIZE_PAIRNR_SES   (5 * sizeOne)
+    #define SIZE_PAIRNAME_SES (6 * sizeOne)
     #define SIZE_PAIRNAME     ((cfg::MAX_NAME_SIZE+1)* sizeOne)   /* original name        */
-    #define SIZE_PROCENT      (7 * sizeOne)                       /* -100.00 - 100.00  */
-    #define SIZE_GAMES        (6 * sizeOne)                       /* like 32             */
+    #define SIZE_PROCENT      (8 * sizeOne)                       /* -100.00 - 100.00  */
+    #define SIZE_GAMES        (8 * sizeOne)                       /* like 32             */
     m_theGrid->SetRowLabelSize(SIZE_PAIRNR_SES);
     m_theGrid->SetColSize(COL_PAIRNAME_SESSION, SIZE_PAIRNAME_SES ); m_theGrid->SetColLabelValue(COL_PAIRNAME_SESSION, _("pair"    )); m_theGrid->SetColLabelAutoTest(COL_PAIRNAME_SESSION, "pair");
     m_theGrid->SetColSize(COL_PAIRNAME_GLOBAL , SIZE_PAIRNAME     ); m_theGrid->SetColLabelValue(COL_PAIRNAME_GLOBAL , _("pairname")); m_theGrid->SetColLabelAutoTest(COL_PAIRNAME_GLOBAL , "pairname");

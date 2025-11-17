@@ -34,8 +34,8 @@ static constexpr auto COR_PERCENT_MAX   = +100;
 #define SIZE_PAIRNAME   ((cfg::MAX_NAME_SIZE+1)* sizeOne)   /* original name        */
 #define SIZE_PAIRNR     (6 * sizeOne)                       /* "AB12 *"             */
 #define SIZE_PROCENT    (4 * sizeOne)                       /* just numbers 1-120   */
-#define SIZE_MP         (5 * sizeOne)                       /* like -2200           */
-#define SIZE_GAMES      (7 * sizeOne)
+#define SIZE_MP         (6 * sizeOne)                       /* like -2200           */
+#define SIZE_GAMES      (8 * sizeOne)
 
 CorrectionsSession::CorrectionsSession(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a_pageId), m_theGrid(0)
 {

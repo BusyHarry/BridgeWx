@@ -27,8 +27,8 @@ AssignNames::AssignNames(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParen
 
     int charSize = GetCharWidth();
     #define SIZE_PAIRNAME_CHARS (cfg::MAX_NAME_SIZE+1)  /* original name*/
-    #define SIZE_PAIRNR_CHARS   7                       /* AB12*/
-    #define SIZE_ID_CHARS       8                       /* just numbers 1-120, minimum char-count!*/
+    #define SIZE_PAIRNR_CHARS   9                       /* AB12*/
+    #define SIZE_ID_CHARS       9                       /* just numbers 1-120, minimum char-count!*/
     #define SIZE_PAIRNAME_PIX (SIZE_PAIRNAME_CHARS* charSize)
     #define SIZE_PAIRNR_PIX   (SIZE_PAIRNR_CHARS  * charSize)
     #define SIZE_ID_PIX       (SIZE_ID_CHARS      * charSize)

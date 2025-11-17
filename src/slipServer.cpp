@@ -168,6 +168,7 @@ void SlipServer::SetupGrid()
     const auto& groupData = *cfg::GetGroupData();
     m_groups = groupData.size();
     m_theGrid->AppendCols(1+m_groups);                  // need 1 column for each group, column 0 is used as tablenr/label
+    m_theGrid->SetColLabelAlignment(wxALIGN_CENTER, wxALIGN_CENTER);
     m_theGrid->SetColLabelValue(0, _("table"));
     m_theGrid->SetRowLabelSize(0);                      // we don't use row-labels: can't suppress row-selection
     wxGridCellAttr* pAttribC0 = new(wxGridCellAttr);    // SetColAttr() takes ownership!
@@ -177,7 +178,6 @@ void SlipServer::SetupGrid()
     const auto COLUMN_SIZE = 10 * GetCharWidth();
     for ( UINT group = 1; group <= m_groups; ++group )
     {
-        m_theGrid->SetColLabelAlignment(wxALIGN_CENTER, wxALIGN_CENTER);
         m_theGrid->SetColSize(group, COLUMN_SIZE);
         m_theGrid->SetColLabelValue(group, m_groups == 1 ? wxString("1") : groupData[group-1].groupChars);
         wxGridCellAttr* pAttrib = new(wxGridCellAttr);  // SetColAttr() takes ownership!
@@ -196,7 +196,7 @@ void SlipServer::SetupGrid()
         m_maxTable = std::max(m_maxTable, tables);
     }
 
-    auto tableColor = wxColor(220,220,220,255); // just a bit different from default label-color
+    auto tableColor = cfg::GetLightOrDark({ 220,220,220,255 }); // just a bit different from default label-color
     for ( UINT table = 1; table <= m_maxTable; ++table )
     {   // create for each table its columns, column 0 is simulated row-label!
         m_theGrid->AppendRows(1);
@@ -241,12 +241,11 @@ void SlipServer::AutotestRequestMousePositions(MyTextFile* a_pFile)
 
 void SlipServer::RefreshInfo()
 {   // update grid with actual info
-//    LogMessage("SlipServer::RefreshInfo()");
-    m_theGrid->BeginBatch();            // no screenupdates for a while
+    // LogMessage("SlipServer::RefreshInfo()");
+    // BeginBatch()/EndBatch() results in columnlabels A B C etc ????
     if ( ConfigChanged() || m_bCancelInProgress )
         SetupGrid();                    // dynamically change row/column info
     UpdateTableInfo(m_activeRound);     // get/show updated data
-    m_theGrid->EndBatch();              // now you can show the changes
     Refresh();
     Layout();
 }   // RefreshInfo()
@@ -588,7 +587,7 @@ void SlipServer::DisplayTableReady(UINT a_group, UINT a_table, TableBackground t
 {
     int row          = (int)a_table - 1;
     int col          = (int)a_group;
-    auto color       = *wxWHITE;
+    auto color       = cfg::GetLightOrDark(*wxWHITE);
     wxString celText = "";
 
     switch ( tbg )

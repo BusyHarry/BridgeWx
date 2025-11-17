@@ -38,9 +38,9 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     #define sizeOne GetCharWidth()
     #define SIZE_PAIRNAME   ((cfg::MAX_NAME_SIZE+1)* sizeOne)   /* original name        */
     #define SIZE_PAIRNR     (6 * sizeOne)                       /* "AB12 *"             */
-    #define SIZE_ID         (5 * sizeOne)                       /* just numbers 1-120   */
-    #define SIZE_SCORE      (8 * sizeOne)                       /* 'score nz' / 'R-9999'*/
-    #define SIZE_CONTRACT   (10* sizeOne)                       /* 3sa+3** */
+    #define SIZE_ID         (6 * sizeOne)                       /* just numbers 1-120   */
+    #define SIZE_SCORE      (9 * sizeOne)                       /* 'score nz' / 'R-9999'*/
+    #define SIZE_CONTRACT   (12* sizeOne)                       /* 3sa+3** */
     m_theGrid->SetColSize(COL_GAME       , SIZE_ID      ); m_theGrid->SetColLabelValue(COL_GAME       , _("game"       ));
     m_theGrid->SetColSize(COL_NS         , SIZE_PAIRNR  ); m_theGrid->SetColLabelValue(COL_NS         , _("ns"         ));
     m_theGrid->SetColSize(COL_EW         , SIZE_PAIRNR  ); m_theGrid->SetColLabelValue(COL_EW         , _("ew"         ));
@@ -433,7 +433,7 @@ void ScoreEntry::RefreshInfo()
     auto                pGrp        = &pSessionInfo.groupData;
     UINT                firstGame   = pSessionInfo.firstGame;
     UINT                nrOfGames   = pSessionInfo.nrOfGames;
-    wxColour            myLightGrey = {230,230,230,wxALPHA_OPAQUE };
+    wxColour            myLightGrey = cfg::GetLightOrDark({ 230,230,230,wxALPHA_OPAQUE });
     schema::vGameInfo   info;
 
     names::InitializePairNames();

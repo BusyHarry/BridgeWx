@@ -83,7 +83,7 @@ Remark: English is buildin, so for this language you don't need to do anything
 # Building:
 
  - I have only build/tested everything in MicrosoftWindows 10 with VisualStudio2019!
- - the gui is based on wxWidgets V3.3.0 (V3.2.5 --> V3.2.8 also ok)
+ - the gui is based on wxWidgets V3.3.1 (V3.3.0, V3.2.5 --> V3.2.8 also ok)
  - I only used the x64 version (also for wxWidgets)
  - copy the tools from the release BridgeWxBin_v\*.zip[BridgeWx/tools/*.exe] to the '\<BridgeWxBase\>/tools' folder 
  - add  global env-variables '\<wxwin\>' and '\<wx_version\>' or
@@ -101,6 +101,14 @@ Remark: English is buildin, so for this language you don't need to do anything
      - create the folder(s) for the Dutch language (automaticaly done when building in VS):
        '\<BridgeWxBase\>vc_x64_mswu[d]/locales/nl'
    and copy the *mo files from the BridgeWxBin_v\*.zip to there corresponding locations
+
+# Network use
+ - from version V10.9.0 a 'slipserver' has been added: you can add result-scores on all tables during play in a web-page
+ - for more info see '/slipServer/read.me'
+
+# Dark mode support
+ - from version V10.9.0 dark-mode is supported
+ - it can be forced by setting an environment variable: set wx_msw_dark_mode=2
 
 # Licence
 

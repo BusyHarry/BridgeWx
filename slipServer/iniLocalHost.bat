@@ -18,5 +18,5 @@ popd
 cd /d %xamp%
 call setup_xampp.bat
 rem conf is set to local ip, so can be reached within local network
-copy d:httpd.conf %xamp%\apache\conf\
+rem copy d:httpd.conf %xamp%\apache\conf\
 call apache_start.bat

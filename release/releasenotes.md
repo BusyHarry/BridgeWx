@@ -1,6 +1,6 @@
 # Releasenotes
 
-#V10.9.0  ....
+#V10.9.0  Sunday November 23 2025
  - added encode/decode strings containing special characters when storing/retreiving the database
  - updated reference test outputs because of encode/decode strings in the database
  - replace deprecated fopen() with fopen_s()

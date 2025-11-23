@@ -36,7 +36,7 @@ groep groepletters paren schema          afwezig paar
 
 deelnemers lijst van <auto-test, zitting 1>
 
-    paarnaam                        clubnaam                   club id
+    paarnaam                        clubnaam                   club id 
   1 paar 1
   2 paar 2
   3 paar 3
@@ -81,7 +81,7 @@ Paar naam
   B9 paar 17
  B10 paar 18
 
-    paarnaam                        paar nr
+    paarnaam                        paar nr  
   1 paar 1                          A1
   2 paar 2                          A2
   3 paar 3                          A3
@@ -106,326 +106,326 @@ Paar naam
 
 Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', ronde 1
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1   1    A1     A2    0                 paar 1                          paar 2
-  2   2   *A1     A2    70
-  3   3    A1    *A2    70
-  4   4   *A1    *A2    80
-  5   5   *A3     A4    90                paar 3                          paar 4
-  6   6    A3    *A4    100
-  7   7   *A3    *A4    110
-  8   8    A3     A4    120
-  9   9    A5    *A6    130               gewijzigd paar 5                paar 6
- 10  10   *A5    *A6    140
- 11  11    A5     A6    150
- 12  12   *A5     A6    160
- 13  13   *A7    *A8    170               paar 7                          paar 8
- 14  14    A7     A8    180
- 15  15   *A7     A8    190
- 16  16    A7    *A8    200
- 17   1    B1     B2    210               paar 9                          paar 10
- 18   2   *B1     B2    230
- 19   3    B1    *B2    240
- 20   4   *B1    *B2    260
- 21   5   *B3     B4    270               paar 11                         paar 12
- 22   6    B3    *B4    340
- 23   7   *B3    *B4    300
- 24   8    B3     B4    340
- 25   9    B5    *B6    -50               paar 13                         paar 14
- 26  10   *B5    *B6    -70
- 27  11    B5     B6    -80
- 28  12   *B5     B6    -90
- 29  17    B9     B10   -100              paar 17                         paar 18
- 30  18   *B9     B10   -110
- 31  19    B9    *B10   -120
- 32  20   *B9    *B10   -130
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1   1     A1     A2    0                   paar 1                          paar 2
+  2   2    *A1     A2    70
+  3   3     A1    *A2    70
+  4   4    *A1    *A2    80
+  5   5    *A3     A4    90                  paar 3                          paar 4
+  6   6     A3    *A4    100
+  7   7    *A3    *A4    110
+  8   8     A3     A4    120
+  9   9     A5    *A6    130                 gewijzigd paar 5                paar 6
+ 10  10    *A5    *A6    140
+ 11  11     A5     A6    150
+ 12  12    *A5     A6    160
+ 13  13    *A7    *A8    170                 paar 7                          paar 8
+ 14  14     A7     A8    180
+ 15  15    *A7     A8    190
+ 16  16     A7    *A8    200
+ 17   1     B1     B2    210                 paar 9                          paar 10
+ 18   2    *B1     B2    230
+ 19   3     B1    *B2    240
+ 20   4    *B1    *B2    260
+ 21   5    *B3     B4    270                 paar 11                         paar 12
+ 22   6     B3    *B4    340
+ 23   7    *B3    *B4    300
+ 24   8     B3     B4    340
+ 25   9     B5    *B6    -50                 paar 13                         paar 14
+ 26  10    *B5    *B6    -70
+ 27  11     B5     B6    -80
+ 28  12    *B5     B6    -90
+ 29  17     B9     B10   -100                paar 17                         paar 18
+ 30  18    *B9     B10   -110
+ 31  19     B9    *B10   -120
+ 32  20    *B9    *B10   -130
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', ronde 2
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  17    A1     A8    -140              paar 1                          paar 8
-  2  18   *A1     A8    -150
-  3  19    A1    *A8    -160
-  4  20   *A1    *A8    -170
-  5   9    A2    *A7    -180              paar 2                          paar 7
-  6  10   *A2    *A7    -190
-  7  11    A2     A7    -200
-  8  12   *A2     A7    -210
-  9  25    A5    *A4    -230              gewijzigd paar 5                paar 4
- 10  26   *A5    *A4    -240
- 11  27    A5     A4    -250
- 12  28   *A5     A4    -260
- 13  13   *A6    *A3    -270              paar 6                          paar 3
- 14  14    A6     A3    -280
- 15  15   *A6     A3    -300
- 16  16    A6    *A3    -340
- 17   5   *B2     B9    -600              paar 10                         paar 17
- 18   6    B2    *B9    -800
- 19   7   *B2    *B9    -1000
- 20   8    B2     B9    -1100
- 21  17    B5     B4    -1200             paar 13                         paar 12
- 22  18   *B5     B4    300
- 23  19    B5    *B4    400
- 24  20   *B5    *B4    500
- 25  13   *B6    *B3    600               paar 14                         paar 11
- 26  14    B6     B3    800
- 27  15   *B6     B3    120
- 28  16    B6    *B3    150
- 29  21   *B10    B7    110               paar 18                         paar 15
- 30  22    B10   *B7    -120
- 31  23   *B10   *B7    -100
- 32  24    B10    B7    100
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1  17     A1     A8    -140                paar 1                          paar 8
+  2  18    *A1     A8    -150
+  3  19     A1    *A8    -160
+  4  20    *A1    *A8    -170
+  5   9     A2    *A7    -180                paar 2                          paar 7
+  6  10    *A2    *A7    -190
+  7  11     A2     A7    -200
+  8  12    *A2     A7    -210
+  9  25     A5    *A4    -230                gewijzigd paar 5                paar 4
+ 10  26    *A5    *A4    -240
+ 11  27     A5     A4    -250
+ 12  28    *A5     A4    -260
+ 13  13    *A6    *A3    -270                paar 6                          paar 3
+ 14  14     A6     A3    -280
+ 15  15    *A6     A3    -300
+ 16  16     A6    *A3    -340
+ 17   5    *B2     B9    -600                paar 10                         paar 17
+ 18   6     B2    *B9    -800
+ 19   7    *B2    *B9    -1000
+ 20   8     B2     B9    -1100
+ 21  17     B5     B4    -1200               paar 13                         paar 12
+ 22  18    *B5     B4    300
+ 23  19     B5    *B4    400
+ 24  20    *B5    *B4    500
+ 25  13    *B6    *B3    600                 paar 14                         paar 11
+ 26  14     B6     B3    800
+ 27  15    *B6     B3    120
+ 28  16     B6    *B3    150
+ 29  21    *B10    B7    110                 paar 18                         paar 15
+ 30  22     B10   *B7    -120
+ 31  23    *B10   *B7    -100
+ 32  24     B10    B7    100
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', ronde 3
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  17    A3     A2    150               paar 3                          paar 2
-  2  18   *A3     A2    150
-  3  19    A3    *A2    170
-  4  20   *A3    *A2    -170
-  5  13   *A4    *A1    200               paar 4                          paar 1
-  6  14    A4     A1    300
-  7  15   *A4     A1    -500
-  8  16    A4    *A1    -500
-  9  21   *A5     A8    160               gewijzigd paar 5                paar 8
- 10  22    A5    *A8    -160
- 11  23   *A5    *A8    -160
- 12  24    A5     A8    R150     R110
- 13   5   *A6     A7    300               paar 6                          paar 7
- 14   6    A6    *A7    -600
- 15   7   *A6    *A7    -150
- 16   8    A6     A7    %70      %70
- 17   9    B2    *B7    -50               paar 10                         paar 15
- 18  10   *B2    *B7    0
- 19  11    B2     B7    90
- 20  12   *B2     B7    %60      R630
- 21  13   *B5    *B9    800               paar 13                         paar 17
- 22  14    B5     B9    600
- 23  15   *B5     B9    500
- 24  16    B5    *B9    R300     %50
- 25  17    B6     B1    -150              paar 14                         paar 9
- 26  18   *B6     B1    -800
- 27  19    B6    *B1    -600
- 28  20   *B6    *B1    -120
- 29  25    B10   *B4    150               paar 18                         paar 12
- 30  26   *B10   *B4    140
- 31  27    B10    B4    140
- 32  28   *B10    B4    50
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1  17     A3     A2    150                 paar 3                          paar 2
+  2  18    *A3     A2    150
+  3  19     A3    *A2    170
+  4  20    *A3    *A2    -170
+  5  13    *A4    *A1    200                 paar 4                          paar 1
+  6  14     A4     A1    300
+  7  15    *A4     A1    -500
+  8  16     A4    *A1    -500
+  9  21    *A5     A8    160                 gewijzigd paar 5                paar 8
+ 10  22     A5    *A8    -160
+ 11  23    *A5    *A8    -160
+ 12  24     A5     A8    R150      R110
+ 13   5    *A6     A7    300                 paar 6                          paar 7
+ 14   6     A6    *A7    -600
+ 15   7    *A6    *A7    -150
+ 16   8     A6     A7    %70       %70
+ 17   9     B2    *B7    -50                 paar 10                         paar 15
+ 18  10    *B2    *B7    0
+ 19  11     B2     B7    90
+ 20  12    *B2     B7    %60       R630
+ 21  13    *B5    *B9    800                 paar 13                         paar 17
+ 22  14     B5     B9    600
+ 23  15    *B5     B9    500
+ 24  16     B5    *B9    R300      %50
+ 25  17     B6     B1    -150                paar 14                         paar 9
+ 26  18    *B6     B1    -800
+ 27  19     B6    *B1    -600
+ 28  20    *B6    *B1    -120
+ 29  25     B10   *B4    150                 paar 18                         paar 12
+ 30  26    *B10   *B4    140
+ 31  27     B10    B4    140
+ 32  28    *B10    B4    50
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', ronde 4
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  21   *A2     A4    50                paar 2                          paar 4
-  2  22    A2    *A4    100
-  3  23   *A2    *A4    -200
-  4  24    A2     A4    -300
-  5   9    A3    *A1    100               paar 3                          paar 1
-  6  10   *A3    *A1    200
-  7  11    A3     A1    300
-  8  12   *A3     A1    %40      %40
-  9   1    A6     A8    70                paar 6                          paar 8
- 10   2   *A6     A8    80
- 11   3    A6    *A8    90
- 12   4   *A6    *A8    %80      R620
- 13  17    A7     A5    -420              paar 7                          gewijzigd paar 5
- 14  18   *A7     A5    -420
- 15  19    A7    *A5    420
- 16  20   *A7    *A5    620
- 17  13   *B4    *B2    800               paar 12                         paar 10
- 18  14    B4     B2    200
- 19  15   *B4     B2    300
- 20  16    B4    *B2    300
- 21  25    B5    *B1    150               paar 13                         paar 9
- 22  26   *B5    *B1    150
- 23  27    B5     B1    150
- 24  28   *B5     B1    150
- 25  17    B7     B3    100               paar 15                         paar 11
- 26  18   *B7     B3    110
- 27  19    B7    *B3    120
- 28  20   *B7    *B3    130
- 29  21   *B9     B6    130               paar 17                         paar 14
- 30  22    B9    *B6    120
- 31  23   *B9    *B6    110
- 32  24    B9     B6    100
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1  21    *A2     A4    50                  paar 2                          paar 4
+  2  22     A2    *A4    100
+  3  23    *A2    *A4    -200
+  4  24     A2     A4    -300
+  5   9     A3    *A1    100                 paar 3                          paar 1
+  6  10    *A3    *A1    200
+  7  11     A3     A1    300
+  8  12    *A3     A1    %40       %40
+  9   1     A6     A8    70                  paar 6                          paar 8
+ 10   2    *A6     A8    80
+ 11   3     A6    *A8    90
+ 12   4    *A6    *A8    %80       R620
+ 13  17     A7     A5    -420                paar 7                          gewijzigd paar 5
+ 14  18    *A7     A5    -420
+ 15  19     A7    *A5    420
+ 16  20    *A7    *A5    620
+ 17  13    *B4    *B2    800                 paar 12                         paar 10
+ 18  14     B4     B2    200
+ 19  15    *B4     B2    300
+ 20  16     B4    *B2    300
+ 21  25     B5    *B1    150                 paar 13                         paar 9
+ 22  26    *B5    *B1    150
+ 23  27     B5     B1    150
+ 24  28    *B5     B1    150
+ 25  17     B7     B3    100                 paar 15                         paar 11
+ 26  18    *B7     B3    110
+ 27  19     B7    *B3    120
+ 28  20    *B7    *B3    130
+ 29  21    *B9     B6    130                 paar 17                         paar 14
+ 30  22     B9    *B6    120
+ 31  23    *B9    *B6    110
+ 32  24     B9     B6    100
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', ronde 5
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  21   *A1     A6    100               paar 1                          paar 6
-  2  22    A1    *A6    100
-  3  23   *A1    *A6    100
-  4  24    A1     A6    100
-  5  13   *A2    *A5    110               paar 2                          gewijzigd paar 5
-  6  14    A2     A5    110
-  7  15   *A2     A5    110
-  8  16    A2    *A5    110
-  9  25    A3    *A8    120               paar 3                          paar 8
- 10  26   *A3    *A8    120
- 11  27    A3     A8    120
- 12  28   *A3     A8    120
- 13   1    A4     A7    130               paar 4                          paar 7
- 14   2   *A4     A7    130
- 15   3    A4    *A7    130
- 16   4   *A4    *A7    130
- 17   1    B3     B9    140               paar 11                         paar 17
- 18   2   *B3     B9    140
- 19   3    B3    *B9    140
- 20   4   *B3    *B9    140
- 21  21   *B4     B1    150               paar 12                         paar 9
- 22  22    B4    *B1    150
- 23  23   *B4    *B1    150
- 24  24    B4     B1    150
- 25   5   *B5     B10   160               paar 13                         paar 18
- 26   6    B5    *B10   160
- 27   7   *B5    *B10   160
- 28   8    B5     B10   160
- 29  25    B7    *B6    170               paar 15                         paar 14
- 30  26   *B7    *B6    170
- 31  27    B7     B6    170
- 32  28   *B7     B6    170
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1  21    *A1     A6    100                 paar 1                          paar 6
+  2  22     A1    *A6    100
+  3  23    *A1    *A6    100
+  4  24     A1     A6    100
+  5  13    *A2    *A5    110                 paar 2                          gewijzigd paar 5
+  6  14     A2     A5    110
+  7  15    *A2     A5    110
+  8  16     A2    *A5    110
+  9  25     A3    *A8    120                 paar 3                          paar 8
+ 10  26    *A3    *A8    120
+ 11  27     A3     A8    120
+ 12  28    *A3     A8    120
+ 13   1     A4     A7    130                 paar 4                          paar 7
+ 14   2    *A4     A7    130
+ 15   3     A4    *A7    130
+ 16   4    *A4    *A7    130
+ 17   1     B3     B9    140                 paar 11                         paar 17
+ 18   2    *B3     B9    140
+ 19   3     B3    *B9    140
+ 20   4    *B3    *B9    140
+ 21  21    *B4     B1    150                 paar 12                         paar 9
+ 22  22     B4    *B1    150
+ 23  23    *B4    *B1    150
+ 24  24     B4     B1    150
+ 25   5    *B5     B10   160                 paar 13                         paar 18
+ 26   6     B5    *B10   160
+ 27   7    *B5    *B10   160
+ 28   8     B5     B10   160
+ 29  25     B7    *B6    170                 paar 15                         paar 14
+ 30  26    *B7    *B6    170
+ 31  27     B7     B6    170
+ 32  28    *B7     B6    170
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', ronde 6
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1   5   *A2     A8    -100              paar 2                          paar 8
-  2   6    A2    *A8    -100
-  3   7   *A2    *A8    -100
-  4   8    A2     A8    -100
-  5  17    A4     A6    -110              paar 4                          paar 6
-  6  18   *A4     A6    -110
-  7  19    A4    *A6    -110
-  8  20   *A4    *A6    -110
-  9   1    A5     A3    -120              gewijzigd paar 5                paar 3
- 10   2   *A5     A3    -120
- 11   3    A5    *A3    -120
- 12   4   *A5    *A3    -120
- 13  25    A7    *A1    -130              paar 7                          paar 1
- 14  26   *A7    *A1    -130
- 15  27    A7     A1    -130
- 16  28   *A7     A1    -130
- 17   5   *B1     B7    -140              paar 9                          paar 15
- 18   6    B1    *B7    -140
- 19   7   *B1    *B7    -140
- 20   8    B1     B7    -140
- 21   9    B3    *B10   -150              paar 11                         paar 18
- 22  10   *B3    *B10   -150
- 23  11    B3     B10   -150
- 24  12   *B3     B10   -150
- 25   1    B4     B6    -160              paar 12                         paar 14
- 26   2   *B4     B6    -160
- 27   3    B4    *B6    -160
- 28   4   *B4    *B6    -160
- 29  21   *B5     B2    -170              paar 13                         paar 10
- 30  22    B5    *B2    -170
- 31  23   *B5    *B2    -170
- 32  24    B5     B2    -170
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1   5    *A2     A8    -100                paar 2                          paar 8
+  2   6     A2    *A8    -100
+  3   7    *A2    *A8    -100
+  4   8     A2     A8    -100
+  5  17     A4     A6    -110                paar 4                          paar 6
+  6  18    *A4     A6    -110
+  7  19     A4    *A6    -110
+  8  20    *A4    *A6    -110
+  9   1     A5     A3    -120                gewijzigd paar 5                paar 3
+ 10   2    *A5     A3    -120
+ 11   3     A5    *A3    -120
+ 12   4    *A5    *A3    -120
+ 13  25     A7    *A1    -130                paar 7                          paar 1
+ 14  26    *A7    *A1    -130
+ 15  27     A7     A1    -130
+ 16  28    *A7     A1    -130
+ 17   5    *B1     B7    -140                paar 9                          paar 15
+ 18   6     B1    *B7    -140
+ 19   7    *B1    *B7    -140
+ 20   8     B1     B7    -140
+ 21   9     B3    *B10   -150                paar 11                         paar 18
+ 22  10    *B3    *B10   -150
+ 23  11     B3     B10   -150
+ 24  12    *B3     B10   -150
+ 25   1     B4     B6    -160                paar 12                         paar 14
+ 26   2    *B4     B6    -160
+ 27   3     B4    *B6    -160
+ 28   4    *B4    *B6    -160
+ 29  21    *B5     B2    -170                paar 13                         paar 10
+ 30  22     B5    *B2    -170
+ 31  23    *B5    *B2    -170
+ 32  24     B5     B2    -170
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', ronde 7
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1   5   *A1     A5    -100              paar 1                          gewijzigd paar 5
-  2   6    A1    *A5    100
-  3   7   *A1    *A5    150
-  4   8    A1     A5    200
-  5   9    A4    *A8    70                paar 4                          paar 8
-  6  10   *A4    *A8    90
-  7  11    A4     A8    100
-  8  12   *A4     A8    110
-  9  25    A6    *A2    110               paar 6                          paar 2
- 10  26   *A6    *A2    120
- 11  27    A6     A2    130
- 12  28   *A6     A2    140
- 13  21   *A7     A3    120               paar 7                          paar 3
- 14  22    A7    *A3    130
- 15  23   *A7    *A3    140
- 16  24    A7     A3    150
- 17  13   *B1    *B10   130               paar 9                          paar 18
- 18  14    B1     B10   140
- 19  15   *B1     B10   150
- 20  16    B1    *B10   160
- 21  25    B3    *B2    140               paar 11                         paar 10
- 22  26   *B3    *B2    150
- 23  27    B3     B2    160
- 24  28   *B3     B2    170
- 25   1    B5     B7    0                 paar 13                         paar 15
- 26   2   *B5     B7    0
- 27   3    B5    *B7    0
- 28   4   *B5    *B7    0
- 29   9    B9    *B4    0                 paar 17                         paar 12
- 30  10   *B9    *B4    0
- 31  11    B9     B4    0
- 32  12   *B9     B4    0
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1   5    *A1     A5    -100                paar 1                          gewijzigd paar 5
+  2   6     A1    *A5    100
+  3   7    *A1    *A5    150
+  4   8     A1     A5    200
+  5   9     A4    *A8    70                  paar 4                          paar 8
+  6  10    *A4    *A8    90
+  7  11     A4     A8    100
+  8  12    *A4     A8    110
+  9  25     A6    *A2    110                 paar 6                          paar 2
+ 10  26    *A6    *A2    120
+ 11  27     A6     A2    130
+ 12  28    *A6     A2    140
+ 13  21    *A7     A3    120                 paar 7                          paar 3
+ 14  22     A7    *A3    130
+ 15  23    *A7    *A3    140
+ 16  24     A7     A3    150
+ 17  13    *B1    *B10   130                 paar 9                          paar 18
+ 18  14     B1     B10   140
+ 19  15    *B1     B10   150
+ 20  16     B1    *B10   160
+ 21  25     B3    *B2    140                 paar 11                         paar 10
+ 22  26    *B3    *B2    150
+ 23  27     B3     B2    160
+ 24  28    *B3     B2    170
+ 25   1     B5     B7    0                   paar 13                         paar 15
+ 26   2    *B5     B7    0
+ 27   3     B5    *B7    0
+ 28   4    *B5    *B7    0
+ 29   9     B9    *B4    0                   paar 17                         paar 12
+ 30  10    *B9    *B4    0
+ 31  11     B9     B4    0
+ 32  12    *B9     B4    0
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', spel 17
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  17    A1     A8    -140              paar 1                          paar 8
-  2  17    A3     A2    150               paar 3                          paar 2
-  3  17    A4     A6    -110              paar 4                          paar 6
-  4  17    A7     A5    -420              paar 7                          gewijzigd paar 5
-  5  17    B5     B4    -1200             paar 13                         paar 12
-  6  17    B6     B1    -150              paar 14                         paar 9
-  7  17    B7     B3    150               paar 15                         paar 11
-  8  17    B9     B10   -100              paar 17                         paar 18
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1  17     A1     A8    -140                paar 1                          paar 8
+  2  17     A3     A2    150                 paar 3                          paar 2
+  3  17     A4     A6    -110                paar 4                          paar 6
+  4  17     A7     A5    -420                paar 7                          gewijzigd paar 5
+  5  17     B5     B4    -1200               paar 13                         paar 12
+  6  17     B6     B1    -150                paar 14                         paar 9
+  7  17     B7     B3    150                 paar 15                         paar 11
+  8  17     B9     B10   -100                paar 17                         paar 18
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', spel 2
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1   2   *A1     A2    70                paar 1                          paar 2
-  2   2   *A4     A7                      paar 4                          paar 7
-  3   2   *A5     A3    -120              gewijzigd paar 5                paar 3
-  4   2   *A6     A8    80                paar 6                          paar 8
-  5   2   *B1     B2    230               paar 9                          paar 10
-  6   2   *B3     B9    140               paar 11                         paar 17
-  7   2   *B4     B6    -160              paar 12                         paar 14
-  8   2   *B5     B7    0                 paar 13                         paar 15
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1   2    *A1     A2    70                  paar 1                          paar 2
+  2   2    *A4     A7                        paar 4                          paar 7
+  3   2    *A5     A3    -120                gewijzigd paar 5                paar 3
+  4   2    *A6     A8    80                  paar 6                          paar 8
+  5   2    *B1     B2    230                 paar 9                          paar 10
+  6   2    *B3     B9    140                 paar 11                         paar 17
+  7   2    *B4     B6    -160                paar 12                         paar 14
+  8   2    *B5     B7    0                   paar 13                         paar 15
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 1 voor '<auto-test, zitting 1>', spel 2
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1   2   *A1     A2    70                paar 1                          paar 2
-  2   2   *A4     A7     130              paar 4                          paar 7
-  3   2   *A5     A3    -120              gewijzigd paar 5                paar 3
-  4   2   *A6     A8    80                paar 6                          paar 8
-  5   2   *B1     B2    230               paar 9                          paar 10
-  6   2   *B3     B9    140               paar 11                         paar 17
-  7   2   *B4     B6    -160              paar 12                         paar 14
-  8   2   *B5     B7    0                 paar 13                         paar 15
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1   2    *A1     A2    70                  paar 1                          paar 2
+  2   2    *A4     A7     130                paar 4                          paar 7
+  3   2    *A5     A3    -120                gewijzigd paar 5                paar 3
+  4   2    *A6     A8    80                  paar 6                          paar 8
+  5   2    *B1     B2    230                 paar 9                          paar 10
+  6   2    *B3     B9    140                 paar 11                         paar 17
+  7   2    *B4     B6    -160                paar 12                         paar 14
+  8   2    *B5     B7    0                   paar 13                         paar 15
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de zittingcorrecties voor '<auto-test, zitting 1>', zitting 1
 
-    paar  paarnaam                        %    mp    max   extra spellen
-  1 A1    paar 1                                     48    16    4
+    paar  paarnaam                        %    mp     max    extra  spellen 
+  1 A1    paar 1                                      48     16     4
   3 A3    paar 3                               10
   5 A5    gewijzigd paar 5                3
-  9 B1    paar 9                                     48    32    4
+  9 B1    paar 9                                      48     32     4
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de eindcorrecties voor '<auto-test, zitting 1>', zitting 1
 
-    paar  paarnaam                        bonus   score   spellen
-  2 A2    paar 2                                  50.00   28
+    paar   paarnaam                        bonus    score    spellen 
+  2 A2     paar 2                                   50.00    28
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -2035,292 +2035,292 @@ Paar naam
   B9 paar 10
  B10 gewijzigd paar 5
 
-    paarnaam                        paar nr paar Z-1 rang     rang Z-1
-  1 paar 1                          B4      A1        13       12
-  2 paar 2                          ???     A2         9       16
-  3 paar 3                          A3      A3         3        3
-  4 paar 4                          A2      A4         2        2
-  5 gewijzigd paar 5                B10     A5        11       10
-  6 paar 6                          B7      A6        16       15
-  7 paar 7                          A5      A7         5        5
-  8 paar 8                          A7      A8         7        7
-  9 paar 9                          B1      B1        10        9
- 10 paar 10                         B9      B2        17       17
- 11 paar 11                         A4      B3         4        4
- 12 paar 12                         B6      B4        15       14
- 13 paar 13                         A6      B5         6        6
- 14 paar 14                         B5      B6        14       13
- 15 paar 15                         A1      B7         1        1
- 16 paar 16                         B2      ???       18       18
- 17 paar 17                         A8      B9        12       11
- 18 paar 18                         B3      B10        8        8
- 19 paar 19                         ???     ???        0        0
+    paarnaam                        paar nr   paar Z-1  rang      rang Z-1 
+  1 paar 1                          B4        A1         13        12
+  2 paar 2                          ???       A2          9        16
+  3 paar 3                          A3        A3          3         3
+  4 paar 4                          A2        A4          2         2
+  5 gewijzigd paar 5                B10       A5         11        10
+  6 paar 6                          B7        A6         16        15
+  7 paar 7                          A5        A7          5         5
+  8 paar 8                          A7        A8          7         7
+  9 paar 9                          B1        B1         10         9
+ 10 paar 10                         B9        B2         17        17
+ 11 paar 11                         A4        B3          4         4
+ 12 paar 12                         B6        B4         15        14
+ 13 paar 13                         A6        B5          6         6
+ 14 paar 14                         B5        B6         14        13
+ 15 paar 15                         A1        B7          1         1
+ 16 paar 16                         B2        ???        18        18
+ 17 paar 17                         A8        B9         12        11
+ 18 paar 18                         B3        B10         8         8
+ 19 paar 19                         ???       ???         0         0
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 1
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1   1    A1     A2    0                 paar 15                         paar 4
-  2   2   *A1     A2    70
-  3   3    A1    *A2    70
-  4   4   *A1    *A2    80
-  5   5   *A3     A4    90                paar 3                          paar 11
-  6   6    A3    *A4    100
-  7   7   *A3    *A4    110
-  8   8    A3     A4    120
-  9   9    A5    *A6    130               paar 7                          paar 13
- 10  10   *A5    *A6    140
- 11  11    A5     A6    150
- 12  12   *A5     A6    160
- 13  13   *A7    *A8    170               paar 8                          paar 17
- 14  14    A7     A8    180
- 15  15   *A7     A8    190
- 16  16    A7    *A8    200
- 17   1    B1     B2    210               paar 9                          paar 16
- 18   2   *B1     B2    230
- 19   3    B1    *B2    240
- 20   4   *B1    *B2    260
- 21   5   *B3     B4    270               paar 18                         paar 1
- 22   6    B3    *B4    340
- 23   7   *B3    *B4    300
- 24   8    B3     B4    340
- 25   9    B5    *B6    -50               paar 14                         paar 12
- 26  10   *B5    *B6    -70
- 27  11    B5     B6    -80
- 28  12   *B5     B6    -90
- 29  17    B9     B10   -100              paar 10                         gewijzigd paar 5
- 30  18   *B9     B10   -110
- 31  19    B9    *B10   -120
- 32  20   *B9    *B10   -130
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1   1     A1     A2    0                   paar 15                         paar 4
+  2   2    *A1     A2    70
+  3   3     A1    *A2    70
+  4   4    *A1    *A2    80
+  5   5    *A3     A4    90                  paar 3                          paar 11
+  6   6     A3    *A4    100
+  7   7    *A3    *A4    110
+  8   8     A3     A4    120
+  9   9     A5    *A6    130                 paar 7                          paar 13
+ 10  10    *A5    *A6    140
+ 11  11     A5     A6    150
+ 12  12    *A5     A6    160
+ 13  13    *A7    *A8    170                 paar 8                          paar 17
+ 14  14     A7     A8    180
+ 15  15    *A7     A8    190
+ 16  16     A7    *A8    200
+ 17   1     B1     B2    210                 paar 9                          paar 16
+ 18   2    *B1     B2    230
+ 19   3     B1    *B2    240
+ 20   4    *B1    *B2    260
+ 21   5    *B3     B4    270                 paar 18                         paar 1
+ 22   6     B3    *B4    340
+ 23   7    *B3    *B4    300
+ 24   8     B3     B4    340
+ 25   9     B5    *B6    -50                 paar 14                         paar 12
+ 26  10    *B5    *B6    -70
+ 27  11     B5     B6    -80
+ 28  12    *B5     B6    -90
+ 29  17     B9     B10   -100                paar 10                         gewijzigd paar 5
+ 30  18    *B9     B10   -110
+ 31  19     B9    *B10   -120
+ 32  20    *B9    *B10   -130
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 2
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  17    A1     A8    -140              paar 15                         paar 17
-  2  18   *A1     A8    -150
-  3  19    A1    *A8    -160
-  4  20   *A1    *A8    -170
-  5   9    A2    *A7    -180              paar 4                          paar 8
-  6  10   *A2    *A7    -190
-  7  11    A2     A7    -200
-  8  12   *A2     A7    -210
-  9  25    A5    *A4    -230              paar 7                          paar 11
- 10  26   *A5    *A4    -240
- 11  27    A5     A4    -250
- 12  28   *A5     A4    -260
- 13  13   *A6    *A3    -270              paar 13                         paar 3
- 14  14    A6     A3    -280
- 15  15   *A6     A3    -300
- 16  16    A6    *A3    -340
- 17   5   *B2     B9    -600              paar 16                         paar 10
- 18   6    B2    *B9    -800
- 19   7   *B2    *B9    -1000
- 20   8    B2     B9    -1100
- 21  17    B5     B4    -1200             paar 14                         paar 1
- 22  18   *B5     B4    300
- 23  19    B5    *B4    400
- 24  20   *B5    *B4    500
- 25  13   *B6    *B3    600               paar 12                         paar 18
- 26  14    B6     B3    800
- 27  15   *B6     B3    120
- 28  16    B6    *B3    150
- 29  21   *B10    B7    110               gewijzigd paar 5                paar 6
- 30  22    B10   *B7    -120
- 31  23   *B10   *B7    -100
- 32  24    B10    B7    100
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1  17     A1     A8    -140                paar 15                         paar 17
+  2  18    *A1     A8    -150
+  3  19     A1    *A8    -160
+  4  20    *A1    *A8    -170
+  5   9     A2    *A7    -180                paar 4                          paar 8
+  6  10    *A2    *A7    -190
+  7  11     A2     A7    -200
+  8  12    *A2     A7    -210
+  9  25     A5    *A4    -230                paar 7                          paar 11
+ 10  26    *A5    *A4    -240
+ 11  27     A5     A4    -250
+ 12  28    *A5     A4    -260
+ 13  13    *A6    *A3    -270                paar 13                         paar 3
+ 14  14     A6     A3    -280
+ 15  15    *A6     A3    -300
+ 16  16     A6    *A3    -340
+ 17   5    *B2     B9    -600                paar 16                         paar 10
+ 18   6     B2    *B9    -800
+ 19   7    *B2    *B9    -1000
+ 20   8     B2     B9    -1100
+ 21  17     B5     B4    -1200               paar 14                         paar 1
+ 22  18    *B5     B4    300
+ 23  19     B5    *B4    400
+ 24  20    *B5    *B4    500
+ 25  13    *B6    *B3    600                 paar 12                         paar 18
+ 26  14     B6     B3    800
+ 27  15    *B6     B3    120
+ 28  16     B6    *B3    150
+ 29  21    *B10    B7    110                 gewijzigd paar 5                paar 6
+ 30  22     B10   *B7    -120
+ 31  23    *B10   *B7    -100
+ 32  24     B10    B7    100
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 3
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  17    A3     A2    150               paar 3                          paar 4
-  2  18   *A3     A2    150
-  3  19    A3    *A2    170
-  4  20   *A3    *A2    -170
-  5  13   *A4    *A1    200               paar 11                         paar 15
-  6  14    A4     A1    300
-  7  15   *A4     A1    -500
-  8  16    A4    *A1    -500
-  9  21   *A5     A8    160               paar 7                          paar 17
- 10  22    A5    *A8    -160
- 11  23   *A5    *A8    -160
- 12  24    A5     A8    R150     R110
- 13   5   *A6     A7    300               paar 13                         paar 8
- 14   6    A6    *A7    -600
- 15   7   *A6    *A7    -150
- 16   8    A6     A7    %70      %70
- 17   9    B2    *B7    -50               paar 16                         paar 6
- 18  10   *B2    *B7    0
- 19  11    B2     B7    90
- 20  12   *B2     B7    %60      R630
- 21  13   *B5    *B9    800               paar 14                         paar 10
- 22  14    B5     B9    600
- 23  15   *B5     B9    500
- 24  16    B5    *B9    R300     %50
- 25  17    B6     B1    -150              paar 12                         paar 9
- 26  18   *B6     B1    -800
- 27  19    B6    *B1    -600
- 28  20   *B6    *B1    -120
- 29  25    B10   *B4    150               gewijzigd paar 5                paar 1
- 30  26   *B10   *B4    140
- 31  27    B10    B4    140
- 32  28   *B10    B4    50
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1  17     A3     A2    150                 paar 3                          paar 4
+  2  18    *A3     A2    150
+  3  19     A3    *A2    170
+  4  20    *A3    *A2    -170
+  5  13    *A4    *A1    200                 paar 11                         paar 15
+  6  14     A4     A1    300
+  7  15    *A4     A1    -500
+  8  16     A4    *A1    -500
+  9  21    *A5     A8    160                 paar 7                          paar 17
+ 10  22     A5    *A8    -160
+ 11  23    *A5    *A8    -160
+ 12  24     A5     A8    R150      R110
+ 13   5    *A6     A7    300                 paar 13                         paar 8
+ 14   6     A6    *A7    -600
+ 15   7    *A6    *A7    -150
+ 16   8     A6     A7    %70       %70
+ 17   9     B2    *B7    -50                 paar 16                         paar 6
+ 18  10    *B2    *B7    0
+ 19  11     B2     B7    90
+ 20  12    *B2     B7    %60       R630
+ 21  13    *B5    *B9    800                 paar 14                         paar 10
+ 22  14     B5     B9    600
+ 23  15    *B5     B9    500
+ 24  16     B5    *B9    R300      %50
+ 25  17     B6     B1    -150                paar 12                         paar 9
+ 26  18    *B6     B1    -800
+ 27  19     B6    *B1    -600
+ 28  20    *B6    *B1    -120
+ 29  25     B10   *B4    150                 gewijzigd paar 5                paar 1
+ 30  26    *B10   *B4    140
+ 31  27     B10    B4    140
+ 32  28    *B10    B4    50
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 4
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  21   *A2     A4    50                paar 4                          paar 11
-  2  22    A2    *A4    100
-  3  23   *A2    *A4    -200
-  4  24    A2     A4    -300
-  5   9    A3    *A1    100               paar 3                          paar 15
-  6  10   *A3    *A1    200
-  7  11    A3     A1    300
-  8  12   *A3     A1    %40      %40
-  9   1    A6     A8    70                paar 13                         paar 17
- 10   2   *A6     A8    80
- 11   3    A6    *A8    90
- 12   4   *A6    *A8    %80      R620
- 13  17    A7     A5    -420              paar 8                          paar 7
- 14  18   *A7     A5    -420
- 15  19    A7    *A5    420
- 16  20   *A7    *A5    620
- 17  13   *B4    *B2    800               paar 1                          paar 16
- 18  14    B4     B2    200
- 19  15   *B4     B2    300
- 20  16    B4    *B2    300
- 21  25    B5    *B1    150               paar 14                         paar 9
- 22  26   *B5    *B1    150
- 23  27    B5     B1    150
- 24  28   *B5     B1    150
- 25  17    B7     B3    100               paar 6                          paar 18
- 26  18   *B7     B3    110
- 27  19    B7    *B3    120
- 28  20   *B7    *B3    130
- 29  21   *B9     B6    130               paar 10                         paar 12
- 30  22    B9    *B6    120
- 31  23   *B9    *B6    110
- 32  24    B9     B6    100
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1  21    *A2     A4    50                  paar 4                          paar 11
+  2  22     A2    *A4    100
+  3  23    *A2    *A4    -200
+  4  24     A2     A4    -300
+  5   9     A3    *A1    100                 paar 3                          paar 15
+  6  10    *A3    *A1    200
+  7  11     A3     A1    300
+  8  12    *A3     A1    %40       %40
+  9   1     A6     A8    70                  paar 13                         paar 17
+ 10   2    *A6     A8    80
+ 11   3     A6    *A8    90
+ 12   4    *A6    *A8    %80       R620
+ 13  17     A7     A5    -420                paar 8                          paar 7
+ 14  18    *A7     A5    -420
+ 15  19     A7    *A5    420
+ 16  20    *A7    *A5    620
+ 17  13    *B4    *B2    800                 paar 1                          paar 16
+ 18  14     B4     B2    200
+ 19  15    *B4     B2    300
+ 20  16     B4    *B2    300
+ 21  25     B5    *B1    150                 paar 14                         paar 9
+ 22  26    *B5    *B1    150
+ 23  27     B5     B1    150
+ 24  28    *B5     B1    150
+ 25  17     B7     B3    100                 paar 6                          paar 18
+ 26  18    *B7     B3    110
+ 27  19     B7    *B3    120
+ 28  20    *B7    *B3    130
+ 29  21    *B9     B6    130                 paar 10                         paar 12
+ 30  22     B9    *B6    120
+ 31  23    *B9    *B6    110
+ 32  24     B9     B6    100
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 5
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  21   *A1     A6    100               paar 15                         paar 13
-  2  22    A1    *A6    100
-  3  23   *A1    *A6    100
-  4  24    A1     A6    100
-  5  13   *A2    *A5    110               paar 4                          paar 7
-  6  14    A2     A5    110
-  7  15   *A2     A5    110
-  8  16    A2    *A5    110
-  9  25    A3    *A8    120               paar 3                          paar 17
- 10  26   *A3    *A8    120
- 11  27    A3     A8    120
- 12  28   *A3     A8    120
- 13   1    A4     A7    130               paar 11                         paar 8
- 14   2   *A4     A7    130
- 15   3    A4    *A7    130
- 16   4   *A4    *A7    130
- 17   1    B3     B9    140               paar 18                         paar 10
- 18   2   *B3     B9    140
- 19   3    B3    *B9    140
- 20   4   *B3    *B9    140
- 21  21   *B4     B1    150               paar 1                          paar 9
- 22  22    B4    *B1    150
- 23  23   *B4    *B1    150
- 24  24    B4     B1    150
- 25   5   *B5     B10   160               paar 14                         gewijzigd paar 5
- 26   6    B5    *B10   160
- 27   7   *B5    *B10   160
- 28   8    B5     B10   160
- 29  25    B7    *B6    170               paar 6                          paar 12
- 30  26   *B7    *B6    170
- 31  27    B7     B6    170
- 32  28   *B7     B6    170
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1  21    *A1     A6    100                 paar 15                         paar 13
+  2  22     A1    *A6    100
+  3  23    *A1    *A6    100
+  4  24     A1     A6    100
+  5  13    *A2    *A5    110                 paar 4                          paar 7
+  6  14     A2     A5    110
+  7  15    *A2     A5    110
+  8  16     A2    *A5    110
+  9  25     A3    *A8    120                 paar 3                          paar 17
+ 10  26    *A3    *A8    120
+ 11  27     A3     A8    120
+ 12  28    *A3     A8    120
+ 13   1     A4     A7    130                 paar 11                         paar 8
+ 14   2    *A4     A7    130
+ 15   3     A4    *A7    130
+ 16   4    *A4    *A7    130
+ 17   1     B3     B9    140                 paar 18                         paar 10
+ 18   2    *B3     B9    140
+ 19   3     B3    *B9    140
+ 20   4    *B3    *B9    140
+ 21  21    *B4     B1    150                 paar 1                          paar 9
+ 22  22     B4    *B1    150
+ 23  23    *B4    *B1    150
+ 24  24     B4     B1    150
+ 25   5    *B5     B10   160                 paar 14                         gewijzigd paar 5
+ 26   6     B5    *B10   160
+ 27   7    *B5    *B10   160
+ 28   8     B5     B10   160
+ 29  25     B7    *B6    170                 paar 6                          paar 12
+ 30  26    *B7    *B6    170
+ 31  27     B7     B6    170
+ 32  28    *B7     B6    170
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 6
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1   5   *A2     A8    -100              paar 4                          paar 17
-  2   6    A2    *A8    -100
-  3   7   *A2    *A8    -100
-  4   8    A2     A8    -100
-  5  17    A4     A6    -110              paar 11                         paar 13
-  6  18   *A4     A6    -110
-  7  19    A4    *A6    -110
-  8  20   *A4    *A6    -110
-  9   1    A5     A3    -120              paar 7                          paar 3
- 10   2   *A5     A3    -120
- 11   3    A5    *A3    -120
- 12   4   *A5    *A3    -120
- 13  25    A7    *A1    -130              paar 8                          paar 15
- 14  26   *A7    *A1    -130
- 15  27    A7     A1    -130
- 16  28   *A7     A1    -130
- 17   5   *B1     B7    -140              paar 9                          paar 6
- 18   6    B1    *B7    -140
- 19   7   *B1    *B7    -140
- 20   8    B1     B7    -140
- 21   9    B3    *B10   -150              paar 18                         gewijzigd paar 5
- 22  10   *B3    *B10   -150
- 23  11    B3     B10   -150
- 24  12   *B3     B10   -150
- 25   1    B4     B6    -160              paar 1                          paar 12
- 26   2   *B4     B6    -160
- 27   3    B4    *B6    -160
- 28   4   *B4    *B6    -160
- 29  21   *B5     B2    -170              paar 14                         paar 16
- 30  22    B5    *B2    -170
- 31  23   *B5    *B2    -170
- 32  24    B5     B2    -170
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1   5    *A2     A8    -100                paar 4                          paar 17
+  2   6     A2    *A8    -100
+  3   7    *A2    *A8    -100
+  4   8     A2     A8    -100
+  5  17     A4     A6    -110                paar 11                         paar 13
+  6  18    *A4     A6    -110
+  7  19     A4    *A6    -110
+  8  20    *A4    *A6    -110
+  9   1     A5     A3    -120                paar 7                          paar 3
+ 10   2    *A5     A3    -120
+ 11   3     A5    *A3    -120
+ 12   4    *A5    *A3    -120
+ 13  25     A7    *A1    -130                paar 8                          paar 15
+ 14  26    *A7    *A1    -130
+ 15  27     A7     A1    -130
+ 16  28    *A7     A1    -130
+ 17   5    *B1     B7    -140                paar 9                          paar 6
+ 18   6     B1    *B7    -140
+ 19   7    *B1    *B7    -140
+ 20   8     B1     B7    -140
+ 21   9     B3    *B10   -150                paar 18                         gewijzigd paar 5
+ 22  10    *B3    *B10   -150
+ 23  11     B3     B10   -150
+ 24  12    *B3     B10   -150
+ 25   1     B4     B6    -160                paar 1                          paar 12
+ 26   2    *B4     B6    -160
+ 27   3     B4    *B6    -160
+ 28   4    *B4    *B6    -160
+ 29  21    *B5     B2    -170                paar 14                         paar 16
+ 30  22     B5    *B2    -170
+ 31  23    *B5    *B2    -170
+ 32  24     B5     B2    -170
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 2 voor '<auto-test, zitting 2>', ronde 7
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1   5   *A1     A5    -100              paar 15                         paar 7
-  2   6    A1    *A5    100
-  3   7   *A1    *A5    150
-  4   8    A1     A5    200
-  5   9    A4    *A8    70                paar 11                         paar 17
-  6  10   *A4    *A8    90
-  7  11    A4     A8    100
-  8  12   *A4     A8    110
-  9  25    A6    *A2    110               paar 13                         paar 4
- 10  26   *A6    *A2    120
- 11  27    A6     A2    130
- 12  28   *A6     A2    140
- 13  21   *A7     A3    120               paar 8                          paar 3
- 14  22    A7    *A3    130
- 15  23   *A7    *A3    140
- 16  24    A7     A3    150
- 17  13   *B1    *B10   130               paar 9                          gewijzigd paar 5
- 18  14    B1     B10   140
- 19  15   *B1     B10   150
- 20  16    B1    *B10   160
- 21  25    B3    *B2    140               paar 18                         paar 16
- 22  26   *B3    *B2    150
- 23  27    B3     B2    160
- 24  28   *B3     B2    170
- 25   1    B5     B7    0                 paar 14                         paar 6
- 26   2   *B5     B7    0
- 27   3    B5    *B7    0
- 28   4   *B5    *B7    0
- 29   9    B9    *B4    0                 paar 10                         paar 1
- 30  10   *B9    *B4    0
- 31  11    B9     B4    0
- 32  12   *B9     B4    0
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1   5    *A1     A5    -100                paar 15                         paar 7
+  2   6     A1    *A5    100
+  3   7    *A1    *A5    150
+  4   8     A1     A5    200
+  5   9     A4    *A8    70                  paar 11                         paar 17
+  6  10    *A4    *A8    90
+  7  11     A4     A8    100
+  8  12    *A4     A8    110
+  9  25     A6    *A2    110                 paar 13                         paar 4
+ 10  26    *A6    *A2    120
+ 11  27     A6     A2    130
+ 12  28    *A6     A2    140
+ 13  21    *A7     A3    120                 paar 8                          paar 3
+ 14  22     A7    *A3    130
+ 15  23    *A7    *A3    140
+ 16  24     A7     A3    150
+ 17  13    *B1    *B10   130                 paar 9                          gewijzigd paar 5
+ 18  14     B1     B10   140
+ 19  15    *B1     B10   150
+ 20  16     B1    *B10   160
+ 21  25     B3    *B2    140                 paar 18                         paar 16
+ 22  26    *B3    *B2    150
+ 23  27     B3     B2    160
+ 24  28    *B3     B2    170
+ 25   1     B5     B7    0                   paar 14                         paar 6
+ 26   2    *B5     B7    0
+ 27   3     B5    *B7    0
+ 28   4    *B5    *B7    0
+ 29   9     B9    *B4    0                   paar 10                         paar 1
+ 30  10    *B9    *B4    0
+ 31  11     B9     B4    0
+ 32  12    *B9     B4    0
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
@@ -3932,292 +3932,292 @@ Paar naam
   B9 paar 10
  B10 paar 16
 
-    paarnaam                        paar nr paar Z-1 rang     rang Z-1
-  1 paar 1                          B7      B4        15       10
-  2 paar 2                          B3      ???       11       16
-  3 paar 3                          A1      A3         1        3
-  4 paar 4                          B4      A2        12        2
-  5 gewijzigd paar 5                B2      B10       10       13
-  6 paar 6                          A4      B7         4       15
-  7 paar 7                          A8      A5         8        5
-  8 paar 8                          A5      A7         5        7
-  9 paar 9                          B5      B1        13       11
- 10 paar 10                         B9      B9        17       17
- 11 paar 11                         A3      A4         3        4
- 12 paar 12                         ???     B6        16       14
- 13 paar 13                         B6      A6        14        6
- 14 paar 14                         B1      B5         9       12
- 15 paar 15                         A2      A1         2        1
- 16 paar 16                         B10     B2        18       18
- 17 paar 17                         A7      A8         7        9
- 18 paar 18                         A6      B3         6        8
- 19 paar 19                         ???     ???        0        0
+    paarnaam                        paar nr   paar Z-1  rang      rang Z-1 
+  1 paar 1                          B7        B4         15        10
+  2 paar 2                          B3        ???        11        16
+  3 paar 3                          A1        A3          1         3
+  4 paar 4                          B4        A2         12         2
+  5 gewijzigd paar 5                B2        B10        10        13
+  6 paar 6                          A4        B7          4        15
+  7 paar 7                          A8        A5          8         5
+  8 paar 8                          A5        A7          5         7
+  9 paar 9                          B5        B1         13        11
+ 10 paar 10                         B9        B9         17        17
+ 11 paar 11                         A3        A4          3         4
+ 12 paar 12                         ???       B6         16        14
+ 13 paar 13                         B6        A6         14         6
+ 14 paar 14                         B1        B5          9        12
+ 15 paar 15                         A2        A1          2         1
+ 16 paar 16                         B10       B2         18        18
+ 17 paar 17                         A7        A8          7         9
+ 18 paar 18                         A6        B3          6         8
+ 19 paar 19                         ???       ???         0         0
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 1
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1   1    A1     A2    0                 paar 3                          paar 15
-  2   2   *A1     A2    70
-  3   3    A1    *A2    70
-  4   4   *A1    *A2    80
-  5   5   *A3     A4    90                paar 11                         paar 6
-  6   6    A3    *A4    100
-  7   7   *A3    *A4    110
-  8   8    A3     A4    120
-  9   9    A5    *A6    130               paar 8                          paar 18
- 10  10   *A5    *A6    140
- 11  11    A5     A6    150
- 12  12   *A5     A6    160
- 13  13   *A7    *A8    170               paar 17                         paar 7
- 14  14    A7     A8    180
- 15  15   *A7     A8    190
- 16  16    A7    *A8    200
- 17   1    B1     B2    210               paar 14                         gewijzigd paar 5
- 18   2   *B1     B2    230
- 19   3    B1    *B2    240
- 20   4   *B1    *B2    260
- 21   5   *B3     B4    270               paar 2                          paar 4
- 22   6    B3    *B4    340
- 23   7   *B3    *B4    300
- 24   8    B3     B4    340
- 25   9    B5    *B6    -50               paar 9                          paar 13
- 26  10   *B5    *B6    -70
- 27  11    B5     B6    -80
- 28  12   *B5     B6    -90
- 29  17    B9     B10   -100              paar 10                         paar 16
- 30  18   *B9     B10   -110
- 31  19    B9    *B10   -120
- 32  20   *B9    *B10   -130
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1   1     A1     A2    0                   paar 3                          paar 15
+  2   2    *A1     A2    70
+  3   3     A1    *A2    70
+  4   4    *A1    *A2    80
+  5   5    *A3     A4    90                  paar 11                         paar 6
+  6   6     A3    *A4    100
+  7   7    *A3    *A4    110
+  8   8     A3     A4    120
+  9   9     A5    *A6    130                 paar 8                          paar 18
+ 10  10    *A5    *A6    140
+ 11  11     A5     A6    150
+ 12  12    *A5     A6    160
+ 13  13    *A7    *A8    170                 paar 17                         paar 7
+ 14  14     A7     A8    180
+ 15  15    *A7     A8    190
+ 16  16     A7    *A8    200
+ 17   1     B1     B2    210                 paar 14                         gewijzigd paar 5
+ 18   2    *B1     B2    230
+ 19   3     B1    *B2    240
+ 20   4    *B1    *B2    260
+ 21   5    *B3     B4    270                 paar 2                          paar 4
+ 22   6     B3    *B4    340
+ 23   7    *B3    *B4    300
+ 24   8     B3     B4    340
+ 25   9     B5    *B6    -50                 paar 9                          paar 13
+ 26  10    *B5    *B6    -70
+ 27  11     B5     B6    -80
+ 28  12    *B5     B6    -90
+ 29  17     B9     B10   -100                paar 10                         paar 16
+ 30  18    *B9     B10   -110
+ 31  19     B9    *B10   -120
+ 32  20    *B9    *B10   -130
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 2
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  17    A1     A8    -140              paar 3                          paar 7
-  2  18   *A1     A8    -150
-  3  19    A1    *A8    -160
-  4  20   *A1    *A8    -170
-  5   9    A2    *A7    -180              paar 15                         paar 17
-  6  10   *A2    *A7    -190
-  7  11    A2     A7    -200
-  8  12   *A2     A7    -210
-  9  25    A5    *A4    -230              paar 8                          paar 6
- 10  26   *A5    *A4    -240
- 11  27    A5     A4    -250
- 12  28   *A5     A4    -260
- 13  13   *A6    *A3    -270              paar 18                         paar 11
- 14  14    A6     A3    -280
- 15  15   *A6     A3    -300
- 16  16    A6    *A3    -340
- 17   5   *B2     B9    -600              gewijzigd paar 5                paar 10
- 18   6    B2    *B9    -800
- 19   7   *B2    *B9    -1000
- 20   8    B2     B9    -1100
- 21  17    B5     B4    -1200             paar 9                          paar 4
- 22  18   *B5     B4    300
- 23  19    B5    *B4    400
- 24  20   *B5    *B4    500
- 25  13   *B6    *B3    600               paar 13                         paar 2
- 26  14    B6     B3    800
- 27  15   *B6     B3    120
- 28  16    B6    *B3    150
- 29  21   *B10    B7    110               paar 16                         paar 1
- 30  22    B10   *B7    -120
- 31  23   *B10   *B7    -100
- 32  24    B10    B7    100
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1  17     A1     A8    -140                paar 3                          paar 7
+  2  18    *A1     A8    -150
+  3  19     A1    *A8    -160
+  4  20    *A1    *A8    -170
+  5   9     A2    *A7    -180                paar 15                         paar 17
+  6  10    *A2    *A7    -190
+  7  11     A2     A7    -200
+  8  12    *A2     A7    -210
+  9  25     A5    *A4    -230                paar 8                          paar 6
+ 10  26    *A5    *A4    -240
+ 11  27     A5     A4    -250
+ 12  28    *A5     A4    -260
+ 13  13    *A6    *A3    -270                paar 18                         paar 11
+ 14  14     A6     A3    -280
+ 15  15    *A6     A3    -300
+ 16  16     A6    *A3    -340
+ 17   5    *B2     B9    -600                gewijzigd paar 5                paar 10
+ 18   6     B2    *B9    -800
+ 19   7    *B2    *B9    -1000
+ 20   8     B2     B9    -1100
+ 21  17     B5     B4    -1200               paar 9                          paar 4
+ 22  18    *B5     B4    300
+ 23  19     B5    *B4    400
+ 24  20    *B5    *B4    500
+ 25  13    *B6    *B3    600                 paar 13                         paar 2
+ 26  14     B6     B3    800
+ 27  15    *B6     B3    120
+ 28  16     B6    *B3    150
+ 29  21    *B10    B7    110                 paar 16                         paar 1
+ 30  22     B10   *B7    -120
+ 31  23    *B10   *B7    -100
+ 32  24     B10    B7    100
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 3
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  17    A3     A2    150               paar 11                         paar 15
-  2  18   *A3     A2    150
-  3  19    A3    *A2    170
-  4  20   *A3    *A2    -170
-  5  13   *A4    *A1    200               paar 6                          paar 3
-  6  14    A4     A1    300
-  7  15   *A4     A1    -500
-  8  16    A4    *A1    -500
-  9  21   *A5     A8    160               paar 8                          paar 7
- 10  22    A5    *A8    -160
- 11  23   *A5    *A8    -160
- 12  24    A5     A8    R150     R110
- 13   5   *A6     A7    300               paar 18                         paar 17
- 14   6    A6    *A7    -600
- 15   7   *A6    *A7    -150
- 16   8    A6     A7    %70      %70
- 17   9    B2    *B7    -50               gewijzigd paar 5                paar 1
- 18  10   *B2    *B7    0
- 19  11    B2     B7    90
- 20  12   *B2     B7    %60      R630
- 21  13   *B5    *B9    800               paar 9                          paar 10
- 22  14    B5     B9    600
- 23  15   *B5     B9    500
- 24  16    B5    *B9    R300     %50
- 25  17    B6     B1    -150              paar 13                         paar 14
- 26  18   *B6     B1    -800
- 27  19    B6    *B1    -600
- 28  20   *B6    *B1    -120
- 29  25    B10   *B4    150               paar 16                         paar 4
- 30  26   *B10   *B4    140
- 31  27    B10    B4    140
- 32  28   *B10    B4    50
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1  17     A3     A2    150                 paar 11                         paar 15
+  2  18    *A3     A2    150
+  3  19     A3    *A2    170
+  4  20    *A3    *A2    -170
+  5  13    *A4    *A1    200                 paar 6                          paar 3
+  6  14     A4     A1    300
+  7  15    *A4     A1    -500
+  8  16     A4    *A1    -500
+  9  21    *A5     A8    160                 paar 8                          paar 7
+ 10  22     A5    *A8    -160
+ 11  23    *A5    *A8    -160
+ 12  24     A5     A8    R150      R110
+ 13   5    *A6     A7    300                 paar 18                         paar 17
+ 14   6     A6    *A7    -600
+ 15   7    *A6    *A7    -150
+ 16   8     A6     A7    %70       %70
+ 17   9     B2    *B7    -50                 gewijzigd paar 5                paar 1
+ 18  10    *B2    *B7    0
+ 19  11     B2     B7    90
+ 20  12    *B2     B7    %60       R630
+ 21  13    *B5    *B9    800                 paar 9                          paar 10
+ 22  14     B5     B9    600
+ 23  15    *B5     B9    500
+ 24  16     B5    *B9    R300      %50
+ 25  17     B6     B1    -150                paar 13                         paar 14
+ 26  18    *B6     B1    -800
+ 27  19     B6    *B1    -600
+ 28  20    *B6    *B1    -120
+ 29  25     B10   *B4    150                 paar 16                         paar 4
+ 30  26    *B10   *B4    140
+ 31  27     B10    B4    140
+ 32  28    *B10    B4    50
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 4
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  21   *A2     A4    50                paar 15                         paar 6
-  2  22    A2    *A4    100
-  3  23   *A2    *A4    -200
-  4  24    A2     A4    -300
-  5   9    A3    *A1    100               paar 11                         paar 3
-  6  10   *A3    *A1    200
-  7  11    A3     A1    300
-  8  12   *A3     A1    %40      %40
-  9   1    A6     A8    70                paar 18                         paar 7
- 10   2   *A6     A8    80
- 11   3    A6    *A8    90
- 12   4   *A6    *A8    %80      R620
- 13  17    A7     A5    -420              paar 17                         paar 8
- 14  18   *A7     A5    -420
- 15  19    A7    *A5    420
- 16  20   *A7    *A5    620
- 17  13   *B4    *B2    800               paar 4                          gewijzigd paar 5
- 18  14    B4     B2    200
- 19  15   *B4     B2    300
- 20  16    B4    *B2    300
- 21  25    B5    *B1    150               paar 9                          paar 14
- 22  26   *B5    *B1    150
- 23  27    B5     B1    150
- 24  28   *B5     B1    150
- 25  17    B7     B3    100               paar 1                          paar 2
- 26  18   *B7     B3    110
- 27  19    B7    *B3    120
- 28  20   *B7    *B3    130
- 29  21   *B9     B6    130               paar 10                         paar 13
- 30  22    B9    *B6    120
- 31  23   *B9    *B6    110
- 32  24    B9     B6    100
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1  21    *A2     A4    50                  paar 15                         paar 6
+  2  22     A2    *A4    100
+  3  23    *A2    *A4    -200
+  4  24     A2     A4    -300
+  5   9     A3    *A1    100                 paar 11                         paar 3
+  6  10    *A3    *A1    200
+  7  11     A3     A1    300
+  8  12    *A3     A1    %40       %40
+  9   1     A6     A8    70                  paar 18                         paar 7
+ 10   2    *A6     A8    80
+ 11   3     A6    *A8    90
+ 12   4    *A6    *A8    %80       R620
+ 13  17     A7     A5    -420                paar 17                         paar 8
+ 14  18    *A7     A5    -420
+ 15  19     A7    *A5    420
+ 16  20    *A7    *A5    620
+ 17  13    *B4    *B2    800                 paar 4                          gewijzigd paar 5
+ 18  14     B4     B2    200
+ 19  15    *B4     B2    300
+ 20  16     B4    *B2    300
+ 21  25     B5    *B1    150                 paar 9                          paar 14
+ 22  26    *B5    *B1    150
+ 23  27     B5     B1    150
+ 24  28    *B5     B1    150
+ 25  17     B7     B3    100                 paar 1                          paar 2
+ 26  18    *B7     B3    110
+ 27  19     B7    *B3    120
+ 28  20    *B7    *B3    130
+ 29  21    *B9     B6    130                 paar 10                         paar 13
+ 30  22     B9    *B6    120
+ 31  23    *B9    *B6    110
+ 32  24     B9     B6    100
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 5
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1  21   *A1     A6    100               paar 3                          paar 18
-  2  22    A1    *A6    100
-  3  23   *A1    *A6    100
-  4  24    A1     A6    100
-  5  13   *A2    *A5    110               paar 15                         paar 8
-  6  14    A2     A5    110
-  7  15   *A2     A5    110
-  8  16    A2    *A5    110
-  9  25    A3    *A8    120               paar 11                         paar 7
- 10  26   *A3    *A8    120
- 11  27    A3     A8    120
- 12  28   *A3     A8    120
- 13   1    A4     A7    130               paar 6                          paar 17
- 14   2   *A4     A7    130
- 15   3    A4    *A7    130
- 16   4   *A4    *A7    130
- 17   1    B3     B9    140               paar 2                          paar 10
- 18   2   *B3     B9    140
- 19   3    B3    *B9    140
- 20   4   *B3    *B9    140
- 21  21   *B4     B1    150               paar 4                          paar 14
- 22  22    B4    *B1    150
- 23  23   *B4    *B1    150
- 24  24    B4     B1    150
- 25   5   *B5     B10   160               paar 9                          paar 16
- 26   6    B5    *B10   160
- 27   7   *B5    *B10   160
- 28   8    B5     B10   160
- 29  25    B7    *B6    170               paar 1                          paar 13
- 30  26   *B7    *B6    170
- 31  27    B7     B6    170
- 32  28   *B7     B6    170
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1  21    *A1     A6    100                 paar 3                          paar 18
+  2  22     A1    *A6    100
+  3  23    *A1    *A6    100
+  4  24     A1     A6    100
+  5  13    *A2    *A5    110                 paar 15                         paar 8
+  6  14     A2     A5    110
+  7  15    *A2     A5    110
+  8  16     A2    *A5    110
+  9  25     A3    *A8    120                 paar 11                         paar 7
+ 10  26    *A3    *A8    120
+ 11  27     A3     A8    120
+ 12  28    *A3     A8    120
+ 13   1     A4     A7    130                 paar 6                          paar 17
+ 14   2    *A4     A7    130
+ 15   3     A4    *A7    130
+ 16   4    *A4    *A7    130
+ 17   1     B3     B9    140                 paar 2                          paar 10
+ 18   2    *B3     B9    140
+ 19   3     B3    *B9    140
+ 20   4    *B3    *B9    140
+ 21  21    *B4     B1    150                 paar 4                          paar 14
+ 22  22     B4    *B1    150
+ 23  23    *B4    *B1    150
+ 24  24     B4     B1    150
+ 25   5    *B5     B10   160                 paar 9                          paar 16
+ 26   6     B5    *B10   160
+ 27   7    *B5    *B10   160
+ 28   8     B5     B10   160
+ 29  25     B7    *B6    170                 paar 1                          paar 13
+ 30  26    *B7    *B6    170
+ 31  27     B7     B6    170
+ 32  28    *B7     B6    170
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 6
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1   5   *A2     A8    -100              paar 15                         paar 7
-  2   6    A2    *A8    -100
-  3   7   *A2    *A8    -100
-  4   8    A2     A8    -100
-  5  17    A4     A6    -110              paar 6                          paar 18
-  6  18   *A4     A6    -110
-  7  19    A4    *A6    -110
-  8  20   *A4    *A6    -110
-  9   1    A5     A3    -120              paar 8                          paar 11
- 10   2   *A5     A3    -120
- 11   3    A5    *A3    -120
- 12   4   *A5    *A3    -120
- 13  25    A7    *A1    -130              paar 17                         paar 3
- 14  26   *A7    *A1    -130
- 15  27    A7     A1    -130
- 16  28   *A7     A1    -130
- 17   5   *B1     B7    -140              paar 14                         paar 1
- 18   6    B1    *B7    -140
- 19   7   *B1    *B7    -140
- 20   8    B1     B7    -140
- 21   9    B3    *B10   -150              paar 2                          paar 16
- 22  10   *B3    *B10   -150
- 23  11    B3     B10   -150
- 24  12   *B3     B10   -150
- 25   1    B4     B6    -160              paar 4                          paar 13
- 26   2   *B4     B6    -160
- 27   3    B4    *B6    -160
- 28   4   *B4    *B6    -160
- 29  21   *B5     B2    -170              paar 9                          gewijzigd paar 5
- 30  22    B5    *B2    -170
- 31  23   *B5    *B2    -170
- 32  24    B5     B2    -170
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1   5    *A2     A8    -100                paar 15                         paar 7
+  2   6     A2    *A8    -100
+  3   7    *A2    *A8    -100
+  4   8     A2     A8    -100
+  5  17     A4     A6    -110                paar 6                          paar 18
+  6  18    *A4     A6    -110
+  7  19     A4    *A6    -110
+  8  20    *A4    *A6    -110
+  9   1     A5     A3    -120                paar 8                          paar 11
+ 10   2    *A5     A3    -120
+ 11   3     A5    *A3    -120
+ 12   4    *A5    *A3    -120
+ 13  25     A7    *A1    -130                paar 17                         paar 3
+ 14  26    *A7    *A1    -130
+ 15  27     A7     A1    -130
+ 16  28    *A7     A1    -130
+ 17   5    *B1     B7    -140                paar 14                         paar 1
+ 18   6     B1    *B7    -140
+ 19   7    *B1    *B7    -140
+ 20   8     B1     B7    -140
+ 21   9     B3    *B10   -150                paar 2                          paar 16
+ 22  10    *B3    *B10   -150
+ 23  11     B3     B10   -150
+ 24  12    *B3     B10   -150
+ 25   1     B4     B6    -160                paar 4                          paar 13
+ 26   2    *B4     B6    -160
+ 27   3     B4    *B6    -160
+ 28   4    *B4    *B6    -160
+ 29  21    *B5     B2    -170                paar 9                          gewijzigd paar 5
+ 30  22     B5    *B2    -170
+ 31  23    *B5    *B2    -170
+ 32  24     B5     B2    -170
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 
 Overzicht van de scores van zitting 3 voor '<auto-test, zitting 3>', ronde 7
 
-    spel  nz     ow     score nz score ow naam nz                         naam ow                        
-  1   5   *A1     A5    -100              paar 3                          paar 8
-  2   6    A1    *A5    100
-  3   7   *A1    *A5    150
-  4   8    A1     A5    200
-  5   9    A4    *A8    70                paar 6                          paar 7
-  6  10   *A4    *A8    90
-  7  11    A4     A8    100
-  8  12   *A4     A8    110
-  9  25    A6    *A2    110               paar 18                         paar 15
- 10  26   *A6    *A2    120
- 11  27    A6     A2    130
- 12  28   *A6     A2    140
- 13  21   *A7     A3    120               paar 17                         paar 11
- 14  22    A7    *A3    130
- 15  23   *A7    *A3    140
- 16  24    A7     A3    150
- 17  13   *B1    *B10   130               paar 14                         paar 16
- 18  14    B1     B10   140
- 19  15   *B1     B10   150
- 20  16    B1    *B10   160
- 21  25    B3    *B2    140               paar 2                          gewijzigd paar 5
- 22  26   *B3    *B2    150
- 23  27    B3     B2    160
- 24  28   *B3     B2    170
- 25   1    B5     B7    0                 paar 9                          paar 1
- 26   2   *B5     B7    0
- 27   3    B5    *B7    0
- 28   4   *B5    *B7    0
- 29   9    B9    *B4    0                 paar 10                         paar 4
- 30  10   *B9    *B4    0
- 31  11    B9     B4    0
- 32  12   *B9     B4    0
+    spel   nz     ow     score nz  score ow  naam nz                         naam ow                        
+  1   5    *A1     A5    -100                paar 3                          paar 8
+  2   6     A1    *A5    100
+  3   7    *A1    *A5    150
+  4   8     A1     A5    200
+  5   9     A4    *A8    70                  paar 6                          paar 7
+  6  10    *A4    *A8    90
+  7  11     A4     A8    100
+  8  12    *A4     A8    110
+  9  25     A6    *A2    110                 paar 18                         paar 15
+ 10  26    *A6    *A2    120
+ 11  27     A6     A2    130
+ 12  28    *A6     A2    140
+ 13  21    *A7     A3    120                 paar 17                         paar 11
+ 14  22     A7    *A3    130
+ 15  23    *A7    *A3    140
+ 16  24     A7     A3    150
+ 17  13    *B1    *B10   130                 paar 14                         paar 16
+ 18  14     B1     B10   140
+ 19  15    *B1     B10   150
+ 20  16     B1    *B10   160
+ 21  25     B3    *B2    140                 paar 2                          gewijzigd paar 5
+ 22  26    *B3    *B2    150
+ 23  27     B3     B2    160
+ 24  28    *B3     B2    170
+ 25   1     B5     B7    0                   paar 9                          paar 1
+ 26   2    *B5     B7    0
+ 27   3     B5    *B7    0
+ 28   4    *B5    *B7    0
+ 29   9     B9    *B4    0                   paar 10                         paar 4
+ 30  10    *B9    *B4    0
+ 31  11     B9     B4    0
+ 32  12    *B9     B4    0
 
 (c)opyright 1991-2024 hl/tc, maandag 1 januari 2024 12:00:00
 

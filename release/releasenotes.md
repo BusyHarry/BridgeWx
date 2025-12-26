@@ -1,4 +1,5 @@
 # Releasenotes
+#V10.10.0  ...
 
 #V10.9.0  Sunday November 23 2025
  - added encode/decode strings containing special characters when storing/retreiving the database
@@ -20,7 +21,7 @@
     - needs a tablet/phone/laptop per table
  - added dark-mode support
    - use dark (complementary) colors where colors are explicitly set
-     - trough 'GetLightOrDark(const wxColor& lightColor)' -> in=light, out=light or dark, depending on dark-mode
+     - through 'GetLightOrDark(const wxColor& lightColor)' -> in=light, out=light or dark, depending on dark-mode
    - changed SetUseNativeColLabels() to UseNativeColHeader() for wxGrid
      - SetUseNativeColLabels() has unchangeable white columnlabel background in dark-mode -> unreadable text
      - UseNativeColHeader() has less space for label -> enlarge many column sizes

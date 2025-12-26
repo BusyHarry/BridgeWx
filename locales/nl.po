@@ -1237,7 +1237,7 @@ msgid "hello in the console!"
 msgstr "hallo in de console!"
 
 msgid "Debug active"
-msgstr "Debug active"
+msgstr "Debug actief"
 
 msgid "PrintPage()"
 msgstr "PrintPage()"

@@ -2,11 +2,11 @@
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
 #define __PRG_NAME__            "BridgeWx"
-#define __VERSION__             "v10.9.0"           /* like "v2.0.0" */
+#define __VERSION__             "v10.10.0"           /* like "v2.0.0" */
 #define __VERSION_MAIN__        "v10"
-#define __VERSION_NR__          10,8,0,0
-#define __PRODUCT_VERSION__     10,8,0,0
-#define __YEAR__                "2025"
+#define __VERSION_NR__          10,10,0,0
+#define __PRODUCT_VERSION__     10,10,0,0
+#define __YEAR__                "2026"
 
 #define __VERSION__AUTO         "x9.99"             /* simulated version in autotest: less differences in output files */
 #define __YEAR__AUTO            "2024"              /* simulated year in autotest: less differences in output files */

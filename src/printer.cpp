@@ -22,7 +22,7 @@ namespace prn
     {
         DWORD               dwNeeded    = 0;
         DWORD               dwReturned  = 0;
-        PRINTER_INFO_1*     pInfo       = 0;
+        std::unique_ptr<PRINTER_INFO_1> pInfo;
         BOOL                bResult     = 0;    //false;
         UINT                searchFlags = PRINTER_ENUM_LOCAL;
 
@@ -44,57 +44,49 @@ namespace prn
 
         if (dwNeeded > 0)
         {
-//            pInfo = static_cast<PRINTER_INFO_1 *>(HeapAlloc(GetProcessHeap(), 0L, dwNeeded));
-            pInfo = reinterpret_cast<PRINTER_INFO_1 *>(new char[dwNeeded]);
+            pInfo.reset(reinterpret_cast<PRINTER_INFO_1 *>(new char[dwNeeded]));
         }
 
-        if (nullptr != pInfo)
+        if ( nullptr != pInfo.get() )
         {   // now we have the wanted buffer for the info
             dwReturned = 0;
             bResult = ::EnumPrinters(
                 searchFlags,
                 nullptr,
                 1L,                // printer info level
-                reinterpret_cast<LPBYTE>(pInfo),
+                reinterpret_cast<LPBYTE>(pInfo.get()),
                 dwNeeded,
                 &dwNeeded,
                 &dwReturned);
         }
 
-        if (bResult && ( 0 != pInfo ) )
+        if (bResult && ( nullptr != pInfo.get() ) )
         {
             // Review the information from all the printers returned by EnumPrinters.
             unsigned int realCount = 0;
             for (DWORD ii=0; ii < dwReturned; ii++)
             {
                 #pragma warning(push)
-                #pragma warning(disable:6385)
+                //#pragma warning(disable:6385)
+                const auto& info = pInfo.get()[ii];
                 // pInfo[ii].pName contains the printername to use in the CreateDC function call.
-                if (   ( wxString(_("Fax"                             )) == pInfo[ii].pName)
-                    || ( wxString(_("Microsoft XPS Document Writer"   )) == pInfo[ii].pName)
-                    || ( wxString(_("OneNote"                         )) == pInfo[ii].pName)
+                if (   ( wxString(_("Fax"                             )) == info.pName)
+                    || ( wxString(_("Microsoft XPS Document Writer"   )) == info.pName)
+                    || ( wxString(_("OneNote"                         )) == info.pName)
                    )
                 {
                     continue;   // we only want 'real' printers!
                 }
                 #pragma warning(pop)
 
-
                 ++realCount;
-                a_sPrinterNames.push_back(pInfo[ii].pName);
-                MyLogMessage(_("Printer %u found, flags: 0x%08x, name: <%s>"), realCount, (unsigned int)pInfo[ii].Flags, pInfo[ii].pName);
+                a_sPrinterNames.push_back(info.pName);
+                MyLogMessage(_("Printer %u found, flags: 0x%08x, name: <%s>"), realCount, (unsigned int)info.Flags, info.pName);
             }
-        }
-
-        if (pInfo)
-        {
-//            HeapFree(GetProcessHeap(), 0, pInfo);
-            delete[] pInfo;
         }
 
         return bResult;
     }   // EnumPrinters()
-
 
 #if defined DEBUG_LOCAL
 static wxString s_sDebugString;  	// used to get some info, and then show it in a messagebox.

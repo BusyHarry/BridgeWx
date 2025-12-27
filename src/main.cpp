@@ -25,7 +25,6 @@
 #include "debug.h"
 #include "calcScore.h"
 #include "showStartImage.h"
-#include "database.h"
 #include "slipServer.h"
 #include "fileIo.h"
 #include "version.h"

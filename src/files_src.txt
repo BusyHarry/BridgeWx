@@ -47,6 +47,7 @@ dbkeys.h
 debug.h
 fileIo.h
 importExportSchema.h
+interfaces.h
 main.h
 mygrid.h
 mylog.h

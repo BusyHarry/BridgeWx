@@ -14,7 +14,6 @@
 #include "names.h"
 #include "printer.h"
 #include "utils.h"
-#include "database.h"
 #include "fileIo.h"
 #include "main.h"
 

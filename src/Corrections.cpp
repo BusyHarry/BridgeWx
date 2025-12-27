@@ -6,7 +6,6 @@
 #include "names.h"
 #include "utils.h"
 #include "score.h"
-#include "database.h"
 #include "fileIo.h"
 #include "corrections.h"
 #include "main.h"

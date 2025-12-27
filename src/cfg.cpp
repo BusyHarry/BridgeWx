@@ -14,7 +14,6 @@
 #include "printer.h"
 #include "scoreEntry.h"
 #include "fileIo.h"
-#include "database.h"
 #include "main.h"
 
 #include <iostream>

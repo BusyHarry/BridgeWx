@@ -13,7 +13,6 @@
 #include "printer.h"
 #include "score.h"
 #include "corrections.h"
-#include "database.h"
 #include "validators.h"
 #include "main.h"
 

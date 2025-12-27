@@ -638,6 +638,7 @@
     <ClInclude Include="src\buildDate.h" />
     <ClInclude Include="src\calcScore.h" />
     <ClInclude Include="src\cfg.h" />
+    <ClInclude Include="src\interfaces.h" />
     <ClInclude Include="src\correctionsEnd.h" />
     <ClInclude Include="src\correctionsSession.h" />
     <ClInclude Include="src\corrections.h" />

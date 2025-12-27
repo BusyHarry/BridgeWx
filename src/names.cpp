@@ -15,7 +15,6 @@
 #include "cfg.h"
 #include "names.h"
 #include "fileIo.h"
-#include "database.h"
 
 namespace names
 {

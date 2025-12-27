@@ -6,7 +6,6 @@
 #include "cfg.h"
 #include "score.h"
 #include "names.h"
-#include "database.h"
 #include "fileIo.h"
 
 static vvScoreData svGameSetData;

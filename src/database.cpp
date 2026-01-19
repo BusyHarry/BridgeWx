@@ -797,14 +797,16 @@ bool UintVectorRead(UINT_VECTOR& a_vUint, UINT a_session, keyId a_id)
     a_vUint.resize(cfg::MAX_PAIRS+1ULL, 0);
     wxString info = s_pConfig->Read(MakePath(a_id, a_session), ES);
     auto split = wxSplit(info, theSeparator);
-    UINT entry = 1;  // entry zero is a  dummy
+    UINT entry = 0;  // entry zero is a  dummy
     UINT max = names::GetNumberOfGlobalPairs();
     for (const auto& it : split)
     {
+        if (++entry > cfg::MAX_PAIRS)
+            break;
         UINT value = (UINT)wxAtoi(it);
         if (value > max)
         {
-            wxString err=FMT(_(" Error in database <%s> value in key <%s>: <%i> higher then max <%u>\nWill be ignored.")
+            wxString err=FMT(_("Error in database <%s> value in key <%s>: <%i> higher then max <%u>\nWill be ignored.")
                                 , sDbFile, MakePath(a_id, a_session)
                                 , (int)value, max);
             MyLogError("%s",err);
@@ -813,8 +815,6 @@ bool UintVectorRead(UINT_VECTOR& a_vUint, UINT a_session, keyId a_id)
             continue;
         }
         a_vUint[entry] = value;
-        if (++entry > cfg::MAX_PAIRS)
-            break;
     }
     return bOk;
 }   //UintVectorRead()

@@ -828,6 +828,11 @@ namespace cfg
                     break;
                 }
                 pArgptr = a_argv[index];
+                if ( (*pArgptr == '-') || (*pArgptr == '/') )
+                {   // assume empty/missing argument
+                    bError = true;
+                    break;
+                }
             }
             switch (parameter)
             {

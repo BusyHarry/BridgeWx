@@ -108,6 +108,17 @@ private:
 
 };  // class MyApp
 
+/*
+* early need of logger in MyApp::OnInit()
+* must be deleted if (last) 'MyFrame' is destroyed, else program does NOT exit
+* 'MyFrame' is delayed-Destroyed and re-Created during a language change, so logger should NOT be destroyed at that time
+* increment 'siMyFrameCounter' in CTOR of 'MyFrame'
+* decrement 'siMyFrameCounter' in DTOR of 'MyFrame'
+* destroy logger when 'siMyFrameCounter' is 0 in de DTOR of 'MyFrame'
+*/
+static MyLog*   spMyLog         = nullptr;
+static int      siMyFrameCounter= 0;
+
 int MyApp::OnExit()
 {
     return 0;
@@ -323,7 +334,7 @@ private:
     Cleanup         m_theCleaner;   // clean wx-stuff before app exits to prevent crashes
     MyStatusBar*    m_pStatusbar;
     Baseframe*      m_pActivePage;
-    MyLog           m_myLogger; // use wxLogWindow(): does the same and can stop msg passtrough!
+
     wxBoxSizer*     m_vSizer;
     
     EventCatcher*   m_pMyEventCatcher;
@@ -339,6 +350,8 @@ MyFrame::~MyFrame()
     delete m_pMyEventCatcher;
 //    delete g_pCheckboxBusy;       // destroyed by MyFrame?
 //    delete g_pCheckboxBusyMC;     // destroyed by MyFrame?
+    if ( --siMyFrameCounter == 0 )
+        delete spMyLog;             // program is exiting now
 }   // ~MyFrame()
 
 static void UncheckLogMenu()
@@ -453,6 +466,20 @@ bool MyApp::OnInit()
     logWindow->SetLogLevel(255);// wxLOG_FatalError);
     //logWindow->Show();
 
+    // early creation of MyLog, need it when reading cfg
+    // can't be destroyed in MyApp::OnExit() because OnExit() is not called if logger still exists... 
+    // so we destroy it in DTOR of MyFrame
+    spMyLog = new MyLog;
+    MyLog::SetLevel(MyLog::Level::LOG_Max);
+    LogMessage("------------"); // just testing...
+    LogMessage("test logging");
+    LogError  ("Error");
+    LogWarning("Warning");
+    LogInfo   ("Info");
+    LogVerbose("Verbose");
+    LogDebug  ("Debug");
+    LogMessage("------------");
+
     SetVendorName("HarrieL");
     SetAppName(__PRG_NAME__);     // not needed, it's the default value
     SetConsoleOutputCP(437);
@@ -492,8 +519,7 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     , m_theApp      { a_theApp }
     , m_oldId       { 0 }
 {   // remark: wxFrame() MUST be initialized in constructor, not in its body: it will not be (for sure) the first toplevel window!
-
-    MyLog::SetLevel(MyLog::Level::LOG_Max);
+    ++siMyFrameCounter;   // increment counter, should be max 2 shortly during language change
     MyLog::SetMainFrame(this);
     MyLog::SetCallbackOnHide(&UncheckLogMenu);
     // autotest init
@@ -557,15 +583,6 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     //SetPosition({10,10}); // testing mouse-coordinates
 
     MyLogDebug(_("Mainwindow position: {%i,%i}, size: %i*%i"), pos.x, pos.y, hSize, vSize);
-
-    LogMessage("------------"); // just testing...
-    LogMessage("test logging");
-    LogError  ("Error");
-    LogWarning("Warning");
-    LogInfo   ("Info");
-    LogVerbose("Verbose");
-    LogDebug  ("Debug");
-    LogMessage("------------");
 
     SetIcon(wxICON(wxwin_standard_icon));
     spMainframe = this;    // for clients to reach us

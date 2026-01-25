@@ -271,6 +271,9 @@ private:
     #define X(x) ((x)*m_iCharWidth  + m_iHorizontalOffset)  //determine the horizontal print position
     #define Y(y) ((y)*m_iCharHeight + m_iVerticalOffset  )  //determine the vertical print position
 
+    MyLinePrinter           (const MyLinePrinter&) = delete;    // cppcheck remarks....
+    MyLinePrinter& operator=(const MyLinePrinter&) = delete;
+    bool operator         ==(const MyLinePrinter&) = delete;
 };
 
 /*

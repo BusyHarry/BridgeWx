@@ -138,7 +138,7 @@ protected:
     const wxWindow* GetSearchWindow(){return m_pTxtCtrlSearchBox;}
     struct WinAndName
     {   // store a window/name at construction time to get it added to AUTOTEST positions later on
-        WinAndName(wxWindow* a_pWindow, const wxString& a_mousePosName, const wxString& a_winTitle="") { pWindow = a_pWindow; mousePosName = a_mousePosName; winTitle = a_winTitle; }
+        WinAndName(const wxWindow* a_pWindow, const wxString& a_mousePosName, const wxString& a_winTitle="") { pWindow = a_pWindow; mousePosName = a_mousePosName; winTitle = a_winTitle; }
         const wxWindow* pWindow;
         wxString        mousePosName;
         wxString        winTitle;

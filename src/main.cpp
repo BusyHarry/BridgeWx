@@ -997,6 +997,7 @@ void MyFrame::LoadExistingSchemaFiles()
     schema::DebuggingSchemaData();  // for debugging....
 }   // LoadExistingSchemaFiles()
 
+// cppcheck-suppress constParameterPointer
 void SendEvent2Mainframe(int a_id, void* a_pClientData)
 {
     if (GetMainframe())
@@ -1007,6 +1008,7 @@ void SendEvent2Mainframe(int a_id, void* a_pClientData)
     }
 }   // SendEvent2Mainframe()
 
+// cppcheck-suppress constParameterPointer
 void SendEvent2Mainframe(wxWindow* a_pWindow, int a_id, void* const a_pClientData)
 {
     wxCommandEvent event(wxEVT_USER, a_id);

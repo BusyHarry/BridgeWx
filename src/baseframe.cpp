@@ -29,7 +29,7 @@ static const wxWindow* GetTopLevelWindow(const wxWindow* a_pWindow)
 {
     while (a_pWindow)
     {
-        wxWindow* parent = a_pWindow->GetParent();
+        const wxWindow* parent = a_pWindow->GetParent();
         if (parent == nullptr)
             break;
         a_pWindow = parent;
@@ -586,6 +586,7 @@ void MyTextFile::Flush()
 
 /****************** end MyTextFile **********************/
 #include <wx/uiaction.h>
+// cppcheck-suppress constParameterPointer
 AHKHelper::AHKHelper(wxWindow* a_pParent, wxWindow* a_pTarget, const  wxString& a_label)
 {
     m_pTarget = a_pTarget;

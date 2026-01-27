@@ -75,7 +75,7 @@ private:
 
 class MywxChoice : public wxChoice, AHKHelper
 {   // wrapper around standard wxChoice to be able to get an identification for this control for autotesting
-public: 
+public:
     MywxChoice(wxWindow *parent, wxWindowID id, const wxString& label = ES);
    ~MywxChoice();
     wxString GetLabel() const;
@@ -83,7 +83,7 @@ public:
 
 class MywxComboBox : public wxComboBox, AHKHelper
 {   // wrapper around standard wxComboBox to be able to get an identification for this control for autotesting
-public: 
+public:
     MywxComboBox(wxWindow *parent, wxWindowID id,
                     const wxString& ahkLabel= wxEmptyString,
                     const wxPoint&  pos     = wxDefaultPosition,

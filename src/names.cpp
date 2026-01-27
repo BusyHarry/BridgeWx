@@ -171,7 +171,7 @@ wxString PairnrSession2SessionText(UINT a_sessionPair, bool a_bForceAbsent)
             return result;
         }
     }
-#endif    
+#endif
     return ssNotSet;  //?????
 }   // PairnrSession2SessionText()
 

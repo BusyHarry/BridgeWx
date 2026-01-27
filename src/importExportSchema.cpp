@@ -44,8 +44,8 @@ namespace importExportSchema
     1-2 1 3-4 2 5-6 3 7-8 4     ; round 1: table 1 to N: NS-EW set    : 0-0 0 -> no play at this table in this round
     1-6 2 5-3 1 7-2 3 8-4 5     ; round 2: table 1 to N: NS-EW set
     1-5 4 3-6 5 4-7 1 2-8 2     ; etc
-    1-4 3 3-2 4 7-5 2 6-8 1 
-    1-7 5 6-4 4 2-5 5 8-3 3 
+    1-4 3 3-2 4 7-5 2 6-8 1
+    1-7 5 6-4 4 2-5 5 8-3 3
     #<name>Short Howell 8</name>    ; descriptive name for this schema
     */
 

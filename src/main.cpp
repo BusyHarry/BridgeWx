@@ -276,7 +276,7 @@ public:
             ||  type == wxEVT_ACTIVATE_APP
             ||  type == wxEVT_MOVE_START
             ||  type == wxEVT_TIMER
-            ||  type == wxEVT_MOVE_END 
+            ||  type == wxEVT_MOVE_END
             ||  type == wxEVT_ICONIZE
             )
         {
@@ -305,7 +305,7 @@ private:
     std::map <int,wxString>  m_keys2String;
 };
 
-static wxCommandEvent s_dummy; 
+static wxCommandEvent s_dummy;
 class MyFrame : public wxFrame
 {
 public:
@@ -336,14 +336,14 @@ private:
     Baseframe*      m_pActivePage;
 
     wxBoxSizer*     m_vSizer;
-    
+
     EventCatcher*   m_pMyEventCatcher;
     MyApp&          m_theApp;
     std::map<UINT, Baseframe*> m_pages; // all created pages
     UINT            m_oldId;
 
 };  // class MyFrame
- 
+
 MyFrame::~MyFrame()
 {
     if (m_pActivePage) m_pActivePage->BackupData();
@@ -467,7 +467,7 @@ bool MyApp::OnInit()
     //logWindow->Show();
 
     // early creation of MyLog, need it when reading cfg
-    // can't be destroyed in MyApp::OnExit() because OnExit() is not called if logger still exists... 
+    // can't be destroyed in MyApp::OnExit() because OnExit() is not called if logger still exists...
     // so we destroy it in DTOR of MyFrame
     spMyLog = new MyLog;
     MyLog::SetLevel(MyLog::Level::LOG_Max);
@@ -595,20 +595,20 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
 
     menuFile->AppendSeparator();
     menuFile->Append(ID_EXIT                , _("&Exit"               ), _("This will end the program"      ));
- 
+
     wxMenu *menuSettings = new wxMenu;
     menuSettings->Append(ID_MENU_SETUPGAME  , _("&Match"                 ), _("Setup for the active match"                      ));
     menuSettings->Append(ID_MENU_SETUPSCHEMA, _("&Schema"                ), _("Entry/change of schema"                          ));
     menuSettings->Append(ID_MENU_NAMEEDITOR , _("pairnames &Entry/change"), _("Entry/change of pair/clubnames"                  ));
     menuSettings->Append(ID_MENU_ASSIGNNAMES, _("pairnames &Assigment"   ), _("Connect a global pairname to a sessionpairnumber"));
-    
-    
+
+
     wxMenu *menuScores = new wxMenu;
     menuScores->Append(ID_MENU_SCORE_ENTRY      , _("s&Core-entry"       ), _("Entry/change of scores"             ));
     menuScores->Append(ID_MENU_COR_ENTRY_SESSION, _("&Sessioncorrections"), _("Entry/change of session corrections"));
     menuScores->Append(ID_MENU_COR_ENTRY_END    , _("&Endcorrections"    ), _("Entry/change of end corrections"    ));
     menuScores->Append(ID_MENU_CALC_SCORES      , _("&Results"           ), _("Calculation of session/end result"  ));
-    
+
     wxMenu *menuExtra = new wxMenu;
     menuExtra->AppendCheckItem(ID_MENU_LOG      , _("&Log window"               ), _("Enable/disable logging window"     ));
     menuExtra->Append(ID_MENU_DEBUG             , _("&Debug window"             ), _("Debug window for all kind of stuff"));
@@ -629,19 +629,19 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     wxMenu *menuHelp = new wxMenu;
     menuHelp->Append(ID_SYSTEM_INFO         , _("&System info"                 ), _("Info about the version of wxWidgets"));
     menuHelp->Append(ID_ABOUT               , _("&About ") + __PRG_NAME__ );
- 
+
     m_pMenuBar = new wxMenuBar;
     m_pMenuBar->Append(menuFile,    _("&File"     ));
     m_pMenuBar->Append(menuSettings,_("&Settings" ));
     m_pMenuBar->Append(menuScores,  _("s&Cores"   ));
     m_pMenuBar->Append(menuExtra,   _("&Tools"    ));
     m_pMenuBar->Append(menuHelp,    _("&Help"     ));
- 
+
     SetMenuBar( m_pMenuBar );
 
     auto type = io::DatabaseTypeGet();
     m_pMenuBar->Check( type == io::DB_ORG ? ID_MENU_OLD_DBASE : ID_MENU_NEW_DBASE, true);
- 
+
     m_pStatusbar = new MyStatusBar(this);
     SetStatusBar(m_pStatusbar);
     SetStatusText(_("Welcome at ") +  __PRG_NAME__);
@@ -676,12 +676,12 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     ShowStartImage(this);
     LoadExistingSchemaFiles();  // load all known imported schemafiles
 }   // MyFrame()
- 
+
 void MyFrame::OnExit(wxCommandEvent& )
 {
     Close(true);
 }   //  OnExit()
- 
+
 void MyFrame::OnPrintPage(wxCommandEvent&)
 {
     AUTOTEST_BUSY("printPage");
@@ -693,7 +693,7 @@ void MyFrame::OnAbout(wxCommandEvent& )
 {
 // next include produced by buildDate.exe gives: static const char* buildDate = "woensdag 22 november 2023 @ 12:08:24";
 #include "buildDate.h"
-  
+
     wxString about;
     about.Printf(   __PRG_NAME__ + _(", version ") + __VERSION__ + _(", from ") + __YEAR__ +
                     _("\nThis is the 'bridge' scoring program of Harrie/Tinus\n"
@@ -705,7 +705,7 @@ void MyFrame::OnAbout(wxCommandEvent& )
 
     MyMessageBox( about, _("About ") + __PRG_NAME__ , wxOK | wxICON_INFORMATION);
 }   // OnAbout()
- 
+
 #include "wxsysinfoframe.h"
 void MyFrame::OnSystemInfo(wxCommandEvent& )
 {
@@ -783,7 +783,7 @@ void MyFrame::AutotestCreatePositions()
     positionsFile.AddLine(    "sSession  := \"" + _("session") + '"');
     positionsFile.AddLine(    "sPair     := \"" + _("pair"   ) + '"');
 
-  
+
     wxCommandEvent event;
     for (auto menuId = ID_MENU_SETUP_FIRST + 1; menuId < ID_MENU_SETUP_LAST; ++menuId)
     {
@@ -912,7 +912,7 @@ void MyFrame::OnMenuChoice(wxCommandEvent& a_event)
 }   // OnMenuChoice()
 
 void MyFrame::OnLogging(wxCommandEvent&)
-{   // show/hide a logwindow 
+{   // show/hide a logwindow
     AUTOTEST_BUSY("log");
     bool bShow = m_pMenuBar->IsChecked(ID_MENU_LOG);
     MyLog::Show(bShow); // my own logger --> made this before I knew the wxLogWindow :(

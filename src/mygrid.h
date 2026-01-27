@@ -22,7 +22,7 @@ public:
     void        EmptyGrid   ();                           // clear the grid and set search position to 0,0
     void        SetMaxChars (int row, int col, int iMaxCharsInColumn);              // setmax nr of chars in a (text)column
     void        SetMaxChars (int row, int col, const wxString& sMaxCharsInColumn);  // setmax nr of chars in a (text)column
-    void        PrintGrid   (const wxString& title, UINT nrOfColumnsToPrint, UINT notEmptyfrom = MaxRow);   //print grid content upto <x> columns, if columns > <y> not empty 
+    void        PrintGrid   (const wxString& title, UINT nrOfColumnsToPrint, UINT notEmptyfrom = MaxRow);   //print grid content upto <x> columns, if columns > <y> not empty
     void        UpdateLimitMax(int row, int col, double newMax); // update max limit for validator
     void        UpdateLimitMin(int row, int col, double newMin); // update min limit for validator
     void        SetLimitMinMax(int row, int col, double min, double max); // update min/max limit for validator

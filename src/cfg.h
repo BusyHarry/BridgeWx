@@ -120,8 +120,8 @@ namespace cfg
         EXT_SESSION_ASSIGNMENT_ID,         //  'n.'        x[pair] = index in pairNames[]
         EXT_SESSION_ASSIGNMENT_NAME,       //  'x.'        x[pair] = full sessionpairname (groupchars+pair like AA12)
         EXT_SESSION_ASSIGNMENT_NAME_PREV,  //  'x.'        x[pair] = previous session: full sessionpairname (groupchars+pair like AA12)
-        EXT_SESSION_RANK,                  //  'r.'        x[pair] = rank in session       
-        EXT_SESSION_RANK_PREV,             //  'r.'        x[pair] = rank in previous session       
+        EXT_SESSION_RANK,                  //  'r.'        x[pair] = rank in session
+        EXT_SESSION_RANK_PREV,             //  'r.'        x[pair] = rank in previous session
         EXT_SESSION_RANK_TOTAL,            //  't.'        x[pair] = total rank of 'pair' upto specific round (binairy)
         EXT_SESSION_RANK_TOTAL_PREV,       //  't.'        x[pair] = total rank of 'pair' upto previous round (binairy)
         EXT_SESSION_RESULT,                //  'u.'        x[pair] = result of 'pair' like "50.00   1  s4  paar 1", zero based
@@ -252,7 +252,7 @@ namespace cfg
     const GROUP_DATA* GetGroupDataFromSessionPair(UINT sessionPair);// the groupinfo of this sessionpair, nullptr if bad pairnr
 
     wxString    GetCopyrightDateTime();                     // as said, with leading/ending '\n'
-    wxString    GetBaseFolder();                            // main storage folder, fallback for non-writable folders 
+    wxString    GetBaseFolder();                            // main storage folder, fallback for non-writable folders
     bool        GetButler();                                // get the type of result-calculation
     void        SetButler(bool bOn);                        // set the type of result-calculation
 

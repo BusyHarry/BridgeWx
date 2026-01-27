@@ -2,7 +2,7 @@
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 //
 // will output to console and file <.\buildDate.h> a string like:
-// static const char* buildDate = "zaterdag 20 juli 2024 @ 16:07:36";  
+// static const char* buildDate = "zaterdag 20 juli 2024 @ 16:07:36";
 
 // locale to use when no commandline argument is given
 // #define DEFAULT_LOCALE "en-UK"
@@ -19,7 +19,7 @@ Format Description: formatting time/date representation
 %A Full name of the day of the week.
 %b Abbreviated month name.
 %B Full name of the month.
-%T equivalent to "%H:%M:%S" (the ISO 8601 time format) 
+%T equivalent to "%H:%M:%S" (the ISO 8601 time format)
 %c Preferred date and time (UTC) representation for the current locale.
 %C Century number (year/100) as a 2-digit integer.
 %d Day of the month as a decimal number (range 01 to 31).

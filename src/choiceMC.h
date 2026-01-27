@@ -46,7 +46,7 @@ private:
     #define MC_DEFAULT_NR_OF_ROWS 4
     PopupChoiceMC*  m_pPopup;
     wxTextCtrl*     m_pTxtctrl;
-    int             m_popupCharWidth; 
+    int             m_popupCharWidth;
     int             m_popupCharHeight;
     int             m_popupMaxWidth;
     bool            m_bAutoSize;

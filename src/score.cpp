@@ -119,12 +119,12 @@ wxString ScoreToString(int a_score)
     wxString result;
 
     if (a_score == SCORE_NONE)
-    {                 
+    {
         return result;              // empty if no score
     }
 
     if (a_score == SCORE_NP)
-    {                 
+    {
         return _("NP");                // not played
     }
 
@@ -482,7 +482,7 @@ bool DeleteScoresFromPair(UINT a_pair)
             score *= a_contract.doubled;
             return score;
         }   // contract down
-        
+
         if ( !IsInRange(a_contract.level, 1, 7) || !IsInRange(a_contract.overTricks, 0, 7 - a_contract.level) )
         {
             a_errorDescription = _("more tricks then possible in a game??\n");
@@ -612,7 +612,7 @@ bool DeleteScoresFromPair(UINT a_pair)
 
     wxString GetContractExplanation()
     {
-        wxString result = 
+        wxString result =
           _("-x[*[*]] or y'SUIT'[[+|-]x][*[*]]   calculate the score for:\n"
             "      'x'    = the number of over/under tricks.\n"
             "      'y'    = the level of the contract.\n"

@@ -40,7 +40,7 @@ namespace cfg
     static wxString         ssPrinterName;          // the windows name of the printer
     static wxString         ssMinMaxClub;           //  min/max as a string: "1 120"
     static int              siPrinterType;          // the type: file or winprinter
-    static constexpr auto   INITIAL_HASH= -1; 
+    static constexpr auto   INITIAL_HASH= -1;
     static int              siConfigHash= INITIAL_HASH;   // 'hash' from active game and session, so users can check when to save/reload data
     static UINT             suSession;              // 0=single match, >=1 match consists of more then one session
     static UINT             suMaxAbsent;            // max count of absency to be in the results
@@ -134,7 +134,7 @@ namespace cfg
         wxArrayString empty;
         HandleCommandline( empty, false ); // open original db again
     }   // DataConversionRestore()
-    
+
     void DataConversionSetMatch(const wxString& a_match)
     {
         if (!sbIsBackuped) DataConversionBackup();
@@ -514,7 +514,7 @@ namespace cfg
         if (a_sessionId == CURRENT_SESSION)  a_sessionId = suSession;
         switch (a_ext)
         {
-        case EXT_DATABASE: 
+        case EXT_DATABASE:
             extension = ".db";
             break;
         case EXT_BIN:

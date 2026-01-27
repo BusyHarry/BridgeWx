@@ -81,7 +81,7 @@ private:
 
 static wxString MakePath(keyId id, UINT session = DEFAULT_SESSION )
 {
-    return session == DEFAULT_SESSION ? 
+    return session == DEFAULT_SESSION ?
         "/main/" + dbKeys[id]
       : FMT("/%u/%s", session, dbKeys[id]);
 }   // MakePath()
@@ -290,7 +290,7 @@ bool ClubnamesWrite(const std::vector<wxString>& clubNames)
     bool bResult = true;
     for (const auto& it : clubNames)
     {
-        if (index && !it.IsEmpty()) 
+        if (index && !it.IsEmpty())
             if (!s_pConfig->Write(FMT("%u",index), FMT("\"%s\"", EncodeString(it)))) bResult = false;;
         ++index;
     }
@@ -328,7 +328,7 @@ bool ScoresRead(vvScoreData& scoreData, UINT session)
         for (const auto& it : splitValues)
         {
             score::GameSetData setData; // ensure that contracts are cleared!
-            char nsScore   [10] = {0};  // {1,2,'score','score'} or {1,2,'score','score',"nsContract","ewContract"} 
+            char nsScore   [10] = {0};  // {1,2,'score','score'} or {1,2,'score','score',"nsContract","ewContract"}
             char ewScore   [10] = {0};
             char nsContract[20] = {0};
             char ewContract[20] = {0};
@@ -846,7 +846,7 @@ static void DoGroup(wxFileConfig& config, wxString group)
     long entry_index;
     for (bool bHasNextEntry = config.GetFirstEntry(key, entry_index);
         bHasNextEntry;
-        bHasNextEntry = config.GetNextEntry(key, entry_index)) 
+        bHasNextEntry = config.GetNextEntry(key, entry_index))
     {   // show entries in current group
         wxString value = config.Read(key, ES);
         wxMessageOutputDebug d;

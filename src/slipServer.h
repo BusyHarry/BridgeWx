@@ -83,7 +83,7 @@ private:
     };
 
     enum class Suits
-    {                   // the possible suits 
+    {                   // the possible suits
           Clubs = 1   , sMin = Clubs
         , Diamonts
         , Hearts

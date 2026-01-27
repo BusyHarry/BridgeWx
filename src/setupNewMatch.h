@@ -13,7 +13,7 @@ class MyTextCtrlWithValidator;
 
 class SetupNewMatch : public Baseframe
 {
-public: 
+public:
 
     explicit SetupNewMatch(wxWindow* pParent, UINT pageId);
             ~SetupNewMatch() override;

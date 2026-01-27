@@ -50,7 +50,7 @@ wxPoint GetStaticRectPosition()
     spPosition.x += STATIC_SIZE;
     if (spPosition.x > 600)
     {
-        spPosition.x  = 0; 
+        spPosition.x  = 0;
         spPosition.y += STATIC_SIZE;
     }
     return spPosition;
@@ -254,14 +254,14 @@ bool Baseframe::AutotestAddMousePos(MyTextFile* a_pFile, const wxWindow* a_pWind
     else
     {   // 'normal' window:  text or button or ...
         AutotestAddWindowPos(a_pFile, a_pWindow, a_positionName);   // mousepos info
-        // next lines will try to get a 'title' of this window so we can access it by name i.s.o. mousepositions 
+        // next lines will try to get a 'title' of this window so we can access it by name i.s.o. mousepositions
         auto pChoiceMC = dynamic_cast<const MyChoiceMC*> (a_pWindow);
         if (pChoiceMC) AutotestAddLabel(a_pFile, a_positionName, pChoiceMC->GetTextCtrl()->GetLabel());
         else
         {
             auto pMyChoice = dynamic_cast<const MyChoice*> (a_pWindow);
             if (pMyChoice) AutotestAddLabel(a_pFile, a_positionName, pMyChoice->GetLabel());
-            else 
+            else
             {
                 auto pMywxComboBox = dynamic_cast<const MywxComboBox*> (a_pWindow);
                 if (pMywxComboBox)
@@ -341,7 +341,7 @@ void MyChoice::Init(UINT a_count, UINT a_selection, UINT a_offset)
     {
         Append(U2String(count+a_offset));
     }
-    
+
     SetSelection(a_selection);
 }   // Init()
 
@@ -472,7 +472,7 @@ int MyMessageBox(const wxString& message, const wxString& caption, long style, c
 // display a message during some time and selfdestruct afterwards (like a tooltip)
 void BusyBox(const wxString& message, int milisecondsShow, const wxPoint& position)
 {
-    class bb 
+    class bb
     {
     public:
         ~bb(){}

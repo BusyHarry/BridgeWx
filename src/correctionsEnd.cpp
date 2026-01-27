@@ -38,9 +38,9 @@ CorrectionsEnd::CorrectionsEnd(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_
     m_theGrid->SetColSize(COL_COR_GAMES       , SIZE_GAMES        ); m_theGrid->SetColLabelValue(COL_COR_GAMES       , _("games"   )); m_theGrid->SetColLabelAutoTest(COL_COR_GAMES       , "games");
     wxGridCellAttr* pAttr = new wxGridCellAttr; pAttr->SetAlignment(wxALIGN_RIGHT, wxALIGN_CENTER_VERTICAL);
                       m_theGrid->SetColAttr(COL_PAIRNAME_SESSION, pAttr);
-    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_SCORE       , pAttr); 
-    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_BONUS       , pAttr); 
-    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_GAMES       , pAttr); 
+    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_SCORE       , pAttr);
+    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_BONUS       , pAttr);
+    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_GAMES       , pAttr);
 
     auto search   = CreateSearchBox();
     auto okCancel = CreateOkCancelButtons();
@@ -80,11 +80,11 @@ void CorrectionsEnd::AutotestRequestMousePositions(MyTextFile* a_pFile)
     int rows = m_theGrid->GetNumberRows();
 
     for (int row = 0; row < rows; ++row)
-    { 
+    {
         wxString score  = m_theGrid->GetCellValue(row, COL_COR_SCORE);
         wxString bonus  = m_theGrid->GetCellValue(row, COL_COR_BONUS);
         if (score.IsEmpty() && bonus.IsEmpty()) continue;
-            
+
         cor::CORRECTION_END cor;
         if (score.IsEmpty())
         {   // we only have a bonus
@@ -183,7 +183,7 @@ bool CorrectionsEnd::OnCellChanging(const CellInfo& a_cellInfo)
         {   // if inrange: don't show bonus data, if value = 0 or when we already have a score
             if (col == COL_COR_BONUS && (value == 0 || !m_theGrid->GetCellValue(row, COL_COR_SCORE).IsEmpty()))
             {
-                ;   
+                ;
             }
             else
             {
@@ -259,7 +259,7 @@ void CorrectionsEnd::RefreshInfo()
     }
 
     auto corrections = cor::GetCorrectionsEnd();
-    
+
     for (const auto& [globalPair, ce] : *corrections)
     {
         bool bIgnore  = ce.score == SCORE_IGNORE;

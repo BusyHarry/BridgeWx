@@ -222,9 +222,9 @@ void TestIp()
     auto hbn = gethostbyname(full);
     struct hostent* hbn_1 = hbn;  MY_UNUSED(hbn_1);
     /*
-    char    ** h_aliases;   alias list 
-    short   h_addrtype;              host address type 
-    short   h_length;                length of address 
+    char    ** h_aliases;   alias list
+    short   h_addrtype;              host address type
+    short   h_length;                length of address
     char    * * h_addr_list;
     */
     auto len = hbn->h_length; MY_UNUSED(len);

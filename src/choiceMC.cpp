@@ -61,7 +61,7 @@ bool PopupChoiceMC::Create( wxWindow* parent )
         wxPoint(0,0), wxDefaultSize, wxLC_LIST | wxLC_SINGLE_SEL | wxLC_ALIGN_LEFT | wxSIMPLE_BORDER );
     Bind(wxEVT_LEFT_DOWN  , &PopupChoiceMC::OnMouseClick, this);
     Bind(wxEVT_MOTION     , &PopupChoiceMC::OnMouseMove , this);
-#if 0 
+#if 0
     Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED,[this](wxListEvent & evt)
     {   // show mouse/cursor movements
         evt.Skip();
@@ -75,7 +75,7 @@ bool PopupChoiceMC::Create( wxWindow* parent )
             m_itemHere = evt.GetIndex();    // 'simulate' mousemove result
             ItemActivated();
         });
-   
+
     return bResult;
 }   // Create()
 
@@ -205,7 +205,7 @@ ChoiceMC::ChoiceMC(wxWindow* a_pParent, const wxString& a_textCtrlTitle) : wxCom
     SetColumnWidthInChars(6);                                   // default 6 chars wide
     m_textMinSize = GetMargins().x + GetButtonSize().GetX();    // minimum size of combobox if no text in it
     m_pPopup->Bind(wxEVT_KILL_FOCUS, [this](wxFocusEvent&){m_timerPopupKillFocus.StartOnce(35);});
-    
+
     IF_TEST MyLogDebug(_("ChoiceMC() comboMinSize=%i, charWidth=%i"), m_textMinSize, m_popupCharWidth);
     SetMaxNumberOfRows(MC_DEFAULT_NR_OF_ROWS);
     ResetTextctrlSize();
@@ -214,7 +214,7 @@ ChoiceMC::ChoiceMC(wxWindow* a_pParent, const wxString& a_textCtrlTitle) : wxCom
 ChoiceMC::~ChoiceMC() {}
 
 bool ChoiceMC::SetSelection(int a_selection)
-{ 
+{
     /*
     * remark: this was in begin 2024, now Oct 2024 it seems to be solved with (sic!) a new windows
     * redistributable package for VS.

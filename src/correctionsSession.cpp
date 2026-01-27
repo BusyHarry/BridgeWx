@@ -62,11 +62,11 @@ CorrectionsSession::CorrectionsSession(wxWindow* a_pParent, UINT a_pageId) :Base
     wxGridCellAttr* pAttr = new wxGridCellAttr;
     pAttr->SetAlignment(wxALIGN_LEFT, wxALIGN_CENTER_VERTICAL);
                       m_theGrid->SetColAttr(COL_PAIRNAME_SESSION, pAttr); pAttr->SetAlignment(wxALIGN_RIGHT, wxALIGN_CENTER_VERTICAL);
-    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_PROCENT     , pAttr); 
-    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_MP          , pAttr); 
-    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_MAX         , pAttr); 
-    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_EXTRA       , pAttr); 
-    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_GAMES       , pAttr); 
+    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_PROCENT     , pAttr);
+    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_MP          , pAttr);
+    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_MAX         , pAttr);
+    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_EXTRA       , pAttr);
+    pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_GAMES       , pAttr);
 
     auto search   = CreateSearchBox();
     auto okCancel = CreateOkCancelButtons();
@@ -105,7 +105,7 @@ void CorrectionsSession::AutotestRequestMousePositions(MyTextFile* a_pFile)
     cor::mCorrectionsSession corrections;    // map of session corrections
     int rows = m_theGrid->GetNumberRows();
     for (int row = 0; row < rows; ++row)
-    { 
+    {
         //        CORRECTION_SESSION() {type = '%'; correction = 0; extra = 0; maxExtra = 0; games = 0;}
         //         char type; int correction; long extra; int maxExtra; UINT games
         wxString procent = m_theGrid->GetCellValue(row, COL_COR_PROCENT);
@@ -114,7 +114,7 @@ void CorrectionsSession::AutotestRequestMousePositions(MyTextFile* a_pFile)
         wxString extra   = m_theGrid->GetCellValue(row, COL_COR_EXTRA  );
         wxString games   = m_theGrid->GetCellValue(row, COL_COR_GAMES  );
         if ( procent.IsEmpty() && mp.IsEmpty() && maxe.IsEmpty() && extra.IsEmpty() ) continue;
-            
+
         cor::CORRECTION_SESSION cor;
         if (mp.IsEmpty())
         {   // if procent AND mp are empty, we use '%' type

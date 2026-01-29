@@ -6,7 +6,7 @@
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 #include <wx/msgdlg.h>
-#include <wx/textdlg.h> 
+#include <wx/textdlg.h>
 #include <wx/checkbox.h>
 #include <wx/filedlg.h>
 #include <wx/choicdlg.h>
@@ -48,7 +48,7 @@ Board: https://en.wikipedia.org/wiki/Glossary_of_contract_bridge_terms
  2- A device that keeps each player's cards separate for duplicate bridge.
  3- The dummy's hand. For example, "You're on the board" means "The lead is in the dummy".
 
-* 
+*
 */
 static const wxString ssDbg = "dbg";
 #define OUTPUT_TEXT_FORMATTED(fmt,...) OutputText(FMT(fmt, __VA_ARGS__))
@@ -95,7 +95,7 @@ private:
     int         m_promptPosition;               // first position after prompt: changes are ONLY allowed AFTER this position
     wxString    m_command;                      // the data entered after the prompt, available at \n entry
     wxBoxSizer* m_pVSizer;                      // sizer for console and buttons
-    wxBoxSizer* m_pHSizer;                      // sizer for the console buttons 
+    wxBoxSizer* m_pHSizer;                      // sizer for the console buttons
     bool        m_bAsyncPrompt;                 // (don't) show prompt
     bool        m_bFirstPrompt;                 // only show initial prompt if set (user could have done it already)
     wxButton*   m_pButtonSave;
@@ -110,7 +110,7 @@ private:
 
 };
 
-Console::Console(wxWindow* parent, const wxString& a_label, const wxString& a_prompt) 
+Console::Console(wxWindow* parent, const wxString& a_label, const wxString& a_prompt)
     : wxTextCtrl(parent, wxID_ANY, a_label, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_PROCESS_ENTER)
 {
     ShowNativeCaret(true);
@@ -201,7 +201,7 @@ Console::Console(wxWindow* parent, const wxString& a_label, const wxString& a_pr
                  CallAfter([this]{ wxYield();wxMilliSleep(50);wxYield(); Thaw();});
              }
         }
-        );}); 
+        );});
         CallAfter([this]{ Bind(wxEVT_SET_FOCUS,[this]( wxFocusEvent&evt)
                                                 {
                                                     Freeze();
@@ -309,7 +309,7 @@ void Console::OnChar(wxKeyEvent& a_event)
 
     if (asciiChar == WXK_BACK) --insertionPoint;
     if ( insertionPoint < m_promptPosition )
-    {   
+    {
         if (asciiChar != WXK_CONTROL_C) // don't eat ^C: leave this key, so you can copy and paste
             a_event.Skip(false);        // eat key: don't allow changes in prompt area or area before it: readonly part
 // enter should be handled!       return;
@@ -662,7 +662,7 @@ MyPrint::MyPrint(wxArrayString* a_pOutArrayString)
 }   // MyPrint()
 
 void MyPrint::ClearScreen()
-{ 
+{
     MY_MEMSET(&m_screen[0][0], ' ', m_screenLength);
     m_maxLine = -1;
 }   // ClearScreen()
@@ -809,7 +809,7 @@ void MyPrint::PrintTable(const prn::table::TableInfo& a_tableInfo)
 {
     if (m_bUseRealPrinter)
     {
-        prn::PrintTable(a_tableInfo);  
+        prn::PrintTable(a_tableInfo);
     }
     else
     {   // interprete tableInfo and put in screenbuffer
@@ -1071,7 +1071,7 @@ wxString Debug::GetBorrowTableAsString(UINT a_table, UINT a_round)
 /* example guide-card:
 .   .   .   .   .   .   .   .   .   .  .   .   .   .   .   .   .   .   .   .
 
-ds Janssen - Pietersen                 hh Klaassen - Jacobs                 
+ds Janssen - Pietersen                 hh Klaassen - Jacobs
 extra info................extra     .  extra info................extra     .
 ╔════════════════════════════════╗  .  ╔════════════════════════════════╗  .
 ║ Paar 13               14 paren ║  .  ║ Paar 14               14 paren ║  .
@@ -1167,7 +1167,7 @@ void Debug::GuideCard( UINT pair, bool a_bAskExtra )
         }
 
         StringDoubler(L"  ╚═════╩═══════╩═════╩════════════╝  .", pair);
-        pair +=2; 
+        pair +=2;
     } while ( m_bAllPairs && (pair <= m_pairs) );
     PrintSeparator();
     if (m_bPrintNext)
@@ -1341,7 +1341,7 @@ void Debug::List(const wxChar* pBuf)
             {
                 for (pair = 1; pair <= m_pairs; ++pair)
                 {
-                    if ( (m_schema.GetTable(pair,round) == table) && m_schema.IsNs(pair,round) ) 
+                    if ( (m_schema.GetTable(pair,round) == table) && m_schema.IsNs(pair,round) )
                         OUTPUT_TEXT_FORMATTED(_("round %u, games %s, pairs %2u (NS) + %2u (EW)  %s\n"),
                                                 round,SetToGamesAsString(m_schema.GetSet(table,round)),
                                                 pair,m_schema.GetOpponent(pair,round),
@@ -1733,7 +1733,7 @@ void Debug::PrintScoreSlips(UINT a_setSize, UINT a_firstSet, UINT a_nrOfSets, UI
      0 ================================================================================  |  |  |  |  |
      1 |                         |      |    Contract     |         |                 |  |  |  |  |  |
      2 | ROUND :                 | Game |   NS       EW   |Resultaat| Score NS + or - |  |  |  |  |  |
-     3 |=========================|======|===========================|=================|  =  |  |  |  | 
+     3 |=========================|======|===========================|=================|  =  |  |  |  |
      4 | TABLE :                 |  X   |*       |*       |         |                 |  3  |  |  |  |
      5 |=========================|======|========|========|=========|=================|     =  |  |  |
      6 |    NS :                 |  X+1 |*       |*       |         |                 |     5  |  |  |
@@ -1775,7 +1775,7 @@ void Debug::PrintScoreSlips(UINT a_setSize, UINT a_firstSet, UINT a_nrOfSets, UI
     UINT nrOfSets       = a_nrOfSets;       // input param
     UINT repeatCount    = a_repeatCount;    // input param
     wxString extra      = a_extra;          // input param
-    
+
     int maxVPos         = SL_V5 + (setSize > 4 ? (setSize - 4)*2 : 0);
 
     prn::table::Line lines[]=
@@ -1896,7 +1896,7 @@ void Debug::PrintGuideNew(UINT a_pair)
         --H3---------------->20
         --H4----------------------------->33
         --H5-------------------------------->37
-        
+
 */
 #define G_H0    0
 #define G_H1    6
@@ -1987,7 +1987,7 @@ void Debug::PrintGuideNew(UINT a_pair)
 
             tableInfo.textsV.push_back({{G_H0,LINES_IN_GUIDE+1}, MakeSeparator(G_H5+1)});
         }
-     
+
         myPrint.PrintTable(tableInfo);      // print current guide
         if (!bAllPairs) break;              // we are done!
 

@@ -15,7 +15,6 @@
 #include "cfg.h"
 #include "names.h"
 #include "fileIo.h"
-#include "database.h"
 
 namespace names
 {
@@ -172,7 +171,7 @@ wxString PairnrSession2SessionText(UINT a_sessionPair, bool a_bForceAbsent)
             return result;
         }
     }
-#endif    
+#endif
     return ssNotSet;  //?????
 }   // PairnrSession2SessionText()
 

@@ -153,7 +153,7 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     AUTOTEST_ADD_WINDOW(m_pChoiceRound       , CHOICE_ROUND );
     AUTOTEST_ADD_WINDOW(m_pChoiceGame        , CHOICE_GAME  );
     AUTOTEST_ADD_WINDOW(m_pCheckboxContract  , "CheckContract");
-    
+
     m_description = "ScoreEntry";
 }   // ScoreEntry()
 
@@ -247,7 +247,7 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
         if (bNS)    // remove EW score, if present...
             m_theGrid->SetCellValue(row, COL_SCORE_EW, ES);
     }
-    else 
+    else
     {   // we have a non-empty score, now test if its a possible one
         score::ScoreValidation result = score::IsScoreValid(score, game, bNS);
         if ((score != SCORE_NP) && !result == score::ScoreValid)
@@ -292,7 +292,7 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
     m_theGrid->SetCellValue(row, COL_CONTRACT_NS, ES);  // empty contractname if you enter the score yourself.
     m_theGrid->SetCellValue(row, COL_CONTRACT_EW, ES);
     // now position to next empty score: do it delayed to prevent interaction with 'enter'
-    // If there are 2 or more empty scores in the next lines, the 'enter' would work on the repositioning 
+    // If there are 2 or more empty scores in the next lines, the 'enter' would work on the repositioning
     CallAfter(&ScoreEntry::GotoNextEmptyScore);
 
     // now we have a 'real' NS score, or a complete NS/EW adjusted score, so save the data

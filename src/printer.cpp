@@ -95,7 +95,7 @@ static wxString s_sDebugString;  	// used to get some info, and then show it in 
 // some constants used to establish default values that work for me :)
 //static const int    sc_iDefaultCodepage     = 437;          // codepage used for translation from ascii <--> wide chars = MS-DOS U.S. English
 static const char   sc_cDefaultFont[]       = "Lucida Console";// "Consolas";   // fixed pitch font
-// L"DejaVu Sans Mono" L"Lucida Console" 
+// L"DejaVu Sans Mono" L"Lucida Console"
 static const int    sc_iDefaultPointsize    = 11;           // 12+'Consolas' -> 84 chars/line+58 lines/page. 11+'Consolas' -> 95 chars/line+63 lines/page.
 static const int    sc_iHorizontalMargin    = 2;            // leftmargin in characters
 static const int    sc_iVerticalMargin      = 1;            // topmargin in lines
@@ -271,6 +271,9 @@ private:
     #define X(x) ((x)*m_iCharWidth  + m_iHorizontalOffset)  //determine the horizontal print position
     #define Y(y) ((y)*m_iCharHeight + m_iVerticalOffset  )  //determine the vertical print position
 
+    MyLinePrinter           (const MyLinePrinter&) = delete;    // cppcheck remarks....
+    MyLinePrinter& operator=(const MyLinePrinter&) = delete;
+    bool operator         ==(const MyLinePrinter&) = delete;
 };
 
 /*
@@ -302,7 +305,7 @@ MyLinePrinter::MyLinePrinter()
 , m_hOriginalFont       ( 0 )
 , m_hNewFont            ( 0 )
 , m_sPrinterFont        ( sc_cDefaultFont )
-{ 
+{
     m_sLineBuffer.reserve(100);         // assume single line always smaller then 100 chars
 }   // MyLinePrinter()
 
@@ -379,7 +382,7 @@ bool MyLinePrinter::PrintAFile(const wxString& a_fileName, const wxString& a_tit
         if (!buf )
         {
             bResult = false;        // out of memory??
-            break;   
+            break;
         }
 
         size_t count;
@@ -410,7 +413,7 @@ void MyLinePrinter::InitFont(LOGFONT* pLogFontInfo)
     if (pLogFontInfo == nullptr)
     {
         pLogFontInfo = &lf;
-        // Initialize members of the LOGFONT structure.  
+        // Initialize members of the LOGFONT structure.
 //      lf.lfCharSet        = FS_LATIN1 ;
         lf.lfCharSet        = ANSI_CHARSET;
         lf.lfOutPrecision   = OUT_STRING_PRECIS;        // OUT_CHARACTER_PRECIS=2, OUT_STRING_PRECIS=1, OUT_DEFAULT_PRECIS=0, OUT_STROKE_PRECIS=3, OUT_DEVICE_PRECIS=5, OUT_TT_PRECIS=4, OUT_RASTER_PRECIS=6
@@ -451,7 +454,7 @@ void MyLinePrinter::InitFont(LOGFONT* pLogFontInfo)
         DeleteObject( m_hNewFont );
     }
 
-    m_hNewFont = CreateFontIndirect(pLogFontInfo);       // Create a logical font based on the user's selection.  
+    m_hNewFont = CreateFontIndirect(pLogFontInfo);       // Create a logical font based on the user's selection.
 
     HFONT tmpFont = reinterpret_cast<HFONT>(SelectObject(m_hPrinter, m_hNewFont));     //activate the new font
 
@@ -496,7 +499,7 @@ void MyLinePrinter::SelectFont()
     LOGFONT     lf = {0};
     CHOOSEFONT  cf = {0};
 
-    // Initialize members of the CHOOSEFONT structure.  
+    // Initialize members of the CHOOSEFONT structure.
     cf.lStructSize      = sizeof( cf );
     lf.lfCharSet        = FS_LATIN1 ;
     cf.lpLogFont        = &lf;
@@ -608,7 +611,7 @@ bool MyLinePrinter::PrinterOpen()
 
 
     //Logical units are device dependent pixels, so this will create a handle to a logical font that is 36 pixels in height.
-    //The width, when set to 10, will cause the font mapper to choose a font which, in this case, is compressed. 
+    //The width, when set to 10, will cause the font mapper to choose a font which, in this case, is compressed.
     //The font face name will be Arial. This time nEscapement is at 250 tenths of a degree (25 degrees)
     hFont = CreateFont(36, 10, 250, 0, FW_DONTCARE, false, true, false, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
         CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, TEXT("Arial"));
@@ -1055,7 +1058,7 @@ HFONT MyCreateFont(HDC a_hdc, char fontBuf[100])
     CHOOSEFONT  cf      ={0};
     LOGFONT     lf      ={0};
 
-    // Initialize members of the CHOOSEFONT structure.  
+    // Initialize members of the CHOOSEFONT structure.
     lf.lfCharSet = FS_LATIN1 ;// EASTEUROPE_CHARSET; //OEM_CHARSET;
 
     cf.lStructSize      = sizeof( CHOOSEFONT );
@@ -1075,7 +1078,7 @@ HFONT MyCreateFont(HDC a_hdc, char fontBuf[100])
     cf.nSizeMax         = 0;
     //    createfont: .fnWeight = FW_NORMAL;  //'normale' dikte vande chars
 
-    // Display the CHOOSEFONT common-dialog box.  
+    // Display the CHOOSEFONT common-dialog box.
 
     ChooseFont(&cf);
 
@@ -1104,9 +1107,9 @@ HFONT MyCreateFont(HDC a_hdc, char fontBuf[100])
     // set font to 12 points: '-' means: find a compatible font
     lf.lfHeight = -MulDiv(12, GetDeviceCaps(a_hdc, LOGPIXELSY), 72);
 
-    // Create a logical font based on the user's  
-    // selection and return a handle identifying  
-    // that font.  
+    // Create a logical font based on the user's
+    // selection and return a handle identifying
+    // that font.
     strcpy(fontBuf, lf.lfFaceName);
     hfont = CreateFontIndirect(&lf);
     return ( hfont );

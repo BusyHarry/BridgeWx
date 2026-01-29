@@ -216,7 +216,7 @@ void SlipServer::SetupGrid()
     m_theGrid->EnableEditing(false);
     m_theGrid->SetCellHighlightPenWidth(0);
     m_theGrid->SetCellHighlightROPenWidth(0);
-   
+
     m_rounds       = SchemaInfo(groupData[0].schemaId).GetNumberOfRounds();
     m_activeRound  = 1;
     m_pChoiceBoxRound->Init(m_rounds, m_activeRound-1); //m_activeRound is 1 based!
@@ -796,7 +796,7 @@ SlipServer::SlipResult SlipServer::HandleResultLine(const wxString& a_result)
             )
        BAD(SlipResult::ERROR_BAD_CMD);
     return error;
-#undef BAD 
+#undef BAD
 }   // HandleResultLine()
 
 bool SlipServer::HandleResultFile()
@@ -828,8 +828,8 @@ bool SlipServer::OkPairs(const GameInputData& a_data)
     const auto& group = (*cfg::GetGroupData())[a_data.group-1];
     auto offset       = group.groupOffset;
     auto maxPair      = offset + group.pairs;
-    return (     offset  <  a_data.ns && offset  <  a_data.ew 
-              && maxPair >= a_data.ns && maxPair >= a_data.ew 
+    return (     offset  <  a_data.ns && offset  <  a_data.ew
+              && maxPair >= a_data.ns && maxPair >= a_data.ew
            );
 }   // OkPairs()
 

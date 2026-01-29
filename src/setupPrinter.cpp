@@ -92,7 +92,7 @@ void SetupPrinter::RefreshInfo()
 void SetupPrinter::BackupData()
 {
     cfg::SetLinesPerPage    (wxAtoi(m_pTxtCtrlLinesPP->GetValue())          );
-    cfg::SetFF              (m_pChkBoxFF             ->GetValue()           ); 
+    cfg::SetFF              (m_pChkBoxFF             ->GetValue()           );
     cfg::SetNetworkPrinting (m_pChkBoxRemote         ->GetValue()           );
     cfg::SetPrinterName     (m_choiceBoxPrn          ->GetStringSelection() );
 }   // BackupData()

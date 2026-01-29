@@ -26,7 +26,7 @@ static const wxWindow*  spMainframe     {nullptr};  //ptr to mainframe to positi
 extern const wxString ES;       // an Empty String
 
 struct frameInfo
-{   // info for delayed destruction 
+{   // info for delayed destruction
     MyLogFrame* pLogFrame = nullptr;
     wxWindowID  frameId   = wxID_ANY;
     frameInfo() {}

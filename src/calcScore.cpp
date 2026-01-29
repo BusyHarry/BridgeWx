@@ -14,7 +14,6 @@
 #include "names.h"
 #include "printer.h"
 #include "utils.h"
-#include "database.h"
 #include "fileIo.h"
 #include "main.h"
 
@@ -426,7 +425,7 @@ void CalcScore::CalcSession()
     m_maxGame = score::GetNumberOfGames();       // highest gamenr
 
     svFrequencyInfo.clear();
-    svFrequencyInfo.resize(m_maxGame+1ULL);                        
+    svFrequencyInfo.resize(m_maxGame+1ULL);
     svSessionResult.clear();
     svSessionResult.resize(m_numberOfSessionPairs+1ULL);
     svGameTops.resize(m_maxGame+1ULL);
@@ -479,7 +478,7 @@ void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
 {
     UINT sets = (*spvGameSetData)[game].size();
     if (sets == 0) return;      // nothing to do, not played yet
-    
+
     UINT  adjustedScoreCount = 0;
     std::vector<int> tmpScores;
     for ( auto it : (*spvGameSetData)[game])
@@ -537,7 +536,7 @@ void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
             // 100* to big!
             if (cfg::GetNeuberg())
                 points = RoundLong(points, 10);    // round to .1
-            else            // round to 
+            else            // round to
                 points = 10*RoundLong(points, 100);
         }
         else
@@ -547,7 +546,7 @@ void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
                 points = NeubergPoints(points,sets,neubergCount);
             else
                 points *=10;                // 1 decimal after dp!!
-        } 
+        }
 
         fs.points=points;
         fs.pointsEW = 0;
@@ -655,7 +654,7 @@ bool GetPlayerInfo(UINT a_pair, UINT a_game, PlayerInfo& a_playerInfo)
     auto end    = (*spvGameSetData)[a_game].end();
     auto it     = std::find_if (begin, end,
         [a_pair](const auto& setInfo){return setInfo.pairNS == a_pair || setInfo.pairEW == a_pair;});
-    
+
     if (it == end) return false;
     a_playerInfo.bHasPlayed = true;
     bool bIsNS = it->pairNS == a_pair;
@@ -1169,7 +1168,7 @@ void CalcScore::SaveFrequencyTable()
         MakeFrequenceTable(game, svFrqstringTable[game]);
         tableSize[game] = svFrqstringTable[game].size();
     }
-    
+
     m_txtFileFrqTable.MyCreate(cfg::ConstructFilename(cfg::EXT_FKW), MyTextFile::WRITE);
     AddHeader(m_txtFileFrqTable);
     size_t linesOnPage          = m_txtFileFrqTable.GetLineCount();
@@ -1383,7 +1382,7 @@ void CalcScore::CalcTotal()
             }
             totalBonus += sessionResults[session][pair].bonus;
         }
-        if (                                            // correct average if .... 
+        if (                                            // correct average if ....
             (absentCount != 0) &&                       // not always present
             (absentCount <= cfg::GetMaxAbsent()) &&     //   and not too often not present
             (maxSession != absentCount)                 //     and not always not present
@@ -2100,7 +2099,7 @@ void ValidateSessionCorrections(const cor::mCorrectionsSession* a_pNonValidatedC
         GetMainframe()->CallAfter([errorMsg]
             {   // if not CallAfter() we get the msgbox on an empty page
                 MyMessageBox(_("Bad data or combi-table results for non-combi player(s) ignored") + errorMsg
-                    , _("Warning"), wxOK | wxICON_INFORMATION); 
+                    , _("Warning"), wxOK | wxICON_INFORMATION);
             });
     }
 }   // ValidateSessionCorrections()
@@ -2146,7 +2145,7 @@ void GetValidatedEndCorrections4Session(cor::mCorrectionsEnd& a_ce, UINT a_sessi
             {   // if not CallAfter() we get the msgbox on an empty page
                 MyMessageBox(_("Invalid total-correction/end data, will be ignored")+ errorMsg
                                 , _("Warning"), wxOK | wxICON_INFORMATION
-                            ); 
+                            );
             });
     }
 

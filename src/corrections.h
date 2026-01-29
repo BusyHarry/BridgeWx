@@ -50,7 +50,7 @@ void SetCorrectionsSession(const mCorrectionsSession* pCorSession);
 void SetCorrectionsEnd    (const mCorrectionsEnd*     pCorEnd    );
 
 void InitializeCorrections();   // load all corrections if config changed
-void SaveCorrections();         // save changes when leaving corrections-editing 
+void SaveCorrections();         // save changes when leaving corrections-editing
 
 bool GetSessionResult           (UINT session, mCorrectionsEnd& sessionResult);        // for total result
 bool IsValidCorrectionSession   (UINT sessionPair, CORRECTION_SESSION& correctionSession, const wxString& input, bool bHasError);
@@ -58,4 +58,3 @@ bool IsValidCorrectionEnd       (UINT globalPair , const CORRECTION_END& correct
 
 }   // namespace cor
 #endif
- 

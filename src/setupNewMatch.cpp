@@ -113,7 +113,13 @@ void SetupNewMatch::UpdateSelection()
         }
         file = wxFindNextFile();
     }
-
+    if ( choices.size() == 0 )
+    {
+        if ( match.IsEmpty() )
+            match = "default";
+        choices.push_back(match);   // else we will get a match of type "-c..."
+        m_pTxtCtrlSession->SetValue("0");
+    }
     m_pComboBoxMatch->Set(choices);
     m_pComboBoxMatch->SetStringSelection(match);
 }   // UpdateSelection()

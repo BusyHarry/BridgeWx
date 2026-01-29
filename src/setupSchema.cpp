@@ -76,7 +76,7 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
     fgs->Add(m_pTxtCtrlNrOfGroups, 0, wxALIGN_CENTER_VERTICAL);
 
 // groupinfo
-//1) wxStaticText+wxChoice(group)   wxButton(nextgroup) 
+//1) wxStaticText+wxChoice(group)   wxButton(nextgroup)
     m_pChoiceBoxGroup = new MY_CHOICE(this, _("Group:"), _("Info of the different groups"), Unique(CHOICE_GROUP));
     m_pChoiceBoxGroup->Bind(wxEVT_CHOICE, &SetupSchema::OnSelectGroup, this );
 
@@ -393,7 +393,7 @@ void SetupSchema::OnLostFocusGames(wxFocusEvent& a_event)
 void SetupSchema::OnEnterRoundsSetSize(wxCommandEvent& )
 {
     LogMessage("SetupSchema::OnEnterRoundsSetSize()");
-    UpdateNrOfGames(); 
+    UpdateNrOfGames();
 //       a_event.Skip(); will ring the bell ??????????
 }   // OnEnterRoundsSetSize()
 
@@ -513,7 +513,7 @@ void SetupSchema::HandleAbsent()
     int grp     = m_pChoiceBoxGroup->GetSelection();            // this group is changing
     UINT absent = wxAtoi(m_pTxtCtrlAbsent->GetValue());
     if (absent <=  m_groupData[grp].pairs)
-    { 
+    {
         m_groupData[grp].absent = absent;
     }
     else

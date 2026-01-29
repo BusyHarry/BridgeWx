@@ -620,10 +620,10 @@ msgstr "Fout bij inlezen schema <%s>"
 
 #, c-format
 msgid ""
-" Error in database <%s> value in key <%s>: <%i> higher then max <%u>\n"
+"Error in database <%s> value in key <%s>: <%i> higher then max <%u>\n"
 "Will be ignored."
 msgstr ""
-" Fout in database <%s> waarde in sleutel '%s': '%i' groter dan max '%u'\n"
+"Fout in database <%s> waarde in sleutel <%s>: <%i> groter dan max '%u'\n"
 "Wordt genegeerd."
 
 msgid "database error"

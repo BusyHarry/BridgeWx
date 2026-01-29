@@ -52,7 +52,7 @@ wxString Ascii2Unicode(const char* a_inbuf, int a_length, int a_codePage)
         int count = ::MultiByteToWideChar
         (
             a_codePage, // code page
-            0,          // flags: 
+            0,          // flags:
             &toConvert, // input string
             1,          // its length (NUL-terminated if -1, else the number of chars to convert)
             outbuf,     // wide output buffer
@@ -230,14 +230,14 @@ wxString GetTime()
 wxString GetDateTime()
 {
     if (cfg::IsScriptTesting()) return __DAY__AUTO + " " + __DATE__AUTO + " "  __TIME__AUTO;
-    //xgettext:TRANSLATORS: Set order of types to your country order 
+    //xgettext:TRANSLATORS: Set order of types to your country order
     return wxDateTime::Now().Format(_("%A %B %d, %G %X"));    //zaterdag 12 augustus 2023 16:44:03
 }   // GetDateTime()
 
 UINT MyGetFilesize(const wxString& a_file)
 {
     union mysize{wxULongLong ull;UINT u;mysize(){ull=0;}};
-    
+
     mysize size;
     size.ull = wxFileName::GetSize(a_file);
     if (size.ull == wxInvalidSize)

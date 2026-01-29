@@ -11,7 +11,7 @@ class MyTextCtrlWithValidator;
 
 class SetupPrinter : public Baseframe
 {
-public: 
+public:
 
     explicit SetupPrinter(wxWindow* pParent, UINT pageId);
             ~SetupPrinter() override;

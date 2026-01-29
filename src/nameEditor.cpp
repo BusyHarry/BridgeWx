@@ -106,7 +106,7 @@ bool NameEditor::OnCellChanging(const CellInfo& a_cellInfo)
     {
         return CELL_CHANGE_OK;          // accept change
     }
-      
+
     int row = a_cellInfo.row;
     if (col == COL_CLUBNAME)
     {
@@ -171,7 +171,7 @@ bool NameEditor::OnCellChanging(const CellInfo& a_cellInfo)
         {
             if (ExistClub(newId))
                 m_theGrid->SetCellValue ( row, COL_CLUBNAME, GetClubName(newId) );
-            else 
+            else
                 return CELL_CHANGE_REJECTED;    // not allowed to create clubid
         }
     }

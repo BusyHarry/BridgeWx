@@ -243,7 +243,7 @@ void SchemaInfo::Init()
         m_pSchema       = &newSchemaTable[m_id];
         m_rounds        = m_pSchema->rounds;
         m_pairs         = m_pSchema->pairs;
-        m_tables        = m_pSchema->tables;  
+        m_tables        = m_pSchema->tables;
         m_name          = m_pSchema->name;
         m_bSchemaInitOk = true;
     }
@@ -263,7 +263,7 @@ schema::NS_EW SchemaInfo::GetPairs(UINT a_table, UINT a_round) const
 UINT SchemaInfo::GetSet( UINT table, UINT round) const
 {
     if ( (table == 0) || !IsOk() ) return 0;     // no schema or rest-table at uneven number of pairs!!
- 
+
     assert(table <= m_tables);
     assert(round && round <= m_rounds);
     return m_pSchema->tableData[round][table].set;

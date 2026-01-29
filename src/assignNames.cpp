@@ -356,4 +356,4 @@ void AssignNames::PrintPage()
     UINT nrOfColumns = cfg::GetActiveSession() > 1 ? m_theGrid->GetNumberCols() : 2;
     m_theGrid->PrintGrid(title, nrOfColumns);
 }   // PrintPage()
- 
+

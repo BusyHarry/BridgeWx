@@ -82,7 +82,7 @@ static wxString ConvertType2String(wxBitmapType format)
     switch(format)
     {
         case wxBITMAP_TYPE_JPEG:
-        case wxBITMAP_TYPE_JPEG_RESOURCE: 
+        case wxBITMAP_TYPE_JPEG_RESOURCE:
             return "JPG";
         case wxBITMAP_TYPE_PNG_RESOURCE:
         case wxBITMAP_TYPE_PNG:

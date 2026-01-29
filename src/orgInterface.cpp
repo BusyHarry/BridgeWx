@@ -534,7 +534,7 @@ namespace  org
 
                 for (UINT ii=1; ii <= nrOfPairs; ++ii)
                 {
-                    a_pairInfo.push_back(names::PairInfo(Ascii2Unicode(theData.old2[ii].name), theData.old2[ii].clubindex)); 
+                    a_pairInfo.push_back(names::PairInfo(Ascii2Unicode(theData.old2[ii].name), theData.old2[ii].clubindex));
                 }
             }
             else
@@ -545,7 +545,7 @@ namespace  org
                     for (UINT ii = 1; ii <= nrOfPairs; ++ii)
                     {
                         wxString name = Ascii2Unicode(theData.old3[ii].name);
-                        a_pairInfo.push_back(names::PairInfo(name, theData.old3[ii].clubindex)); 
+                        a_pairInfo.push_back(names::PairInfo(name, theData.old3[ii].clubindex));
                     }
                 }
                 else
@@ -573,7 +573,7 @@ namespace  org
         {
             auto clubIndex = (UINT)theData.old2[pair].clubindex;
             if ( clubIndex < a_clubNames.size() )
-                a_clubNames[clubIndex] = Ascii2Unicode(theData.old2[pair].club); 
+                a_clubNames[clubIndex] = Ascii2Unicode(theData.old2[pair].club);
         }
     }   // TryOldSpec4Clubs()
 
@@ -725,10 +725,10 @@ namespace  org
 
         if (! ReadFileBinairy(file, &buf, size))
             return false;
-        
+
         for (UINT pair = 0; pair <= MAX_PAIRS3; ++pair)
         {
-            a_assignmentsName[pair] = 
+            a_assignmentsName[pair] =
                   type == AssignType::old
                 ? buf.old[pair]
                 : type == AssignType::cur
@@ -924,7 +924,7 @@ namespace  org
         bool        bError      = false;
         UINT        restSize    = 0;
         UINT        nrOfGames   = score::GetNumberOfGames(&a_scoreData);
-        
+
 //      UINT        rst = std::accumulate(a_scoreData.begin() + 1, a_scoreData.begin() + nrOfGames + 1, 0U, [](UINT rst, const auto& data) {return rst + data.size(); });
         for (UINT game = 1; game <= nrOfGames; ++game)
             restSize += 1+a_scoreData[game].size();
@@ -1040,7 +1040,7 @@ namespace  org
         // ;score.2 glbpaar bonus.2 spellen paarnaam
         // 100.00     1     11.00   s16     xxx - xxx
         if ( a_correctionsEnd.size() == 0 ) return true;    // don't create empty file
-        wxString correctionFile = _ConstructFilename( cfg::EXT_SESSION_CORRECTION_END, a_session ); 
+        wxString correctionFile = _ConstructFilename( cfg::EXT_SESSION_CORRECTION_END, a_session );
         MyTextFile file(correctionFile, MyTextFile::WRITE);
 
         if (!file.IsOk())

@@ -19,7 +19,7 @@ int wmain(int argc, wchar_t* argv[])
         if (index != 2) (void)wcscat_s(msg, bufSize, L"\n");
         (void)wcscat_s(msg, bufSize, argv[index]);
     }
-    
+
     MessageBox(nullptr, msg, pTitle, 0 );
     return 0;
 }

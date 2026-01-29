@@ -75,7 +75,7 @@ private:
 
 class MywxChoice : public wxChoice, AHKHelper
 {   // wrapper around standard wxChoice to be able to get an identification for this control for autotesting
-public: 
+public:
     MywxChoice(wxWindow *parent, wxWindowID id, const wxString& label = ES);
    ~MywxChoice();
     wxString GetLabel() const;
@@ -83,7 +83,7 @@ public:
 
 class MywxComboBox : public wxComboBox, AHKHelper
 {   // wrapper around standard wxComboBox to be able to get an identification for this control for autotesting
-public: 
+public:
     MywxComboBox(wxWindow *parent, wxWindowID id,
                     const wxString& ahkLabel= wxEmptyString,
                     const wxPoint&  pos     = wxDefaultPosition,
@@ -138,7 +138,7 @@ protected:
     const wxWindow* GetSearchWindow(){return m_pTxtCtrlSearchBox;}
     struct WinAndName
     {   // store a window/name at construction time to get it added to AUTOTEST positions later on
-        WinAndName(wxWindow* a_pWindow, const wxString& a_mousePosName, const wxString& a_winTitle="") { pWindow = a_pWindow; mousePosName = a_mousePosName; winTitle = a_winTitle; }
+        WinAndName(const wxWindow* a_pWindow, const wxString& a_mousePosName, const wxString& a_winTitle="") { pWindow = a_pWindow; mousePosName = a_mousePosName; winTitle = a_winTitle; }
         const wxWindow* pWindow;
         wxString        mousePosName;
         wxString        winTitle;

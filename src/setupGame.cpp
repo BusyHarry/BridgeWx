@@ -96,7 +96,7 @@ SetupGame::SetupGame(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a
     checkerSizer->Add( m_pChkBoxGroupResult  ); checkerSizer->AddSpacer(20);
     checkerSizer->Add( m_pChkBoxGlobalNames  ); checkerSizer->AddSpacer(20);
     checkerSizer->Add( m_pChkBoxClock        );
- 
+
     fgs->AddGrowableCol(1, 1);
 
     // action buttons: keep/cancel
@@ -179,7 +179,7 @@ void SetupGame::RefreshInfo()
     m_pChkBoxClock          ->SetValue  ( m_bClock             );
     m_pTxtCtrlMaxMean       ->SetValue  ( m_sMaxMean           );
     m_pChkBoxGroupResult    ->SetValue  ( m_bGroupResult       );
-    m_pChkBoxGlobalNames    ->SetValue  ( m_bGlobalNames       );       
+    m_pChkBoxGlobalNames    ->SetValue  ( m_bGlobalNames       );
 
     HandleMin();  // update the rangechecks for min/max club
     HandleMax();
@@ -268,7 +268,7 @@ void SetupGame::HandleMax()
 }   // HandleMax()
 
 void SetupGame::OnFocusLostMin(wxFocusEvent& a_event)
-{   
+{
     //LogMessage("SetupGame::OnFocusLostMin()");
     HandleMin();
     a_event.Skip();

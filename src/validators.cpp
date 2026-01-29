@@ -249,7 +249,7 @@ bool MyValidator::IsMinusOk(const wxString& a_val, int a_pos) const
         return false;
 
     // Minus is only ever accepted in the beginning of the string, but ignore a single space!
-    if ( a_pos == 1 && a_val[0] == ' ' && wxString::npos == a_val.Find('-') ) 
+    if ( a_pos == 1 && a_val[0] == ' ' && wxString::npos == a_val.Find('-') )
         return true;
     if ( a_pos )
         return false;
@@ -396,6 +396,6 @@ bool MyString2Double(wxString& a_string, double& a_value)
     if ( bSign ) a_value = -a_value;
     return true;
 }   // MyString2Double()
-#endif 
+#endif
 
 //**************** end of implementation for MyValidator  ***************************

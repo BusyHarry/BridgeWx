@@ -1,5 +1,11 @@
 # Releasenotes
 #V10.10.0  ...
+ - reorganised the in/output methods in fileio in preparation to adding an sqlite database for storage
+ - logic error while reading the config when an array value was out of range
+ - sometimes you got an unexpected matchname like "-c1"
+ - early creation of MyLog in App::OnInit(): we need it there for cmdline handling
+ - resolve remarks of cppcheck V2.19.0
+ - removed all trailing white space
 
 #V10.9.0  Sunday November 23 2025
  - added encode/decode strings containing special characters when storing/retreiving the database

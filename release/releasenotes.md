@@ -6,6 +6,11 @@
  - early creation of MyLog in App::OnInit(): we need it there for cmdline handling
  - resolve remarks of cppcheck V2.19.0
  - removed all trailing white space
+ - added sqlite as data-storage
+   - (for now) data is stored same as .db, so many data-strings and not individual items
+   - select through menu 'tools/sWitch datatype'
+   - referencefiles for testing added
+   - version of sqlite3: sqlite-amalgamation-3.51.02.00 from 2026-01-09
 
 #V10.9.0  Sunday November 23 2025
  - added encode/decode strings containing special characters when storing/retreiving the database

@@ -24,7 +24,7 @@ namespace cfg
     static wxString         ssMainIni;
     static const wxString   ssClubNames      ("club.nam");
     static const wxString   ssCentralNameFile("centraal.nm");       // nm-filename when using global names
-    static const wxString   ssGlobalNameFile ("globalNames.db");    // db-filename when using global names
+    static const wxString   ssGlobalNameFile ("globalNames");       // db-filename when using global names
     static wxString         ssBaseFolder;           // folder where bridge.ini/globalNames.db is located
 
 
@@ -269,7 +269,7 @@ namespace cfg
     wxString    GetFilePrinterName()    { return FILE_PRINTER_NAME;         }
     UINT        GetFirstGame()          { return sSessionInfo.firstGame;    }
     UINT        GetFontsizeIncrease()   { return suFontsizeIncrease;        }
-    wxString    GetGlobalNameFile()     { return ssBaseFolder + PS + ssGlobalNameFile;}
+    wxString    GetGlobalNameFile()     { return ssBaseFolder + PS + ssGlobalNameFile+GetDbExtension();}
     bool        GetGlobalNameUse()      { return sbGlobalNameUse;           }
     const vGroupData* GetGroupData()    { return &sSessionInfo.groupData;   }
     bool        GetGroupResult()        { return sbGroupResult;             }
@@ -505,6 +505,33 @@ namespace cfg
         return ConstructFilename( ssActiveMatch, a_ext, a_sessionId );
     }   // ConstructFilename()
 
+    wxString GetDbExtension(FileExtension a_ext)
+    {
+        wxString extension;
+        if ( a_ext == cfg::EXT_MAX )
+        {
+            auto type = io::DatabaseTypeGet();
+            a_ext = (type == io::DB_ORG)
+                    ? cfg::EXT_MAIN_INI
+                    : (type == io::DB_DATABASE)
+                      ? cfg::EXT_DATABASE
+                      : cfg::EXT_SQLITE;
+        }
+        switch ( a_ext )
+        {
+            case EXT_DATABASE:
+                extension = ".db";
+                break;
+            case EXT_SQLITE:
+                extension = ".sqlite";
+                break;
+            case EXT_MAIN_INI:
+                extension = ".ini";
+                break;
+        }
+        return extension;
+    }   // GetDbExtension()
+
     wxString ConstructFilename(const wxString& a_basename, FileExtension a_ext, UINT a_sessionId)
     {
         wxString    theWantedName;
@@ -515,7 +542,9 @@ namespace cfg
         switch (a_ext)
         {
         case EXT_DATABASE:
-            extension = ".db";
+        case EXT_SQLITE:
+        case EXT_MAIN_INI:
+            extension = GetDbExtension(a_ext);
             break;
         case EXT_BIN:
             extension = ".bin";
@@ -537,9 +566,6 @@ namespace cfg
             break;
         case EXT_SESSION_INI:
             extension = FMT(".i%u", a_sessionId);
-            break;
-        case EXT_MAIN_INI:
-            extension = ".ini";
             break;
         case EXT_SESSION_ASSIGNMENT_ID:
             extension = FMT(".n%u", a_sessionId);

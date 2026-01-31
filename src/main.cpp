@@ -602,7 +602,6 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     menuSettings->Append(ID_MENU_NAMEEDITOR , _("pairnames &Entry/change"), _("Entry/change of pair/clubnames"                  ));
     menuSettings->Append(ID_MENU_ASSIGNNAMES, _("pairnames &Assigment"   ), _("Connect a global pairname to a sessionpairnumber"));
 
-
     wxMenu *menuScores = new wxMenu;
     menuScores->Append(ID_MENU_SCORE_ENTRY      , _("s&Core-entry"       ), _("Entry/change of scores"             ));
     menuScores->Append(ID_MENU_COR_ENTRY_SESSION, _("&Sessioncorrections"), _("Entry/change of session corrections"));
@@ -620,9 +619,10 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     convertData->Append(ID_MENU_DBASE_TO_OLD  , _("&Database -> old"           ), _("Convert .db file to 'old' .ini/data files"            ));
     menuExtra->AppendSubMenu(convertData      , _("&Convert data"              ), _("convert match-data between old/new types"             ));
     auto otherDb = new wxMenu;
-    otherDb->AppendRadioItem(ID_MENU_OLD_DBASE, _("&Old datatype (.ini)"       ), _("Use 'old' .ini/data files for data storage"           ));
-    otherDb->AppendRadioItem(ID_MENU_NEW_DBASE, _("&New datatype (.db)"        ), _("Use new .db file for data storage"                    ));
-    menuExtra->AppendSubMenu(otherDb          , _("s&Witch between datatypes"  ), _("switch between the two datatypes"                     ));
+    otherDb->AppendRadioItem(ID_MENU_OLD_DBASE,  (".&Ini"                      ), _("Use (older) .ini files for data storage"              ));
+    otherDb->AppendRadioItem(ID_MENU_NEW_DBASE,  (".&Db"                       ), _("Use .db file for data storage"                        ));
+    otherDb->AppendRadioItem(ID_MENU_SQL_DBASE,  (".&Sqlite"                   ), _("Use .sqlite file for data storage"                    ));
+    menuExtra->AppendSubMenu(otherDb          , _("s&Witch datatype"           ), _("switch between the available datatypes"               ));
     menuExtra->Append(ID_MENU_SLIP_SERVER     , _("&Slip server"               ), _("Server for receiving slip-data"                       ));
     menuExtra->Append(ID_MENU_LANGUAGE        , _("&Language"                  ), _("language of the userinterface"                        ));
 
@@ -640,7 +640,12 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     SetMenuBar( m_pMenuBar );
 
     auto type = io::DatabaseTypeGet();
-    m_pMenuBar->Check( type == io::DB_ORG ? ID_MENU_OLD_DBASE : ID_MENU_NEW_DBASE, true);
+    m_pMenuBar->Check( type == io::DB_ORG
+                       ? ID_MENU_OLD_DBASE
+                       : type == io::DB_DATABASE
+                         ? ID_MENU_NEW_DBASE
+                         : ID_MENU_SQL_DBASE
+                       , true);
 
     m_pStatusbar = new MyStatusBar(this);
     SetStatusBar(m_pStatusbar);
@@ -659,6 +664,7 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     Bind(wxEVT_MENU, [this](wxCommandEvent&){AUTOTEST_BUSY("menu"); io::ConvertDataBase (io::FromDbToOld);}, ID_MENU_DBASE_TO_OLD);
     Bind(wxEVT_MENU, [this](wxCommandEvent&){AUTOTEST_BUSY("menu"); cfg::DatabaseTypeSet(io::DB_ORG)     ;}, ID_MENU_OLD_DBASE);
     Bind(wxEVT_MENU, [this](wxCommandEvent&){AUTOTEST_BUSY("menu"); cfg::DatabaseTypeSet(io::DB_DATABASE);}, ID_MENU_NEW_DBASE);
+    Bind(wxEVT_MENU, [this](wxCommandEvent&){AUTOTEST_BUSY("menu"); cfg::DatabaseTypeSet(io::DB_SQLITE)  ;}, ID_MENU_SQL_DBASE);
     Bind(wxEVT_USER, &MyFrame::UpdateStatusbarInfo  , this, ID_STATUSBAR_UPDATE);
     Bind(wxEVT_USER, &MyFrame::UpdateStatusbarText  , this, ID_STATUSBAR_SETTEXT);
     Bind(wxEVT_USER, &MyFrame::SetClock             , this, ID_UPDATE_CLOCK);
@@ -773,9 +779,10 @@ void MyFrame::AutotestCreatePositions()
     positionsFile.AddLine(    _("MenuGuides        := \"tg\"       ; Tools: Guide creation"                 ));
     positionsFile.AddLine(    _("MenuScoreSlips    := \"ts\"       ; Tools: Scoreslip creation"             ));
     positionsFile.AddLine(    _("MenuImportSchema  := \"ti\"       ; Tools: Import a new playing-schema"    ));
-    positionsFile.AddLine(    _("MenuDbType        := \"twn\"      ; Tools: sWitch between datatypes: New datatype" ));
-    positionsFile.AddLine(    _("MenuOldType       := \"two\"      ; Tools: sWitch between datatypes: Old datatype" ));
-    positionsFile.AddLine(    _("AllMenus          := [\"fn\",\"fp\",\"fg\",\"sm\",\"ss\",\"se\",\"sa\",\"cc\",\"cs\",\"ce\",\"cr\",\"two\",\"twn\"]"));
+    positionsFile.AddLine(    _("MenuDbType        := \"twd\"      ; Tools: sWitch to .Db storage type"     ));
+    positionsFile.AddLine(    _("MenuOldType       := \"twi\"      ; Tools: sWitch to .Ini storage type"    ));
+    positionsFile.AddLine(    _("MenuSqliteType    := \"tws\"      ; Tools: sWitch to .Sqlite storage type" ));
+    positionsFile.AddLine(    _("AllMenus          := [\"fn\",\"fp\",\"fg\",\"sm\",\"ss\",\"se\",\"sa\",\"cc\",\"cs\",\"ce\",\"cr\",\"twi\",\"twd\",\"tws\"]"));
     positionsFile.AddLine(    ";\n;windowrelative-positions");
     positionsFile.AddLine(    ";s* vars are screen-coordinates, TL=TopLeft, TR=TopRight, BR=BottomRight\n;");
     positionsFile.AddLine(    ";some vars and there value in the current language");

@@ -75,6 +75,7 @@ enum MY_IDS
     ID_MENU_DBASE_TO_OLD,
     ID_MENU_OLD_DBASE,      // 'original' way of saving game-data: game.* files
     ID_MENU_NEW_DBASE,      // 'new'wayof saving  data: game.db, only one file
+    ID_MENU_SQL_DBASE,      // 'new'wayof saving  data: game.sqlite, only one file
     ID_MENU_LANGUAGE,
     ID_SCHEMA_NEXTGROUP,
     ID_NAMEEDIT_SEARCH,
@@ -102,6 +103,7 @@ namespace cfg
     enum FileExtension
     {
         EXT_DATABASE,                      //  "db"
+        EXT_SQLITE,                        //  "sqlite"
         EXT_BIN,                           //  "bin"
         EXT_CLUB_TOTAL,                    //  "clt"
         EXT_FKW,                           //  "fkw"
@@ -192,6 +194,7 @@ namespace cfg
     wxString    GetActiveMatchAndSession();                 // name and session (if non-zero)
     bool        GetClock();                                 // clock wanted?
     wxString    GetCopyright();                             // my (c) string
+    wxString    GetDbExtension(FileExtension ext = cfg::EXT_MAX);   // extension of the data-file for the match
     wxString    GetVersion();                               // programm version
     wxString    GetDescription();                           // the description of the active match
     int         GetConfigHash();                            // identification of active confuguration

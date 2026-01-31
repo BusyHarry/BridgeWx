@@ -16,3 +16,4 @@ cleanpo.vcxproj.filters
 cleanpo.exe
 zip.exe
 AutoHotkey64.exe
+shell_sqlite.exe

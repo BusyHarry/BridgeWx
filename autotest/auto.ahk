@@ -113,7 +113,7 @@ InitApplication()   ; set databasetype to .db and delete all temp-files
   ok:
   ProcessClose(Exename)  ; kill process if running: we don't know if its params are ok
   StartApplication()
-  MenuSelect(MenuDbType)
+;;;;;;;;  MenuSelect(MenuDbType)
   MenuSelect(MenuShutdown)
   FileDelete AutoTestPath AutoTestMatch ".*" ; delete temp files and 'list'
   if FileExist(ListFile)
@@ -243,7 +243,7 @@ WaitPopupMC()
 MenuSelect(a_menu)
 {
   bBusy:=true
-  if a_menu = MenuDbType || a_menu = MenuOldType
+  if a_menu = MenuDbType || a_menu = MenuOldType || MenuSqliteType
     bBusy:=false  ; this is a radio, if allready active no menutrigger
   if (bBusy)
     SetBusy()

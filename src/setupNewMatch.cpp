@@ -44,7 +44,7 @@ SetupNewMatch::SetupNewMatch(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_p
     m_pTxtCtrlSession->SetMinMax(0, cfg::MAX_SESSIONS);
 // database type
     auto txtDbType = new wxStaticText(this, wxID_ANY, _("Database type:"));
-    m_pTxtCtrlDbType = new wxTextCtrl(this, wxID_ANY, "DbaseType",MY_SIZE_TXTCTRL_NUM(4), wxTE_READONLY);
+    m_pTxtCtrlDbType = new wxTextCtrl(this, wxID_ANY, "DbaseType",MY_SIZE_TXTCTRL_NUM(5), wxTE_READONLY);
 
 // butler or precent score
     m_pChkBoxButler = new wxCheckBox(this, wxID_ANY, _("Butler"));
@@ -100,7 +100,7 @@ void SetupNewMatch::UpdateSelection()
     AUTOTEST_BUSY("matchPath");
     wxString match      = cfg::GetActiveMatch();
     wxString path       = m_pDirPicker->GetTextCtrlValue();
-    wxString extension  = io::DatabaseTypeGet() == io::DB_ORG ? ".ini" : ".db";
+    wxString extension  = cfg::GetDbExtension();
     wxArrayString choices;
     wxString file = wxFindFirstFile(path + "/*" + extension);
     while ( !file.IsEmpty() )
@@ -129,10 +129,8 @@ void SetupNewMatch::RefreshInfo()
 {
     m_pDirPicker     ->SetDirName( cfg::GetActiveMatchPath()          );
     m_pTxtCtrlSession->SetValue  ( U2String( cfg::GetActiveSession()) );
-    cfg::FileExtension extension = io::DatabaseTypeGet() == io::DB_ORG ? cfg::EXT_MAIN_INI : cfg::EXT_DATABASE;
-    wxFileName file = cfg:: ConstructFilename("", extension);
-    m_pTxtCtrlDbType ->SetValue  (file.GetName());
-    m_pChkBoxButler->SetValue(cfg::GetButler());
+    m_pTxtCtrlDbType ->SetValue  (cfg::GetDbExtension());
+    m_pChkBoxButler  ->SetValue  (cfg::GetButler());
 
     UpdateSelection();
     Layout();

@@ -2247,4 +2247,3 @@ wxString FormBuilder::CreateColumn(const wxString& a_input, size_t a_len, Align 
     }
     return result;
 }   // CreateColumn()
-

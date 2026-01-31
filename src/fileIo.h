@@ -25,7 +25,8 @@ namespace io
     {   // mask
           DB_ORG        = 1     // 'old' interface with many separate files
         , DB_DATABASE   = 2     // new interface with all matchdata in 1 file
-        , DB_BOTH       = (DB_ORG | DB_DATABASE)
+        , DB_SQLITE     = 4     // new interface with all matchdata in 1 file
+//        , DB_BOTH       = (DB_ORG | DB_DATABASE)
     };
 
     enum ConvertFromTo

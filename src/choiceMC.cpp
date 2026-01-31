@@ -225,6 +225,7 @@ bool ChoiceMC::SetSelection(int a_selection)
     bool bResult = m_pPopup->SetSelection(a_selection);
 //  SetValueByUser(bResult ? GetStringSelection() : ES);    // show in editctrl
     CallAfter([this, bResult] {SetValueByUser(bResult ? GetStringSelection() : ES);});  // show in editctrl
+    // maybe: Layout();   will do the trick??
     return bResult;
 }   // SetSelection()
 

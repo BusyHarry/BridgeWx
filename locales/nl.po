@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-10 12:22+0100\n"
-"PO-Revision-Date: 2025-11-10 12:23+0100\n"
+"POT-Creation-Date: 2026-01-31 13:25+0100\n"
+"PO-Revision-Date: 2026-01-31 13:25+0100\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -606,6 +606,9 @@ msgstr "Inlezen clubnamen: clubnr <%u> te groot!"
 msgid "Rading clubnames: <%s = %s> invalid!"
 msgstr "Inlezen clubnamen: <%s = %s> ongeldig!"
 
+msgid "database error"
+msgstr "database fout"
+
 #, c-format
 msgid "Reading scores: gamenr <%s> too high!"
 msgstr "Inlezen scores: spelnr <%s> te groot!"
@@ -625,9 +628,6 @@ msgid ""
 msgstr ""
 "Fout in database <%s> waarde in sleutel <%s>: <%i> groter dan max '%u'\n"
 "Wordt genegeerd."
-
-msgid "database error"
-msgstr "database fout"
 
 msgid "save window-content"
 msgstr "inhoud van venster opslaan"
@@ -1176,22 +1176,19 @@ msgstr "&Converteren data"
 msgid "convert match-data between old/new types"
 msgstr "wedstrijdgegevens omzetten van het ene type naar het andere"
 
-msgid "&Old datatype (.ini)"
-msgstr "&Oud bestandstype (.ini)"
-
-msgid "Use 'old' .ini/data files for data storage"
+msgid "Use (older) .ini files for data storage"
 msgstr "Gebruik van 'oude' .ini/data bestanden voor opslag"
 
-msgid "&New datatype (.db)"
-msgstr "&Nieuw bestandstype (.db)"
+msgid "Use .db file for data storage"
+msgstr "Gebruik .db bestand voor opslag"
 
-msgid "Use new .db file for data storage"
-msgstr "Gebruik van nieuw .db bestand voor opslag"
+msgid "Use .sqlite file for data storage"
+msgstr "Gebruik van .sqlite bestand voor opslag"
 
-msgid "s&Witch between datatypes"
+msgid "s&Witch datatype"
 msgstr "&Wissel van bestandstype"
 
-msgid "switch between the two datatypes"
+msgid "switch between the available datatypes"
 msgstr "omschakelen van het ene opslagtype naar het andere"
 
 msgid "&Slip server"
@@ -1316,14 +1313,17 @@ msgstr "MenuScoreSlips    := \"es\"       ; Extra: Scoreslips aanmaken"
 msgid "MenuImportSchema  := \"ti\"       ; Tools: Import a new playing-schema"
 msgstr "MenuImportSchema  := \"ei\"       ; Extra: Importeren van een nieuw speelschema"
 
-msgid "MenuDbType        := \"twn\"      ; Tools: sWitch between datatypes: New datatype"
-msgstr "MenuDbType        := \"ewn\"      ; Extra: Wissel Nieuw"
+msgid "MenuDbType        := \"twd\"      ; Tools: sWitch to .Db storage type"
+msgstr "MenuDbType        := \"ewd\"      ; Extra: Wissel naar .Db opslagtype"
 
-msgid "MenuOldType       := \"two\"      ; Tools: sWitch between datatypes: Old datatype"
-msgstr "MenuOldType       := \"ewo\"      ; Extra: Wissel Oud"
+msgid "MenuOldType       := \"twi\"      ; Tools: sWitch to .Ini storage type"
+msgstr "MenuOldType       := \"ewi\"      ; Extra: Wissel naar .Ini opslagtype"
 
-msgid "AllMenus          := [\"fn\",\"fp\",\"fg\",\"sm\",\"ss\",\"se\",\"sa\",\"cc\",\"cs\",\"ce\",\"cr\",\"two\",\"twn\"]"
-msgstr "AllMenus          := [\"bn\",\"bp\",\"bg\",\"iw\",\"is\",\"ii\",\"it\",\"ss\",\"sz\",\"se\",\"su\",\"ewo\",\"ewn\"]"
+msgid "MenuSqliteType    := \"tws\"      ; Tools: sWitch to .Sqlite storage type"
+msgstr "MenuSqliteType    := \"ews\"     ; Extra: Wissel naar: .Sqlite opslagtype"
+
+msgid "AllMenus          := [\"fn\",\"fp\",\"fg\",\"sm\",\"ss\",\"se\",\"sa\",\"cc\",\"cs\",\"ce\",\"cr\",\"twi\",\"twd\",\"tws\"]"
+msgstr "AllMenus          := [\"bn\",\"bp\",\"bg\",\"iw\",\"is\",\"ii\",\"it\",\"ss\",\"sz\",\"se\",\"su\",\"ewi\",\"ewd\",\"ews\"]"
 
 msgid "changed"
 msgstr "gewijzigd"
@@ -2214,6 +2214,14 @@ msgstr "ontvangen"
 
 msgid "Got the data, sending the result"
 msgstr "Data ontvangen, het resultaat wordt teruggestuurd"
+
+#, c-format
+msgid "SqlExec %s has error(s), see log"
+msgstr "SqlExec %s heeft fout(en), kijk in het log"
+
+#, c-format
+msgid "Can't open sql db '%s', error: '%s'"
+msgstr "Kan sql database '%s' niet openen, fout: '%s'"
 
 #. TRANSLATORS: Set order of types to your country order
 msgid "%A %B %d, %G %X"

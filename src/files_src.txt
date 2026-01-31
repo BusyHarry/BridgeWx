@@ -8,6 +8,7 @@ Corrections.cpp
 correctionsEnd.cpp
 correctionsSession.cpp
 database.cpp
+dbglobals.cpp
 debug.cpp
 fileIo.cpp
 importExportSchema.cpp
@@ -29,6 +30,8 @@ setupSchema.cpp
 showStartImage.cpp
 slipServer.cpp
 socketServer.cpp
+sqlite.cpp
+sqlite3.c
 statusbar.cpp
 utils.cpp
 validators.cpp
@@ -43,6 +46,7 @@ corrections.h
 correctionsEnd.h
 correctionsSession.h
 database.h
+dbglobals.h
 dbkeys.h
 debug.h
 fileIo.h
@@ -65,6 +69,8 @@ setupPrinter.h
 setupSchema.h
 ShowStartImage.h
 slipServer.h
+sqlite.h
+sqlite3.h
 statusbar.h
 utils.h
 validators.h

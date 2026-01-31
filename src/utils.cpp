@@ -349,4 +349,3 @@ void RingBell()
     if ( sbBellActive )
         wxBell();
 }   // RingBell()
-

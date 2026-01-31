@@ -6,6 +6,7 @@
 #include "fileIo.h"
 #include "database.h"
 #include "orgInterface.h"
+#include "sqlite.h"
 
 namespace io
 {   // all persistent match-io arrives here and is distributed to the wanted data-interface.
@@ -34,6 +35,7 @@ namespace io
         typeReturn ret(defaultReturn);\
         if (seTheType & DB_ORG)      ret = org::name(); \
         if (seTheType & DB_DATABASE) ret =  db::name(); \
+        if (seTheType & DB_SQLITE)   ret = sql::name(); \
         return ret;\
     }
 
@@ -43,6 +45,7 @@ namespace io
         typeReturn ret(defaultReturn);\
         if (seTheType & DB_ORG)      ret = org::name(p1); \
         if (seTheType & DB_DATABASE) ret =  db::name(p1); \
+        if (seTheType & DB_SQLITE)   ret = sql::name(p1); \
         return ret;\
     }
 
@@ -52,6 +55,7 @@ namespace io
         typeReturn ret(defaultReturn);\
         if (seTheType & DB_ORG)      ret = org::name(p1,p2); \
         if (seTheType & DB_DATABASE) ret =  db::name(p1,p2); \
+        if (seTheType & DB_SQLITE)   ret = sql::name(p1,p2); \
         return ret;\
     }
 
@@ -61,6 +65,7 @@ namespace io
         typeReturn ret(defaultReturn);\
         if (seTheType & DB_ORG)      ret = org::name(p1,p2,p3); \
         if (seTheType & DB_DATABASE) ret =  db::name(p1,p2,p3); \
+        if (seTheType & DB_SQLITE)   ret = sql::name(p1,p2,p3); \
         return ret;\
     }
 

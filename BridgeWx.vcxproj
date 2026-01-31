@@ -605,6 +605,7 @@
     <ClCompile Include="src\correctionsEnd.cpp" />
     <ClCompile Include="src\correctionsSession.cpp" />
     <ClCompile Include="src\database.cpp" />
+    <ClCompile Include="src\dbglobals.cpp" />
     <ClCompile Include="src\debug.cpp" />
     <ClCompile Include="src\choiceMC.cpp" />
     <ClCompile Include="src\fileIo.cpp" />
@@ -627,6 +628,8 @@
     <ClCompile Include="src\showStartImage.cpp" />
     <ClCompile Include="src\slipServer.cpp" />
     <ClCompile Include="src\socketServer.cpp" />
+    <ClCompile Include="src\sqlite.cpp" />
+    <ClCompile Include="src\sqlite3.c" />
     <ClCompile Include="src\statusbar.cpp" />
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\validators.cpp" />
@@ -638,6 +641,7 @@
     <ClInclude Include="src\buildDate.h" />
     <ClInclude Include="src\calcScore.h" />
     <ClInclude Include="src\cfg.h" />
+    <ClInclude Include="src\dbglobals.h" />
     <ClInclude Include="src\interfaces.h" />
     <ClInclude Include="src\correctionsEnd.h" />
     <ClInclude Include="src\correctionsSession.h" />
@@ -665,6 +669,8 @@
     <ClInclude Include="src\setupSchema.h" />
     <ClInclude Include="src\ShowStartImage.h" />
     <ClInclude Include="src\slipServer.h" />
+    <ClInclude Include="src\sqlite.h" />
+    <ClInclude Include="src\sqlite3.h" />
     <ClInclude Include="src\statusbar.h" />
     <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\validators.h" />

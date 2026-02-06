@@ -75,7 +75,7 @@ public:
     explicit    Console(wxWindow *parent, const wxString& label, const wxString& prompt = ES);
     virtual    ~Console(){}
     void        SetPrompt       (const wxString& prompt);
-    const wxString& GetCommand  ();             // retrieve the last entered commandline
+    const wxString& GetCommand  () const;       // retrieve the last entered commandline
     wxBoxSizer* GetVSizer       ();
     wxBoxSizer* GetHSizer       ();
     void        AsyncTextOutBegin();            // disable outputting prompt
@@ -279,7 +279,7 @@ void Console::ShowPrompt()
 wxBoxSizer* Console::GetVSizer(){return m_pVSizer;}
 [[maybe_unused]] wxBoxSizer* Console::GetHSizer(){return m_pHSizer;}
 
-const wxString& Console::GetCommand()
+const wxString& Console::GetCommand() const
 {
     return m_command;
 }   // GetCommand()
@@ -974,7 +974,7 @@ void Debug::InitSlips()
 void Debug::InitGuideStuff()
 {
     if (m_debugType != Guides) return;
-    auto& groupData = *cfg::GetGroupData();
+    const auto& groupData = *cfg::GetGroupData();
     wxArrayString choices;
     for (const auto& group : groupData)
     {

@@ -150,7 +150,7 @@ public:
     ~FormBuilder() {}
 
     wxString        CreateHeader(const std::vector<ColumnInfoHeader>& headerInfo);
-    wxString        CreateRow   (const std::vector<wxString>& columsContent);
+    wxString        CreateRow   (const std::vector<wxString>& columsContent) const;
     static wxString CreateColumn(const wxString& input, size_t len, Align align);
 
 private:

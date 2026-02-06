@@ -313,7 +313,7 @@ public:
     ~MyFrame();
     void UpdateStatusbarInfo(wxCommandEvent& event=s_dummy);
     void UpdateStatusbarText(wxCommandEvent& a_event);
-    UINT GetCurrentMenuId() {return m_oldId;}
+    UINT GetCurrentMenuId() const {return m_oldId;}
     void SetClock(wxCommandEvent& event=s_dummy);
     MyStatusBar* StatusBar() {return m_pStatusbar;}
     wxMenuBar* m_pMenuBar;

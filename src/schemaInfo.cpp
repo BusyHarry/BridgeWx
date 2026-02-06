@@ -326,7 +326,7 @@ UINT SchemaInfo::GetOpponent(UINT pair, UINT round) const
     return opponent > m_pairs ? 0 : opponent;
 }   // GetOpponent()
 
-bool SchemaInfo::AreOpponents(UINT a_pair1, UINT a_pair2)
+bool SchemaInfo::AreOpponents(UINT a_pair1, UINT a_pair2) const
 {
     for (UINT round = 1; round <= m_rounds; ++round)
     {

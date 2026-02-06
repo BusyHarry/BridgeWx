@@ -36,7 +36,7 @@ struct frameInfo
         frameId     = id;
     }
 };
-static std::map < MyLog*, frameInfo> sm_pLogFrames; // backup of active logframes: on dynamic language switch, we need 'previous' frameptr
+static std::map < const MyLog*, frameInfo> sm_pLogFrames; // backup of active logframes: on dynamic language switch, we need 'previous' frameptr
 
 #define DEFAULT_SIZE {300,-1}
 class MyLogFrame : public wxFrame
@@ -95,7 +95,7 @@ MyLog::~MyLog()
     }
 }   // ~MyLog()
 
-void MyLog::Create( )
+void MyLog::Create( ) const
 {
     enum MY_MENU_IDS
     {

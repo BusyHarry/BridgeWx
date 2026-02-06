@@ -533,7 +533,7 @@ void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
         if (score::IsProcent(score))
         {
             points = normalTop*score::Procentscore2Procent(score);
-            // 100* to big!
+            // 100* too big!
             if (cfg::GetNeuberg())
                 points = RoundLong(points, 10);    // round to .1
             else            // round to
@@ -2182,7 +2182,7 @@ wxString FormBuilder::CreateHeader(const std::vector<ColumnInfoHeader>& a_header
     return result.RemoveLast(); // remove last separator
 }   // CreateHeader()
 
-wxString FormBuilder::CreateRow(const std::vector<wxString>& a_columsContent)
+wxString FormBuilder::CreateRow(const std::vector<wxString>& a_columsContent) const
 {   // called for each data-row
     size_t size = a_columsContent.size();
     if (size != m_rowInfo.size())   // no translation: error should popup during development!

@@ -63,7 +63,7 @@ public:
     const wxString& GetName ()const { return m_name;     }
     bool IsOk               ()const { return m_bSchemaInitOk; }
     bool GetTableRoundInfo  (const UINT table, UINT round, schema::GameInfo& info) const;
-    bool AreOpponents       (UINT pair1, UINT pair2);
+    bool AreOpponents       (UINT pair1, UINT pair2) const;
     schema::NS_EW GetPairs  (UINT table, UINT round) const;
 private:
     void Init();

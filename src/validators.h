@@ -33,7 +33,7 @@ protected:
 private:
     bool DoValidate         (bool bForceInRange = false);                   // return true if accepted, possibly forcing result to be in-range
     void GetCurrentValueAndInsertionPoint(wxString& val, int& pos);         // retrieve current textvalue and insertion point from the txtCtrl
-    bool IsCharOk           (const wxString& val, int pos, wxChar chr);     // is 'chr' acceptable at this position
+    bool IsCharOk           (const wxString& val, int pos, wxChar chr)const;// is 'chr' acceptable at this position
     bool IsExtraChar        (wxChar chr);                                   // true, if 'chr' is in 'm_sStartChars'
     bool IsMinusOk          (const wxString& val, int pos) const;           // is '-' acceptable at this position
     void UpdateDouble       (const wxString& current, const double& val);   // get double in wanted format

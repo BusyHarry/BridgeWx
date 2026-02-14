@@ -40,6 +40,9 @@
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
   <Import Project="BridgeWx.props" Condition="$(wxwin)==''" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DLL Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -608,6 +611,7 @@
     <ClCompile Include="src\dbglobals.cpp" />
     <ClCompile Include="src\debug.cpp" />
     <ClCompile Include="src\choiceMC.cpp" />
+    <ClCompile Include="src\fdp.cpp" />
     <ClCompile Include="src\fileIo.cpp" />
     <ClCompile Include="src\importExportSchema.cpp" />
     <ClCompile Include="src\NewSchemaData.cpp" />
@@ -642,6 +646,7 @@
     <ClInclude Include="src\calcScore.h" />
     <ClInclude Include="src\cfg.h" />
     <ClInclude Include="src\dbglobals.h" />
+    <ClInclude Include="src\fdp.h" />
     <ClInclude Include="src\interfaces.h" />
     <ClInclude Include="src\correctionsEnd.h" />
     <ClInclude Include="src\correctionsSession.h" />
@@ -676,6 +681,9 @@
     <ClInclude Include="src\validators.h" />
     <ClInclude Include="src\version.h" />
     <ClInclude Include="src\wxsysinfoframe.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="fdp.natvis" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

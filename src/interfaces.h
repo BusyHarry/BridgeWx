@@ -18,8 +18,8 @@
     bool        DatabaseIsOpen          (io::GlbDbType dbType = io::DB_MAIN);
     CfgFileEnum DatabaseOpen            (io::GlbDbType dbType, CfgFileEnum how2Open);
     wxString    GetDbFileName           ();
-    bool        MaxmeanRead             (UINT& maxmean);
-    bool        MaxmeanWrite            (UINT  maxmean);
+    bool        MaxmeanRead             (      Fdp& maxmean);
+    bool        MaxmeanWrite            (const Fdp& maxmean);
     bool        MinMaxClubRead          (UINT& min, UINT& max);
     bool        MinMaxClubWrite         (UINT  min, UINT max);
     bool        PairnamesRead           (      names::PairInfoData&     pairInfo    );

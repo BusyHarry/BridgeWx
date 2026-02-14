@@ -20,28 +20,7 @@ bool IsInRange(const T& value, const T& low, const T& high)
 bool EnableBell( bool bBell );  // enable/disable bellsound, return old value
 void RingBell  ();              // ring the bell, if enabled
 
-struct StringBuf
-{   // buffer with a string and an index from where to start in the string
-    // A function using this can update the index upto the position chars are handled
-    StringBuf() {index = 0;}
-    explicit StringBuf(const wxString& a_string, size_t a_index = 0){index = a_index; string = a_string;}
-    size_t      index;
-    wxString    string;
-};
-
-enum class ExpectedDecimalDigits
-{
-      DIGITS_1 = 1
-    , DIGITS_2 = 2
-};
-
 long     RoundLong   (long a,int b);            // rounding when deviding long by int
-wxString LongToAscii2(long score);              // return "float" string to score as xxx.yy
-wxString LongToAscii1(long score);              // return "float" string to score as xxx.y or xxx if input is multiple of 10
-wxString LongToAscii (long value, ExpectedDecimalDigits precision); // LongToAscii<precision>()
-int      Ascii1ToInt (StringBuf& stringBuffer); // convert "float" with 1 expected decimal digit to int and update "used chars" index
-long     AsciiTolong (StringBuf& stringBuffer,ExpectedDecimalDigits longtype);                                  // "float" string to long
-long     AsciiTolong (const wxString& string, ExpectedDecimalDigits longtype=ExpectedDecimalDigits::DIGITS_1);  // "float" string to long
 
 // convert a 0 terminated ascii string to unicode, using cp437
 // if length == 0, then zero-termination expected

@@ -84,8 +84,8 @@ namespace io
     FUNCTION3(WriteValue                ,bool       ,false  ,keyId,UINT,UINT)
     FUNCTION2(MinMaxClubRead            ,bool       ,false  ,UINT&,UINT&)
     FUNCTION2(MinMaxClubWrite           ,bool       ,false  ,UINT,UINT)
-    FUNCTION1(MaxmeanRead               ,bool       ,false  ,UINT&)
-    FUNCTION1(MaxmeanWrite              ,bool       ,false  ,UINT)
+    FUNCTION1(MaxmeanRead               ,bool       ,false  ,Fdp&)
+    FUNCTION1(MaxmeanWrite              ,bool       ,false  ,const Fdp&)
     FUNCTION2(SchemaRead                ,bool       ,false  ,      cfg::SessionInfo&,UINT)
     FUNCTION2(SchemaWrite               ,bool       ,false  ,const cfg::SessionInfo&,UINT)
     FUNCTION1(PairnamesWrite            ,bool       ,false  ,const names::PairInfoData&)
@@ -148,6 +148,7 @@ namespace io
         cfg::DataConversionSetMatchPath(folder);
 
         wxString tmpS; UINT tmpU, tmpU2; bool tmpB; // all temporary vars for read-old -> write-new
+        Fdp tmpFdp;
         names::PairInfoData         pairNames;
         std::vector<wxString>       clubNames;
         std::vector<UINT>           uintV;
@@ -171,7 +172,7 @@ namespace io
             tmpS = org::ReadValue     (KEY_MATCH_PRNT       , ES   );
             tmpS.Replace(cfg::GetWinPrintPrefix(), ES       , false); db::WriteValue      (KEY_MATCH_PRNT         , tmpS);
             tmpU = org::ReadValueUINT (KEY_MATCH_MAX_ABSENT , 0    ); db::WriteValue      (KEY_MATCH_MAX_ABSENT   , tmpU);
-                   org::MaxmeanRead   (tmpU                        ); db::MaxmeanWrite    (tmpU);
+                   org::MaxmeanRead   (tmpFdp                      ); db::MaxmeanWrite    (tmpFdp);
             tmpB = org::ReadValueBool (KEY_MATCH_CLOCK      , false); db::WriteValue      (KEY_MATCH_CLOCK        , tmpB);
             tmpB = org::ReadValueBool (KEY_MATCH_WEIGHTAVG  , false); db::WriteValue      (KEY_MATCH_WEIGHTAVG    , tmpB);
             tmpB = org::ReadValueBool (KEY_MATCH_VIDEO      , false); db::WriteValue      (KEY_MATCH_VIDEO        , tmpB);
@@ -219,7 +220,7 @@ namespace io
              tmpS = db::ReadValue     (KEY_MATCH_PRNT       , ES   );
              tmpS.Replace(cfg::GetWinPrintPrefix(), ES      , false); org::WriteValue      (KEY_MATCH_PRNT         , tmpS);
              tmpU = db::ReadValueUINT (KEY_MATCH_MAX_ABSENT , 0    ); org::WriteValue      (KEY_MATCH_MAX_ABSENT   , tmpU);
-                    db::MaxmeanRead   (tmpU                        ); org::MaxmeanWrite    (tmpU);
+                    db::MaxmeanRead   (tmpFdp                      ); org::MaxmeanWrite    (tmpFdp);
              tmpB = db::ReadValueBool (KEY_MATCH_CLOCK      , false); org::WriteValue      (KEY_MATCH_CLOCK        , tmpB);
              tmpB = db::ReadValueBool (KEY_MATCH_WEIGHTAVG  , false); org::WriteValue      (KEY_MATCH_WEIGHTAVG    , tmpB);
              tmpB = db::ReadValueBool (KEY_MATCH_VIDEO      , false); org::WriteValue      (KEY_MATCH_VIDEO        , tmpB);

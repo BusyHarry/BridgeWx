@@ -433,20 +433,17 @@ bool SchemaWrite(const cfg::SessionInfo& a_info, UINT a_session)
     return s_pConfig->Write(MakePath(KEY_SESSION_SCHEMA, a_session), info);
 }   // SchemaWrite()
 
-bool MaxmeanRead(UINT& a_maxmean)
+bool MaxmeanRead(Fdp& a_maxmean)
 {
     if ( !s_pConfig ) return false;
-    wxString defaultValue = FMT("%u.%02u", a_maxmean / 100, a_maxmean % 100);
-    wxString sMaxMean = s_pConfig->Read(MakePath(KEY_MATCH_MAXMEAN), defaultValue);
-    a_maxmean = AsciiTolong(sMaxMean, ExpectedDecimalDigits::DIGITS_2);
+    a_maxmean= s_pConfig->Read(MakePath(KEY_MATCH_MAXMEAN), a_maxmean.AsString2F());
     return true;
 }   // MaxmeanRead()
 
-bool MaxmeanWrite(UINT a_maxmean)
+bool MaxmeanWrite(const Fdp& a_maxmean)
 {
     if ( !s_pConfig ) return false;
-    wxString sMaxmean = FMT("%u.%02u", a_maxmean / 100, a_maxmean % 100);
-    return s_pConfig->Write(MakePath(KEY_MATCH_MAXMEAN), sMaxmean);
+    return s_pConfig->Write(MakePath(KEY_MATCH_MAXMEAN), a_maxmean.AsString2F());
 } // MaxmeanWrite()
 
 bool MinMaxClubRead(UINT& a_min, UINT& a_max)

@@ -14,8 +14,8 @@ namespace score
     #define EW              1       /* index in data for E/W pair                               */
     #define SCORE_NONE      -1      /* empty score                                              */
     #define SCORE_NP        -2      /* N(ot)P(layed) score: game not played, perhaps no time... */
-    #define SCORE_IGNORE    1000000L    /* this value in endcorrrections: just ignore if only bonus present */
-    #define SCORE_NO_TOTAL  2000000L    /* this value in endcorrrections: sessionScore NOT added to total score*/
+    #define SCORE_IGNORE    10000L  /* for non Fdp: 100*10000L this value in endcorrrections: just ignore if only bonus present */
+    #define SCORE_NO_TOTAL  20000L  /* for non Fdp: 100*20000L this value in endcorrrections: sessionScore NOT added to total score*/
 
     struct GameSetData
     {

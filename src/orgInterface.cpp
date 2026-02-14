@@ -198,19 +198,17 @@ namespace  org
         return pCfg->Write(GetKeyName(a_id), a_value);
     }   // WriteValue()
 
-    bool MaxmeanRead(UINT& a_maxmean)
+    bool MaxmeanRead(Fdp& a_maxmean)
     {
         const wxFileConfig* pCfg = GetpCfg(KEY_MATCH_MAXMEAN); if (pCfg == nullptr) return false;
-        wxString defaultValue = FMT("%u.%02u", a_maxmean / 100, a_maxmean % 100);
-        wxString sMaxMean = pCfg->Read(GetKeyName(KEY_MATCH_MAXMEAN), defaultValue);
-        a_maxmean = AsciiTolong(sMaxMean, ExpectedDecimalDigits::DIGITS_2);
+        a_maxmean = pCfg->Read(GetKeyName(KEY_MATCH_MAXMEAN), a_maxmean.AsString2F());
         return true;
     }   // MaxmeanRead()
 
-    bool MaxmeanWrite(UINT a_maxmean)
+    bool MaxmeanWrite(const Fdp& a_maxmean)
     {
         wxFileConfig* pCfg = GetpCfg(KEY_MATCH_MAXMEAN); if (pCfg == nullptr) return false;
-        return pCfg->Write(GetKeyName(KEY_MATCH_MAXMEAN), FMT("%u.%02u", a_maxmean / 100, a_maxmean % 100));
+        return pCfg->Write(GetKeyName(KEY_MATCH_MAXMEAN), a_maxmean.AsString2F());
     }   // MaxmeanWrite()
 
     static void ValidateMinMaxClub(UINT& a_min, UINT& a_max)
@@ -1055,9 +1053,9 @@ namespace  org
         for (const auto& it : a_correctionsEnd)
         {
             wxString correction = FMT("%+6s   %3d     %5s   s%-4u   %-s"
-                , LongToAscii2(it.second.score)
+                , it.second.score.AsString2F()
                 , it.first
-                , LongToAscii2(it.second.bonus)
+                , it.second.bonus.AsString2F()
                 , it.second.games
                 , names::GetGlobalPairInfo(it.first).pairName
             );
@@ -1111,8 +1109,8 @@ namespace  org
                     bLineError = true;
             }
 
-            ce.score = AsciiTolong( scoreBuf, ExpectedDecimalDigits::DIGITS_2);
-            ce.bonus = AsciiTolong( bonusBuf, ExpectedDecimalDigits::DIGITS_2);
+            ce.score = Fdp(scoreBuf);
+            ce.bonus = Fdp(bonusBuf);
             if ( ce == cor::CORRECTION_END() ) continue;    // only during conversion old --> db
 
             if (cor::IsValidCorrectionEnd(pairnr, ce, str, bLineError))
@@ -1164,7 +1162,7 @@ namespace  org
                 , it.second.correction
                 , it.second.type
                 , it.first
-                , LongToAscii1(it.second.extra)
+                , it.second.extra.AsString1E()
                 , it.second.maxExtra
                 , names::PairnrSession2GlobalText(it.first)
             );
@@ -1203,7 +1201,7 @@ namespace  org
             #define FORMAT(S)     RESOLVE(S)
             #define formatstring  FORMAT(MAX_SIZE)
             bool bEntryError = (5 !=  wxSscanf(str, formatstring, &cs.correction, &cs.type, &sessionPairnr, &extraBuf, &charCount, &cs.maxExtra));
-            cs.extra = AsciiTolong(extraBuf);
+            cs.extra = Fdp(extraBuf);
             if (IsValidCorrectionSession(sessionPairnr, cs, str, bEntryError))
             {   // add info to map
                 cs.games = cs.maxExtra ? 4 : 0;  // we need/use this for butler. Assume a default setsize of 4
@@ -1230,7 +1228,7 @@ namespace  org
             if ( it.second.games == 0 ) continue;           // pair has not played
             wxString tmp;
             tmp.Printf("%5s %3u  s%-2u %s",
-                LongToAscii2(it.second.score),              // score
+                it.second.score.AsString2F(),               // score
                 it.first,                                   // global pairnr...
                 it.second.games,                            // played games
                 names::PairnrGlobal2GlobalText(it.first));  // global pairname

@@ -140,7 +140,7 @@ void SetupGame::RefreshInfo()
     m_bNeuberg      = cfg::GetNeuberg();
     m_bWeightedAvg  = cfg::GetWeightedAvg();
     m_bClock        = cfg::GetClock();
-    m_sMaxMean      = cfg::MaxMeanToString();
+    m_sMaxMean      = cfg::GetMaxMean().AsString2F();
     m_bGroupResult  = cfg::GetGroupResult();
     m_bGlobalNames  = cfg::GetGlobalNameUse();
 

@@ -2,18 +2,14 @@
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
 #include <wx/wx.h>
-#include <wx/stc/stc.h>
-#include <wx/listctrl.h>
 #include <numeric>
 
 #include "cfg.h"
-#include "utils.h"
 #include "score.h"
 #include "calcScore.h"
 #include "corrections.h"
 #include "names.h"
 #include "printer.h"
-#include "utils.h"
 #include "fileIo.h"
 #include "main.h"
 
@@ -64,10 +60,10 @@ int ButlerGetMpsFromScore(int a_score, int a_datumScore)
 
 struct ScoreInfo
 {
-    long total              = 0;
-    long average            = 0;
-    long averageWeighted    = 0;
-    long bonus              = 0;
+    Fdp  total;
+    Fdp  average;
+    Fdp  averageWeighted;
+    Fdp  bonus;
     bool bWeightedAvg       = false;            // true, if not always same number of games
     bool bHasPlayed         = false;
     UINT nrOfSessions       = 0;                // number of sessions included in total/end result
@@ -113,9 +109,10 @@ static void GetSessionCorrectionStrings(UINT a_sessionPair, wxString& a_sCombiRe
     bool bButler = cfg::GetButler();
     if ( it->second.games )
     {   // combi
+        long extra = it->second.extra.Trunc(0).AsLong();
         a_sCombiResult = bButler
-            ? FMT("%ii"  , it->second.extra/10) // don't show fractional value!
-            : FMT("%d/%d", it->second.extra/10, it->second.maxExtra);
+            ? FMT("%ldi"  , extra) // don't show fractional value!
+            : FMT("%ld/%d", extra, it->second.maxExtra);
     }
 
     int correction = it->second.correction;
@@ -142,7 +139,7 @@ static void InitPairToRankVector(bool a_bSession)
     for (UINT rank = 1; rank < rankToPair.size(); ++rank)
     {   // todo? if pair == 0, skip this?
         UINT pair       = rankToPair[rank];
-        long score      = SCORE(pair);
+        Fdp  score      = SCORE(pair);
         UINT realRank   = rank;
         while ( (realRank > 1) && (score == SCORE(rankToPair[realRank-1])) )
         {
@@ -523,29 +520,26 @@ void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
         fs.nrOfEqualScores = equalCount;
         fs.score = score;
         /*
-        * Till now all scores are 'normal' integers. To prevent calculation errors when using floatingpoint
-        * we use from now on long values with an implied decimalpoint position of 1.
-        * This means: 10 --> 100, -300 --> -3000
-        * When you have a value of 3001, it would be displayed lateron as "300.1"
-        * For procent values we use an implied dp position of 2:  5037  --> "50.37"
+        * Till now all scores are 'normal' integers. To prevent calculation errors when using floatingpoint,
+        * we use from now on a special FixedDecimalPoint class (Fdp) that has a fixed number of fractional
+        * digits (for now 3). It behaves like a floating point type.
+        * All normal operations are available: conversion from/to string, * / + - and all comparison operators.
         */
-        long points = 0;
+        Fdp points;
         if (score::IsProcent(score))
         {
-            points = normalTop*score::Procentscore2Procent(score);
-            // 100* too big!
-            if (cfg::GetNeuberg())
-                points = RoundLong(points, 10);    // round to .1
-            else            // round to
-                points = 10*RoundLong(points, 100);
+            points = normalTop*Fdp::FromProcent(score::Procentscore2Procent(score));
+            if ( cfg::GetNeuberg() )
+                points = points.Round(1);   // round to .1
+            else
+                points = points.Round(0);   // round to 0 decimals
         }
         else
-        {   points=1L+top-equalCount;
+        {
+            points=1LL+top-equalCount;
             top-=equalCount*2;                              // new 'top'
-            if (adjustedScoreCount && cfg::GetNeuberg())    // recalc points with special formule
-                points = NeubergPoints(points,sets,neubergCount);
-            else
-                points *=10;                // 1 decimal after dp!!
+            if ( adjustedScoreCount && cfg::GetNeuberg() )  // recalc points with special formule
+                points = NeubergPoints(points, sets, neubergCount);
         }
 
         fs.points=points;
@@ -565,7 +559,7 @@ void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
         svSessionResult[pair].maxScore += normalTop;
         svSessionResult[pair].nrOfGames++;
         auto pScore = std::find_if(fsInfo.begin(), fsInfo.end(), [score](const auto& it){return score == it.score;});
-        if (pScore != fsInfo.end()) // should always be the case....
+        if ( pScore != fsInfo.end() ) // should always be the case....
             svSessionResult[pair].points += pScore->points;
     }
 }   // CalcGamePercent()
@@ -664,17 +658,16 @@ bool GetPlayerInfo(UINT a_pair, UINT a_game, PlayerInfo& a_playerInfo)
     return true;
 }   // GetPlayerInfo()
 
-static long GetGameResultButler(UINT game, bool a_bNs, int a_score)
+static Fdp GetGameResultButler(UINT game, bool a_bNs, int a_score)
 {
-    long gameResult = 0;
     int datumScore = a_bNs ? svDatumScores[game].dsNS : svDatumScores[game].dsEW;
-    gameResult = ButlerGetMpsFromScore(a_score, datumScore);
+    Fdp gameResult = ButlerGetMpsFromScore(a_score, datumScore);
     return gameResult;
 }   // GetGameResultButler()
 
-static long GetGameResultPercent(UINT game, bool a_bNs, int a_score)
+static Fdp GetGameResultPercent(UINT game, bool a_bNs, int a_score)
 {
-    long gameResult = 0;
+    Fdp gameResult;
     int score = a_bNs ? a_score : ScoreEwToNs(a_score);
     score = score::Score2Real(score);
     auto end2 = svFrequencyInfo[game].end();
@@ -684,9 +677,9 @@ static long GetGameResultPercent(UINT game, bool a_bNs, int a_score)
     return gameResult;
 }   // GetGameResultPercent()
 
-long CalcScore::GetSetResult( UINT pair, UINT firstGame, UINT nrOfGames, UINT* a_pGamesPlayed )
+Fdp CalcScore::GetSetResult(UINT pair, UINT firstGame, UINT nrOfGames, UINT* a_pGamesPlayed)
 {
-    long setResult = 0;
+    Fdp setResult;
 
     if (a_pGamesPlayed) *a_pGamesPlayed = 0;    // nr of games played for the requested count
     for (UINT ii = 0; ii < nrOfGames; ++ii)
@@ -783,9 +776,9 @@ void CalcScore::SaveGroupResult()
         for (UINT ii = 0; ii < sets; ++ii)
         {
             UINT gamesPlayed = 0;
-            long score = GetSetResult(pair, offsetFirstGame+setSize*ii+1, setSize, &gamesPlayed);
+            Fdp points = GetSetResult(pair, offsetFirstGame + setSize * ii + 1, setSize, &gamesPlayed);
             if (gamesPlayed)    // if at least played once in this set, show score
-                rowInfo.push_back(LongToAscii1(score * (m_bButler ? 10 : 1)));
+                rowInfo.push_back( points.AsString1E() );
             else
                 rowInfo.push_back("-----");
         }
@@ -796,8 +789,8 @@ void CalcScore::SaveGroupResult()
         rowInfo.push_back(combi);
         rowInfo.push_back(correction);
         rowInfo.push_back(U2String(svSessionResult[pair].nrOfGames));
-        rowInfo.push_back(m_bButler ? L2String(svSessionResult[pair].butlerMp) : LongToAscii1(svSessionResult[pair].points));
-        rowInfo.push_back(LongToAscii2(svSessionResult[pair].procentScore));
+        rowInfo.push_back(m_bButler ? svSessionResult[pair].butlerMp.AsString() : svSessionResult[pair].points.AsString1E());
+        rowInfo.push_back(svSessionResult[pair].procentScore.AsString2F());
         m_txtFileResultGroup.AddLine(group.CreateRow(rowInfo));
     }
 
@@ -853,7 +846,7 @@ void CalcScore::SaveSessionResultsProcent()
     for (UINT rank=1; rank < svSessionRankToPair.size(); ++rank)
     {
         UINT pair   = svSessionRankToPair[rank];
-        long score  = svSessionResult[pair].procentScore;
+        Fdp  score  = svSessionResult[pair].procentScore;
         if (svSessionResult[pair].maxScore == 0)
             continue;                   // pair didn't play
 
@@ -865,9 +858,9 @@ void CalcScore::SaveSessionResultsProcent()
               U2String(svSessionPairToRank[pair])
             , names::PairnrSession2SessionText(pair)
             , DottedName(names::PairnrSession2GlobalText(pair))
-            , LongToAscii1(svSessionResult[pair].points)
+            , svSessionResult[pair].points.AsString1E()
             , U2String(svSessionResult[pair].maxScore)
-            , LongToAscii2(score)
+            , score.AsString2F()
             , combi
             , correction
             , GetGroupResultString(pair)
@@ -927,7 +920,7 @@ void CalcScore::SaveSessionResultsButler()
     for (UINT rank=1; rank < svSessionRankToPair.size(); ++rank)
     {
         UINT pair   = svSessionRankToPair[rank];
-        long score  = svSessionResult[pair].mpPerGame;
+        Fdp  score  = svSessionResult[pair].mpPerGame;
         if (svSessionResult[pair].nrOfGames == 0)
             continue;                   // pair didn't play
 
@@ -939,9 +932,9 @@ void CalcScore::SaveSessionResultsButler()
               U2String(svSessionPairToRank[pair])
             , names::PairnrSession2SessionText(pair)
             , DottedName(names::PairnrSession2GlobalText(pair))
-            , L2String(svSessionResult[pair].butlerMp)
+            , svSessionResult[pair].butlerMp.AsString()
             , U2String(svSessionResult[pair].nrOfGames)
-            , LongToAscii2(score)
+            , score.AsString2F()
             , combi
             , correction
             , GetGroupResultString(pair)
@@ -970,6 +963,15 @@ void CalcScore::SaveSessionResults()
     m_txtFileResultOnName.Flush();
 }   // SaveSessionResults()
 
+Fdp CalcScore::NeubergPoints(const Fdp& points, UINT gameCount, UINT comparableCount)
+{   // https://www.bridgeservice.nl/NBB-rekenprogramma/Vraag%20&%20Antwoord%2003.pdf
+    //SN = (Sn + 1) * N/n - 1    // Sn=points, N=gameCount, n=comparableCount
+    Fdp tmp = ((points+1)*gameCount)/comparableCount - 1;
+    tmp.Round(1);   // TOODO: check if we need round/trunc for some values, see original function
+    return tmp;
+}   // NeubergPoints()
+
+#if 0
 long CalcScore::NeubergPoints(long points, UINT gameCount, UINT comparableCount)
 {   // https://www.bridgeservice.nl/NBB-rekenprogramma/Vraag%20&%20Antwoord%2003.pdf
     //SN = (Sn + 1) * N/n - 1    // Sn=points, N=gamecCount, n=comparableCount
@@ -996,6 +998,7 @@ long CalcScore::NeubergPoints(long points, UINT gameCount, UINT comparableCount)
     }
     return nbpoints;
 }   // NeubergPoints()
+#endif
 
 void CalcScore::ApplySessionCorrections(void)
 {
@@ -1006,9 +1009,9 @@ void CalcScore::ApplySessionCorrections(void)
         if (svSessionResult[pair].nrOfGames == 0)  // valid for percent AND butler score
             continue;    // pair did not play any game, so no corrections possible
 
-        int     correctionProcent   = 0;
-        auto    it                  = smCorSessionValidated.find(pair);
-        long    butlerCorImps       = 0;    // corrections in imps for butler: 100* real value so mpPerGame can be calculated easy
+        Fdp     correctionProcent;
+        auto    it            = smCorSessionValidated.find(pair);
+        Fdp     butlerCorImps;  // corrections in imps for butler
 
         m_maxPair = pair;
         if (it != smCorSessionValidated.end())
@@ -1019,13 +1022,13 @@ void CalcScore::ApplySessionCorrections(void)
             {   // some correction in 'mp' or '% '
                 if (cs.type == '%')
                 {
-                    correctionProcent = 100L*cs.correction;
-                    //butlerCorImps = 10*cs.correction*sButlerImpsPer10Procent;   // 100*((cor/10)*sButlerImpsPer10Procent)
+                    correctionProcent = cs.correction;
+                    //butlerCorImps = cs.correction*sButlerImpsPer10Procent;
                 }
                 else
-                {
-                    svSessionResult[pair].points += 10L*cs.correction;
-                    butlerCorImps = cs.correction*100;
+                {   // assume imps in % calculation. If butler, then .points is ignored...
+                    svSessionResult[pair].points += cs.correction;
+                    butlerCorImps = cs.correction;
                 }
             }
 
@@ -1033,13 +1036,13 @@ void CalcScore::ApplySessionCorrections(void)
             {   // from a combi-table, calculated separately!
                 UINT combiTop  = 2 * (GetNumberOfRounds(pair) - 1);
                 UINT normalTop = cfg::GetNrOfSessionPairs() - 2 - 2;
-                long extra     = RoundLong(normalTop * cs.extra   , combiTop);
+                Fdp  extra     = ((normalTop*cs.extra)/combiTop).Round(1);
                 int  maxExtra  = RoundLong(normalTop * cs.maxExtra, combiTop);
                 svSessionResult[pair].points   += extra;
                 svSessionResult[pair].maxScore += maxExtra;
             }
             else
-                butlerCorImps += cs.extra*10;     // extra: 2 decimals now
+                butlerCorImps += cs.extra;
 
             svSessionResult[pair].nrOfGames += cs.games;
         }   // end of correction calculation
@@ -1048,11 +1051,11 @@ void CalcScore::ApplySessionCorrections(void)
         if (m_bButler)
         {
             svSessionResult[pair].procentScore = // for now: too many things depend on it
-            svSessionResult[pair].mpPerGame = RoundLong(butlerCorImps + svSessionResult[pair].butlerMp * 100 , (int)svSessionResult[pair].nrOfGames);
-            svSessionResult[pair].butlerMp += RoundLong(butlerCorImps, 100);
+            svSessionResult[pair].mpPerGame = ((butlerCorImps + svSessionResult[pair].butlerMp)/ (int)svSessionResult[pair].nrOfGames).Round(2);
+            svSessionResult[pair].butlerMp += butlerCorImps;
         }
         else
-            svSessionResult[pair].procentScore = correctionProcent + RoundLong(1000L*svSessionResult[pair].points, svSessionResult[pair].maxScore);
+            svSessionResult[pair].procentScore = correctionProcent + ((100*svSessionResult[pair].points)/svSessionResult[pair].maxScore).Round(2);
     }
     m_maxPair = std::min(m_maxPair, m_numberOfSessionPairs);    // no more then we have active players!
     svSessionRankToPair.resize(m_maxPair+1ULL);
@@ -1147,9 +1150,9 @@ void CalcScore::MakeFrequenceTable(UINT a_game, std::vector<wxString>& a_stringT
         a_stringTable.push_back(frequencyTable.CreateRow(rowInfo));
 
         const auto& frqInfo = svFrequencyInfo[a_game];
-        for (auto it : frqInfo)
+        for (const auto& it : frqInfo)
         {
-            rowInfo = {score::ScoreToString(it.score),LongToAscii1(it.points),LongToAscii1(it.pointsEW)};
+            rowInfo = {score::ScoreToString(it.score), it.points.AsString1E(), it.pointsEW.AsString1E()};
             a_stringTable.push_back(frequencyTable.CreateRow(rowInfo));
         }
     }
@@ -1247,7 +1250,7 @@ void CalcScore::SaveSessionResultShort()
     io::SessionResultWrite(mce, cfg::GetActiveSession());
 }   // SaveSessionResultShort()
 
-static long GetResultScore(UINT a_sessionPairnr, bool a_bSession)
+static Fdp GetResultScore(UINT a_sessionPairnr, bool a_bSession)
 {   // just for use in GetGroupResultString() to find equal scores (and so ranks)
     if (a_bSession) return svSessionResult[a_sessionPairnr].procentScore;
     return svTotalResult[names::PairnrSession2GlobalPairnr(a_sessionPairnr)].total;
@@ -1275,10 +1278,10 @@ wxString CalcScore::GetGroupResultString(UINT a_sessionPair, const std::vector<U
             {   // determine rank in group
                 UINT rank           = 1;
                 UINT groupRank      = 1;
-                long previousScore  = -1;
+                Fdp  previousScore  = -1;
                 for (auto rankPair : *a_pRankIndex)
                 {
-                    long score = GetResultScore(rankPair, a_bSession);
+                    Fdp score = GetResultScore(rankPair, a_bSession);
                     if (score != previousScore) groupRank = rank;    // check for equal scores-->equal rank
                     previousScore = score;
                     if (rankPair == pair)
@@ -1323,7 +1326,7 @@ void CalcScore::CalcTotal()
         return;  // no names yet
     }
     UINT session;
-    std::vector<cor::mCorrectionsEnd> sessionResults;    // corrections have same data as session-results
+    std::vector<cor::mCorrectionsEnd> sessionResults;       // corrections have same data as session-results
     sessionResults.resize(maxSession+1ULL);
     for (session = 1; session <= maxSession; ++session)
     {
@@ -1338,22 +1341,23 @@ void CalcScore::CalcTotal()
         (void)io::CorrectionsEndRead(sessionResults[session], session, false);
     }
 
+    svTotalResult.clear();
     svTotalResult.resize(globalPairs+1ULL);
 
-    long    totalScore;
-    long    totalBonus;
+    Fdp     totalScore;
+    Fdp     totalBonus;
     UINT    games;
     bool    bBonus = false;          // assume no bonus
-    long    tempscore;
+    Fdp     tempscore;
     UINT    pair;
     bool    bWeightedAvg = cfg::GetWeightedAvg();
 
     for (pair=1; pair <= globalPairs; ++pair)   // calc total+average
     {
-        long totalScoreAvg   = 0;           // init used vars
+        Fdp  totalScoreAvg;          // score*games: used for avg if not always present and weightedAvg is wanted
         UINT totalGames      = 0;
-        long average         = 0;
-        long averageWeighted = 0;
+        Fdp  average;
+        Fdp  averageWeighted;
         UINT absentCount     = 0;
         UINT noSessionCount  = 0;   // nr of times the session score is not added to end/total count (== endcorrection)
         totalScore           = 0;
@@ -1361,7 +1365,7 @@ void CalcScore::CalcTotal()
         svTotalResult[pair].nrOfSessions = maxSession;  // assume all played sessions account to end/total result
         for (session=1;session <= maxSession;++session)
         {
-            long score = sessionResults[session][pair].score;
+            Fdp score = sessionResults[session][pair].score;
             if (score == SCORE_NO_TOTAL)
             {
                 ++noSessionCount;
@@ -1375,9 +1379,9 @@ void CalcScore::CalcTotal()
                 svTotalResult[pair].bHasPlayed = true;  // at least played once in all sessions
                 totalScore      += score;
                 games            = sessionResults[session][pair].games;
-                totalScoreAvg   += (int)games*sessionResults[session][pair].score;
+                totalScoreAvg   += (int)games*score;
                 totalGames      += games;
-                if (games * session != totalGames)
+                if (games * session != totalGames)    // not played all games, so weighted avg can/will be different
                     svTotalResult[pair].bWeightedAvg = true;
             }
             totalBonus += sessionResults[session][pair].bonus;
@@ -1388,27 +1392,27 @@ void CalcScore::CalcTotal()
             (maxSession != absentCount)                 //     and not always not present
             )
         {
-            averageWeighted=RoundLong(totalScoreAvg,(int)totalGames);   // determine average score
-            if (averageWeighted > (long)cfg::GetMaxMean())              // too big: take max average
+            averageWeighted = (totalScoreAvg/(int)totalGames).Round(2);     // determine average score
+            if ( averageWeighted > cfg::GetMaxMean() )                      // too big: take max average
             {   //total= average*present + absentCount*min(average,maxaverage)
                 totalScoreAvg = averageWeighted*(maxSession-absentCount);
                 averageWeighted=cfg::GetMaxMean();
                 totalScoreAvg += averageWeighted*absentCount;
             }
             else
-                totalScoreAvg = averageWeighted*maxSession;
-            average=RoundLong(totalScore,maxSession-(absentCount+noSessionCount)); // determine average score
-            if (average > (long)cfg::GetMaxMean() )                         // too big: take max average
-                average=cfg::GetMaxMean();
+                totalScoreAvg = averageWeighted * maxSession;
+            average=(totalScore/(maxSession-(absentCount+noSessionCount))).Round(2); // determine average score
+            if ( average > cfg::GetMaxMean() )     // too big: take max average
+                average = cfg::GetMaxMean();
             totalScore += average*absentCount;
         }
         else
         {
-            if (totalGames)  // don't devide by 0!
-                averageWeighted=RoundLong(totalScoreAvg,(int)totalGames);    // determine average score
+            if ( totalGames )  // don't devide by 0!
+                averageWeighted = (totalScoreAvg/(int)totalGames).Round(2);    // determine average score
             else
                 averageWeighted = 0;
-            average=RoundLong(totalScore,maxSession);
+            average=(totalScore/maxSession).Round(2);
             totalScoreAvg = averageWeighted*maxSession;
         }
         svTotalResult[pair].averageWeighted=averageWeighted;   // save it
@@ -1512,11 +1516,11 @@ void CalcScore::CalcTotal()
                 rowInfo.push_back("-----");
             else if (sessionResults[session][pair].games == 0)
             {
-                rowInfo.push_back(LongToAscii2(svTotalResult[pair].average));
+                rowInfo.push_back(svTotalResult[pair].average.AsString2F());
                 extra = 'a';
             }
             else
-                rowInfo.push_back(LongToAscii2(tempscore));
+                rowInfo.push_back(tempscore.AsString2F());
 
             formInfo[RT_INSERT_POS + session - 1].extra = extra;
         }
@@ -1524,8 +1528,8 @@ void CalcScore::CalcTotal()
         if (bBonus)                         // yes, we have a bonus!
         {
             totalBonus = svTotalResult[pair].bonus;
-            if (totalBonus)                // and this pair has it
-                bonusString=LongToAscii2(totalBonus);
+            if ( totalBonus )                // and this pair has it
+                bonusString = totalBonus.AsString2F();
         }
         rowInfo.push_back(bonusString);
         wxString totalString;
@@ -1538,10 +1542,10 @@ void CalcScore::CalcTotal()
         }
         else
         {
-            totalString = LongToAscii2(totalScore);
+            totalString = totalScore.AsString2F();
         }
         rowInfo.push_back(totalString);
-        rowInfo.push_back(LongToAscii2( RoundLong(totalScore,svTotalResult[pair].nrOfSessions)));
+        rowInfo.push_back((totalScore/svTotalResult[pair].nrOfSessions).AsString2F());
         rowInfo.push_back(GetGroupResultString(names::PairnrGlobal2SessionPairnr(pair)));
         tmp = totalResult.CreateRow(rowInfo);
         m_txtFileResultTotal.AddLine(tmp);
@@ -1554,11 +1558,11 @@ void CalcScore::CalcTotal()
 
 struct CLUB_DATA
 {
-    long    score       = 0;    // accumulated (session) scores, up to max nr of allowed pairs
-    long    totalScore  = 0;    // accumulated scores for all pairs
+    Fdp     score;              // accumulated (session) scores, up to max nr of allowed pairs
+    Fdp     totalScore;         // accumulated scores for all pairs
     UINT    clubCount   = 0;    // nr of pairs playing for this club
     UINT    clubId      = 0;    // the id of the club, from name-info
-    long    average     = 0;    // average of upto cfg::GetMaxClubcount() pairs;
+    Fdp     average;            // average of upto cfg::GetMaxClubcount() pairs;
 };
 
 static bool CompareClubs(const CLUB_DATA& left, const CLUB_DATA& right)
@@ -1602,7 +1606,7 @@ void CalcScore::CalcClub( bool a_bTotal)
         {
             // for total, use sum of session-results for better accuracy
             // like: (x.01+x.00)/2 = x.01   and (x.01+x.01)/2=x.01, but its 'more'!
-            long score = a_bTotal ? svTotalResult[pair].total : svSessionResult[pair].procentScore;                 // score bepalen
+            Fdp score = a_bTotal ? svTotalResult[pair].total : svSessionResult[pair].procentScore;                 // score bepalen
             if (score)
             {
                 if (!a_bTotal) pair = names::PairnrSession2GlobalPairnr(pair);
@@ -1675,7 +1679,7 @@ void CalcScore::CalcClub( bool a_bTotal)
 
     UINT rank               = 1;
     UINT actualRank         = 1;
-    long previousAvgScore   = 99999;    // just some impossible score..
+    Fdp  previousAvgScore   = 99999;    // just some impossible score..
 
     for (UINT clubIndex = 1; clubIndex <= maxClubIndex; ++clubIndex)
     {
@@ -1684,7 +1688,7 @@ void CalcScore::CalcClub( bool a_bTotal)
 
         if (clubCount > maxClubCount)
             clubCount = maxClubCount;
-        long avgScore = RoundLong(club[clubIndex].score, clubCount*maxSession);
+        Fdp avgScore = club[clubIndex].score/(clubCount * maxSession);
         if (avgScore != previousAvgScore)
         {   // check if previous score is equal, and then emit equal rank
             actualRank = rank;
@@ -1695,12 +1699,12 @@ void CalcScore::CalcClub( bool a_bTotal)
               U2String(actualRank)
             , U2String(clubCount)
             , names::GetClubName(club[clubIndex].clubId)
-            , LongToAscii2(club[clubIndex].score)
-            , LongToAscii2(avgScore)
+            , club[clubIndex].score.AsString2F()
+            , avgScore.AsString2F()
             , FMT("%7s (%2u, %5s)"
-                , LongToAscii2(club[clubIndex].totalScore)
+                , club[clubIndex].totalScore.AsString2F()
                 , club[clubIndex].clubCount
-                , LongToAscii2 (RoundLong(club[clubIndex].totalScore, club[clubIndex].clubCount * maxSession)))
+                , (club[clubIndex].totalScore/(club[clubIndex].clubCount * maxSession)).Round(2).AsString2F())
         };
         tmp2 = clubResult.CreateRow(rowInfo);
         txtFile.AddLine(tmp2);
@@ -1713,8 +1717,8 @@ void CalcScore::CalcClub( bool a_bTotal)
         txtFile.AddLine(ES);
         tmp = FMT(_("individual pairs: %u, score: %6s (%5s)"),
             club[0].clubCount,
-            LongToAscii2(club[0].totalScore),
-            LongToAscii2(RoundLong(club[0].totalScore,club[0].clubCount*maxSession))
+            club[0].totalScore.AsString2F(),
+            (club[0].totalScore/(club[0].clubCount*maxSession)).Round(2).AsString2F()
         );
         txtFile.AddLine(tmp);
     }
@@ -1722,7 +1726,7 @@ void CalcScore::CalcClub( bool a_bTotal)
     txtFile.Flush();    // write to disk
 }   // CalcClub()
 
-void CalcScore::CalcResultPairHelper(long& sumPoints, UINT& sumTops, UINT& gamesPlayed, wxString& tmp)
+void CalcScore::CalcResultPairHelper(Fdp& sumPoints, UINT& sumTops, UINT& gamesPlayed, wxString& tmp)
 {
     #undef ADDLINE
     #define ADDLINE m_txtFileResultPair.AddLine
@@ -1730,9 +1734,9 @@ void CalcScore::CalcResultPairHelper(long& sumPoints, UINT& sumTops, UINT& games
     if (gamesPlayed)
     {
         if (m_bButler)
-            tmp += FMT(_(" set-score: %ld (%s imps/game)"), sumPoints, LongToAscii2(sumPoints*100/(int)gamesPlayed)    );
+            tmp += FMT(" %s: %s (%s %s)", _("set-score"), sumPoints.AsString(), (sumPoints / (int)gamesPlayed).Round(2).AsString2F(), _("imps/game"));
         else
-            tmp += FMT(_(" set-score: %s(%u%%)"), LongToAscii1(sumPoints), (sumPoints*10+sumTops/2)/sumTops);
+            tmp += FMT(" %s: %s(%s%%)", _("set-score"), sumPoints.AsString1E(), ((sumPoints * 100) / sumTops).Round(0).AsString());
     }
     ADDLINE(tmp);
     ADDLINE(ES);
@@ -1770,7 +1774,7 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
         ShowChoice();
         return;
     }
-    long sumPoints  = 0;
+    Fdp  sumPoints;
     UINT sumTops    = 0;
     UINT gamesPlayed= 0;    // nr of games played at a table
     for (UINT game = 1; game <= maxGame; ++game)
@@ -1793,17 +1797,18 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
         UINT top    = playerInfo.bIsNS ? svGameTops[game].topNS : svGameTops[game].topEW;
         if  (!m_bButler && top == 0) continue;    // no top yet, only playd once??
         long score  = playerInfo.score;
-        long points = GetSetResult(pair, game, 1);
+        Fdp points = GetSetResult(pair, game, 1);
         sumPoints  += points;
         sumTops    += top;
         tmp        += playerInfo.bIsNS ? _("NS") : _("EW");
         tmp        += FMT(_(", score: %5s"), score::ScoreToString(score)  );
         if (m_bButler)
-            tmp    += FMT(_(", imps %3ld" )  , points                       );
+            tmp    += FMT(_(", imps %3ld" )  , points.AsLong() );
+
         else
         {
-            tmp += FMT(_(", points%6s"), LongToAscii1(points));
-            tmp += FMT(" %3ld%%", (points * 10 + top / 2) / top);
+            tmp += FMT(_(", points%6s"), points.AsString1E() );
+            tmp += FMT(" %3ld%%", ((100*points)/top).AsLong());
         }
 
         if ((game % setSize) == 1)  // first game of set, show opponent
@@ -1838,13 +1843,13 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
             corrections = " (" + combiString + ", " + correctionString + ')';
     }
 
-    long score = svSessionResult[pair].procentScore;
+    Fdp score = svSessionResult[pair].procentScore;
     if (m_bButler)
     {
         ADDLINE(FMT(_("imps: %ld, games: %u, sessionscore: %s imps/game%s, rank: %u"),
-            svSessionResult[pair].butlerMp,
+            svSessionResult[pair].butlerMp.AsLong(),
             svSessionResult[pair].nrOfGames,
-            LongToAscii2(score),
+            score.AsString2F(),
             corrections,
             svSessionPairToRank[pair]
         ));
@@ -1852,10 +1857,10 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
     }
     else
         ADDLINE(FMT(_("points: %s (%i), games: %u, sessionscore: %s%%%s, rank: %u"),
-            LongToAscii1(svSessionResult[pair].points),
+            svSessionResult[pair].points.AsString1E(),
             svSessionResult[pair].maxScore,
             svSessionResult[pair].nrOfGames,
-            LongToAscii2(score),
+            score.AsString2F(),
             corrections,
             svSessionPairToRank[pair]
             ));
@@ -2051,24 +2056,24 @@ void ValidateSessionCorrections(const cor::mCorrectionsSession* a_pNonValidatedC
             {
                 if ( !IsCombiCandidate(pair) )
                 {
-                    cs.maxExtra = cs.extra = cs.games = 0;
+                    cs.extra = cs.maxExtra = cs.games = 0;
                     break;
                 }
                 if ( cs.games == 0 )
                 {
-                    cs.maxExtra = cs.extra = 0;
+                    cs.extra = cs.maxExtra =  0;
                     break;
                 }
                 if ( bButler )
                 {
                     if ( cs.maxExtra )
-                        cs.maxExtra = cs.extra = cs.games = 0;
+                        cs.extra = cs.maxExtra = cs.games = 0;
                     else
                         state |= OK_COMBI;
                     break;
                 }
-                if ( (cs.maxExtra * 10 < cs.extra) || (cs.maxExtra == 0) || (cs.extra < 0) )
-                    cs.maxExtra = cs.extra = cs.games = 0;
+                if ( (cs.maxExtra < cs.extra) || (cs.maxExtra == 0) || (cs.extra < 0) )
+                    cs.extra = cs.maxExtra = cs.games = 0;
                 else
                     state |= OK_COMBI;
             } while (0);
@@ -2087,7 +2092,7 @@ void ValidateSessionCorrections(const cor::mCorrectionsSession* a_pNonValidatedC
                                 , pair
                                 , correction.correction
                                 , correction.type
-                                , LongToAscii1(correction.extra)
+                                , correction.extra.AsString1E()
                                 , correction.maxExtra
                                 , correction.games
                             );
@@ -2115,10 +2120,10 @@ void GetValidatedEndCorrections4Session(cor::mCorrectionsEnd& a_ce, UINT a_sessi
     for (const auto& [globalPair, ce] : a_ce)
     {
         if (
-               (ce.score < (bButler ? -10000 : 0 ))
-            || ((ce.score  > 10000) && (ce.score != SCORE_IGNORE && ce.score != SCORE_NO_TOTAL))  // between 0 and 100%  :10000 = 100.00%
-            || (ce.bonus   < -9999)
-            || (ce.bonus   > 9999)  // between -99.99% and +99.99% or imps
+               (ce.score < (bButler ? -100 : 0 ))
+            || ((ce.score  > 100) && (ce.score != SCORE_IGNORE && ce.score != SCORE_NO_TOTAL))  // between 0 and 100%
+            || (ce.bonus   <= -100)
+            || (ce.bonus   >= +100) // between -99.99% and +99.99% or imps
             || (globalPair < 1)
             || (globalPair > names::GetNumberOfGlobalPairs())
             || (ce.games   > cfg::GetNrOfGames())
@@ -2129,8 +2134,8 @@ void GetValidatedEndCorrections4Session(cor::mCorrectionsEnd& a_ce, UINT a_sessi
             {
                 errorMsg += FMT("\n:  '%u,%s,%s,%u'"
                                     , globalPair
-                                    , LongToAscii2(ce.score)
-                                    , LongToAscii2(ce.bonus)
+                                    , ce.score.AsString2F()
+                                    , ce.bonus.AsString2F()
                                     , ce.games
                                );
             }

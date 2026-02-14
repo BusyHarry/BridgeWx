@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010"> 
+    <Type Name="Fdp">
+        <!--  <DisplayString>"{(static_cast&lt;float&gt;(m_value))/1000}"</DisplayString> -->
+        <DisplayString>{(static_cast&lt;float&gt;(m_value))/1000,g}</DisplayString>
+    </Type>
+</AutoVisualizer>

@@ -14,6 +14,7 @@
 
 #include "utils.h"
 #include "schemaInfo.h"
+#include "fdp.h"
 
 class wxWindow;
 class wxTextCtrl;
@@ -203,7 +204,7 @@ namespace cfg
     wxColor     GetLightOrDark(const wxColor& lightColor);  // return 'lightColor' if non darkmode, else 255-x per color
     UINT        GetMaxAbsent();                             // max times allowed to be not present
     UINT        GetMaxClubcount();                          // maximum nr of players for the club result
-    UINT        GetMaxMean();                               // max mean when absent
+    Fdp         GetMaxMean();                               // max mean when absent
     UINT        GetFontsizeIncrease() ;                     // get wanted increse of fontsize in %
     UINT        GetMinClubcount();                          // minimum nr of players for the club result
     bool        GetNeuberg();                               // state of the Neuberg calculation
@@ -213,7 +214,6 @@ namespace cfg
     bool        IsDark();                                   // return true if darmode is active
     bool        IsDebug();                                  // true if we want some extra output
     bool        IsScriptTesting();                          // true if running auto-tests
-    wxString    MaxMeanToString();                          // get this value as string
     void        SetActiveMatch(const wxString& sMatch, const wxString& a_sMatchPath = wxEmptyString);     // Set (new) name for current match
     void        SetActiveSession(UINT activeSession);       // set the new session for a set of games
     void        SetClock(bool bClock);                      // (re)set the clockdisplay
@@ -221,7 +221,7 @@ namespace cfg
     void        SetFF(bool bFF);                            // (re)set the wanted flag
     void        SetLanguage(int language, const wxString& description); // set the language for the user-interface
 
-    void        SetMaxMean( const wxString& maxMean);       // set max mean in multiple games when not always present
+    void        SetMaxMean(const Fdp& maxMean);             // set max mean in multiple games when not always present
     void        SetNeuberg(bool bNeuberg);                  // (re)set the use Neuberg calculation
     void        SetWeightedAvg(bool bWA);                   // (re)set the use of weighted mean
 

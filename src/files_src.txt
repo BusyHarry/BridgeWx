@@ -10,6 +10,7 @@ correctionsSession.cpp
 database.cpp
 dbglobals.cpp
 debug.cpp
+fdp.cpp
 fileIo.cpp
 importExportSchema.cpp
 main.cpp
@@ -49,6 +50,7 @@ database.h
 dbglobals.h
 dbkeys.h
 debug.h
+fdp.h
 fileIo.h
 importExportSchema.h
 interfaces.h

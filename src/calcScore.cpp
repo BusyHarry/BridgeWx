@@ -2119,15 +2119,16 @@ void GetValidatedEndCorrections4Session(cor::mCorrectionsEnd& a_ce, UINT a_sessi
 
     for (const auto& [globalPair, ce] : a_ce)
     {
+        auto realScore = (ce.score == SCORE_IGNORE || ce.score == SCORE_NO_TOTAL) ? 0 : ce.score;
         if (
                (ce.score < (bButler ? -100 : 0 ))
-            || ((ce.score  > 100) && (ce.score != SCORE_IGNORE && ce.score != SCORE_NO_TOTAL))  // between 0 and 100%
+            || ((ce.score  > 100) && realScore) // between 0 and 100%
             || (ce.bonus   <= -100)
             || (ce.bonus   >= +100) // between -99.99% and +99.99% or imps
             || (globalPair < 1)
             || (globalPair > names::GetNumberOfGlobalPairs())
             || (ce.games   > cfg::GetNrOfGames())
-            || (ce.bonus && (ce.games || ce.score))
+            || (ce.bonus && (ce.games || realScore))
             )
         {   // (some) incorrect value(s)
             if ( !bTesting )

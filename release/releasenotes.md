@@ -15,6 +15,7 @@
    - get rid of incomprehensible constructs like */100 or */10 etc
    - calculations are now much more readable/understandable
    - added a visualiser for Fdp in VisualStudio
+ - there was an incorrect error (pop-up) when we had an endresult bonus
 
 #V10.9.0  Sunday November 23 2025
  - added encode/decode strings containing special characters when storing/retreiving the database

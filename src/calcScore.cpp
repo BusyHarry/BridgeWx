@@ -59,14 +59,21 @@ int ButlerGetMpsFromScore(int a_score, int a_datumScore)
 }   // ButlerGetMpsFromScore()
 
 struct ScoreInfo
-{
-    Fdp  total;
-    Fdp  average;
-    Fdp  averageWeighted;
-    Fdp  bonus;
-    bool bWeightedAvg       = false;            // true, if not always same number of games
-    bool bHasPlayed         = false;
+{   // 'N' = normal, non-weighted, 'W' = weighted calculation
+    Fdp  totalN;                                // total for non-weighted avg
+    Fdp  totalW;                                // sum of sessionwAvg[i], corrected for absent session(s)
+    Fdp  avgN;                                  // real          avg over played games
+    Fdp  avgW;                                  // real weighted avg over played games
+    Fdp  avgAbsentN;                            // avg for absent sessions for non-weighted
+    Fdp  avgAbsentW;                            // avg for absent sessions for weighted
+    Fdp  bonus;                                 // sum of bonusses
+    bool bWeightedAvg       = false;            // true, if not always played all games
+    bool bHasPlayed         = false;            // true, if played at least 1 game
     UINT nrOfSessions       = 0;                // number of sessions included in total/end result
+    Fdp  totalGameScoreW;                       // sum of sessionResult[i]*sessionGames[i] for weighted calculation
+    UINT gameCount          = 0;                // sum of sessionGames[i]
+    UINT activeSessions     = 0;                // sessions with data
+    bool bNoTotal           = false;            // if set, pair is not ranked in total
 };
 
 struct TopsPerGame
@@ -131,7 +138,7 @@ static void GetSessionCorrectionStrings(UINT a_sessionPair, wxString& a_sCombiRe
 
 static void InitPairToRankVector(bool a_bSession)
 {
-    #define SCORE(pair) (a_bSession ? svSessionResult[pair].procentScore : svTotalResult[pair].total)
+    #define SCORE(pair) (a_bSession ? svSessionResult[pair].procentScore : svTotalResult[pair].totalN)
     std::vector<UINT>& pairToRank = a_bSession ? svSessionPairToRank : svTotalPairToRank;
     std::vector<UINT>& rankToPair = a_bSession ? svSessionRankToPair : svTotalRankToPair;
     pairToRank.clear();
@@ -1253,7 +1260,7 @@ void CalcScore::SaveSessionResultShort()
 static Fdp GetResultScore(UINT a_sessionPairnr, bool a_bSession)
 {   // just for use in GetGroupResultString() to find equal scores (and so ranks)
     if (a_bSession) return svSessionResult[a_sessionPairnr].procentScore;
-    return svTotalResult[names::PairnrSession2GlobalPairnr(a_sessionPairnr)].total;
+    return svTotalResult[names::PairnrSession2GlobalPairnr(a_sessionPairnr)].totalN;
 }   // GetResultScore()
 
 wxString CalcScore::GetGroupResultString(UINT a_sessionPair, const std::vector<UINT>* a_pRankIndex, bool a_bSession)
@@ -1313,6 +1320,63 @@ wxString CalcScore::GetGroupResultString(UINT a_sessionPair, const std::vector<U
     return result;
 }   // GetGroupResultString()
 
+static void CalcTotalSub(ScoreInfo& a_pairResult, UINT a_absentCount, bool& a_bBonus)
+{   // CalcTotal() helper: calc real totals and averages
+    auto  sessionCount = a_pairResult.nrOfSessions;
+    a_pairResult.avgW.Round(2);     // need 2 decimals, else we could get differences when 
+    a_pairResult.avgN.Round(2);     //  multiplied by 2 or more (a_absentCount or sessioncount)
+
+    if ( a_absentCount != 0 )
+    {   // correct average/total if not always present
+        auto  presentCount  = sessionCount-a_absentCount;
+        const auto MAX_MEAN = cfg::GetMaxMean();
+
+        // Weighted stuf : *W
+        if ( a_pairResult.avgW > MAX_MEAN )
+        {
+            a_pairResult.avgAbsentW = MAX_MEAN;
+            a_pairResult.totalW     = a_pairResult.avgW*presentCount + MAX_MEAN*a_absentCount;
+            a_pairResult.avgW       = a_pairResult.totalW/sessionCount;
+        }
+        else
+        {
+            a_pairResult.avgAbsentW = a_pairResult.avgW;
+            a_pairResult.totalW     = a_pairResult.avgW*sessionCount;
+        }
+
+        // Normal/non-weighted stuf
+        if ( a_pairResult.avgN > MAX_MEAN ) // too big: take max average
+        {
+            a_pairResult.avgAbsentN = MAX_MEAN;
+            a_pairResult.totalN    += MAX_MEAN*a_absentCount;
+            a_pairResult.avgN       = a_pairResult.totalN/sessionCount;
+        }
+        else
+        {
+            a_pairResult.avgAbsentN = a_pairResult.avgN;
+            a_pairResult.totalN    += a_pairResult.avgN*a_absentCount;
+        }
+    }   // end of not always present
+    else
+    {   // always present
+        //a_pairResult.totalN; this is already correct, so do nothing
+        a_pairResult.totalW     = a_pairResult.avgW*sessionCount;
+        a_pairResult.avgAbsentW = a_pairResult.avgW;    // not used anymore, but nice to have an overview
+        a_pairResult.avgAbsentN = a_pairResult.avgN;    // not used anymore, but nice to have an overview
+    }
+
+    if ( a_pairResult.bonus )
+    {   // adjust total and running average
+        a_pairResult.totalN  += a_pairResult.bonus;
+        a_pairResult.avgN     = a_pairResult.totalN/a_pairResult.nrOfSessions;
+        a_pairResult.totalW  += a_pairResult.bonus;
+        a_pairResult.avgW     = a_pairResult.totalW/a_pairResult.nrOfSessions;
+        a_bBonus              = true;
+    }
+    else
+        a_bBonus = false;
+}   // CalcTotalSub()
+
 void CalcScore::CalcTotal()
 {
     UINT maxSession = cfg::GetActiveSession();
@@ -1325,15 +1389,20 @@ void CalcScore::CalcTotal()
             MyMessageBox(_("No names entered yet!"));
         return;  // no names yet
     }
-    UINT session;
     std::vector<cor::mCorrectionsEnd> sessionResults;       // corrections have same data as session-results
     sessionResults.resize(maxSession+1ULL);
-    for (session = 1; session <= maxSession; ++session)
+    std::vector<UINT> gamesPerSession(maxSession+1ULL,0U);  // max games in a session, needed for average calculation
+    for (UINT session = 1; session <= maxSession; ++session)
     {
         cor::CORRECTION_END ce; // preset pairnr's
         for (UINT pair = 0; pair <= globalPairs; ++pair) sessionResults[session][pair] = ce;
         //load session result
         (void)io::SessionResultRead(sessionResults[session], session);
+        for ( auto const& it : sessionResults[session] )
+        {   // determine max number of games played in this session
+            if ( gamesPerSession[session] < it.second.games )
+                gamesPerSession[session] = it.second.games;
+        }
         //append end-corrections
         // get validated end-corrections for this session
         cor::mCorrectionsEnd correctionsEnd;
@@ -1343,96 +1412,64 @@ void CalcScore::CalcTotal()
 
     svTotalResult.clear();
     svTotalResult.resize(globalPairs+1ULL);
-
-    Fdp     totalScore;
-    Fdp     totalBonus;
-    UINT    games;
-    bool    bBonus = false;          // assume no bonus
-    Fdp     tempscore;
-    UINT    pair;
-    bool    bWeightedAvg = cfg::GetWeightedAvg();
-
-    for (pair=1; pair <= globalPairs; ++pair)   // calc total+average
+    bool bBonus4Display = false;
+    for (UINT pair=1; pair <= globalPairs; ++pair)   // calc total+average
     {
-        Fdp  totalScoreAvg;          // score*games: used for avg if not always present and weightedAvg is wanted
-        UINT totalGames      = 0;
-        Fdp  average;
-        Fdp  averageWeighted;
         UINT absentCount     = 0;
         UINT noSessionCount  = 0;   // nr of times the session score is not added to end/total count (== endcorrection)
-        totalScore           = 0;
-        totalBonus           = 0;
-        svTotalResult[pair].nrOfSessions = maxSession;  // assume all played sessions account to end/total result
-        for (session=1;session <= maxSession;++session)
+        auto& pairResult     = svTotalResult[pair];
+        pairResult.nrOfSessions = maxSession;  // assume all played sessions account to end/total result
+        for (UINT session=1;session <= maxSession;++session)
         {
             Fdp score = sessionResults[session][pair].score;
             if (score == SCORE_NO_TOTAL)
             {
                 ++noSessionCount;
-                --svTotalResult[pair].nrOfSessions;
+                --pairResult.nrOfSessions;
                 continue;
             }
             if (sessionResults[session][pair].games == 0)
                 ++absentCount;
             else
             {
-                svTotalResult[pair].bHasPlayed = true;  // at least played once in all sessions
-                totalScore      += score;
-                games            = sessionResults[session][pair].games;
-                totalScoreAvg   += (int)games*score;
-                totalGames      += games;
-                if (games * session != totalGames)    // not played all games, so weighted avg can/will be different
-                    svTotalResult[pair].bWeightedAvg = true;
+                pairResult.activeSessions++;    // one more active session for this pair
+                pairResult.bHasPlayed = true;   // at least played once in all sessions
+                UINT games = sessionResults[session][pair].games;
+                if ( gamesPerSession[session] != games )    // not played all games, so weighted avg can/will be different
+                    pairResult.bWeightedAvg = true;
+                pairResult.totalN           += score;
+                pairResult.avgN              = pairResult.totalN/pairResult.activeSessions;
+                pairResult.totalGameScoreW  += games*score;
+                pairResult.gameCount        += games;
+                pairResult.avgW              = pairResult.totalGameScoreW/pairResult.gameCount;
             }
-            totalBonus += sessionResults[session][pair].bonus;
+            pairResult.bonus += sessionResults[session][pair].bonus;
+        }   // end session handling
+
+        if ( absentCount > cfg::GetMaxAbsent() || absentCount == maxSession || pairResult.gameCount == 0 )
+        {   // if too often or always absent, don't rank pair
+            pairResult.totalN        = 0;
+            pairResult.avgN          = 0;
+            pairResult.avgAbsentN    = 0;
+            pairResult.totalW        = 0;
+            pairResult.avgW          = 0;
+            pairResult.avgAbsentW    = 0;
+            pairResult.bNoTotal      = true;
+            continue;
         }
-        if (                                            // correct average if ....
-            (absentCount != 0) &&                       // not always present
-            (absentCount <= cfg::GetMaxAbsent()) &&     //   and not too often not present
-            (maxSession != absentCount)                 //     and not always not present
-            )
-        {
-            averageWeighted = (totalScoreAvg/(int)totalGames).Round(2);     // determine average score
-            if ( averageWeighted > cfg::GetMaxMean() )                      // too big: take max average
-            {   //total= average*present + absentCount*min(average,maxaverage)
-                totalScoreAvg = averageWeighted*(maxSession-absentCount);
-                averageWeighted=cfg::GetMaxMean();
-                totalScoreAvg += averageWeighted*absentCount;
-            }
-            else
-                totalScoreAvg = averageWeighted * maxSession;
-            average=(totalScore/(maxSession-(absentCount+noSessionCount))).Round(2); // determine average score
-            if ( average > cfg::GetMaxMean() )     // too big: take max average
-                average = cfg::GetMaxMean();
-            totalScore += average*absentCount;
-        }
-        else
-        {
-            if ( totalGames )  // don't devide by 0!
-                averageWeighted = (totalScoreAvg/(int)totalGames).Round(2);    // determine average score
-            else
-                averageWeighted = 0;
-            average=(totalScore/maxSession).Round(2);
-            totalScoreAvg = averageWeighted*maxSession;
-        }
-        svTotalResult[pair].averageWeighted=averageWeighted;   // save it
-        if (bWeightedAvg)
-        {   svTotalResult[pair].total   = totalScoreAvg+totalBonus;
-            svTotalResult[pair].average = svTotalResult[pair].averageWeighted;
-        }
-        else
-        {   svTotalResult[pair].total     = totalScore+totalBonus;// and total
-            svTotalResult[pair].average = average;      // save it
-        }
-        svTotalResult[pair].bonus=totalBonus;           //  and bonus
-        if (totalBonus)
-            bBonus = TRUE;                              // for display
+
+        CalcTotalSub(pairResult, absentCount, bBonus4Display);  // do the magic
     }   // end for all pairs
 
+    bool bWeightedAvg = cfg::GetWeightedAvg();
     svTotalRankToPair.resize(globalPairs+1ULL);
     std::iota(svTotalRankToPair.begin(), svTotalRankToPair.end(), 0);   // fill with 0,1,2,3....
-    std::sort(svTotalRankToPair.begin()+1, svTotalRankToPair.end(),
-        [](auto left, auto right){return  svTotalResult[left].bHasPlayed && svTotalResult[left].total > svTotalResult[right].total;} );
+    if ( bWeightedAvg ) 
+        std::sort(svTotalRankToPair.begin()+1, svTotalRankToPair.end(),
+            [](auto left, auto right){return svTotalResult[left].bHasPlayed && svTotalResult[left].totalW > svTotalResult[right].totalW;} );
+    else
+        std::sort(svTotalRankToPair.begin()+1, svTotalRankToPair.end(), 
+            [](auto left, auto right){return svTotalResult[left].bHasPlayed && svTotalResult[left].totalN > svTotalResult[right].totalN;} );
 
     for (auto it = svTotalRankToPair.rbegin(); it != svTotalRankToPair.rend(); ++it)
     {
@@ -1472,7 +1509,7 @@ void CalcScore::CalcTotal()
           {SIZE_RT_RANK       , FormBuilder::Align::RIGHT, ES , true}
         , {SIZE_RT_NAME       , FormBuilder::Align::LEFT , ' ', true}
         // session info added later
-        , {SIZE_RT_BONUS      , FormBuilder::Align::RIGHT, ES , bBonus}
+        , {SIZE_RT_BONUS      , FormBuilder::Align::RIGHT, ES , bBonus4Display}
         , {SIZE_RT_TOTAL      , FormBuilder::Align::RIGHT, ES , true}
         , {SIZE_RT_AVG        , FormBuilder::Align::RIGHT, ES , true}
         , {SIZE_RT_GROUPRESULT, FormBuilder::Align::LEFT , ES , true}
@@ -1489,7 +1526,7 @@ void CalcScore::CalcTotal()
         , {FormBuilder::Align::LEFT , ES , GetGroupResultString(0, &indexSessionPairnr, GROUPRESULT_FINAL)}
     };
 
-    for (session=1; session <= maxSession; ++session)
+    for (UINT session=1; session <= maxSession; ++session)
     {
         formInfo  .insert(formInfo.begin()   + RT_INSERT_POS + session - 1, {SIZE_RT_SESSION, FormBuilder::Align::RIGHT, ES, true});
         //xgettext:TRANSLATORS: 'S' is first character of 'Session'
@@ -1502,51 +1539,45 @@ void CalcScore::CalcTotal()
 
     for (UINT rank = 1; rank < svTotalRankToPair.size(); ++rank)
     {
-        pair        = svTotalRankToPair[rank];
+        UINT pair       = svTotalRankToPair[rank];
         if (!svTotalResult[pair].bHasPlayed)
             break;  // all global players that have not played yet, should be at end of rank-array!
-        totalScore  = svTotalResult[pair].total;
+        Fdp totalScore  = bWeightedAvg ? svTotalResult[pair].totalW : svTotalResult[pair].totalN;
+        Fdp average     = bWeightedAvg ? svTotalResult[pair].avgW   : svTotalResult[pair].avgN;
         std::vector<wxString> rowInfo = {U2String(svTotalPairToRank[pair]), DottedName(names::PairnrGlobal2GlobalText(pair))};
 
-        for (session=1; session <= maxSession; ++session)
+        wxString averageAbsent = (bWeightedAvg ? svTotalResult[pair].avgAbsentW : svTotalResult[pair].avgAbsentN).AsString2F();
+        for (UINT session=1; session <= maxSession; ++session)
         {
             char extra = ' ';
-            tempscore = sessionResults[session][pair].score;
-            if (tempscore == SCORE_NO_TOTAL)
+            Fdp score = sessionResults[session][pair].score;
+            if ( score == SCORE_NO_TOTAL )
                 rowInfo.push_back("-----");
             else if (sessionResults[session][pair].games == 0)
             {
-                rowInfo.push_back(svTotalResult[pair].average.AsString2F());
+                rowInfo.push_back(averageAbsent);
                 extra = 'a';
             }
             else
-                rowInfo.push_back(tempscore.AsString2F());
+                rowInfo.push_back(score.AsString2F());
 
             formInfo[RT_INSERT_POS + session - 1].extra = extra;
         }
         wxString bonusString;
-        if (bBonus)                         // yes, we have a bonus!
-        {
-            totalBonus = svTotalResult[pair].bonus;
-            if ( totalBonus )                // and this pair has it
-                bonusString = totalBonus.AsString2F();
-        }
+        if ( svTotalResult[pair].bonus )    // yes, this pair has a bonus!
+            bonusString = svTotalResult[pair].bonus.AsString2F();
         rowInfo.push_back(bonusString);
-        wxString totalString;
-        if (bWeightedAvg)
-        {
+        wxString totalString = totalScore.AsString2F();
+        if ( bWeightedAvg )
+        {   // some pairs did have non-playing table(s)
             if (svTotalResult[pair].bWeightedAvg)
-                totalString = '+';      // average mean gives a difference
+                totalString += '+';     // this pair did have non-playing table(s)
             else
-                totalString = ' ';      // no dif
-        }
-        else
-        {
-            totalString = totalScore.AsString2F();
+                totalString += ' ';
         }
         rowInfo.push_back(totalString);
-        rowInfo.push_back((totalScore/svTotalResult[pair].nrOfSessions).AsString2F());
-        rowInfo.push_back(GetGroupResultString(names::PairnrGlobal2SessionPairnr(pair)));
+        rowInfo.push_back(average.AsString2F());
+        rowInfo.push_back(svTotalResult[pair].bNoTotal ? ES : GetGroupResultString(names::PairnrGlobal2SessionPairnr(pair)));
         tmp = totalResult.CreateRow(rowInfo);
         m_txtFileResultTotal.AddLine(tmp);
     }   // end for all ranks
@@ -1606,7 +1637,7 @@ void CalcScore::CalcClub( bool a_bTotal)
         {
             // for total, use sum of session-results for better accuracy
             // like: (x.01+x.00)/2 = x.01   and (x.01+x.01)/2=x.01, but its 'more'!
-            Fdp score = a_bTotal ? svTotalResult[pair].total : svSessionResult[pair].procentScore;                 // score bepalen
+            Fdp score = a_bTotal ? svTotalResult[pair].totalN : svSessionResult[pair].procentScore;                 // score bepalen
             if (score)
             {
                 if (!a_bTotal) pair = names::PairnrSession2GlobalPairnr(pair);

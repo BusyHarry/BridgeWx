@@ -26,7 +26,7 @@ namespace cfg
     static const wxString   ssCentralNameFile("centraal.nm");       // nm-filename when using global names
     static const wxString   ssGlobalNameFile ("globalNames");       // db-filename when using global names
     static wxString         ssBaseFolder;           // folder where bridge.ini/globalNames.db is located
-    static const Fdp        MAX_MEAN_FDP     ("52.50");             // 
+    static const Fdp        MAX_MEAN_FDP     ("52.50");             // default max average for final calculation if not present
 
     static wxString         ssActiveMatch;          // base-name of the active match, used in filenames. Must be inited here!
     static wxString         ssActiveMatchPath;      // location of match-data

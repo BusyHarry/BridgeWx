@@ -16,6 +16,7 @@
    - calculations are now much more readable/understandable
    - added a visualiser for Fdp in VisualStudio
  - there was an incorrect error (pop-up) when we had an endresult bonus
+ - restructuring calculation of weighted average
 
 #V10.9.0  Sunday November 23 2025
  - added encode/decode strings containing special characters when storing/retreiving the database

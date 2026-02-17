@@ -107,7 +107,7 @@ void CorrectionsSession::AutotestRequestMousePositions(MyTextFile* a_pFile)
     for (int row = 0; row < rows; ++row)
     {
         //        CORRECTION_SESSION() {type = '%'; correction = 0; extra = 0; maxExtra = 0; games = 0;}
-        //         char type; int correction; long extra; int maxExtra; UINT games
+        //         char type; int correction; Fdp extra; int maxExtra; UINT games
         wxString procent = m_theGrid->GetCellValue(row, COL_COR_PROCENT);
         wxString mp      = m_theGrid->GetCellValue(row, COL_COR_MP     );
         wxString maxe    = m_theGrid->GetCellValue(row, COL_COR_MAX    );
@@ -127,7 +127,7 @@ void CorrectionsSession::AutotestRequestMousePositions(MyTextFile* a_pFile)
             cor.correction = wxAtoi(mp);
         }
 
-        cor.extra       = AsciiTolong(extra);
+        cor.extra       = extra;
         cor.maxExtra    = wxAtoi(maxe);
         cor.games       = wxAtoi(games);
         corrections[(UINT)row+1] = cor;     // row+1 equals sessionpairnr
@@ -140,22 +140,12 @@ void CorrectionsSession::AutotestRequestMousePositions(MyTextFile* a_pFile)
     cor::SaveCorrections();
 }   // BackupData()
 
-static wxString Long12ToString(long a_value, int a_nrOfDecimals = 1)
+static wxString ForceInRange( const wxString& a_val2Check, int a_minVal, int a_maxVal)
 {
-    if (a_nrOfDecimals == 1)
-    {
-        if ((a_value % 10) == 0)
-            return FMT("%ld  ", a_value/ 10);
-        return FMT("%ld.%01ld", a_value/ 10, std::abs(a_value) %  10L);
-    }
-    return     FMT("%ld.%02ld", a_value/100, std::abs(a_value) % 100L);
-}   // Long12ToString()
-
-static wxString ForceInRange( const wxString& val2Check, int a_minVal, int a_maxVal, bool a_bIntType = false)
-{
-    int ival2Check = a_bIntType ? wxAtoi(val2Check) : AsciiTolong(val2Check);
-    ival2Check = std::clamp(ival2Check, a_minVal, a_maxVal);
-    return a_bIntType ? I2String(ival2Check) : Long12ToString(ival2Check);
+    Fdp val2Check(a_val2Check);
+    if ( val2Check < a_minVal ) val2Check = a_minVal;
+    if ( val2Check > a_maxVal ) val2Check = a_maxVal;
+    return val2Check.AsString1E();
 }   // ForceInRange()
 
 void CorrectionsSession::ClearCombiData(int a_row)
@@ -197,7 +187,7 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
             if ( !newData.IsEmpty() )
             {
                 m_theGrid->SetCellValue(row, COL_COR_MP, ES);   // only one can have a value
-                newData = ForceInRange(newData, COR_PERCENT_MIN, COR_PERCENT_MAX, true);
+                newData = ForceInRange(newData, COR_PERCENT_MIN, COR_PERCENT_MAX);
                 value = wxAtoi(newData);
                 if ( value == 0 || value == COR_PERCENT_MIN )
                     newData.clear();
@@ -207,7 +197,7 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
             if ( !newData.IsEmpty() )
             {
                 m_theGrid->SetCellValue(row, COL_COR_PROCENT, ES);  // only one can have a value
-                newData = ForceInRange(newData, COR_MP_MIN, COR_MP_MAX, true);
+                newData = ForceInRange(newData, COR_MP_MIN, COR_MP_MAX);
                 value = wxAtoi(newData);
                 if ( value == 0 || value == COR_MP_MIN )
                     newData.clear();
@@ -221,10 +211,10 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
                 break;
             }
 
-            newData = ForceInRange(newData, COR_EXTRA_MIN, COR_EXTRA_MAX, true);
+            newData = ForceInRange(newData, COR_EXTRA_MIN, COR_EXTRA_MAX);
             value = wxAtoi(newData);
             m_theGrid->UpdateLimitMax(row, COL_COR_EXTRA, value);
-            m_theGrid->SetCellValue(row, COL_COR_EXTRA, ForceInRange( m_theGrid->GetCellValue(row,COL_COR_EXTRA), COR_EXTRA_MIN, value*10));
+            m_theGrid->SetCellValue(row, COL_COR_EXTRA, ForceInRange( m_theGrid->GetCellValue(row,COL_COR_EXTRA), COR_EXTRA_MIN, value));
             if ( m_theGrid->GetCellValue(row, COL_COR_GAMES).IsEmpty() )
                 m_theGrid->SetCellValue(row, COL_COR_GAMES, U2String(cfg::GetSetSize()));
             break;
@@ -237,7 +227,7 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
 
             if ( m_bButler )
             {
-                newData = ForceInRange(newData, -COR_EXTRA_MAX*10, COR_EXTRA_MAX*10);
+                newData = ForceInRange(newData, -COR_EXTRA_MAX, COR_EXTRA_MAX);
                 if ( m_theGrid->GetCellValue(row, COL_COR_GAMES).IsEmpty() )    // set default set-size
                     m_theGrid->SetCellValue(row, COL_COR_GAMES, U2String(cfg::GetSetSize()));
             }
@@ -245,7 +235,7 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
             {   // percent scoring
                 if ( m_theGrid->GetCellValue(row,COL_COR_MAX).IsEmpty() )
                     return CELL_CHANGE_REJECTED;        // only extra-data if we have a maximum inserted
-                newData = ForceInRange(newData, COR_EXTRA_MIN, 10*wxAtoi(m_theGrid->GetCellValue(row,COL_COR_MAX)));
+                newData = ForceInRange(newData, COR_EXTRA_MIN, wxAtoi(m_theGrid->GetCellValue(row,COL_COR_MAX)));
             }
             break;
         case COL_COR_GAMES:
@@ -256,7 +246,7 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
                 if ( m_theGrid->GetCellValue(row, COL_COR_MAX).IsEmpty() && m_theGrid->GetCellValue(row, COL_COR_EXTRA).IsEmpty() )
                     return CELL_CHANGE_REJECTED;        // only games if extra/max data
                 else
-                    newData = ForceInRange(newData, 1, cfg::GetSetSize(), true);
+                    newData = ForceInRange(newData, 1, cfg::GetSetSize());
             }
             break;
         default:
@@ -354,7 +344,7 @@ void CorrectionsSession::RefreshInfo()
                 m_theGrid->UpdateLimitMax(row, COL_COR_EXTRA, cs.maxExtra);
             }
             m_theGrid->SetCellValue(row, COL_COR_MAX  , I2String      (cs.maxExtra));
-            m_theGrid->SetCellValue(row, COL_COR_EXTRA, Long12ToString(cs.extra   ));
+            m_theGrid->SetCellValue(row, COL_COR_EXTRA, cs.extra.AsString1E() );
             m_theGrid->SetCellValue(row, COL_COR_GAMES, U2String      (cs.games   ));
         }
     }

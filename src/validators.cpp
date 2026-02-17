@@ -270,7 +270,7 @@ bool MyValidator::IsMinusOk(const wxString& a_val, int a_pos) const
     return true;
 }   // MyValidator::IsMinusOk()
 
-bool MyValidator::IsCharOk(const wxString& a_val, int a_pos, wxChar a_chr)
+bool MyValidator::IsCharOk(const wxString& a_val, int a_pos, wxChar a_chr) const
 {
     if ( !m_bIsFloat ) return ( a_chr >= '0' && a_chr <= '9' );
     const wxChar separator =  '.' ;     // NB, the OnChar() transforms a ',' to a '.'

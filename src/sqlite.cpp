@@ -699,20 +699,17 @@ namespace sql
         return UpdateSingleItem(KEY_SESSION_CORRECTION, correction, a_session);
     }   // CorrectionsSessionWrite()
 
-    bool MaxmeanRead(UINT& a_maxmean)
+    bool MaxmeanRead(Fdp& a_maxmean)
     {
         if ( !sqlFp ) return false;
-        wxString defaultValue = FMT("%u.%02u", a_maxmean / 100, a_maxmean % 100);
-        wxString sMaxMean = ReadSingleItem(KEY_MATCH_MAXMEAN, defaultValue);
-        a_maxmean = AsciiTolong(sMaxMean, ExpectedDecimalDigits::DIGITS_2);
+        a_maxmean = ReadSingleItem(KEY_MATCH_MAXMEAN, a_maxmean.AsString2F());
         return true;
     }   // MaxmeanRead()
 
-    bool MaxmeanWrite(UINT a_maxmean)
+    bool MaxmeanWrite(const Fdp& a_maxmean)
     {
         if ( !sqlFp ) return false;
-        wxString sMaxmean = FMT("%u.%02u",a_maxmean / 100, a_maxmean % 100);
-        return UpdateSingleItem(KEY_MATCH_MAXMEAN, sMaxmean);
+        return UpdateSingleItem(KEY_MATCH_MAXMEAN, a_maxmean.AsString2F());
     } // MaxmeanWrite()
 
     bool MinMaxClubRead(UINT& a_min, UINT& a_max)

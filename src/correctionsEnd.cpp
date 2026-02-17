@@ -89,7 +89,7 @@ void CorrectionsEnd::AutotestRequestMousePositions(MyTextFile* a_pFile)
         if (score.IsEmpty())
         {   // we only have a bonus
             cor.score = SCORE_IGNORE;
-            cor.bonus = AsciiTolong(bonus, ExpectedDecimalDigits::DIGITS_2);
+            cor.bonus = bonus;
         }
         else
         {
@@ -98,7 +98,7 @@ void CorrectionsEnd::AutotestRequestMousePositions(MyTextFile* a_pFile)
                 cor.score = SCORE_NO_TOTAL;
             else
             {
-                cor.score = AsciiTolong(score, ExpectedDecimalDigits::DIGITS_2);
+                cor.score = score;
                 cor.games = wxAtoi(m_theGrid->GetCellValue(row, COL_COR_GAMES));
                 if (cor.games == 0)
                     cor.games = cfg::GetNrOfGames();
@@ -116,7 +116,7 @@ void CorrectionsEnd::AutotestRequestMousePositions(MyTextFile* a_pFile)
 }   // BackupData()
 
 bool CorrectionsEnd::OnCellChanging(const CellInfo& a_cellInfo)
-{   MyLogError("CorrectionsEnd::OnCellChanging(): %f", 1.234);
+{
     AUTOTEST_BUSY("cellChanging");
     if (a_cellInfo.pList != m_theGrid)
     {
@@ -176,10 +176,9 @@ bool CorrectionsEnd::OnCellChanging(const CellInfo& a_cellInfo)
         }
 
         // 'normal' score/bonus
-        // score and bonus are: xxx.yy, so 10000 = 100.00 for display
-        long minimum = (col == COL_COR_BONUS || bButler) ? -10000 : 0L;
-        long value = AsciiTolong(newData, ExpectedDecimalDigits::DIGITS_2);
-        if ((value >= minimum) && (value <= 10000))
+        Fdp minimum = (col == COL_COR_BONUS || bButler) ? -100 : 0L;
+        Fdp value = newData;
+        if ( (value >= minimum) && (value <= 100) )
         {   // if inrange: don't show bonus data, if value = 0 or when we already have a score
             if (col == COL_COR_BONUS && (value == 0 || !m_theGrid->GetCellValue(row, COL_COR_SCORE).IsEmpty()))
             {
@@ -187,7 +186,7 @@ bool CorrectionsEnd::OnCellChanging(const CellInfo& a_cellInfo)
             }
             else
             {
-                updatedData = LongToAscii2(value);
+                updatedData = value.AsString2F();
                 if (col == COL_COR_SCORE)
                 {   // set default value for games, if cell still empty
                     m_theGrid->SetCellValue(row, COL_COR_BONUS, ES);
@@ -268,11 +267,11 @@ void CorrectionsEnd::RefreshInfo()
         if (bIgnore)
         {   // MUST have a bonus
             if (ce.bonus)   // only show non-zero values: should be the case because bonus of 0 makes no sense!
-                m_theGrid->SetCellValue(row, COL_COR_BONUS, LongToAscii2(ce.bonus));
+                m_theGrid->SetCellValue(row, COL_COR_BONUS, ce.bonus.AsString2F());
         }
         else
         {
-            m_theGrid->SetCellValue(row, COL_COR_SCORE, bNoTotal ? wxString('*') : LongToAscii2(ce.score));
+            m_theGrid->SetCellValue(row, COL_COR_SCORE, bNoTotal ? wxString('*') : ce.score.AsString2F());
             if (!bNoTotal)
                 m_theGrid->SetCellValue(row, COL_COR_GAMES, U2String(ce.games));
         }

@@ -5,7 +5,7 @@
 #define _CORRECTIONS_H
 #pragma once
 #include <map>
-
+#include "fdp.h"
 class wxString;
 
 namespace cor
@@ -18,7 +18,7 @@ namespace cor
 
     typedef struct CORRECTION_SESSION
     {
-        CORRECTION_SESSION(char a_type, int a_correction, long a_extra, int a_maxExtra, UINT a_games)
+        CORRECTION_SESSION(char a_type, int a_correction, Fdp a_extra, int a_maxExtra, UINT a_games)
         {type = a_type;correction = a_correction;extra = a_extra; maxExtra = a_maxExtra;games=a_games;}
         CORRECTION_SESSION() {type = '%'; correction = 0; extra = 0; maxExtra = 0; games = 0;}
         bool operator == (const CORRECTION_SESSION& rhs) const
@@ -26,17 +26,17 @@ namespace cor
         bool operator != (const CORRECTION_SESSION& rhs) const {return !(*this == rhs);}
         char    type;
         int     correction;
-        long    extra;          //  long.1:  xx.x
+        Fdp     extra;          //  xx.x
         int     maxExtra;
-        UINT    games;        // only valid for extra/maxExtra (i.e combi-table)
+        UINT    games;          // only valid for extra/maxExtra (i.e combi-table)
     } CORRECTION_SESSION;
 
     typedef struct CORRECTION_END
     {
         bool operator == (const CORRECTION_END& rhs) const
         { return score == rhs.score && bonus == rhs.bonus && games == rhs.games;}
-        long            score=0;  // long.2:  xx.xx
-        long            bonus=0;  // long.2:  xx.xx
+        Fdp             score;      // xx.xx
+        Fdp             bonus;      // xx.xx
         unsigned int    games=0;
     } CORRECTION_END;
 

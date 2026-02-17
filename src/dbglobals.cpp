@@ -106,8 +106,8 @@ namespace glb
             UINT pairNr;
             bool bItemError = (4 != wxSscanf(it, " {%u , %10[^, ] , %10[^, ] ,%u }", &pairNr, scoreBuf, bonusBuf, &ce.games));
             (void)bItemError;
-            ce.score = AsciiTolong(scoreBuf, ExpectedDecimalDigits::DIGITS_2);
-            ce.bonus = AsciiTolong(bonusBuf, ExpectedDecimalDigits::DIGITS_2);
+            ce.score = Fdp(scoreBuf);
+            ce.bonus = Fdp(bonusBuf);
             //        if ( cor::IsValidCorrectionEnd(pairNr, ce, it, bItemError) )   // let application handle this
             {   // only add result if editing (map == empty) or when pair exists in supplied map
                 if ( a_bEdit || a_mCorrectionsEnd.find(pairNr) != a_mCorrectionsEnd.end() )
@@ -136,8 +136,8 @@ namespace glb
             correction += FMT("%c{%u,%s,%s,%u}"
                 , separator
                 , it.first
-                , LongToAscii2(it.second.score)
-                , LongToAscii2(it.second.bonus)
+                , it.second.score.AsString2F()
+                , it.second.bonus.AsString2F()
                 , it.second.games
             );
             separator = theSeparator;
@@ -160,7 +160,7 @@ namespace glb
                 , &sessionPairnr, &cs.correction, &cs.type, extraBuf, &cs.maxExtra, &cs.games
             );  // older db may NOT have games component
             bool bErrorEntry = entries < 5; (void)bErrorEntry;
-            cs.extra = AsciiTolong(extraBuf, ExpectedDecimalDigits::DIGITS_1);
+            cs.extra = Fdp(extraBuf);
 #if 0   // don't remove (partly) bad input, application should do it
             if ( !IsValidCorrectionSession(sessionPairnr, cs, it, bErrorEntry) )
             {
@@ -186,7 +186,7 @@ namespace glb
                 , it.first
                 , it.second.correction
                 , it.second.type
-                , LongToAscii1(it.second.extra).Trim(TRIM_RIGHT)
+                , it.second.extra.AsString1()
                 , it.second.maxExtra
                 , it.second.games
             );
@@ -296,7 +296,7 @@ namespace glb
             char scoreBuf[10 + 1] = { 0 };
             UINT pairNr;
             bool bItemError = (3 != wxSscanf(it, " {%u , %10[^, ] , %u }", &pairNr, scoreBuf, &ce.games));
-            ce.score = AsciiTolong(scoreBuf, ExpectedDecimalDigits::DIGITS_2);
+            ce.score = Fdp(scoreBuf);
             if ( a_mSessionResult.find(pairNr) == a_mSessionResult.end() )
                 bItemError = true;  // pair MUST be present!
             if ( cor::IsValidCorrectionEnd(pairNr, ce, it, bItemError) )
@@ -319,7 +319,7 @@ namespace glb
             result += FMT("%c{%u,%s,%u}"
                 , separator
                 , it.first                          // global pairnr
-                , LongToAscii2(it.second.score)     // score
+                , it.second.score.AsString2F()      // score
                 , it.second.games                   // played games
             );
             separator = theSeparator;

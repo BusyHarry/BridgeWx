@@ -11,6 +11,12 @@
    - select through menu 'tools/sWitch datatype'
    - referencefiles for testing added
    - version of sqlite3: sqlite-amalgamation-3.51.02.00 from 2026-01-09
+ - added a fixed decimal point class (Fdp)
+   - get rid of incomprehensible constructs like */100 or */10 etc
+   - calculations are now much more readable/understandable
+   - added a visualiser for Fdp in VisualStudio
+ - there was an incorrect error (pop-up) when we had an endresult bonus
+ - restructuring calculation of weighted average
 
 #V10.9.0  Sunday November 23 2025
  - added encode/decode strings containing special characters when storing/retreiving the database

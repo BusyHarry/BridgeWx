@@ -334,13 +334,11 @@ msgstr "totaal score"
 msgid "individual pairs: %u, score: %6s (%5s)"
 msgstr "individuele paren: %u, score: %6s (%5s)"
 
-#, c-format
-msgid " set-score: %ld (%s imps/game)"
-msgstr " set-score: %ld (%s imps/spel)"
+msgid "imps/game"
+msgstr "imps/spel"
 
-#, c-format
-msgid " set-score: %s(%u%%)"
-msgstr " set-score: %s(%u%%)"
+msgid "set-score"
+msgstr "set-score"
 
 #, c-format
 msgid "Result of pair %s '%s' for '%s'%s"

@@ -218,6 +218,9 @@
     <ClCompile Include="src\dbglobals.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\fdp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\assignNames.h">
@@ -340,5 +343,11 @@
     <ClInclude Include="src\dbglobals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\fdp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="fdp.natvis" />
   </ItemGroup>
 </Project>

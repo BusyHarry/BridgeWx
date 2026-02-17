@@ -518,7 +518,9 @@ void BusyBox(const wxString& message, int milisecondsShow, const wxPoint& positi
         }
     private:
         bb(){m_pBusyFrame = nullptr;}
+        // cppcheck-suppress missingMemberCopy
         bb(const bb &)      {m_pBusyFrame = nullptr;}  // complaint of cppcheck
+        // cppcheck-suppress operatorEqVarError
         void operator=(bb&) {m_pBusyFrame = nullptr;}  // complaint of cppcheck
         wxFrame*        m_pBusyFrame;
         wxTimer         m_busyTimer;
@@ -568,7 +570,7 @@ void MyTextFile::MyCreate(const wxString& a_filename, AccessType a_access, wxTex
     }
 }   // MyCreate()
 
-bool MyTextFile::IsOk()
+bool MyTextFile::IsOk() const
 {
     return m_bOk;
 }   // IsOk()

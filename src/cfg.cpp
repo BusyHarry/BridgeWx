@@ -26,7 +26,7 @@ namespace cfg
     static const wxString   ssCentralNameFile("centraal.nm");       // nm-filename when using global names
     static const wxString   ssGlobalNameFile ("globalNames");       // db-filename when using global names
     static wxString         ssBaseFolder;           // folder where bridge.ini/globalNames.db is located
-
+    static const Fdp        MAX_MEAN_FDP     ("52.50");             // default max average for final calculation if not present
 
     static wxString         ssActiveMatch;          // base-name of the active match, used in filenames. Must be inited here!
     static wxString         ssActiveMatchPath;      // location of match-data
@@ -44,7 +44,7 @@ namespace cfg
     static int              siConfigHash= INITIAL_HASH;   // 'hash' from active game and session, so users can check when to save/reload data
     static UINT             suSession;              // 0=single match, >=1 match consists of more then one session
     static UINT             suMaxAbsent;            // max count of absency to be in the results
-    static UINT             suMaxMean;              // max mean result if 1 or more times absent
+    static Fdp              sfMaxMean;              // max mean result if 1 or more times absent
     static UINT             suLinesPerPage;         // lines per page when printing
     static UINT             suMaxClub;              // max nr of players used in club-result
     static UINT             suMinClub;              // min nr of players used in club-result
@@ -99,8 +99,6 @@ namespace cfg
 
     #define  DEFAULT_DESCRIPTION                  _("<no description yet>") /*NO static -> translation!*/
     static void HashIncrement();
-    static void MaxmeanWrite(UINT maxmean);
-
 
     static bool     sbIsBackuped = false;
     static wxString ssActiveMatchBackup;        // original name of active match
@@ -239,7 +237,7 @@ namespace cfg
             suLinesPerPage  = 64;
             suMaxAbsent     = 3;
             suMaxClub       = MAX_PAIRS;
-            suMaxMean       = 5250;         //52.50% or 1.00 imps/game
+            sfMaxMean       = MAX_MEAN_FDP; //52.50% or 1.00 imps/game
             suMinClub       = 1;
             suSession       = 0;
             ssPrinterAll    = FILE_PRINTER_NAME;
@@ -276,7 +274,7 @@ namespace cfg
     UINT        GetLinesPerPage()       { return suLinesPerPage;            }
     UINT        GetMaxAbsent()          { return suMaxAbsent;               }
     UINT        GetMaxClubcount()       { return suMaxClub;                 }
-    UINT        GetMaxMean()            { return suMaxMean;                 }
+    Fdp         GetMaxMean()            { return sfMaxMean;                 }
     UINT        GetMinClubcount()       { return suMinClub;                 }
     bool        GetNetworkPrinting()    { return sbNetworkPrinting;         }
     bool        GetNeuberg()            { return  sbNeuberg;                }
@@ -344,8 +342,8 @@ namespace cfg
     {
         if ( a_bOn == sbButler) return;
         sbButler = a_bOn;
-        suMaxMean = sbButler ? std::min(100U,suMaxMean) : std::max(5250U,suMaxMean);
-        MaxmeanWrite(suMaxMean);
+        auto maxMean = sbButler ? std::min(Fdp(1),sfMaxMean) : std::max(MAX_MEAN_FDP,sfMaxMean);
+        SetMaxMean(maxMean);
 
         io::WriteValue(KEY_MATCH_BUTLER, sbButler);
         HashIncrement();
@@ -637,33 +635,12 @@ namespace cfg
         return theWantedName;
     }   // ConstructFilename()
 
-    wxString MaxMeanToString()
+    void SetMaxMean( const Fdp& a_maxMean )
     {
-        return FMT("%u.%02u", suMaxMean / 100, suMaxMean % 100);
-    }   // MaxMeanToString()
-
-    UINT MaxMeanFromString( const wxString& a_sMaxMean)
-    {
-        return AsciiTolong( a_sMaxMean, ExpectedDecimalDigits::DIGITS_2);
-    }   // MaxMeanFromString()
-
-    static void MaxmeanRead(UINT& a_maxmean)
-    {
-        io::MaxmeanRead(a_maxmean);
-    }   // MaxmeanRead()
-
-    static void MaxmeanWrite(UINT maxmean)
-    {
-        io::MaxmeanWrite(maxmean);
+        if (a_maxMean == sfMaxMean) return;
+        sfMaxMean = a_maxMean;
+        io::MaxmeanWrite(a_maxMean);
         HashIncrement();
-    }   // MaxmeanWrite()
-
-    void SetMaxMean( const wxString& a_maxMean )
-    {
-        auto tmp = MaxMeanFromString(a_maxMean);
-        if (tmp == suMaxMean) return;
-        suMaxMean = tmp;
-        MaxmeanWrite(suMaxMean);
     }   // SetMaxMean()
 
     void SetGroupResult(bool a_bGroupResult)
@@ -729,7 +706,7 @@ namespace cfg
         ssPrinterAll.Replace(WINPRINT_PREFIX, ES, false);   // remove winprint prefix
         prn::SetPrinterName(ssPrinterAll);
         suMaxAbsent     = io::ReadValueUINT (KEY_MATCH_MAX_ABSENT, suMaxAbsent       );
-        MaxmeanRead(suMaxMean);
+        (void)io::MaxmeanRead(sfMaxMean);
         sbClock         = io::ReadValueBool (KEY_MATCH_CLOCK     , sbClock           );
         sbWeightedAvg   = io::ReadValueBool (KEY_MATCH_WEIGHTAVG , sbWeightedAvg     );
         sbBiosVideo     = io::ReadValueBool (KEY_MATCH_VIDEO     , sbBiosVideo       );
@@ -827,7 +804,7 @@ namespace cfg
         UINT    lsuMaxAbsent    = suMaxAbsent;
 //      bool    lsbBiosVideo    = sbBiosVideo;
         bool    lsbButler       = sbButler;
-        UINT    lsiMaxMean      = suMaxMean;
+        Fdp     lsfMaxMean      = sfMaxMean;
         bool    lsbGroupResult  = sbGroupResult;
         bool    lsbClock        = sbClock;
         UINT    lsiLinesPerPage = suLinesPerPage;
@@ -878,8 +855,7 @@ namespace cfg
                 break;
             case 'm':
                 {
-                    wxString tmp = pArgptr;
-                    lsiMaxMean = MaxMeanFromString(tmp);
+                    lsfMaxMean = Fdp(pArgptr);
                 }
                 break;
             case 'k':
@@ -970,6 +946,7 @@ namespace cfg
         UpdateConfigMatch();    // create/update/read match cfgfile
 
         // now we can update the match data;
+        SetMaxMean      (lsfMaxMean);
         SetActiveSession(lsiSession);
         SetMaxAbsent    (lsuMaxAbsent);
         SetNeuberg      (lsbNeuberg);

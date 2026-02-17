@@ -8,6 +8,8 @@
 
 #include "importExportSchema.h"
 
+#define STANDALONE_TEST 0   /* set to 1 for standalone testing: main defined*/
+
 static bool GetNonEmptyLine(std::ifstream& a_file, std::string& a_line)
 {   // return true if we have a none empty line, false if eof
     for(;;)
@@ -145,6 +147,7 @@ namespace importExportSchema
 
 }   // namespace importExportSchema
 
+#if STANDALONE_TEST == 1
 int main()
 {
     NEW_SCHEMA schema;
@@ -165,3 +168,4 @@ int main()
     }
     return 0;
 }   // main()
+#endif

@@ -135,7 +135,7 @@ protected:
     bool        AutotestAddMousePos(MyTextFile* pFile, const wxWindow* pWindow, const wxString& positionName); //add center of window as click-point for autotest
     void        AutoTestAddGridInfo(MyTextFile* pFile, const wxString& pageName, const MyGrid::GridInfo& gridInfo);
 
-    const wxWindow* GetSearchWindow(){return m_pTxtCtrlSearchBox;}
+    const wxWindow* GetSearchWindow() const {return m_pTxtCtrlSearchBox;}
     struct WinAndName
     {   // store a window/name at construction time to get it added to AUTOTEST positions later on
         WinAndName(const wxWindow* a_pWindow, const wxString& a_mousePosName, const wxString& a_winTitle="") { pWindow = a_pWindow; mousePosName = a_mousePosName; winTitle = a_winTitle; }
@@ -215,7 +215,7 @@ public:
     explicit MyTextFile(const wxString& filename, AccessType access = READ, wxTextFileType textType = wxTextFileType_Dos);
     ~MyTextFile();
     void MyCreate(const wxString& filename, AccessType access = READ, wxTextFileType textType= wxTextFileType_Dos);
-    bool IsOk();
+    bool IsOk() const;
     void  Flush();
 private:
     AccessType      m_access;

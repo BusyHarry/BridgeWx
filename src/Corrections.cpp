@@ -63,7 +63,7 @@ namespace cor
     {   // validate data and show error if not ok
         if (    a_bHasError
             || ((a_correctionSession.type != 'm') && (a_correctionSession.type != 'M') && (a_correctionSession.type != '%'))
-            || (!cfg::GetButler() && a_correctionSession.extra > a_correctionSession.maxExtra*10)
+            || (!cfg::GetButler() && a_correctionSession.extra > a_correctionSession.maxExtra)
             || (a_sessionPair > names::GetNumberOfGlobalPairs())
             || (a_sessionPair < 1)
             || (a_correctionSession.correction < MIN_CORRECTION)
@@ -99,15 +99,15 @@ namespace cor
     {
         bool bError = !cfg::GetButler() && (a_ce.score < 0);
         if (   a_bHasError
-            || (bError)              || ((a_ce.score > 10000) && (a_ce.score != SCORE_IGNORE && a_ce.score != SCORE_NO_TOTAL))  // between 0 and 100%  :10000 = 100.00%
-            || (a_ce.bonus < -9999)  || (a_ce.bonus > 9999 )  // between -99.99% and +99.99%
+            || (bError)              || ((a_ce.score > 100) && (a_ce.score != SCORE_IGNORE && a_ce.score != SCORE_NO_TOTAL))  // between 0 and 100%
+            || (a_ce.bonus <= -100)  || (a_ce.bonus >= 100 )  // between -99.99% and +99.99%
             || (a_globalPair < 1 )   || (a_globalPair > names::GetNumberOfGlobalPairs())
             || (a_ce.games > cfg:: MAX_GAMES ) //cfg::GetNrOfGames())
            )
         {
             wxString msg  = FMT(_("Invalid total-correction/end data <%s> will be ignored.\n"), a_input);
-                     msg += FMT(" %-11s: %ld\n", _("score")     , a_ce.score);
-                     msg += FMT(" %-11s: %ld\n", _("bonus")     , a_ce.bonus);
+                     msg += FMT(" %-11s: %s\n", _("score")     , a_ce.score.AsString2());
+                     msg += FMT(" %-11s: %s\n", _("bonus")     , a_ce.bonus.AsString2());
                      msg += FMT(" %-11s: %u\n" , _("globalPair"), a_globalPair);
                      msg += FMT(" %s: %u, cfg::max: %u", _("games"), a_ce.games, cfg::MAX_GAMES); //cfg::GetNrOfGames());
             MyLogError("%s", msg);

@@ -1,5 +1,6 @@
 files_main.txt
 .gitignore
+fdp.natvis
 readme.md.txt
 usefulFunctions.md
 CompareAll.bat

@@ -47,7 +47,7 @@ public:
     static void         Show             (bool bShow = true);                   // show/hide the logwindow
 
 private:
-    void Create();
+    void Create() const;
 };
 
 #define MyLogWarning(fmt,...) MyLog::DoLog(MyLog::Level::LOG_Warning, wxString::Format(fmt, __VA_ARGS__))

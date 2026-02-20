@@ -41,7 +41,7 @@ if not [%wxwin%] == [] copy %wxwin%\locale\nl.mo .\BridgeWx\locales\nl\wxstd.mo
 copy ..\locales\nl.mo .\BridgeWx\locales\nl\BridgeWx.mo
 
 
-set tools=AutoHotkey64,BuildDate,cleanpo,msgbox,zip
+set tools=AutoHotkey64,BuildDate,cleanpo,msgbox,zip,shell_sqlite
 for %%a in (%tools%) copy ..\tools\%%a.exe BridgeWx\tools\
 
 :: copy vc-redist dll's

@@ -110,6 +110,10 @@ Remark: English is buildin, so for this language you don't need to do anything
  - from version V10.9.0 dark-mode is supported
  - it can be forced by setting an environment variable: set wx_msw_dark_mode=2
 
+# SQLite
+ - from version V10.10.0 you can also store the game-data in an SQLite database
+ - referencefiles for autotesting are added
+
 # Licence
 
 MIT License

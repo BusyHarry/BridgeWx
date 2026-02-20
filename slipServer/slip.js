@@ -84,7 +84,7 @@ function OnSignOk()
   let bAllReady =    ValidateGameData()
                   && document.getElementById("IDC_pairNS").checked 
                   && document.getElementById("IDC_pairEW").checked;
-   /* testing */ bAllReady = true;
+   /* testing  bAllReady = true; */
    //console.log(gdI);
   document.getElementById("IDB_submit").style.display = bAllReady ? "" : "none";
 }  // OnSignOk()

@@ -1,5 +1,5 @@
 # Releasenotes
-#V10.10.0  ...
+#V10.10.0  Friday Februari 20 2026
  - reorganised the in/output methods in fileio in preparation to adding an sqlite database for storage
  - logic error while reading the config when an array value was out of range
  - sometimes you got an unexpected matchname like "-c1"
@@ -17,6 +17,7 @@
    - added a visualiser for Fdp in VisualStudio
  - there was an incorrect error (pop-up) when we had an endresult bonus
  - restructuring calculation of weighted average
+ - undone a (forgotten) test-setting in the slipserver
 
 #V10.9.0  Sunday November 23 2025
  - added encode/decode strings containing special characters when storing/retreiving the database

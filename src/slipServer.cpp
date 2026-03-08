@@ -491,10 +491,11 @@ void SlipServer::CreateHtmlTableInfo(MyTextFile& a_file)
             for ( UINT table = 1; table <= schema.GetNumberOfTables(); ++table )
             {
                 schema.GetTableRoundInfo(table, round, info);
-                if ( grp.absent == info.pairs.ns || grp.absent == info.pairs.ew )
-                {
+                if (   grp.data.absent == info.pairs.ns || grp.data.absent == info.pairs.ew
+                    || 0U              == info.pairs.ns || 0U              == info.pairs.ew
+                   )
+                {   // pair is absent or there is just no play at this table, this round
                     info.set = 0;   // noplay this round
-                    info.pairs.ns = info.pairs.ew = grp.absent; // results in empty names
                 }
                 wxString grt = FMT("$G%uR%uT%u   = array(%u, %u, %u);", group, round, table
                     , info.set

@@ -763,7 +763,7 @@ SlipServer::SlipResult SlipServer::HandleResultLine(const wxString& a_result)
                 score::GameSetData gameData;
                 gameData.pairNS     = data.ns;
                 gameData.pairEW     = data.ew;
-                gameData.scoreNS    = data.nsScore;
+                gameData.scoreNS    = data.declarer == (UINT)Declarer::NP ? SCORE_NP : data.nsScore;
                 gameData.scoreEW    = -data.nsScore;
                 gameData.contractNS = ContractAsString(data, true);
                 gameData.contractEW = ContractAsString(data, false);

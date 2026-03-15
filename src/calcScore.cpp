@@ -489,6 +489,8 @@ void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
     {
         if (it.pairNS > m_numberOfSessionPairs || it.pairEW > m_numberOfSessionPairs)
             continue;   // just ignore scores with a bad pair involved
+        if ( it.scoreNS == SCORE_NP || it.scoreEW == SCORE_NP )
+            continue;   // ignore explicitly non-played games!
 
         int score = bNs ? it.scoreNS : it.scoreEW;
         score = score::Score2Real(score);   //we only want/need real scores or %
@@ -513,6 +515,8 @@ void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
         svGameTops[game].topEW = normalTop;
 
     size_t maxIndex = tmpScores.size();
+    if ( maxIndex == 0 )
+        return;    // no scores ??, return to prevent outOfRange vector access
     size_t index = 0;
     do
     {   // determine the different scores and there appearance count
@@ -581,6 +585,8 @@ void CalcScore::CalcGameButler(UINT a_game, bool a_bNs)
     {
         if (it.pairNS > m_numberOfSessionPairs || it.pairEW > m_numberOfSessionPairs)
             continue;   // just ignore scores with a bad pair involved
+        if ( it.scoreNS == SCORE_NP || it.scoreEW == SCORE_NP )
+            continue;   // ignore explicitly non-played games!
         int score = a_bNs ? it.scoreNS : it.scoreEW;
         if (!score::IsProcent(score))
         {   //we only want/need real scores, percent-scores will be converted to imps lateron
@@ -607,6 +613,8 @@ void CalcScore::CalcGameButler(UINT a_game, bool a_bNs)
     // now determine datum-score
     // int sumTest = std::accumulate(tmpScores.begin(), tmpScores.end(), 0);
     int count = static_cast<int>(tmpScores.size());
+    if ( count == 0 )
+        return;    // no scores ??, return to prevent outOfRange vector access or divide zero
     int sum = 0;
     for (auto it : tmpScores) sum += it;
     int datumScore = sum/count; // remark: DON'T round here! -> 4.9 -> 4 -> 0 and not 4.9 -> 5 -> 10 as datum score!

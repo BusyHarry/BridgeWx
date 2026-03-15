@@ -1015,6 +1015,8 @@ void CalcScore::ApplySessionCorrections(void)
     {
         if (svSessionResult[pair].nrOfGames == 0)  // valid for percent AND butler score
             continue;    // pair did not play any game, so no corrections possible
+        if ( !m_bButler && svSessionResult[pair].maxScore == 0 )
+            continue;   // ??? will get divide by zero: not enough data present
 
         Fdp     correctionProcent;
         auto    it            = smCorSessionValidated.find(pair);
@@ -1766,7 +1768,7 @@ void CalcScore::CalcResultPairHelper(Fdp& sumPoints, UINT& sumTops, UINT& gamesP
     {
         if (m_bButler)
             tmp += FMT(" %s: %s (%s %s)", _("set-score"), sumPoints.AsString(), (sumPoints / (int)gamesPlayed).Round(2).AsString2F(), _("imps/game"));
-        else
+        else if ( sumTops ) // prevent divide-zero if there is not enough data
             tmp += FMT(" %s: %s(%s%%)", _("set-score"), sumPoints.AsString1E(), ((sumPoints * 100) / sumTops).Round(0).AsString());
     }
     ADDLINE(tmp);

@@ -36,7 +36,7 @@
 </script>
 <body id="ID_body">
 
-<h1><?php echo $ins_description;?></h1>
+<h1><?php echo $ins_descriptions[1];?></h1>
 <h3 id="info"></h3>
 <?php
    if ( isSet($inputError) )
@@ -191,7 +191,7 @@ echo '<input hidden type="text" name="group" value="1"></input>';
        let id   =   (date.getFullYear()).toString() + '-'
                   + (date.getMonth()+1) .toString() + '-'
                   + (date.getDate())    .toString() + '-'
-                  + <?php echo '"' . $ins_match . '"';?>
+                  + <?php echo '"' . $ins_matchNames[1] . '"';?>
                 ;
        let idSaved = sessionStorage.getItem(sessionId) || "";
        let bFirstRun = (idSaved != id);

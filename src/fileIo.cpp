@@ -98,6 +98,7 @@ namespace io
     FUNCTION2(SessionNamesRead          ,bool       ,false  ,      wxArrayString&,UINT)
     FUNCTION2(ScoresRead                ,bool       ,false  ,      vvScoreData&,UINT)
     FUNCTION2(ScoresWrite               ,bool       ,false  ,const vvScoreData&,UINT)
+    FUNCTION3(ScoresWriteEx             ,int        ,EX_RESULT_ERROR, const wxString&, const vvScoreData&, UINT);
     FUNCTION2(SessionRankRead           ,bool       ,false  ,      UINT_VECTOR&,UINT)
     FUNCTION2(SessionRankWrite          ,bool       ,false  ,const UINT_VECTOR&,UINT)
     FUNCTION2(TotalRankRead             ,bool       ,false  ,      UINT_VECTOR&,UINT)

@@ -18,6 +18,7 @@
 <body>
 <script>
     <?php /* initialisation by php */ ?>
+    <?php $setSize = $ini_setSizes[$group]; ?>
     /* input data for the different tables 'in' = input, 'i' = integer, 's' = string */
     let ini_round     =  <?php echo $round               ?>;
     let ini_session   =  <?php echo $session             ?>;
@@ -82,7 +83,7 @@
 </p>
 < !-- ********* end tooltip example *********** -->
 ******/ ?>
-<h1 id="ID_match"  style="font-size: 2.7vw"><?php echo $ins_description?></h1>
+<h1 id="ID_match"  style="font-size: 2.7vw"><?php echo $ins_descriptions[$group]?></h1>
 <h2 id="ID_header" style="font-size: 2.7vw"><?php echo $sScoreEntry . ' ' . $ins_table . ' ' . $table . ' ' . $ins_round . ' ' . $round ?></h2>
 <table id="ID_slip" class="slip">
   <caption><?php echo $ins_slipCaption ?> </caption>
@@ -96,6 +97,7 @@
     <th>    <?php echo $ins_resultNs ?></th>
   </tr>
   <?php
+     $setSize = $ini_setSizes[$group];
      for ($game = 0; $game < $setSize ; ++$game)
      {
        echo

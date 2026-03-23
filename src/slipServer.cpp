@@ -1,6 +1,9 @@
 ﻿// Copyright(c) 2024-present, BusyHarry/h.levels & BridgeWx contributors.
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
+#include <ranges>
+#define StartFrom1(x) std::views::drop((x),1) /* view-range from 1-->end */
+
 #include <wx/button.h>
 #include <wx/fswatcher.h>
 #include <wx/radiobox.h>
@@ -9,18 +12,20 @@
 #include <wx/textctrl.h>
 #include <wx/wfstream.h>
 #include <wx/wxcrtvararg.h>
+#include <map>
 
 #include "cfg.h"
 #include "main.h"
 #include "names.h"
 #include "printer.h"
 #include "score.h"
+#include "fileio.h"
 #include "slipServer.h"
 
-static std::vector< std::vector<score::GameSetData> > svGameSetData;
 #define CHOICE_ROUND    "ChoiceRound"
-static const auto S1((size_t)1);
-static const auto BORDERSIZE(5);
+static constexpr auto S1        ((size_t)1);
+static constexpr auto BORDERSIZE(5);
+static constexpr bool ADD_TIME  (true);
 
 /*******
 - the file with results of html-scoreslip entry *.slipdata
@@ -30,7 +35,7 @@ static const auto BORDERSIZE(5);
 . <date> <time> <id> "session: <session>, group: <group>, table: <table>, round: <round>, ns: <nsId>, ew: <ewId>, slipResult: <slipresult>
 . <date> <time> <id> "ready session: <session>, group: <group>, table: <table>, round: <round>
 where:
-- <date>       -> 2025.09.21
+- <date>       -> 2025.09.21cfg::GetActiveSession()
 - <time>       -> 14:41:59
 - <id>         -> <group>.<table>
 - <session>    -> session id: between 0 and nr of sessions
@@ -77,9 +82,13 @@ example:
 
 SlipServer::SlipServer(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, a_pageId), m_theGrid(0)
 {
-    m_linesReadInResult = 0;
-    m_logFile     = FMT("%s%s_%u.rx.log" , cfg::GetActiveMatchPath(), cfg::GetActiveMatch(), cfg::GetActiveSession());
-    m_tempLogFile = FMT("%s%s_%u.tmp.log", cfg::GetActiveMatchPath(), cfg::GetActiveMatch(), cfg::GetActiveSession());
+    m_linesReadInResult     = 0;
+    m_firstActiveMatchPath  = cfg::GetActiveMatchPath();
+    m_firstActiveMatch      = cfg::GetActiveMatch();
+    m_firstActiveSession    = cfg::GetActiveSession();
+    m_firstDescription      = cfg::GetDescription();
+    m_logFile               = FMT("%s%s_%u.rx.log" , m_firstActiveMatchPath, m_firstActiveMatch, m_firstActiveSession);
+    m_tempLogFile           = FMT("%s%s_%u.tmp.log", m_firstActiveMatchPath, m_firstActiveMatch, m_firstActiveSession);
     wxRemoveFile(m_logFile);
     // m_pChoiceBoxRound MUST exist before calling SetupGrid()
     m_pChoiceBoxRound = new MY_CHOICE(this, _("Round:"), _("The info for this round"), Unique(CHOICE_ROUND));
@@ -110,15 +119,20 @@ SlipServer::SlipServer(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent
     clearLog->SetToolTip(_("Clear the log window"));
     clearLog->Bind(wxEVT_BUTTON, &SlipServer::OnClearLog, this);
 
+    auto addMatch = new wxButton(this, wxID_ANY, _("add match"));
+    addMatch->SetToolTip(_("Add another match by selecting one\nand return here to regenerate the slip-data"));
+    addMatch->Bind(wxEVT_BUTTON, &SlipServer::OnAddMatch, this);
+
     auto pButtonHtmlSlips = new wxButton(this, wxID_ANY, _("html slip data"));
     pButtonHtmlSlips->SetToolTip(_("generate configuration data for score entry through a html-page"));
     pButtonHtmlSlips->Bind(wxEVT_BUTTON,&SlipServer::OnGenHtmlSlipData, this);
 
-    wxBoxSizer* hBox = new wxBoxSizer(wxHORIZONTAL);
+    auto* hBox = new wxBoxSizer(wxHORIZONTAL);
     hBox->Add  (m_pInputChoice   , wxSizerFlags(0).Border(wxALL, BORDERSIZE));
     hBox->MyAdd(m_pChoiceBoxRound, wxSizerFlags(0).Border(wxALL, BORDERSIZE).Bottom());
     hBox->Add  (nextRound        , wxSizerFlags(0).Border(wxALL, BORDERSIZE).Bottom());
     hBox->Add  (clearLog         , wxSizerFlags(0).Border(wxALL, BORDERSIZE).Bottom());
+    hBox->Add  (addMatch         , wxSizerFlags(0).Border(wxALL, BORDERSIZE).Bottom());
     hBox->AddStretchSpacer(1000);   // 'generate slip-button' in the middle
     hBox->Add  (pButtonHtmlSlips , wxSizerFlags(1).Border(wxALL, BORDERSIZE).Bottom());
     hBox->AddStretchSpacer(1000);
@@ -127,10 +141,10 @@ SlipServer::SlipServer(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent
     m_pLog = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
         wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY|wxHSCROLL);
     wxString msg = FMT("%s --> %s", wxGetHostName(), GetMyIpv4() );
-    Add2Log(msg, true); // show hostname and host-ip in log and statusbar
+    Add2Log(msg, ADD_TIME); // show hostname and host-ip in log and statusbar
     SetStatusbarText(msg);
     // add to layout
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Slip server, automatic handling of slip-data"));
+    auto* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Slip server, automatic handling of slip-data"));
     vBox->Add(m_theGrid, wxSizerFlags(0).Expand().Border(wxALL, BORDERSIZE));
     vBox->Add(m_pLog   , wxSizerFlags(1).Expand().Border(wxALL, BORDERSIZE));
     vBox->Add(hBox     , 0);   //no borders/align: already done in hBox!
@@ -141,7 +155,6 @@ SlipServer::SlipServer(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent
     m_pFsWatcher        = nullptr;
     m_pSocketServer     = nullptr;
     RefreshInfo();                                          // now fill the grid with data
-    HandleInputSelection(m_pInputChoice->GetSelection());   // start input selection
     AUTOTEST_ADD_WINDOW(pButtonHtmlSlips, "GeneratePhp");
     AUTOTEST_ADD_WINDOW(this            , "Panel"      );
     m_description = "SlipServer";
@@ -154,24 +167,227 @@ SlipServer::~SlipServer()
     CreateNetworkWatcher(false);
 }   // ~SlipServer()
 
+struct MatchInfo
+{   // info administrated for each added match
+    names::PairInfoData pairInfo;                       // original data of this match
+    cfg  ::vGroupData   groupData;                      //  --^
+    std  ::vector<UINT> session2Global;                 //  --^
+    vvScoreData         gameSetData;                    //  --^
+    wxString            description;                    //  --^
+    UINT                activeSession       = 0;        //  --^
+    UINT                setSize             = 0;        //  --^
+    UINT                rounds              = 0;        //  --^
+    bool                bCurrentMatch       = false;    // this match is the active match
+    wxString            fullName;                       // full db name, needed for updating the changed scores
+    UINT                sessionPairOffset   = 0;        // pairnrs start here for this match
+    bool                bDataChanged        = false;    // scores changed for this match
+};
+
+#if 0
+struct CompareNocase
+{ 
+    bool operator() (const wxString& left, const wxString& right) const
+    {
+        return left.Lower() < right.Lower();
+    }
+};
+static std::map<wxString, MatchInfo, CompareNocase> matchesInfo1;
+static std::map<wxString, MatchInfo, decltype([](const wxString& left, const wxString& right) { return left.Lower() < right.Lower(); })> matchesInfo2;
+#endif
+
+struct AllGroupsData
+{
+    cfg::GROUP_DATA data;
+    wxString        prefix;
+    wxString        description;
+    UINT            setSize       = 0U;
+    UINT            activeSession = 0U;
+};
+
+struct SessionPairInfo
+{   // info per pair for easier getting at original match values
+    // all group based vectors start at index 1: first 'group' == 1, etc
+    UINT        matchOffset;    // pairnrs for this 'match' start here for this pair
+    UINT        groupOffset;    // offset for the 'group' of this pair in this 'match'
+    UINT        sumOffset;      // 'matchOffset' + 'groupOffset' for this pair: sessionPairnr = 'sumOffset' + 'pairnr_in_this_group'
+    UINT        allGroupsIndex; // index in 's_all.groups' for the group this pair belongs to
+    bool        bAbsent;        // true if pair is absent
+    wxString    matchName;      // 'match' this pair belongs to, index in 's_all.matches'
+    UINT        matchId;        // number of this match from 1 to N, used as prefix for groupnames/pairnames
+};
+
+struct All
+{   // we use static data, else we need too many includes in the .h file
+    // combined info, asif we have 1 match
+    // all the vectors are 1 based, so entry 0 is a dummy
+    // fe info of the first item: groups[1:group], sessionPairInfo[1:pair], globalPairInfo[1:pair], scores[1:game], session2Global[1:pair], setSizes[1:group]
+    std  ::map<wxString,MatchInfo>  matches;            // map of all matches
+    std  ::vector<AllGroupsData>    groups;             // combined group-info of all matches
+    std  ::vector<SessionPairInfo>  sessionPairInfo;    // combined info of pairs, based on session-pairnr
+    std  ::vector<names::PairInfo>  globalPairInfo;     // combined global info of pairs, based on global-pairnr
+    vvScoreData                     scores;             // combined scores, indexed by game
+    UINT_VECTOR                     session2Global;     // translation of a session-pairnr to global-pairnr
+};
+static All s_all;
+
+static wxString PairnrSession2SessionText(UINT a_sessionPair)
+{
+    if ( 0 == a_sessionPair ) return names::GetNotSet();
+
+    const auto& spi = s_all.sessionPairInfo[a_sessionPair];
+    wxString groupId = s_all.matches.size() > 1
+        ? s_all.groups[spi.allGroupsIndex].prefix    // add match id when more then one match
+        : wxString("");
+    wxString result = spi.bAbsent
+                   ? names::GetNotSet()
+                   : FMT("%s%s%u", groupId, s_all.groups[spi.allGroupsIndex].data.groupChars.c_str(), a_sessionPair - spi.sumOffset);
+    return result;
+}   // PairnrSession2SessionText()
+
+static wxString PairnrSession2GlobalText(UINT a_sessionPair)
+{
+    UINT globalPair = s_all.session2Global[a_sessionPair];
+    return s_all.globalPairInfo[globalPair].pairName;
+}   // PairnrSession2GlobalText()
+
+struct Upd
+{
+    wxString    name;
+    UINT        groupOffset    = 0;
+    UINT        pairInfoOffset = 0;
+    UINT        matchNr        = 1;
+    UINT        nrOfMatchPairs = 0;
+};
+
+void AddGroupInfo(const MatchInfo& match, const Upd& upd)
+{   // update the group info
+    s_all.groups.insert(s_all.groups.end(), match.groupData.begin(), match.groupData.end());
+    size_t count = match.groupData.size();
+    for ( auto pOffset = s_all.groups.rbegin(); count; --count, ++pOffset )
+        pOffset->data.groupOffset += upd.groupOffset;    // update offset to match global offset
+}   // end AddGroupInfo()
+
+static void AddSession2Global(const MatchInfo& match, const Upd& upd)
+{   // update the session2Global data
+    s_all.session2Global.insert(s_all.session2Global.end(), match.session2Global.begin()+1, match.session2Global.begin()+upd.nrOfMatchPairs + 1);
+    auto count = upd.nrOfMatchPairs;
+    for ( auto pSession = s_all.session2Global.rbegin(); count ; pSession++,count--)
+        *pSession += upd.pairInfoOffset;    // update index to match global offset
+}   // AddSession2Global()
+
+static void AddScores(const MatchInfo& match, const Upd& upd)
+{   // update scores
+    auto currentGames = match.gameSetData.size();   // remark: entry 0 is dummy, games are 1 based, size is always max
+    auto globalGames  = s_all.scores.size();
+    if ( currentGames > globalGames )
+        s_all.scores.resize(currentGames);          // make room for new games
+    for ( UINT game = 1; game < currentGames; ++game )
+    {
+        const auto& gameScores = match.gameSetData[game];
+        for ( const auto& score : gameScores )
+        {
+            auto data    = score;
+            data.pairNS += upd.groupOffset;
+            data.pairEW += upd.groupOffset;
+            s_all.scores[game].emplace_back/*push_back*/(data);
+        }
+    }
+}   // AddScores()
+
+static void AddSessionPairInfo(const MatchInfo& match, const Upd& upd)
+{   // update session pair info
+    SessionPairInfo spi;
+    spi.matchOffset     = upd.groupOffset;
+    spi.matchName       = upd.name;
+    spi.matchId         = upd.matchNr;
+    auto allGroupIndex  = s_all.groups.size() - match.groupData.size();
+    for ( const auto& grp : match.groupData )   // 0 based
+    {
+        auto size = s_all.matches.size();
+        s_all.groups[allGroupIndex].setSize       = match.setSize;
+        s_all.groups[allGroupIndex].prefix        = size > 1 ? FMT("%u:", upd.matchNr) : ES;
+        s_all.groups[allGroupIndex].description   = match.description;
+        s_all.groups[allGroupIndex].activeSession = match.activeSession;
+        UINT pairs = grp.pairs;
+        for ( UINT pair = 1; pair <= pairs; ++pair )
+        {
+            spi.groupOffset     = grp.groupOffset;
+            spi.sumOffset       = spi.matchOffset + spi.groupOffset;
+            spi.bAbsent         = pair == grp.absent;
+            spi.allGroupsIndex  = (UINT)allGroupIndex;
+            s_all.sessionPairInfo.push_back(spi);
+        }
+        ++allGroupIndex;
+    }   // end handle all groups in this match
+}   // AddSessionPairInfo()
+
+static void AddGlobalPairInfo(const MatchInfo& match)
+{   // update global pairinfo
+    s_all.globalPairInfo.insert(s_all.globalPairInfo.end(), match.pairInfo.begin()+1, match.pairInfo.end());
+}   // AddGlobalPairInfo()
+
 void SlipServer::SetupGrid()
-{   // (re-)setup the grid for a match
-    svGameSetData = *score::GetScoreData();     // get the current game data, need it verify..
+{   // (re-)setup the grid for a/next match
+    wxString matchName = cfg::GetActiveMatch();
+    s_all.matches[matchName] = MatchInfo();                         // add empty entry
+    auto& newMatch = s_all.matches[matchName];                      // and point to newMatch
+    names::InitializePairNames();
+    newMatch.pairInfo       =  names::GetGlobalPairInfo();          // now update the entry with the new info
+    newMatch.session2Global = *names::GetPairnrSession2Global();    // remark: we need copies of data, not references...
+    newMatch.gameSetData    = *score::GetScoreData();
+    newMatch.groupData      =   *cfg::GetGroupData();
+    newMatch.activeSession  =    cfg::GetActiveSession();
+    newMatch.setSize        =    cfg::GetSetSize();
+    newMatch.description    =    cfg::GetDescription();
+    newMatch.rounds         = SchemaInfo(newMatch.groupData[0].schemaId).GetNumberOfRounds(); // assume all groups have equal rounds
+    newMatch.fullName       =    cfg::GetActiveMatchPath() + matchName + cfg::GetDbExtension(cfg::EXT_MAX);
+
+    s_all.sessionPairInfo.clear();  s_all.sessionPairInfo.resize(1);
+    s_all.groups         .clear();  s_all.groups         .resize(1); // group infos, 1 based
+    s_all.scores         .clear();                                   // size will always be set to max nr of games
+    s_all.globalPairInfo          .clear();  s_all.globalPairInfo.resize(1);            // dummy entry 0, 1 based
+    s_all.session2Global .clear();  s_all.session2Global.resize(1);   // dummy entry 0, 1 based
+    struct Upd upd;
+    for ( auto& [name, match] : s_all.matches )
+    {   // (re-)build the s_all* data
+        upd.name                = name;
+        match.bCurrentMatch     = false;                // current match will be updated AFTER all matches are handled
+        match.sessionPairOffset = upd.groupOffset;      // needed for pairnrs in gameInfo
+
+        upd.nrOfMatchPairs = match.groupData.back().groupOffset + match.groupData.back().pairs;
+        AddGroupInfo        (match, upd);
+        AddSession2Global   (match, upd);
+        AddScores           (match, upd);
+        AddSessionPairInfo  (match, upd);
+        AddGlobalPairInfo   (match     );
+        upd.pairInfoOffset += match.pairInfo.size()-1;
+        upd.groupOffset    += upd.nrOfMatchPairs;
+        ++upd.matchNr;
+    }   // end handle all matches
+
+    newMatch.bCurrentMatch = true;  // after init all matches, set this match to be the current
+    m_maxRounds = 0;
+    for ( const auto& [name,match] : s_all.matches )
+        m_maxRounds = std::max( m_maxRounds, match.rounds);
+
     m_bDataChanged      = false;
     m_bCancelInProgress = false;
     m_linesReadInResult = 0;                    // fresh start for results-file
     // deleting zero rows/columns when none exist, will give an assert??????
-    auto nrOfRows = m_theGrid->GetNumberRows();
-    if ( nrOfRows ) m_theGrid->DeleteRows(0, nrOfRows);
-    auto nrOfCols = m_theGrid->GetNumberCols();
-    if ( nrOfCols ) m_theGrid->DeleteCols(0, nrOfCols);
-    const auto& groupData = *cfg::GetGroupData();
-    m_groups = groupData.size();
+    if ( auto nrOfRows = m_theGrid->GetNumberRows(); nrOfRows ) m_theGrid->DeleteRows(0, nrOfRows);
+    if ( auto nrOfCols = m_theGrid->GetNumberCols(); nrOfCols ) m_theGrid->DeleteCols(0, nrOfCols);
+
+    m_groups = s_all.groups.size()-1;                   // s_all.groups: 1 based
     m_theGrid->AppendCols(1+m_groups);                  // need 1 column for each group, column 0 is used as tablenr/label
     m_theGrid->SetColLabelAlignment(wxALIGN_CENTER, wxALIGN_CENTER);
-    m_theGrid->SetColLabelValue(0, _("table"));
-    m_theGrid->SetRowLabelSize(0);                      // we don't use row-labels: can't suppress row-selection
-    wxGridCellAttr* pAttribC0 = new(wxGridCellAttr);    // SetColAttr() takes ownership!
+    m_theGrid->CallAfter([this]
+        {   // without CallAfter(), the grid will show default collumn-labels ( 'A'  'B' etc)
+            //    when collumns have been deleted (so the 2' time this is executed)
+            // UseNativeColHeader() causes this...
+            m_theGrid->SetColLabelValue(0, _("table"));
+        });
+    m_theGrid->SetRowLabelSize(0);              // we don't use row-labels: can't suppress row-selection
+    auto pAttribC0 = new(wxGridCellAttr);       // SetColAttr() takes ownership!
     pAttribC0->SetAlignment(wxALIGN_CENTER_HORIZONTAL, wxALIGN_CENTER_VERTICAL);
     m_theGrid->SetColAttr(0, pAttribC0);
 
@@ -179,8 +395,10 @@ void SlipServer::SetupGrid()
     for ( UINT group = 1; group <= m_groups; ++group )
     {
         m_theGrid->SetColSize(group, COLUMN_SIZE);
-        m_theGrid->SetColLabelValue(group, m_groups == 1 ? wxString("1") : groupData[group-1].groupChars);
-        wxGridCellAttr* pAttrib = new(wxGridCellAttr);  // SetColAttr() takes ownership!
+        wxString label =  m_groups == 1 ? wxString("1") : s_all.groups[group].prefix + s_all.groups[group].data.groupChars;
+        m_theGrid->CallAfter([this, group, label]
+            {m_theGrid->SetColLabelValue(group, label);});
+        auto pAttrib = new(wxGridCellAttr);  // SetColAttr() takes ownership!
         pAttrib->SetAlignment(wxALIGN_CENTER_HORIZONTAL, wxALIGN_CENTER_VERTICAL);
         m_theGrid->SetColAttr(group, pAttrib);
     }
@@ -188,9 +406,9 @@ void SlipServer::SetupGrid()
     m_tables.clear();
     m_tables.push_back(0U); // m_tables one-based, entry 0 = dummy
 
-    for ( const auto& group : groupData )
+    for ( const auto& group : StartFrom1(s_all.groups) )
     {   // determine the maximum nr of tables of/for all groups
-        SchemaInfo schema(group.schemaId);
+        SchemaInfo schema(group.data.schemaId);
         UINT tables = schema.GetNumberOfTables();
         m_tables.push_back(tables);
         m_maxTable = std::max(m_maxTable, tables);
@@ -217,20 +435,21 @@ void SlipServer::SetupGrid()
     m_theGrid->SetCellHighlightPenWidth(0);
     m_theGrid->SetCellHighlightROPenWidth(0);
 
-    m_rounds       = SchemaInfo(groupData[0].schemaId).GetNumberOfRounds();
     m_activeRound  = 1;
-    m_pChoiceBoxRound->Init(m_rounds, m_activeRound-1); //m_activeRound is 1 based!
-    m_tableInfo.resize(m_rounds+S1); // init m_tableInfo[m_rounds+S1][m_groups+S1][m_maxTable+S1]
+    m_pChoiceBoxRound->Init(m_maxRounds, m_activeRound-1); //m_activeRound is 1 based!
+    m_tableInfo.clear();
+    m_tableInfo.resize(m_maxRounds+S1); // init m_tableInfo[m_maxRounds+S1][m_groups+S1][m_maxTable+S1]
     for ( auto& grp : m_tableInfo )
     {
         grp.resize(m_groups+S1);
         for ( auto& tbl : grp )
-            tbl.resize(m_maxTable+S1);
+            tbl.resize(m_maxTable + S1);
     }
-    for ( UINT round = 1; round <= m_rounds; ++round )
+    for ( UINT round = 1; round <= m_maxRounds; ++round )
     {   // initialise the table info for all rounds
-        UpdateTableInfo(round, false);
+        UpdateTableInfo(round, DO_NOT_DISPLAY);
     }
+    HandleInputSelection(m_pInputChoice->GetSelection());   // start input selection
 }   // SetupGrid()
 
 void SlipServer::AutotestRequestMousePositions(MyTextFile* a_pFile)
@@ -250,26 +469,31 @@ void SlipServer::RefreshInfo()
     Layout();
 }   // RefreshInfo()
 
-void SlipServer::UpdateTableInfo(UINT a_round, bool a_bUpdateDisplay)
+void SlipServer::UpdateTableInfo(UINT a_round, bool a_bUpdateDisplay /* = DO_DISPLAY */)
 {
-    const auto& groupData = *cfg::GetGroupData();
     for ( UINT group = 1; group <= m_groups; ++group )
     {
-        auto grp = groupData[group-1];
-        const SchemaInfo schema(grp.schemaId);
-        UINT tables = schema.GetNumberOfTables();
+        const auto& grp = s_all.groups[group];
+        const SchemaInfo schema(grp.data.schemaId);
+        UINT tables     = schema.GetNumberOfTables();
+        UINT maxRound   = schema.GetNumberOfRounds();
+        auto setSize    = grp.setSize;
+        auto maxGames   = setSize*maxRound;
+
+        if ( a_round > maxRound )
+            continue;
         for ( UINT table = 1; table <= tables; ++table )
         {
             TableBackground tbg;
             UINT set   = schema.GetSet  (table, a_round);
             auto pairs = schema.GetPairs(table, a_round);
 
-            if ( pairs.ns == grp.absent || pairs.ew == grp.absent )
+            if ( pairs.ns == grp.data.absent || pairs.ew == grp.data.absent || pairs.ns == 0U || pairs.ew == 0U )
                 set = 0;
             if ( set )
             {
                 m_tableInfo[a_round][group][table].bPresent = true;
-                bool bReady = HasPlayed(pairs, set, grp.groupOffset);
+                bool bReady = HasPlayed(pairs, set, grp.data.groupOffset, setSize, maxGames);
                 m_tableInfo[a_round][group][table].bReady = bReady;
                 tbg = bReady? TableBackground::Ready : TableBackground::NotReady;
             }
@@ -310,8 +534,21 @@ void SlipServer::OnNextRound(wxCommandEvent&)
 {
     MyLogMessage("SlipServer::BackupData()");
     if ( !m_bDataChanged ) return;
-    score::SetScoreData(svGameSetData);
     m_bDataChanged = false;
+    for ( auto& [name, match] : s_all.matches )
+    {
+        if ( match.bDataChanged )
+        {
+            match.bDataChanged = false;
+            int result = EX_RESULT_OK;  // preset result for current match, as it has no returnvalue
+            if ( match.bCurrentMatch )
+                score::SetScoreData(match.gameSetData);
+            else
+                result = io::ScoresWriteEx(match.fullName, match.gameSetData, match.activeSession);
+            if ( result == EX_RESULT_CURRENT ) {/*should not happen*/ }
+            MyLogDebug(FMT("SlipServer::BackupData('%s':%i)", name, result));
+        }
+    }
 }   // BackupData()
 
 void SlipServer::OnOk()
@@ -339,7 +576,7 @@ void SlipServer::DoSearch(wxString& a_theString)
 
 void SlipServer::PrintPage()
 {   // doesn't really show something..
-    wxString    title       = _("slip-info of") +" " + cfg::GetDescription();
+    wxString    title       = _("slip-info of") +" " + m_firstDescription;
     UINT        nrOfColumns = m_theGrid->GetNumberCols();
     m_theGrid->PrintGrid(title, nrOfColumns);
 }   // PrintPage()
@@ -349,12 +586,11 @@ void SlipServer::OnGenHtmlSlipData(wxCommandEvent&)
     AUTOTEST_BUSY("OnGenHtmlSlipData");
 #define __(x) EscapeHtmlChars((x))
     BusyBox();
-    if ( 0 == cfg::GetGroupData()->size() )
+    if ( m_groups == 0 )
     {
         MyMessageBox(_("No session data yet.."));
         return;
     }
-    names::InitializePairNames();   // need it for pair-names
     static const wxString weekdays[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "unknown day!"};
     auto time = wxDateTime::Now();
     auto day  = time.GetWeekDay();
@@ -365,29 +601,37 @@ void SlipServer::OnGenHtmlSlipData(wxCommandEvent&)
         "   input data for the different tables 'in' = input, 'i' = integer, 's' = string\n"
         "**/",  __PRG_NAME__,  __VERSION__, date, GetTime() );
 
-    wxString groupNames = "array(\"\"";
-//    wxChar comma = ' ';
-    for ( const auto& grp : *cfg::GetGroupData() )
-    {
-//        groupNames += FMT("%c \"%s\"", comma, grp.groupChars);
-        groupNames += FMT(", \"%s\"", grp.groupChars);
-//        comma = ',';
-    }
-    groupNames += ")";
+    wxString groupNames         = "array(\"\"";
+    wxString matchNames         = "array(\"\"";
+    wxString matchDescriptions  = "array(\"\"";
+    wxString sessions           = "array(0"   ;
+    wxString setSizes           = "array(0"   ;
 
-    MyTextFile php(cfg::GetActiveMatchPath() + "language.php",  MyTextFile::WRITE);
+    for ( const auto& grp : StartFrom1(s_all.groups) )
+    {
+        if ( grp.setSize == 0 ) continue;
+        groupNames          += FMT(", \"%s%s\"", grp.prefix, grp.data.groupChars                            );
+        matchNames          += FMT(", \"%s\""  , s_all.sessionPairInfo[grp.data.groupOffset+S1].matchName   );
+        matchDescriptions   += FMT(", \"%s\""  , __(grp.description)                                        );
+        sessions            += FMT(", %u"      , grp.activeSession                                          );
+        setSizes            += FMT(", %u"      , grp.setSize                                                );
+    }
+    groupNames          += ")";
+    matchNames          += ")";
+    matchDescriptions   += ")";
+    sessions            += ")";
+    setSizes            += ")";
+
+    MyTextFile php(m_firstActiveMatchPath + "language.php",  MyTextFile::WRITE);
     php.AddLine("<?php\n" + header);
-    php.AddLine(FMT("const ACTIVE_SESSION    = %u;"    , cfg::GetActiveSession()                   ));
     php.AddLine(FMT("const MAX_TABLES        = %u;"    , m_maxTable                                ));
-    php.AddLine(FMT("const NR_OF_ROUNDS      = %u;"    , m_rounds                                  ));
     php.AddLine(FMT("const SERVER_MSG_ID     = %u;"    , SERVER_MSG_ID                             ));
     php.AddLine(FMT("const SERVER_PORT       = %u;"    , SERVER_PORT                               ));
-    php.AddLine(FMT("const SET_SIZE          = %u;"    , cfg::GetSetSize()                         ));
-    php.AddLine(FMT("const SLIP_E_BAD_CMD    = %u;"    , (UINT)SlipResult::ERROR_BAD_CMD           ));
-    php.AddLine(FMT("const SLIP_E_FORMAT     = %u;"    , (UINT)SlipResult::ERROR_FORMAT            ));
     php.AddLine(FMT("const SLIP_E_NONE       = %u;"    , (UINT)SlipResult::ERROR_NONE              ));
+    php.AddLine(FMT("const SLIP_E_BAD_CMD    = %u;"    , (UINT)SlipResult::ERROR_BAD_CMD           ));
     php.AddLine(FMT("const SLIP_E_PARAM_COUNT= %u;"    , (UINT)SlipResult::ERROR_PARAM_COUNT       ));
     php.AddLine(FMT("const SLIP_E_PARAM_OOR  = %u;"    , (UINT)SlipResult::ERROR_PARAM_OOR         ));
+    php.AddLine(FMT("const SLIP_E_FORMAT     = %u;"    , (UINT)SlipResult::ERROR_FORMAT            ));
     php.AddLine(FMT("$ins_appIpAddress       = \"%s\";", GetMyIpv4()                               ));
     php.AddLine(FMT("$ins_apply              = \"%s\";", __(_("ok"                                 ))));
     php.AddLine(FMT("$ins_applyTip           = \"%s\";", __(_("accept input and de-select the game"))));
@@ -408,7 +652,6 @@ void SlipServer::OnGenHtmlSlipData(wxCommandEvent&)
     php.AddLine(FMT("$ins_clear              = \"%s\";", __(_("clear"                              ))));
     php.AddLine(FMT("$ins_contract           = \"%s\";", __(_("Contract"                           ))));
     php.AddLine(FMT("$ins_declarer           = \"%s\";", __(_("Declarer"                           ))));
-    php.AddLine(FMT("$ins_description        = \"%s\";", __(cfg::GetDescription()                  )));
     php.AddLine(FMT("$ins_doubled            = \"%s\";", __(_("Doubled"                            ))));
     php.AddLine(FMT("$ins_error              = \"%s\";", __(_("Error"                              ))));
     php.AddLine(FMT("$ins_errorNetworkOpen   = \"%s\";", __(_("Error opening network"              ))));
@@ -417,10 +660,13 @@ void SlipServer::OnGenHtmlSlipData(wxCommandEvent&)
     php.AddLine(FMT("$ins_game               = \"%s\";", __(_("game"                               ))));
     php.AddLine(FMT("$ins_group              = \"%s\";", __(_("group")                             )));
     php.AddLine(FMT("$ins_groupColumn        = \"%s\";", __(_("group") + ':'                       )));
-    php.AddLine(FMT("$ins_groupNames         = %s;  // groupnames are one based", groupNames       ));
+    php.AddLine(FMT("$ins_groupNames         = %s;  // groupnames[groupnr]"     , groupNames       ));
+    php.AddLine(FMT("$ins_matchNames         = %s;  // matchnames[groupnr]"     , matchNames       ));
+    php.AddLine(FMT("$ini_setSizes           = %s;  // setSizes[groupnr]"       , setSizes         ));
+    php.AddLine(FMT("$ins_descriptions       = %s;  // descriptions[groupnr]"   , matchDescriptions));
+    php.AddLine(FMT("$ini_sessions           = %s;  // sessions[groupnr]"       , sessions         ));
     php.AddLine(FMT("$ins_laptopName         = \"%s\";", wxGetHostName()                           ));
     php.AddLine(FMT("$ins_logFile            = \"%s\";", GetLogFile()                              ));
-    php.AddLine(FMT("$ins_match              = \"%s\";", __(cfg::GetActiveMatch()                  )));
     php.AddLine(FMT("$ins_matchReady         = \"%s\";", __(_("Match ready!"                       ))));
     php.AddLine(FMT("$ins_noDirectStart      = \"%s\";", __(_("cannot be started directly!"        ))));
     php.AddLine(FMT("$ins_notComplete        = \"%s\";", __(_("Not all games have data!"           ))));
@@ -450,10 +696,10 @@ void SlipServer::OnGenHtmlSlipData(wxCommandEvent&)
     CreateHtmlTableInfo(php);
     php.AddLine("?>");
 #undef __
-    Add2Log(_("language.php generated"), true);
+    Add2Log(_("language.php generated"), ADD_TIME);
 }   // OnGenHtmlSlipData()
 
-void SlipServer::CreateHtmlTableInfo(MyTextFile& a_file)
+void SlipServer::CreateHtmlTableInfo(MyTextFile& a_file) const
 {
     a_file.AddLine("/**");
     a_file.AddLine("   the 'G*R*T*'are table-data for Group[x][Round[y]Table[z]");
@@ -464,26 +710,26 @@ void SlipServer::CreateHtmlTableInfo(MyTextFile& a_file)
     a_file.AddLine("const INDEX_SET = 0;  // index in table-data");
     a_file.AddLine("const INDEX_NS  = 1;  // index in table-data");
     a_file.AddLine("const INDEX_EW  = 2;  // index in table-data");
-    auto groupData = cfg::GetGroupData();
     a_file.AddLine("$pairNames = array(\"\" // dummy pair 0: pairnrs are 1 based");
-#define __(x) EscapeHtmlChars(FMT("%s %s", names::PairnrSession2SessionText((x)), names::PairnrSession2GlobalText((x))))
+#define __(x) EscapeHtmlChars(FMT("%s %s", PairnrSession2SessionText((x)), PairnrSession2GlobalText((x))))
     UINT group = 1;
-    for ( const auto& grp : *groupData )
+
+    for ( const auto& grp : StartFrom1(s_all.groups) )
     {
         wxString pairs=FMT("     /* group %u */ ", group++);
-        for ( UINT pair = 1; pair <= grp.pairs; ++pair )
+        for ( UINT pair = 1; pair <= grp.data.pairs; ++pair )
         {
-            pairs += ", \"" + __(grp.groupOffset + pair) + '"';
+            pairs += ", \"" + __(grp.data.groupOffset + pair) + '"';
         }
         a_file.AddLine(pairs);
     }
     a_file.AddLine("   );");
     wxString slipData = "$slipData = array(array()";
     group = 1;
-    for ( const auto& grp : *groupData )
+    for ( const auto& grp : StartFrom1(s_all.groups) )
     {   // variable 'g' = groupInfo, 'gr'= grouproundInfo, 'grt' = grouproundtableInfo
         wxString g = FMT("$G%u       = array(array()", group);
-        SchemaInfo schema(grp.schemaId);
+        SchemaInfo schema(grp.data.schemaId);
         for ( UINT round = 1; round <= schema.GetNumberOfRounds(); ++round )
         {
             schema::GameInfo info;
@@ -499,8 +745,8 @@ void SlipServer::CreateHtmlTableInfo(MyTextFile& a_file)
                 }
                 wxString grt = FMT("$G%uR%uT%u   = array(%u, %u, %u);", group, round, table
                     , info.set
-                    , info.set == 0 ? 0u : (grp.groupOffset + info.pairs.ns)
-                    , info.set == 0 ? 0u : (grp.groupOffset + info.pairs.ew)
+                    , info.set == 0 ? 0u : (grp.data.groupOffset + info.pairs.ns)
+                    , info.set == 0 ? 0u : (grp.data.groupOffset + info.pairs.ew)
                 );
 
                 a_file.AddLine(grt);
@@ -517,7 +763,7 @@ void SlipServer::CreateHtmlTableInfo(MyTextFile& a_file)
 #undef __
 }   // CreateHtmlTableInfo()
 
-wxString SlipServer::EscapeHtmlChars(const wxString& a_str)
+wxString SlipServer::EscapeHtmlChars(const wxString& a_str) const
 {
     wxString ret(a_str);
     ret.Replace( "&" , "&amp;" );
@@ -528,30 +774,35 @@ wxString SlipServer::EscapeHtmlChars(const wxString& a_str)
     return ret;
 }   // EscapeHtmlChars();
 
-wxString SlipServer::GetSlipResultsFile(bool a_bfilenameOnly /* = false */)
+wxString SlipServer::GetBaseResultName() const
 {
-    wxString fileNameOnly = FMT("%s_%u.slipdata", cfg::GetActiveMatch(), cfg::GetActiveSession());
+    return s_all.matches.size() > 1
+        ? "slipResults_" + DateYMD()                                // general name if more the one match involved
+        : FMT("%s_%u" , m_firstActiveMatch, m_firstActiveSession);  // use matchname+session as identification
+}   // GetBaseResultName()
+
+wxString SlipServer::GetSlipResultsFile(bool a_bfilenameOnly /* = false */) const
+{
+    wxString fileNameOnly = GetBaseResultName() + ".slipdata";
     if ( a_bfilenameOnly )
         return fileNameOnly;
-    return cfg::GetActiveMatchPath() + fileNameOnly;    // full path
+    return m_firstActiveMatchPath + fileNameOnly;    // full path
 }   // GetSlipResultsFile()
 
-wxString SlipServer::GetLogFile()
+wxString SlipServer::GetLogFile() const
 {
-    return FMT("%s%s_%u.log", cfg::GetActiveMatchPath(), cfg::GetActiveMatch(), cfg::GetActiveSession());
+    return m_firstActiveMatchPath + GetBaseResultName() + ".log";
 }   // GetLogFile()
 
 void SlipServer::Add2Log(const wxString& a_newMsg, bool a_bAddTime /* =false */)
 {
     m_pLog->AppendText('\n');
     if ( a_bAddTime )
-    {
         m_pLog->AppendText(DateYMD() + ' ' + GetTime() + ' ');
-    }
     m_pLog->AppendText(a_newMsg);
-}   // AddLog()
+}   // Add2Log()
 
-wxString SlipServer::DateYMD()
+wxString SlipServer::DateYMD() const
 {
     auto time = wxDateTime::Now();
     auto date = time.Format("%Y.%m.%d");
@@ -570,7 +821,7 @@ void SlipServer::DisplayGroupsReady()
     for ( UINT group = 1; group <= m_groups; ++group )
     {
         bool bReady = true;
-        for ( UINT round = 1; bReady && (round <= m_rounds); ++round )
+        for ( UINT round = 1; bReady && (round <= m_maxRounds); ++round )
         {
             for ( UINT table = 1; bReady && (table <= m_maxTable); ++table )
             {
@@ -621,7 +872,7 @@ void SlipServer::OnFileSystemEvent(wxFileSystemWatcherEvent& a_event)
         wxString slip   = GetSlipResultsFile(true);
         if ( change == slip )
         {
-            //Add2Log(FMT("%s: %s (%u)", _("changed"), slip, (UINT)wxFile(GetSlipResultsFile()).Length()), true);
+            //Add2Log(FMT("%s: %s (%u)", _("changed"), slip, (UINT)wxFile(GetSlipResultsFile()).Length()), ADD_TIME);
             (void)HandleResultFile();
         }
     }
@@ -631,17 +882,16 @@ void SlipServer::CreateFileWatcher(bool a_bCreate)
 {
     if ( a_bCreate )
     {
-        if ( nullptr == m_pFsWatcher )
-        {   // only ceate if non exists
-            m_pFsWatcher = new wxFileSystemWatcher();
-            m_pFsWatcher->SetOwner(this);
-            Bind(wxEVT_FSWATCHER, &SlipServer::OnFileSystemEvent, this);
-            wxFileName f1(GetSlipResultsFile());
-            wxFileName f2(wxFileName::DirName(f1.GetPath()));
-            f1.DontFollowLink();
-            m_pFsWatcher->Add(f2);
-            Add2Log(_("Watching resultfile") + ' ' + GetSlipResultsFile() , true);
-        }
+        if ( m_pFsWatcher )
+            CreateFileWatcher(false);    // ALWAYS (re-)create filewatcher, resultfilename could have changed
+        m_pFsWatcher = new wxFileSystemWatcher();
+        m_pFsWatcher->SetOwner(this);
+        Bind(wxEVT_FSWATCHER, &SlipServer::OnFileSystemEvent, this);
+        wxFileName f1(GetSlipResultsFile());
+        wxFileName f2(wxFileName::DirName(f1.GetPath()));
+        f1.DontFollowLink();
+        m_pFsWatcher->Add(f2);
+        Add2Log(_("Watching resultfile") + ' ' + GetSlipResultsFile() , ADD_TIME);
     }
     else
     {
@@ -665,28 +915,26 @@ void SlipServer::HandleInputSelection(int a_selection)
         (void)HandleResultFile();           // handle file, if it exists
     }
     else
-    {   // network input;
+    {   // network input
         CreateFileWatcher(false);
         CreateNetworkWatcher(true);
     }
 }   // HandleInputSelection();
 
-bool SlipServer::HasPlayed(const schema::NS_EW& a_pairs, UINT a_set, UINT a_groupOffset)
+bool SlipServer::HasPlayed(const schema::NS_EW& a_pairs, UINT a_set, UINT a_groupOffset, UINT a_setSize, UINT a_maxGames) const
 {   // check if all games in this set have a score for these pairs
     if ( a_set == 0 ) return true;          // should not happen
-    UINT setSize        = cfg::GetSetSize();
-    UINT nrOfGames      = cfg::GetNrOfGames();
-    UINT firstGame      = (a_set - 1) * setSize + 1;
+    UINT firstGame      = (a_set - 1) * a_setSize + 1;
     UINT okCount        = 0;                // for ok, we need setSize* ok
     schema::NS_EW pairs = a_pairs;
     pairs.ns           += a_groupOffset;    // schema pair is relative to group-offset
     pairs.ew           += a_groupOffset;
 
-    if ( firstGame + setSize > nrOfGames + 1 ) return false;    // sanity check
-    UINT maxGame = setSize + firstGame - 1;
+    if ( firstGame + a_setSize > a_maxGames + 1 ) return false;    // sanity check
+    UINT maxGame = a_setSize + firstGame - 1;
     for ( UINT game = firstGame; game <= maxGame; ++game )
     {
-        const std::vector<score::GameSetData>& gameInfo = svGameSetData[game];
+        const std::vector<score::GameSetData>& gameInfo = s_all.scores[game];
         for ( const auto& info : gameInfo )
         {   // check also a switched ns<-->ew game
             if (    (info.pairNS == pairs.ns || info.pairNS == pairs.ew )
@@ -695,109 +943,161 @@ bool SlipServer::HasPlayed(const schema::NS_EW& a_pairs, UINT a_set, UINT a_grou
             { ++okCount; break; }   // don't search further: game only played once per pair
         }
     }
-    return (okCount == setSize);
+    return (okCount == a_setSize);
 }   // HasPlayed()
+
+static wxString GetBadInputDataString()
+{
+    return _("^-- bad input data");
+}   // GetBadInputDataString()
+
+SlipServer::SlipResult SlipServer::HandleError(SlipServer::SlipResult a_error)
+{
+    wxString explanation;
+    switch ( a_error )
+    {
+        case SlipResult::ERROR_NONE:
+            explanation = _("no error");
+            break;
+        case SlipResult::ERROR_BAD_CMD:
+            explanation = _("unknown command");
+            break;
+        case SlipResult::ERROR_PARAM_COUNT:
+            explanation = _("invalid number of parameters");
+            break;
+        case SlipResult::ERROR_PARAM_OOR:
+            explanation = _("param(s) out of range");
+            break;
+        case SlipResult::ERROR_FORMAT:
+            explanation = _("wrong command format");
+            break;
+    }
+    Add2Log(FMT("%s(%d: %s)", GetBadInputDataString(), (int)a_error, explanation), ADD_TIME);
+    return a_error;
+}   // HandleError()
+
+SlipServer::SlipResult SlipServer::HandleLogin(const char*& pInput)
+{
+    UINT table      = 0;
+    UINT group      = 0;
+    auto count      = sscanf(pInput, "for group: %u, table: %u, ", &group, &table);
+    if (   count != 2
+        || group == 0 || group > m_groups
+        || table == 0 || table > m_tables[group]
+       )
+        return HandleError(SlipResult::ERROR_PARAM_OOR);
+    DisplayTableReady(group, table, TableBackground::LoggedIn);
+    return SlipResult::ERROR_NONE;
+}   // HandleLogin()
+
+void SlipServer::HandleOneGame(const GameInputData& a_data)
+{
+    score::GameSetData gameData;
+    gameData.pairNS     = a_data.ns;
+    gameData.pairEW     = a_data.ew;
+    gameData.scoreNS    = a_data.declarer == (UINT)Declarer::NP ? SCORE_NP : a_data.nsScore;
+    gameData.scoreEW    = -a_data.nsScore;
+    gameData.contractNS = ContractAsString(a_data, true);
+    gameData.contractEW = ContractAsString(a_data, false);
+    auto& gameResults   = s_all.scores[a_data.game];
+    bool bFound         = false;    // not found yet in current data
+    for ( const auto& result : gameResults )
+    {   // check for matching pairs and switched NS-EW
+        if (    (result.pairNS == a_data.ns && result.pairEW == a_data.ew)
+             || (result.pairNS == a_data.ew && result.pairEW == a_data.ns)
+           )
+        {   // matching pairs
+            // do NOT replace this result with new data, director COULD have changed the data!
+            bFound = true;
+            break;
+        }
+    }
+    if ( !bFound )  // append NEW data
+    {
+        gameResults.push_back(gameData);
+        // also save changes for backup
+        gameData.pairNS -= s_all.sessionPairInfo[a_data.ns].matchOffset;    // get match-relative pairnr
+        gameData.pairEW -= s_all.sessionPairInfo[a_data.ns].matchOffset;
+        auto& match      = s_all.matches[s_all.sessionPairInfo[a_data.ns].matchName];
+        match.gameSetData[a_data.game].push_back(gameData);
+        match.bDataChanged = true;  // this match has changed
+        m_bDataChanged     = true;  //  'a' match has changed
+    }
+}   // HandleOneGame()
+
+SlipServer::SlipResult SlipServer::HandleSession(const char*& a_pInput)
+{   // "session: 3, group: 2, table: 4, round: 2, ns: 13, ew: 12, slipresult: {17, 0, 1, 1, 0, 0, 0}@....."
+    GameInputData   data;
+    SlipResult      error     = SlipResult::ERROR_NONE;
+    int             charsRead = 0;
+    auto            count     = sscanf(a_pInput, " %u, group: %u, table: %u, round: %u, ns: %u, ew: %u, slipresult: %n"
+        , &data.session, &data.group, &data.table, &data.round, &data.ns, &data.ew, &charsRead);
+    if ( count != 6 )
+        return HandleError(SlipResult::ERROR_PARAM_COUNT);
+    if (
+           data.group == 0 || data.group    > m_groups
+        || data.table == 0 || data.table    > m_tables[data.group]
+        || data.round == 0 || data.round    > m_maxRounds
+        || !OkPairs(data)  || data.session != s_all.groups[data.group].activeSession
+       )
+        return HandleError(SlipResult::ERROR_PARAM_OOR);
+    a_pInput += charsRead;
+    for ( ;; ++a_pInput ) // <setsize> nr of results should follow
+    {   // {<gamenr>, <declarer>, <level>, <suit>, <over/under tricks>, <doubled>, <NSscore>}@....
+        count = sscanf(a_pInput, "{%u, %u, %u, %u, %i, %u, %i}%n",
+            &data.game, &data.declarer, &data.level, &data.suit, &data.tricks, &data.doubled, &data.nsScore, &charsRead);
+        if ( count != 7 )
+        {
+            error = SlipResult::ERROR_PARAM_COUNT;
+            Add2Log(FMT("%s(%i): %s", GetBadInputDataString(), (int)error,  a_pInput), ADD_TIME);
+        }
+        else if ( !OkGameData(data) )
+        {
+            error = SlipResult::ERROR_PARAM_OOR;
+            Add2Log(FMT("%s(%i): %s", GetBadInputDataString(), (int)error,  a_pInput), ADD_TIME);
+        }
+        else
+            HandleOneGame(data);    // no obvious error in input, so get the result of this game
+        a_pInput += charsRead;      // point to next gamedata
+        if ( *a_pInput != '@' )     // more results may follow
+            break;
+    }   // end result evaluation
+    if ( m_activeRound == data.round )  // update display ONLY if new data is from the active round 
+        UpdateTableInfo(m_activeRound, DO_DISPLAY);
+    return error;
+}   // HandleSession()
 
 SlipServer::SlipResult SlipServer::HandleResultLine(const wxString& a_result)
 {
-    #define BAD(error) {Add2Log(_("^-- bad input data"), true); return (error);}
     // common part of all lines: "2025.10.09 17:24:49 2.4" -> date time id (may be '?.?')
-    SlipResult error = SlipResult::ERROR_NONE;
     const auto MAX1(20);    // if you change the value, also change the formatstring
     const auto MAX2(300);
     char cmd  [MAX1+1]; cmd  [MAX1] = 0;
     char id   [MAX1+1]; id   [MAX1] = 0; MY_UNUSED(id);
     char inBuf[MAX2+1]; inBuf[MAX2] = 0;
     strncpy(inBuf, a_result.mb_str(wxConvUTF8), MAX2);
-    char comment;
-    if ( 1 == sscanf(inBuf, " %c", &comment) && comment == ';' )
+    if ( char comment; 1 == sscanf(inBuf, " %c", &comment) && comment == ';' )
         return SlipResult::ERROR_NONE;   // comment line
 
-    char* pRest     = inBuf;
-    int   charsRead = 0;
-    auto  count     = sscanf(pRest, " %*s %*s %20s %20s %n",/* &date, &time,*/ &id, &cmd, &charsRead);
-    if ( count != 2 ) BAD(SlipResult::ERROR_FORMAT);
-    pRest          += charsRead;
+    const char* pRest       = inBuf;
+    int         charsRead   = 0;
+    auto        count       = sscanf(pRest, " %*s %*s %20s %20s %n",/* &date, &time,*/ &id, &cmd, &charsRead);
+    if ( count != 2 )
+        return HandleError(SlipResult::ERROR_FORMAT);
+
+    pRest += charsRead;
     if ( 0 == strcmp("login", cmd) )
-    {
-        UINT table=0, group=0;
-        count = sscanf(pRest, "for group: %u, table: %u, %n", &group, &table, &charsRead);
-        if (   count != 2
-            || group == 0 || group > m_groups
-            || table == 0 || table > m_tables[group]
-           )
-            BAD(SlipResult::ERROR_PARAM_OOR);
-        DisplayTableReady(group, table, TableBackground::LoggedIn);
-    }
-    else if ( 0 == strcmp("session:", cmd) )
-    {   // "session: 3, group: 2, table: 4, round: 2, ns: 13, ew: 12, slipresult: {17, 0, 1, 1, 0, 0, 0}@....."
-        GameInputData data;
-        count = sscanf(pRest, " %u, group: %u, table: %u, round: %u, ns: %u, ew: %u, slipresult: %n"
-            , &data.session, &data.group, &data.table, &data.round, &data.ns, &data.ew, &charsRead);
-        if ( count != 6 )
-            BAD(SlipResult::ERROR_PARAM_COUNT);
-        if (                      data.session != cfg::GetActiveSession()
-            || data.group == 0 || data.group    > m_groups
-            || data.table == 0 || data.table    > m_tables[data.group]
-            || data.round == 0 || data.round    > m_rounds
-            || !OkPairs(data)
-           )
-            BAD(SlipResult::ERROR_PARAM_OOR);
-        pRest += charsRead;
-        for (;;++pRest) // <setsize> nr of results should follow
-        {   // {<gamenr>, <declarer>, <level>, <suit>, <over/under tricks>, <doubled>, <NSscore>}@....
-            count = sscanf(pRest, "{%u, %u, %u, %u, %i, %u, %i}%n",
-                        &data.game, &data.declarer, &data.level, &data.suit, &data.tricks,&data.doubled, &data.nsScore, &charsRead);
-            if ( count != 7 )
-            {
-                Add2Log(_("^-- bad input data") + ": " + pRest, true);
-                error = SlipResult::ERROR_PARAM_COUNT;
-            }
-            else if ( !OkGameData(data) )
-            {
-                Add2Log(_("^-- bad input data") + ": " + pRest, true);
-                error = SlipResult::ERROR_PARAM_OOR;
-            }
-            else
-            {
-                score::GameSetData gameData;
-                gameData.pairNS     = data.ns;
-                gameData.pairEW     = data.ew;
-                gameData.scoreNS    = data.declarer == (UINT)Declarer::NP ? SCORE_NP : data.nsScore;
-                gameData.scoreEW    = -data.nsScore;
-                gameData.contractNS = ContractAsString(data, true);
-                gameData.contractEW = ContractAsString(data, false);
-                auto& gameResults   = svGameSetData[data.game];
-                bool bFound         = false;    // not found yet in current data
-                for ( auto& result : gameResults )
-                {   // check for matching pairs and switched NS-EW
-                    if (    (result.pairNS == data.ns && result.pairEW == data.ew)
-                         || (result.pairNS == data.ew && result.pairEW == data.ns)
-                       )
-                    {   // matching pairs
-                        // do NOT insert data, director COULD have changed the data!
-                        bFound = true;
-                        break;
-                    }
-                }
-                if ( !bFound )  // append NEW data
-                {
-                    gameResults.push_back(gameData);
-                    m_bDataChanged = true;
-                }
-            }
-            pRest += charsRead;
-            if ( *pRest != '@' )    // more results may follow
-                break;
-        }   // end result evaluation
-        UpdateTableInfo(data.round, true);
-    }   // end session data
-    else if (    (';' != cmd[0])                        // comment
-              && (0   != strcmp("ready"     , cmd))     // table finished
-            )
-       BAD(SlipResult::ERROR_BAD_CMD);
-    return error;
-#undef BAD
+        return HandleLogin(pRest);
+
+    if ( 0 == strcmp("session:", cmd) )
+        return HandleSession(pRest);
+
+    if (     (';' != cmd[0])                // comment
+          && (0   != strcmp("ready", cmd))  // table finished
+       )
+       return HandleError(SlipResult::ERROR_BAD_CMD);
+
+    return SlipResult::ERROR_NONE;
 }   // HandleResultLine()
 
 bool SlipServer::HandleResultFile()
@@ -805,28 +1105,26 @@ bool SlipServer::HandleResultFile()
     MyTextFile results(GetSlipResultsFile());
     if ( !results.IsOk() )
     {
-        Add2Log(_("error opening results file"), true);
+        Add2Log(_("error opening results file"), ADD_TIME);
         return false;
     }
     auto lineCount = results.GetLineCount();
     if ( lineCount < m_linesReadInResult )
-    {
         m_linesReadInResult = 0;    // file deleted, start reading from begin
-    }
-    bool bResult = true;
+    bool bOk = true;
     while ( m_linesReadInResult < lineCount )
     {
         wxString line = results.GetLine(m_linesReadInResult++);
         Add2Log(FMT("line %u: %s", (UINT)m_linesReadInResult, line));
         if ( SlipResult::ERROR_NONE != HandleResultLine(line) )
-            bResult = false;
+            bOk = false;
     }
-    return bResult;
+    return bOk;
 }   // HandleResultFile()
 
-bool SlipServer::OkPairs(const GameInputData& a_data)
+bool SlipServer::OkPairs(const GameInputData& a_data) const
 {   // group/table/round are ok
-    const auto& group = (*cfg::GetGroupData())[a_data.group-1];
+    const auto& group = s_all.groups[a_data.group].data;
     auto offset       = group.groupOffset;
     auto maxPair      = offset + group.pairs;
     return (     offset  <  a_data.ns && offset  <  a_data.ew
@@ -834,13 +1132,13 @@ bool SlipServer::OkPairs(const GameInputData& a_data)
            );
 }   // OkPairs()
 
-bool SlipServer::OkGameData(const GameInputData& a_data)
+bool SlipServer::OkGameData(const GameInputData& a_data) const
 {   // group/table/round/pairs are ok
-    const auto& group = (*cfg::GetGroupData())[a_data.group-1];
+    UINT setSize      = s_all.groups[a_data.group].setSize;
+    const auto& group = s_all.groups[a_data.group].data;
     SchemaInfo schema(group.schemaId);
-    UINT set        = schema.GetSet(a_data.table, a_data.round);
-    UINT setSize    = cfg::GetSetSize();
-    int totalTricks = 6 + (int)a_data.level + a_data.tricks;
+    UINT set          = schema.GetSet(a_data.table, a_data.round);
+    int totalTricks   = 6 + (int)a_data.level + a_data.tricks;
 
     if (    ( ((a_data.game - 1) / setSize) != (set - 1) )
          || ( a_data.declarer > (UINT)Declarer::dclMax ) /* ||( a_data.declarer < Declarer::dclMin )*/
@@ -854,7 +1152,7 @@ bool SlipServer::OkGameData(const GameInputData& a_data)
     return true;
 }   // OkGameData
 
-wxString SlipServer::ContractAsString(const GameInputData& a_data, bool a_bNs)
+wxString SlipServer::ContractAsString(const GameInputData& a_data, bool a_bNs) const
 {
     switch ( static_cast<Declarer>(a_data.declarer) )
     {
@@ -879,9 +1177,17 @@ wxString SlipServer::ContractAsString(const GameInputData& a_data, bool a_bNs)
 
     static const wxString suits  [] = {"", _("Clubs"), _("Diamonds"), _("Hearts"), _("Spades"), _("NoTrump")};
     static const wxString doubled[] = {"", "*", "**"};
-    wxString contract(FMT("%u%s%+i%s", a_data.level, suits[a_data.suit], a_data.tricks, doubled[a_data.doubled]));
-    return contract;
+
+    wxString contract = a_data.tricks
+                        ? FMT("%u%s%+i%s", a_data.level, suits[a_data.suit], a_data.tricks, doubled[a_data.doubled])
+                        : FMT("%u%s%s"   , a_data.level, suits[a_data.suit]               , doubled[a_data.doubled]);
+        return contract;
 }   // ContractAsString()
+
+void SlipServer::OnAddMatch(wxCommandEvent&)
+{   // jump to the 'new match' page
+    SendEvent2Mainframe(ID_MENU_SETUPNEWMATCH);
+}   // OnAddMatch()
 
 void SlipServer::OnClearLog(wxCommandEvent&)
 {
@@ -896,7 +1202,7 @@ void SlipServer::OnClearLog(wxCommandEvent&)
     m_pLog->Clear();    // always clear the logwindow
 }   // OnClearLog()
 
-wxString SlipServer::GetMyIpv4()
+wxString SlipServer::GetMyIpv4() const
 {
     /*
     ping -a -4 -n 1 127.0.0.1      | findstr /C:[ --> "Pinging laptop-BTO17 [127.0.0.1] with 32 bytes of data:"

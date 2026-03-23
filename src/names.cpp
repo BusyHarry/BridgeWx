@@ -24,6 +24,7 @@ static std::vector<wxString>    svClubNames;                // entry 0 is a dumm
 static UINT_VECTOR              svuPairnrGlobal2Session;    // entry 0 is a dummy! [x] gives sessionpairnr for global pair x
 static UINT_VECTOR              svuPairnrSession2Global;    // entry 0 is a dummy! [x] gives globalpairnr for session pair x
 
+const UINT_VECTOR* GetPairnrSession2Global() {return &svuPairnrSession2Global;}
 //static UINT16 saiPairIndices[cfg::MAX_PAIRS+1]; // index to real pairnames for active match
 
 static bool sbChangedPairNames = false;

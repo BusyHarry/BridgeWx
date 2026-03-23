@@ -5,6 +5,7 @@
 *  - fileio       (io:: ) -> interface for application
 *  - orgInterface (org::) -> implementation for 'old' types of storage
 *  - database     (db:: ) -> implementation for 'wxConfig' type of storage
+*  - database     (sql::) -> implementation for sqlite type of storage
 */
 
     bool        ClubnamesRead           (      std::vector<wxString>&   clubNames, UINT& a_uMaxId);
@@ -46,3 +47,4 @@
     bool        WriteValue              (keyId id, const wxString& value,   UINT session = DEFAULT_SESSION);
     bool        WriteValue              (keyId id, long            value,   UINT session = DEFAULT_SESSION);
     bool        WriteValue              (keyId id, UINT            value,   UINT session = DEFAULT_SESSION);
+    int         ScoresWriteEx           (const wxString& dBase, const vvScoreData& scoreData, UINT session);

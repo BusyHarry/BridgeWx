@@ -11,8 +11,6 @@
   **/
   session_start();
   include "language.php";                           // get generated strings/values for this match
-  $setSize                 = SET_SIZE;              // doesn't change
-  $session                 = ACTIVE_SESSION;        // doesn't change
   $logFile                 = $ins_logFile;          // default file for info/error msg's
   $dataFile                = $ins_slipResultsFile;  // default file for the submitted data
   $clientId                = "?.?";                 // id for a client 'group.table'
@@ -54,26 +52,29 @@
     return;
   }
 
-  $clientId  = "$group.$table";
+  $clientId   = "$group.$table";
+  $session    = $ini_sessions[$group];
+  $nrOfRounds = count($slipData[$group])-1;  // rounds depend on match!
 
   if ( $round < 1 )
   { // we are 'posted' from login.php/index.php
     // table/group/forcedRound are selected in there
     // in other rounds, these are just 'passed-through'
     CheckNetworkConnection();
+    $setSize = $ini_setSizes[$group];
     $forcedRound = isset($_POST['forcedRound']) ? +filter_var($_POST['forcedRound'], FILTER_VALIDATE_INT) : 0;
     $result = AppendResult("login for group: " . $group
                              . ", table: "     . $table
                              . ", groups: "    . count($slipData)-1
                              . ", fRound: "    . $forcedRound
-                             . ", rounds: "    . NR_OF_ROUNDS
-                             . ", games: "     . NR_OF_ROUNDS*SET_SIZE
+                             . ", rounds: "    . $nrOfRounds
+                             . ", games: "     . $nrOfRounds*$setSize
                           );
     if ( $result != SLIP_E_NONE && $result != ERROR_NETWORK )
     { // do something....
       DoLog("$ins_error $result: $ins_group $group, $ins_table $table, $ins_round $round");
       // echo "$ins_badInput: roep arbiter<br>";
-      // $round = NR_OF_ROUNDS; // force end
+      // $round = $nrOfRounds; // force end
     }
     $round = ( $forcedRound == 0 ) ? 0 : ($forcedRound - 1);
     // group/table/round defined now
@@ -126,9 +127,9 @@
   $round += 1; // prepare info for next round
   for (;;)
   { // dummy loop, so you can easily restart/exit
-    if ( $round > NR_OF_ROUNDS )
+    if ( $round > $nrOfRounds )
     {
-       AppendResult("ready session: $session, group: $group, table: $table, round: " . NR_OF_ROUNDS);
+       AppendResult("ready session: $session, group: $group, table: $table, round: " . $nrOfRounds);
        include 'ready.php';
        break;
     }
@@ -143,7 +144,7 @@
     $ewId        = $slipData[$group][$round][$table][INDEX_EW];
     $ns          = $pairNames[$nsId];
     $ew          = $pairNames[$ewId];
-    $firstGame   = (($set-1) * $setSize) + 1;
+    $firstGame   = (($set-1) * $ini_setSizes[$group]) + 1;
     $sScoreEntry = $ins_scoreEntry;
     if ( count($ins_groupNames)-1 > 1 )
        $sScoreEntry .= ' ' . $ins_group . ' ' . $ins_groupNames[$group] . ' ';
@@ -239,9 +240,10 @@
   }  // VerifyHash()
 
   function GetLocalIp4()
-  { // "Pinging laptop-BTO17 [192.168.2.46] with 32 bytes of data:"
+  { // "Pinging xyz [192.168.2.46] with 32 bytes of data:"
+    global $ins_laptopName;
     $ip = "ip not found!";
-    $tmp = `ping -4 -n 1 laptop-BTO17`;
+    $tmp = `ping -4 -n 1 $ins_laptopName`;
     $pos1 = strpos($tmp,"[");
     if ( $pos1 != false )
     {
@@ -255,6 +257,7 @@
   function Send2Laptop($msg)
   {
     global $ins_laptopName;
+    global $ins_error;
     if (    !isset($_SESSION[CONNECTION])
          || "" ==  $_SESSION[CONNECTION]
        ) return ERROR_NETWORK;  // no connection setup

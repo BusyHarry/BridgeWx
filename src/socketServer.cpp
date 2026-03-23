@@ -16,8 +16,14 @@ enum
 //typedef wxIPV6address IPaddress;
 typedef wxIPV4address IPaddress;
 
+static constexpr auto TEST_IP = 0;
+static void TestIp();
+
 void SlipServer::CreateNetworkWatcher(bool a_bCreate)
 {
+#if TEST_IP == 1
+    TestIp();
+#endif
     if ( a_bCreate )
     {
         if ( nullptr == m_pSocketServer )
@@ -207,33 +213,35 @@ void SlipServer::SocketPutResult(wxSocketBase* a_pSock, SlipResult a_error, cons
     a_pSock->Write(&sendBuf, 3 + sendBuf.len);
 }   // SocketPutResult()
 
-#if 0
-static wxString Ip2S(UINT ip)
-{
-    return FMT("%u.%u.%u.%u", ip & 0xff, (ip >> 8)&0xff, (ip>>16)&0xff, (ip >> 24)&0xff);
-}
-
+#if TEST_IP == 1
 void TestIp()
 {
-    wxIPV4address addr;
-    auto full = wxGetFullHostName();
+    wxIPV4address   addr;
+    auto            full    = wxGetHostName();// wxGetFullHostName();
     addr.Hostname(full);
-    wxString ipAddr = addr.IPAddress();
-    auto hbn = gethostbyname(full);
-    struct hostent* hbn_1 = hbn;  MY_UNUSED(hbn_1);
+    wxString        ipAddr  = addr.IPAddress();
+    auto            hbn     = gethostbyname(full);
+    struct hostent* hbn_1   = hbn;  MY_UNUSED(hbn_1);
     /*
-    char    ** h_aliases;   alias list
-    short   h_addrtype;              host address type
-    short   h_length;                length of address
-    char    * * h_addr_list;
+    char*   h_name;         official name of host
+    char**  h_aliases;      alias list
+    short   h_addrtype;     host address type
+    short   h_length;       length of address
+    char**  h_addr_list;    zero terminated list of ip-addresses (of size h_length)
     */
-    auto len = hbn->h_length; MY_UNUSED(len);
-    auto name = hbn->h_name;  MY_UNUSED(name);
-    auto lst = hbn->h_addr_list;
-    auto p1 = lst[0]; UINT p1u = *(UINT*)p1; wxString ip1 = Ip2S(p1u);
-    auto p2 = lst[1]; UINT p2u = *(UINT*)p2; wxString ip2 = Ip2S(p2u);
-    auto p3 = lst[2]; UINT p3u = *(UINT*)p3; wxString ip3 = Ip2S(p3u);
-    auto p4 = lst[3]; UINT p4u = *(UINT*)p4; wxString ip4 = Ip2S(p4u);
-    //    char ips[1][4] = lst;
+    auto len    = hbn->h_length; MY_UNUSED(len);
+    auto name   = hbn->h_name;  MY_UNUSED(name);
+    auto lst    = hbn->h_addr_list;
+    wxArrayString ipList;
+
+    for (struct in_addr** pIp = (struct in_addr**)lst ; *pIp != 0 ; ++pIp) 
+    {
+        char *address = inet_ntoa(**pIp);
+        // add the IP address to the list
+        ipList.Add(wxString(address, wxConvLocal));
+    }
+    // now ipList will contain ALL local ip's,
+    // its on you to choose the one that responds to external events....
+    // in my case, I have 6 of them...
 }   // TestIp()
 #endif

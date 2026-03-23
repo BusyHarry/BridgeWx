@@ -11,6 +11,15 @@
 #include "corrections.h"
 #include "calcscore.h"
 
+/*
+* the EX_RESULT_* are result values for the *Ex method(s)
+*/
+static constexpr auto EX_RESULT_OK          =  0;   // all ok
+static constexpr auto EX_RESULT_CURRENT     = -1;   // matchname is current match, can't use *Ex
+static constexpr auto EX_RESULT_ERROR       = -2;   // some error
+static constexpr auto EX_RESULT_NOT_EXIST   = -3;   // given matchname does not exist, won't create
+static constexpr auto EX_RESULT_NO_IMPL     = -4;   // not implemented
+
 namespace io
 {
     enum GlbDbType

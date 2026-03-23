@@ -1,4 +1,12 @@
 # Releasenotes
+#V10.11....
+ - autohotkey V2.0.21 (https://github.com/AutoHotkey/AutoHotkey/releases/tag/v2.0.21)
+ - slipserver: wrong handling if schemadata had a non-playing table: NS and EW are both 0 (zero)
+ - slipserver: wrong display in score-entry if a game was not played: 'NP'
+ - prevent divide-zero/outOfBounds vector access when a 'NP'(NotPlayed) game is present and its the only entry for that game
+ - slipserver: added capability to add a second/third independent match to the slipserver
+               - now all these matches can be controled/viewed on one computer
+
 #V10.10.0  Friday Februari 20 2026
  - reorganised the in/output methods in fileio in preparation to adding an sqlite database for storage
  - logic error while reading the config when an array value was out of range

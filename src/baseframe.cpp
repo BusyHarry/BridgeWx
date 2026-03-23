@@ -305,7 +305,7 @@ void Baseframe::AutoTestAddGridInfo(MyTextFile* a_pFile, const wxString& a_pageN
         wxString name = FMT("%s_GridCol%u", a_pageName, colNr);
         AutotestAddPos(a_pFile, a_gridInfo.pGridWindow, sTL, sSize.x, sSize.y, name);
         if ( (a_gridInfo.ColumnLabelAutotest.size() > colNr) && pGrid->IsColShown(colNr) )
-        {   // columnlabel defenitions
+        {   // columnlabel definitions
             ++colNrAuto;    // one based column values for non-hidden columns
             wxString columnId = FMT("%s_Column_%s", a_pageName, a_gridInfo.ColumnLabelAutotest[colNr]);
             columnId.Replace(" ", "_");

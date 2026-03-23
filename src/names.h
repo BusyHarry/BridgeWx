@@ -53,6 +53,7 @@ namespace names
     int                 GetFreeClubIndex        ();                                         // get an unused id for clubnames, 0 if non available
     void                SetRestorePoint         ();                                         // save current names/club info
     void                GetRestorePoint         ();                                         // restore saved names/club info
+    const UINT_VECTOR*  GetPairnrSession2Global ();                                         // get the translation table from sessionPair to globalPair
     wxString            PairnrSession2GlobalText(UINT sessionPair);                         // convert session pairnr to its global name 57 -> "HH Janssen - Pietersen"
     wxString            PairnrGlobal2GlobalText(UINT globalPair);                           // convert global pairnr to its global name 57 -> "HH Janssen - Pietersen"
     UINT                PairnrSession2GlobalPairnr(UINT sessionPairNr);                     // get global pairnr from sessionPairNr

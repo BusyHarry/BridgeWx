@@ -29,6 +29,11 @@ namespace  org
     static wxString currentIniMatch;
     static wxString currentIniSession;
 
+    int ScoresWriteEx(const wxString& /*a_dBase*/, const vvScoreData& /*a_scoreData*/, UINT /*a_session*/)
+    {
+        return EX_RESULT_NO_IMPL;
+    }   // ScoresWriteEx()
+
     static wxString _ConstructFilename(cfg::FileExtension a_fe, UINT a_session = CURRENT_SESSION)
     {
         #if TEST == 1

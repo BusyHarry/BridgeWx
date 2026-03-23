@@ -569,6 +569,27 @@ bool UintVectorWrite(const UINT_VECTOR& a_vUint, UINT a_session, keyId a_id)
     return s_pConfig->Write(key, info);
 }   // UintVectorWrite()
 
+/*
+  *Ex methods:
+    - db actions for non-active matches
+    - use: open --> action --> close
+*/
+
+int ScoresWriteEx(const wxString& a_dBase, const vvScoreData& a_scoreData, UINT a_session)
+{   // only write to existing files
+    if ( !wxFile::Exists(a_dBase) )             return EX_RESULT_NOT_EXIST;
+    if ( a_dBase.Lower() == sDbFile.Lower() )   return EX_RESULT_CURRENT;  // don't open current active system db
+    wxFileConfig* pConfigEx = InitDatabase(a_dBase);
+    if ( pConfigEx == nullptr ) return EX_RESULT_ERROR;
+
+    bool bResult = false;;
+    std::swap(s_pConfig, pConfigEx);        // have the correct value for the next calls....
+    bResult = ScoresWrite(a_scoreData, a_session);
+    std::swap(s_pConfig, pConfigEx);        // back to how it was
+    delete pConfigEx;                       // will also flush pending changes
+    return bResult ? EX_RESULT_OK : EX_RESULT_ERROR;
+}   // ScoresWriteEx()
+
 #if TEST
 static void DoGroup(wxFileConfig& config, wxString group)
 {

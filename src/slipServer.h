@@ -31,8 +31,10 @@ protected:
     virtual void BackupData     ()          override final;     // backup changed data (not really useful here)
 
 private:
-    static const UINT SERVER_MSG_ID = 0xFE;     // messages from client should start with this id
-    static const UINT SERVER_PORT   = 45678;    // the port used for tx/rx
+    static constexpr UINT SERVER_MSG_ID = 0xFE;     // messages from client should start with this id
+    static constexpr UINT SERVER_PORT   = 45678;    // the port used for tx/rx
+    static constexpr bool DO_DISPLAY    = true;
+    static constexpr bool DO_NOT_DISPLAY=false;
 
     enum class SlipResult
     {                           // returned status for an incoming msg if using sockets
@@ -98,52 +100,64 @@ private:
         , Redoubled       , dblMax = Redoubled
     };
 
-    void        Add2Log    (const wxString& newMsg, bool bAddTime = false); // append time and 'newMsg' to log window and add a '\n'
-    wxString    ContractAsString    (const GameInputData& data, bool bNs);  // get slipcontract as string
+    void        Add2Log             (const wxString& newMsg, bool bAddTime = false);// append time and 'newMsg' to log window and add a '\n'
+    wxString    ContractAsString    (const GameInputData& data, bool bNs) const;    // get slipcontract as string
     void        CreateFileWatcher   (bool bCreate);                         // create or delete filewatcher
-    void        CreateHtmlTableInfo (MyTextFile& file);                     // schema to use in .php
+    void        CreateHtmlTableInfo (MyTextFile& file) const;               // schema to use in .php
     void        CreateNetworkWatcher(bool bCreate);                         // create or delete socket watcher
-    wxString    DateYMD             ();                                     // get date as '2025.10.07'
+    wxString    DateYMD             () const;                               // get date as '2025.10.07'
     void        DisplayGroupsReady  ();                                     // color group ready: true->green, false->red
     void        DisplayTableReady   (UINT group, UINT table, TableBackground tbg);      // color ready: true->green, false->red
-    wxString    EscapeHtmlChars     (const wxString& str);                  // escape special chars in html
-    wxString    GetLogFile          ();                                     // name of log-file to use in .php for logging
-    wxString    GetMyIpv4           ();                                     // get ipv4 of current machine
-    wxString    GetSlipResultsFile  (bool bfilenameOnly = false);           // name of file to receive the slip-results
+    wxString    EscapeHtmlChars     (const wxString& str) const;            // escape special chars in html
+    wxString    GetBaseResultName   () const;                               // base name for result/log file
+   
+    wxString    GetLogFile          () const;                               // name of log-file to use in .php for logging
+    wxString    GetMyIpv4           () const;                               // get ipv4 of current machine
+    wxString    GetSlipResultsFile  (bool bfilenameOnly = false) const;     // name of file to receive the slip-results
+    void        HandleOneGame       (const GameInputData& data);            // handle a single game
+    SlipResult  HandleError         (SlipResult error);
     void        HandleInputSelection(int selection);                        // 0=file, 1=network
+    SlipResult  HandleLogin         (const char*& pInput);
+
     bool        HandleResultFile    ();                                     // handle a file contaning results
     SlipResult  HandleResultLine    (const wxString& result);               // handle a line from the resultsfile: comment, logon, slipresult, ready. return error, 0 if no error
-    bool        HasPlayed           (const schema::NS_EW& pairs, UINT set, UINT groupOffset);   // check if pairs have played this set
-    bool        OkGameData          (const GameInputData& data);            // check if gamedata is correct
+    SlipResult  HandleSession       (const char*& pInput);
+    bool        HasPlayed           (const schema::NS_EW& pairs, UINT set, UINT groupOffset, UINT setSize, UINT maxGames) const;   // check if pairs have played this set
+    bool        OkGameData          (const GameInputData& data) const;      // check if gamedata is correct
     void        OnClearLog          (wxCommandEvent& evt);                  // clear log window, append it to logfile
+    void        OnAddMatch          (wxCommandEvent& evt);                  // add another match to have its data submitted through the browser
     void        OnFileSystemEvent   (wxFileSystemWatcherEvent& event);      // the watched file has changed
     void        OnGenHtmlSlipData   (wxCommandEvent&);                      // generate a .php definition/language file
     void        OnInputChoice       (wxCommandEvent& event);                // new input method selected
     void        OnNextRound         (wxCommandEvent&);                      // easier choice for next round
-    bool        OkPairs             (const GameInputData& data);            // check if pairs are in this group
+    bool        OkPairs             (const GameInputData& data) const;      // check if pairs are in this group
     void        OnSelectRound       (wxCommandEvent&);                      // new round selected
     void        OnServerEvent       (wxSocketEvent& event);                 // new connection
     void        OnSocketEvent       (wxSocketEvent& event);                 // something coming in
     void        SetupGrid           ();                                     // (re-)create grid, if config changes
     void        SocketGetInput      (wxSocketBase *pSock);                  // get <len><msg> and handle it
     void        SocketPutResult     (wxSocketBase *pSock, SlipResult error, const char buf[]);  // put result buf: <id><err><len><msg>
-    void        UpdateTableInfo     (UINT round, bool bUpdateDisplay=true); // update results to show if round is ready
+    void        UpdateTableInfo     (UINT round, bool bUpdateDisplay=DO_DISPLAY); // update results to show if round is ready
 
     std::vector< std::vector< std::vector<TableInfo> > > m_tableInfo;       // [round][group][table].TableInfo all 1-based!
     UINT                    m_activeRound;      // the (current) round to show the info (1-based)
     bool                    m_bCancelInProgress;// true, if cancel pressed
     bool                    m_bDataChanged;     // true, if we got new scores
-    UINT                    m_groups;           // nr of groups for this match
+    wxString                m_firstActiveMatchPath; // info of the first/only match to watch
+    wxString                m_firstActiveMatch;
+    UINT                    m_firstActiveSession;
+    wxString                m_firstDescription;
+    UINT                    m_groups;           // total nr of groups for all included matches
     size_t                  m_linesReadInResult;// nr of lines already read in slipresult file
     wxString                m_logFile;          // filename for appending contents of m_pLog
     UINT                    m_maxTable;         // max nr of tables over all groups
     int                     m_numClients;       // number of clients currently connected
-    MY_CHOICE*              m_pChoiceBoxRound;  // choose the round to handle its info
+    MY_CHOICE*              m_pChoiceBoxRound;  // choose the round to show its info
     wxFileSystemWatcher*    m_pFsWatcher;       // the file system watcher
     wxRadioBox*             m_pInputChoice;     // input through a file or a special network connection
     wxTextCtrl*             m_pLog;             // show gotten data
     wxSocketServer*         m_pSocketServer;    // the server listening for slip-results
-    UINT                    m_rounds;           // nr of rounds for this session
+    UINT                    m_maxRounds;        // max nr of rounds for all matches
     std::vector<UINT>       m_tables;           // number of tables in each group
     wxString                m_tempLogFile;      // file, used temporarily for saving contents of m_plog
     MyGrid*                 m_theGrid;          // the grid to show progress of slipdata entry

@@ -771,6 +771,21 @@ namespace sql
         return glb::SessionResultRead(a_mSessionResult, info);
     } //SessionResultRead()
 
+    int ScoresWriteEx(const wxString& a_dBase, const vvScoreData& a_scoreData, UINT a_session)
+    {   // only write to existing files
+        if ( !wxFile::Exists(a_dBase) )                 return EX_RESULT_NOT_EXIST;
+        if ( a_dBase.Lower() == sqlDbFilename.Lower() ) return EX_RESULT_CURRENT;   // don't open current active system db
+        sqlite3* pSqlEx = InitDatabase(a_dBase);
+        if ( pSqlEx == nullptr ) return EX_RESULT_ERROR;
+
+        bool bResult = false;;
+        std::swap(pSqlEx, sqlFp);       // have the correct value for the next calls....
+        bResult = ScoresWrite(a_scoreData, a_session);
+        std::swap(pSqlEx, sqlFp);       // back to how it was
+        sqlite3_close(pSqlEx);          // will also flush pending changes
+        return bResult ? EX_RESULT_OK : EX_RESULT_ERROR;
+    }   // ScoresWriteEx()
+
 } // namespace sql
 
 #if 0

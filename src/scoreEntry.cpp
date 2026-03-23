@@ -481,7 +481,8 @@ void ScoreEntry::RefreshInfo()
                 if (GetScore(theGame, nsPair, data, bReversed))
                 {
                     scoreNS = score::ScoreToString(data.scoreNS);
-                    scoreEW = score::ScoreToString(data.scoreEW);
+                    if ( data.scoreNS != SCORE_NP )
+                        scoreEW = score::ScoreToString(data.scoreEW);
                 }
 
                 if (bReversed)

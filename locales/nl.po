@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BridgeWx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-31 13:25+0100\n"
-"PO-Revision-Date: 2026-01-31 13:25+0100\n"
+"POT-Creation-Date: 2026-03-23 14:48+0100\n"
+"PO-Revision-Date: 2026-03-23 14:48+0100\n"
 "Last-Translator: BusyHarry\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -2047,6 +2047,16 @@ msgstr "log wissen"
 msgid "Clear the log window"
 msgstr "Wis het logwindow"
 
+msgid "add match"
+msgstr "voeg wedstrijd toe"
+
+msgid ""
+"Add another match by selecting one\n"
+"and return here to regenerate the slip-data"
+msgstr ""
+"Voeg een nieuwe wedstrijd toe door deze te selecteren\n"
+" en kom hier terug om de slip-data te vernieuwen"
+
 msgid "html slip data"
 msgstr "html slip data"
 
@@ -2163,6 +2173,21 @@ msgstr "Resultaten komen via bestand"
 
 msgid "^-- bad input data"
 msgstr "^-- foute gegevens"
+
+msgid "no error"
+msgstr "geen fout"
+
+msgid "unknown command"
+msgstr "onbekende opdracht"
+
+msgid "invalid number of parameters"
+msgstr "ongeldig aantal parameters"
+
+msgid "param(s) out of range"
+msgstr "parameter(s) te groot/klein"
+
+msgid "wrong command format"
+msgstr "foutief commando formaat"
 
 msgid "error opening results file"
 msgstr "probleem bij openen score-file"

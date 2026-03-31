@@ -11,6 +11,7 @@
 
 #ifdef __VISUALC__
     // 'this' : used in base member initializer list -- so what??
+#pragma warning( push )
 #pragma warning(disable: 4355)
 #endif
 
@@ -54,7 +55,7 @@ void MyStatusBar::SetClock()
 }   // SetClock()
 
 #ifdef __VISUALC__
-#pragma warning(default: 4355)
+#pragma warning(pop)
 #endif
 
 MyStatusBar::~MyStatusBar()
@@ -70,7 +71,7 @@ void MyStatusBar::UpdateClock()
     SetStatusText(wxDateTime::Now().FormatTime(), FIELD_CLOCK);
 }   // UpdateClock()
 
-void MyStatusBar::OnTimer(wxTimerEvent& WXUNUSED(event))
+void MyStatusBar::OnTimer(const wxTimerEvent& WXUNUSED(event))
 {
     UpdateClock();
 }   // OnTimer()

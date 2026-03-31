@@ -374,7 +374,7 @@ namespace sql
         (void)SqlExec(sql);
         for ( const auto& ci : sqlData )
         {   // [0]=clubId, [1]=clubName
-            UINT clubId = (UINT)wxAtoi(ci[0].data);
+            auto clubId = (UINT)wxAtoi(ci[0].data);
             if ( clubId > cfg::MAX_CLUBNAMES )
             {
                 MyLogError(_("Reading clubnames: clubnr <%u> too high!"), clubId);
@@ -427,7 +427,7 @@ namespace sql
         return rc == SQLITE_OK && size > 0;
     }   // end ExistSession()
 
-    void InitSdbMap()
+    static void InitSdbMap()
     {
         static bool bIsInited = false;
         if ( bIsInited ) return;
@@ -468,10 +468,10 @@ namespace sql
 
     }  // InitSdbMap()
 
-    wxString GetTableName(keyId a_id, UINT a_session /* = DEFAULT_SESSION */)
+    static wxString GetTableName(keyId a_id, UINT a_session /* = DEFAULT_SESSION */)
     {
         static std::map<UINT, bool> sm_sessionExist;
-        if ( (a_session != DEFAULT_SESSION) && (sm_sessionExist.end() == sm_sessionExist.find(a_session)) )
+        if ( (a_session != DEFAULT_SESSION) && (!sm_sessionExist.contains(a_session)) )
         {
             sm_sessionExist[a_session] = true;    // must come first, else recursion till death follows...
             CreateSessionTables( a_session );
@@ -497,12 +497,12 @@ namespace sql
         return table;
     }   // GetTableName()
 
-    wxString GetColumnName(keyId a_id)
+    static wxString GetColumnName(keyId a_id)
     {
         return wxString(dbKeys[a_id].first);
     }   // GetColumnName()
 
-    int SqlExec(const char* a_pSql)
+    static int SqlExec(const char* a_pSql)
     {   // this will call the sql3 execution unit
         // results: sqlData and sqlErrorMsg
         sqlErrorMsg.clear();
@@ -513,7 +513,7 @@ namespace sql
 
             for (int index = 0; index < count; ++index)
             {
-                rowData.push_back({columnNames[index], columnData[index] ? columnData[index] : ""});
+                rowData.emplace_back(columnNames[index], columnData[index] ? columnData[index] : "");
             }
             sqlData.emplace_back(rowData);
             return 0;   // non-zero will force the exec function to abort
@@ -533,14 +533,14 @@ namespace sql
         return rc;
     }   // SqlExec()
 
-    int SqlExec(const wxString& a_sql)
+    static int SqlExec(const wxString& a_sql)
     {
         auto        buf = a_sql.ToUTF8();
         const char* sql = buf;
         return SqlExec(sql);
     }   // SqlExec()
 
-    void CreateSessionTables(UINT a_session)
+    static void CreateSessionTables(UINT a_session)
     {   // create the MAIN table and the gameresult table for this session
         if ( sqlFp == nullptr || ExistSession( a_session) )
             return;
@@ -577,7 +577,7 @@ namespace sql
         #undef CHECK
     }   // CreateSessionTables()
 
-    bool UintVectorRead(UINT_VECTOR& a_vUint, UINT a_session, keyId a_id)
+    static bool UintVectorRead(UINT_VECTOR& a_vUint, UINT a_session, keyId a_id)
     {   // Resize vector to cfg::MAX_PAIRS and read a set of UINTs and put them in a vector.
         if ( !sqlFp ) return false;
         wxString key  = FMT("%s:%s", GetTableName(a_id, a_session), GetColumnName(a_id));
@@ -585,7 +585,7 @@ namespace sql
         return glb::UintVectorRead(a_vUint, info, sqlDbFilename, key, SqlError4MsgBox("UintVectorRead()"));
     }   //UintVectorRead()
 
-    bool UintVectorWrite(const UINT_VECTOR& a_vUint, UINT a_session, keyId a_id)
+    static bool UintVectorWrite(const UINT_VECTOR& a_vUint, UINT a_session, keyId a_id)
     {   // write contents of vector as UINT, ignoring entry 0
         if ( !sqlFp ) return false;
         wxString info = glb::UintVectorWrite(a_vUint);
@@ -644,7 +644,7 @@ namespace sql
         auto result = glb::ScoresWrite(a_scoreData, CB_ScoresWriteGame, &cb_fmtScoresWrite );
         (void)SqlExec("COMMIT;");
         return result;
-    }   // ScoresWrite();
+    }   // ScoresWrite()
 
     static bool CB_ScoresReadLine(wxString& a_game, wxString& a_gameScores, void* a_pUserData)
     {   // read the scores of a single game at 'index'

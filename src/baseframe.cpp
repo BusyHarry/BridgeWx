@@ -19,6 +19,9 @@
 #include <wx/msw/subwin.h>
 #endif
 #include <wx/radiobut.h>
+#include <wx/app.h>
+#include <wx/uiaction.h>
+#include <wx/choicdlg.h>
 
 #include "cfg.h"
 #include "baseframe.h"
@@ -38,7 +41,7 @@ static const wxWindow* GetTopLevelWindow(const wxWindow* a_pWindow)
     return a_pWindow;
 }   // GetTopLevelWindow()
 
-#define STATIC_SIZE 20
+constexpr auto STATIC_SIZE = 20;
 static wxPoint spPosition={1,1};
 wxSize GetStaticRectSize()
 {   // position/size for invisible static controls
@@ -60,16 +63,10 @@ Baseframe::Baseframe(wxWindow* a_pParent, UINT a_pageId)
     : wxPanel(a_pParent)
     , m_pParent             { a_pParent }
     , m_pConfig             { this      }
-    , m_pTxtCtrlSearchBox   { 0         }
-    , m_iCurrentConfigHash  { -1        }
     , m_pageId              { a_pageId  }
 {
     m_bIsScriptTesting = cfg::IsScriptTesting();
 }   // Baseframe()
-
-Baseframe::~Baseframe()
-{
-}   // ~Baseframe()
 
 const wxString& Baseframe::GetDescription() const
 {
@@ -102,18 +99,18 @@ wxBoxSizer* Baseframe::CreateOkCancelButtons()
     cancel->SetToolTip(_("undo changes"));
 
     // sizer for the default implementation of the Ok/Cancel buttons
-    wxBoxSizer* pButtonOkCancelSizer = new wxBoxSizer(wxHORIZONTAL);
+    auto pButtonOkCancelSizer = new wxBoxSizer(wxHORIZONTAL);
     pButtonOkCancelSizer->Add(    ok, 0 /* unstretchable */ , wxRIGHT, 20); // only right border so buttons don't clash
     pButtonOkCancelSizer->Add(cancel, 0                                  ); // caller handles all other borders/alignments
 
-    ok    ->Bind(wxEVT_BUTTON, &Baseframe::OnOk    , this);//, ok    ->GetId() );
-    cancel->Bind(wxEVT_BUTTON, &Baseframe::OnCancel, this);//, cancel->GetId() );
+    ok    ->Bind(wxEVT_BUTTON, &Baseframe::OnOk_    , this);//, ok    ->GetId() );
+    cancel->Bind(wxEVT_BUTTON, &Baseframe::OnCancel_, this);//, cancel->GetId() );
     AUTOTEST_ADD_WINDOW(ok    , "Ok"    );
     AUTOTEST_ADD_WINDOW(cancel, "Cancel");
     return pButtonOkCancelSizer;    // add this one to your own sizer(s)
 }   // CreateOkCancelButtons()
 
-void Baseframe::OnOk(wxCommandEvent&)
+void Baseframe::OnOk_(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("ok");
     MyLogDebug("OnOk()");
@@ -126,7 +123,7 @@ void Baseframe::OnOk()
     // derived class should implement this
 }   // OnOk()
 
-void Baseframe::OnCancel(wxCommandEvent&)
+void Baseframe::OnCancel_(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("cancel");
     MyLogDebug(_("OnCancel()"));
@@ -145,12 +142,12 @@ void Baseframe::PrintPage()
     LogMessage("Baseframe::PrintPage()");   // derived class should implement this...
 }   // PrintPage()
 
-wxString Baseframe::Unique(const wxString& a_name)
+wxString Baseframe::Unique(const wxString& a_name) const
 {   // autohotkey cannot distinguish between buttons with same name (like "ok")
     return m_bIsScriptTesting ? FMT("%s%u", a_name, m_pageId - ID_MENU_SETUP_FIRST) : a_name;
 }   // Unique()
 
-#define TXT_BORDER_SIZE 10  /* border between static text and its control*/
+constexpr auto TXT_BORDER_SIZE = 10;  // border between static text and its control
 // TXT_CTRL_SIZER: how to add Sstatic txt in hSizer: fixed size, right border of TXT_BORDER_SIZE and txt centered vertically
 #define TXT_CTRL_SIZER   1, wxRIGHT | wxALIGN_CENTER_VERTICAL, TXT_BORDER_SIZE /* sizer info for static txt in combo's*/
 
@@ -171,7 +168,7 @@ wxBoxSizer* Baseframe::CreateSearchBox()
     return hSearchBox;
 }   // CreateSearchBox()
 
-void Baseframe::OnSearch(wxCommandEvent& )
+void Baseframe::OnSearch(const wxCommandEvent& )
 {
     AUTOTEST_BUSY("search");
     wxString theString = m_pTxtCtrlSearchBox->GetValue();
@@ -181,6 +178,7 @@ void Baseframe::OnSearch(wxCommandEvent& )
 
 /* virtual */ void Baseframe::DoSearch(wxString&)
 {
+    // default do nothing
 }
 
 wxRadioBox* Baseframe::CreateRadioBox(const wxString& a_title, const wxArrayString& a_choices, pEventHandler a_pHandler, const wxString& a_autoName)
@@ -225,7 +223,7 @@ static void AutotestAddWindowPos(MyTextFile* a_pFile, const wxWindow* a_pWindow,
     AutotestAddPos(a_pFile, a_pWindow, sWinTL, winRect.width, winRect.height, a_positionName);
 }   //  AutotestAddWindowPos()
 
-bool Baseframe::AutotestAddMousePos(MyTextFile* a_pFile, const wxWindow* a_pWindow, const wxString& a_positionName)
+bool Baseframe::AutotestAddMousePos(MyTextFile* a_pFile, const wxWindow* a_pWindow, const wxString& a_positionName) const
 {   // s* vars are Screen positions, w* vars are appwindow-relative positions
     class MyRadioBox: public wxRadioBox
     {   // helper class, only to get at the msw-whnd inside the wxRadiobox
@@ -281,7 +279,7 @@ bool Baseframe::AutotestAddMousePos(MyTextFile* a_pFile, const wxWindow* a_pWind
     return true;
 }   // AutotestAddMousePos()
 
-void Baseframe::AutoTestAddWindowsNames(MyTextFile* a_pFile, const wxString& a_pageName)
+void Baseframe::AutoTestAddWindowsNames(MyTextFile* a_pFile, const wxString& a_pageName) const
 {
     for (const auto& window : m_winNames)
     {
@@ -289,7 +287,7 @@ void Baseframe::AutoTestAddWindowsNames(MyTextFile* a_pFile, const wxString& a_p
     }
 }  // AutoTestAddWindowsNames()
 
-void Baseframe::AutoTestAddGridInfo(MyTextFile* a_pFile, const wxString& a_pageName, const MyGrid::GridInfo& a_gridInfo)
+void Baseframe::AutoTestAddGridInfo(MyTextFile* a_pFile, const wxString& a_pageName, const MyGrid::GridInfo& a_gridInfo) const
 {   // add info about all collumns of first row
     AutotestAddMousePos(a_pFile, a_gridInfo.pGridWindow, a_pageName + "_Grid");
     UINT colNr = 0;
@@ -319,7 +317,6 @@ void Baseframe::AutoTestAddGridInfo(MyTextFile* a_pFile, const wxString& a_pageN
 
 /*****************************************************************/
 
-
 /*********************************************************/
 MyChoice::MyChoice(wxWindow* a_parent, const wxString& a_staticText, const wxString& a_tooltip, const wxString& a_ahkLabel)
     : MywxChoice(a_parent, wxID_ANY, a_ahkLabel)
@@ -328,7 +325,7 @@ MyChoice::MyChoice(wxWindow* a_parent, const wxString& a_staticText, const wxStr
     m_pBoxSizer = new wxBoxSizer(wxHORIZONTAL);
     if (!a_staticText.IsEmpty())
     {
-        wxStaticText* pTitle= new wxStaticText(a_parent, wxID_ANY, a_staticText);
+        auto pTitle= new wxStaticText(a_parent, wxID_ANY, a_staticText);
         m_pBoxSizer->Add(pTitle, TXT_CTRL_SIZER);
     }
     m_pBoxSizer->Add(this, 0);
@@ -365,16 +362,11 @@ MyChoiceMC::MyChoiceMC(wxWindow* a_parent, const wxString& a_staticText, const w
 
     if (!a_staticText.IsEmpty())
     {
-        wxStaticText* pTitle= new wxStaticText(a_parent, wxID_ANY, a_staticText);
+        auto pTitle= new wxStaticText(a_parent, wxID_ANY, a_staticText);
         m_pBoxSizer->Add(pTitle, TXT_CTRL_SIZER);
     }
     m_pBoxSizer->Add(this  , 0);
 }   // MyChoiceMC()
-
-MyChoiceMC::~MyChoiceMC()
-{
-    ;
-}   // ~MyChoiceMC()
 
 wxSize GetSize4EditBox(wxString& msg)    // remark: 'msg' will be adapted
 {
@@ -411,8 +403,6 @@ if (style & flag)                                           \
     pSizer->Add(pButton, 0, wxRIGHT, 5);                    \
     if (style & flag##_DEFAULT) pButton->SetFocus();        \
 }
-#include <wx/app.h>
-
 float GetScale()
 {   // calculate a scale from the fontsize of the mainframe and a default txtCtrl
     auto pMain = GetMainframe();    // this guarantees MY main window
@@ -437,7 +427,7 @@ int MyMessageBox(const wxString& message, const wxString& caption, long style, c
     auto        pEditSizer  = new wxBoxSizer( wxHORIZONTAL );
     wxString    msg         = message;
     wxSize      size        = GetSize4EditBox(msg);
-    wxTextCtrl* txtCtrl     = new wxTextCtrl(&dialog, wxID_ANY, msg, {0,0}, size, wxBORDER_NONE|wxTE_MULTILINE | wxTE_READONLY);
+    auto        txtCtrl     = new wxTextCtrl(&dialog, wxID_ANY, msg, {0,0}, size, wxBORDER_NONE|wxTE_MULTILINE | wxTE_READONLY);
 
     txtCtrl->SetScrollbar(wxVERTICAL,0,0,0);
     pEditSizer->Add(txtCtrl, 1);    // '1': possibly grow horizontally
@@ -448,7 +438,7 @@ int MyMessageBox(const wxString& message, const wxString& caption, long style, c
     ADD_BUTTON_TO_MSGBOX(style, wxNO    ,_("No"      ), hButtonSizer, dialog)
     ADD_BUTTON_TO_MSGBOX(style, wxCANCEL,_("Cancel"  ), hButtonSizer, dialog)
 
-    wxBoxSizer *vBox = new wxBoxSizer( wxVERTICAL );
+    auto vBox = new wxBoxSizer( wxVERTICAL );
     vBox->Add(pEditSizer  , 1, wxEXPAND);
     vBox->Add(hButtonSizer, 0, wxALIGN_RIGHT | wxALL, 8);
     dialog.SetSizerAndFit(vBox);
@@ -475,7 +465,7 @@ void BusyBox(const wxString& message, int milisecondsShow, const wxPoint& positi
     class bb
     {
     public:
-        ~bb(){}
+        ~bb() = default;
         bb(const wxString& message, int milisecondsShow, const wxPoint& position)
         {
             auto    pTxtCtrl = new wxTextCtrl();
@@ -517,12 +507,10 @@ void BusyBox(const wxString& message, int milisecondsShow, const wxPoint& positi
             m_raiseTimer.Start(100);
         }
     private:
-        bb(){m_pBusyFrame = nullptr;}
-        // cppcheck-suppress missingMemberCopy
-        bb(const bb &)      {m_pBusyFrame = nullptr;}  // complaint of cppcheck
-        // cppcheck-suppress operatorEqVarError
-        void operator=(bb&) {m_pBusyFrame = nullptr;}  // complaint of cppcheck
-        wxFrame*        m_pBusyFrame;
+        bb() = default;
+        bb(const bb &)              = delete;   // complaint of cppcheck
+        void operator=(const bb&)   = delete;   // complaint of cppcheck
+        wxFrame*        m_pBusyFrame = nullptr;
         wxTimer         m_busyTimer;
         wxTimer         m_raiseTimer;
         wxBusyCursor    m_busyCursor;
@@ -533,14 +521,6 @@ void BusyBox(const wxString& message, int milisecondsShow, const wxPoint& positi
 }   // BusyBox()
 
 /****************** MyTextFile **********************/
-MyTextFile::MyTextFile()
-{
-    m_error     = -1;
-    m_access    = READ;
-    m_bOk       = false;
-    m_textType  = wxTextFileType_Dos;
-}   // MyTextFile()
-
 MyTextFile::MyTextFile(const wxString& a_filename, AccessType a_access, wxTextFileType a_textType)
 {
     MyCreate(a_filename, a_access, a_textType);
@@ -587,14 +567,13 @@ void MyTextFile::Flush()
 }   // Flush()
 
 /****************** end MyTextFile **********************/
-#include <wx/uiaction.h>
 // cppcheck-suppress constParameterPointer
 AHKHelper::AHKHelper(wxWindow* a_pParent, wxWindow* a_pTarget, const  wxString& a_label)
+  : m_pTarget(a_pTarget)
 {
-    m_pTarget = a_pTarget;
     m_staticAhk.Hide();
     m_staticAhk.Create(a_pParent, wxID_ANY, a_label, GetStaticRectPosition(), GetStaticRectSize());
-    m_staticAhk.Bind(wxEVT_LEFT_DOWN, [this](wxMouseEvent& )
+    m_staticAhk.Bind(wxEVT_LEFT_DOWN, [this](const wxMouseEvent& )
                         {
                             // SetFocus()/SetFocusFromKbd(): this SEEMS to work, but 'sometimes' OS thinks focus is somewhere else...
                             wxUIActionSimulator sim;        // this ALWAYS works!
@@ -604,8 +583,6 @@ AHKHelper::AHKHelper(wxWindow* a_pParent, wxWindow* a_pTarget, const  wxString& 
                         }
                     );
 }   // AHKHelper()
-
-AHKHelper::~AHKHelper(){}
 
 wxString AHKHelper::GetStaticLabel() const
 {
@@ -618,9 +595,6 @@ MywxChoice::MywxChoice(wxWindow* a_pParent, wxWindowID a_id, const wxString& a_l
 {
 }   // MywxChoice()
 
-MywxChoice::~MywxChoice()
-{
-}
 
 wxString MywxChoice::GetLabel() const
 {
@@ -634,16 +608,11 @@ MywxComboBox::MywxComboBox(wxWindow* a_pParent, wxWindowID a_id,
 {
 }   // MywxComboBox()
 
-MywxComboBox::~MywxComboBox()
-{
-}
-
 wxString MywxComboBox::GetLabel() const
 {
     return AHKHelper::GetStaticLabel();
 }   // GetLabel()
 
-#include <wx/choicdlg.h>
 int MyGetSingleChoiceIndex(const wxString& a_message, const wxString& a_caption, const wxArrayString& a_names, wxWindow* a_pParent, int a_selection)
 {   // replacement for wxGetSingleChoiceIndex() to get a fontsize equal to its parent
     wxSingleChoiceDialog dialog;

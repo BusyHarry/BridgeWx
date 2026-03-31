@@ -9,7 +9,7 @@
 
 void AutoTestBusyMC(bool bSetCheck = true);
 
-typedef unsigned int UINT;
+using UINT = unsigned int;
 
 class PopupChoiceMC;
 class wxTextCtrl;
@@ -18,11 +18,11 @@ class ChoiceMC : public wxComboCtrl
 {
 public:
     explicit    ChoiceMC            (wxWindow* pParent, const wxString& textCtrlTitle);
-    virtual     ~ChoiceMC           ();
+               ~ChoiceMC            () override = default;
     bool        SetSelection        (int selection);  // return true if new selection within limits
     bool        SetStringSelection  (const wxString& selection);
     void        Append              (const wxString& choice);
-    wxString    GetStringSelection  () const;
+    wxString    GetStringSelection  () const override;
     int         GetSelection        () const;
     void        Clear               ();         // remove all content
     void        Init                (UINT count, UINT selection = 0U, UINT offset = 0U);
@@ -36,26 +36,26 @@ public:
     void        CheckAutoSize       (const wxString& choice);
     void        SetPopupWidth       (int size);
     void        SetMaxPopupWidth    (int maxWidth);
-    UINT        GetCount            ();         // nr of items in popup
+    UINT        GetCount            () const;       // nr of items in popup
 protected:
-    virtual bool AnimateShow( const wxRect& rect, int flags ) wxOVERRIDE;
+    bool        AnimateShow( const wxRect& rect, int flags ) wxOVERRIDE;
 
 private:
     void ResetTextctrlSize();               // set max-size of combo if empty
     void ExpandNrOfRows(UINT itemNumber, bool bInit=false); // expand nr of rows if itemNumber > current rowcount
-    #define MC_DEFAULT_NR_OF_ROWS 4
+    static constexpr auto MC_DEFAULT_NR_OF_ROWS = 4;
     PopupChoiceMC*  m_pPopup;
     wxTextCtrl*     m_pTxtctrl;
     int             m_popupCharWidth;
     int             m_popupCharHeight;
     int             m_popupMaxWidth;
     bool            m_bAutoSize;
-    int             m_currentColumnWidth;
-    UINT            m_numberOfRows;
-    UINT            m_maxNumberOfRows;
-    int             m_popupWidth;
+    int             m_currentColumnWidth = 0;
+    UINT            m_numberOfRows       = 0;
+    UINT            m_maxNumberOfRows    = 0;
+    int             m_popupWidth         = 0;
     int             m_textMinSize;      // size of borders and button of combo-editbox
-    UINT            m_nrOfColumns;
+    UINT            m_nrOfColumns        = 0;
     wxTimer         m_timerPopupKillFocus;
 };
 

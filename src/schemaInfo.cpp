@@ -12,10 +12,10 @@
 #include <wx/filename.h>
 
 
-#include "NewSchemaData.h"
-#include "schemaInfo.h"
-#include "MyLog.h"
-#include "importExportSchema.h"
+#include "newschemadata.h"
+#include "schemainfo.h"
+#include "myLog.h"
+#include "importexportschema.h"
 #include "baseframe.h"
 
 #define   SET(round,table) (*m_pSchema).tableData[round][table].set
@@ -102,7 +102,7 @@ namespace schema
         // All ok, transform importdata to local data
         // All tables/pairs/sets are within limits!
         // Now check if its a new schema or a replacement of an existing one.
-        auto dup = std::find(newSchemaTable.begin(), newSchemaTable.end(), importSchema);
+        auto dup = std::ranges::find(newSchemaTable, importSchema);
         if (dup != newSchemaTable.end())
             *dup = importSchema;                    // update it
         else
@@ -168,7 +168,7 @@ bool SchemaInfo::GetTableRoundInfo(UINT a_table, UINT a_round, schema::GameInfo&
     return bResult;
 }   // GetTableRoundInfo()
 
-void SchemaInfo::GetRoundInfo( UINT a_round, bool a_bGameOrder,  schema::vGameInfo& a_info)
+void SchemaInfo::GetRoundInfo( UINT a_round, bool a_bGameOrder,  schema::vGameInfo& a_info) const
 {
     a_info.clear();
     if (!IsOk()) return;    // no valid schema
@@ -182,7 +182,7 @@ void SchemaInfo::GetRoundInfo( UINT a_round, bool a_bGameOrder,  schema::vGameIn
 
     //now sort the data
     // here in the lambda its easier to sort also on NS...
-    std::sort(a_info.begin(), a_info.end(),
+    std::ranges::sort(a_info,
         [a_bGameOrder] (schema::GameInfo const& left,schema:: GameInfo const& right)
         {
             if (a_bGameOrder)
@@ -198,7 +198,7 @@ void SchemaInfo::GetRoundInfo( UINT a_round, bool a_bGameOrder,  schema::vGameIn
 void SchemaInfo::GetSetInfo(UINT a_set, schema::vGameInfo& a_info) const
 {
     a_info.clear();
-    NewSchemaDataType theSet = static_cast<NewSchemaDataType> (a_set);
+    auto theSet = static_cast<NewSchemaDataType> (a_set);
     for (UINT round = 1; round <= m_rounds; ++round)
     {
         for (UINT table = 1; table <= m_tables; ++table)
@@ -284,7 +284,7 @@ UINT SchemaInfo::GetTable( UINT pair, UINT round) const
     assert(pair  && pair  <= m_pairs );
     assert(round && round <= m_rounds);
 
-    auto roundInfo = m_pSchema->tableData[round];
+    const auto& roundInfo = m_pSchema->tableData[round];
     for (UINT table = 1; table <= m_tables; ++table)
     {
         if (roundInfo[table].pairNS == pair || roundInfo[table].pairEW == pair)
@@ -299,7 +299,7 @@ bool SchemaInfo::IsNs( UINT pair, UINT round) const
     assert(pair  && pair  <= m_pairs );
     assert(round && round <= m_rounds);
 
-    auto roundInfo = m_pSchema->tableData[round];
+    const auto& roundInfo = m_pSchema->tableData[round];
 //    return std::any_of(roundInfo.begin(), roundInfo.end(), [pair](const auto& info) {return info.pairNS == pair;});
     for (const auto& gameInfo : roundInfo)
     {
@@ -381,7 +381,7 @@ static void CreateNewSchemaDataCppOld()
         "// Copyright(c) 2024-present, BusyHarry/h.levels & BridgeWx contributors.\n"
         "// Distributed under the MIT License (http://opensource.org/licenses/MIT)\n"
         "\n"
-        "#include \"NewSchemaData.h\"\n";
+        "#include \"newschemadata.h\"\n";
 
     SchemaInfo oldSchema;
     std::vector<std::string> schemas;

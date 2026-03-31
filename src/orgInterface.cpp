@@ -6,7 +6,7 @@
 #include <wx/fileconf.h>
 #include <wx/ffile.h>
 
-#include "orgInterface.h"
+#include "orginterface.h"
 
 #define TEST 0      /* filenames get extra extension ".tst" */
 /*
@@ -278,7 +278,7 @@ namespace  org
             size_t  offset      = a_schemaString.find('P');
             UINT    group       = 0;
             UINT    groupOffset = 0;
-            for ( ; offset != wxString::npos; )
+            while ( offset != wxString::npos )
             {   //sets of "PxxAxx[Oxx]"schema"
                 if (group >= MAX_GROUPS3)   { bError = true; break; }
                 int pairs, absent;
@@ -321,7 +321,7 @@ namespace  org
                 offset = a_schemaString.find('P', offset + 1);  // find start of next definition
             }
             break;
-        } while (0);
+        } while (false);
 
         if (bError)
         {
@@ -376,7 +376,7 @@ namespace  org
     {
         wxFileConfig* pCfg = GetpCfg(KEY_SESSION_SCHEMA); if (pCfg == nullptr) return false;
 
-        UINT maxGroup = a_sessionInfo.groupData.size();
+        auto maxGroup = (UINT)a_sessionInfo.groupData.size();
         wxString groupChars;
         wxString schema = FMT("S%uS%u", a_sessionInfo.nrOfGames, a_sessionInfo.setSize);
         for (UINT group = 0; group < maxGroup; ++group)
@@ -401,10 +401,10 @@ namespace  org
     // OLD3 stuff is now actual definition
     constexpr UINT NAME_LENGTH_OLD3 = 30;   //cfg::MAX_NAME_SIZE;   // pairnames max (30) chars
     //constexpr auto FILE_LENGTH_NAMES_OLD3  = 3993;                 // (MAX_PAIRS3+1)*((NAME_LENGTH_OLD3+1)+2) = (120+1)*((30+1)+2)
-    typedef struct NAMES_CURRENT
+    using NAMES_CURRENT = struct NAMES_CURRENT
     {   char    name[NAME_LENGTH_OLD3+1];
         INT16   clubindex;
-    } NAMES_CURRENT;                          //  newest format MAX_PAIRS3=120,NAME_LENGTH_OLD3=30
+    };                          //  newest format MAX_PAIRS3=120,NAME_LENGTH_OLD3=30
 #ifdef _WIN32
 #pragma pack()
 #endif
@@ -473,13 +473,13 @@ namespace  org
         constexpr UINT FILE_LENGTH_NAMES_OLD3       = 3993;   // (MAX_PAIRS3+1)*((NAME_LENGTH_OLD3+1)+2) = (120+1)*((30+1)+2)
         constexpr UINT CLUB_LENGTH_OLD2             = 15;
 
-        typedef struct NAMES_OLD2
+        using NAMES_OLD2 = struct NAMES_OLD2
         {
             char    name[NAME_LENGTH_OLD2+1];
             char    club[CLUB_LENGTH_OLD2+1];
             INT16   clubindex;
             INT16   klasse;
-        } NAMES_OLD2;
+        };
 
         union
         {
@@ -504,7 +504,7 @@ namespace  org
         UINT nrOfPairs = 0;
 
         a_pairInfo.clear();
-        a_pairInfo.push_back(names::PairInfo());     // dummy first entry
+        a_pairInfo.emplace_back();     // dummy first entry
 
         wxString pairNames = _ConstructFilename(cfg::EXT_NAMES);
         if (!wxFileExists(pairNames)) return true;   // else error-popup when using logwindow :(
@@ -527,7 +527,7 @@ namespace  org
 
             for (UINT ii = 1; ii <= nrOfPairs;  ++ii)
             {
-                a_pairInfo.push_back(names::PairInfo(Ascii2Unicode(theData.old1[ii])));// only name present
+                a_pairInfo.emplace_back(Ascii2Unicode(theData.old1[ii]));// only name present
             }
         }   // end old1 name-structure
         else
@@ -537,7 +537,7 @@ namespace  org
 
                 for (UINT ii=1; ii <= nrOfPairs; ++ii)
                 {
-                    a_pairInfo.push_back(names::PairInfo(Ascii2Unicode(theData.old2[ii].name), theData.old2[ii].clubindex));
+                    a_pairInfo.emplace_back(Ascii2Unicode(theData.old2[ii].name), theData.old2[ii].clubindex);
                 }
             }
             else
@@ -548,7 +548,7 @@ namespace  org
                     for (UINT ii = 1; ii <= nrOfPairs; ++ii)
                     {
                         wxString name = Ascii2Unicode(theData.old3[ii].name);
-                        a_pairInfo.push_back(names::PairInfo(name, theData.old3[ii].clubindex));
+                        a_pairInfo.emplace_back(name, theData.old3[ii].clubindex);
                     }
                 }
                 else
@@ -655,7 +655,7 @@ namespace  org
 
     bool ClubnamesWrite(const std::vector<wxString>& a_clubNames)
     {
-        if ( a_clubNames.end() == std::find_if(a_clubNames.begin(), a_clubNames.end(), [](const auto& name){return !name.IsEmpty();}) )
+        if ( a_clubNames.end() == std::ranges::find_if(a_clubNames, [](const auto& name){return !name.IsEmpty();}) )
             return true;    // don't create empty file
         wxString fileName = _ConstructFilename(cfg::EXT_NAMES_CLUB);
         wxRemoveFile(fileName);
@@ -836,7 +836,7 @@ namespace  org
             a_scoreData[game] = scores;
         }
         return true;
-    }   // TryOldFormat();
+    }   // TryOldFormat()
 
     static constexpr int    CURRENT_TYPE = 1;        // version of datastorage
     bool ScoresRead(vvScoreData& a_scoreData, UINT a_session)
@@ -1031,7 +1031,7 @@ namespace  org
 
     bool TotalRankWrite(const UINT_VECTOR& a_vuRank, UINT a_session)
     {
-        if ( a_vuRank.end() == std::find_if(a_vuRank.begin(), a_vuRank.end(), [](UINT rank){return rank != 0U;}) )
+        if ( a_vuRank.end() == std::ranges::find_if(a_vuRank, [](UINT rank){return rank != 0U;}) )
             return true;  // no results, so just return success
 
         wxString file = _ConstructFilename(cfg::EXT_SESSION_RANK_TOTAL, a_session);
@@ -1055,14 +1055,14 @@ namespace  org
         }
 
         file.AddLine(_(";score.2 glbpair bonus.2 games   pairname"));    // content description/spec
-        for (const auto& it : a_correctionsEnd)
+        for (const auto&[pair,data] : a_correctionsEnd)
         {
             wxString correction = FMT("%+6s   %3d     %5s   s%-4u   %-s"
-                , it.second.score.AsString2F()
-                , it.first
-                , it.second.bonus.AsString2F()
-                , it.second.games
-                , names::GetGlobalPairInfo(it.first).pairName
+                , data.score.AsString2F()
+                , pair
+                , data.bonus.AsString2F()
+                , data.games
+                , names::GetGlobalPairInfo(pair).pairName
             );
             file.AddLine(correction);
         }
@@ -1120,7 +1120,7 @@ namespace  org
 
             if (cor::IsValidCorrectionEnd(pairnr, ce, str, bLineError))
             {   // add info to map
-                if ( a_bForceAdd || !a_bCorrections || a_correctionsEnd.find(pairnr) != a_correctionsEnd.end())
+                if ( a_bForceAdd || !a_bCorrections || a_correctionsEnd.contains(pairnr) )
                 {   // if corrections: only accept existing pairnr
                     if (!a_bForceAdd && a_bCorrections && ce.score == SCORE_IGNORE)
                         ce.score = a_correctionsEnd[pairnr].score;
@@ -1161,15 +1161,15 @@ namespace  org
 
         // newer versions have also a <games> value, used for butler calculation. We ignore this in an old config!
         file.AddLine(_(";<correction><type> <session pairnr> <extra.1> <max extra> <pairname>"));    // content description/spec
-        for (const auto& it : a_correctionsSession)
+        for (const auto&[pair, data] : a_correctionsSession)
         {
             wxString correction = FMT("%+5i%c%20u%15s%12i     %s"
-                , it.second.correction
-                , it.second.type
-                , it.first
-                , it.second.extra.AsString1E()
-                , it.second.maxExtra
-                , names::PairnrSession2GlobalText(it.first)
+                , data.correction
+                , data.type
+                , pair
+                , data.extra.AsString1E()
+                , data.maxExtra
+                , names::PairnrSession2GlobalText(pair)
             );
             file.AddLine(correction);
         }
@@ -1223,20 +1223,20 @@ namespace  org
 
     bool SessionResultWrite(const cor::mCorrectionsEnd& a_mSessionResult, UINT a_session)
     {   // write and read: different params!
-        if ( a_mSessionResult.end() == std::find_if(a_mSessionResult.begin(), a_mSessionResult.end(), [](const auto& res){return res.second.games != 0U;}))
+        if ( a_mSessionResult.end() == std::ranges::find_if(a_mSessionResult, [](const auto& res){return res.second.games != 0U;}))
               return true;  // no results, so just return success
         MyTextFile file(_ConstructFilename(cfg::EXT_SESSION_RESULT, a_session), MyTextFile::WRITE);
         if (!file.IsOk()) return false;
         file.AddLine(_(";score 'glb pair' s<games>   name"));
-        for (const auto& it : a_mSessionResult)              // save score of all pairs
+        for (const auto&[pair,data] : a_mSessionResult)              // save score of all pairs
         {
-            if ( it.second.games == 0 ) continue;           // pair has not played
+            if ( data.games == 0 ) continue;            // pair has not played
             wxString tmp;
             tmp.Printf("%5s %3u  s%-2u %s",
-                it.second.score.AsString2F(),               // score
-                it.first,                                   // global pairnr...
-                it.second.games,                            // played games
-                names::PairnrGlobal2GlobalText(it.first));  // global pairname
+                data.score.AsString2F(),                // score
+                pair,                                   // global pairnr...
+                data.games,                             // played games
+                names::PairnrGlobal2GlobalText(pair));  // global pairname
             file.AddLine(tmp);
         }
         return true;

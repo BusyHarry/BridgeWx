@@ -14,14 +14,14 @@ class SetupPrinter : public Baseframe
 public:
 
     explicit SetupPrinter(wxWindow* pParent, UINT pageId);
-            ~SetupPrinter() override;
+            ~SetupPrinter() override = default;
     void     RefreshInfo() final;
     void     AutotestRequestMousePositions(MyTextFile* a_pFile) final;  // create needed mousepositions
     void     PrintPage() final;
 protected:
-    void OnOk                   () final;
-    void OnCancel               () final;
-    virtual void BackupData     () override final;
+    void OnOk       () final;
+    void OnCancel   () final;
+    void BackupData () final;
 private:
 
     MyTextCtrlWithValidator* m_pTxtCtrlLinesPP;

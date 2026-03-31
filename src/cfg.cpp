@@ -12,15 +12,14 @@
 #include "names.h"
 #include "names.h"
 #include "printer.h"
-#include "scoreEntry.h"
-#include "fileIo.h"
+#include "scoreentry.h"
+#include "fileio.h"
 #include "main.h"
 
 #include <iostream>
 
 namespace cfg
 {
-    #define MAIN_INIFILE "bridge.ini"
     static wxString         ssMainIni;
     static const wxString   ssClubNames      ("club.nam");
     static const wxString   ssCentralNameFile("centraal.nm");       // nm-filename when using global names
@@ -66,6 +65,7 @@ namespace cfg
     static long             slActiveDbType   = io::DB_DATABASE;     // default databasetype to use
     static int              siLanguage       = wxLANGUAGE_DEFAULT;  // means: not initialized yet
 
+    static constexpr auto MAIN_INIFILE          = "bridge.ini";
     static constexpr auto CFG_MAIN_GAME         = "wedstrijd";
     static constexpr auto CFG_MAIN_VERSION      = "versie";
     static constexpr auto CFG_MAIN_DBTYPE       = "databaseType";
@@ -167,7 +167,7 @@ namespace cfg
 
     UINT GetNrOfSessionPairs()    // to do????: this is for active session ONLY!
     {
-        UINT count = sSessionInfo.groupData.size();
+        auto count = sSessionInfo.groupData.size();
         if (count)
             return sSessionInfo.groupData[count-1].groupOffset + sSessionInfo.groupData[count-1].pairs;
         return 0;
@@ -184,7 +184,7 @@ namespace cfg
         return false;
     }   // IsSessionPairAbsent()
 
-    void HashIncrement()
+    static void HashIncrement()
     {
         // update config hash
         ++siConfigHash;
@@ -259,7 +259,6 @@ namespace cfg
     wxString    GetActiveMatchPath()    { return ssActiveMatchPath+PS;      }
     UINT        GetActiveSession()      { return suSession;                 }
     wxString    GetBareMainIni()        { return MAIN_INIFILE;              }
-//  bool        GetBiosVideo()          { return sbBiosVideo;               }
     bool        GetClock()              { return sbClock;                   }
     int         GetConfigHash()         { return siConfigHash;              }
     wxString    GetDescription()        { return ssDescription;             }
@@ -678,7 +677,7 @@ namespace cfg
 
     int UpdateConfigSession(CfgFileEnum a_type)
     {
-        CfgFileEnum result = io::DatabaseOpen(io::DB_SESSION, a_type);
+        auto result = io::DatabaseOpen(io::DB_SESSION, a_type);
         if (a_type == CFG_ONLY_READ && result == CFG_ERROR)
         {
                 return CFG_ERROR;
@@ -691,7 +690,7 @@ namespace cfg
 
     int UpdateConfigMatch(CfgFileEnum a_type)
     {   // assume (new) active match filename is set.
-        CfgFileEnum result = io::DatabaseOpen(io::DB_MATCH, a_type);
+        auto result = io::DatabaseOpen(io::DB_MATCH, a_type);
         if (a_type == CFG_ONLY_READ && result == CFG_ERROR)
         {
             return CFG_ERROR;
@@ -802,7 +801,6 @@ namespace cfg
         // next l-variables are used to receive the commandline values
         // After the handling of the cmd-line, they will set the real values
         UINT    lsuMaxAbsent    = suMaxAbsent;
-//      bool    lsbBiosVideo    = sbBiosVideo;
         bool    lsbButler       = sbButler;
         Fdp     lsfMaxMean      = sfMaxMean;
         bool    lsbGroupResult  = sbGroupResult;
@@ -843,7 +841,6 @@ namespace cfg
                 lsuMaxAbsent = wxAtoi(pArgptr);
                 break;
             case 'b':
-//              lsbBiosVideo = wxAtoi(pArgptr);
                 lsbButler = wxAtoi(pArgptr);
                 break;
             case 'd':
@@ -914,7 +911,6 @@ namespace cfg
                   _("\n"
                     "  activation: BridgeWx [-ax] [-bx] [-gx] [-kx] [-lx] [-nx] [-rx] [-wx] [-fx] [-qx] [-d] [-u]\n"
                     "  ax: maximum allowed Absent count = x\n"
-  //                "  bx: video trough bios (x=1), or direct access (x=0)\n"
                     "  bx: results are calculated according butler method (x=1), or as percentage (x=0)\n"
                     "  d:  enable Debug for extra info\n"
                     "  gx: display Groupresult yes (x=1), no (x=0)\n"
@@ -950,7 +946,6 @@ namespace cfg
         SetActiveSession(lsiSession);
         SetMaxAbsent    (lsuMaxAbsent);
         SetNeuberg      (lsbNeuberg);
-//      SetBiosVideo    (lsbBiosVideo);
         SetButler       (lsbButler);
         SetClock        (lsbClock);
         SetLinesPerPage (lsiLinesPerPage);

@@ -3,8 +3,8 @@
 
 #include "wx/socket.h"
 
-#include "schemaInfo.h"
-#include "slipServer.h"
+#include "schemainfo.h"
+#include "slipserver.h"
 
 enum
 {
@@ -13,8 +13,8 @@ enum
     SOCKET_ID
 };
 
-//typedef wxIPV6address IPaddress;
-typedef wxIPV4address IPaddress;
+//using IPaddress = wxIPV6address;
+using IPaddress = wxIPV4address;
 
 static constexpr auto TEST_IP = 0;
 static void TestIp();
@@ -76,7 +76,7 @@ void SlipServer::CreateNetworkWatcher(bool a_bCreate)
     }
 }   // CreateNetworkWatcher()
 
-void SlipServer::OnSocketEvent(wxSocketEvent& event)
+void SlipServer::OnSocketEvent(const wxSocketEvent& event)
 {
     wxString msg = "OnSocketEvent: ";
     wxSocketBase *pSock = event.GetSocket();
@@ -136,7 +136,7 @@ void SlipServer::OnSocketEvent(wxSocketEvent& event)
     }
 }   // OnSocketEvent()
 
-void SlipServer::OnServerEvent(wxSocketEvent& event)
+void SlipServer::OnServerEvent(const wxSocketEvent& event)
 {
     wxString msg = "OnServerEvent: ";
     wxSocketBase *sock;
@@ -186,7 +186,7 @@ void SlipServer::SocketGetInput(wxSocketBase* a_pSock)
 {   // <id> is already read, now get the rest: [<id>]<len><msg> all uchars, <len> is length of <msg>
     a_pSock->SetFlags(wxSOCKET_WAITALL);
     unsigned char len = 0;
-    a_pSock->Read(&len, 1);
+    a_pSock->Read(&len, 1); // read 1 byte, so we know 'len' <= 255
     char inputBuf[255+1];
     a_pSock->Read(inputBuf, len);
     inputBuf[a_pSock->LastReadCount()] = 0;
@@ -198,7 +198,7 @@ void SlipServer::SocketGetInput(wxSocketBase* a_pSock)
     Add2Log(_("Got the data, sending the result"), true);
 }   // SocketGetInput()
 
-void SlipServer::SocketPutResult(wxSocketBase* a_pSock, SlipResult a_error, const char a_buf[])
+void SlipServer::SocketPutResult(wxSocketBase* a_pSock, SlipResult a_error, const char a_buf[]) const
 { // send result buf: <id><err><len><buf>
     const auto MAX_BUF = 256;
     struct {unsigned char id; unsigned char error; unsigned char len; char out[MAX_BUF+1];} sendBuf;

@@ -107,25 +107,25 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\assignNames.cpp">
+    <ClCompile Include="src\assignnames.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\baseframe.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\calcScore.cpp">
+    <ClCompile Include="src\calcscore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\cfg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Corrections.cpp">
+    <ClCompile Include="src\corrections.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\correctionsEnd.cpp">
+    <ClCompile Include="src\correctionsend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\correctionsSession.cpp">
+    <ClCompile Include="src\correctionssession.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\database.cpp">
@@ -134,25 +134,25 @@
     <ClCompile Include="src\debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\choiceMC.cpp">
+    <ClCompile Include="src\choicemc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\fileIo.cpp">
+    <ClCompile Include="src\fileio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\orgInterface.cpp">
+    <ClCompile Include="src\orginterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\score.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\scoreEntry.cpp">
+    <ClCompile Include="src\scoreentry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\setupNewMatch.cpp">
+    <ClCompile Include="src\setupnewmatch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\setupPrinter.cpp">
+    <ClCompile Include="src\setupprinter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\mygrid.cpp">
@@ -161,7 +161,7 @@
     <ClCompile Include="src\mylog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\nameEditor.cpp">
+    <ClCompile Include="src\nameeditor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
@@ -170,19 +170,19 @@
     <ClCompile Include="src\printer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\schemaInfo.cpp">
+    <ClCompile Include="src\schemainfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\names.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\setupGame.cpp">
+    <ClCompile Include="src\setupgame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\setupSchema.cpp">
+    <ClCompile Include="src\setupschema.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\showStartImage.cpp">
+    <ClCompile Include="src\showstartimage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\statusbar.cpp">
@@ -194,19 +194,19 @@
     <ClCompile Include="src\wxsysinfoframe.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\importExportSchema.cpp">
+    <ClCompile Include="src\importexportschema.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\NewSchemaData.cpp">
+    <ClCompile Include="src\newschemadata.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\validators.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\slipServer.cpp">
+    <ClCompile Include="src\slipserver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\socketServer.cpp">
+    <ClCompile Include="src\socketserver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\sqlite.cpp">
@@ -223,31 +223,31 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\assignNames.h">
+    <ClInclude Include="src\assignnames.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\baseframe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\buildDate.h">
+    <ClInclude Include="src\builddate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\calcScore.h">
+    <ClInclude Include="src\calcscore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\cfg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\choiceMC.h">
+    <ClInclude Include="src\choicemc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\corrections.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\correctionsEnd.h">
+    <ClInclude Include="src\correctionsend.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\correctionsSession.h">
+    <ClInclude Include="src\correctionssession.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\database.h">
@@ -259,7 +259,7 @@
     <ClInclude Include="src\debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\fileIo.h">
+    <ClInclude Include="src\fileio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\mygrid.h">
@@ -268,40 +268,40 @@
     <ClInclude Include="src\mylog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\nameEditor.h">
+    <ClInclude Include="src\nameeditor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\names.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\orgInterface.h">
+    <ClInclude Include="src\orginterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\printer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\schemaInfo.h">
+    <ClInclude Include="src\schemainfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\score.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\scoreEntry.h">
+    <ClInclude Include="src\scoreentry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\setupGame.h">
+    <ClInclude Include="src\setupgame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\setupNewMatch.h">
+    <ClInclude Include="src\setupnewmatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\setupPrinter.h">
+    <ClInclude Include="src\setupprinter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\setupSchema.h">
+    <ClInclude Include="src\setupschema.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ShowStartImage.h">
+    <ClInclude Include="src\showstartimage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\statusbar.h">
@@ -316,16 +316,16 @@
     <ClInclude Include="src\wxsysinfoframe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\importExportSchema.h">
+    <ClInclude Include="src\importexportschema.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\NewSchemaData.h">
+    <ClInclude Include="src\newschemadata.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\validators.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\slipServer.h">
+    <ClInclude Include="src\slipserver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\main.h">

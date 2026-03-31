@@ -6,7 +6,7 @@
 #include <sstream>
 #include <filesystem>
 
-#include "importExportSchema.h"
+#include "importexportschema.h"
 
 #define STANDALONE_TEST 0   /* set to 1 for standalone testing: main defined*/
 
@@ -25,10 +25,10 @@ static bool GetNonEmptyLine(std::ifstream& a_file, std::string& a_line)
 }   // GetNonEmptyLine()
 
 // sanity checks
-#define MAX_PAIRS   127
-#define MAX_TABLES  20
-#define MAX_SETS    10
-#define MAX_ROUNDS  10
+static constexpr auto MAX_PAIRS    = 127;
+static constexpr auto MAX_TABLES   = 20;
+static constexpr auto MAX_SETS     = 10;
+static constexpr auto MAX_ROUNDS   = 10;
 
 #define CHECK_VALUE(value,max) if ((value) < 1 || (value) > (max)) return false
 

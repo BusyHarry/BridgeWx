@@ -13,8 +13,8 @@
 #include "fileio.h"
 namespace glb
 {
-typedef bool (*CB_ScoreWriteLine)(UINT      game, const wxString& score, void* pUserData);
-typedef bool (*CB_ScoreReadLine )(wxString& game,       wxString& score, void* pUserData);
+using CB_ScoreWriteLine = bool (*)(UINT      game, const wxString& score, void* pUserData);
+using CB_ScoreReadLine  = bool (*)(wxString& game,       wxString& score, void* pUserData);
 
 wxChar   GetSeparator            ();                // get current separator for items in the db
 void     SetSeparator            (wxChar separator);// set current separator for items in the db

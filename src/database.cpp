@@ -17,7 +17,7 @@ namespace db
 static const long dbVersion = 100;  // assumed version (or smaller) for the code below
 static void InitSdb();
 
-#define TEST 0
+static auto constexpr TEST = 0;
 #if TEST
     static void Test();
     static void Test2();
@@ -53,11 +53,8 @@ class ReadConfigGroup
 {   // support class for easy getting all entries in a group
 public:
     ReadConfigGroup(wxFileConfig* a_pConfig, const wxString& a_path)
+        :  m_pConfig(a_pConfig)
     {
-        m_pConfig   = a_pConfig;
-        m_bFirst    = true;
-        m_bHasNext  = false;
-        m_index     = 0;
         m_pConfig->SetPath(a_path);
     }
 
@@ -69,12 +66,12 @@ public:
         return m_bHasNext;
     }
 
-    size_t GetNumberOfEntries(){return m_pConfig->GetNumberOfEntries();}
+    size_t GetNumberOfEntries() const {return m_pConfig->GetNumberOfEntries();}
 
 private:
-    bool            m_bFirst;
-    bool            m_bHasNext;
-    long            m_index;
+    bool            m_bFirst    = true;
+    bool            m_bHasNext  = false;
+    long            m_index     = 0;
     wxFileConfig*   m_pConfig;
 };
 
@@ -123,8 +120,8 @@ static wxFileConfig* InitDatabase(const wxString& a_dbFile)
         file.AddLine(";info database           : 'data saved according definition of version <x>'");
         file.AddLine(";info pair names         : '<global pairnr> = {<name>,<clubId>}, max size=30'");
         file.AddLine(";info club names         : '<club id> = \"club name\", max size=25'");
-        file.AddLine(";info game result        : '<game nr> = {<ns>,<ew>,<ns result>,<ew result>[,\"ns contract\",\"ew contract\"]}[@ ...]'");
-        file.AddLine(";info schema             : '{<nr of games>,<setsize>,<first game>}@{<nr of pairs>,<absent pair>,\"schema\",\"groupChars\"}[@...]'");
+        file.AddLine(R"(;info game result        : '<game nr> = {<ns>,<ew>,<ns result>,<ew result>[,"ns contract","ew contract"]}[@ ...]')");
+        file.AddLine(R"(;info schema             : '{<nr of games>,<setsize>,<first game>}@{<nr of pairs>,<absent pair>,"schema","groupChars"}[@...]')");
         file.AddLine(";info min/max club       : '{<min pairs needed>,<max pairs used>}'");
         file.AddLine(";info assignments        : '<global pairnr>[@...] -> array[<sessionpair>] = <global pairnr>'");
         file.AddLine(";info assignments names  : '<session name of global pair>[@...] -> array[<globalpair>] = <session name of global pair>'");
@@ -138,7 +135,7 @@ static wxFileConfig* InitDatabase(const wxString& a_dbFile)
         file.Flush();
     }
 
-    wxFileConfig* pCfg = new wxFileConfig(wxEmptyString, wxEmptyString, a_dbFile, wxEmptyString, wxCONFIG_USE_LOCAL_FILE | wxCONFIG_USE_NO_ESCAPE_CHARACTERS);
+    auto pCfg = new wxFileConfig(wxEmptyString, wxEmptyString, a_dbFile, wxEmptyString, wxCONFIG_USE_LOCAL_FILE | wxCONFIG_USE_NO_ESCAPE_CHARACTERS);
     pCfg->SetRecordDefaults();   //write all requested entries to the file, if not present
     // set some info-records
     std::swap(s_pConfig, pCfg);       // have the correct value for the next two calls....
@@ -211,7 +208,7 @@ bool PairnamesWrite(const names::PairInfoData& a_pairInfo)
     bool bResult = true;
     for (const auto& it : a_pairInfo)
     {
-        if ( index ) if ( !s_pConfig->Write(FMT("%u",index), FMT("{\"%s\",%u}", EncodeString(it.pairName), it.clubIndex)) ) bResult = false;
+        if ( index && !s_pConfig->Write(FMT("%u",index), FMT("{\"%s\",%u}", EncodeString(it.pairName), it.clubIndex)) ) bResult = false;
         ++index;
     }
     InitGlobalNames();  // back to local db
@@ -236,7 +233,7 @@ bool PairnamesRead(names::PairInfoData& a_pairInfo)
         if ( pair > maxPair ) { MyLogError(_("Reading pairnames: pairnr <%s> too high!"), key); continue; }
         names::PairInfo info;
         char name[2*cfg::MAX_NAME_SIZE+1]={0};
-        auto count = wxSscanf(value," { \"%50[^\"]\" , %u }", name, &info.clubIndex);   // hardcoded maxsize == 50!
+        auto count = wxSscanf(value,R"( { "%50[^"]" , %u })", name, &info.clubIndex);   // hardcoded maxsize == 50!
         if ( count != 2 )
         {
             MyLogError(_("Reading pairnames: <%s = %s> invalid!"), key, value);
@@ -265,7 +262,7 @@ bool ClubnamesRead(std::vector<wxString>& a_clubNames, UINT& a_uMaxId)
         UINT club = wxAtoi(key);
         if ( club > cfg::MAX_CLUBNAMES ) { MyLogError(_("Reading clubnames: clubnr <%u> too high!"), club ); continue; }
         char name[2*cfg::MAX_CLUB_SIZE+1]={0};
-        auto count = wxSscanf(value, " \"%50[^\"]\" ", name);   // hardcoded maxsize == 50!
+        auto count = wxSscanf(value, R"( "%50[^"]" )", name);   // hardcoded maxsize == 50!
         if ( count != 1 )
         {
             MyLogError(_("Rading clubnames: <%s = %s> invalid!"), key, value);
@@ -328,7 +325,7 @@ bool ScoresWrite(const vvScoreData& a_scoreData, UINT a_session)
     return glb::ScoresWrite(a_scoreData, CB_ScoresWriteGame );
 } // ScoresWrite()
 
-void InitSdb()
+static void InitSdb()
 {
     static bool bIsInited = false;
     if ( bIsInited ) return;
@@ -553,7 +550,7 @@ bool TotalRankWrite(const UINT_VECTOR& a_vuRank, UINT a_session)
     return UintVectorWrite(a_vuRank, a_session, KEY_SESSION_RANK_TOTAL);
 }   // TotalRankWrite()
 
-bool UintVectorRead(UINT_VECTOR& a_vUint, UINT a_session, keyId a_id)
+static bool UintVectorRead(UINT_VECTOR& a_vUint, UINT a_session, keyId a_id)
 {   // Resize vector to cfg::MAX_PAIRS and read a set of UINTs and put them in a vector.
     if ( !s_pConfig ) return false;
     wxString key  = MakePath(a_id, a_session);
@@ -561,7 +558,7 @@ bool UintVectorRead(UINT_VECTOR& a_vUint, UINT a_session, keyId a_id)
     return glb::UintVectorRead(a_vUint, info, sDbFile, key, _("database error"));
 }   //UintVectorRead()
 
-bool UintVectorWrite(const UINT_VECTOR& a_vUint, UINT a_session, keyId a_id)
+static bool UintVectorWrite(const UINT_VECTOR& a_vUint, UINT a_session, keyId a_id)
 {   // write contents of vector as UINT, ignoring entry 0
     if ( !s_pConfig ) return false;
     wxString  key = MakePath(a_id, a_session);

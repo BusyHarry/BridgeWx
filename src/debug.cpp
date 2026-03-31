@@ -60,6 +60,7 @@ static const wxString ssDbg = "dbg";
 #endif
 
 #define PNT(x,y) {(int)(x), (int)(y)}   /* create a wxPoint from the supplied x and y, certainly if values are unsigned*/
+static wxString CenterText (const wxString& text, size_t length);   // return a centered string with size length
 
 class Console : public wxTextCtrl
 {
@@ -73,14 +74,14 @@ class Console : public wxTextCtrl
 
 public:
     explicit    Console(wxWindow *parent, const wxString& label, const wxString& prompt = ES);
-    virtual    ~Console(){}
+               ~Console() final = default;
     void        SetPrompt       (const wxString& prompt);
     const wxString& GetCommand  () const;       // retrieve the last entered commandline
     wxBoxSizer* GetVSizer       ();
     wxBoxSizer* GetHSizer       ();
     void        AsyncTextOutBegin();            // disable outputting prompt
     void        AsyncTextOutEnd ();             // force prompt at end of text
-    virtual void AppendText     (const wxString& text) final override;      // add text to console and update prompt-position
+    void        AppendText      (const wxString& text) final;      // add text to console and update prompt-position
     virtual void Clear          (bool bPrompt = true);// final override;    // to update prompt-position
     void        ShowHSizer      (bool bShow = true) {m_pHSizer->Show(bShow);}
     void        HideHSizer      (){ShowHSizer(false);}
@@ -94,20 +95,19 @@ private:
     wxString    m_prompt;                       // the prompt to show after each \n
     int         m_promptPosition;               // first position after prompt: changes are ONLY allowed AFTER this position
     wxString    m_command;                      // the data entered after the prompt, available at \n entry
-    wxBoxSizer* m_pVSizer;                      // sizer for console and buttons
-    wxBoxSizer* m_pHSizer;                      // sizer for the console buttons
-    bool        m_bAsyncPrompt;                 // (don't) show prompt
-    bool        m_bFirstPrompt;                 // only show initial prompt if set (user could have done it already)
+    wxBoxSizer* m_pVSizer       = nullptr;      // sizer for console and buttons
+    wxBoxSizer* m_pHSizer       = nullptr;      // sizer for the console buttons
+    bool        m_bAsyncPrompt  = false;        // (don't) show prompt
+    bool        m_bFirstPrompt  = true;         // only show initial prompt if set (user could have done it already)
     wxButton*   m_pButtonSave;
     wxButton*   m_pButtonClear;
     public:
-    bool bFrozen;
-    int sErasecount;
-    int sPaintcount;
-    int freezeCount;
-    int thawCount;
+    bool bFrozen    = false;
+    int sErasecount = 0;
+    int sPaintcount = 0;
+    int freezeCount = 0;
+    int thawCount   = 0;
     wxTimer m_freezeTimer;
-
 };
 
 Console::Console(wxWindow* parent, const wxString& a_label, const wxString& a_prompt)
@@ -115,16 +115,12 @@ Console::Console(wxWindow* parent, const wxString& a_label, const wxString& a_pr
 {
     ShowNativeCaret(true);
     //SetBackgroundStyle(wxBG_STYLE_PAINT);
-    m_pVSizer       = nullptr;
-    m_pHSizer       = nullptr;
-    m_bAsyncPrompt  = false;
-    m_bFirstPrompt  = true;
     Bind(wxEVT_CHAR, &Console::OnChar, this);   // we need this to only allow chars AFTER the prompt
     SetPrompt(a_prompt);                        // default prompt
     CallAfter([this]{ if(m_bFirstPrompt) ShowPrompt();});  // After userinit, we show the prompt if user hasn't done it yet
     m_pButtonSave = new wxButton(parent, wxID_ANY, _("Save"));
     m_pButtonSave->SetToolTip(_("save window-content"));
-    m_pButtonSave->Bind(wxEVT_BUTTON, [this](wxCommandEvent&)
+    m_pButtonSave->Bind(wxEVT_BUTTON, [this](const wxCommandEvent&)
         {
             AUTOTEST_BUSY("save");
             wxString filename = wxFileSelector(_("Choose a file to save the text to")
@@ -136,7 +132,7 @@ Console::Console(wxWindow* parent, const wxString& a_label, const wxString& a_pr
 
     m_pButtonClear = new wxButton(parent, wxID_ANY, _("Clear"));
     m_pButtonClear->SetToolTip(_("clear window-content"));
-    m_pButtonClear->Bind(wxEVT_BUTTON, [this](wxCommandEvent&) { this->Clear();} );
+    m_pButtonClear->Bind(wxEVT_BUTTON, [this](const wxCommandEvent&) { this->Clear();} );
 
     int size = GetFont().GetPointSize();
     wxFont  celFont ((size*4)/5, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
@@ -154,12 +150,6 @@ Console::Console(wxWindow* parent, const wxString& a_label, const wxString& a_pr
         m_pVSizer->Add(m_pHSizer, 0);
     #endif
 #endif
-        bFrozen = false;
-        sErasecount=0;
-        sPaintcount=0;
-        freezeCount = 0;
-        thawCount = 0;
-
 #if 0   // test of preventing flicker
         m_freezeTimer.Bind(wxEVT_TIMER,[this](const wxTimerEvent&)
                     {
@@ -331,27 +321,22 @@ void Console::CreateCmdLine()
     m_command = GetRange(m_promptPosition, pos);    // get all chars from end of prompt to last char entered
 }   // CreateCmdLine()
 
-#define GROUP_CHOICE    "GroupChoice"
-#define PAIR_CHOICE     "PairChoice"
-#define FIRST_SET       "FirstSet"
-#define NUMBER_OF_SETS  "NrOfSets"
-#define PRINT_COUNT     "PrintCount"
-#define SET_SIZE        "SetSize"
+constexpr auto GROUP_CHOICE     = "GroupChoice";
+constexpr auto PAIR_CHOICE      = "PairChoice";
+constexpr auto FIRST_SET        = "FirstSet";
+constexpr auto NUMBER_OF_SETS   = "NrOfSets";
+constexpr auto PRINT_COUNT      = "PrintCount";
+constexpr auto SET_SIZE         = "SetSize";
 
 Debug::Debug(wxWindow* a_pParent, UINT a_pageId, DebugType a_type) :Baseframe(a_pParent, a_pageId)
+ , m_debugType (a_type)
 {
-    m_bPrintNext    = false;
-    m_bDontTest     = false;
-    m_group         = 1;
-    m_debugType     = a_type;
-    m_bSchema       = false;
-
     m_pConsole = new Console(this, Unique("Console"));
-    m_pConsole->Bind(wxEVT_TEXT_ENTER,[this](wxCommandEvent&){HandleCommandLine(m_pConsole->GetCommand()); });
+    m_pConsole->Bind(wxEVT_TEXT_ENTER,[this](const wxCommandEvent&){HandleCommandLine(m_pConsole->GetCommand()); });
 
     m_pCheckBoxPrintNext = new wxCheckBox(this, wxID_ANY, _("print next output"));
     m_pCheckBoxPrintNext->SetToolTip(_("Output of next command will (also) be printed"));
-    m_pCheckBoxPrintNext->Bind(wxEVT_CHECKBOX,[this](wxCommandEvent&){ m_pConsole->SetFocus();m_bPrintNext = m_pCheckBoxPrintNext->IsChecked();});
+    m_pCheckBoxPrintNext->Bind(wxEVT_CHECKBOX,[this](const wxCommandEvent&){ m_pConsole->SetFocus();m_bPrintNext = m_pCheckBoxPrintNext->IsChecked();});
 
     //setup for guides
     m_pHsizerGuides = new wxBoxSizer(wxHORIZONTAL);
@@ -364,7 +349,7 @@ Debug::Debug(wxWindow* a_pParent, UINT a_pageId, DebugType a_type) :Baseframe(a_
 
     m_pChkBoxGuide = new wxCheckBox(this, wxID_ANY, _("Schema"));
     m_pChkBoxGuide->SetToolTip(_("show/print schema-overview"));
-    m_pChkBoxGuide->Bind(wxEVT_CHECKBOX,[this](wxCommandEvent&){m_pConsole->SetFocus(); m_bSchema = m_pChkBoxGuide->IsChecked(); });
+    m_pChkBoxGuide->Bind(wxEVT_CHECKBOX,[this](const wxCommandEvent&){m_pConsole->SetFocus(); m_bSchema = m_pChkBoxGuide->IsChecked(); });
     m_pHsizerGuides->Add(m_pChkBoxGuide, 0, wxALIGN_CENTER_VERTICAL);
 
     //setup for scoreslips
@@ -459,7 +444,7 @@ Debug::Debug(wxWindow* a_pParent, UINT a_pageId, DebugType a_type) :Baseframe(a_
 
     AUTOTEST_ADD_WINDOW(m_pConsole, "TextWindow");
     // add to layout
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, windowText);
+    auto vBox = new wxStaticBoxSizer(wxVERTICAL, this, windowText);
     vBox->Add(m_pConsole->GetVSizer(), 1 ,wxCENTER|wxALL| wxEXPAND, MY_BORDERSIZE);
     vBox->Add(m_pHsizerGuides        , 0, wxLEFT|wxALL            , MY_BORDERSIZE);
     vBox->Add(m_pHsizerScoreSlips    , 0, wxLEFT|wxALL            , MY_BORDERSIZE);
@@ -472,9 +457,7 @@ Debug::Debug(wxWindow* a_pParent, UINT a_pageId, DebugType a_type) :Baseframe(a_
     //LogMessage("Debug:: \'" + windowText + "\' aangemaakt");
 }   // Debug()
 
-Debug::~Debug(){}
-
-void Debug::SetFocusAfter(wxCommandEvent&)
+void Debug::SetFocusAfter(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("focusAfter");
     CallAfter([this]{m_pConsole->SetFocus();});
@@ -496,7 +479,7 @@ void Debug::AutotestRequestMousePositions(MyTextFile* a_pFile)
     }
 }   // AutotestRequestMousePositions()
 
-void Debug::OnSelectGroup(wxCommandEvent&)
+void Debug::OnSelectGroup(const wxCommandEvent&)
 {
     LogMessage("Debug::OnSelectGroup()");
     m_group = m_pGroupChoice->GetSelection() + 1;
@@ -505,7 +488,7 @@ void Debug::OnSelectGroup(wxCommandEvent&)
     m_pConsole->AsyncTextOutEnd();
 }   // OnSelectGroup()
 
-void Debug::OnSelectPair(wxCommandEvent&)
+void Debug::OnSelectPair(const wxCommandEvent&)
 {
     CallAfter([this]{m_pConsole->SetFocus();}); // doesn't work without CallAfter()...
     // do nothing: action on button example/print, only set focus
@@ -574,13 +557,13 @@ void Debug::PrintOrExample()
     m_bPrintNext = false;
 }   // PrintOrExample()
 
-void Debug::OnPrint(wxCommandEvent&)
+void Debug::OnPrint(const wxCommandEvent&)
 {
     m_bPrintNext = true;
     PrintOrExample();
 }   // end OnPrint()
 
-void Debug::OnExample(wxCommandEvent&)
+void Debug::OnExample(const wxCommandEvent&)
 {
     m_bPrintNext = false;       // prevent output to printer
     PrintOrExample();
@@ -624,14 +607,13 @@ private:
     void    PrintTextLine   (wxPoint& begin, wxPoint& end, int direction);
     void    ClearScreen     ();
     wxChar  SmoothLineChar  (int x, int y) const;
-    #define MY_LINES 100
-    #define MY_LINESIZE 100
-    typedef wxChar MY_SCREEN [MY_LINES][MY_LINESIZE];
-    wxChar          (*m_screen)[MY_LINESIZE];
-    bool            m_bUseRealPrinter;
-    int             m_maxLine;
-    size_t          m_screenLength;
+    static constexpr auto MY_LINES    = 100;
+    static constexpr auto MY_LINESIZE = 100;
+    wxChar          (*m_screen)[MY_LINESIZE] = nullptr;
+    int             m_maxLine = -1;
+    size_t          m_screenLength = MY_LINES*MY_LINESIZE;
     wxArrayString*  m_pOutArrayString;
+    bool            m_bUseRealPrinter;
 #if defined _UNICODE
     #define MY_MEMCPY wmemcpy
     #define MY_MEMSET wmemset
@@ -640,18 +622,15 @@ private:
     #define MY_MEMSET memset
 #endif
     MyPrint(const MyPrint&);
-    const MyPrint& operator = (const MyPrint&x) const;//{return x;}
+    MyPrint& operator = (const MyPrint&x) const;
 };
 
 MyPrint::~MyPrint(){delete[] m_screen;}
 
 MyPrint::MyPrint(wxArrayString* a_pOutArrayString)
+    : m_pOutArrayString (a_pOutArrayString)
 {
-    m_pOutArrayString   = a_pOutArrayString;
     m_bUseRealPrinter   = m_pOutArrayString == nullptr;
-    m_maxLine           = -1;
-    m_screen            = 0;
-    m_screenLength      = MY_LINES*MY_LINESIZE;
 
     if (!m_bUseRealPrinter)
     {
@@ -696,16 +675,15 @@ void MyPrint::EndPage()
 void MyPrint::PrintText( const wxPoint& position, const wxString& text)
 {
     if (text.IsEmpty()) return;
-    if (position.y < MY_LINES)
+    if ( position.y >= 0 && position.y < MY_LINES )
     {
-        if (position.y < 0 || position.y >= MY_LINES) return;
         MY_MEMCPY(&m_screen[position.y][position.x], text.c_str(), text.Len());
         m_maxLine = std::max(m_maxLine,position.y); //assumption: no vertical line goes beyond this value!
     }
 }   // PrintText()
 
-#define MY_HLINE_CHAR L'═'  /*char to draw horizontal lines*/
-#define MY_VLINE_CHAR L'║'  /*char to draw vertical   lines*/
+static constexpr auto MY_HLINE_CHAR = L'═'  /*char to draw horizontal lines*/;
+static constexpr auto MY_VLINE_CHAR = L'║'  /*char to draw vertical   lines*/;
 void MyPrint::PrintTextLine( wxPoint& begin, wxPoint& end, int direction)
 {
     // ONLY horizontal or vertical lines.
@@ -742,7 +720,7 @@ void MyPrint::PrintTextLine( wxPoint& begin, wxPoint& end, int direction)
     }
 }   // PrintTextLine()
 
-static wxChar translate[16]=
+static const wxChar translate[16]=
 {   // translate the vertical linecharacter '║' to a 'smoother' one
 /*00*/    MY_VLINE_CHAR,  //hLeft   = 1,    // left   has a horizontal char
 /*01*/    MY_VLINE_CHAR,  //hRight  = 2,    // right  has a horizontal char
@@ -1031,12 +1009,12 @@ void Debug::StringDoubler(const wxString& msg, UINT pair)
     OUTPUT_TEXT(all);
 }   // StringDoubler()
 
-wxString Debug::GetNsEwString(UINT pair, UINT round)
+wxString Debug::GetNsEwString(UINT pair, UINT round) const
 {
     return m_schema.IsNs( pair, round) ? _("NS") : _("EW");
 }   // GetNsEwString()
 
-wxString Debug::SetToGamesAsString(UINT set, bool bWide)
+wxString Debug::SetToGamesAsString(UINT set, bool bWide) const
 {
     if (set == 0) return bWide ? "       " : "     ";   // wide: "17 - 20", non-wide: "17-20"
 
@@ -1045,7 +1023,7 @@ wxString Debug::SetToGamesAsString(UINT set, bool bWide)
     return FMT(bWide ? "%2u - %-2u" : "%2u-%-2u", offset + (set - 1) * setSize + 1, offset + set * setSize);
 }   // SetToGamesAsString()
 
-UINT Debug::GetOpponent(UINT pair, UINT round)
+UINT Debug::GetOpponent(UINT pair, UINT round) const
 {
     UINT opponent;
     UINT table = m_schema.GetTable( pair, round);
@@ -1060,7 +1038,7 @@ UINT Debug::GetOpponent(UINT pair, UINT round)
     return opponent > m_pairs ? 0 : opponent;
 }   // GetOpponent()
 
-wxString Debug::GetBorrowTableAsString(UINT a_table, UINT a_round)
+wxString Debug::GetBorrowTableAsString(UINT a_table, UINT a_round) const
 {
     UINT table = m_schema.GetBorrowTable( a_table, a_round);
     if (table == 0) return "  ";    // no borrowing
@@ -1098,7 +1076,7 @@ void Debug::GuideCard( UINT pair, bool a_bAskExtra )
     if (m_bPrintNext)
     {   // ask for special text on guide
         m_pConsole->AsyncTextOutBegin();    // delay prompt till ready (printing)
-        #define SCHEMA_WIDTH 34
+        constexpr auto SCHEMA_WIDTH = 34;
         m_explanation = a_bAskExtra ? wxGetTextFromUser(_("any text above each schema:"),ES,m_explanation).Left(SCHEMA_WIDTH)
                                     : m_pTxtCtrlExtra->GetValue();
         explanation   = FMT("  %-*s  .",SCHEMA_WIDTH, m_explanation);
@@ -1109,7 +1087,7 @@ void Debug::GuideCard( UINT pair, bool a_bAskExtra )
     {
         if (m_bPrintNext)
         {
-            if (m_linesPrinted + 9 + m_rounds > (UINT)prn::GetLinesPerPage())
+            if (m_linesPrinted + 9 + m_rounds > prn::GetLinesPerPage())
             {
                 PrintSeparator();
                 OUTPUT_TEXT("\f");          // next guide doesn't fit on current page
@@ -1404,7 +1382,7 @@ void Debug::DoCommand(const wxString& a_cmd)
                 wxArrayString schemas;
                 INT_VECTOR    nameIds;
                 schema::FindSchema(rounds, pairs, nameIds, &schemas);
-                if (nameIds.size() == 0)
+                if ( nameIds.empty() )
                     OUTPUT_TEXT(_(" no matching schemas found!\n"));
                 else
                 {
@@ -1527,10 +1505,7 @@ void Debug::GroupOverview()
 
     UINT    round;
     UINT    table;
-    UINT    ow;
     UINT    pair;
-    UINT    set;
-    UINT    count;
     UINT    setSize = cfg::GetSetSize();
     #define BUF_SIZE 256
     wchar_t buf[BUF_SIZE];
@@ -1563,7 +1538,7 @@ void Debug::GroupOverview()
     for (round = 2; round < width-1; ++round) buf[round] = L'═';
     wcscpy(buf+round, L"╗\n");
     OUTPUT_TEXT(buf);
-    count = swprintf_s(buf, BUF_SIZE, L" ║%u paren, %u rondes, %u spellen", m_pairs, m_rounds, m_rounds*setSize);
+    UINT count = swprintf_s(buf, BUF_SIZE, L" ║%u paren, %u rondes, %u spellen", m_pairs, m_rounds, m_rounds*setSize);
     swprintf_s(buf+count, BUF_SIZE-count, L" %*s║\n", width-count-2, L"");
     OUTPUT_TEXT(buf);
     OUTPUT_TEXT_FORMATTED(L" ║Schema: %-*s║\n", width-11, m_pActiveGroupInfo->schema);
@@ -1598,7 +1573,7 @@ void Debug::GroupOverview()
             count = swprintf_s(buf, BUF_SIZE, L" ║        ║%2u ║", table);
         for (round = 1; round <= m_rounds; ++round)
         {
-            ow = 9999;
+            UINT ow = 9999;
             for (pair = 1; pair <= m_pairs;++pair)
                 if ((m_schema.GetTable(pair, round) == table) && m_schema.IsNs(pair, round) )
                 {
@@ -1609,7 +1584,7 @@ void Debug::GroupOverview()
                 count += swprintf_s(buf+count, BUF_SIZE-count, L"       ║");
             else
             {
-                set = m_schema.GetSet (table, round);
+                UINT set = m_schema.GetSet (table, round);
                 if (set == table)           // 'normal' games on this table
                     wcscpy(bufje, L"  ");
                 else                        // borrow from other table
@@ -1754,21 +1729,21 @@ void Debug::PrintScoreSlips(UINT a_setSize, UINT a_firstSet, UINT a_nrOfSets, UI
 
     #define ARRAY_LEN(x) (sizeof(x)/sizeof((x)[0]))
 
-    #define SL_H0  0    /* SLip position/size H0 etc*/
-    #define SL_H1 13
-    #define SL_H2 26
-    #define SL_H3 33
-    #define SL_H4 42
-    #define SL_H5 51
-    #define SL_H6 61
-    #define SL_H7 79
+    constexpr auto SL_H0 = 0;    /* SLip position/size H0 etc*/
+    constexpr auto SL_H1 = 13;
+    constexpr auto SL_H2 = 26;
+    constexpr auto SL_H3 = 33;
+    constexpr auto SL_H4 = 42;
+    constexpr auto SL_H5 = 51;
+    constexpr auto SL_H6 = 61;
+    constexpr auto SL_H7 = 79;
 
-    #define SL_V0 0
-    #define SL_V1 3
-    #define SL_V2 5
-    #define SL_V3 7
-    #define SL_V4 9
-    #define SL_V5 11    /* if 4 or less games else 11 + (games-4)*2  */
+    constexpr auto SL_V0 = 0;
+    constexpr auto SL_V1 = 3;
+    constexpr auto SL_V2 = 5;
+    constexpr auto SL_V3 = 7;
+//  constexpr auto SL_V4 = 9;
+    constexpr auto SL_V5 = 11    /* if 4 or less games else 11 + (games-4)*2  */;
 
     UINT firstSet       = a_firstSet;       // input param
     UINT setSize        = a_setSize;        // input param
@@ -1898,20 +1873,20 @@ void Debug::PrintGuideNew(UINT a_pair)
         --H5-------------------------------->37
 
 */
-#define G_H0    0
-#define G_H1    6
-#define G_H2    14
-#define G_H3    20
-#define G_H4    33
-#define G_H5    37
+    constexpr auto G_H0 = 0;
+    constexpr auto G_H1 = 6;
+    constexpr auto G_H2 = 14;
+    constexpr auto G_H3 = 20;
+    constexpr auto G_H4 = 33;
+    constexpr auto G_H5 = 37;
 
-#define G_V0    0
-#define G_V1    2
-#define G_V2    5
-#define G_V3    7
-#define G_V4    (m_rounds+G_V3+1)
-#define LINES_IN_GUIDE          ((int)(G_V4+1))
-#define LINES_PRINTED_PER_CARD  (LINES_IN_GUIDE+2)
+    constexpr auto G_V0 = 0;
+    constexpr auto G_V1 = 2;
+    constexpr auto G_V2 = 5;
+    constexpr auto G_V3 = 7;
+    #define G_V4    (m_rounds+G_V3+1)
+    #define LINES_IN_GUIDE          ((int)(G_V4+1))
+    #define LINES_PRINTED_PER_CARD  (LINES_IN_GUIDE+2)
 
     prn::table::Line lines[]=
     {
@@ -2013,17 +1988,17 @@ void Debug::PrintGuideNew(UINT a_pair)
 
 void Debug::PrintSchemaOverviewNew()
 {
-#define O_H0    0
-#define O_H1    9
-#define O_H2    13
-#define O_H1    9
-#define O_DH    8
+    constexpr auto O_H0 = 0;
+    constexpr auto O_H1 = 9;
+    constexpr auto O_H2 = 13;
+    //#define O_H1    9
+    constexpr auto O_DH = 8;
 
-#define O_V0    0
-#define O_V1    3
-#define O_V2    5
-#define O_V3    7
-#define O_DV    2
+    constexpr auto O_V0 = 0;
+    constexpr auto O_V1 = 3;
+    constexpr auto O_V2 = 5;
+    constexpr auto O_V3 = 7;
+    constexpr auto O_DV = 2;
 
 /*
                  5   10   15   20   25   30   35   40   45   50   55   60
@@ -2130,7 +2105,7 @@ void Debug::PrintSchemaOverviewNew()
     myPrint.EndPrint();
 }   // PrintSchemaOverviewNew()
 
-wxString Debug::CenterText(const wxString& a_text, size_t a_length)
+static wxString CenterText(const wxString& a_text, size_t a_length)
 {   // add spaces in front of the supplied text, so the new string will be centered in a space of 'a_length' characters
     if (a_length > 100) a_length = 100; //maximize stringlength to 100
     size_t len = a_text.Len();

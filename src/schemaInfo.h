@@ -28,14 +28,23 @@ namespace schema
     struct GameInfo
     {
         UINT round=0; UINT set=0; NS_EW pairs;
+        #if 0
             bool operator < (const GameInfo &rhs) const
             {
                 if (set != rhs.set) return set < rhs.set;
                 return pairs.ns < rhs.pairs.ns;
             }
+        #else
+            auto operator <=> (const GameInfo& rhs) const
+            {
+                if ( set != rhs.set )
+                    return set <=> rhs.set;
+                return pairs.ns <=> rhs.pairs.ns;
+            }
+        #endif
     };
 
-    typedef std::vector<GameInfo> vGameInfo;
+    using vGameInfo = std::vector<GameInfo>;
 
     void GetRoundInfo       (int schemaId, UINT round, bool bGameOrder, vGameInfo& info);
     void GetSetInfo         (int schemaId, UINT a_set, vGameInfo& a_info);
@@ -48,9 +57,9 @@ public:
     explicit SchemaInfo(int id);  /* explicit*/
     explicit SchemaInfo( const wxString& name );
     SchemaInfo();
-    ~SchemaInfo(){;}
+   ~SchemaInfo() = default;
     bool SetId              ( int schemaId );    // return ok(true) if valid id was  supplied
-    void GetRoundInfo       ( UINT round, bool bGameOrder, schema::vGameInfo& info );
+    void GetRoundInfo       ( UINT round, bool bGameOrder, schema::vGameInfo& info ) const;
     void GetSetInfo         ( UINT set  , schema::vGameInfo& info )const;
     UINT GetSet             ( UINT table, UINT round )const;
     UINT GetTable           ( UINT pair , UINT round )const;

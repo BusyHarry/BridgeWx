@@ -34,7 +34,7 @@ int Unicode2Ascii(const wxString& a_inbuf, char* a_outbuf, int a_outsize, int a_
 wxString Ascii2Unicode(const char* a_inbuf, int a_length, int a_codePage)
 {
     wxString out;
-    if (a_inbuf == 0 || *a_inbuf == 0) return out;  // if no input, return empty string
+    if (a_inbuf == nullptr || *a_inbuf == 0) return out;  // if no input, return empty string
 
     if (a_length == 0)  // zero-terminated string
         a_length = strlen(a_inbuf);
@@ -48,7 +48,7 @@ wxString Ascii2Unicode(const char* a_inbuf, int a_length, int a_codePage)
             continue;
         }
 
-        wchar_t outbuf[4];  //{0};
+        wchar_t outbuf[4];
         int count = ::MultiByteToWideChar
         (
             a_codePage, // code page
@@ -147,13 +147,10 @@ wxString GetDateTime()
 
 UINT MyGetFilesize(const wxString& a_file)
 {
-    union mysize{wxULongLong ull;UINT u;mysize(){ull=0;}};
-
-    mysize size;
-    size.ull = wxFileName::GetSize(a_file);
-    if (size.ull == wxInvalidSize)
+    auto size = wxFileName::GetSize(a_file);
+    if (size == wxInvalidSize)
         return UINT_MAX;
-    return size.u;
+    return size.GetLo();
 #if 0
     wxStructStat buf;
     int result = wxStat(a_file, &buf);

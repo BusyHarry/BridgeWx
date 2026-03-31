@@ -11,37 +11,40 @@ class wxString;
 namespace cor
 {
 
-#define MIN_CORRECTION      (-500)
-#define MAX_CORRECTION      (+500)
-#define BONUS_MINIMUM       (-9999)
-#define BONUS_MAXIMUM       (+9999)
+constexpr auto MIN_CORRECTION = (-500);
+constexpr auto MAX_CORRECTION = (+500);
+constexpr auto BONUS_MINIMUM  = (-9999);
+constexpr auto BONUS_MAXIMUM  = (+9999);
 
-    typedef struct CORRECTION_SESSION
+    using CORRECTION_SESSION = struct CORRECTION_SESSION
     {
         CORRECTION_SESSION(char a_type, int a_correction, Fdp a_extra, int a_maxExtra, UINT a_games)
-        {type = a_type;correction = a_correction;extra = a_extra; maxExtra = a_maxExtra;games=a_games;}
-        CORRECTION_SESSION() {type = '%'; correction = 0; extra = 0; maxExtra = 0; games = 0;}
-        bool operator == (const CORRECTION_SESSION& rhs) const
-        { return type == rhs.type && correction == rhs.correction && games == rhs.games && maxExtra == rhs.maxExtra && extra == rhs.extra;}
+          : type        (a_type)
+          , correction  (a_correction)
+          , extra       (a_extra)
+          , maxExtra    (a_maxExtra)
+          , games       (a_games)
+        {}
+        CORRECTION_SESSION() = default;
+        bool operator == (const CORRECTION_SESSION& rhs) const = default;
         bool operator != (const CORRECTION_SESSION& rhs) const {return !(*this == rhs);}
-        char    type;
-        int     correction;
-        Fdp     extra;          //  xx.x
-        int     maxExtra;
-        UINT    games;          // only valid for extra/maxExtra (i.e combi-table)
-    } CORRECTION_SESSION;
+        char    type        = '%';
+        int     correction  = 0;
+        Fdp     extra       = 0;        //  xx.x
+        int     maxExtra    = 0;
+        UINT    games       = 0;        // only valid for extra/maxExtra (i.e combi-table)
+    };
 
-    typedef struct CORRECTION_END
+    using CORRECTION_END = struct CORRECTION_END
     {
-        bool operator == (const CORRECTION_END& rhs) const
-        { return score == rhs.score && bonus == rhs.bonus && games == rhs.games;}
+        bool operator == (const CORRECTION_END& rhs) const = default;
         Fdp             score;      // xx.xx
         Fdp             bonus;      // xx.xx
         unsigned int    games=0;
-    } CORRECTION_END;
+    };
 
-typedef std::map<unsigned int, cor::CORRECTION_SESSION> mCorrectionsSession;
-typedef std::map<unsigned int, cor::CORRECTION_END> mCorrectionsEnd;
+using mCorrectionsSession = std::map<unsigned int, cor::CORRECTION_SESSION>;
+using mCorrectionsEnd     = std::map<unsigned int, cor::CORRECTION_END>;
 
 const mCorrectionsSession*  GetCorrectionsSession();
 const mCorrectionsEnd*      GetCorrectionsEnd    ();

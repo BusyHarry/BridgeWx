@@ -6,7 +6,7 @@
 #include "names.h"
 #include "utils.h"
 #include "score.h"
-#include "fileIo.h"
+#include "fileio.h"
 #include "corrections.h"
 #include "main.h"
 
@@ -81,12 +81,12 @@ namespace cor
         return true;
     }   // IsValidCorrectionSession()
 
-    bool CorrectionsSessionRead()   //unconditional read
+    static bool CorrectionsSessionRead()    //unconditional read
     {
         return io::CorrectionsSessionRead(sm_correctionsSession, cfg::GetActiveSession());
     }   // CorrectionsSessionRead()
 
-    bool CorrectionsSessionWrite()
+    static bool CorrectionsSessionWrite()
     {
         if (!bCorrectionsSessionChanged) return true;
         (void)ConfigChanged(true);  // refresh config
@@ -118,13 +118,13 @@ namespace cor
         return true;
     }   // IsValidCorrectionEnd()
 
-    bool CorrectionsEndReadSession()   //unconditional read for editing
+    static bool CorrectionsEndReadSession()   //unconditional read for editing
     {
         sm_correctionsEndSession.clear();
         return io::CorrectionsEndRead(sm_correctionsEndSession, cfg::GetActiveSession(), true);
     }   // CorrectionsEndReadSession()
 
-    bool CorrectionsEndWrite()
+    static bool CorrectionsEndWrite()
     {
         if (!bCorrectionsEndChanged) return true;
         (void)ConfigChanged(true);      // refresh config

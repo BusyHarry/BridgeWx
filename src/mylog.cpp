@@ -27,22 +27,19 @@ extern const wxString ES;       // an Empty String
 
 struct frameInfo
 {   // info for delayed destruction
-    MyLogFrame* pLogFrame = nullptr;
-    wxWindowID  frameId   = wxID_ANY;
-    frameInfo() {}
-    frameInfo(MyLogFrame* pFrame, wxWindowID id)
-    {
-        pLogFrame   = pFrame;
-        frameId     = id;
-    }
+    MyLogFrame* pLogFrame;
+    wxWindowID  frameId;
+    frameInfo()                                 : pLogFrame(nullptr), frameId(wxID_ANY){;}
+    frameInfo(MyLogFrame* pFrame, wxWindowID id): pLogFrame(pFrame) , frameId(id)      {;}
 };
 static std::map < const MyLog*, frameInfo> sm_pLogFrames; // backup of active logframes: on dynamic language switch, we need 'previous' frameptr
 
-#define DEFAULT_SIZE {300,-1}
+static wxSize const DEFAULT_SIZE = {300,-1};
+
 class MyLogFrame : public wxFrame
 {   // need this 'inbetween' frame to receive events
 public:
-    MyLogFrame() : wxFrame(   0
+    MyLogFrame() : wxFrame(   nullptr
                             , sFrameId
                             , _("MyLog window")
                             , {600,50}              //position
@@ -50,16 +47,15 @@ public:
                             , wxDEFAULT_FRAME_STYLE //style)
                             , "MyModalLog"
                           )
-    {
-        pCallbackOnHide = nullptr;
-    }
-    ~MyLogFrame() {}
+
+    {}
+    ~MyLogFrame() final = default;
 
     void OnClose (wxCloseEvent& event);
-    void OnSave  (wxCommandEvent& event);
-    void OnClear (wxCommandEvent& event);
-    void OnHide  (wxCommandEvent& event);
-    void (*pCallbackOnHide)();
+    void OnSave  (const wxCommandEvent& event);
+    void OnClear (const wxCommandEvent& event);
+    void OnHide  (const wxCommandEvent& event);
+    pCallBack    pCallbackOnHide = nullptr;
 };
 
 MyLog::MyLog()
@@ -104,13 +100,13 @@ void MyLog::Create( ) const
         , ID_MENU_MYLOG_HIDE
     };
     spLogFrame = new MyLogFrame();
-    wxMenu *pMenu = new wxMenu;
+    auto pMenu = new wxMenu;
     pMenu->Append(ID_MENU_MYLOG_SAVE , _("save &As..."), _("Save in logfile"           ));
     pMenu->Append(ID_MENU_MYLOG_CLEAR, _("&Clear")     , _("Clear logwindow"           ));
     pMenu->AppendSeparator();
     pMenu->Append(ID_MENU_MYLOG_HIDE,  _("&Close")     , _("Close (hide) the logwindow"));
 
-    wxMenuBar *pMenuBar = new wxMenuBar;
+    auto pMenuBar = new wxMenuBar;
     pMenuBar->Append(pMenu, _("&File"));
     spLogFrame->SetMenuBar(pMenuBar);
 
@@ -142,18 +138,18 @@ bool MyLog::IsShown()
     return spLogFrame->IsShown();
 }   // IsShown()
 
-void MyLog::SetCallbackOnHide(void(*ptr)())
+void MyLog::SetCallbackOnHide(pCallBack ptr)
 {
     spLogFrame->pCallbackOnHide = ptr;
 }   // SetCallbackOnHide()
 
-void MyLogFrame::OnHide (wxCommandEvent& )
+void MyLogFrame::OnHide (const wxCommandEvent& )
 {
     if (pCallbackOnHide) pCallbackOnHide();
     spLogFrame->Show(false);
 }   // OnHide()
 
-void MyLogFrame::OnSave  (wxCommandEvent& )
+void MyLogFrame::OnSave  (const wxCommandEvent& )
 {
     wxString filename = wxSaveFileSelector("log", "txt", "log.txt", spLogFrame);
     if (!filename.IsEmpty())
@@ -161,7 +157,7 @@ void MyLogFrame::OnSave  (wxCommandEvent& )
     MyLogMessage(_("Log saved to file '%s'."), filename);
 }   // OnSave()
 
-void MyLogFrame::OnClear (wxCommandEvent& )
+void MyLogFrame::OnClear (const wxCommandEvent& )
 {
     spTextCtrl->Clear();
 }   // OnClear()
@@ -218,7 +214,7 @@ void MyLog::Show(bool a_bShow)
     }
 }   // Show()
 
-static wxString theType[]=
+static const wxString theType[]=
 {
       " ERR: "
     , " WRN: "

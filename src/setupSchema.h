@@ -14,29 +14,29 @@ class SetupSchema : public Baseframe
 {
 public:
     explicit SetupSchema(wxWindow* pParent, UINT pageId);
-            ~SetupSchema() override { ; }
+            ~SetupSchema() override = default;
     void     RefreshInfo() final;
     void     AutotestRequestMousePositions(MyTextFile* pFile) final;
     void     PrintPage() final;
 
 protected:
-    void OnOk                   () final;
-    void OnCancel               () final;
-    virtual void BackupData     () override final;
+    void OnOk       () final;
+    void OnCancel   () final;
+    void BackupData () final;
 
-    void OnNextGroup            (wxCommandEvent&);
-    void OnSelectGroup          (wxCommandEvent&);
-    void OnSelectSchema         (wxCommandEvent&);
-    void OnEnterRoundsSetSize   (wxCommandEvent&);
-    void OnEnterPairs           (wxCommandEvent&);
-    void OnEnterAbsent          (wxCommandEvent&);
-    void OnEnterNrOfGroups      (wxCommandEvent&);
-    void OnEnterGroupChars      (wxCommandEvent&);
+    void OnNextGroup            (const wxCommandEvent&);
+    void OnSelectGroup          (const wxCommandEvent&);
+    void OnSelectSchema         (const wxCommandEvent&);
+    void OnEnterRoundsSetSize   (const wxCommandEvent&);
+    void OnEnterPairs           (const wxCommandEvent&);
+    void OnEnterAbsent          (const wxCommandEvent&);
+    void OnEnterNrOfGroups      (const wxCommandEvent&);
+    void OnEnterGroupChars      (const wxCommandEvent&);
 
     void OnLostFocusGroupChars  (wxFocusEvent&);
     void OnLostFocusNrOfPairs   (wxFocusEvent&);        // wxCommandEvent wxEVT_TEXT signals every char-change...
     void OnLostFocusAbsent      (wxFocusEvent&);
-    void OnLostFocusGames       (wxFocusEvent&);
+    void OnLostFocusGames       (wxFocusEvent&) const;
     void OnLostFocusNrOfGroups  (wxFocusEvent&);
     void OnLostFocusRoundsSetSize(wxFocusEvent&);
 

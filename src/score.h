@@ -5,18 +5,15 @@
 #define _SCORE_H_
 #pragma once
 
+    static constexpr auto CONTRACT_MALFORMED        = -1;       // error-result for GetContractScoreFromString
+    static constexpr auto CONTRACT_NOT_CONSISTENT   = -2;       // error-result for GetContractScoreFromString
+    static constexpr auto SCORE_NONE                = -3;       // empty score
+    static constexpr auto SCORE_NP                  = -4;       // N(ot)P(layed) score: game not played, perhaps no time...
+    static constexpr auto SCORE_IGNORE              = 10000L;   // for non Fdp: 100*10000L this value in endcorrrections: just ignore if only bonus present
+    static constexpr auto SCORE_NO_TOTAL            = 20000L;   // for non Fdp: 100*20000L this value in endcorrrections: sessionScore NOT added to total score
+
 namespace score
 {
-    #define MAX_REAL        8000    /* for 'normal' score                                       */
-    #define OFFSET_PROCENT  9000    /* adjusted score in %                                      */
-    #define OFFSET_REAL     20000   /* adjusted score asif it was 'normal'                      */
-    #define NS              0       /* index in data for N/S pair                               */
-    #define EW              1       /* index in data for E/W pair                               */
-    #define SCORE_NONE      -1      /* empty score                                              */
-    #define SCORE_NP        -2      /* N(ot)P(layed) score: game not played, perhaps no time... */
-    #define SCORE_IGNORE    10000L  /* for non Fdp: 100*10000L this value in endcorrrections: just ignore if only bonus present */
-    #define SCORE_NO_TOTAL  20000L  /* for non Fdp: 100*20000L this value in endcorrrections: sessionScore NOT added to total score*/
-
     struct GameSetData
     {
         UINT        pairNS;
@@ -38,7 +35,7 @@ namespace score
 }   // end of namespace score
 
 //now all used identifiers are known: set a typedef
-typedef std::vector< std::vector<score::GameSetData> > vvScoreData; // vv=vector[games] of vector[sets]
+using vvScoreData = std::vector< std::vector<score::GameSetData> > ; // vv=vector[games] of vector[sets]
 
 namespace score
 {
@@ -50,22 +47,23 @@ namespace score
     };
     void                ReadScoresFromDisk();
     void                WriteScoresToDisk();
-    const vvScoreData*  GetScoreData();                     // get a ptr to the current scores
-    void                SetScoreData(const vvScoreData&);   // update the scores (write to disk)
-    UINT                GetNumberOfGames(const vvScoreData* a_scoreData = nullptr);                     // highest gamenr that is played in a session
-    bool                IsReal(int score);            // checks if score is real (not adjusted)
-    bool                IsProcent(int score);            // checks if its a '%' score
-    wxString            ScoreToString(int score);            // get string representation of score
-    int                 ScoreFromString(const wxString& score);// convert string to (possible) score
-    bool                IsVulnerable(UINT game, bool bNS);  // checks for vulnerability
-    char                VulnerableChar(UINT game, bool bNS);  // returns '*' if vulnerable else ' '
+    const vvScoreData*  GetScoreData();                                 // get a ptr to the current scores
+    void                SetScoreData(const vvScoreData&);               // update the scores (write to disk)
+    UINT                GetNumberOfGames(const vvScoreData* a_scoreData = nullptr); // highest gamenr that is played in a session
+    bool                IsReal(int score);                              // checks if score is real (not adjusted)
+    bool                IsProcent(int score);                           // checks if its a '%' score
+    wxString            ScoreToString(int score);                       // get string representation of score
+    int                 ScoreFromString(const wxString& score);         // convert string to (possible) score
+    bool                IsVulnerable(UINT game, bool bNS);              // checks for vulnerability
+    char                VulnerableChar(UINT game, bool bNS);            // returns '*' if vulnerable else ' '
     ScoreValidation     IsScoreValid(int score, UINT game, bool bNS);   // checks if a score is valid
-    int                 Score2Real(int score);            // make adjusted real score into real score
-    int                 Procentscore2Procent(int score);            // convert aribitrairy score to 0<=value<=100
+    int                 Score2Real(int score);                          // make adjusted real score into real score
+    int                 Procentscore2Procent(int score);                // convert aribitrairy score to 0<=value<=100
     UINT                GetNumberOfGamesPlayedByGlobalPair(UINT globalPairnr);
-    bool                ExistGameData();                     // true, if there is atleast one score entered
-    bool                AdjustPairNrs(UINT fromPair, int delta); // adjust all pairnrs in the scoredata starting from 'frompair' with 'delta', return true if one or more changes
-    bool                DeleteScoresFromPair(UINT sessionPair);     // delete all scores for 'pair', return true if anything deleted
+    bool                ExistGameData();                                // true, if there is atleast one score entered
+    bool                AdjustPairNrs(UINT fromPair, int delta);        // adjust all pairnrs in the scoredata starting from 'frompair' with 'delta', return true if one or more changes
+    bool                DeleteScoresFromPair(UINT sessionPair);         // delete all scores for 'pair', return true if anything deleted
+    int                 ScoreEwToNs(int score);                         // convert ew-score to ns-score
 
     // next some enums and methods to handle contracts in text
     enum PlayType :int
@@ -97,14 +95,11 @@ namespace score
     *   CONTRACT_MALFORMED      = malformed contract: can't interprete the input, show usage
     *  rest = correct score
     */
-    #define CONTRACT_MALFORMED         -1
-    #define CONTRACT_NOT_CONSISTENT    -2
     int                 GetContractScoreFromString(const wxString& input, bool bVulnerable, wxString& result);
     wxString            GetDoubledTypeName        (int         type           );
     wxString            GetPlayTypeName           (PlayType    type           );
     wxString            GetCardName               (CardId      id             );    // name of the suit
     void                InitTexts4Translation     (bool        bForce = false );    // init static texts for translation
     wxString            GetContractExplanation    ();                               // how to build a contract-string
-
 } // end of namespace score
 #endif

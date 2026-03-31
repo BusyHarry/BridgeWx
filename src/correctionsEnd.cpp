@@ -8,13 +8,23 @@
 
 #include "cfg.h"
 #include "names.h"
-#include "correctionsEnd.h"
+#include "correctionsend.h"
 #include "mygrid.h"
 #include "printer.h"
 #include "score.h"
 #include "corrections.h"
 #include "validators.h"
 #include "main.h"
+
+enum
+{
+      COL_PAIRNAME_SESSION = 0  // session pairname
+    , COL_PAIRNAME_GLOBAL       // global pairname
+    , COL_COR_BONUS             // bonus in %/imps
+    , COL_COR_SCORE             // score in %/imps
+    , COL_COR_GAMES             // nr of games for these corrections
+    , COL_NR_OF                 // nr of columns in this grid
+};
 
 CorrectionsEnd::CorrectionsEnd(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a_pageId), m_theGrid(0)
 {
@@ -25,18 +35,18 @@ CorrectionsEnd::CorrectionsEnd(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_
 //    ;score.2 paar bonus.2 spellen paarnaam
 //    100.00     1  11.00   s16     xxx-xxx
     int sizeOne = GetCharWidth();
-    #define SIZE_PAIRNR_SES   (5 * sizeOne)
-    #define SIZE_PAIRNAME_SES (6 * sizeOne)
-    #define SIZE_PAIRNAME     ((cfg::MAX_NAME_SIZE+1)* sizeOne)   /* original name        */
-    #define SIZE_PROCENT      (8 * sizeOne)                       /* -100.00 - 100.00  */
-    #define SIZE_GAMES        (8 * sizeOne)                       /* like 32             */
+    static auto const SIZE_PAIRNR_SES   = (5 * sizeOne);
+    static auto const SIZE_PAIRNAME_SES = (6 * sizeOne);
+    static auto const SIZE_PAIRNAME     = ((cfg::MAX_NAME_SIZE+1)* sizeOne);    /* original name    */
+    static auto const SIZE_PROCENT      = (8 * sizeOne);                        /* -100.00 - 100.00 */
+    static auto const SIZE_GAMES        = (8 * sizeOne);                        /* like 32          */
     m_theGrid->SetRowLabelSize(SIZE_PAIRNR_SES);
     m_theGrid->SetColSize(COL_PAIRNAME_SESSION, SIZE_PAIRNAME_SES ); m_theGrid->SetColLabelValue(COL_PAIRNAME_SESSION, _("pair"    )); m_theGrid->SetColLabelAutoTest(COL_PAIRNAME_SESSION, "pair");
     m_theGrid->SetColSize(COL_PAIRNAME_GLOBAL , SIZE_PAIRNAME     ); m_theGrid->SetColLabelValue(COL_PAIRNAME_GLOBAL , _("pairname")); m_theGrid->SetColLabelAutoTest(COL_PAIRNAME_GLOBAL , "pairname");
     m_theGrid->SetColSize(COL_COR_SCORE       , SIZE_PROCENT      );// m_theGrid->SetColLabelValue(COL_COR_SCORE       , _("score" ));
     m_theGrid->SetColSize(COL_COR_BONUS       , SIZE_PROCENT      ); m_theGrid->SetColLabelValue(COL_COR_BONUS       , _("bonus"   )); m_theGrid->SetColLabelAutoTest(COL_COR_BONUS       , "bonus");
     m_theGrid->SetColSize(COL_COR_GAMES       , SIZE_GAMES        ); m_theGrid->SetColLabelValue(COL_COR_GAMES       , _("games"   )); m_theGrid->SetColLabelAutoTest(COL_COR_GAMES       , "games");
-    wxGridCellAttr* pAttr = new wxGridCellAttr; pAttr->SetAlignment(wxALIGN_RIGHT, wxALIGN_CENTER_VERTICAL);
+    auto pAttr = new wxGridCellAttr; pAttr->SetAlignment(wxALIGN_RIGHT, wxALIGN_CENTER_VERTICAL);
                       m_theGrid->SetColAttr(COL_PAIRNAME_SESSION, pAttr);
     pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_SCORE       , pAttr);
     pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_BONUS       , pAttr);
@@ -47,24 +57,20 @@ CorrectionsEnd::CorrectionsEnd(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_
 
     wxSizerFlags defaultSF1(1); defaultSF1.Border(wxALL, MY_BORDERSIZE);
 
-    wxBoxSizer* hBoxSearchOk = new wxBoxSizer(wxHORIZONTAL);
+    auto hBoxSearchOk = new wxBoxSizer(wxHORIZONTAL);
     hBoxSearchOk->Add(search    , defaultSF1);
     hBoxSearchOk->AddStretchSpacer(1000);
     hBoxSearchOk->Add(okCancel  , defaultSF1);
 
     // add to layout
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Entry of sessioncorrections for endresult"));
+    auto vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Entry of sessioncorrections for endresult"));
     vBox->Add(m_theGrid         , defaultSF1.Expand());
     vBox->Add(hBoxSearchOk      , 0);
     SetSizer(vBox);             // add to panel
 
-    m_bDataChanged  = false;    // no changes yet
-
     RefreshInfo();              // fill the grid with data
     m_description = "CorEnd";
 }   // CorrectionsEnd
-
-CorrectionsEnd::~CorrectionsEnd(){}
 
 void CorrectionsEnd::AutotestRequestMousePositions(MyTextFile* a_pFile)
 {
@@ -197,7 +203,7 @@ bool CorrectionsEnd::OnCellChanging(const CellInfo& a_cellInfo)
         }
 
         break;
-    } while (0);
+    } while (false);
 
     m_bDataChanged = true;
     m_theGrid->CallAfter([this, row, col, updatedData]() {this->m_theGrid->SetCellValue(row, col, updatedData); });
@@ -257,9 +263,8 @@ void CorrectionsEnd::RefreshInfo()
         m_theGrid->SetCellEditor(row, COL_COR_GAMES, new MyGridCellEditorWithValidator(1, cfg::GetNrOfGames() ));
     }
 
-    auto corrections = cor::GetCorrectionsEnd();
-
-    for (const auto& [globalPair, ce] : *corrections)
+    const auto& corrections = *cor::GetCorrectionsEnd();
+    for (const auto& [globalPair, ce] : corrections)
     {
         bool bIgnore  = ce.score == SCORE_IGNORE;
         bool bNoTotal = ce.score == SCORE_NO_TOTAL;

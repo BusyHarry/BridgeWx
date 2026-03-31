@@ -19,15 +19,16 @@
 #include <wx/combobox.h>
 
 #include "validators.h"
-#include "setupGame.h"
+#include "setupgame.h"
 #include "cfg.h"
 #include "printer.h"
+#include "names.h"
 
 SetupGame::SetupGame(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a_pageId)
 {
-    wxFlexGridSizer* fgs = new wxFlexGridSizer(10, 2, 9, 25);
+    auto fgs = new wxFlexGridSizer(10, 2, 9, 25);
     // match description
-    wxStaticText* txtDescription = new wxStaticText(this, wxID_ANY, _("Description:"));
+    auto txtDescription = new wxStaticText(this, wxID_ANY, _("Description:"));
     txtDescription->SetToolTip(_("Short description for this match"));
     m_pTxtCtrlDescr = new wxTextCtrl(this, wxID_ANY, "GameDescription");
     m_pTxtCtrlDescr->SetMaxLength(cfg::MAX_DESCRIPTION);
@@ -43,25 +44,25 @@ SetupGame::SetupGame(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a
     fgs->Add(m_pTxtCtrlMaxMean, 0);
 
 // minmax count for club result
-    wxStaticText* txtMinMaxClub = new wxStaticText(this, wxID_ANY, _("Min/Max clubpairs:"));
+    auto txtMinMaxClub = new wxStaticText(this, wxID_ANY, _("Min/Max clubpairs:"));
 
     //sorry, but validators don't work when min-value is non-zero
     // see https://github.com/wxWidgets/wxWidgets/issues/12968
     // so we check the values when storing them
     //20231201: seems to be resolved in 3.2.4, but only validation on loosing focus, not enter?????
 
-    wxStaticText*   txtMin = new wxStaticText(this, wxID_ANY, _("min:") + "  ");
+    auto   txtMin = new wxStaticText(this, wxID_ANY, _("min:") + "  ");
     m_pTxtCtrlMin = new MyTextCtrlWithValidator  (this, wxID_ANY, "Min", MY_SIZE_TXTCTRL_NUM(3), wxTE_PROCESS_ENTER);
     m_pTxtCtrlMin->SetMinMax(1, cfg::MAX_PAIRS);
     m_pTxtCtrlMin->Bind(wxEVT_KILL_FOCUS        , &SetupGame::OnFocusLostMin, this); //not needed because validator bug
     m_pTxtCtrlMin->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupGame::OnEnterMin    , this);
-    wxStaticText*   txtMax = new wxStaticText(this, wxID_ANY, _("max:") + "  ");
+    auto   txtMax = new wxStaticText(this, wxID_ANY, _("max:") + "  ");
     m_pTxtCtrlMax = new MyTextCtrlWithValidator  (this, wxID_ANY,"Max",  MY_SIZE_TXTCTRL_NUM(3), wxTE_PROCESS_ENTER);
     m_pTxtCtrlMax->SetMinMax(1, cfg::MAX_PAIRS);
     m_pTxtCtrlMax->Bind(wxEVT_KILL_FOCUS        , &SetupGame::OnFocusLostMax, this);
     m_pTxtCtrlMax->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupGame::OnEnterMax    , this);
 
-    wxBoxSizer* minMaxSizer = new wxBoxSizer  (wxHORIZONTAL);
+    auto minMaxSizer = new wxBoxSizer  (wxHORIZONTAL);
     minMaxSizer->Add(txtMin       , 0, wxALIGN_CENTER_VERTICAL);    // minimum size so txtctrl is adjacent
     minMaxSizer->Add(m_pTxtCtrlMin);
     minMaxSizer->AddSpacer(50);
@@ -74,7 +75,6 @@ SetupGame::SetupGame(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a
 
 // Neuberg calculation for games not played bij all players or with some arbitration
     m_pChkBoxNeuberg = new wxCheckBox(this, wxID_ANY, _("Neuberg"));
-//    m_pChkBoxNeuberg = new wxCheckBox(this, wxID_ANY, "Neuberg");
     m_pChkBoxNeuberg->SetToolTip(_("Neuberg calculation of sessionresult on adjusted scores"));
 
 // use 'weighted mean' of the result of each match when calculating result of N sessions
@@ -90,7 +90,7 @@ SetupGame::SetupGame(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a
     m_pChkBoxClock = new wxCheckBox(this, wxID_ANY, _("Clock"));
     m_pChkBoxClock->SetToolTip(_("Display a clock in the statusbar"));
 
-    wxBoxSizer* checkerSizer = new wxBoxSizer(wxHORIZONTAL);
+    auto checkerSizer = new wxBoxSizer(wxHORIZONTAL);
     checkerSizer->Add( m_pChkBoxNeuberg      ); checkerSizer->AddSpacer(20);
     checkerSizer->Add( m_pChkBoxWeightedMean ); checkerSizer->AddSpacer(20);
     checkerSizer->Add( m_pChkBoxGroupResult  ); checkerSizer->AddSpacer(20);
@@ -103,7 +103,7 @@ SetupGame::SetupGame(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a
     auto okCancel = CreateOkCancelButtons();
 
     // add all sizers to vertical sizer
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("General settings for this match "));
+    auto vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("General settings for this match "));
     vBox->Add(fgs,          1, wxALL | wxEXPAND      , MY_BORDERSIZE);
     vBox->Add(checkerSizer, 1, wxALL                 , MY_BORDERSIZE);  // was wxLEFT == border flag
     vBox->Add(okCancel,     0, wxALL | wxALIGN_CENTER, MY_BORDERSIZE);
@@ -186,7 +186,6 @@ void SetupGame::RefreshInfo()
     Layout();
 }   // RefreshInfo()
 
-#include "names.h"
 void SetupGame::BackupData()
 {
     UINT minClub = wxAtoi(m_pTxtCtrlMin->GetValue());
@@ -281,13 +280,13 @@ void SetupGame::OnFocusLostMax(wxFocusEvent& a_event)
     a_event.Skip();
 }   // OnFocusLostMax)()
 
-void SetupGame::OnEnterMin(wxCommandEvent&)
+void SetupGame::OnEnterMin(const wxCommandEvent&)
 {
     //LogMessage("SetupGame::OnEnterMin()");
     HandleMin();
 }   // OnEnterMin()
 
-void SetupGame::OnEnterMax(wxCommandEvent&)
+void SetupGame::OnEnterMax(const wxCommandEvent&)
 {
     //LogMessage("SetupGame::OnEnterMax()");
     HandleMax();

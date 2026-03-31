@@ -4,7 +4,7 @@
 
 #include "fdp.h"
 
-#define STANDALONE_TEST 1   /* set to 1 for standalone testing: main defined*/
+#define STANDALONE_TEST 0   /* set to 1 for standalone testing: main defined*/
 #define TEST_CNV        1   /* messagebox if conversion wxString::ToLongLong() gives an error */
 
 #if STANDALONE_TEST == 0
@@ -18,7 +18,6 @@ Fdp::Fdp(const wxString& a_val)
     // NB, take max FRACTION_DIGITS digits after dp and DONOT round here! Round when string requested!
     // fe: '0.1499999' should give '0.1' for .ToString1(), so store : 149LL
     // [space][+|-][<digits>][[.|,][<digits>]]
-    m_value = 0;
     // for now, assume 'correct' formatted value! "12.3"
     wxString    work(a_val); work.Trim(false).Trim(true);   // remove leading/trailing white-space
     auto        dp       = work.find('.');
@@ -41,15 +40,7 @@ Fdp::Fdp(const wxString& a_val)
         work.erase(dp + FRACTION_DIGITS);           //   and the superfluous fraction digits: now exactly FRACTION_DIGITS digits
         mpFactor = 1;                               // we have max fraction digits, so no multiplication needed
     }
-    /*
-        errno = 0;
-        char*    end1;
-        wchar_t* end2;
-        long long var1 = strtoll("1234", &end1, 10);
-        long long var2 = wcstoll(work.c_str(), &end2, 10);
-        bool bErr1 = (errno == ERANGE);
-        bool bErr2 = (var1 == LLONG_MAX) || (var1 == LLONG_MIN);
-    */
+
     auto bOk = work.ToLongLong(&m_value, 10);
     if ( !bOk && !work.IsEmpty() )  // stupid wx gives error if string is empty...
     {
@@ -75,7 +66,7 @@ wxString Fdp::ToString(UINT a_dp, StringType a_type) const
     LL fraction = value % (FACTOR / DIVISOR[a_dp]);             // determine the fraction
 
     wxString result;        // build result in reverse order
-    for ( UINT count = 0; count <= a_dp || value; ++count )
+    for ( UINT count = 0; (count <= a_dp) || value; ++count )
     {   // need/want atleast a_dp+1 digits
         result += static_cast<unsigned char>('0' + (value % 10));
         value /= 10;
@@ -119,7 +110,7 @@ void Test(const char* msg, const Fdp& value)
 void ShowAll(const char* input)
 {
     Fdp value(input);
-    std::cout << std::setw(10) << input            << " " ;
+    std::cout << std::setw(10) << input              << " " ;
     std::cout << std::setw(10) << value.AsString1 () << " " ;
     std::cout << std::setw(10) << value.AsString1E() << " " ;
     std::cout << std::setw(10) << value.AsString2 () << " " ;

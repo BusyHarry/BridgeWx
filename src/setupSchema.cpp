@@ -11,14 +11,14 @@
 
 #include "validators.h"
 #include "cfg.h"
-#include "schemaInfo.h"
-#include "setupSchema.h"
+#include "schemainfo.h"
+#include "setupschema.h"
 #include "printer.h"
 #include "score.h"
 #include "names.h"
 
-#define CHOICE_SCHEMA   "ChoiceSchema"
-#define CHOICE_GROUP    "ChoiceGroup"
+constexpr auto CHOICE_SCHEMA = "ChoiceSchema";
+constexpr auto CHOICE_GROUP  = "ChoiceGroup";
 
 SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, a_pageId)
 {
@@ -41,7 +41,7 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
     m_pTxtCtrlFirstGame->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusRoundsSetSize, this);
     m_pTxtCtrlFirstGame->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterRoundsSetSize,     this);
 
-    wxFlexGridSizer* fgs = new wxFlexGridSizer(3 /*rows*/, 6 /*columns*/, 20 /*v-gap*/, 10 /*h-gap*/);
+    auto fgs = new wxFlexGridSizer(3 /*rows*/, 6 /*columns*/, 20 /*v-gap*/, 10 /*h-gap*/);
     // row 1
     fgs->Add(nrOfRounds          , 0, wxALIGN_CENTER_VERTICAL);
     fgs->Add(m_pTxtCtrlNrOfRounds, 0, wxALIGN_CENTER_VERTICAL);
@@ -84,12 +84,12 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
     nextGroup->SetToolTip(_("Info for the next group"));
     nextGroup->Bind(wxEVT_BUTTON, &SetupSchema::OnNextGroup, this );
 
-    wxBoxSizer* groupCountSizer = new wxBoxSizer(wxHORIZONTAL);
+    auto groupCountSizer = new wxBoxSizer(wxHORIZONTAL);
     groupCountSizer->MyAdd(m_pChoiceBoxGroup); groupCountSizer->AddSpacer(20);
     groupCountSizer->Add(nextGroup);
 
 //2)wxStaticText+wxTextCtrl(groupletters) + wxStaticText+wxTextCtrl(nr of pairs) + wxStaticText+wxChoice(schema) +  wxStaticText+wxTextCtrl(absent pair)
-    wxStaticText* groupChars = new wxStaticText(this, wxID_ANY, _("Group characters:  "));
+    auto groupChars = new wxStaticText(this, wxID_ANY, _("Group characters:  "));
     m_pTxtCtrlGroupChars     = new wxTextCtrl  (this, wxID_ANY, "GroupChars", MY_SIZE_TXTCTRL_NUM(3), wxTE_PROCESS_ENTER, wxTextValidator(wxFILTER_ALPHA));
     m_pTxtCtrlGroupChars->SetMaxLength(2);
     m_pTxtCtrlGroupChars->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusGroupChars, this );
@@ -110,7 +110,7 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
     m_pTxtCtrlAbsent->Bind(wxEVT_KILL_FOCUS        , &SetupSchema::OnLostFocusAbsent, this );
     m_pTxtCtrlAbsent->Bind(wxEVT_COMMAND_TEXT_ENTER, &SetupSchema::OnEnterAbsent    , this );
 
-    wxBoxSizer* groupInfoSizer = new wxBoxSizer(wxHORIZONTAL);
+    auto groupInfoSizer = new wxBoxSizer(wxHORIZONTAL);
     groupInfoSizer->Add(groupChars, 0, wxALIGN_CENTER_VERTICAL); groupInfoSizer->Add  (m_pTxtCtrlGroupChars, 0); groupInfoSizer->AddSpacer( 30 );
     groupInfoSizer->Add(pairs     , 0, wxALIGN_CENTER_VERTICAL); groupInfoSizer->Add  (m_pTxtCtrlPairs     , 0); groupInfoSizer->AddSpacer( 30 );
     groupInfoSizer->Add(absent    , 0, wxALIGN_CENTER_VERTICAL); groupInfoSizer->Add  (m_pTxtCtrlAbsent    , 0); groupInfoSizer->AddSpacer(30);
@@ -120,7 +120,7 @@ SetupSchema::SetupSchema(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPare
     auto okCancel = CreateOkCancelButtons();
 
     // add all sizers to vertical sizer
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Schema entry for this session"));
+    auto vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Schema entry for this session"));
     vBox->AddSpacer( 30 );  vBox->Add(fgs                   , 0, wxALIGN_LEFT   );
     vBox->AddSpacer( 30 );  vBox->Add(groupCountSizer       , 0, wxALIGN_LEFT   );
     vBox->AddSpacer(  5 );  vBox->Add(groupInfoSizer        , 0                 );
@@ -166,7 +166,7 @@ void SetupSchema::RefreshInfo()
     Layout();
 }   // RefreshInfo()
 
-void SetupSchema::OnSelectGroup(wxCommandEvent&)
+void SetupSchema::OnSelectGroup(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("selectGroup");
     int choice = m_pChoiceBoxGroup->GetSelection();
@@ -174,7 +174,7 @@ void SetupSchema::OnSelectGroup(wxCommandEvent&)
     RefreshInfoGroup(choice);
 }   // OnSelectGroup()
 
-void SetupSchema::OnSelectSchema(wxCommandEvent&)
+void SetupSchema::OnSelectSchema(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("selectSchema");
     int grp                     = m_pChoiceBoxGroup->GetSelection();            // this group is changing
@@ -295,7 +295,7 @@ void SetupSchema::PrintPage()
                         , _("absent pair")
                       )
                   );
-    //m_groupData;
+    //m_groupData
     for (UINT group = 0; group < m_groupData.size(); ++group)
     {
         wxString info;
@@ -326,7 +326,7 @@ void SetupSchema::OnCancel()
     RefreshInfo();  // restore original content
 }   // OnCancel()
 
-void SetupSchema::OnNextGroup(wxCommandEvent&)
+void SetupSchema::OnNextGroup(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("nextGroup");
     UINT count  = m_pChoiceBoxGroup->GetCount();
@@ -361,7 +361,7 @@ void SetupSchema::OnLostFocusGroupChars(wxFocusEvent& a_event )
     HandleGroupChars();
 }   // OnLostFocusGroupChars()
 
-void SetupSchema::OnEnterGroupChars(wxCommandEvent&)
+void SetupSchema::OnEnterGroupChars(const wxCommandEvent&)
 {
     LogMessage("SetupSchema::OnEnterGroupChars()");
     HandleGroupChars();
@@ -383,14 +383,14 @@ void SetupSchema::OnLostFocusAbsent(wxFocusEvent& a_event)
     HandleAbsent();
 }   // OnLostFocusAbsent()
 
-void SetupSchema::OnLostFocusGames(wxFocusEvent& a_event)
+void SetupSchema::OnLostFocusGames(wxFocusEvent& a_event) const
 {
     a_event.Skip();
     if (m_bIsScriptTesting) return;     // if testing, {ENTER} will have handled it
     LogMessage("SetupSchema::OnLostFocusGames()");
 }   // OnLostFocusGames()
 
-void SetupSchema::OnEnterRoundsSetSize(wxCommandEvent& )
+void SetupSchema::OnEnterRoundsSetSize(const wxCommandEvent& )
 {
     LogMessage("SetupSchema::OnEnterRoundsSetSize()");
     UpdateNrOfGames();
@@ -437,19 +437,19 @@ void SetupSchema::UpdateNrOfGames()
     RefreshInfoGroup( m_pChoiceBoxGroup->GetSelection() ); //perhaps used schema is invalid...
 }   // UpdateNrOfGames()
 
-void SetupSchema::OnEnterPairs(wxCommandEvent&)
+void SetupSchema::OnEnterPairs(const wxCommandEvent&)
 {
     LogMessage("SetupSchema::OnEnterPairs()");
     HandlePairs();
 }   // OnEnterPairs()
 
-void SetupSchema::OnEnterAbsent(wxCommandEvent&)
+void SetupSchema::OnEnterAbsent(const wxCommandEvent&)
 {
     LogMessage("SetupSchema::OnEnterAbsent()");
     HandleAbsent();
 }   // OnEnterAbsent()
 
-void SetupSchema::OnEnterNrOfGroups(wxCommandEvent&)
+void SetupSchema::OnEnterNrOfGroups(const wxCommandEvent&)
 {
     LogMessage("SetupSchema::OnEnterNrOfGroups()");
     HandleNrOfGroups();

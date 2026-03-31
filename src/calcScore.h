@@ -26,25 +26,25 @@ class CalcScore: public Baseframe
 {
 public:
     explicit    CalcScore(wxWindow* pParent, UINT pageId);
-               ~CalcScore() override;
-    void        RefreshInfo() override final;   // (re)populate the grid
-    void        PrintPage()   override final;   // print grid/listbox
+               ~CalcScore() override = default;
+    void        RefreshInfo() final;    // (re)populate the grid
+    void        PrintPage()   final;    // print grid/listbox
     void        AutotestRequestMousePositions(MyTextFile* pFile) final;
 
-    typedef struct FrequencyState
+    using FrequencyState = struct FrequencyState
     {
         int     score           = 0;
         UINT    nrOfEqualScores = 0;
         Fdp     points;
         Fdp     pointsEW;
-    } FrequencyState;
+    };
 
-    typedef std::vector<FrequencyState> FS_INFO;
-    typedef std::vector<FS_INFO> FS;
+    using FS_INFO = std::vector<FrequencyState>;
+    using FS      = std::vector<FS_INFO>;
 
 protected:
-    virtual void BackupData     () override final;
-    virtual void DoSearch       (wxString&) override final;                    // handler for 'any' search in derived class
+    void BackupData     () final;
+    void DoSearch       (wxString&) final;      // handler for 'any' search in derived class
 
 private:
     void        CalcSession             ();     // results for current session
@@ -57,14 +57,13 @@ private:
     void        SaveGroupResult         ();
     void        ApplySessionCorrections (); // apply corrections to the session result
     void        CalcGamePercent         (UINT game, bool bNs, FS_INFO& fsInfo);
-    void        CalcGameButler          (UINT game, bool bNs);
-    void        CalcButlerFkw           (UINT game);
-    Fdp         NeubergPoints           (const Fdp& points, UINT gameCount, UINT comparableCount);
-    void        MergeFrqTables          (FS_INFO& ns, const FS_INFO& ew);
+    void        CalcGameButler          (UINT game, bool bNs) const;
+    void        CalcButlerFkw           (UINT game) const;
+    void        MergeFrqTables          (FS_INFO& ns, const FS_INFO& ew) const;
     void        SaveFrequencyTable      ();
-    void        MakeFrequenceTable      (UINT a_game, std::vector<wxString>& a_stringTable);
+    void        MakeFrequenceTable      (UINT a_game, std::vector<wxString>& a_stringTable) const;
     void        SaveSessionResultShort  ();
-    void        OnPrint                 (wxCommandEvent& );
+    void        OnPrint                 (const wxCommandEvent& );
     void        OnCalcResultPair        (const wxCommandEvent&);
     void        CalcResultPairHelper    (Fdp& sumPoints, UINT& sumTops, UINT& gamesPlayed, wxString& tmp);
 
@@ -73,12 +72,11 @@ private:
     Fdp         GetSetResult            (UINT pair, UINT firstGame, UINT nrOfGames, UINT* pGamesPlayed = nullptr);  // get earned match-points for wanted games
     static const bool GROUPRESULT_SESSION = true;
     static const bool GROUPRESULT_FINAL   = false;
-    wxString    GetGroupResultString    (UINT pair, const std::vector<UINT>* a_pIndex = nullptr, bool bSession = GROUPRESULT_FINAL);    // get groupstring or rank in group "BLYEGR" / " . 1 ."
+    wxString    GetGroupResultString    (UINT pair, const std::vector<UINT>* a_pIndex = nullptr, bool bSession = GROUPRESULT_FINAL) const;    // get groupstring or rank in group "BLYEGR" / " . 1 ."
     bool        FindBadGameData         (); // return true if invalid pairnrs found in gamedata
 
-//    wxTextCtrl* m_pTextBox;
-    wxListView* m_pListBox;
-    bool        m_bDataChanged;     // 'something' changed
+    wxListView* m_pListBox      = nullptr;
+    bool        m_bDataChanged  = false;     // 'something' changed
     MyTextFile  m_txtFileResultSession;
     MyTextFile  m_txtFileResultOnName;
     MyTextFile  m_txtFileFrqTable;
@@ -89,15 +87,15 @@ private:
     MyTextFile  m_txtFileResultPair;            // result for a pair
     MyTextFile  m_txtFileResultGame;            // result for a game
     wxString    m_txtBadGameData;               // info on bad gamedata
-    UINT        m_numberOfSessionPairs;         // sum of pairs in all groups
+    UINT        m_numberOfSessionPairs = 0;     // sum of pairs in all groups
 
-    bool        m_bButler;
-    bool        m_bBadGameData;     // some bad pairnrs in gamedata
-    UINT        m_maxPair;          // highest pairnr played in this session
-    UINT        m_maxGame;          // highest gamenr
-    long        m_findPos;          // start  searching in listbox from this line
-    MyChoiceMC* m_pPairSelect;      // pair-selection for result of a specific pair
-    MyChoiceMC* m_pGameSelect;      // game-selection for result of a specific game
+    bool        m_bButler       = false;
+    bool        m_bBadGameData  = false;        // some bad pairnrs in gamedata
+    UINT        m_maxPair       = 1;            // highest pairnr played in this session
+    UINT        m_maxGame       = 1;            // highest gamenr
+    long        m_findPos       = -1;           // start  searching in listbox from this line
+    MyChoiceMC* m_pPairSelect   = nullptr;      // pair-selection for result of a specific pair
+    MyChoiceMC* m_pGameSelect   = nullptr;      // game-selection for result of a specific game
 
     enum Choices
     {
@@ -112,9 +110,8 @@ private:
         , ResultGame        = 8 // in separate choicebox
     };
     std::vector<Choices>    m_vChoices;    // items in choice selector
-    MY_CHOICE*              m_pChoices;
-    int                     m_choiceResult;
-//    wxStyledTextCtrl* m_pStyledTextBox;
+    MY_CHOICE*              m_pChoices     = nullptr;
+    int                     m_choiceResult = 0;
 };
 
 class FormBuilder
@@ -148,15 +145,14 @@ public:
     };
 
     explicit FormBuilder(const std::vector<ColumnInfoRow>& a_rowInfo) : m_rowInfo(a_rowInfo) {}
-    ~FormBuilder() {}
+    ~FormBuilder() = default;
 
-    wxString        CreateHeader(const std::vector<ColumnInfoHeader>& headerInfo);
+    wxString        CreateHeader(const std::vector<ColumnInfoHeader>& headerInfo) const;
     wxString        CreateRow   (const std::vector<wxString>& columsContent) const;
     static wxString CreateColumn(const wxString& input, size_t len, Align align);
 
 private:
     const std::vector<ColumnInfoRow>& m_rowInfo;  // reference, so one can apply runtime updates
 };  // FormBuilder
-
 
 #endif

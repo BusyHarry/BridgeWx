@@ -6,6 +6,7 @@
 
 class wxWindow;
 class wxString;
+using pCallBack = void(*)();
 
 /**
     - instantiate this class in your mainframe/dialog: MyLog m_myLog;
@@ -40,7 +41,7 @@ public:
     static bool         IsEnabled        (Level level);                         // true, if logging enabled for 'level'
     static bool         IsShown          ();                                    // return true if logwindow is visable
     static void         SetAppDebugging  ();                                    // this app is in debug-mode
-    static void         SetCallbackOnHide(void(*pCallbackFun)());               // 'pCallbackFun' is called when window is hidden/closed
+    static void         SetCallbackOnHide(pCallBack pCallbackFun);              // 'pCallbackFun' is called when window is hidden/closed
     static void         SetLevel         (Level level);                         // messages upto this id will be logged
     static void         SetMainFrame     (const wxWindow* pMainframe);          // sets the mainframe, so log window can be positioned alongside
     static void         SetScriptTesting ();                                    // this app is in scripttesting mode

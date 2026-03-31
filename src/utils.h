@@ -4,10 +4,11 @@
 #if !defined _UTILS_H_
 #define _UTILS_H_
 
-typedef unsigned int UINT;
+#include "mylog.h"
+
+using UINT = unsigned int;
 #define FMT wxString::Format
 extern const wxString ES;       // an Empty String
-#include "mylog.h"
 
 #define MY_UNUSED(x) do {} while(0 && (x) )
 

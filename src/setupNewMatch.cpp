@@ -9,16 +9,17 @@
 #include <wx/filepicker.h>
 #include <wx/valnum.h>
 #include <wx/combobox.h>
+#include <wx/display.h>
 
 #include "validators.h"
 #include "cfg.h"
-#include "setupNewMatch.h"
+#include "setupnewmatch.h"
 #include "fileio.h"
 #include "printer.h"
 
 SetupNewMatch::SetupNewMatch(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, a_pageId)
 {
-    wxStaticText* txtDir = new wxStaticText(this, wxID_ANY, _("Folder for matchdata:   "));
+    auto txtDir = new wxStaticText(this, wxID_ANY, _("Folder for matchdata:   "));
     long style = 0;
 
     style |= wxDIRP_USE_TEXTCTRL;   // manual enter directory here, or use the 'browse' button
@@ -30,7 +31,7 @@ SetupNewMatch::SetupNewMatch(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_p
         ES, _("Choose folder to save matchdata."),
         wxDefaultPosition, wxDefaultSize,
         style, wxDefaultValidator, "MatchFolder");  // name is for AHK2
-    m_pDirPicker->Bind(wxEVT_DIRPICKER_CHANGED, [this](wxFileDirPickerEvent&){UpdateSelection();});
+    m_pDirPicker->Bind(wxEVT_DIRPICKER_CHANGED, [this](const wxFileDirPickerEvent&){UpdateSelection();});
 
     txtDir->SetToolTip(_("Choose here the folder where you want to store the matchdata."));
 // the name of the match
@@ -51,7 +52,7 @@ SetupNewMatch::SetupNewMatch(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_p
     m_pChkBoxButler->SetToolTip(_("Type of calculation: percent or butler"));
 
     // now add all of the above in sets of 2 to a flexgridsizer
-    wxFlexGridSizer* fgs = new wxFlexGridSizer(5 /*rows*/, 2 /*columns*/, 9 /*v-gap*/, 25 /*h-gap*/);
+    auto fgs = new wxFlexGridSizer(5 /*rows*/, 2 /*columns*/, 9 /*v-gap*/, 25 /*h-gap*/);
     fgs->Add(txtDir    , 0, wxALIGN_CENTER_VERTICAL);   fgs->Add(m_pDirPicker,      1, wxEXPAND);
     fgs->Add(txtMatch  , 0, wxALIGN_CENTER_VERTICAL);   fgs->Add(m_pComboBoxMatch,  1          );
     fgs->Add(txtSession, 0, wxALIGN_CENTER_VERTICAL);   fgs->Add(m_pTxtCtrlSession, 0          );
@@ -64,7 +65,7 @@ SetupNewMatch::SetupNewMatch(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_p
     auto okCancel = CreateOkCancelButtons();
 
 // add all sizers to vertical sizer
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Setup for the active match:"));
+    auto vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Setup for the active match:"));
     vBox->AddSpacer( 30 );
     vBox->Add(fgs,         1, wxALL | wxEXPAND         , MY_BORDERSIZE);
     vBox->Add(okCancel,    0, wxALL | wxALIGN_CENTER   , MY_BORDERSIZE);
@@ -72,10 +73,9 @@ SetupNewMatch::SetupNewMatch(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_p
     SetSizer(vBox);
     RefreshInfo();      // populate the controls
 
-    wxButton *pButton = dynamic_cast<wxButton*>(m_pDirPicker->GetPickerCtrl());
+    auto pButton = dynamic_cast<wxButton*>(m_pDirPicker->GetPickerCtrl());
     if (pButton)
     {
-        //pButton->SetLabel("Custom browse string");
         AUTOTEST_ADD_WINDOW(pButton      , "BrowsButton");
     }
     AUTOTEST_ADD_WINDOW(m_pDirPicker     , "Folder"    );
@@ -85,8 +85,6 @@ SetupNewMatch::SetupNewMatch(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_p
 
     m_description = "Match";
 }   // SetupNewMatch()
-
-SetupNewMatch:: ~SetupNewMatch(){}
 
 void SetupNewMatch::AutotestRequestMousePositions(MyTextFile* a_pFile)    // request to add usefull mousepositions for autotesting
 {
@@ -113,7 +111,7 @@ void SetupNewMatch::UpdateSelection()
         }
         file = wxFindNextFile();
     }
-    if ( choices.size() == 0 )
+    if ( choices.empty() )
     {
         if ( match.IsEmpty() )
             match = "default";
@@ -124,7 +122,6 @@ void SetupNewMatch::UpdateSelection()
     m_pComboBoxMatch->SetStringSelection(match);
 }   // UpdateSelection()
 
-#include <wx/display.h>
 void SetupNewMatch::RefreshInfo()
 {
     m_pDirPicker     ->SetDirName( cfg::GetActiveMatchPath()          );

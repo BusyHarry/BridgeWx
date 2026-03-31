@@ -9,7 +9,7 @@
 #include <wx/bitmap.h>
 #include <wx/dc.h>
 
-#include "showStartImage.h"
+#include "showstartimage.h"
 
 static bool LoadImageFromResource(const wxString& resName, const wxString& resType, wxImage& image);
 
@@ -22,7 +22,7 @@ class MyImagePanel : public wxPanel
 
 public:
     MyImagePanel(wxWindow* parent, const wxString& resName, wxBitmapType format);
-    ~MyImagePanel(){}
+    ~MyImagePanel() final = default;
 
     void paintEvent(wxPaintEvent & evt);
     void paintNow();
@@ -238,7 +238,7 @@ bool HasResource(const wxString& a_resource_name, const wxString& a_resource_typ
     return true;
 }   // HasResource()
 
-bool LoadImageFromResource(const wxString& a_resName, const wxString& a_resType, wxImage& a_image)
+static bool LoadImageFromResource(const wxString& a_resName, const wxString& a_resType, wxImage& a_image)
 {
     bool bResult = false;
     wxMemoryInputStream* stream = GetResourceInputStream(a_resName, a_resType);

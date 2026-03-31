@@ -6,6 +6,20 @@
  - prevent divide-zero/outOfBounds vector access when a 'NP'(NotPlayed) game is present and its the only entry for that game
  - slipserver: added capability to add a second/third independent match to the slipserver
                - now all these matches can be controled/viewed on one computer
+ - general overhaul/coding-style adaptations, no functional changes
+   - use initializerlists where possible
+   - use static functions i.s.o. class methods when functions don't use/alter class members
+   - use const references in range based for-loops where applicable
+   - replace defines with const(expr)
+   - use auto xx = new <type>; i.s.o. <type> xx = new <type>;
+   - remove redundant 'override' from 'override final'
+   - replacing many 'typedef' with 'using'
+   - replace 'std::*' with 'std::ranges::*' if range is from begin till end
+   - replace 'insert/push_back' with 'emplace/emplace_back'
+   - use '= default' for 'operator ==' when only standard types are used
+   - use raw strings when they contain double quotes
+   - use std::contains() i.s.o std::find() and check for .end()
+   - use only lowercase for all filenames
 
 #V10.10.0  Friday Februari 20 2026
  - reorganised the in/output methods in fileio in preparation to adding an sqlite database for storage

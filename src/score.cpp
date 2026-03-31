@@ -2,18 +2,24 @@
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
 #include <wx/msgdlg.h>
+#include <wx/wxcrtvararg.h>
 
 #include "cfg.h"
 #include "score.h"
 #include "names.h"
-#include "fileIo.h"
+#include "fileio.h"
 
 static vvScoreData svGameSetData;
 
 namespace score
 {
 
-static constexpr int    CURRENT_TYPE    = 1;        // version of datastorage
+static constexpr auto CURRENT_TYPE      = 1;        // version of datastorage
+static constexpr auto MAX_REAL          = 8000;     // for 'normal' score
+static constexpr auto OFFSET_PROCENT    = 9000;     // adjusted score in %
+static constexpr auto OFFSET_REAL       = 20000;    // adjusted score asif it was 'normal'
+static constexpr auto NS                = 0;        // index in data for N/S pair
+static constexpr auto EW                = 1;        // index in data for E/W pair
 
 UINT GetNumberOfGamesPlayedByGlobalPair(UINT a_globalPairnr)
 {
@@ -82,7 +88,7 @@ void WriteScoresToDisk()
     for (auto& gamesets : svGameSetData)
     {   // we need a reference, else sorting is done on a copy of the data
         // which is thrown away after sorting...
-        std::sort(gamesets.begin(), gamesets.end(), [](const auto& left, const auto& right)
+        std::ranges::sort(gamesets, [](const auto& left, const auto& right)
                     {
                         return left.pairNS < right.pairNS;
                     }
@@ -94,14 +100,14 @@ void WriteScoresToDisk()
 UINT GetNumberOfGames(const vvScoreData* a_scoreData)
 {
     const vvScoreData& scores = a_scoreData == nullptr ? svGameSetData : *a_scoreData;
-    UINT count = scores.size();
+    auto count = scores.size();
     if (count == 0) return 0;
     for (--count; count; --count)
     {
         if (scores[count].size()) break;
     }
 
-    return count;
+    return (UINT)count;
 }   // GetNumberOfGames()
 
 bool IsReal(int a_score)
@@ -147,7 +153,6 @@ wxString ScoreToString(int a_score)
     return result + FMT("%i", a_score);
 }   // ScoreToString()
 
-#include <wx/wxcrtvararg.h>
 int ScoreFromString(const wxString& a_score)
 {
     wxString tmp = a_score;
@@ -159,13 +164,13 @@ int ScoreFromString(const wxString& a_score)
     int score = 0;
     UINT uScore;
     wxChar chr;
-#define BAD_SCORE 1 /* returned value, if input somehow not ok*/
+    constexpr auto BAD_SCORE = 1; /* returned value, if input somehow not ok*/
 
 #define FORCE_INRANGE(x) std::clamp((x), -MAX_REAL+1, MAX_REAL-1) /* force 'real' score to be (absolute) less then MAX_REAL*/
     if ( 1 == wxSscanf(tmp," %i %c"  , &score , &chr)) return FORCE_INRANGE(score);                     // 'normal' score
     if ( 1 == wxSscanf(tmp," %%%u %c", &uScore, &chr)) return std::min(uScore,101U)+OFFSET_PROCENT;     // % score
     if ( 1 == wxSscanf(tmp," R%i %c" , &score , &chr)) return FORCE_INRANGE(score)+OFFSET_REAL;         // 'real' aribitrary score
-    if ( (tmp == _("NP")) || (tmp == ("NP")) )  // remark: one fixed "NP" and one translatable
+    if ( (tmp == _("NP")) || (tmp == "NP") )    // remark: one fixed "NP" and one translatable
         return SCORE_NP;
     return BAD_SCORE;   // bad score, rangecheck will get it
 }   // ScoreFromString()
@@ -303,6 +308,13 @@ int Procentscore2Procent(int score)
 {
     return score - OFFSET_PROCENT;
 }   // Procentscore2Procent()
+
+int ScoreEwToNs(int ewScore)
+{   // remark: scores are real or % scores, so we don't need to check for real adjusted scores
+    if (score::IsProcent(ewScore))
+        return 100+2*OFFSET_PROCENT-ewScore;
+    return -ewScore;
+}   // ScoreEwToNs()
 
 bool ExistGameData()
 {
@@ -558,7 +570,7 @@ bool DeleteScoresFromPair(UINT a_pair)
         if (len == 0) return false; // no (abbreviated) suit found
         wxString tmp = wxString(pInput).Mid(0, len);
         // find the first (partial) match of a card-name
-        const auto it = std::find_if(svCardNamesLowercase.begin(), svCardNamesLowercase.end(), [&tmp](const auto& it){return it.name.StartsWith(tmp);});
+        const auto it = std::ranges::find_if(svCardNamesLowercase, [&tmp](const auto& it){return it.name.StartsWith(tmp);});
         if (it == svCardNamesLowercase.end()) return false;    // no (partial) match found
         a_contract.type = it->type;
         a_contract.id   = it->id;

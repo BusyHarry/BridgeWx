@@ -3,9 +3,9 @@
 
 #include <wx/string.h>
 #include "cfg.h"
-#include "choiceMC.h"
+#include "choicemc.h"
 
-#define TEST 0        /* for testing*/
+static auto constexpr TEST = 0; /* for testing*/
 #define IF_TEST if(TEST)
 
 #define MAX_SIZE_COMBO  (20*m_popupCharWidth)
@@ -17,9 +17,9 @@ public:
     explicit            PopupChoiceMC       (wxWindow* a_pParent);
     void                InitPopupMc         ();
     virtual bool        Create              (wxWindow* parent) wxOVERRIDE;
-    virtual wxWindow*   GetControl          () wxOVERRIDE;
-    virtual void        SetStringValue      (const wxString& sel) wxOVERRIDE;
-    virtual wxString    GetStringValue      () const wxOVERRIDE;
+    wxWindow*           GetControl          () wxOVERRIDE;
+    void                SetStringValue      (const wxString& sel) wxOVERRIDE;
+    wxString            GetStringValue      () const wxOVERRIDE;
 
     wxString            GetStringSelection  () const;
     bool                SetStringSelection  (const wxString& sel);
@@ -27,10 +27,9 @@ public:
     bool                SetSelection        (int a_selection);  // return true if new selection within limits
     void                Append              (const wxString& selstr);
 
-protected:
 private:
     void OnMouseMove (wxMouseEvent& event);
-    void OnMouseClick(wxMouseEvent& event);
+    void OnMouseClick(const wxMouseEvent& event);
     void ItemActivated();           // actions when item activated by mouse or ENTER key
 
     int         m_selection;        // current item index
@@ -41,9 +40,9 @@ private:
 
 /////////// implementation ////////////////////
 PopupChoiceMC::PopupChoiceMC(wxWindow* a_pParent) : wxListView(), wxComboPopup()
+  , m_pTargetWindow (a_pParent)
+  , m_mainWinId     (a_pParent->GetId())
 {
-    m_pTargetWindow = a_pParent;
-    m_mainWinId     = a_pParent->GetId();
     InitPopupMc();
 }   // PopupChoiceMC()
 
@@ -139,7 +138,7 @@ void PopupChoiceMC::OnMouseMove(wxMouseEvent& event)
     event.Skip();
 }   // OnMouseMove()
 
-void PopupChoiceMC::OnMouseClick(wxMouseEvent& WXUNUSED(event))
+void PopupChoiceMC::OnMouseClick(const wxMouseEvent& WXUNUSED(event))
 {
     ItemActivated();
 }   // OnMouseClick()
@@ -174,7 +173,7 @@ ChoiceMC::ChoiceMC(wxWindow* a_pParent, const wxString& a_textCtrlTitle) : wxCom
     m_pTxtctrl = GetTextCtrl();
     m_pTxtctrl->Clear();   // remove label-text from entry...
     m_pPopup->SetFont(m_pTxtctrl->GetFont());       // at least in windows, the wxListView does NOT use its parent fontsize! But some(?) global defined one.
-    m_pTxtctrl->Bind(wxEVT_LEFT_DOWN , [this](wxMouseEvent&)
+    m_pTxtctrl->Bind(wxEVT_LEFT_DOWN , [this](const wxMouseEvent&)
             {   // on mouseclick in editctrl, show popup or do nothing...
                 if (m_timerPopupKillFocus.IsRunning())
                 {   // apparently(!) popup receives killfocus before we get the mouse
@@ -189,29 +188,22 @@ ChoiceMC::ChoiceMC(wxWindow* a_pParent, const wxString& a_textCtrlTitle) : wxCom
                     Popup();
                 }
             });
-    m_pTxtctrl->Bind(wxEVT_SET_FOCUS,[this](wxFocusEvent&){});      // eat all focus events: don't select anything, don't show cursor
+    m_pTxtctrl->Bind(wxEVT_SET_FOCUS,[](const wxFocusEvent&){});      // eat all focus events: don't select anything, don't show cursor
     m_pTxtctrl->SetBackgroundColour(cfg::GetLightOrDark({ 220,220,220 }));                 // now it looks like wxChoice
     //GetButton()->SetBackgroundColour({220,220,220});  // GetButton() ALWAYS nullptr
     //SetBackgroundColour({220,220,220});               // doesn't work for button to set background of mainwindow
-    m_currentColumnWidth    = 0;
-    m_nrOfColumns           = 0;
-    m_maxNumberOfRows       = 0;    // will be set in SetMaxNumberOfRows()
-    m_numberOfRows          = 0;
-    m_popupWidth            = 0;
     m_popupCharWidth        = m_pPopup->GetCharWidth();
     m_popupCharHeight       = m_pPopup->GetCharHeight();
 
     SetMaxPopupWidth(27*m_popupCharWidth);                      // arbitrary, but we allow atleast 2 columns before scrolling...
     SetColumnWidthInChars(6);                                   // default 6 chars wide
     m_textMinSize = GetMargins().x + GetButtonSize().GetX();    // minimum size of combobox if no text in it
-    m_pPopup->Bind(wxEVT_KILL_FOCUS, [this](wxFocusEvent&){m_timerPopupKillFocus.StartOnce(35);});
+    m_pPopup->Bind(wxEVT_KILL_FOCUS, [this](const wxFocusEvent&){m_timerPopupKillFocus.StartOnce(35);});
 
     IF_TEST MyLogDebug(_("ChoiceMC() comboMinSize=%i, charWidth=%i"), m_textMinSize, m_popupCharWidth);
     SetMaxNumberOfRows(MC_DEFAULT_NR_OF_ROWS);
     ResetTextctrlSize();
 }   // ChoiceMC()
-
-ChoiceMC::~ChoiceMC() {}
 
 bool ChoiceMC::SetSelection(int a_selection)
 {
@@ -300,7 +292,7 @@ void ChoiceMC::Clear()
     ResetTextctrlSize(); // Clear() SHOULD reset, but screen-layout could change.....
 }   // Clear()
 
-UINT ChoiceMC::GetCount()
+UINT ChoiceMC::GetCount() const
 {
     return m_pPopup->GetItemCount();
 }   // GetCount()

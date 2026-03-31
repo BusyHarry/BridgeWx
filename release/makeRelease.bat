@@ -10,7 +10,7 @@ echo version=%1
 
 :: set environment var 'wxwin' for wxWidgets base to get the wx internal translations
 set wxwin=
-call SetWxWin.bat
+call setwxwin.bat
 
 set version=
 set zipfile=BridgeWxBin

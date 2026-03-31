@@ -29,7 +29,7 @@ MyTextCtrlWithValidator::MyTextCtrlWithValidator(wxWindow *a_parent, wxWindowID 
 // we need the wxTE_PROCESS_ENTER else we don't get the '\n' char at all!
 {
     if ( !(a_style & wxTE_PROCESS_ENTER) )                      // derived class does not want/need enter-event
-        this->Bind(wxEVT_TEXT_ENTER,[](wxCommandEvent& ){;});   // dummy handler to consume event (prevent bell)
+        this->Bind(wxEVT_TEXT_ENTER,[](const wxCommandEvent& ){});  // dummy handler to consume event (prevent bell)
     MyValidator::SetTextCtrl(this);
 }   // MyTextCtrlWithValidator()
 ///******************* end of implementation for MyTextCtrlWithValidator *******************************
@@ -48,13 +48,13 @@ bool MyValidator::IsValidStartKey(wxChar a_key)
         if ( wxIsdigit(a_key) && (a_key - '0') <= m_dMax  ) break;
         if ( IsExtraChar(a_key)                           ) break;
         bValid = false;
-    } while ( 0 );
+    } while ( false );
     if ( !bValid )
         RingBell();
     return bValid;
 }   //  MyValidator::IsValidStartKey()
 
-bool MyValidator::IsExtraChar(wxChar a_chr)
+bool MyValidator::IsExtraChar(wxChar a_chr) const
 {
     return wxString::npos != m_sStartChars.Find(a_chr);
 }   // MyValidator::IsExtraChar()
@@ -150,7 +150,7 @@ void MyValidator::OnChar(wxKeyEvent& a_event)
         if ( !bOk ) break;
         if ( m_bSignOk   && xx < m_dMin ) { bOk = false; break;}    // too small: smaller then negative minimum
         if ( m_dMax >= 0 && xx > m_dMax ) { bOk = false; break;}    // too large: larger  then positive maximum
-    } while ( 0 );
+    } while ( false );
 
     if ( !bOk )
     {
@@ -204,7 +204,7 @@ bool MyValidator::DoValidate(bool a_bForceInRange)
     }
     else
     {
-        double xx = (double)wxAtol(currentVal);
+        auto xx = (double)wxAtol(currentVal);
         if ( xx >= m_dMin && xx <= m_dMax ) return true;
         if ( a_bForceInRange )
         {
@@ -216,7 +216,7 @@ bool MyValidator::DoValidate(bool a_bForceInRange)
     return false;
 }   // MyValidator::DoValidate()
 
-void MyValidator::GetCurrentValueAndInsertionPoint(wxString& a_val, int& a_pos)
+void MyValidator::GetCurrentValueAndInsertionPoint(wxString& a_val, int& a_pos) const
 {
     a_val = m_pTextCtrl->GetValue();
     a_pos = m_pTextCtrl->GetInsertionPoint();

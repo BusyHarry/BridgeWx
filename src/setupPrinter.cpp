@@ -11,9 +11,9 @@
 #include "validators.h"
 #include "cfg.h"
 #include "printer.h"
-#include "SetupPrinter.h"
+#include "setupprinter.h"
 
-#define CHOICE_PRINTER "ChoicePrinter"
+static constexpr auto CHOICE_PRINTER = "ChoicePrinter";
 
 SetupPrinter::SetupPrinter(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, a_pageId)
 {
@@ -24,7 +24,7 @@ SetupPrinter::SetupPrinter(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPa
 
     m_pTxtCtrlLinesPP->SetMinMax(1, 100);   // lines per page: 1-100
     // now add all of the above in sets of 2 to a flexgridsizer
-    wxFlexGridSizer* fgs = new wxFlexGridSizer(2 /*rows*/, 2 /*columns*/, 9 /*v-gap*/, 25 /*h-gap*/);
+    auto fgs = new wxFlexGridSizer(2 /*rows*/, 2 /*columns*/, 9 /*v-gap*/, 25 /*h-gap*/);
     fgs->Add( new wxStaticText(this, wxID_ANY, _("Printer:"       )), 0, wxALIGN_CENTER_VERTICAL );   fgs->MyAdd( m_choiceBoxPrn    );
     fgs->Add( new wxStaticText(this, wxID_ANY, _("Lines per page:")), 0, wxALIGN_CENTER_VERTICAL );   fgs->  Add( m_pTxtCtrlLinesPP );
 
@@ -35,7 +35,7 @@ SetupPrinter::SetupPrinter(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPa
     m_pChkBoxRemote->SetToolTip(_("Also show printers in the network\n\nBE CAREFULL: SYSTEEM CAN HANG!"));
 
     // put all of above below each other in a sizer: all occupying just the space they need
-    wxBoxSizer* vBoxSettings= new wxBoxSizer(wxVERTICAL);
+    auto vBoxSettings= new wxBoxSizer(wxVERTICAL);
     vBoxSettings->Add(fgs            ,0 , wxALL | wxALIGN_LEFT  , MY_BORDERSIZE );
     vBoxSettings->Add(m_pChkBoxFF    ,0 , wxALL                 , MY_BORDERSIZE );
     vBoxSettings->Add(m_pChkBoxRemote,0 , wxALL                 , MY_BORDERSIZE );
@@ -43,7 +43,7 @@ SetupPrinter::SetupPrinter(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPa
     // button for font-selection
     m_pBtnFont = new wxButton(this, wxID_ANY, _("Font choice"));
     m_pBtnFont->SetToolTip(_("choice of another/larger/smaller font for the printer output"));
-    m_pBtnFont->Bind(wxEVT_BUTTON, [](wxCommandEvent&){prn::SelectFont();});
+    m_pBtnFont->Bind(wxEVT_BUTTON, [](const wxCommandEvent&){prn::SelectFont();});
 
     // action buttons: keep/cancel
     m_mOkCancel = CreateOkCancelButtons();
@@ -53,7 +53,7 @@ SetupPrinter::SetupPrinter(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPa
     hButtonSizer->Add(m_mOkCancel, 0, wxALL, MY_BORDERSIZE);
 
     // add all sizers to vertical sizer
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this,_("Printer settings"));
+    auto vBox = new wxStaticBoxSizer(wxVERTICAL, this,_("Printer settings"));
     vBox->AddSpacer( 30 );
     vBox->Add(vBoxSettings, 1                                       );  // take as much space as there is, so ok/cancel is at the bottom
     vBox->Add(hButtonSizer, 0, wxALL | wxALIGN_CENTER, MY_BORDERSIZE);
@@ -70,8 +70,6 @@ SetupPrinter::SetupPrinter(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pPa
     AUTOTEST_ADD_WINDOW(m_choiceBoxPrn   , CHOICE_PRINTER );
     m_description = "Printer";
 }   // SetupPrinter()
-
-SetupPrinter::~SetupPrinter(){}   // ~SetupPrinter()
 
 void SetupPrinter::RefreshInfo()
 {

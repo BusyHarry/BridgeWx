@@ -10,7 +10,7 @@ class MyStatusBar : public wxStatusBar
 {
 public:
     explicit MyStatusBar(wxWindow* parent, long style = wxSTB_DEFAULT_STYLE);
-    virtual ~MyStatusBar();
+    ~MyStatusBar() final;
 
     void UpdateClock();
     void SetInfo(const wxString& a_info);
@@ -18,7 +18,7 @@ public:
 
 protected:
     // event handlers
-    void OnTimer(wxTimerEvent& WXUNUSED(event));
+    void OnTimer(const wxTimerEvent& WXUNUSED(event));
 
 private:
     enum

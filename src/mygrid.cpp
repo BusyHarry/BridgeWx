@@ -2,6 +2,8 @@
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
 #include <wx/grid.h>
+#include <wx/wxcrtvararg.h>
+#include <numeric>
 
 #include "validators.h"
 #include "baseframe.h"
@@ -11,12 +13,10 @@
 #include "printer.h"
 #include "mygrid.h"
 
-#include <wx/wxcrtvararg.h>
-
 MyGrid::MyGrid(Baseframe* a_pParent, const wxString& a_ahkLabel) : wxGrid(a_pParent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
     wxWANTS_CHARS | wxBORDER_SIMPLE, a_ahkLabel)
+    , m_pParent(a_pParent)
 {
-    m_pParent    = a_pParent;
     if (a_pParent) SetLabelFont(a_pParent->GetFont());  // just incase the parent font is NOT standard
     SetColLabelAlignment(wxALIGN_LEFT, wxALIGN_CENTER);
     SetTabBehaviour(Tab_Wrap);  // wrap to next/previous row: till end/begin
@@ -34,9 +34,7 @@ MyGrid::MyGrid(Baseframe* a_pParent, const wxString& a_ahkLabel) : wxGrid(a_pPar
 #endif
 }
 
-MyGrid::~MyGrid(){}
-
-void MyGrid::UpdateLimitMax(int a_row, int a_col, double a_newMax)
+void MyGrid::UpdateLimitMax(int a_row, int a_col, double a_newMax) const
 {
     auto pBase = GetCellEditor(a_row, a_col);
     if ( pBase )
@@ -48,7 +46,7 @@ void MyGrid::UpdateLimitMax(int a_row, int a_col, double a_newMax)
     }
 }   // MyGrid::UpdateLimitMax()
 
-void MyGrid::UpdateLimitMin(int a_row, int a_col, double a_newMin)
+void MyGrid::UpdateLimitMin(int a_row, int a_col, double a_newMin) const
 {
     auto pBase = GetCellEditor(a_row, a_col);
     if ( pBase )
@@ -60,7 +58,7 @@ void MyGrid::UpdateLimitMin(int a_row, int a_col, double a_newMin)
     }
 }   // MyGrid::UpdateLimitMin()
 
-void MyGrid::SetLimitMinMax(int a_row, int a_col, double a_min, double a_max)
+void MyGrid::SetLimitMinMax(int a_row, int a_col, double a_min, double a_max) const
 {
     auto pBase = GetCellEditor(a_row, a_col);
     if ( pBase )
@@ -72,12 +70,12 @@ void MyGrid::SetLimitMinMax(int a_row, int a_col, double a_min, double a_max)
     }
 }   // MyGrid::UpdateLimitMinMax()
 
-void MyGrid::PrintGrid( const wxString& a_title, UINT a_nrOfColumnsToPrint, UINT a_notEmptyfrom)
+void MyGrid::PrintGrid( const wxString& a_title, UINT a_nrOfColumnsToPrint, UINT a_notEmptyfrom) const
 {
     int rows = GetNumberRows();
     if (rows <= 0) return; //nothing to print
 
-    UINT cols   = (UINT)GetNumberCols();
+    auto cols   = (UINT)GetNumberCols();
     int cWidth  = GetCharWidth();
     if (a_nrOfColumnsToPrint > cols) a_nrOfColumnsToPrint = cols;
 
@@ -185,13 +183,13 @@ void MyGrid::EmptyGrid()
 #endif;
 }   // EmptyGrid()
 
-void MyGrid::SetMaxChars(int a_row, int a_col, int a_iMaxCharsInColumn)
+void MyGrid::SetMaxChars(int a_row, int a_col, int a_iMaxCharsInColumn) const
 {
     wxString tmp = U2String(a_iMaxCharsInColumn);
     SetMaxChars(a_row, a_col, tmp );
 }   // SetMaxChars()
 
-void MyGrid::SetMaxChars(int a_row, int a_col, const wxString& a_sMaxCharsInColumn)
+void MyGrid::SetMaxChars(int a_row, int a_col, const wxString& a_sMaxCharsInColumn) const
 {
     auto pEdit = GetCellEditor(a_row, a_col);
     pEdit->SetParameters(a_sMaxCharsInColumn);
@@ -205,7 +203,7 @@ void MyGrid::SetRowBackground(int a_row, const wxColour& a_colour)
         SetCellBackgroundColour(a_row, cols, a_colour);
 }   // SetRowBackground()
 
-void MyGrid::OnLeftClickLabel(wxGridEvent& a_event)
+void MyGrid::OnLeftClickLabel(const wxGridEvent& a_event)
 {   // eat it, if its a column label: no whole column selection
     int col = a_event.GetCol();
     LogMessage(_("MyGrid::OnLeftClickLabel(column: %i)"), col);
@@ -256,7 +254,7 @@ static void GridEventSetRow(wxGridEvent& a_evt, int a_row)
     class MywxGridEvent : public wxGridEvent
     {   // dummy class to be able to access protected members of the base class
         public:
-        MywxGridEvent() {}; // not used...
+        MywxGridEvent() = default; // not used...
         void SetRow(int a_row){wxGridEvent::m_row = a_row;}
     };
 
@@ -290,10 +288,10 @@ int MyGrid::GridRowToIntern(int a_row) const
 {
     if (m_sortType != SORT_NONE)
     {
-        auto it = std::find(m_sortedRows.begin(), m_sortedRows.end(), a_row);
+        auto it = std::ranges::find(m_sortedRows, a_row);
         if (it != m_sortedRows.end())
         {
-            a_row = it - m_sortedRows.begin();  // = index in table
+            a_row = (int)(it - m_sortedRows.begin());  // = index in table
         }
     }
 
@@ -309,8 +307,6 @@ wxString MyGrid::GetCellValue(int a_row, int a_col) const
 {
     return wxGrid::GetCellValue( GridRowToIntern(a_row), a_col);
 }   // GetCellValue()
-
-#include <numeric>
 
 bool MyGrid::AppendRows(int a_numRows, bool a_updateLabels)
 {
@@ -489,7 +485,7 @@ void MyGrid::OnSortColumn(wxGridEvent& a_event)
     if ( (m_sortType != SORT_NONE) && (method != SORT_DISABLED) )
     {   // we need to sort the data
         bool bUp = (m_sortType == SORT_UP);
-        std::sort(m_sortedRows.begin(), m_sortedRows.end(),
+        std::ranges::sort(m_sortedRows,
                     [&data, sortCol, bUp, method] ( int row1, int row2 ) -> bool
                     {
                         if (!bUp) std::swap(row1, row2);

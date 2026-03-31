@@ -16,16 +16,16 @@ class MyGrid : public wxGrid
 {
 public:
     explicit MyGrid(Baseframe* pParent, const wxString& ahkLabel = ES);
-    virtual ~MyGrid();
+    ~MyGrid() final = default;
 
-    bool        Search      (const wxString& s2Search );     // find a string in the grid, starting in (last) selected cell.using the physical/sorted grid
-    void        EmptyGrid   ();                           // clear the grid and set search position to 0,0
-    void        SetMaxChars (int row, int col, int iMaxCharsInColumn);              // setmax nr of chars in a (text)column
-    void        SetMaxChars (int row, int col, const wxString& sMaxCharsInColumn);  // setmax nr of chars in a (text)column
-    void        PrintGrid   (const wxString& title, UINT nrOfColumnsToPrint, UINT notEmptyfrom = MaxRow);   //print grid content upto <x> columns, if columns > <y> not empty
-    void        UpdateLimitMax(int row, int col, double newMax); // update max limit for validator
-    void        UpdateLimitMin(int row, int col, double newMin); // update min limit for validator
-    void        SetLimitMinMax(int row, int col, double min, double max); // update min/max limit for validator
+    bool        Search      (const wxString& s2Search );    // find a string in the grid, starting in (last) selected cell.using the physical/sorted grid
+    void        EmptyGrid   ();                             // clear the grid and set search position to 0,0
+    void        SetMaxChars (int row, int col, int iMaxCharsInColumn) const;              // setmax nr of chars in a (text)column
+    void        SetMaxChars (int row, int col, const wxString& sMaxCharsInColumn) const;  // setmax nr of chars in a (text)column
+    void        PrintGrid   (const wxString& title, UINT nrOfColumnsToPrint, UINT notEmptyfrom = MaxRow) const;   //print grid content upto <x> columns, if columns > <y> not empty
+    void        UpdateLimitMax(int row, int col, double newMax) const; // update max limit for validator
+    void        UpdateLimitMin(int row, int col, double newMin) const; // update min limit for validator
+    void        SetLimitMinMax(int row, int col, double min, double max) const; // update min/max limit for validator
 #ifdef MY_GRIDSORT
     enum SortMethod
     {
@@ -64,7 +64,7 @@ protected:
 
 private:
     void OnCellChanging     (wxGridEvent& event);       // end of editing: old and new data returned, if changed call Baseframe:: OnCellChanging()
-    void OnLeftClickLabel   (wxGridEvent& event);       // left click column header, prevent column selection
+    void OnLeftClickLabel   (const wxGridEvent& event); // left click column header, prevent column selection
 
     GridInfo                        m_gridInfo;
     Baseframe*                      m_pParent;          // needed to call its OnCellChanging()

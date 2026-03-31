@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 
-typedef unsigned short NewSchemaDataType;
+using NewSchemaDataType = unsigned short;
 struct NewTableInfo
 {
     NewSchemaDataType pairNS         = 0;
@@ -37,7 +37,6 @@ public:
                 // schemaType ALWAYS 0
                 ;
     }
-    inline bool operator != (const NEW_SCHEMA& rhs) const { return !(*this == rhs); }
 };
 
 extern std::vector<NEW_SCHEMA> newSchemaTable;   // vector of schema's

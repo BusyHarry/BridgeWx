@@ -10,8 +10,16 @@
 
 #include "cfg.h"
 #include "names.h"
-#include "nameEditor.h"
+#include "nameeditor.h"
 #include "printer.h"
+
+enum
+{
+      COL_PAIRNAME = 0
+    , COL_CLUBNAME
+    , COL_CLUBID
+    , COL_NR_OF                         // nr of columns in this grid
+};
 
 NameEditor::NameEditor(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a_pageId), m_theGrid(0), m_bDataChanged(false)
 {
@@ -21,12 +29,12 @@ NameEditor::NameEditor(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     m_theGrid->SetRowLabelSize( 4*GetCharWidth() );     // room for 3 digit numbers
 
     int charSize = GetCharWidth();
-    #define PAIR_SIZE_CHARS (cfg::MAX_NAME_SIZE+1)
-    #define CLUB_SIZE_CHARS (cfg::MAX_CLUB_SIZE+1)
-    #define ID_SIZE_CHARS   8
-    #define PAIR_SIZE_PIX (PAIR_SIZE_CHARS * charSize)
-    #define CLUB_SIZE_PIX (CLUB_SIZE_CHARS * charSize)
-    #define ID_SIZE_PIX   (ID_SIZE_CHARS   * charSize)
+    constexpr auto  PAIR_SIZE_CHARS (cfg::MAX_NAME_SIZE+1);
+    constexpr auto  CLUB_SIZE_CHARS (cfg::MAX_CLUB_SIZE+1);
+    constexpr auto  ID_SIZE_CHARS   (8);
+    const auto      PAIR_SIZE_PIX   (PAIR_SIZE_CHARS * charSize);
+    const auto      CLUB_SIZE_PIX   (CLUB_SIZE_CHARS * charSize);
+    const auto      ID_SIZE_PIX     (ID_SIZE_CHARS   * charSize);
     m_theGrid->SetColSize(COL_PAIRNAME, PAIR_SIZE_PIX); m_theGrid->SetColLabelValue(COL_PAIRNAME, _("pairname"));
     m_theGrid->SetColSize(COL_CLUBNAME, CLUB_SIZE_PIX); m_theGrid->SetColLabelValue(COL_CLUBNAME, _("clubname"));
     m_theGrid->SetColSize(COL_CLUBID  , ID_SIZE_PIX  ); m_theGrid->SetColLabelValue(COL_CLUBID,   _("club id" ));
@@ -45,13 +53,13 @@ NameEditor::NameEditor(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     auto        pButtonAdd  = new wxButton(this, ID_NAMEEDIT_ADD, _("Add name"));
     auto        okCancel    = CreateOkCancelButtons();
     auto        search      = CreateSearchBox();
-    wxBoxSizer* hBox        = new wxBoxSizer(wxHORIZONTAL);
+    auto        hBox        = new wxBoxSizer(wxHORIZONTAL);
     hBox->Add(search    , wxSizerFlags(1).Border(wxALL, MY_BORDERSIZE));//    hBox->AddStretchSpacer(10);
     hBox->Add(pButtonAdd, wxSizerFlags(0).Border(wxALL, MY_BORDERSIZE));    hBox->AddStretchSpacer(10);
     hBox->Add(okCancel  , wxSizerFlags(0).Border(wxALL, MY_BORDERSIZE));
 
     // add to layout
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Entry/change of pair/clubnames"));
+    auto vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Entry/change of pair/clubnames"));
 
     vBox->Add(m_theGrid, wxSizerFlags(1).Expand().Border(wxALL, MY_BORDERSIZE));
     vBox->Add(hBox,      0);   //no borders/align: already done in hBox!
@@ -66,11 +74,6 @@ NameEditor::NameEditor(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     AUTOTEST_ADD_WINDOW(this      , "Panel"  );
     m_description = "NameEditor";
 }   // NameEditor()
-
-NameEditor::~NameEditor()
-{
-    // keep changes //names::GetRestorePoint();       // restore data if not exited via the 'normal' way
-}   // ~NameEditor()
 
 void NameEditor::AutotestRequestMousePositions(MyTextFile* a_pFile)
 {
@@ -137,8 +140,8 @@ bool NameEditor::OnCellChanging(const CellInfo& a_cellInfo)
             }
             else
             {   // non empty name AND and existing club id
-                int tmpIndex;
-                if (ExistClub(newName, &tmpIndex) && (tmpIndex != clubId))
+                
+                if ( int tmpIndex; ExistClub(newName, &tmpIndex) && (tmpIndex != clubId) )
                 {   // user wants to change to other clubname
                     m_theGrid->SetCellValue (row, COL_CLUBNAME, GetClubName(tmpIndex));
                     m_theGrid->SetCellValue (row, COL_CLUBID, U2String( tmpIndex));
@@ -234,7 +237,7 @@ void NameEditor::AddName(const wxString& a_pairName, const wxString& a_clubName,
     }
 }   // AddName()
 
-void NameEditor::OnAddName(wxCommandEvent& /*event*/)
+void NameEditor::OnAddName(const wxCommandEvent& /*event*/)
 {
     AUTOTEST_BUSY("addName");
     AddName();

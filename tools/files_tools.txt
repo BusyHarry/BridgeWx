@@ -1,9 +1,9 @@
 files_tools.txt
-BuildDate.cpp
-BuildDate.sln
-BuildDate.vcxproj
-BuildDate.vcxproj.filters
-BuildDate.exe
+builddate.cpp
+builddate.sln
+builddate.vcxproj
+builddate.vcxproj.filters
+builddate.exe
 msgbox.cpp
 msgbox.sln
 msgbox.vcxproj
@@ -15,5 +15,5 @@ cleanpo.vcxproj
 cleanpo.vcxproj.filters
 cleanpo.exe
 zip.exe
-AutoHotkey64.exe
+autohotkey64.exe
 shell_sqlite.exe

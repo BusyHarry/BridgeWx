@@ -1,7 +1,7 @@
 ﻿
 Nieuwewedstrijd pagina:
 
-Wedstrijdmap : D:\bridge\BridgeWx\AutoTest\work
+Wedstrijdmap : D:\bridge\BridgeWx\autotest\work
 Wedstrijd    : autoTest01
 Zitting      : 1
 Opslagtype   : .sqlite

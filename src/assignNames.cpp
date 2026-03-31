@@ -12,26 +12,35 @@
 
 #include "cfg.h"
 #include "names.h"
-#include "assignNames.h"
+#include "assignnames.h"
 #include "mygrid.h"
 #include "printer.h"
 #include "score.h"
 
+enum
+{
+      COL_PAIRNAME = 0          // the (global) pairname
+    , COL_PAIRNR_SESSION        // pairnr for this session
+    , COL_PAIRNR_SESSION_PREV   // pairnr of previous session for this pair
+    , COL_RANK_TOTAL_PREV       // rank in total result for all sessions up to now
+    , COL_RANK_SESSION_PREV     // rank in previous session
+    , COL_NR_OF                 // nr of columns in this grid
+};
+
 AssignNames::AssignNames(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a_pageId), m_theGrid(0)
 {
     // create and populate grid
-    m_bDataChanged = false;
     m_theGrid = new MyGrid(this, "GridAssignNames");
     m_theGrid->CreateGrid(0, COL_NR_OF);                // need 2 columns if session <=1, else 5
     m_theGrid->SetRowLabelSize( 4*GetCharWidth() );     // room for 3 digit numbers
 
     int charSize = GetCharWidth();
-    #define SIZE_PAIRNAME_CHARS (cfg::MAX_NAME_SIZE+1)  /* original name*/
-    #define SIZE_PAIRNR_CHARS   9                       /* AB12*/
-    #define SIZE_ID_CHARS       9                       /* just numbers 1-120, minimum char-count!*/
-    #define SIZE_PAIRNAME_PIX (SIZE_PAIRNAME_CHARS* charSize)
-    #define SIZE_PAIRNR_PIX   (SIZE_PAIRNR_CHARS  * charSize)
-    #define SIZE_ID_PIX       (SIZE_ID_CHARS      * charSize)
+    auto constexpr SIZE_PAIRNAME_CHARS  = (cfg::MAX_NAME_SIZE+1);  /* original name*/
+    auto constexpr SIZE_PAIRNR_CHARS    = 9;                       /* AB12*/
+    auto constexpr SIZE_ID_CHARS        = 9 ;                      /* just numbers 1-120, minimum char-count!*/
+    auto const     SIZE_PAIRNAME_PIX    = (SIZE_PAIRNAME_CHARS* charSize);
+    auto const     SIZE_PAIRNR_PIX      = (SIZE_PAIRNR_CHARS  * charSize);
+    auto const     SIZE_ID_PIX          = (SIZE_ID_CHARS      * charSize);
     m_theGrid->SetColSize(COL_PAIRNAME             , SIZE_PAIRNAME_PIX); m_theGrid->SetColLabelValue(COL_PAIRNAME           , _("pairname"));
     m_theGrid->SetColSize(COL_PAIRNR_SESSION       , SIZE_PAIRNR_PIX  ); m_theGrid->SetColLabelValue(COL_PAIRNR_SESSION     , _("pair no" ));   // TRANSLATORS: 'S' is first char of Session
     m_theGrid->SetColSize(COL_PAIRNR_SESSION_PREV  , SIZE_ID_PIX      ); m_theGrid->SetColLabelValue(COL_PAIRNR_SESSION_PREV, _("pair S-1"));
@@ -58,7 +67,7 @@ AssignNames::AssignNames(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParen
     m_pButtonRankTotal  = new wxButton    (this, wxID_ANY, _("Rank total" ));
     m_pButtonRankPrev   = new wxButton    (this, wxID_ANY, _("Rank S-1"   ));
     auto pButtonClear   = new wxButton    (this, wxID_ANY, Unique(_("Clear")));
-    wxBoxSizer* hBox    = new wxBoxSizer  (wxHORIZONTAL);
+    auto hBox           = new wxBoxSizer  (wxHORIZONTAL);
 
     wxSizerFlags defaultSF0(0); defaultSF0.Align(wxALIGN_CENTER_VERTICAL).Border(wxALL, MY_BORDERSIZE);
     wxSizerFlags defaultSF1(1); defaultSF1.Align(wxALIGN_CENTER_VERTICAL).Border(wxALL, MY_BORDERSIZE);
@@ -71,13 +80,13 @@ AssignNames::AssignNames(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParen
 
     auto search   = CreateSearchBox();
     auto okCancel = CreateOkCancelButtons();
-    wxBoxSizer* hBoxSearchOk = new wxBoxSizer(wxHORIZONTAL);
+    auto hBoxSearchOk = new wxBoxSizer(wxHORIZONTAL);
     hBoxSearchOk->Add(search   , defaultSF1);
     hBoxSearchOk->AddStretchSpacer(1000);       // ok/cancel ALWAYS at right side
     hBoxSearchOk->Add(okCancel , defaultSF0);
 
     // add to layout
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Assign pairnames"));
+    auto vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Assign pairnames"));
     vBox->Add(m_theGrid         , wxSizerFlags(1).Expand().Border(wxALL, MY_BORDERSIZE));
     vBox->Add(hBox              , 0);
     vBox->Add(hBoxSearchOk      , 0);
@@ -106,7 +115,7 @@ AssignNames::~AssignNames()
 void AssignNames::AutotestRequestMousePositions(MyTextFile* a_pFile)
 {
     const MyGrid::GridInfo* pGridInfo = nullptr;
-    UINT sessions[]={2,cfg::GetActiveSession()};
+    const UINT sessions[]={2,cfg::GetActiveSession()};
     if (sessions[1] < 2)    //only needed for sessions < 2
     {
         for (auto session : sessions )
@@ -285,7 +294,7 @@ void AssignNames::OnCancel()
     RefreshInfo();  // just repopulate the grid, only local changes
 }   // OnCancel()
 
-void AssignNames::OnOriginal(wxCommandEvent&)
+void AssignNames::OnOriginal(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("original");
     std::vector<unsigned int> newAssign;
@@ -295,7 +304,7 @@ void AssignNames::OnOriginal(wxCommandEvent&)
     m_bDataChanged = true;
 }   // OnOriginal()
 
-void AssignNames::OnTotalRank(wxCommandEvent&)
+void AssignNames::OnTotalRank(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("rank");
     std::vector<unsigned int> newAssign;
@@ -304,7 +313,7 @@ void AssignNames::OnTotalRank(wxCommandEvent&)
     m_bDataChanged = true;
 }   // OnTotalRank()
 
-void AssignNames::OnPreviousRank(wxCommandEvent&)
+void AssignNames::OnPreviousRank(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("previous");
     std::vector<unsigned int> newAssign;
@@ -313,7 +322,7 @@ void AssignNames::OnPreviousRank(wxCommandEvent&)
     m_bDataChanged = true;
 }   // OnPreviousRank()
 
-void AssignNames::OnClear(wxCommandEvent&)
+void AssignNames::OnClear(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("clear");
     std::vector<unsigned int> newAssign;

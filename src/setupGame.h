@@ -15,15 +15,15 @@ class SetupGame : public Baseframe
 {
 public:
     explicit SetupGame(wxWindow* pParent, UINT pageId);
-            ~SetupGame() override { ; }
+            ~SetupGame() override = default;
     void     RefreshInfo() final;
     void     AutotestRequestMousePositions(MyTextFile* pFile) final;
     void     PrintPage() final;
 
 protected:
-    void OnOk    () final;
-    void OnCancel() final;
-    virtual void BackupData   () override final;
+    void OnOk      () final;
+    void OnCancel  () final;
+    void BackupData() final;
 
 private:
     // all the controls in this setup page, assumed to be initialised in ctor.
@@ -62,8 +62,8 @@ private:
 
     void OnFocusLostMin(wxFocusEvent& event);
     void OnFocusLostMax(wxFocusEvent& event);
-    void OnEnterMin(wxCommandEvent&);
-    void OnEnterMax(wxCommandEvent&);
+    void OnEnterMin(const wxCommandEvent&);
+    void OnEnterMax(const wxCommandEvent&);
     void HandleMin();
     void HandleMax();
 };

@@ -16,18 +16,32 @@
 #include "score.h"
 #include "main.h"
 
-#include "scoreEntry.h"
+#include "scoreentry.h"
+
+enum
+{
+      COL_GAME = 0      // game nr
+    , COL_NS            // NS session pair nr
+    , COL_EW            // EW session pair nr
+    , COL_CONTRACT_NS   // contract entry for NS
+    , COL_CONTRACT_EW   // contract entry for EW
+    , COL_SCORE_NS      // score NS
+    , COL_SCORE_EW      // score EW (only if adjusted score)
+    , COL_NAME_NS       // pairname NS
+    , COL_NAME_EW       // pairname EW
+    , COL_NR_OF         // nr of columns in this grid
+};
 
 static std::vector< std::vector<score::GameSetData> > svGameSetData;   // [cfg::max_games+1]
 static bool     GetScore        (UINT theGame, UINT nsPair, score::GameSetData& setData, bool& a_bReversed); // return requested data. true if found. if NS-EW are a_bReversed, flag is set
 
-#define CHOICE_ID_SLIP    0ULL  /* slip/game added FIRST to this sizer*/
-#define CHOICE_ID_GAME_NS 1ULL  /* game/ns added SECOND to this sizer*/
-#define CHOICE_ID_ROUND   2ULL  /* choice round added THIRD to this sizer*/
-#define CHOICE_ID_GAME    3ULL  /* choice game added FOURTH to this sizer*/
+constexpr auto CHOICE_ID_SLIP   = 0ULL; // slip/game added FIRST to this sizer
+constexpr auto CHOICE_ID_GAME_NS= 1ULL; // game/ns added SECOND to this sizer
+constexpr auto CHOICE_ID_ROUND  = 2ULL; // choice round added THIRD to this sizer
+constexpr auto CHOICE_ID_GAME   = 3ULL; // choice game added FOURTH to this sizer
 
-#define CHOICE_GAME     "ChoiceGame"
-#define CHOICE_ROUND    "ChoiceRound"
+constexpr auto CHOICE_GAME      = "ChoiceGame";
+constexpr auto CHOICE_ROUND     = "ChoiceRound";
 ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a_pageId), m_theGrid(0)
 {
     // create and populate grid
@@ -60,7 +74,7 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
                                                            m_theGrid->SetColLabelAutoTest(COL_CONTRACT_NS, "contract ns");
                                                            m_theGrid->SetColLabelAutoTest(COL_CONTRACT_EW, "contract ew");
 
-    wxGridCellAttr* pAttr = new wxGridCellAttr;
+    auto pAttr = new wxGridCellAttr;
     // apparently can be used only once
     // need this IncRef() if using it for 2 colums? strange?? using it in SetColAttr() invalidates it?????
     // other solution: use it only once, then create a new wxGridCellAttr ....
@@ -117,10 +131,10 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
 
     auto search   = CreateSearchBox();
     auto okCancel = CreateOkCancelButtons();
-    wxBoxSizer* vBoxOk = new wxBoxSizer(wxVERTICAL);
+    auto vBoxOk   = new wxBoxSizer(wxVERTICAL);
     vBoxOk->Add(okCancel, 0, wxALIGN_RIGHT);
 
-    wxBoxSizer* hBoxSearchOk = new wxBoxSizer(wxHORIZONTAL);
+    auto hBoxSearchOk = new wxBoxSizer(wxHORIZONTAL);
 
     hBoxSearchOk->Add(search                , defaultSF1);
     hBoxSearchOk->Add(pButtonNextEmptyScore , defaultSF0);
@@ -130,19 +144,13 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     hBoxSearchOk->AddStretchSpacer(1000);
     hBoxSearchOk->Add(vBoxOk                , defaultSF0);
     // add to layout
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Entry/Change scores"));
+    auto vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Entry/Change scores"));
     vBox->Add(m_theGrid         , defaultSF1.Expand());
     vBox->Add(m_pSizerAllChoices, 0);
     vBox->Add(hBoxSearchOk      , 0);
     SetSizer(vBox);     // add to panel
 
-    m_bCancelInProgress     = false;
-    m_bSlipOrder            = true;
-    m_bGameOrder            = true;
-    m_bDataChanged          = false;
-    m_startrow4EmptyScore   = -1;
-    m_uActiveRound          = 1;
-    m_uActiveGame           = cfg::GetFirstGame();
+    m_uActiveGame = cfg::GetFirstGame();
     svGameSetData.resize(cfg::MAX_GAMES+1); //expected to be present: no checks are done...
 
     RefreshInfo();                  // fill the grid with data
@@ -156,8 +164,6 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
 
     m_description = "ScoreEntry";
 }   // ScoreEntry()
-
-ScoreEntry::~ScoreEntry(){}
 
 /*virtual*/ void ScoreEntry::BackupData()
 {
@@ -316,7 +322,7 @@ void ScoreEntry::SaveRowData()
     int scoreNS = score::ScoreFromString(m_theGrid->GetCellValue(m_iRowToSave, COL_SCORE_NS));
     std::vector<score::GameSetData>& scores = svGameSetData[game];
     score::GameSetData setData;
-    auto it = std::find_if(scores.begin(), scores.end(), [ns](const score::GameSetData& lhs){return lhs.pairNS == ns || lhs.pairEW == ns;});
+    auto it = std::ranges::find_if(scores, [ns](const score::GameSetData& lhs){return lhs.pairNS == ns || lhs.pairEW == ns;});
 
     if ( (scoreNS == SCORE_NONE) || (scoreNS == SCORE_NP) ) // remove NP for compatibility with old programm
     {   // empty score or not played, remove from data
@@ -347,14 +353,14 @@ void ScoreEntry::SaveRowData()
     }
 }   // SaveRowData()
 
-void ScoreEntry::OnSelectRound(wxCommandEvent& evt)
+void ScoreEntry::OnSelectRound(const wxCommandEvent& evt)
 {
     AUTOTEST_BUSY("selectRound");
     m_uActiveRound = 1 + evt.GetInt(); //m_pChoiceRound->GetSelection();
     RefreshInfo();
 }   // OnSelectRound()
 
-void ScoreEntry::OnSelectGame(wxCommandEvent&)
+void ScoreEntry::OnSelectGame(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("selectGame");
     m_uActiveGame = cfg::GetFirstGame() + m_pChoiceGame->GetSelection();
@@ -372,7 +378,7 @@ bool ScoreEntry::FindEmptyScore()
     {
         ++count;
         if (++row >= maxRow) row = 0;
-        if ( (m_startrow4EmptyScore == -1) && (row == 0) ) m_startrow4EmptyScore = 0;    // prevent endless loop if no empty scores
+        if ( (m_startrow4EmptyScore == INIT_ROW) && (row == 0) ) m_startrow4EmptyScore = 0;    // prevent endless loop if no empty scores
         wxString score = m_theGrid->GetCellValue(row, COL_SCORE_NS);
         int col = COL_SCORE_NS;
 
@@ -413,7 +419,7 @@ void ScoreEntry::GotoNextEmptyScore()
     CallAfter([this]{(void)FindEmptyScore();});
 }   // GotoNextEmptyScore()
 
-void ScoreEntry::OnNextEmptyScore(wxCommandEvent&)
+void ScoreEntry::OnNextEmptyScore(const wxCommandEvent&)
 {
     CallAfter(&ScoreEntry::GotoNextEmptyScore);
 }   // OnNextEmptyScore()
@@ -459,12 +465,12 @@ void ScoreEntry::RefreshInfo()
             schema::GetSetInfo(itGrp->schemaId, 1+(m_uActiveGame-firstGame)/setSize, info);
         }
 
-        for ( auto itSet = info.begin(); itSet != info.end(); ++itSet)
+        for ( const auto& itSet : info )
         {
-            UINT        nsPair      = itSet->pairs.ns+pairBase;
-            UINT        ewPair      = itSet->pairs.ew+pairBase;
+            UINT        nsPair      = itSet.pairs.ns+pairBase;
+            UINT        ewPair      = itSet.pairs.ew+pairBase;
             if (pairAbsent == nsPair || pairAbsent == ewPair) continue; // don't show entry for absent pair
-            UINT        gameBase    = (itSet->set - 1)*setSize + firstGame - 1;
+            UINT        gameBase    = (itSet.set - 1)*setSize + firstGame - 1;
             wxString    nsName      = names::PairnrSession2SessionText(nsPair);
             wxString    ewName      = names::PairnrSession2SessionText(ewPair);
 
@@ -476,7 +482,7 @@ void ScoreEntry::RefreshInfo()
                 m_theGrid->SetCellValue(currentRow, COL_GAME    , FMT("%3u", theGame)  );
 
                 score::GameSetData data;
-                bool bReversed;
+                bool bReversed = false;
                 wxString scoreNS, scoreEW;
                 if (GetScore(theGame, nsPair, data, bReversed))
                 {
@@ -491,8 +497,8 @@ void ScoreEntry::RefreshInfo()
                     std::swap(nsPair,ewPair);
                 }
 
-                #define IS_NS true
-                #define IS_EW false
+                constexpr auto IS_NS = true;
+                constexpr auto IS_EW = false;
                 m_theGrid->SetCellValue(currentRow, COL_NS         , score::VulnerableChar(theGame, IS_NS) + nsName);
                 m_theGrid->SetCellValue(currentRow, COL_EW         , score::VulnerableChar(theGame, IS_EW) + ewName);
                 m_theGrid->SetCellValue(currentRow, COL_CONTRACT_NS, data.contractNS);
@@ -526,7 +532,7 @@ void ScoreEntry::RefreshInfo()
 
     m_theGrid->AutoSizeRows();
     m_theGrid->MakeCellVisible(0, 0);       // needed, because GotoNextEmptyScore() would position column 1 at leftside
-    m_startrow4EmptyScore = -1;             // fresh start
+    m_startrow4EmptyScore = INIT_ROW;       // fresh start
     GotoNextEmptyScore();                   // position cursor at first empty score, if any
 
     m_theGrid->EndBatch();                  // now you can show the changes
@@ -535,16 +541,16 @@ void ScoreEntry::RefreshInfo()
     if (m_bSlipOrder)
     {
         m_pChoiceRound->Init( nrOfGames/setSize, m_uActiveRound - 1 );
-        m_pSizerAllChoices->Show((size_t)CHOICE_ID_GAME_NS);
-        m_pSizerAllChoices->Show((size_t)CHOICE_ID_ROUND);
-        m_pSizerAllChoices->Hide((size_t)CHOICE_ID_GAME);
+        m_pSizerAllChoices->Show(CHOICE_ID_GAME_NS);
+        m_pSizerAllChoices->Show(CHOICE_ID_ROUND);
+        m_pSizerAllChoices->Hide(CHOICE_ID_GAME);
     }
     else
     {
         m_pChoiceGame->Init( nrOfGames, m_uActiveGame - firstGame, firstGame-1);
         m_pSizerAllChoices->Hide(CHOICE_ID_GAME_NS);
         m_pSizerAllChoices->Hide(CHOICE_ID_ROUND);
-        m_pSizerAllChoices->Show((size_t)CHOICE_ID_GAME);
+        m_pSizerAllChoices->Show(CHOICE_ID_GAME);
     }
 
     // show/hide the columns for contract-entry
@@ -575,7 +581,7 @@ void ScoreEntry::OnCancel()
     RefreshInfo();  // just repopulate the grid, only local changes
 }   // OnCancel()
 
-void ScoreEntry::OnRbSlipGame(wxCommandEvent& a_event)
+void ScoreEntry::OnRbSlipGame(const wxCommandEvent& a_event)
 {
     AUTOTEST_BUSY("slipGame");
     m_bSlipOrder =  (0 == a_event.GetSelection());
@@ -583,7 +589,7 @@ void ScoreEntry::OnRbSlipGame(wxCommandEvent& a_event)
     LogMessage("ScoreEntry::OnRbSlipGame(%i)", m_bSlipOrder ? 0 : 1);
 }   // OnRbSlipGame()
 
-void ScoreEntry::OnRbGameNS(wxCommandEvent& a_event)
+void ScoreEntry::OnRbGameNS(const wxCommandEvent& a_event)
 {
     AUTOTEST_BUSY("rbGameNs");
     m_bGameOrder = ( 0 == a_event.GetSelection() );
@@ -591,7 +597,7 @@ void ScoreEntry::OnRbGameNS(wxCommandEvent& a_event)
     LogMessage("ScoreEntry::OnRbGameNS(%i)", m_bGameOrder ? 0 : 1);
 }   // OnRbGameNS()
 
-void ScoreEntry::UpdateCell(wxCommandEvent& a_event)
+void ScoreEntry::UpdateCell(const wxCommandEvent& a_event)
 {
     const CellData* pData = reinterpret_cast<CellData*>(a_event.GetClientData());
     m_theGrid->SetCellValue(pData->row, pData->column, pData->newData);
@@ -602,7 +608,7 @@ void ScoreEntry::DoSearch(wxString& a_string)
     (void) m_theGrid->Search(a_string);
 }   // DoSearch()
 
-void ScoreEntry::OnSwitchNsEw(wxCommandEvent& )
+void ScoreEntry::OnSwitchNsEw(const wxCommandEvent& )
 {
     // switch the content of ns-ew pair numbers and names. Please note the vulnerability char
     int      row    = m_theGrid->GetGridCursorRow();
@@ -680,7 +686,7 @@ void ScoreEntry::PrintPage()
     m_theGrid->PrintGrid(title, m_theGrid->GetNumberCols());
 }   // PrintPage()
 
-void ScoreEntry::OnCheckboxContract(wxCommandEvent&)
+void ScoreEntry::OnCheckboxContract(const wxCommandEvent&)
 {
     RefreshInfo();
 }   // OnCheckboxContract()
@@ -694,7 +700,7 @@ static bool GetScore(UINT a_theGame, UINT a_nsPair, score::GameSetData& a_setDat
 
     a_bReversed = false;    // assume ok
     a_setData={0};
-    for (auto setData : gameData)
+    for (const auto& setData : gameData)
     {
         if (setData.pairNS == a_nsPair)
         {

@@ -30,8 +30,8 @@ namespace table
 {   //simple table-printing: texts and horizontal/vertical lines
 struct Line
 {
-    Line() { begin = { 0,0 }; end = { 0,0 }; }
-    Line(const wxPoint& a_begin, const wxPoint& a_end){begin = a_begin; end = a_end;}
+    Line()                                              : begin({0,0})  , end({0,0}){;}
+    Line(const wxPoint& a_begin, const wxPoint& a_end)  : begin(a_begin), end(a_end){;}
     wxPoint     begin;          // beginpoint in chars/lines from left-top of page
     wxPoint     end;            // endpoint of line
 //    wxPoint     offsetInChar;   // startpoint within a char in pixels

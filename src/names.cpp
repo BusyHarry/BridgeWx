@@ -14,7 +14,7 @@
 
 #include "cfg.h"
 #include "names.h"
-#include "fileIo.h"
+#include "fileio.h"
 
 namespace names
 {
@@ -38,7 +38,7 @@ static void ReadClubNames();
 static void ReadPairNames();
 
 //auto convert = wxConvAuto(wxFONTENCODING_CP437);  // doesnot work!
-auto convert = wxCSConv(wxFONTENCODING_CP437);      // this one does!
+static const auto convert = wxCSConv(wxFONTENCODING_CP437);      // this one does!
 
 #ifdef _WIN32       // for VS (32/64 bit) we need 1 byte packing for the storage to be compatible
 #pragma pack(1)
@@ -47,10 +47,10 @@ constexpr UINT AP_CURRENT                   = cfg::MAX_PAIRS;       // nr of pai
 constexpr UINT NAME_LENGTH_CURRENT          = cfg::MAX_NAME_SIZE;   // pairnames max (30) chars
 //constexpr auto FILE_LENGTH_NAMES_CURRENT  = 3993;                 // (AP_CURRENT+1)*((NAME_LENGTH_CURRENT+1)+2) = (120+1)*((30+1)+2)
 
-typedef struct NAMES_CURRENT
+using NAMES_CURRENT = struct NAMES_CURRENT
 {   char    name[NAME_LENGTH_CURRENT+1];
     INT16   clubindex;
-} NAMES_CURRENT;                          //  newest format AP_CURRENT=120,NAME_LENGTH_CURRENT=30
+};                          //  newest format AP_CURRENT=120,NAME_LENGTH_CURRENT=30
 #ifdef _WIN32
 #pragma pack()
 #endif
@@ -80,11 +80,11 @@ wxString PairnrGlobal2GlobalText(UINT a_globalPair)
 
 UINT GetNumberOfGlobalPairs()
 {
-    UINT size = svGlobalPairInfo.size();
+    auto size = (UINT)svGlobalPairInfo.size();
     return size ? size - 1 : 0;
 }   // GetNumberOfGlobalPairs()
 
-const wxString GetNotSet()
+wxString GetNotSet()
 {
     return ssNotSet;
 }   // GetNotSet()
@@ -205,7 +205,7 @@ bool ValidateSessionPairName(wxString& a_sessionName, UINT& a_sessionPair)
         return true;        // value cleared
     }
     a_sessionName.MakeUpper();
-    UINT len = a_sessionName.Len();
+    auto len = (UINT)a_sessionName.Len();
     wxString groupChars;
     UINT pair = 0;
 
@@ -258,12 +258,12 @@ bool ValidateSessionPairName(wxString& a_sessionName, UINT& a_sessionPair)
     return false;
 }   // ValidateSessionPairName()
 
-void ReadClubNames()
+static void ReadClubNames()
 {
     io::ClubnamesRead(svClubNames,suNrOfClubs);
 }   // readclubnames()
 
-void ReadPairNames()
+static void ReadPairNames()
 {
     sbChangedPairNames = false;
     if (!io::PairnamesRead(svGlobalPairInfo))
@@ -356,7 +356,7 @@ int GetClubIndex(const wxString& a_clubName)
     {
         if (0 == a_clubName.CmpNoCase(svClubNames[ii]))
         {
-            return ii;
+            return (int)ii;
         }
     }
 
@@ -446,7 +446,7 @@ bool RemoveClubIdFromPair(int a_index)
     return true;
 }   // RemoveClubIdFromPair()
 
-void SessionNamesWrite()
+static void SessionNamesWrite()
 {
     (void)ConfigChanged(true);  // refresh config
     wxArrayString names;
@@ -457,7 +457,7 @@ void SessionNamesWrite()
     io::SessionNamesWrite(names, cfg::GetActiveSession());
 }   // SessionNamesWrite()
 
-void ReadSession2GlobalIds()
+static void ReadSession2GlobalIds()
 {
     // The file has the pairs based on sessionpairnr order, entry zero = dummy
     // pairIndex[x]: sessionPairNr 'x' is mapped to globalPairNr 'pairIndex[x]'
@@ -466,7 +466,7 @@ void ReadSession2GlobalIds()
     XformPairnrFromSession2GlobleVicaVersa(svuPairnrSession2Global, svuPairnrGlobal2Session);
 }   // ReadSession2GlobalIds()
 
-bool WriteSession2GlobalIds()
+static bool WriteSession2GlobalIds()
 {
     return io::Session2GlobalIdsWrite(svuPairnrSession2Global, cfg::GetActiveSession());
 }   // WriteSession2GlobalIds()

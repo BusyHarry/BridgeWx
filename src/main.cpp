@@ -12,21 +12,21 @@
 // my own includes
 #include "cfg.h"
 #include "statusbar.h"
-#include "nameEditor.h"
-#include "setupGame.h"
-#include "setupSchema.h"
-#include "setupPrinter.h"
-#include "setupNewMatch.h"
-#include "assignNames.h"
-#include "scoreEntry.h"
-#include "correctionsSession.h"
-#include "correctionsEnd.h"
+#include "nameeditor.h"
+#include "setupgame.h"
+#include "setupschema.h"
+#include "setupprinter.h"
+#include "setupnewmatch.h"
+#include "assignnames.h"
+#include "scoreentry.h"
+#include "correctionssession.h"
+#include "correctionsend.h"
 #include "printer.h"
 #include "debug.h"
-#include "calcScore.h"
-#include "showStartImage.h"
-#include "slipServer.h"
-#include "fileIo.h"
+#include "calcscore.h"
+#include "showstartimage.h"
+#include "slipserver.h"
+#include "fileio.h"
 #include "version.h"
 #include "main.h"
 
@@ -96,15 +96,15 @@ class MyFrame;
 class MyApp : public wxApp
 {
 public:
-    MyApp() { m_pMainFrame = 0; m_pLocale = nullptr; }
-    ~MyApp() { wxDELETE(m_pLocale); }
+    MyApp() = default;
+    ~MyApp() final { wxDELETE(m_pLocale); }
     bool OnInit() override;
-    virtual int OnExit();
+    int OnExit() final;
     void InitLanguage();        // setup the language
     void ReInitLanguage();      // re-setup the language AND the mainframe/topwindow
 private:
-    MyFrame*  m_pMainFrame;
-    wxLocale* m_pLocale;
+    MyFrame*  m_pMainFrame = nullptr;
+    wxLocale* m_pLocale    = nullptr;
 
 };  // class MyApp
 
@@ -131,10 +131,6 @@ public:
     EventCatcher()
     {
         wxEvtHandler::AddFilter(this);
-        m_bBusy             = false;
-        m_timeStamp         = 0;
-        m_previousTimeStamp = 0;
-        m_previousChar      = 0;
         m_keys2String[WXK_BACK        ] = "{BS}";
         m_keys2String[WXK_RETURN      ] = "{ENTER}";
         m_keys2String[WXK_TAB         ] = "{TAB}";
@@ -158,7 +154,7 @@ public:
         m_keys2String[WXK_NUMPAD_ENTER] = "{NUM_ENTER}";
     }
 
-    virtual ~EventCatcher()
+    ~EventCatcher() final
     {
         wxEvtHandler::RemoveFilter(this);
     }   // ~EventCatcher()
@@ -171,20 +167,8 @@ public:
         return FMT("<%04X>", key);
     }   // Key2String()
 
-    virtual int FilterEvent(wxEvent& event)
+    int FilterEvent(wxEvent& event) final
     {
-        #define KEYDOWN     10070   /*wxEVT_KEY_DOWN */
-        #define MOUSE_LD    10052   /*wxEVT_LEFT_DCLICK*/
-        #define MOUSE_L     10043   /*wxEVT_LEFT_DOWN*/
-        #define CHAR        10066   /*wxEVT_CHAR */
-        #define CHARHOOK    10068   /*wxEVT_CHARHOOK */
-        #define KEYUP       10071   /*wxEVT_KEY_UP */
-        #define COMMAND     10148   /*wxCommandEvent*/
-        #define MOTION      10049   /*wxEVT_MOTION*/
-        #define CURSOR      10073   /*wxSetCursorEvent: clicking radiobutton*/
-        #define MOUSEWHEEL  10050   /*wxMouseEvent :wxEVT_ENTER_WINDOW: clicking radiobutton*/
-        /*wxEVT_NAVIGATION_KEY wxEVT_RIGHT_DOWN  wxEVT_MIDDLE_DOWN wxIdleEvent*/
-
         if (m_bBusy)
         {   // recursive call or call when I am busy??????
             //Don't output anything now: you WILL get lots of debug-assertions
@@ -198,14 +182,14 @@ public:
         if (type == wxEVT_KEY_DOWN || type == wxEVT_KEY_UP)
         {
             bool    bUp = true;
-            wxChar  chr = (static_cast<wxKeyEvent*>(&event))->GetKeyCode();
+            auto    chr = (wxChar)((static_cast<wxKeyEvent*>(&event))->GetKeyCode());
             if (type == wxEVT_KEY_DOWN)
             {
                 bUp = false;
                 long timeStamp = event.GetTimestamp();
                 if ( timeStamp == m_timeStamp)
                 {
-                    if (0) if (chr == m_previousChar)
+                    if (false) if (chr == m_previousChar)
                     {
                         m_bBusy = false;
                         return Event_Skip;      // same event, other source?
@@ -229,7 +213,7 @@ public:
         {
             bool            bChecked1   = g_pCheckboxBusy  ->IsChecked();
             bool            bChecked2   = g_pCheckboxBusyMC->IsChecked();
-            wxMouseEvent*   evt         = dynamic_cast<wxMouseEvent*>(&event);
+            auto            evt         = dynamic_cast<const wxMouseEvent*>(&event);
             auto            pos         = evt->GetPosition();
             auto            pWin        = dynamic_cast<wxWindow*>(evt->GetEventObject());
             auto            screenPos   = pWin->ClientToScreen(pos);
@@ -244,8 +228,8 @@ public:
            )
         {   // mouse
         } else
-        if (dynamic_cast<wxCommandEvent*>(&event))   // gives 'reentrancy' problems
-        {
+        if (dynamic_cast<wxCommandEvent*>(&event))
+        {   // gives 'reentrancy' problems
         } else
         if (    type == wxEVT_IDLE
             ||  type == wxEVT_MOTION
@@ -280,10 +264,10 @@ public:
             ||  type == wxEVT_ICONIZE
             )
         {
-            ;   // nothing
+            // nothing
         } else
         {   // unknown/unseen yet...
-            if (1)
+            if (true)
             {
                 bool bChecked1 = g_pCheckboxBusy  ->IsChecked();
                 bool bChecked2 = g_pCheckboxBusyMC->IsChecked();
@@ -298,10 +282,10 @@ public:
 
 private:
     wxString m_keys;
-    bool     m_bBusy;   // check for re-entrancy
-    long     m_timeStamp;
-    long     m_previousTimeStamp;
-    wxChar   m_previousChar;
+    bool     m_bBusy                = false;   // check for re-entrancy
+    long     m_timeStamp            = 0;
+    long     m_previousTimeStamp    = 0;
+    wxChar   m_previousChar         = 0;
     std::map <int,wxString>  m_keys2String;
 };
 
@@ -310,37 +294,37 @@ class MyFrame : public wxFrame
 {
 public:
     explicit MyFrame(MyApp& theApp);
-    ~MyFrame();
-    void UpdateStatusbarInfo(wxCommandEvent& event=s_dummy);
-    void UpdateStatusbarText(wxCommandEvent& a_event);
+    ~MyFrame() final;
+    void UpdateStatusbarInfo(const wxCommandEvent& event=s_dummy);
+    void UpdateStatusbarText(const wxCommandEvent& a_event);
     UINT GetCurrentMenuId() const {return m_oldId;}
-    void SetClock(wxCommandEvent& event=s_dummy);
+    void SetClock(const wxCommandEvent& event=s_dummy);
     MyStatusBar* StatusBar() {return m_pStatusbar;}
     wxMenuBar* m_pMenuBar;
 
 private:
-    void OnSystemInfo   (wxCommandEvent& event);
-    void OnExit         (wxCommandEvent& event);
-    void OnAbout        (wxCommandEvent& event);
-    void OnPrintPage    (wxCommandEvent&);
-    void OnMenuChoice   (wxCommandEvent& event);
-    void OnLogging      (wxCommandEvent& event);
-    void OnPrintFile    (wxCommandEvent& event);
-    void OnImportSchema (wxCommandEvent& event);
-    void OnLanguage     (wxCommandEvent& event);
+    void OnSystemInfo   (const wxCommandEvent& event);
+    void OnExit         (const wxCommandEvent& event);
+    void OnAbout        (const wxCommandEvent& event);
+    void OnPrintPage    (const wxCommandEvent&);
+    void OnMenuChoice   (const wxCommandEvent& event);
+    void OnLogging      (const wxCommandEvent& event);
+    void OnPrintFile    (const wxCommandEvent& event);
+    void OnImportSchema (const wxCommandEvent& event);
+    void OnLanguage     (const wxCommandEvent& event);
     void AutotestCreatePositions();
     void LoadExistingSchemaFiles();
 
     Cleanup         m_theCleaner;   // clean wx-stuff before app exits to prevent crashes
     MyStatusBar*    m_pStatusbar;
-    Baseframe*      m_pActivePage;
+    Baseframe*      m_pActivePage = nullptr;
 
     wxBoxSizer*     m_vSizer;
 
-    EventCatcher*   m_pMyEventCatcher;
+    EventCatcher*   m_pMyEventCatcher = nullptr;
     MyApp&          m_theApp;
     std::map<UINT, Baseframe*> m_pages; // all created pages
-    UINT            m_oldId;
+    UINT            m_oldId = 0;
 
 };  // class MyFrame
 
@@ -360,7 +344,7 @@ static void UncheckLogMenu()
 }   // UncheckLogMenu()
 
 #include <wx/dir.h>
-static wxString sLocales = "locales";   // folder name in .exe folder where translations are stored
+static const wxString sLocales = "locales";   // folder name in .exe folder where translations are stored
 
 static void MakeDir(const wxString& a_dir)
 {
@@ -460,10 +444,10 @@ bool MyApp::OnInit()
     if (!wxUILocale::UseDefault())
     {;}
     //Need the stupid wxLogWindow, else you get many error-popups!
-    auto logWindow = new wxLogWindow(0, "Logwindow", false, false /*pass trough*/);
-    logWindow->SetVerbose(TRUE);
+    auto logWindow = new wxLogWindow(nullptr, "Logwindow", false, false /*pass trough*/);
+    wxLogWindow::SetVerbose(true);
+    wxLogWindow::SetLogLevel(255);
     wxLog::SetActiveTarget(logWindow);
-    logWindow->SetLogLevel(255);// wxLOG_FatalError);
     //logWindow->Show();
 
     // early creation of MyLog, need it when reading cfg
@@ -515,33 +499,30 @@ bool MyApp::OnInit()
 }   //  OnInit()
 
 MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'Bridge' scoring program")) // ssWinTitle: init here because of translation for new frame!
-    , m_pActivePage { 0 }
-    , m_theApp      { a_theApp }
-    , m_oldId       { 0 }
+    , m_theApp { a_theApp }
 {   // remark: wxFrame() MUST be initialized in constructor, not in its body: it will not be (for sure) the first toplevel window!
     ++siMyFrameCounter;   // increment counter, should be max 2 shortly during language change
     MyLog::SetMainFrame(this);
     MyLog::SetCallbackOnHide(&UncheckLogMenu);
     // autotest init
-    m_pMyEventCatcher = nullptr;
     if (cfg::IsScriptTesting())
     {
         g_pCheckboxBusy   = new wxCheckBox(this, wxID_ANY, ssCheckBoxBusy  , GetStaticRectPosition(), GetStaticRectSize()); g_pCheckboxBusy->Hide();
         g_pCheckboxBusyMC = new wxCheckBox(this, wxID_ANY, ssCheckBoxBusyMC, GetStaticRectPosition(), GetStaticRectSize()); g_pCheckboxBusyMC->Hide();
 
-        g_pCheckboxBusy  ->Bind(wxEVT_CHECKBOX,[this](wxCommandEvent&){ MyLogDebug("Busy -> %i"  ,g_pCheckboxBusy  ->IsChecked());});
-        g_pCheckboxBusyMC->Bind(wxEVT_CHECKBOX,[this](wxCommandEvent&){ MyLogDebug("BusyMC -> %i",g_pCheckboxBusyMC->IsChecked());});
+        g_pCheckboxBusy  ->Bind(wxEVT_CHECKBOX,[](const wxCommandEvent&){ MyLogDebug("Busy -> %i"  ,g_pCheckboxBusy  ->IsChecked());});
+        g_pCheckboxBusyMC->Bind(wxEVT_CHECKBOX,[](const wxCommandEvent&){ MyLogDebug("BusyMC -> %i",g_pCheckboxBusyMC->IsChecked());});
 
 
         SetExtraStyle(wxWS_EX_PROCESS_IDLE);
         wxIdleEvent::SetMode(wxIDLE_PROCESS_SPECIFIED); //  send only idle events to MyFrame
-        Bind(wxEVT_IDLE,[](wxIdleEvent&){OnIdle();});
+        Bind(wxEVT_IDLE,[](const wxIdleEvent&){OnIdle();});
         m_pMyEventCatcher = new EventCatcher;           // we want early notice of mouseclick
 
         // create hotkey for generating mousepositions of controls for autotest in file "<matchfolder>/AutoTest.pos"
         #define HOTKEY "!+a\"         ; SHIFT+ALT+A" /* AHK2 definition*/
         RegisterHotKey(0, wxMOD_ALT | wxMOD_SHIFT, 'A'); // wxMOD_CONTROL doesn't work...
-        Bind(wxEVT_HOTKEY, [this](wxKeyEvent&){AutotestCreatePositions();});
+        Bind(wxEVT_HOTKEY, [this](const wxKeyEvent&){AutotestCreatePositions();});
     }
 
     // check if cmdline has fontscaling setting 'q'
@@ -558,8 +539,8 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     // Set default size of mainwindow
     // will give +/- 1040*560 size on 1920*1080 screen with 125% scalefactor: 1536=1920/1.25 and 864=1080/1.25
     // will give +/- 1040*560 size on 1920*1080 screen with 125% scalefactor: 1536=1920/1.25 and 821=(1080-taskbar)/1.25
-    #define HSIZE_WANTED 900 /*1040*/
-    #define VSIZE_WANTED 450 /*560*/
+    constexpr auto HSIZE_WANTED = 900; /*1040*/
+    constexpr auto VSIZE_WANTED = 450; /*560*/
 
     auto displayRect = wxGetClientDisplayRect();
     int maxX = displayRect.width;
@@ -587,7 +568,7 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     SetIcon(wxICON(wxwin_standard_icon));
     spMainframe = this;    // for clients to reach us
 
-    wxMenu *menuFile = new wxMenu;
+    auto menuFile = new wxMenu;
     menuFile->Append(ID_MENU_SETUPNEWMATCH  , _("&New match/session"  ), _("Match/session entry"            ));
     menuFile->Append(ID_MENU_SETUPPRINTER   , _("&Printer choice"     ), _("Printer choice and setup"       ));
     menuFile->Append(ID_MENU_PRINTPAGE      , _("print pa&Ge"         ), _("Print current page"             ));
@@ -596,19 +577,19 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     menuFile->AppendSeparator();
     menuFile->Append(ID_EXIT                , _("&Exit"               ), _("This will end the program"      ));
 
-    wxMenu *menuSettings = new wxMenu;
+    auto menuSettings = new wxMenu;
     menuSettings->Append(ID_MENU_SETUPGAME  , _("&Match"                 ), _("Setup for the active match"                      ));
     menuSettings->Append(ID_MENU_SETUPSCHEMA, _("&Schema"                ), _("Entry/change of schema"                          ));
     menuSettings->Append(ID_MENU_NAMEEDITOR , _("pairnames &Entry/change"), _("Entry/change of pair/clubnames"                  ));
     menuSettings->Append(ID_MENU_ASSIGNNAMES, _("pairnames &Assigment"   ), _("Connect a global pairname to a sessionpairnumber"));
 
-    wxMenu *menuScores = new wxMenu;
+    auto menuScores = new wxMenu;
     menuScores->Append(ID_MENU_SCORE_ENTRY      , _("s&Core-entry"       ), _("Entry/change of scores"             ));
     menuScores->Append(ID_MENU_COR_ENTRY_SESSION, _("&Sessioncorrections"), _("Entry/change of session corrections"));
     menuScores->Append(ID_MENU_COR_ENTRY_END    , _("&Endcorrections"    ), _("Entry/change of end corrections"    ));
     menuScores->Append(ID_MENU_CALC_SCORES      , _("&Results"           ), _("Calculation of session/end result"  ));
 
-    wxMenu *menuExtra = new wxMenu;
+    auto menuExtra = new wxMenu;
     menuExtra->AppendCheckItem(ID_MENU_LOG      , _("&Log window"               ), _("Enable/disable logging window"     ));
     menuExtra->Append(ID_MENU_DEBUG             , _("&Debug window"             ), _("Debug window for all kind of stuff"));
     menuExtra->Append(ID_MENU_DEBUG_GUIDES      , _("&Guides"                   ), _("Creation of guides"                ));
@@ -626,7 +607,7 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     menuExtra->Append(ID_MENU_SLIP_SERVER     , _("&Slip server"               ), _("Server for receiving slip-data"                       ));
     menuExtra->Append(ID_MENU_LANGUAGE        , _("&Language"                  ), _("language of the userinterface"                        ));
 
-    wxMenu *menuHelp = new wxMenu;
+    auto menuHelp = new wxMenu;
     menuHelp->Append(ID_SYSTEM_INFO         , _("&System info"                 ), _("Info about the version of wxWidgets"));
     menuHelp->Append(ID_ABOUT               , _("&About ") + __PRG_NAME__ );
 
@@ -660,11 +641,11 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     Bind(wxEVT_MENU, &MyFrame::OnImportSchema, this, ID_MENU_IMPORT_SCHEMA);
     Bind(wxEVT_MENU, &MyFrame::OnMenuChoice,   this, ID_MENU_SETUP_FIRST, ID_MENU_SETUP_LAST);
     Bind(wxEVT_MENU, &MyFrame::OnLogging,      this, ID_MENU_LOG);
-    Bind(wxEVT_MENU, [this](wxCommandEvent&){AUTOTEST_BUSY("menu"); io::ConvertDataBase(io::FromOldToDb); }, ID_MENU_OLD_TO_DBASE);
-    Bind(wxEVT_MENU, [this](wxCommandEvent&){AUTOTEST_BUSY("menu"); io::ConvertDataBase (io::FromDbToOld);}, ID_MENU_DBASE_TO_OLD);
-    Bind(wxEVT_MENU, [this](wxCommandEvent&){AUTOTEST_BUSY("menu"); cfg::DatabaseTypeSet(io::DB_ORG)     ;}, ID_MENU_OLD_DBASE);
-    Bind(wxEVT_MENU, [this](wxCommandEvent&){AUTOTEST_BUSY("menu"); cfg::DatabaseTypeSet(io::DB_DATABASE);}, ID_MENU_NEW_DBASE);
-    Bind(wxEVT_MENU, [this](wxCommandEvent&){AUTOTEST_BUSY("menu"); cfg::DatabaseTypeSet(io::DB_SQLITE)  ;}, ID_MENU_SQL_DBASE);
+    Bind(wxEVT_MENU, [this](const wxCommandEvent&){AUTOTEST_BUSY("menu"); io::ConvertDataBase(io::FromOldToDb); }, ID_MENU_OLD_TO_DBASE);
+    Bind(wxEVT_MENU, [this](const wxCommandEvent&){AUTOTEST_BUSY("menu"); io::ConvertDataBase (io::FromDbToOld);}, ID_MENU_DBASE_TO_OLD);
+    Bind(wxEVT_MENU, [this](const wxCommandEvent&){AUTOTEST_BUSY("menu"); cfg::DatabaseTypeSet(io::DB_ORG)     ;}, ID_MENU_OLD_DBASE);
+    Bind(wxEVT_MENU, [this](const wxCommandEvent&){AUTOTEST_BUSY("menu"); cfg::DatabaseTypeSet(io::DB_DATABASE);}, ID_MENU_NEW_DBASE);
+    Bind(wxEVT_MENU, [this](const wxCommandEvent&){AUTOTEST_BUSY("menu"); cfg::DatabaseTypeSet(io::DB_SQLITE)  ;}, ID_MENU_SQL_DBASE);
     Bind(wxEVT_USER, &MyFrame::UpdateStatusbarInfo  , this, ID_STATUSBAR_UPDATE);
     Bind(wxEVT_USER, &MyFrame::UpdateStatusbarText  , this, ID_STATUSBAR_SETTEXT);
     Bind(wxEVT_USER, &MyFrame::SetClock             , this, ID_UPDATE_CLOCK);
@@ -683,19 +664,19 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     LoadExistingSchemaFiles();  // load all known imported schemafiles
 }   // MyFrame()
 
-void MyFrame::OnExit(wxCommandEvent& )
+void MyFrame::OnExit(const wxCommandEvent& )
 {
     Close(true);
 }   //  OnExit()
 
-void MyFrame::OnPrintPage(wxCommandEvent&)
+void MyFrame::OnPrintPage(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("printPage");
     MyLogDebug(_("PrintPage()"));
     if (m_pActivePage) m_pActivePage->PrintPage();
 }   // OnPrintPage()
 
-void MyFrame::OnAbout(wxCommandEvent& )
+void MyFrame::OnAbout(const wxCommandEvent& )
 {
 // next include produced by buildDate.exe gives: static const char* buildDate = "woensdag 22 november 2023 @ 12:08:24";
 #include "buildDate.h"
@@ -713,9 +694,9 @@ void MyFrame::OnAbout(wxCommandEvent& )
 }   // OnAbout()
 
 #include "wxsysinfoframe.h"
-void MyFrame::OnSystemInfo(wxCommandEvent& )
+void MyFrame::OnSystemInfo(const wxCommandEvent& )
 {
-    wxSystemInformationFrame* frame = new wxSystemInformationFrame(this);
+    auto frame = new wxSystemInformationFrame(this);
     frame->Show();
 //    wxInfoMessageBox(0);
 }   // OnSystemInfo()
@@ -731,7 +712,7 @@ void SetStatusbarInfo()
     reinterpret_cast<MyFrame*>(spMainframe)->StatusBar()->SetInfo(tmp);
 }   // SetStatusbarInfo()
 
-void MyFrame::UpdateStatusbarInfo(wxCommandEvent& )
+void MyFrame::UpdateStatusbarInfo(const wxCommandEvent& )
 {
     SetStatusbarInfo();
 }   //  UpdateStatusbarInfo()
@@ -741,13 +722,13 @@ void SetStatusbarText(const wxString& a_msg)
     reinterpret_cast<MyFrame*>(spMainframe)->StatusBar()->SetStatusText(a_msg);
 }   // SetStatusbarText()
 
-void MyFrame::UpdateStatusbarText(wxCommandEvent& a_event)
+void MyFrame::UpdateStatusbarText(const wxCommandEvent& a_event)
 {
     auto msg = reinterpret_cast<const wxString*>(a_event.GetClientData());
     m_pStatusbar->SetStatusText(*msg);
 }   // UpdateStatusbarText()
 
-void MyFrame::SetClock(wxCommandEvent& /*event*/)
+void MyFrame::SetClock(const wxCommandEvent& /*event*/)
 {
     m_pStatusbar->SetClock();
 }   // SetClock()
@@ -806,12 +787,12 @@ void MyFrame::AutotestCreatePositions()
     OnMenuChoice(event);
 }   // AutotestCreatePositions()
 
-void MyFrame::OnMenuChoice(wxCommandEvent& a_event)
+void MyFrame::OnMenuChoice(const wxCommandEvent& a_event)
 {
     MyLogDebug(ES);                             // separation between menu messages
     AUTOTEST_BUSY("menu");
 
-    if (m_pages.size() == 0)
+    if ( m_pages.empty() )
     {
         GetSizer()->Hide((size_t)0);            // firsttime call: remove/disable picture in mainframe
         GetSizer()->DeleteWindows();
@@ -918,7 +899,7 @@ void MyFrame::OnMenuChoice(wxCommandEvent& a_event)
     Update();                           // refresh()+update() -> immediate show updated window
 }   // OnMenuChoice()
 
-void MyFrame::OnLogging(wxCommandEvent&)
+void MyFrame::OnLogging(const wxCommandEvent&)
 {   // show/hide a logwindow
     AUTOTEST_BUSY("log");
     bool bShow = m_pMenuBar->IsChecked(ID_MENU_LOG);
@@ -926,7 +907,7 @@ void MyFrame::OnLogging(wxCommandEvent&)
     SetFocus();         // stay with me...
 }   // OnLogging()
 
-void MyFrame::OnLanguage(wxCommandEvent&)
+void MyFrame::OnLanguage(const wxCommandEvent&)
 {
     wxArrayString   names;
     wxArrayInt      identifiers;
@@ -945,7 +926,7 @@ void MyFrame::OnLanguage(wxCommandEvent&)
     }
 }   // OnLanguage()
 
-void MyFrame::OnPrintFile(wxCommandEvent& )
+void MyFrame::OnPrintFile(const wxCommandEvent& )
 {
     AUTOTEST_BUSY("printFile");
     wxString filename = wxFileSelector(_("Choose a file for printing"));
@@ -959,7 +940,7 @@ void MyFrame::OnPrintFile(wxCommandEvent& )
 
 static auto const NBB_SCHEMA_EXTENSION("asc");  // Dutch Bridge Association
 
-void MyFrame::OnImportSchema(wxCommandEvent& )
+void MyFrame::OnImportSchema(const wxCommandEvent& )
 {
     AUTOTEST_BUSY("ImportSchema");
     wxString schemaFile = wxFileSelector(_("Choose a schema file to import")

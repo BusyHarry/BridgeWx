@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BuildDate.cpp">
+    <ClCompile Include="builddate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -14,37 +14,24 @@ class CorrectionsSession : public Baseframe
 {
 public:
     explicit    CorrectionsSession (wxWindow* pParent, UINT pageId);
-               ~CorrectionsSession() override;
-    void        RefreshInfo() override final;   // (re)populate the grid
-    void        PrintPage()   override final;
+               ~CorrectionsSession() override = default;
+    void        RefreshInfo() final;   // (re)populate the grid
+    void        PrintPage()   final;
     void        AutotestRequestMousePositions(MyTextFile* pFile) final;
 
 protected:
-    void        OnOk            () override final;
-    void        OnCancel        () override final;
-    void        DoSearch        (wxString&       string  ) override final;
-    bool        OnCellChanging  (const CellInfo& cellInfo) override final;
-    virtual void BackupData     () override final;  // called if active panel is about to be hidden. You may save changed data!
+    void        OnOk            () final;
+    void        OnCancel        () final;
+    void        DoSearch        (wxString&       string  ) final;
+    bool        OnCellChanging  (const CellInfo& cellInfo) final;
+    void        BackupData      () final;   // called if active panel is about to be hidden. You may save changed data!
     void        InitButlerProcent();    // init columns for butler or percentage calculation
     void        ClearCombiData  (int row);
 private:
 
     MyGrid*     m_theGrid;
-    bool        m_bButler;          // true, if columns are setup for butler calculation
-    bool        m_bDataChanged;     // 'something' changed in grid
-
-    enum
-    {
-          COL_ZERO = 0                      // label, first column
-        , COL_PAIRNAME_SESSION = COL_ZERO   // session pairname
-        , COL_PAIRNAME_GLOBAL               // global pairname
-        , COL_COR_PROCENT                   // correction in %
-        , COL_COR_MP                        // correctionin MP
-        , COL_COR_MAX                       // maximum correction ....
-        , COL_COR_EXTRA                     // extra corrrection.....
-        , COL_COR_GAMES                     // nr of games for max/extra
-        , COL_NR_OF                         // nr of columns in this grid
-    };
+    bool        m_bButler;              // true, if columns are setup for butler calculation
+    bool        m_bDataChanged = false; // 'something' changed in grid
 };
 
 #endif

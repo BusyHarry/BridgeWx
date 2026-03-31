@@ -1,7 +1,7 @@
 ﻿
 New match page:
 
-Matchfolder  : D:\bridge\BridgeWx\AutoTest\work
+Matchfolder  : D:\bridge\BridgeWx\autotest\work
 Match        : autoTest01
 Session      : 1
 Databasetype : .sqlite

@@ -1,7 +1,7 @@
 ﻿// Copyright(c) 2024-present, BusyHarry/h.levels & BridgeWx contributors.
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
-#include "NewSchemaData.h"
+#include "newschemadata.h"
 
 std::vector<NEW_SCHEMA> newSchemaTable
 {

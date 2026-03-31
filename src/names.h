@@ -12,25 +12,29 @@
 
 namespace names
 {
-    typedef std::vector<UINT16> UINT16_VECTOR;
+    using UINT16_VECTOR = std::vector<UINT16>;
 
     struct PairInfo
     {
-        explicit PairInfo(int a_clubIndex=0){clubIndex = a_clubIndex;}
-        explicit PairInfo(const wxString& a_name, int a_clubIndex=0){pairName=a_name, clubIndex = a_clubIndex;}
+        explicit PairInfo(int a_clubIndex=0)
+            : clubIndex (a_clubIndex)
+        {;}
+        explicit PairInfo(const wxString& a_name, int a_clubIndex=0)
+            : pairName  (a_name)
+            , clubIndex (a_clubIndex)
+        {;}
         bool operator == (const PairInfo& b) const
             { return (this->clubIndex == b.clubIndex) && (this->pairName == b.pairName) ? true : false; }
-        bool operator != (const PairInfo& b) const {return !(*this == b);}
         wxString    pairName;
         int         clubIndex;
     };
 
-//    typedef std::vector<names::PairInfo>::const_iterator PairInfoConstIt;
-    typedef std::vector<names::PairInfo> PairInfoData;
-    typedef PairInfoData::const_iterator PairInfoConstIt;
-    typedef PairInfoData::      iterator PairInfoIt;
+/// using PairInfoConstIt   = std::vector<names::PairInfo>::const_iterator;
+    using PairInfoData      = std::vector<names::PairInfo>;
+    using PairInfoConstIt   = PairInfoData::const_iterator;
+    using PairInfoIt        = PairInfoData::iterator;
 
-    const wxString      GetNotSet();                                                        // the string you get if no pairnr exists for it
+    wxString            GetNotSet();                                                        // the string you get if no pairnr exists for it
     const PairInfoData& GetGlobalPairInfo       ();                                         // get all the pair info
     UINT                GetNumberOfGlobalPairs  ();                                         // the nr of global pairnr's
     PairInfo            GetGlobalPairInfo       (int pairnr);                               // get info for pair <index>
@@ -70,7 +74,6 @@ namespace names
     bool                AdjustAssignments(UINT fromPair, int delta); // adjust all pairnrs in the assignment table, starting from 'frompair' with 'delta', return true if one or more changes
     bool                DeleteAssignmentFromPair(UINT sessionPair);  // remove assignment 'pair', return true if removed
     bool                ExistAssignments();                          // true, if there is atleast one assignment
-
 }   // end namespace names
 
 #endif

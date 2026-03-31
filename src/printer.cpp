@@ -240,36 +240,34 @@ private:
     void PrintPage();                               //executed when '\f' is found in input
     bool OpenDiskfile4Print();                      //open the diskfile, if printing to disk
 
-    HDC                 m_hPrinter;                 // active printer connection, will be closed on destruction or on new printername
-    bool                m_bPrinting;                // if we have started, we also have to stop
-    bool                m_bPageStarted;             // true if at least 1 line has been put on a (new) page
-    int                 m_iPrintjobId;              // id from startdoc, not used here
-    int                 m_iLinesOnPage;             // number of lines already printed on current page
-    int                 m_iCharWidth;               // the width in pixels of a char in the choosen font
-    int                 m_iCharHeight;              // the height in pixels of a char in the choosen font
-    int                 m_iHorizontalOffset;        // left margin in pixels of page
-    int                 m_iVerticalOffset;          // top margin in pixels of page
-    int                 m_iDeviceHeight;            // height in pixels of page of used printer
-    int                 m_iDeviceWidth;             // width in pixels of page of used printer
-    int                 m_iMaxCharsOnLine;          // maximum chars on a line for this printer/paper/font
-    int                 m_iMaxLinesOnPage;          // maximum lines on a page for this printer/paper/font
-    int                 m_iDefaultLpp4List;         // lpp when printing to textfile, set by application
-    int                 m_iPointSize;               // the pointsize used in creating fonts
-    int                 m_iPagesPrinted;            // nr of pages printed for the active session
-    bool                m_bPrint2File;              // true, if we are not using a real printer
-    FILE*               m_fp;                       // the filepointer when writing to a document
-    bool                m_bAutoWrap;                // will wrap text to next line if more chars then m_iMaxCharsOnLine
+    HDC         m_hPrinter          = 0;        // active printer connection, will be closed on destruction or on new printername
+    bool        m_bPrinting         = false;    // if we have started, we also have to stop
+    bool        m_bPageStarted      = false;    // true if at least 1 line has been put on a (new) page
+    int         m_iPrintjobId       = 0;        // id from startdoc, not used here
+    int         m_iLinesOnPage      = 0;        // number of lines already printed on current page
+    int         m_iCharWidth        = 0;        // the width in pixels of a char in the choosen font
+    int         m_iCharHeight       = 0;        // the height in pixels of a char in the choosen font
+    int         m_iHorizontalOffset = 0;        // left margin in pixels of page
+    int         m_iVerticalOffset   = 0;        // top margin in pixels of page
+    int         m_iDeviceHeight     = 0;        // height in pixels of page of used printer
+    int         m_iDeviceWidth      = 0;        // width in pixels of page of used printer
+    int         m_iMaxCharsOnLine   = 80;       // maximum chars on a line for this printer/paper/font
+    int         m_iMaxLinesOnPage   = 64;       // maximum lines on a page for this printer/paper/font
+    int         m_iDefaultLpp4List  = 64;       // lpp when printing to textfile, set by application
+    int         m_iPointSize        = sc_iDefaultPointsize; // the pointsize used in creating fonts
+    int         m_iPagesPrinted     = 0;        // nr of pages printed for the active session
+    bool        m_bPrint2File       = false;    // true, if we are not using a real printer
+    FILE*       m_fp                = nullptr;  // the filepointer when writing to a document
+    bool        m_bAutoWrap         = false;    // will wrap text to next line if more chars then m_iMaxCharsOnLine
+    HFONT       m_hOriginalFont     = nullptr;  // receives the original font when setting a new one
+    HFONT       m_hNewFont          = nullptr;  // the currently created new font
+    wxString    m_sLineBuffer;                  // buffer for characters till next \n or \f
+    wxString    m_sPrinterName;                 // the name of the current active printer
+    wxString    m_sPrinterFont      = sc_cDefaultFont;  // the currently used font for the printer
+    wxString    m_sPageTitle;                   // the title is printed at the top of a (new) page
 
-
-    HFONT               m_hOriginalFont;            // receives the original font when setting a new one
-    HFONT               m_hNewFont;                 // the currently created new font
-    wxString            m_sLineBuffer;              // buffer for characters till next \n or \f
-    wxString            m_sPrinterName;             // the name of the current active printer
-    wxString            m_sPrinterFont;             // the currently used font for the printer
-    wxString            m_sPageTitle;               // the title is printed at the top of a (new) page
-
-    #define X(x) ((x)*m_iCharWidth  + m_iHorizontalOffset)  //determine the horizontal print position
-    #define Y(y) ((y)*m_iCharHeight + m_iVerticalOffset  )  //determine the vertical print position
+    #define X(x) ((x)*m_iCharWidth  + m_iHorizontalOffset)  /* determine the horizontal print position */
+    #define Y(y) ((y)*m_iCharHeight + m_iVerticalOffset  )  /* determine the vertical print position   */
 
     MyLinePrinter           (const MyLinePrinter&) = delete;    // cppcheck remarks....
     MyLinePrinter& operator=(const MyLinePrinter&) = delete;
@@ -283,28 +281,6 @@ private:
 static MyLinePrinter thePrintclass;
 
 MyLinePrinter::MyLinePrinter()
-: m_hPrinter            ( 0 )
-, m_bPrinting           ( false )
-, m_bPageStarted        ( false )
-, m_iPrintjobId         ( 0 )
-, m_iLinesOnPage        ( 0 )
-, m_iCharWidth          ( 0 )
-, m_iCharHeight         ( 0 )
-, m_iHorizontalOffset   ( 0 )
-, m_iVerticalOffset     ( 0 )
-, m_iDeviceHeight       ( 0 )
-, m_iDeviceWidth        ( 0 )
-, m_iMaxCharsOnLine     ( 80 )
-, m_iMaxLinesOnPage     ( 64 )
-, m_iDefaultLpp4List    ( 64 )
-, m_iPointSize          ( sc_iDefaultPointsize )
-, m_iPagesPrinted       ( 0 )
-, m_bPrint2File         ( false )
-, m_fp                  ( nullptr )
-, m_bAutoWrap           ( true )
-, m_hOriginalFont       ( 0 )
-, m_hNewFont            ( 0 )
-, m_sPrinterFont        ( sc_cDefaultFont )
 {
     m_sLineBuffer.reserve(100);         // assume single line always smaller then 100 chars
 }   // MyLinePrinter()
@@ -349,8 +325,8 @@ bool MyLinePrinter::PrintAFile(const wxString& a_fileName, const wxString& a_tit
     }
 
     bool    bResult = true;
-    FILE*   fp      = 0;
-    char*   buf     = 0;
+    FILE*   fp      = nullptr;
+    std::unique_ptr<char> uBuf;
 
     do
     {
@@ -373,13 +349,14 @@ bool MyLinePrinter::PrintAFile(const wxString& a_fileName, const wxString& a_tit
             break;
         }
 
-        #define BUF_SIZE_ 1024
+        constexpr auto BUF_SIZE_ = 1024;
         try
         {
-            buf = new char[BUF_SIZE_];
+            uBuf.reset(new char[BUF_SIZE_]);
         } catch (...) { ; }
 
-        if (!buf )
+        char* buf = uBuf.get();
+        if ( !buf )
         {
             bResult = false;        // out of memory??
             break;
@@ -392,11 +369,10 @@ bool MyLinePrinter::PrintAFile(const wxString& a_fileName, const wxString& a_tit
             bResult = PrintLine(cnv);
 //            bResult = std::all_of(cnv.begin(), cnv.end(), [this]( wxChar chr ){ return this->PrintCharacter(chr);});
         }
-    } while (0);            // execute body only once
+    } while (false);        // execute body only once
 
     EndPrint();             // print last line/page
     if (fp) (void)fclose(fp);
-    delete[] buf;
     m_sPageTitle.clear();
     return bResult;
 }   // PrintAFile()
@@ -456,7 +432,7 @@ void MyLinePrinter::InitFont(LOGFONT* pLogFontInfo)
 
     m_hNewFont = CreateFontIndirect(pLogFontInfo);       // Create a logical font based on the user's selection.
 
-    HFONT tmpFont = reinterpret_cast<HFONT>(SelectObject(m_hPrinter, m_hNewFont));     //activate the new font
+    auto tmpFont = reinterpret_cast<HFONT>(SelectObject(m_hPrinter, m_hNewFont));     //activate the new font
 
     if (m_hOriginalFont == 0)
     {   // first time creation, so keep original for later restore (don't know if needed)
@@ -574,7 +550,7 @@ bool MyLinePrinter::PrinterOpen()
         // gives multiple(6): "Invalid parameter passed to C runtime function."
     } catch(...){m_hPrinter = 0;}
 
-    if (m_hPrinter == 0)
+    if ( m_hPrinter == nullptr )
     {
         return false;
     }
@@ -653,7 +629,6 @@ bool MyLinePrinter::BeginPrint(const wxString& a_title)
         return PrintLine('\n' + a_title + '\n');
     }
 
-//    Clear();
     if (!PrinterOpen())
     {   // can't open printer!
         return false;
@@ -731,7 +706,7 @@ void MyLinePrinter::SetPrinterName(const wxString& a_printerName )
 
 void  MyLinePrinter::Line2Printer()
 {
-    if (m_hPrinter == 0) return;        // there is no open printer yet, so just ignore
+    if ( m_hPrinter == nullptr ) return;        // there is no open printer yet, so just ignore
 
     /*
     Caution  Using the MultiByteToWideChar function incorrectly can compromise the security
@@ -745,7 +720,7 @@ void  MyLinePrinter::Line2Printer()
         if (!m_bPageStarted)
         {   //first line on a page, so we need to tell the printer to prepare a new page
             {
-                bool bStatus = (bool)StartPage(m_hPrinter);     MY_UNUSED(bStatus);
+                auto bStatus = (bool)StartPage(m_hPrinter);     MY_UNUSED(bStatus);
             }
 
             m_bPageStarted = true;
@@ -840,7 +815,7 @@ bool MyLinePrinter::PrintLine(const wxString& a_line)
         return PrintString2File(a_line, m_fp);
     }
 
-    return std::all_of(a_line.begin(), a_line.end(), [this]( wxChar chr ){ return this->PrintCharacter(chr);});
+    return std::ranges::all_of(a_line, [this]( wxChar chr ){ return this->PrintCharacter(chr);});
 }   // PrintLine()
 
 const wxString& MyLinePrinter::GetPrinterName()const
@@ -884,11 +859,11 @@ bool MyLinePrinter::SelectPrinter()
         return false;   //something wrong, or user has cancelled.
     }
 
-    PDEVMODE    pDefmode    = (PDEVMODE)GlobalLock(pdlg.hDevMode);                              (void)pDefmode;
-    LPDEVNAMES  pDefNames   = (LPDEVNAMES)GlobalLock(pdlg.hDevNames);
-    wxChar*     pDriverName = reinterpret_cast<wxChar*>(pDefNames) + pDefNames->wDriverOffset;  (void)pDriverName;
-    wxChar*     pDeviceName = reinterpret_cast<wxChar*>(pDefNames) + pDefNames->wDeviceOffset;
-    wxChar*     pOutput     = reinterpret_cast<wxChar*>(pDefNames) + pDefNames->wOutputOffset;  (void)pOutput;
+    auto    pDefmode    = (PDEVMODE)GlobalLock(pdlg.hDevMode);                              (void)pDefmode;
+    auto    pDefNames   = (LPDEVNAMES)GlobalLock(pdlg.hDevNames);
+    auto    pDriverName = reinterpret_cast<wxChar*>(pDefNames) + pDefNames->wDriverOffset;  (void)pDriverName;
+    auto    pDeviceName = reinterpret_cast<wxChar*>(pDefNames) + pDefNames->wDeviceOffset;
+    auto    pOutput     = reinterpret_cast<wxChar*>(pDefNames) + pDefNames->wOutputOffset;  (void)pOutput;
 
     m_sPrinterName = pDeviceName;   // update member
 
@@ -933,8 +908,8 @@ void MyLinePrinter::PrintTable(const table::TableInfo& table)
     #define TO_X(pt) (X((pt).x)+m_iCharWidth/2)
     #define TO_Y(pt) (Y((pt).y)+m_iCharHeight/2)
 
-    HPEN pen    = CreatePen(PS_SOLID, 10, RGB(0, 0, 0));
-    HPEN oldPen = static_cast<HPEN> (SelectObject(m_hPrinter, pen));
+    auto pen    = CreatePen(PS_SOLID, 10, RGB(0, 0, 0));
+    auto oldPen = static_cast<HPEN> (SelectObject(m_hPrinter, pen));
     for (size_t index = 0; index < table.lineCount; ++index)
     {   // draw all the lines in the linearray
         wxPoint pos = table.origin + table.lines[index].begin;

@@ -13,8 +13,9 @@
 #include <wx/colour.h>
 
 #include "utils.h"
-#include "schemaInfo.h"
+#include "schemainfo.h"
 #include "fdp.h"
+#include "version.h"
 
 class wxWindow;
 class wxTextCtrl;
@@ -24,12 +25,14 @@ enum CfgFileEnum{ CFG_OK, CFG_ERROR, CFG_ONLY_READ, CFG_WRITE };  // used for ha
 constexpr auto TRIM_LEFT  = false;
 constexpr auto TRIM_RIGHT = true;
 
-typedef unsigned char       UINT8;
-typedef short               INT16;
-typedef unsigned short      UINT16;
-typedef unsigned int        UINT;
-typedef unsigned int        UINT32;
-typedef std::vector<UINT> UINT_VECTOR;
+using UINT8         = unsigned char;
+using INT16         = short;
+using UINT16        = unsigned short;
+using UINT          = unsigned int;
+using UINT32        = unsigned int;
+using UINT_VECTOR   = std::vector<UINT>;
+
+static auto constexpr CURRENT_SESSION = UINT_MAX;
 
 #define wxEVT_USER          wxEVT_MENU
 #define PS                  wxFileName::GetPathSeparator()
@@ -41,7 +44,7 @@ typedef std::vector<UINT> UINT_VECTOR;
 class Cleanup
 {   // https://github.com/wxWidgets/wxWidgets/issues/18571?cversion=0&cnum_hist=2
 public:
-    Cleanup() {}
+    Cleanup() = default;
     ~Cleanup();
 };
 
@@ -100,7 +103,6 @@ enum MY_IDS
 
 namespace cfg
 {
-#include "version.h"
     enum FileExtension
     {
         EXT_DATABASE,                      //  "db"
@@ -145,45 +147,29 @@ namespace cfg
     constexpr UINT MAX_DESCRIPTION      = 32;
 
     class SCHEMA_DATA;
-    typedef struct GROUP_DATA
+    using GROUP_DATA = struct GROUP_DATA
     {
-        GROUP_DATA(){pairs=14;absent=0;groupOffset=0;schemaId=schema::defaultId;schema=schema::defaultSchema;}
-        bool operator == (const GROUP_DATA& rhs) const
-        {
-            return     pairs        == rhs.pairs
-                    && absent       == rhs.absent
-                    && groupOffset  == rhs.groupOffset
-                    && schemaId     == rhs.schemaId
-                    && schema       == rhs.schema
-                    && groupChars   == rhs.groupChars
-                ;
-        }
-        UINT        pairs;              // nr of pairs fot this group
-        UINT        absent;             // nr of absent pair
-        UINT        groupOffset;        // first pairnr in (next) group
-        int         schemaId;           // id of actual schema
-        wxString    schema;             // the schema to use
-        wxString    groupChars;         // 1/2 char for this group, if more then 1 group
-    } GROUP_DATA;
+        GROUP_DATA() = default;
+        bool operator == (const GROUP_DATA& rhs) const = default;
+        UINT        pairs       = 14;                       // nr of pairs for this group
+        UINT        absent      = 0;                        // nr of absent pair
+        UINT        groupOffset = 0;                        // first pairnr in (next) group
+        int         schemaId    = schema::defaultId;        // id of actual schema
+        wxString    schema      = schema::defaultSchema;    // the schema to use
+        wxString    groupChars;                             // 1/2 char for this group, if more then 1 group
+    };
 
-    typedef  std::vector<GROUP_DATA> vGroupData;
+    using vGroupData = std::vector<GROUP_DATA>;
 
-    typedef struct SessionInfo
+    using SessionInfo = struct SessionInfo
     {   // to have the updated values at the same time!
         UINT        nrOfGames   = 0;
         UINT        setSize     = 0;
         UINT        firstGame   = 0;
         vGroupData  groupData;
-        bool operator == (const SessionInfo& rhs) const
-        {
-            return     nrOfGames == rhs.nrOfGames
-                    && setSize   == rhs.setSize
-                    && firstGame == rhs.firstGame
-                    && groupData == rhs.groupData;
-        }
-    } SessionInfo;
+        bool operator == (const SessionInfo& rhs) const = default;
+    };
 
-    #define CURRENT_SESSION UINT_MAX
     wxString    ConstructFilename(const wxString& basename, FileExtension ext, UINT a_sessionId = CURRENT_SESSION);   // based on active path/session and supplied extensiontype
     wxString    ConstructFilename( FileExtension ext, UINT a_sessionId = CURRENT_SESSION );         // based on active path/match and wanted session and supplied extensiontype
 

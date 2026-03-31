@@ -9,7 +9,7 @@
 #include "validators.h"
 #include "cfg.h"
 #include "names.h"
-#include "correctionsSession.h"
+#include "correctionssession.h"
 #include "mygrid.h"
 #include "printer.h"
 #include "score.h"
@@ -28,17 +28,38 @@ static constexpr auto COR_PERCENT_MAX   = +100;
 * extra: the mp's you really  got at that table (for all games....)
 * The 'max' is added to the total achievable mp's and the 'extra' is added to your total achieved mp's
 */
-#define sizeOne GetCharWidth()
-#define SIZE_PAIRNR_SES (4 * sizeOne)
-#define SIZE_PAIR_SES   (5 * sizeOne)
-#define SIZE_PAIRNAME   ((cfg::MAX_NAME_SIZE+1)* sizeOne)   /* original name        */
-#define SIZE_PAIRNR     (6 * sizeOne)                       /* "AB12 *"             */
-#define SIZE_PROCENT    (4 * sizeOne)                       /* just numbers 1-120   */
-#define SIZE_MP         (6 * sizeOne)                       /* like -2200           */
-#define SIZE_GAMES      (8 * sizeOne)
+
+static int SIZE_PAIRNR_SES;
+static int SIZE_PAIR_SES;
+static int SIZE_PAIRNAME;   /* original name        */
+static int SIZE_PAIRNR;     /* "AB12 *"             */
+static int SIZE_PROCENT;    /* just numbers 1-120   */
+static int SIZE_MP;         /* like -2200           */
+static int SIZE_GAMES;
+
+enum
+{
+      COL_PAIRNAME_SESSION = 0  // session pairname
+    , COL_PAIRNAME_GLOBAL       // global pairname
+    , COL_COR_PROCENT           // correction in %
+    , COL_COR_MP                // correctionin MP
+    , COL_COR_MAX               // maximum correction ....
+    , COL_COR_EXTRA             // extra corrrection.....
+    , COL_COR_GAMES             // nr of games for max/extra
+    , COL_NR_OF                 // nr of columns in this grid
+};
 
 CorrectionsSession::CorrectionsSession(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent, a_pageId), m_theGrid(0)
 {
+    auto const sizeOne = GetCharWidth();
+    SIZE_PAIRNR_SES = (4 * sizeOne);
+    SIZE_PAIR_SES   = (5 * sizeOne);
+    SIZE_PAIRNAME   = ((cfg::MAX_NAME_SIZE+1)* sizeOne); /* original name        */
+    SIZE_PAIRNR     = (6 * sizeOne);                     /* "AB12 *"             */
+    SIZE_PROCENT    = (4 * sizeOne);                     /* just numbers 1-120   */
+    SIZE_MP         = (6 * sizeOne);                     /* like -2200           */
+    SIZE_GAMES      = (8 * sizeOne);
+
     // create and populate grid
     m_theGrid = new MyGrid(this, "GridCorSession");
     m_theGrid->CreateGrid(0, COL_NR_OF);
@@ -59,7 +80,7 @@ CorrectionsSession::CorrectionsSession(wxWindow* a_pParent, UINT a_pageId) :Base
                                                                    m_theGrid->SetColLabelAutoTest(COL_COR_MAX         , "max"     );
                                                                    m_theGrid->SetColLabelAutoTest(COL_COR_EXTRA       , "extra"   );
                                                                    m_theGrid->SetColLabelAutoTest(COL_COR_GAMES       , "games"   );
-    wxGridCellAttr* pAttr = new wxGridCellAttr;
+    auto pAttr = new wxGridCellAttr;
     pAttr->SetAlignment(wxALIGN_LEFT, wxALIGN_CENTER_VERTICAL);
                       m_theGrid->SetColAttr(COL_PAIRNAME_SESSION, pAttr); pAttr->SetAlignment(wxALIGN_RIGHT, wxALIGN_CENTER_VERTICAL);
     pAttr->IncRef();  m_theGrid->SetColAttr(COL_COR_PROCENT     , pAttr);
@@ -72,24 +93,21 @@ CorrectionsSession::CorrectionsSession(wxWindow* a_pParent, UINT a_pageId) :Base
     auto okCancel = CreateOkCancelButtons();
 
     wxSizerFlags defaultSF1(1); defaultSF1.Border(wxALL, MY_BORDERSIZE);
-    wxBoxSizer* hBoxSearchOk = new wxBoxSizer(wxHORIZONTAL);
+    auto hBoxSearchOk = new wxBoxSizer(wxHORIZONTAL);
     hBoxSearchOk->Add(search    , defaultSF1);
     hBoxSearchOk->AddStretchSpacer(1000);
     hBoxSearchOk->Add(okCancel  , defaultSF1);
 
     // add to layout
-    wxStaticBoxSizer* vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Entry of session corrections"));
+    auto vBox = new wxStaticBoxSizer(wxVERTICAL, this, _("Entry of session corrections"));
     vBox->Add(m_theGrid         , defaultSF1.Expand());
     vBox->Add(hBoxSearchOk      , 0);
     SetSizer(vBox);             // add to panel
-    m_bDataChanged  = false;    // no changes yet
     m_bButler = !cfg::GetButler();  // force first setup in RefreshInfo()
 
     RefreshInfo();              // fill the grid with data
     m_description = "CorSession";
 }   // CorrectionsSession()
-
-CorrectionsSession::~CorrectionsSession(){}
 
 void CorrectionsSession::AutotestRequestMousePositions(MyTextFile* a_pFile)
 {
@@ -106,8 +124,6 @@ void CorrectionsSession::AutotestRequestMousePositions(MyTextFile* a_pFile)
     int rows = m_theGrid->GetNumberRows();
     for (int row = 0; row < rows; ++row)
     {
-        //        CORRECTION_SESSION() {type = '%'; correction = 0; extra = 0; maxExtra = 0; games = 0;}
-        //         char type; int correction; Fdp extra; int maxExtra; UINT games
         wxString procent = m_theGrid->GetCellValue(row, COL_COR_PROCENT);
         wxString mp      = m_theGrid->GetCellValue(row, COL_COR_MP     );
         wxString maxe    = m_theGrid->GetCellValue(row, COL_COR_MAX    );
@@ -329,8 +345,8 @@ void CorrectionsSession::RefreshInfo()
         m_theGrid->SetCellEditor(row, COL_COR_EXTRA     , new MyGridCellEditorWithValidator(minVal         , COR_EXTRA_MAX , 1 ));
     }
 
-    auto corrections = cor::GetCorrectionsSession();
-    for (const auto& [sessionPair, cs] : *corrections)
+    const auto& corrections = *cor::GetCorrectionsSession();
+    for (const auto& [sessionPair, cs] : corrections)
     {
         int row = sessionPair - 1;
         int col = cs.type == '%' ? COL_COR_PROCENT : COL_COR_MP;

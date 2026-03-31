@@ -75,11 +75,11 @@ namespace glb
             {   // only games with data
                 wxString theScores;
                 wxChar separator = ' ';
-                for ( auto score : it )
+                for ( const auto& score : it )
                 {
                     wxString contracts;
                     if ( !score.contractNS.IsEmpty() || !score.contractEW.IsEmpty() )
-                        contracts = FMT(",\"%s\",\"%s\"", score.contractNS, score.contractEW);
+                        contracts = FMT(R"(,"%s","%s")", score.contractNS, score.contractEW);
                     theScores += FMT("%c{%u,%u,%s,%s%s}", separator, score.pairNS, score.pairEW,
                         score::ScoreToString(score.scoreNS), score::ScoreToString(score.scoreEW), contracts);
                     separator = theSeparator;
@@ -110,7 +110,7 @@ namespace glb
             ce.bonus = Fdp(bonusBuf);
             //        if ( cor::IsValidCorrectionEnd(pairNr, ce, it, bItemError) )   // let application handle this
             {   // only add result if editing (map == empty) or when pair exists in supplied map
-                if ( a_bEdit || a_mCorrectionsEnd.find(pairNr) != a_mCorrectionsEnd.end() )
+                if ( a_bEdit || a_mCorrectionsEnd.contains(pairNr) )
                 {
                     if ( !a_bEdit && ce.score == SCORE_IGNORE )
                     {   // keep original score and nr of played games if bonus present
@@ -131,14 +131,14 @@ namespace glb
     {
         wxChar   separator = ' ';
         wxString correction;
-        for ( const auto& it : a_mCorrectionsEnd )
+        for ( const auto&[pair, data] : a_mCorrectionsEnd )
         {
             correction += FMT("%c{%u,%s,%s,%u}"
                 , separator
-                , it.first
-                , it.second.score.AsString2F()
-                , it.second.bonus.AsString2F()
-                , it.second.games
+                , pair
+                , data.score.AsString2F()
+                , data.bonus.AsString2F()
+                , data.games
             );
             separator = theSeparator;
         }
@@ -179,16 +179,16 @@ namespace glb
     {
         wxChar   separator = ' ';
         wxString correction;
-        for ( const auto& it : a_mCorrectionsSession )
+        for ( const auto&[pair, data] : a_mCorrectionsSession )
         {
             correction += FMT("%c{%u,%+i%c,%s,%i,%u}"
                 , separator
-                , it.first
-                , it.second.correction
-                , it.second.type
-                , it.second.extra.AsString1()
-                , it.second.maxExtra
-                , it.second.games
+                , pair
+                , data.correction
+                , data.type
+                , data.extra.AsString1()
+                , data.maxExtra
+                , data.games
             );
             separator = theSeparator;
         }
@@ -197,7 +197,7 @@ namespace glb
 
     wxString GetDefaultSchema()
     {
-        return FMT("{24,4,1}%c{14,0,\"6multi14\",\"\"}", theSeparator);
+        return FMT(R"({24,4,1}%c{14,0,"6multi14",""})", theSeparator);
     }   // GetDefaultSchema()
 
     bool SchemaRead(cfg::SessionInfo& a_sessionInfo, const wxString& a_schema)
@@ -225,12 +225,12 @@ namespace glb
             char groupChars[20] = { 0 };
             groupData.pairs     = 0;
             groupData.absent    = 0;
-            count               = wxSscanf(it, " {%u ,%u , \"%19[^\"]\" , \"%19[^\"]\" }", &groupData.pairs, &groupData.absent, schema, groupChars);
+            count               = wxSscanf(it, R"( {%u ,%u , "%19[^"]" , "%19[^"]" })", &groupData.pairs, &groupData.absent, schema, groupChars);
             // count == 2 -> empty schema
             // count == 3 -> empty groupchars
             if ( count == 2 )
             {   // no schema, but perhaps groupchars
-                count = wxSscanf(it, " {%u ,%u , \"\" , \"%19[^\"]\" }", &groupData.pairs, &groupData.absent, groupChars);
+                count = wxSscanf(it, R"( {%u ,%u , "" , "%19[^"]" })", &groupData.pairs, &groupData.absent, groupChars);
             }
             if ( count < 3 )
             {   // schema and groupchars empty
@@ -253,7 +253,7 @@ namespace glb
         for ( const auto& it : a_info.groupData )
         {
             wxString groupChars = it.groupChars;
-            schema += FMT("%c{%u,%u,\"%s\",\"%s\"}", theSeparator, it.pairs, it.absent, it.schema, groupChars);
+            schema += FMT(R"(%c{%u,%u,"%s","%s"})", theSeparator, it.pairs, it.absent, it.schema, groupChars);
         }
 
         return schema;
@@ -297,7 +297,7 @@ namespace glb
             UINT pairNr;
             bool bItemError = (3 != wxSscanf(it, " {%u , %10[^, ] , %u }", &pairNr, scoreBuf, &ce.games));
             ce.score = Fdp(scoreBuf);
-            if ( a_mSessionResult.find(pairNr) == a_mSessionResult.end() )
+            if ( !a_mSessionResult.contains(pairNr) )
                 bItemError = true;  // pair MUST be present!
             if ( cor::IsValidCorrectionEnd(pairNr, ce, it, bItemError) )
             {
@@ -313,14 +313,14 @@ namespace glb
     {
         wxString result;
         wxChar   separator = ' ';
-        for ( const auto& it : a_mSessionResult )   // save score of all pairs
+        for ( const auto&[pair, data] : a_mSessionResult )   // save score of all pairs
         {
-            if ( it.second.games == 0 ) continue;   // only present on conversion old --> db
+            if ( data.games == 0 ) continue;   // only present on conversion old --> db
             result += FMT("%c{%u,%s,%u}"
                 , separator
-                , it.first                          // global pairnr
-                , it.second.score.AsString2F()      // score
-                , it.second.games                   // played games
+                , pair                         // global pairnr
+                , data.score.AsString2F()      // score
+                , data.games                   // played games
             );
             separator = theSeparator;
         }
@@ -332,7 +332,7 @@ namespace glb
     {   // write contents of vector as UINT, ignoring entry 0
         wxString info;
         auto it = std::find_if(a_vUint.rbegin(), a_vUint.rend(), [](UINT pair){return pair != 0U ;} );
-        int maxPair = a_vUint.rend() - it - 1;  // index of highest pair in session, -1 if none found
+        auto maxPair = (int)(a_vUint.rend() - it - 1LL);  // index of highest pair in session, -1 if none found
 
         wxChar separator = ' ';
         for ( int pair = 1; pair <= maxPair; ++pair)

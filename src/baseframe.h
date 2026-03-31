@@ -7,15 +7,17 @@
 
 #include <wx/panel.h>
 #include <wx/choice.h>
-#include <wx/textCtrl.h>
+#include <wx/textctrl.h>
 #include <wx/timer.h>
 #include <wx/frame.h>
 #include <wx/textfile.h>
 #include <wx/string.h>
 #include <wx/combobox.h>
+#include <wx/stattext.h>
+#include <wx/checkbox.h>
 
 #include "utils.h"
-#include "choiceMC.h"
+#include "choicemc.h"
 #include "mygrid.h"
 
 void AutoTestBusy(wxWindow* pWin, const wxString& msg);
@@ -29,18 +31,19 @@ void AutoTestBusy(wxWindow* pWin, const wxString& msg);
 
 class wxBoxSizer;
 class MyTextFile;
+class wxRadioBox;
 
 #define MY_SIZE_TXTCTRL_NUM(count) wxDefaultPosition, {GetCharWidth()*(1+(count)),-1} /* default size for textCtrl with number input*/
 #undef wxOK_DEFAULT                     /* is defined as 0x00, so has no effect when setting focus....*/
 #undef wxYES_DEFAULT                    /* is defined as 0x00, so has no effect when setting focus....*/
-#define wxOK_DEFAULT            wxOK    /* this is default, so define it like its button id!*/
-#define wxYES_DEFAULT           wxYES   /* this is default, so define it like its button id!*/
-#define MY_BORDERSIZE           10
+auto constexpr wxOK_DEFAULT     = wxOK; /* this is default, so define it like its button id!*/
+auto constexpr wxYES_DEFAULT    = wxYES;/* this is default, so define it like its button id!*/
+auto constexpr MY_BORDERSIZE    = 10;
 
 wxPoint GetStaticRectPosition();    // position for invisible static controls AHK
 wxSize  GetStaticRectSize();        //     size for invisible static controls AHK
 
-typedef struct CellData { int row=0;int column=0; wxString newData;} CellData;
+using  CellData = struct CellData { int row=0;int column=0; wxString newData;};
 
 struct CellInfo             // info for derived class when a gridcell changes
 {
@@ -49,8 +52,13 @@ struct CellInfo             // info for derived class when a gridcell changes
     void*       pList;      // the pointer to the active grid/list
     wxString    oldData;    // the original value
     wxString    newData;    // the new value
-    explicit CellInfo(void* a_pList=0, int a_row=0,int a_column=0, const wxString& a_oldData=wxEmptyString, const wxString& a_newData=wxEmptyString)
-    {pList=a_pList;row=a_row;column=a_column;oldData=a_oldData; newData=a_newData;}
+    explicit CellInfo(void* a_pList=nullptr, int a_row=0,int a_column=0, const wxString& a_oldData=ES, const wxString& a_newData=ES)
+      : row     (a_row)
+      , column  (a_column)
+      , pList   (a_pList)
+      , oldData (a_oldData)
+      , newData (a_newData)
+    {}
 };
 
 enum CellChanges
@@ -59,29 +67,26 @@ enum CellChanges
     CELL_CHANGE_REJECTED = true
 };
 
-#include <wx/stattext.h>
-#include <wx/checkbox.h>
-
 class AHKHelper
 {   // (hidden) helper class for AHK2 to receive mouseclick so we can send it to wxChoice/wxComboBox which don't have a 'title'
 public:
     AHKHelper(wxWindow* pParent, wxWindow* pTarget, const wxString& label);
-    ~AHKHelper();
+    ~AHKHelper() = default;
     wxString GetStaticLabel() const;
 private:
     wxStaticText    m_staticAhk;    // 'dummy' target to issue mouseclick for wxChoice/wxComboBox
     wxWindow*       m_pTarget;      // real window  to send mouseclicks to
 };
 
-class MywxChoice : public wxChoice, AHKHelper
+class MywxChoice : public wxChoice, private AHKHelper
 {   // wrapper around standard wxChoice to be able to get an identification for this control for autotesting
 public:
     MywxChoice(wxWindow *parent, wxWindowID id, const wxString& label = ES);
-   ~MywxChoice();
-    wxString GetLabel() const;
+   ~MywxChoice() override = default;
+    wxString GetLabel() const final;
 };
 
-class MywxComboBox : public wxComboBox, AHKHelper
+class MywxComboBox : public wxComboBox, private AHKHelper
 {   // wrapper around standard wxComboBox to be able to get an identification for this control for autotesting
 public:
     MywxComboBox(wxWindow *parent, wxWindowID id,
@@ -89,11 +94,11 @@ public:
                     const wxPoint&  pos     = wxDefaultPosition,
                     const wxSize&   size    = wxDefaultSize,
                     int             count   = 0,
-                    const wxString choices[]= NULL,
+                    const wxString choices[]= nullptr,
                     long            style   = 0
         );
-    ~MywxComboBox();
-    wxString GetLabel() const;
+    ~MywxComboBox() final = default;
+    wxString GetLabel() const final;
 };
 
 class Baseframe : public wxPanel
@@ -101,7 +106,7 @@ class Baseframe : public wxPanel
 public:
     #define AUTOTEST_ADD_WINDOW(pWindow,mousePosName) m_winNames.push_back({pWindow,mousePosName})
     Baseframe(wxWindow* pParent, UINT pageId);
-    virtual ~Baseframe();
+    ~Baseframe() override = default;
 
     void            DeleteConfig() { delete m_pConfig; m_pConfig = 0; }
     virtual void    RefreshInfo() = 0;  // (re)populate the current info
@@ -119,40 +124,44 @@ public:
     // param:"cellInfo", the grid, the row, column, olddata, newdata
     virtual bool OnCellChanging(const CellInfo& cellInfo);
 
-    wxString Unique(const wxString& name);  // if scripttesting, append class_id to common names
+    wxString Unique(const wxString& name) const;    // if scripttesting, append class_id to common names
 protected:
     wxWindow*    m_pParent;
-    void         OnOk           (wxCommandEvent&);              // eventhandler for 'Ok' button, calls OnOk()
+    void         OnOk_          (const wxCommandEvent&);        // eventhandler for 'Ok' button, calls OnOk()
     virtual void OnOk           ();                             // default method for 'Ok' button for derived classes
-    void         OnCancel       (wxCommandEvent&);              // eventhandler for 'Cancel' button, calls OnCancel()
+    void         OnCancel_      (const wxCommandEvent&);        // eventhandler for 'Cancel' button, calls OnCancel()
     virtual void OnCancel       ();                             // default method for 'Cancel' button for derived classes
     virtual void DoSearch       (wxString&);                    // handler for 'any' search in derived class
-    typedef void (Baseframe::*pEventHandler)(wxCommandEvent&);
+    using pEventHandler = void (Baseframe::*)(wxCommandEvent &);
     #define EVT_CMD_HANDLER(handler) (pEventHandler)handler
     wxRadioBox* CreateRadioBox(const wxString& title, const wxArrayString& choices, pEventHandler pHandler, const wxString& autoName = "Radio");
     wxBoxSizer* CreateOkCancelButtons();                        // as it says
     wxBoxSizer* CreateSearchBox();                              // creates a static txt, textctl and search button in horizontal-boxSizer, caling DoSearch() when activated
-    bool        AutotestAddMousePos(MyTextFile* pFile, const wxWindow* pWindow, const wxString& positionName); //add center of window as click-point for autotest
-    void        AutoTestAddGridInfo(MyTextFile* pFile, const wxString& pageName, const MyGrid::GridInfo& gridInfo);
+    bool        AutotestAddMousePos(MyTextFile* pFile, const wxWindow* pWindow, const wxString& positionName) const; //add center of window as click-point for autotest
+    void        AutoTestAddGridInfo(MyTextFile* pFile, const wxString& pageName, const MyGrid::GridInfo& gridInfo) const;
 
     const wxWindow* GetSearchWindow() const {return m_pTxtCtrlSearchBox;}
     struct WinAndName
     {   // store a window/name at construction time to get it added to AUTOTEST positions later on
-        WinAndName(const wxWindow* a_pWindow, const wxString& a_mousePosName, const wxString& a_winTitle="") { pWindow = a_pWindow; mousePosName = a_mousePosName; winTitle = a_winTitle; }
-        const wxWindow* pWindow;
+        WinAndName(const wxWindow* a_pWindow, const wxString& a_mousePosName, const wxString& a_winTitle="")
+            : pWindow       (a_pWindow)
+            , mousePosName  (a_mousePosName)
+            , winTitle      (a_winTitle)
+        {}
+        const wxWindow* pWindow = nullptr;
         wxString        mousePosName;
         wxString        winTitle;
     };
     std::vector<WinAndName> m_winNames;
-    void AutoTestAddWindowsNames(MyTextFile* pFile, const wxString& pageName);     // add the values from m_mousePosNames to the position-file
+    void AutoTestAddWindowsNames(MyTextFile* pFile, const wxString& pageName) const;     // add the values from m_mousePosNames to the position-file
     wxString            m_description;                          // describe this frame
     bool                m_bIsScriptTesting;                     // true if autotest active
 private:
-    void                OnSearch(wxCommandEvent&);              // local handler for the search-button
+    void                OnSearch(const wxCommandEvent&);        // local handler for the search-button
 
-    Baseframe*          m_pConfig;
-    wxTextCtrl*         m_pTxtCtrlSearchBox;
-    int                 m_iCurrentConfigHash;                   // last known config hash
+    Baseframe*          m_pConfig            = nullptr;
+    wxTextCtrl*         m_pTxtCtrlSearchBox  = nullptr;
+    int                 m_iCurrentConfigHash = -1;              // last known config hash
     UINT                m_pageId;                               // identification of the actual page, added to names of common buttons etc when autotesting
 };
 
@@ -168,7 +177,7 @@ class MyChoice : public MywxChoice
 {
 public:
     MyChoice(wxWindow* parent, const wxString& staticText, const wxString& tooltip, const wxString& ahkLabel=ES);
-    virtual ~MyChoice(){}
+    ~MyChoice() final = default;
     /*
     *     the Init() methods: initialize with numbers from 1 to count or the supplied strings.
     *     Set selection to 'selection'
@@ -188,7 +197,7 @@ class MyChoiceMC : public ChoiceMC
 {
 public:
     MyChoiceMC(wxWindow* parent, const wxString& title, const wxString& tooltip, const wxString& textCtrlTitle);
-    ~MyChoiceMC() override;
+    ~MyChoiceMC() override = default;
     /*
     *     the Init() methods are buildin
     */
@@ -211,18 +220,18 @@ public:
         , WRITE
         , READ_WRITE
     };
-    MyTextFile();
+    MyTextFile() = default;
     explicit MyTextFile(const wxString& filename, AccessType access = READ, wxTextFileType textType = wxTextFileType_Dos);
-    ~MyTextFile();
+    ~MyTextFile() final;
     void MyCreate(const wxString& filename, AccessType access = READ, wxTextFileType textType= wxTextFileType_Dos);
     bool IsOk() const;
     void  Flush();
 private:
-    AccessType      m_access;
-    wxTextFileType  m_textType;
+    AccessType      m_access    = READ;
+    wxTextFileType  m_textType  = wxTextFileType_Dos;
     wxString        m_fileName;
-    int             m_error;
-    bool            m_bOk;
+    int             m_error     = -1;
+    bool            m_bOk       = false;
 };
 
 int MyGetSingleChoiceIndex(const wxString& message, const wxString& caption, const wxArrayString& names, wxWindow* pParent = nullptr, int selection = 0);

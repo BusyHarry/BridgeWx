@@ -18,23 +18,23 @@ class wxSocketBase;
 class SlipServer : public Baseframe
 {
 public:
-    explicit     SlipServer     (wxWindow* pParent, UINT pageId);
-                ~SlipServer     ()          override;
-    void         RefreshInfo    ()          override final;     // (re)populate the grid
-    void         PrintPage      ()          override final;     // not really useful here..
-    void         AutotestRequestMousePositions(MyTextFile* pFile) override final;
+    explicit    SlipServer     (wxWindow* pParent, UINT pageId);
+               ~SlipServer     ()          override;
+    void        RefreshInfo    ()          final;     // (re)populate the grid
+    void        PrintPage      ()          final;     // not really useful here..
+    void        AutotestRequestMousePositions(MyTextFile* pFile) final;
 
 protected:
-    void         OnOk           ()          override final;     // accept button pressed
-    void         OnCancel       ()          override final;     // cancel button pressed
-    virtual void DoSearch       (wxString&) override final;     // handler for 'any' search in derived class
-    virtual void BackupData     ()          override final;     // backup changed data (not really useful here)
+    void        OnOk           ()          final;   // accept button pressed
+    void        OnCancel       ()          final;   // cancel button pressed
+    void        DoSearch       (wxString&) final;   // handler for 'any' search in derived class
+    void        BackupData     ()          final;   // backup changed data (not really useful here)
 
 private:
     static constexpr UINT SERVER_MSG_ID = 0xFE;     // messages from client should start with this id
     static constexpr UINT SERVER_PORT   = 45678;    // the port used for tx/rx
     static constexpr bool DO_DISPLAY    = true;
-    static constexpr bool DO_NOT_DISPLAY=false;
+    static constexpr bool DO_NOT_DISPLAY= false;
 
     enum class SlipResult
     {                           // returned status for an incoming msg if using sockets
@@ -108,7 +108,6 @@ private:
     wxString    DateYMD             () const;                               // get date as '2025.10.07'
     void        DisplayGroupsReady  ();                                     // color group ready: true->green, false->red
     void        DisplayTableReady   (UINT group, UINT table, TableBackground tbg);      // color ready: true->green, false->red
-    wxString    EscapeHtmlChars     (const wxString& str) const;            // escape special chars in html
     wxString    GetBaseResultName   () const;                               // base name for result/log file
    
     wxString    GetLogFile          () const;                               // name of log-file to use in .php for logging
@@ -124,42 +123,45 @@ private:
     SlipResult  HandleSession       (const char*& pInput);
     bool        HasPlayed           (const schema::NS_EW& pairs, UINT set, UINT groupOffset, UINT setSize, UINT maxGames) const;   // check if pairs have played this set
     bool        OkGameData          (const GameInputData& data) const;      // check if gamedata is correct
-    void        OnClearLog          (wxCommandEvent& evt);                  // clear log window, append it to logfile
-    void        OnAddMatch          (wxCommandEvent& evt);                  // add another match to have its data submitted through the browser
-    void        OnFileSystemEvent   (wxFileSystemWatcherEvent& event);      // the watched file has changed
-    void        OnGenHtmlSlipData   (wxCommandEvent&);                      // generate a .php definition/language file
-    void        OnInputChoice       (wxCommandEvent& event);                // new input method selected
-    void        OnNextRound         (wxCommandEvent&);                      // easier choice for next round
+    void        OnClearLog          (const wxCommandEvent& evt);            // clear log window, append it to logfile
+    void        OnAddMatch          (const wxCommandEvent& evt);            // add another match to have its data submitted through the browser
+    void        OnFileSystemEvent   (const wxFileSystemWatcherEvent& event);// the watched file has changed
+    void        OnGenHtmlSlipData   (const wxCommandEvent&);                // generate a .php definition/language file
+    void        OnInputChoice       (const wxCommandEvent& event);          // new input method selected
+    void        OnNextRound         (const wxCommandEvent&);                // easier choice for next round
     bool        OkPairs             (const GameInputData& data) const;      // check if pairs are in this group
-    void        OnSelectRound       (wxCommandEvent&);                      // new round selected
-    void        OnServerEvent       (wxSocketEvent& event);                 // new connection
-    void        OnSocketEvent       (wxSocketEvent& event);                 // something coming in
+    void        OnSelectRound       (const wxCommandEvent&);                // new round selected
+    void        OnServerEvent       (const wxSocketEvent& event);                 // new connection
+    void        OnSocketEvent       (const wxSocketEvent& event);                 // something coming in
     void        SetupGrid           ();                                     // (re-)create grid, if config changes
     void        SocketGetInput      (wxSocketBase *pSock);                  // get <len><msg> and handle it
-    void        SocketPutResult     (wxSocketBase *pSock, SlipResult error, const char buf[]);  // put result buf: <id><err><len><msg>
+    void        SocketPutResult     (wxSocketBase *pSock, SlipResult error, const char buf[]) const;    // put result buf: <id><err><len><msg>
     void        UpdateTableInfo     (UINT round, bool bUpdateDisplay=DO_DISPLAY); // update results to show if round is ready
 
-    std::vector< std::vector< std::vector<TableInfo> > > m_tableInfo;       // [round][group][table].TableInfo all 1-based!
-    UINT                    m_activeRound;      // the (current) round to show the info (1-based)
-    bool                    m_bCancelInProgress;// true, if cancel pressed
-    bool                    m_bDataChanged;     // true, if we got new scores
-    wxString                m_firstActiveMatchPath; // info of the first/only match to watch
+    using vvvTableInfo = std::vector< std::vector< std::vector<TableInfo> > >;
+    wxString                m_firstActiveMatchPath;         // info of the first/only match to watch
     wxString                m_firstActiveMatch;
     UINT                    m_firstActiveSession;
     wxString                m_firstDescription;
-    UINT                    m_groups;           // total nr of groups for all included matches
-    size_t                  m_linesReadInResult;// nr of lines already read in slipresult file
-    wxString                m_logFile;          // filename for appending contents of m_pLog
-    UINT                    m_maxTable;         // max nr of tables over all groups
-    int                     m_numClients;       // number of clients currently connected
-    MY_CHOICE*              m_pChoiceBoxRound;  // choose the round to show its info
-    wxFileSystemWatcher*    m_pFsWatcher;       // the file system watcher
-    wxRadioBox*             m_pInputChoice;     // input through a file or a special network connection
-    wxTextCtrl*             m_pLog;             // show gotten data
-    wxSocketServer*         m_pSocketServer;    // the server listening for slip-results
-    UINT                    m_maxRounds;        // max nr of rounds for all matches
-    std::vector<UINT>       m_tables;           // number of tables in each group
-    wxString                m_tempLogFile;      // file, used temporarily for saving contents of m_plog
-    MyGrid*                 m_theGrid;          // the grid to show progress of slipdata entry
+    wxString                m_logFile;                      // filename for appending contents of m_pLog
+    vvvTableInfo            m_tableInfo;                    // [round][group][table].TableInfo all 1-based!
+    std::vector<UINT>       m_tables;                       // number of tables in each group
+    wxString                m_tempLogFile;                  // file, used temporarily for saving contents of m_plog
+
+    UINT                    m_activeRound       = 0;        // the (current) round to show the info (1-based)
+    bool                    m_bCancelInProgress = false;    // true, if cancel pressed
+    bool                    m_bDataChanged      = false;    // true, if we got new scores
+    UINT                    m_groups            = 0;        // total nr of groups for all included matches
+    size_t                  m_linesReadInResult = 0;        // nr of lines already read in slipresult file
+    UINT                    m_maxRounds         = 0;        // max nr of rounds for all matches
+    UINT                    m_maxTable          = 0;        // max nr of tables over all groups
+    int                     m_numClients        = 0;        // number of clients currently connected
+    MY_CHOICE*              m_pChoiceBoxRound   = nullptr;  // choose the round to show its info
+    wxFileSystemWatcher*    m_pFsWatcher        = nullptr;  // the file system watcher
+    wxSocketServer*         m_pSocketServer     = nullptr;  // the server listening for slip-results
+
+    wxRadioBox*             m_pInputChoice;                 // input through a file or a special network connection
+    wxTextCtrl*             m_pLog;                         // show gotten data
+    MyGrid*                 m_theGrid;                      // the grid to show progress of slipdata entry
 };
 #endif

@@ -4,7 +4,7 @@
 #if !defined _IMPORTEXPORTSCHEMA_H_
 #define _IMPORTEXPORTSCHEMA_H_
 
-#include "NewSchemaData.h"
+#include "newschemadata.h"
 
 namespace importExportSchema
 {

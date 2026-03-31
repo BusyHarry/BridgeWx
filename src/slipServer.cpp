@@ -20,12 +20,12 @@
 #include "printer.h"
 #include "score.h"
 #include "fileio.h"
-#include "slipServer.h"
+#include "slipserver.h"
 
-#define CHOICE_ROUND    "ChoiceRound"
-static constexpr auto S1        ((size_t)1);
-static constexpr auto BORDERSIZE(5);
-static constexpr bool ADD_TIME  (true);
+static constexpr auto CHOICE_ROUND  ("ChoiceRound");
+static constexpr auto S1            ((size_t)1);
+static constexpr auto BORDERSIZE    (5);
+static constexpr bool ADD_TIME      (true);
 
 /*******
 - the file with results of html-scoreslip entry *.slipdata
@@ -80,15 +80,18 @@ example:
 2025.09.21 17:08:38 1.2 ready session: 3, group: 2, table: 3, round: 7
 *****/
 
-SlipServer::SlipServer(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, a_pageId), m_theGrid(0)
+static wxString EscapeHtmlChars (const wxString& str);  // escape special chars in html
+
+SlipServer::SlipServer(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent, a_pageId)
 {
-    m_linesReadInResult     = 0;
+    // cppcheck-suppress useInitializationList
     m_firstActiveMatchPath  = cfg::GetActiveMatchPath();
     m_firstActiveMatch      = cfg::GetActiveMatch();
     m_firstActiveSession    = cfg::GetActiveSession();
     m_firstDescription      = cfg::GetDescription();
     m_logFile               = FMT("%s%s_%u.rx.log" , m_firstActiveMatchPath, m_firstActiveMatch, m_firstActiveSession);
     m_tempLogFile           = FMT("%s%s_%u.tmp.log", m_firstActiveMatchPath, m_firstActiveMatch, m_firstActiveSession);
+
     wxRemoveFile(m_logFile);
     // m_pChoiceBoxRound MUST exist before calling SetupGrid()
     m_pChoiceBoxRound = new MY_CHOICE(this, _("Round:"), _("The info for this round"), Unique(CHOICE_ROUND));
@@ -150,10 +153,6 @@ SlipServer::SlipServer(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_pParent
     vBox->Add(hBox     , 0);   //no borders/align: already done in hBox!
     SetSizer(vBox);     // add to panel
 
-    m_bDataChanged      = false;
-    m_bCancelInProgress = false;
-    m_pFsWatcher        = nullptr;
-    m_pSocketServer     = nullptr;
     RefreshInfo();                                          // now fill the grid with data
     AUTOTEST_ADD_WINDOW(pButtonHtmlSlips, "GeneratePhp");
     AUTOTEST_ADD_WINDOW(this            , "Panel"      );
@@ -178,9 +177,9 @@ struct MatchInfo
     UINT                setSize             = 0;        //  --^
     UINT                rounds              = 0;        //  --^
     bool                bCurrentMatch       = false;    // this match is the active match
-    wxString            fullName;                       // full db name, needed for updating the changed scores
     UINT                sessionPairOffset   = 0;        // pairnrs start here for this match
     bool                bDataChanged        = false;    // scores changed for this match
+    wxString            fullName;                       // full db name, needed for updating the changed scores
 };
 
 #if 0
@@ -289,7 +288,7 @@ static void AddScores(const MatchInfo& match, const Upd& upd)
             auto data    = score;
             data.pairNS += upd.groupOffset;
             data.pairEW += upd.groupOffset;
-            s_all.scores[game].emplace_back/*push_back*/(data);
+            s_all.scores[game].emplace_back(data);
         }
     }
 }   // AddScores()
@@ -509,7 +508,7 @@ void SlipServer::UpdateTableInfo(UINT a_round, bool a_bUpdateDisplay /* = DO_DIS
         DisplayGroupsReady();   // match-ready info
 }   // UpdateTableInfo()
 
-void SlipServer::OnSelectRound(wxCommandEvent&)
+void SlipServer::OnSelectRound(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("OnSelectRound");
     m_activeRound = 1 + m_pChoiceBoxRound->GetSelection();
@@ -517,7 +516,7 @@ void SlipServer::OnSelectRound(wxCommandEvent&)
     RefreshInfo();
 }   // OnSelectRound()
 
-void SlipServer::OnNextRound(wxCommandEvent&)
+void SlipServer::OnNextRound(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("nextRound");
     UINT count  = m_pChoiceBoxRound->GetCount();
@@ -581,7 +580,7 @@ void SlipServer::PrintPage()
     m_theGrid->PrintGrid(title, nrOfColumns);
 }   // PrintPage()
 
-void SlipServer::OnGenHtmlSlipData(wxCommandEvent&)
+void SlipServer::OnGenHtmlSlipData(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("OnGenHtmlSlipData");
 #define __(x) EscapeHtmlChars((x))
@@ -763,7 +762,7 @@ void SlipServer::CreateHtmlTableInfo(MyTextFile& a_file) const
 #undef __
 }   // CreateHtmlTableInfo()
 
-wxString SlipServer::EscapeHtmlChars(const wxString& a_str) const
+static wxString EscapeHtmlChars(const wxString& a_str)
 {
     wxString ret(a_str);
     ret.Replace( "&" , "&amp;" );
@@ -772,7 +771,7 @@ wxString SlipServer::EscapeHtmlChars(const wxString& a_str) const
     ret.Replace( "<" , "&lt;"  );
     ret.Replace( ">" , "&gt;"  );
     return ret;
-}   // EscapeHtmlChars();
+}   // EscapeHtmlChars()
 
 wxString SlipServer::GetBaseResultName() const
 {
@@ -809,7 +808,7 @@ wxString SlipServer::DateYMD() const
     return date;
 }   // DateYMD()
 
-void SlipServer::OnInputChoice(wxCommandEvent& a_event)
+void SlipServer::OnInputChoice(const wxCommandEvent& a_event)
 {
     AUTOTEST_BUSY("OnInputChoice");
     auto id = a_event.GetSelection();
@@ -833,7 +832,7 @@ void SlipServer::DisplayGroupsReady()
         }
         m_theGrid->SetCellBackgroundColour(m_maxTable, (int)group, bReady ? *wxGREEN : *wxRED);
     }
-}   // DisplayGroupsReady();
+}   // DisplayGroupsReady()
 
 void SlipServer::DisplayTableReady(UINT a_group, UINT a_table, TableBackground tbg)
 {
@@ -863,7 +862,7 @@ void SlipServer::DisplayTableReady(UINT a_group, UINT a_table, TableBackground t
     Refresh();  // needed, else it will only be visible after other changes/resize
 }   // DisplayTableReady()
 
-void SlipServer::OnFileSystemEvent(wxFileSystemWatcherEvent& a_event)
+void SlipServer::OnFileSystemEvent(const wxFileSystemWatcherEvent& a_event)
 {
     int type = a_event.GetChangeType();
     if ( type == wxFSW_EVENT_MODIFY )
@@ -1184,12 +1183,12 @@ wxString SlipServer::ContractAsString(const GameInputData& a_data, bool a_bNs) c
         return contract;
 }   // ContractAsString()
 
-void SlipServer::OnAddMatch(wxCommandEvent&)
+void SlipServer::OnAddMatch(const wxCommandEvent&)
 {   // jump to the 'new match' page
     SendEvent2Mainframe(ID_MENU_SETUPNEWMATCH);
 }   // OnAddMatch()
 
-void SlipServer::OnClearLog(wxCommandEvent&)
+void SlipServer::OnClearLog(const wxCommandEvent&)
 {
     if ( m_pLog->SaveFile(m_tempLogFile) )          // temp file deleted at program-exit
     {

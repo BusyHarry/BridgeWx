@@ -22,19 +22,18 @@ public:
     };
 
     explicit    Debug(wxWindow* pParent, UINT pageId, DebugType type = DebugConsole);
-               ~Debug() override;
-    void        RefreshInfo() override final;   // (re)populate the grid
-    void        PrintPage()   override final;
+               ~Debug() override = default;
+    void        RefreshInfo() final;   // (re)populate the grid
+    void        PrintPage()   final;
     void        AutotestRequestMousePositions(MyTextFile* pFile) final;
 
 protected:
-    virtual void BackupData     () override final{}
+    void        BackupData      () final{/* default: do nothing */}
 
 private:
     void HandleCommandLine      (wxString cmdLine);
     void DoCommand              (const wxString& cmd);
     void CalcScore              (const wxChar* pBuf);
-    void CalcScoreOld           (const wxChar* pBuf);
     void List                   (const wxChar* pBuf);
     void GuideCard              (UINT pair, bool bAskExtra = true);
     void Usage                  ();
@@ -47,21 +46,20 @@ private:
     void OutputText             (const wxString& msg);
     void PrintSeparator         ();
     void StringDoubler          (const wxString& msg, UINT pair);
-    wxString GetNsEwString      (UINT pair, UINT round);
-    wxString SetToGamesAsString (UINT set, bool bWide = true);
-    wxString CenterText         (const wxString& text, size_t length);  // return a centered string with size length
-    wxString GetBorrowTableAsString( UINT table, UINT round);
-    UINT GetOpponent            (UINT pair, UINT round);
+    wxString GetNsEwString      (UINT pair, UINT round) const;
+    wxString SetToGamesAsString (UINT set, bool bWide = true) const;
+    wxString GetBorrowTableAsString( UINT table, UINT round) const;
+    UINT GetOpponent            (UINT pair, UINT round) const;
     void InitGroupData          ();
     void GroupOverview          ();
     void TestSchemas            ();
-    void OnSelectGroup          (wxCommandEvent&);
-    void OnSelectPair           (wxCommandEvent&);
-    void OnPrint                (wxCommandEvent&);
-    void OnExample              (wxCommandEvent&);
+    void OnSelectGroup          (const wxCommandEvent&);
+    void OnSelectPair           (const wxCommandEvent&);
+    void OnPrint                (const wxCommandEvent&);
+    void OnExample              (const wxCommandEvent&);
     void OnExportSchema         (wxCommandEvent&);
     void PrintOrExample();
-    void SetFocusAfter          (wxCommandEvent&);  // set focus back to console-window
+    void SetFocusAfter          (const wxCommandEvent&);  // set focus back to console-window
     void InitGuideStuff         ();
     void PrintScoreSlips        (UINT setSize, UINT firstSet, UINT nrOfSets, UINT repeatCount, const wxString& extra);
     void InitSlips              ();
@@ -70,11 +68,11 @@ private:
 
     wxCheckBox*     m_pCheckBoxPrintNext;
     wxCheckBox*     m_pChkBoxGuide;
-    bool            m_bSchema;
+    bool            m_bSchema = false;
 
     Console*        m_pConsole;
-    bool            m_bPrintNext;
-    UINT            m_group;            // selected group
+    bool            m_bPrintNext = false;
+    UINT            m_group  = 1;       // selected group
     UINT            m_rounds;           // rounds for this group
     UINT            m_tables;           // tables for this group
     UINT            m_pairs;            // pairs for this group
@@ -83,7 +81,7 @@ private:
     UINT            m_linesPrinted;
     wxString        m_explanation;      // text printed on each guideletter
     SchemaInfo      m_schema;
-    bool            m_bDontTest;
+    bool            m_bDontTest = false;
     DebugType       m_debugType;
     wxBoxSizer*     m_pHsizerGuides;    // controls used when making guides for players
     wxBoxSizer*     m_pHsizerScoreSlips;// controls used when making scoreslips for a game

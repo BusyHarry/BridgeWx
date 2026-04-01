@@ -62,12 +62,12 @@ goto builddate
 ::end of :setupLanguage()
 
 :builddate
-:: now create the builddate.h if we have a release version
+:: now create the buildDate.h if we have a release version
 
 if /I [%p1%] == [Debug]     goto DoneBuildDate
 if /I [%p1%] == [DLL Debug] goto DoneBuildDate
-  echo creating .\src\builddate.h
-  .\tools\builddate.exe %builddateLanguage% > .\src\buildDate.h
+  echo creating .\src\buildDate.h
+  .\tools\BuildDate.exe %builddateLanguage% > .\src\buildDate.h
 :DoneBuildDate
 
 set       p1=

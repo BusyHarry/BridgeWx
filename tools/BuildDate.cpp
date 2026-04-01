@@ -142,7 +142,7 @@ int main(int argc, const char* argv[])
     if (_isatty(_fileno(stdout)))
     {   // only create file, if no output redirection
         char cmd[256];
-        sprintf(cmd, "echo %s > builddate.h", build);
+        sprintf(cmd, "echo %s > buildDate.h", build);
         system((const char*)cmd);
     }
 

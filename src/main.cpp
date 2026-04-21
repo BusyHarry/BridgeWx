@@ -53,7 +53,7 @@ static void SetReady(wxWindow* pWin, int count)
         DEBUG_BUSY MyLogDebug("Busy(0)");
         sbBusySet           = false;    // not busy anymore, can be activated again
         sbIdleHandleBusy    = true;     // let idle do the uncheck, so grid is handled more properly in autotest
-        //g_pCheckboxBusy->SetValue(0); // uncheck -> not busy == ready
+        //g_pCheckboxBusy->SetValue(false); // uncheck -> not busy == ready
     }
 }   // SetReady()
 
@@ -63,7 +63,7 @@ void AutoTestBusy(wxWindow* a_pWin, const wxString& a_msg)
     if (sbBusySet) return;            // we set it already ourself, no need to do it again
     if (sbIdleHandleBusy)
         MyLogError(_("Help, new busy request while previous not yet handled by Idle???"));
-    g_pCheckboxBusy->SetValue(1);   // check
+    g_pCheckboxBusy->SetValue(true);   // check
     DEBUG_BUSY MyLogDebug("Busy(1:'%s')", a_msg);
     if (a_pWin != nullptr)
     {   // atleast 2* CallAfter() to ensure(?) that all is really finished
@@ -86,25 +86,25 @@ void OnIdle()
     {   // first idle after cmdready will reset busy checkbox
         sbIdleHandleBusy= false;
         int checked     = g_pCheckboxBusy->IsChecked();  // should be set...
-        g_pCheckboxBusy->SetValue(0);   // uncheck -> not busy == ready
+        g_pCheckboxBusy->SetValue(false);   // uncheck -> not busy == ready
         DEBUG_BUSY MyLogDebug("Idle(%i), busy: %i --> 0",idleCount, checked);
     }
 }   // OnIdle()
 
 class MyFrame;
 
-class MyApp : public wxApp
+class MyApp final : public wxApp
 {
 public:
     MyApp() = default;
-    ~MyApp() final { wxDELETE(m_pLocale); }
+    ~MyApp() override = default;
     bool OnInit() override;
-    int OnExit() final;
+    int  OnExit() override;
     void InitLanguage();        // setup the language
     void ReInitLanguage();      // re-setup the language AND the mainframe/topwindow
 private:
     MyFrame*  m_pMainFrame = nullptr;
-    wxLocale* m_pLocale    = nullptr;
+    std::unique_ptr<wxLocale> m_pLocale;
 
 };  // class MyApp
 
@@ -205,7 +205,7 @@ public:
             else
                 m_keys = Key2String(chr);
             //wxChar updown = bUp ? 0x02C4 : 0x02C5; //  '^'  'v'
-            wxChar updown = bUp ? 0x2191 : 0x2193; //  arrow-up/down
+            wxChar updown = bUp ? L'↑' : L'↓'; // 0x2191 : 0x2193; //  arrow-up/down
             m_keys += updown;
             MyLogDebug("%s", m_keys);
         } else
@@ -393,8 +393,7 @@ static void GetInstalledLanguages(wxArrayString & a_descriptions, wxArrayInt & a
 void MyApp::InitLanguage()
 {
     auto language = cfg::GetLanguage();
-    wxDELETE(m_pLocale);
-    m_pLocale = new wxLocale;   // .init() can only be done ONCE!
+    m_pLocale = std::make_unique<wxLocale>();   // need a new wxLocale: .init() can only be done ONCE!
     m_pLocale->AddCatalogLookupPathPrefix(GetCatalogPath());
     m_pLocale->Init(language);
     m_pLocale->AddCatalog(__PRG_NAME__, wxLANGUAGE_DUTCH_NETHERLANDS);

@@ -22,8 +22,8 @@ namespace prn
     {
         DWORD               dwNeeded    = 0;
         DWORD               dwReturned  = 0;
-        std::unique_ptr<PRINTER_INFO_1> pInfo;
-        BOOL                bResult     = 0;    //false;
+        std::unique_ptr<char[]> pInfo;
+        BOOL                bOk         = 0;    //false;
         UINT                searchFlags = PRINTER_ENUM_LOCAL;
 
         if (cfg::GetNetworkPrinting())
@@ -44,13 +44,13 @@ namespace prn
 
         if (dwNeeded > 0)
         {
-            pInfo.reset(reinterpret_cast<PRINTER_INFO_1 *>(new char[dwNeeded]));
+            pInfo = std::make_unique<char[]>(dwNeeded);
         }
 
         if ( nullptr != pInfo.get() )
         {   // now we have the wanted buffer for the info
             dwReturned = 0;
-            bResult = ::EnumPrinters(
+            bOk = ::EnumPrinters(
                 searchFlags,
                 nullptr,
                 1L,                // printer info level
@@ -60,15 +60,13 @@ namespace prn
                 &dwReturned);
         }
 
-        if (bResult && ( nullptr != pInfo.get() ) )
+        if (bOk && ( nullptr != pInfo.get() ) )
         {
             // Review the information from all the printers returned by EnumPrinters.
             unsigned int realCount = 0;
             for (DWORD ii=0; ii < dwReturned; ii++)
             {
-                #pragma warning(push)
-                //#pragma warning(disable:6385)
-                const auto& info = pInfo.get()[ii];
+                const auto& info = (reinterpret_cast<PRINTER_INFO_1*>(pInfo.get()))[ii];
                 // pInfo[ii].pName contains the printername to use in the CreateDC function call.
                 if (   ( wxString(_("Fax"                             )) == info.pName)
                     || ( wxString(_("Microsoft XPS Document Writer"   )) == info.pName)
@@ -77,7 +75,6 @@ namespace prn
                 {
                     continue;   // we only want 'real' printers!
                 }
-                #pragma warning(pop)
 
                 ++realCount;
                 a_sPrinterNames.push_back(info.pName);
@@ -85,7 +82,7 @@ namespace prn
             }
         }
 
-        return bResult;
+        return bOk;
     }   // EnumPrinters()
 
 #if defined DEBUG_LOCAL
@@ -324,57 +321,57 @@ bool MyLinePrinter::PrintAFile(const wxString& a_fileName, const wxString& a_tit
         return false;
     }
 
-    bool    bResult = true;
+    bool    bOk     = true;
     FILE*   fp      = nullptr;
-    std::unique_ptr<char> uBuf;
+    std::unique_ptr<char[]> uBuf;
 
     do
     {
         if (a_fileName.IsEmpty())
         {
-            bResult = false;   // no filename given?
+            bOk = false;    // no filename given?
             break;
         }
 
         if (!BeginPrint(a_title))
         {
-            bResult = false;   // printer error??
+            bOk = false;    // printer error??
             break;
         }
 
         auto err = fopen_s(&fp, a_fileName.char_str(), "rb"); MY_UNUSED(err);
         if (!fp)
         {
-            bResult = false;   // can't open file: no file or not allowed
+            bOk = false;    // can't open file: no file or not allowed
             break;
         }
 
         constexpr auto BUF_SIZE_ = 1024;
         try
         {
-            uBuf.reset(new char[BUF_SIZE_]);
+            uBuf = std::make_unique<char[]>(BUF_SIZE_);
         } catch (...) { ; }
 
         char* buf = uBuf.get();
         if ( !buf )
         {
-            bResult = false;        // out of memory??
+            bOk = false;    // out of memory??
             break;
         }
 
         size_t count;
-        while (bResult && ( 0 != (count = fread(buf, sizeof(buf[0]), BUF_SIZE_, fp))))
+        while ( bOk && ( 0 != (count = fread(buf, sizeof(buf[0]), BUF_SIZE_, fp))) )
         {
-            wxString cnv = Ascii2Unicode(buf, count );
-            bResult = PrintLine(cnv);
-//            bResult = std::all_of(cnv.begin(), cnv.end(), [this]( wxChar chr ){ return this->PrintCharacter(chr);});
+            wxString cnv = Ascii2Unicode(buf, (int)count );
+            bOk = PrintLine(cnv);
+//            bOk = std::all_of(cnv.begin(), cnv.end(), [this]( wxChar chr ){ return this->PrintCharacter(chr);});
         }
     } while (false);        // execute body only once
 
     EndPrint();             // print last line/page
     if (fp) (void)fclose(fp);
     m_sPageTitle.clear();
-    return bResult;
+    return bOk;
 }   // PrintAFile()
 
 void MyLinePrinter::InitFont(LOGFONT* pLogFontInfo)

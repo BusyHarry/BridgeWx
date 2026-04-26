@@ -262,6 +262,8 @@ public:
             ||  type == wxEVT_TIMER
             ||  type == wxEVT_MOVE_END
             ||  type == wxEVT_ICONIZE
+            ||  type == wxEVT_SCROLLWIN_BOTTOM  // since V3.3.2 ???
+            ||  type == wxEVT_CLOSE_WINDOW
             )
         {
             // nothing

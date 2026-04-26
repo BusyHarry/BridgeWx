@@ -1,5 +1,5 @@
 # Releasenotes
-#V10.11....
+#V10.11 Sunday April 26 2026
  - autohotkey V2.0.21 (https://github.com/AutoHotkey/AutoHotkey/releases/tag/v2.0.21)
  - slipserver: wrong handling if schemadata had a non-playing table: NS and EW are both 0 (zero)
  - slipserver: wrong display in score-entry if a game was not played: 'NP'

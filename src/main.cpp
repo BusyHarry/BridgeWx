@@ -262,6 +262,8 @@ public:
             ||  type == wxEVT_TIMER
             ||  type == wxEVT_MOVE_END
             ||  type == wxEVT_ICONIZE
+            ||  type == wxEVT_SCROLLWIN_BOTTOM  // since V3.3.2 ???
+            ||  type == wxEVT_CLOSE_WINDOW
             )
         {
             // nothing
@@ -321,7 +323,7 @@ private:
 
     wxBoxSizer*     m_vSizer;
 
-    EventCatcher*   m_pMyEventCatcher = nullptr;
+    std::unique_ptr<EventCatcher>   m_pMyEventCatcher;
     MyApp&          m_theApp;
     std::map<UINT, Baseframe*> m_pages; // all created pages
     UINT            m_oldId = 0;
@@ -331,7 +333,6 @@ private:
 MyFrame::~MyFrame()
 {
     if (m_pActivePage) m_pActivePage->BackupData();
-    delete m_pMyEventCatcher;
 //    delete g_pCheckboxBusy;       // destroyed by MyFrame?
 //    delete g_pCheckboxBusyMC;     // destroyed by MyFrame?
     if ( --siMyFrameCounter == 0 )
@@ -516,7 +517,7 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
         SetExtraStyle(wxWS_EX_PROCESS_IDLE);
         wxIdleEvent::SetMode(wxIDLE_PROCESS_SPECIFIED); //  send only idle events to MyFrame
         Bind(wxEVT_IDLE,[](const wxIdleEvent&){OnIdle();});
-        m_pMyEventCatcher = new EventCatcher;           // we want early notice of mouseclick
+        m_pMyEventCatcher = std::make_unique<EventCatcher>();   // we want early notice of mouseclick
 
         // create hotkey for generating mousepositions of controls for autotest in file "<matchfolder>/AutoTest.pos"
         #define HOTKEY "!+a\"         ; SHIFT+ALT+A" /* AHK2 definition*/

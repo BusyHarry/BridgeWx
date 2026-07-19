@@ -1046,7 +1046,7 @@ void CalcScore::ApplySessionCorrections(void)
                 UINT combiTop  = 2 * (GetNumberOfRounds(pair) - 1);
                 UINT normalTop = cfg::GetNrOfSessionPairs() - 2 - 2;
                 Fdp  extra     = ((normalTop*cs.extra)/combiTop).Round(1);
-                int  maxExtra  = RoundLong(normalTop * cs.maxExtra, combiTop);
+                int  maxExtra  = RoundLong(normalTop * (long)cs.maxExtra, combiTop);    // CodeQL
                 svSessionResult[pair].points   += extra;
                 svSessionResult[pair].maxScore += maxExtra;
             }

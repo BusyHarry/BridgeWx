@@ -24,6 +24,9 @@ You can also run an 'autotest' on the program: feed it with lots of data, do cal
 For this test I used 'AutoHotkey2' and for this, I have buildin some synchronisation methods, so data-entry can be as fast as possible, without using too many 'sleeps()'
 When setting keydelay/duration to minimum, some chars are lost/arrive at wrong window: you will get some (still unhandled) asserts.
 To run the autotest:
+ - till BridgeWx V10.10 inclusive: ahk: V2.0.19,
+     - from BridgeWx V10.11: ahk:V2.0.21
+     - from BridgeWx V10.12: ahk:V2.0.26
  - AutoHotkey64.exe MUST exist, reachable through the 'path' environment-variable, or be present in the tools folder
  - run once: initTest.bat (it will create a file with mouse-positions/labels used in the actual test)
  - run the test: runTest.bat

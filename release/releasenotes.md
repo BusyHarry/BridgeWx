@@ -1,5 +1,10 @@
 # Releasenotes
-#V10.11 Sunday April 26 2026
+#V10.12.0 ......
+ - updated autohotkey to V2.0.26 (https://github.com/AutoHotkey/AutoHotkey/releases/tag/v2.0.26)
+ - updated wxWidgets to V3.3.3 (no changes compared to V3.3.2)
+ - updated SQLite to V3.53.3 (https://sqlite.org)
+
+#V10.11.0 Sunday April 26 2026
  - autohotkey V2.0.21 (https://github.com/AutoHotkey/AutoHotkey/releases/tag/v2.0.21)
  - slipserver: wrong handling if schemadata had a non-playing table: NS and EW are both 0 (zero)
  - slipserver: wrong display in score-entry if a game was not played: 'NP'

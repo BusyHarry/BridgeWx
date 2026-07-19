@@ -8,6 +8,7 @@
 #include <wx/image.h>
 #include <wx/uilocale.h>
 #include <wx/stdpaths.h>
+#include "sqlite3.h"
 
 // my own includes
 #include "cfg.h"
@@ -684,10 +685,10 @@ void MyFrame::OnAbout(const wxCommandEvent& )
     wxString about;
     about.Printf(   __PRG_NAME__ + _(", version ") + __VERSION__ + _(", from ") + __YEAR__ +
                     _("\nThis is the 'bridge' scoring program of Harrie/Tinus\n"
-                      "on base of %s\n\n"
+                      "on base of %s and SQLite %s\n\n"
                       "Build date: %s\n%s\n\n"
                       "(c) wxSystemInformationFrame, PB: https://github.com/PBfordev"
-                    ), wxVERSION_STRING, wxString::FromUTF8(buildDate), cfg::GetCopyright()
+                    ), wxVERSION_STRING, SQLITE_VERSION, wxString::FromUTF8(buildDate), cfg::GetCopyright()
                 );
 
     MyMessageBox( about, _("About ") + __PRG_NAME__ , wxOK | wxICON_INFORMATION);

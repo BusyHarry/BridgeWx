@@ -622,9 +622,9 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     SetMenuBar( m_pMenuBar );
 
     auto type = io::DatabaseTypeGet();
-    m_pMenuBar->Check( type == io::DB_ORG
+    m_pMenuBar->Check( (type & io::DB_ORG)
                        ? ID_MENU_OLD_DBASE
-                       : type == io::DB_DATABASE
+                       : (type & io::DB_DATABASE)
                          ? ID_MENU_NEW_DBASE
                          : ID_MENU_SQL_DBASE
                        , true);

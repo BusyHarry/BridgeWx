@@ -3,6 +3,11 @@
  - updated autohotkey to V2.0.26 (https://github.com/AutoHotkey/AutoHotkey/releases/tag/v2.0.26)
  - updated wxWidgets to V3.3.3 (no changes compared to V3.3.2)
  - updated SQLite to V3.53.3 (https://sqlite.org)
+ - updated POEDIT to V3.9.1 (local install only)
+ - after updating to POEDIT version 3.9.1, xgettext does not support wildcards anymore for input, so we need to provide a file with all the names in it
+ - remove remark(s) from the vs2026 compiler
+ - added in the about-dialog the version of SQLite and MSVC compiler
+
 
 #V10.11.0 Sunday April 26 2026
  - autohotkey V2.0.21 (https://github.com/AutoHotkey/AutoHotkey/releases/tag/v2.0.21)

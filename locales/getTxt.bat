@@ -49,7 +49,11 @@ echo Getting translatable text through %gt%
 :: the generated file is called '%potFile%' and is located in the current folder
 
 set errorlog=error.log
-%gt% 2>%errorlog% --no-wrap --sort-by-file --from-code=UTF-8 --default-domain=BridgeWx --keyword=_ --output=%potfile% --add-comments=TRANSLATORS ..\src\*.cpp ..\src\*.h
+rem newer xgettext (>3.5.2?) does not accept wildcards anymore, so create a file with all the files
+set tmpfiles=tmpfiles
+del %tmpfiles% >nul 2>&1
+for %%a in (..\src\*.cpp ..\src\*.h) do @echo %%~fa >> %tmpfiles%
+%gt% 2>%errorlog% --no-wrap --sort-by-file --from-code=UTF-8 --default-domain=BridgeWx --keyword=_ --output=%potfile% --add-comments=TRANSLATORS -f %tmpfiles%
 if not exist %potfile% goto error
   echo %potfile% generated, starting Poedit
   call "%drive%\%base%\%pExe%"
@@ -73,6 +77,7 @@ if not exist %potfile% goto error
 
 :end
 del >nul 2>&1 %errorlog%
+del >nul 2>&1 %tmpfiles% 
 set         gt=
 set       base=
 set       pExe=
@@ -80,6 +85,7 @@ set      drive=
 set     base64=
 set    potfile=
 set   errorlog=
+set   tmpfiles=
 set  test_4dos=
 set all_drives=
 popd

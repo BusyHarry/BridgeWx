@@ -622,9 +622,9 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     SetMenuBar( m_pMenuBar );
 
     auto type = io::DatabaseTypeGet();
-    m_pMenuBar->Check( type == io::DB_ORG
+    m_pMenuBar->Check( (type & io::DB_ORG)
                        ? ID_MENU_OLD_DBASE
-                       : type == io::DB_DATABASE
+                       : (type & io::DB_DATABASE)
                          ? ID_MENU_NEW_DBASE
                          : ID_MENU_SQL_DBASE
                        , true);
@@ -682,13 +682,20 @@ void MyFrame::OnAbout(const wxCommandEvent& )
 // next include produced by buildDate.exe gives: static const char* buildDate = "woensdag 22 november 2023 @ 12:08:24";
 #include "buildDate.h"
 
+    wxString msvcVer;
+#if defined _MSC_FULL_VER && defined _MSC_BUILD
+    // _MSC_FULL_VER: MM.NN.BBBBB: MM=major, NN=minor, BBBBB=revision
+    wxString version = wxString::Format("%u", (UINT)_MSC_FULL_VER);
+    version.insert(4,'.').insert(2,'.');
+    msvcVer.Printf(_(" and MSVC %s.%u"), version, (UINT)_MSC_BUILD);
+#endif
     wxString about;
     about.Printf(   __PRG_NAME__ + _(", version ") + __VERSION__ + _(", from ") + __YEAR__ +
                     _("\nThis is the 'bridge' scoring program of Harrie/Tinus\n"
-                      "on base of %s and SQLite %s\n\n"
+                      "on base of %s and SQLite %s%s\n\n"
                       "Build date: %s\n%s\n\n"
                       "(c) wxSystemInformationFrame, PB: https://github.com/PBfordev"
-                    ), wxVERSION_STRING, SQLITE_VERSION, wxString::FromUTF8(buildDate), cfg::GetCopyright()
+                    ), wxVERSION_STRING, SQLITE_VERSION, msvcVer, wxString::FromUTF8(buildDate), cfg::GetCopyright()
                 );
 
     MyMessageBox( about, _("About ") + __PRG_NAME__ , wxOK | wxICON_INFORMATION);

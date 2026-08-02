@@ -138,8 +138,8 @@ static void GetSessionCorrectionStrings(UINT a_sessionPair, wxString& a_sCombiRe
 static void InitPairToRankVector(bool a_bSession)
 {
     #define SCORE(pair) (a_bSession ? svSessionResult[pair].procentScore : svTotalResult[pair].totalN)
-    std::vector<UINT>& pairToRank = a_bSession ? svSessionPairToRank : svTotalPairToRank;
-    std::vector<UINT>& rankToPair = a_bSession ? svSessionRankToPair : svTotalRankToPair;
+          std::vector<UINT>& pairToRank = a_bSession ? svSessionPairToRank : svTotalPairToRank;
+    const std::vector<UINT>& rankToPair = a_bSession ? svSessionRankToPair : svTotalRankToPair;
     pairToRank.clear();
     pairToRank.resize(rankToPair.size());
     for (UINT rank = 1; rank < rankToPair.size(); ++rank)
@@ -1613,7 +1613,7 @@ static bool CompareClubs(const CLUB_DATA& left, const CLUB_DATA& right)
 void CalcScore::CalcClub( bool a_bTotal)
 {   // results for clubs, if you have assigned pairnames to a club
     UINT                maxClubIndex= 0;
-    std::vector<UINT>&  rankToPair  = a_bTotal ? svTotalRankToPair       : svSessionRankToPair;
+    const std::vector<UINT>& rankToPair = a_bTotal ? svTotalRankToPair    : svSessionRankToPair;
     MyTextFile&         txtFile     = a_bTotal ? m_txtFileResultClubTotal : m_txtFileResultClubSession;
     UINT                session     = cfg::GetActiveSession();
     UINT                maxSession  = a_bTotal ? session : 1;

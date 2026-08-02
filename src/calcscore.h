@@ -131,17 +131,17 @@ public:
     static const char SEPERATOR = ' ';              // separator between columns
     struct ColumnInfoHeader
     {
-        Align       align;  // Can be different from row-alignment
+        Align       align = Align::LEFT;  // Can be different from row-alignment
         wxString    extra;  // append this string to the constructed string
         wxString    header; // column label
     };
 
     struct ColumnInfoRow
     {
-        size_t      size;   // size of this column            , also used for the header
-        Align       align;  // alignment for the data-columns
-        wxString    extra;  // append this string to the constructed string
-        bool        active; // if not set, ignore this column , also used for the header
+        size_t      size    = 0;            // size of this column            , also used for the header
+        Align       align   = Align::LEFT;  // alignment for the data-columns
+        wxString    extra;                  // append this string to the constructed string
+        bool        active  = false;        // if not set, ignore this column , also used for the header
     };
 
     explicit FormBuilder(const std::vector<ColumnInfoRow>& a_rowInfo) : m_rowInfo(a_rowInfo) {}

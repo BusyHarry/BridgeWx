@@ -16,10 +16,10 @@ namespace score
 {
     struct GameSetData
     {
-        UINT        pairNS;
-        UINT        pairEW;
-        int         scoreNS;
-        int         scoreEW;
+        UINT        pairNS  = 0;    // cppcheck v2.21 remark
+        UINT        pairEW  = 0;
+        int         scoreNS = 0;
+        int         scoreEW = 0;
         wxString    contractNS;
         wxString    contractEW;
         bool operator < (const GameSetData &rhs) const

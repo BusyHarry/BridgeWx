@@ -1,7 +1,11 @@
 ﻿// Copyright(c) 2026-present, BusyHarry/h.levels & BridgeWx contributors.
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
-#include <wx/wxcrtvararg.h>
+/*
+   I need <wx/wxcrtvararg.h> but from version 3.2.9 to 3.2.11 this gives undifined 'WXDLLIMPEXP_BASE'
+   Solution for now is to include 'wx/wx.h' to all (and more?) I need.
+*/
+#include <wx/wx.h>  // for wx/wxcrtvararg.h and the things this depends on.
 
 #include "sqlite3.h"
 #include "sqlite.h"

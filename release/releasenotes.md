@@ -7,7 +7,7 @@
  - after updating to POEDIT version 3.9.1, xgettext does not support wildcards anymore for input, so we need to provide a file with all the names in it
  - remove remark(s) from the vs2026 compiler
  - added in the about-dialog the version of SQLite and MSVC compiler
-
+ - changes from V3.2.9 to V3.2.11 forces the include of 'wx/wx.h' i.s.o 'wx/wxcrtvararg.h' because undifined 'WXDLLIMPEXP_BASE'
 
 #V10.11.0 Sunday April 26 2026
  - autohotkey V2.0.21 (https://github.com/AutoHotkey/AutoHotkey/releases/tag/v2.0.21)

@@ -30,7 +30,7 @@ static wxString                 sDbFile;                // current database, emp
 static std::map<enum keyId,wxString>   dbKeys;          // map, translating db_id to key
 static wxChar                   theSeparator = '@';     // default separator
 
-static struct { char input; wxString replace; } charEncoding[] = { {'"',  "&quot;"} };
+static const struct { char input{' '}; wxString replace; } charEncoding[] = { {'"',  "&quot;"} };
 static wxString EncodeString(const wxString& a_string)
 {   // encode special char in a string
     wxString result(a_string);

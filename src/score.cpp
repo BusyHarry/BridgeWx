@@ -380,9 +380,9 @@ bool DeleteScoresFromPair(UINT a_pair)
 
     struct CardNameAndType
     {
-        wxString    name;   // clubs|diamonds|hearts|spades|notrump
-        PlayType    type;   // clubdiamonds|heartsSpades|notrump
-        CardId      id;     // suit-id of 'name'
+        wxString    name;                       // clubs|diamonds|hearts|spades|notrump
+        PlayType    type    = PlayTypeFirst;    // clubdiamonds|heartsSpades|notrump
+        CardId      id      = CardIdFirst;      // suit-id of 'name'
     };
 
     static std::vector<CardNameAndType> svCardNames;            // identification of all suits

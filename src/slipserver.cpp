@@ -206,13 +206,13 @@ struct AllGroupsData
 struct SessionPairInfo
 {   // info per pair for easier getting at original match values
     // all group based vectors start at index 1: first 'group' == 1, etc
-    UINT        matchOffset;    // pairnrs for this 'match' start here for this pair
-    UINT        groupOffset;    // offset for the 'group' of this pair in this 'match'
-    UINT        sumOffset;      // 'matchOffset' + 'groupOffset' for this pair: sessionPairnr = 'sumOffset' + 'pairnr_in_this_group'
-    UINT        allGroupsIndex; // index in 's_all.groups' for the group this pair belongs to
-    bool        bAbsent;        // true if pair is absent
-    wxString    matchName;      // 'match' this pair belongs to, index in 's_all.matches'
-    UINT        matchId;        // number of this match from 1 to N, used as prefix for groupnames/pairnames
+    UINT        matchOffset     = 0;        // pairnrs for this 'match' start here for this pair
+    UINT        groupOffset     = 0;        // offset for the 'group' of this pair in this 'match'
+    UINT        sumOffset       = 0;        // 'matchOffset' + 'groupOffset' for this pair: sessionPairnr = 'sumOffset' + 'pairnr_in_this_group'
+    UINT        allGroupsIndex  = 0;        // index in 's_all.groups' for the group this pair belongs to
+    bool        bAbsent         = false;    // true if pair is absent
+    wxString    matchName;                  // 'match' this pair belongs to, index in 's_all.matches'
+    UINT        matchId         = 0;        // number of this match from 1 to N, used as prefix for groupnames/pairnames
 };
 
 struct All

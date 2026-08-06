@@ -266,8 +266,8 @@ private:
 struct ColourInfo
 {
     wxSystemColour index;
-    const char*    name;
-    const char*    description;
+    const char*    name         = nullptr;
+    const char*    description  = nullptr;
 };
 
 ColourInfo const s_colourInfoArray[] =
@@ -520,8 +520,8 @@ protected:
 struct FontInfo
 {
     wxSystemFont index;
-    const char*  name;
-    const char*  description;
+    const char*	 name        = nullptr;
+    const char*  description = nullptr;
 };
 
 FontInfo const s_fontInfoArray[] =
@@ -603,8 +603,8 @@ protected:
 struct MetricInfo
 {
     wxSystemMetric index;
-    const char*    name;
-    const char*    description;
+    const char*    name        = nullptr;
+    const char*    description = nullptr;
 };
 
 MetricInfo const s_metricInfoArray[] =
@@ -1309,7 +1309,7 @@ void StandardPathsView::DoUpdateValues()
 #endif // #if wxCHECK_VERSION(3, 1, 0)
 
 #ifdef __WXMSW__
-            case Param_CSIDL_DESKTOP:                 value = paths.MSWGetShellDir(0x0000 | flags); break;
+            case Param_CSIDL_DESKTOP:                 value = paths.MSWGetShellDir(         flags); break;
             case Param_CSIDL_INTERNET:                value = paths.MSWGetShellDir(0x0001 | flags); break;
             case Param_CSIDL_PROGRAMS:                value = paths.MSWGetShellDir(0x0002 | flags); break;
             case Param_CSIDL_CONTROLS:                value = paths.MSWGetShellDir(0x0003 | flags); break;

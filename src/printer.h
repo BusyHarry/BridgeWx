@@ -45,13 +45,13 @@ struct Text
 
 struct TableInfo    // use oldstyle arrays for fixed layout && vectors for dynamic layouts
 {
-    wxPoint origin;     // offset from top left of page where table starts
-    Line*   lines;      // array of lines to draw
-    Text*   texts;      // array of texts to print
-    size_t  lineCount;  // number of lines (pointed to by lines)
-    size_t  textCount;  // number of texts (pointed to by texts)
-    std::vector<Line>   linesV; // runtime calculated lines
-    std::vector<Text>   textsV; // runtime calculated texts
+    wxPoint origin;                 // offset from top left of page where table starts
+    Line*   lines       = nullptr;  // array of lines to draw
+    Text*   texts       = nullptr;  // array of texts to print
+    size_t  lineCount   = 0;        // number of lines (pointed to by lines)
+    size_t  textCount   = 0;        // number of texts (pointed to by texts)
+    std::vector<Line>   linesV;     // runtime calculated lines
+    std::vector<Text>   textsV;     // runtime calculated texts
 };
 
 }   // namespace table

@@ -49,7 +49,11 @@ bool MyValidator::IsValidStartKey(wxChar a_key)
         if ( IsExtraChar(a_key)                           ) break;
         bValid = false;
     } while ( false );
-    if ( !bValid )
+    // wxwidgets 3.3.4 sends an 'a' on cell selection/navigation
+    // from  wxGrid::UpdateIME(), *\src\generic\grid.cpp, line 6325
+    // to probe if it can activate the cell-editor.
+    // We need to filter it out (#27204 already solved by #27206 within 2 hours!)
+    if ( !bValid && (a_key != 'a') )    // leave check in!
         RingBell();
     return bValid;
 }   //  MyValidator::IsValidStartKey()

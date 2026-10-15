@@ -144,14 +144,14 @@ void SetupGame::RefreshInfo()
     m_bGroupResult  = cfg::GetGroupResult();
     m_bGlobalNames  = cfg::GetGlobalNameUse();
 
-    if (cfg::GetButler() != m_bButler)
+    if ( cfg::GetButler() != m_bButler )
     {   // update/init butler dependent values
         m_bButler = !m_bButler;
 
         wxString    staticTxt;
         wxString    tipTxt;
         double      max;
-        if (m_bButler)
+        if ( m_bButler )
         {
             staticTxt   = _("Maximum imps/game when absent:");
             tipTxt      = _("Maximum imps/game you get in the end/total result when not playing a session");
@@ -201,10 +201,10 @@ void SetupGame::BackupData()
     cfg::SetMaxMean         (m_pTxtCtrlMaxMean      ->GetValue());
     cfg::SetGroupResult     (m_pChkBoxGroupResult   ->GetValue());
     bool bNewGlobalNameUse = m_pChkBoxGlobalNames   ->GetValue();
-    if (cfg::GetGlobalNameUse() != bNewGlobalNameUse)
+    if ( cfg::GetGlobalNameUse() != bNewGlobalNameUse )
     {
         cfg::SetGlobalNameUse(bNewGlobalNameUse);
-        if (names::GetNumberOfGlobalPairs())
+        if ( names::GetNumberOfGlobalPairs() )
         {
             MyMessageBox(_("Changing from/to globalname use, while there are already pairnames!"), _("Warning"));
         }
@@ -240,15 +240,15 @@ void SetupGame::OnCancel()
     RefreshInfo();  // restore original content
 }   // OnCancel()
 
-static int siMinClub=1;
-static int siMaxClub=cfg::MAX_PAIRS;
+static int s_iMinClub=1;
+static int s_iMaxClub=cfg::MAX_PAIRS;
 
 void SetupGame::HandleMin()
 {
     AUTOTEST_BUSY("min");
     // update the minimum value for maxclub
     int minClub = wxAtoi(m_pTxtCtrlMin->GetValue());
-    siMinClub = minClub;
+    s_iMinClub = minClub;
     m_pTxtCtrlMax->UpdateMin(minClub);
 }   // HandleMin()
 
@@ -257,12 +257,12 @@ void SetupGame::HandleMax()
     AUTOTEST_BUSY("max");
     //update the maximum value for minclub
     int maxClub = wxAtoi(m_pTxtCtrlMax->GetValue());
-    if (maxClub < siMinClub)
+    if ( maxClub < s_iMinClub )
     {   // prevent recursion with too low value in control and then change focus
-//        maxClub = siMinClub;
+//        maxClub = s_iMinClub;
 //        m_pTxtCtrlMax->ChangeValue(U2String(maxClub));
     }
-    siMaxClub = maxClub;
+    s_iMaxClub = maxClub;
     m_pTxtCtrlMin->UpdateMax(maxClub);
 }   // HandleMax()
 

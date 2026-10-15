@@ -71,14 +71,17 @@ wxString Fdp::ToString(UINT a_dp, StringType a_type) const
         result += static_cast<unsigned char>('0' + (value % 10));
         value /= 10;
     }
-    if ( bSign ) result += '-';                 // add sign if needed
+    if ( bSign )
+        result += '-';                          // add sign if needed
     result.insert(a_dp, '.');                   // and insert dp
     std::reverse(result.begin(), result.end()); // back to 'normal' order
     switch ( a_type )
     {   // check what 'op' we want
         case StringType::SHORT: // remove trailing '0' and '.' as much as possible
-            while ( *result.rbegin() == '0' ) result.RemoveLast();
-            if    ( *result.rbegin() == '.' ) result.RemoveLast();
+            while ( *result.rbegin() == '0' )
+                result.RemoveLast();
+            if ( *result.rbegin() == '.' )
+                result.RemoveLast();
             break;
         case StringType::EXTRA: // replace fraction and '.' with spaces if fraction == zero
             if ( fraction == 0 )
@@ -212,7 +215,7 @@ int main()
     Fdp::LL n51 = Fdp("-1.2567").AsLong2(); (void) n51;
     Fdp::LL n52 = Fdp("-1.2567").AsLong3(); (void) n52;
     long n53 = n50; (void) n53;
-    if (n53 )
+    if ( n53 )
         n53 = 0; (void)n53;
     return 0;
 }   // main()

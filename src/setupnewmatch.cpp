@@ -74,7 +74,7 @@ SetupNewMatch::SetupNewMatch(wxWindow* a_pParent, UINT a_pageId) : Baseframe(a_p
     RefreshInfo();      // populate the controls
 
     auto pButton = dynamic_cast<wxButton*>(m_pDirPicker->GetPickerCtrl());
-    if (pButton)
+    if ( pButton )
     {
         AUTOTEST_ADD_WINDOW(pButton      , "BrowsButton");
     }
@@ -104,7 +104,7 @@ void SetupNewMatch::UpdateSelection()
     while ( !file.IsEmpty() )
     {
         file = file.AfterLast('/').AfterLast('\\'); // remove path
-        if (file != cfg::GetBareMainIni())
+        if ( file != cfg::GetBareMainIni() )
         {
             file.Replace(extension, ES);            // remove extension
             choices.push_back(file);                // only filenamepart needed

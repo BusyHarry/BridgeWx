@@ -98,7 +98,7 @@ protected:
     long AppendItemWithData(const wxString& label, long data);
 
     virtual void DoUpdateValues() = 0;
-    virtual void DoShowDetailedInformation(long WXUNUSED(listItemIndex)) const {};
+    virtual void DoShowDetailedInformation(long) const {};
 
     wxArrayString GetNameAndValueValues(int nameColumnIndex, int valueColumnIndex, const wxString& separator) const;
 

@@ -116,18 +116,20 @@ void AssignNames::AutotestRequestMousePositions(MyTextFile* a_pFile)
 {
     const MyGrid::GridInfo* pGridInfo = nullptr;
     const UINT sessions[]={2,cfg::GetActiveSession()};
-    if (sessions[1] < 2)    //only needed for sessions < 2
+    if ( sessions[1] < 2 )  //only needed for sessions < 2
     {
-        for (auto session : sessions )
+        for ( auto session : sessions )
         {   // need session > 1 for getting position of several buttons
             cfg::SetActiveSession(session);
             RefreshInfo();
             Update();
-            if (!pGridInfo) pGridInfo = &m_theGrid->GetGridInfo();  // Only visible columns have 'good' values...
+            if ( !pGridInfo )
+                pGridInfo = &m_theGrid->GetGridInfo();  // Only visible columns have 'good' values...
         }
     }
 
-    if (!pGridInfo) pGridInfo = &m_theGrid->GetGridInfo();  // get data, if we don't have it yet
+    if ( !pGridInfo )
+        pGridInfo = &m_theGrid->GetGridInfo();          // get data, if we don't have it yet
     AutoTestAddWindowsNames(a_pFile, m_description);
     AutoTestAddGridInfo    (a_pFile, m_description, *pGridInfo);
 }   // AutotestRequestMousePositions()
@@ -135,14 +137,15 @@ void AssignNames::AutotestRequestMousePositions(MyTextFile* a_pFile)
 bool AssignNames::OnCellChanging(const CellInfo& a_cellInfo)
 {
     AUTOTEST_BUSY("cellChanging");
-    if (a_cellInfo.pList != m_theGrid)
+    if ( a_cellInfo.pList != m_theGrid )
     {
         return CELL_CHANGE_OK;  //hm, its not my grid
     }
 
-    if ( a_cellInfo.column != COL_PAIRNR_SESSION ) return CELL_CHANGE_REJECTED;
+    if ( a_cellInfo.column != COL_PAIRNR_SESSION )
+        return CELL_CHANGE_REJECTED;
 
-    if (m_bIsScriptTesting)
+    if ( m_bIsScriptTesting )
     {
         wxString msg;
         msg.Printf(_("AssignNames:: row %d, column %d changes from <%s> to <%s>")
@@ -155,18 +158,21 @@ bool AssignNames::OnCellChanging(const CellInfo& a_cellInfo)
     }
     UINT uSessionPair;
     wxString sSessionPair = a_cellInfo.newData;
-    if (!names::ValidateSessionPairName(sSessionPair, uSessionPair) ) return CELL_CHANGE_REJECTED;
+    if ( !names::ValidateSessionPairName(sSessionPair, uSessionPair) )
+        return CELL_CHANGE_REJECTED;
 
     int row = a_cellInfo.row;
 
     m_theGrid->CallAfter([this,row,sSessionPair](){m_theGrid->SetCellValue(row,COL_PAIRNR_SESSION,sSessionPair);});
-    if (sSessionPair == a_cellInfo.oldData)  return CELL_CHANGE_OK; // no change
+    if ( sSessionPair == a_cellInfo.oldData )
+        return CELL_CHANGE_OK;      // no change
 
     int rowCount = m_theGrid->GetNumberRows();
-    for (int ii = 0; ii < rowCount; ++ii)
+    for ( int ii = 0; ii < rowCount; ++ii )
     {   // remove old assign if it was in use before
-        if (ii == row) continue;
-        if (m_theGrid->GetCellValue(ii, COL_PAIRNR_SESSION).CmpNoCase(sSessionPair) == 0)
+        if ( ii == row )
+            continue;
+        if ( m_theGrid->GetCellValue(ii, COL_PAIRNR_SESSION).CmpNoCase(sSessionPair) == 0 )
             m_theGrid->SetCellValue(ii, COL_PAIRNR_SESSION, names::GetNotSet());
     }
     m_bDataChanged = true;
@@ -179,7 +185,7 @@ static void RankIndexToPairIndex(UINT_VECTOR& a_uiV)
     dst.resize(a_uiV.size(),0);
 //    UINT maxRank = std::max(cfg::GetNrOfSessionPairs(), names::GetNumberOfGlobalPairs());
     UINT maxRank = cfg::GetNrOfSessionPairs();  // don't need more then this number of assignments
-    for (UINT rank = 1; rank <= maxRank; ++rank)
+    for ( UINT rank = 1; rank <= maxRank; ++rank )
     {
         UINT globalPair = a_uiV[rank];
         if ( globalPair == 0 )
@@ -191,7 +197,8 @@ static void RankIndexToPairIndex(UINT_VECTOR& a_uiV)
         else
             dst[globalPair] = rank;
     }
-    if (dst.size()) dst[0] = 0;
+    if ( dst.size() )
+        dst[0] = 0;
     a_uiV = dst;
 }   // RankIndexToPairIndex()
 
@@ -210,7 +217,7 @@ void AssignNames::RefreshInfo()
 #ifdef MY_GRIDSORT
     m_theGrid->UndoSort();
 #endif
-    if (activeSession <= 1)
+    if ( activeSession <= 1 )
     {   //no extra colums needed
         m_theGrid->HideCol(COL_PAIRNR_SESSION_PREV);
         m_theGrid->HideCol(COL_RANK_TOTAL_PREV);
@@ -238,7 +245,7 @@ void AssignNames::RefreshInfo()
     int pairs = pairInfo.size() - 1;
     m_theGrid->AppendRows(pairs);
 
-    for (int ii = 0; ii < pairs; ++ii)
+    for ( int ii = 0; ii < pairs; ++ii )
     {
         m_theGrid->SetCellValue(ii, COL_PAIRNAME      , pairInfo[ii+1].pairName );
         m_theGrid->SetCellValue(ii, COL_PAIRNR_SESSION, names::PairnrGlobal2SessionText(ii+1));
@@ -247,7 +254,7 @@ void AssignNames::RefreshInfo()
         m_theGrid->SetReadOnly(ii, COL_PAIRNR_SESSION_PREV  );
         m_theGrid->SetReadOnly(ii, COL_RANK_TOTAL_PREV      );
         m_theGrid->SetReadOnly(ii, COL_RANK_SESSION_PREV    );
-        if (activeSession > 1)
+        if ( activeSession > 1 )
         {
             m_theGrid->SetCellValue(ii, COL_PAIRNR_SESSION_PREV , prevAssign               [ii+1]);
             m_theGrid->SetCellValue(ii, COL_RANK_TOTAL_PREV     , TO_STRING(prevRankTotal  [ii+1]));
@@ -264,7 +271,8 @@ void AssignNames::RefreshInfo()
 
 /*virtual*/ void AssignNames::BackupData()
 {
-    if (!m_bDataChanged) return;
+    if ( !m_bDataChanged )
+        return;
     m_bDataChanged = false;
 
     std::vector<unsigned int> newAssign;
@@ -272,7 +280,7 @@ void AssignNames::RefreshInfo()
 
     auto rows = m_theGrid->GetNumberRows();
 
-    for (auto row = 0; row < rows; ++row)
+    for ( auto row = 0; row < rows; ++row )
     {
         UINT     sessionNr;
         wxString sessionName = m_theGrid->GetCellValue(row, COL_PAIRNR_SESSION );
@@ -339,7 +347,7 @@ void AssignNames::UpdateColumnAssign(std::vector<unsigned int>& a_newAssign)
 #endif
     RankIndexToPairIndex(a_newAssign);
     auto rows = m_theGrid->GetNumberRows();
-    for (auto ii = 0; ii < rows; ++ii)
+    for ( auto ii = 0; ii < rows; ++ii )
     {
         m_theGrid->SetCellValue(ii, COL_PAIRNR_SESSION, names::PairnrGlobal2SessionText(ii+1,&a_newAssign));
     }
@@ -357,7 +365,7 @@ void AssignNames::PrintPage()
     wxString sessionString = session > 0 ? FMT(_(", session %u"), session) : ES;
 
     wxString title = FMT(_("Pairname assignment for '%s'%s\n\nPair name"), cfg::GetDescription(), sessionString );
-    for (UINT index = 1; index <= nrOfPairs; ++index)
+    for ( UINT index = 1; index <= nrOfPairs; ++index )
     {
         title+=FMT("\n%4s %s", names::PairnrSession2SessionText(index), names::PairnrSession2GlobalText(index));
     }

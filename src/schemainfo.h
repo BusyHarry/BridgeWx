@@ -31,7 +31,8 @@ namespace schema
         #if 0
             bool operator < (const GameInfo &rhs) const
             {
-                if (set != rhs.set) return set < rhs.set;
+                if ( set != rhs.set )
+                    return set < rhs.set;
                 return pairs.ns < rhs.pairs.ns;
             }
         #else

@@ -26,7 +26,7 @@ namespace prn
         BOOL                bOk         = 0;    //false;
         UINT                searchFlags = PRINTER_ENUM_LOCAL;
 
-        if (cfg::GetNetworkPrinting())
+        if ( cfg::GetNetworkPrinting() )
             searchFlags |= PRINTER_ENUM_CONNECTIONS;
 
         a_sPrinterNames.clear();    // we have new data, remove old!
@@ -42,7 +42,7 @@ namespace prn
             &dwNeeded,          // bytes needed for buffer
             &dwReturned);       // number of entries
 
-        if (dwNeeded > 0)
+        if ( dwNeeded > 0 )
         {
             pInfo = std::make_unique<char[]>(dwNeeded);
         }
@@ -60,17 +60,17 @@ namespace prn
                 &dwReturned);
         }
 
-        if (bOk && ( nullptr != pInfo.get() ) )
+        if ( bOk && (nullptr != pInfo.get()) )
         {
             // Review the information from all the printers returned by EnumPrinters.
             unsigned int realCount = 0;
-            for (DWORD ii=0; ii < dwReturned; ii++)
+            for ( DWORD ii=0; ii < dwReturned; ii++ )
             {
                 const auto& info = (reinterpret_cast<PRINTER_INFO_1*>(pInfo.get()))[ii];
                 // pInfo[ii].pName contains the printername to use in the CreateDC function call.
-                if (   ( wxString(_("Fax"                             )) == info.pName)
-                    || ( wxString(_("Microsoft XPS Document Writer"   )) == info.pName)
-                    || ( wxString(_("OneNote"                         )) == info.pName)
+                if (   (wxString(_("Fax"                             )) == info.pName)
+                    || (wxString(_("Microsoft XPS Document Writer"   )) == info.pName)
+                    || (wxString(_("OneNote"                         )) == info.pName)
                    )
                 {
                     continue;   // we only want 'real' printers!
@@ -90,12 +90,12 @@ static wxString s_sDebugString;  	// used to get some info, and then show it in 
 #endif
 
 // some constants used to establish default values that work for me :)
-//static const int    sc_iDefaultCodepage     = 437;          // codepage used for translation from ascii <--> wide chars = MS-DOS U.S. English
-static const char   sc_cDefaultFont[]       = "Lucida Console";// "Consolas";   // fixed pitch font
+//static constexpr int    sc_iDefaultCodepage = 437;              // codepage used for translation from ascii <--> wide chars = MS-DOS U.S. English
+static constexpr char   s_acDefaultFont[]   = "Lucida Console"; // "Consolas";   // fixed pitch font
 // L"DejaVu Sans Mono" L"Lucida Console"
-static const int    sc_iDefaultPointsize    = 11;           // 12+'Consolas' -> 84 chars/line+58 lines/page. 11+'Consolas' -> 95 chars/line+63 lines/page.
-static const int    sc_iHorizontalMargin    = 2;            // leftmargin in characters
-static const int    sc_iVerticalMargin      = 1;            // topmargin in lines
+static constexpr int    s_iDefaultPointsize = 11;               // 12+'Consolas' -> 84 chars/line+58 lines/page. 11+'Consolas' -> 95 chars/line+63 lines/page.
+static constexpr int    s_iHorizontalMargin = 2;                // leftmargin in characters
+static constexpr int    s_iVerticalMargin   = 1;                // topmargin in lines
 
 /*
     This class enables you get Ascii text on a windows printer.
@@ -251,7 +251,7 @@ private:
     int         m_iMaxCharsOnLine   = 80;       // maximum chars on a line for this printer/paper/font
     int         m_iMaxLinesOnPage   = 64;       // maximum lines on a page for this printer/paper/font
     int         m_iDefaultLpp4List  = 64;       // lpp when printing to textfile, set by application
-    int         m_iPointSize        = sc_iDefaultPointsize; // the pointsize used in creating fonts
+    int         m_iPointSize        = s_iDefaultPointsize; // the pointsize used in creating fonts
     int         m_iPagesPrinted     = 0;        // nr of pages printed for the active session
     bool        m_bPrint2File       = false;    // true, if we are not using a real printer
     FILE*       m_fp                = nullptr;  // the filepointer when writing to a document
@@ -260,7 +260,7 @@ private:
     HFONT       m_hNewFont          = nullptr;  // the currently created new font
     wxString    m_sLineBuffer;                  // buffer for characters till next \n or \f
     wxString    m_sPrinterName;                 // the name of the current active printer
-    wxString    m_sPrinterFont      = sc_cDefaultFont;  // the currently used font for the printer
+    wxString    m_sPrinterFont      = s_acDefaultFont;  // the currently used font for the printer
     wxString    m_sPageTitle;                   // the title is printed at the top of a (new) page
 
     #define X(x) ((x)*m_iCharWidth  + m_iHorizontalOffset)  /* determine the horizontal print position */
@@ -275,7 +275,7 @@ private:
     This is normally the only one printerclass.
     The methods or called through global "C"-functions (extern "C")
 */
-static MyLinePrinter thePrintclass;
+static MyLinePrinter s_thePrintclass;
 
 MyLinePrinter::MyLinePrinter()
 {
@@ -288,21 +288,22 @@ MyLinePrinter::~MyLinePrinter()
     {   //methods could possibly throw an exception according lint??
         Clear();    //clean everything as needed
         (void)PrinterClose();
-        if (m_fp) (void)fclose(m_fp);
+        if ( m_fp )
+            (void)fclose(m_fp);
     }
     catch (...) { ; }
 }   // ~MyLinePrinter()
 
 bool MyLinePrinter::OpenDiskfile4Print()
 {
-    if (m_bPrint2File && m_fp == nullptr)
+    if ( m_bPrint2File && m_fp == nullptr )
     {
         wxString fileName  = cfg::GetActiveMatchPath()+cfg::GetFilePrinterName();
         bool     bWriteBom = !wxFileExists(fileName);
         m_fp = _fsopen(fileName.mb_str(wxConvUTF8), "a", _SH_DENYWR);   // fopen_s() does not allow read for other apps
-        if (m_fp == nullptr)
+        if ( m_fp == nullptr )
             m_bPrint2File = false;
-        else if (bWriteBom)
+        else if ( bWriteBom )
         {
             const unsigned char bom[] = { 0xEF, 0xBB, 0xBF };    // utf8
             (void)fwrite(bom, 1, sizeof(bom), m_fp);
@@ -313,7 +314,7 @@ bool MyLinePrinter::OpenDiskfile4Print()
 
 bool MyLinePrinter::PrintAFile(const wxString& a_fileName, const wxString& a_title)
 {
-    if (m_bPrint2File)
+    if ( m_bPrint2File )
     {
         wxString msg = _("Cant print a file to a file!");
         LogMessage(msg);
@@ -327,20 +328,20 @@ bool MyLinePrinter::PrintAFile(const wxString& a_fileName, const wxString& a_tit
 
     do
     {
-        if (a_fileName.IsEmpty())
+        if ( a_fileName.IsEmpty() )
         {
             bOk = false;    // no filename given?
             break;
         }
 
-        if (!BeginPrint(a_title))
+        if ( !BeginPrint(a_title) )
         {
             bOk = false;    // printer error??
             break;
         }
 
         auto err = fopen_s(&fp, a_fileName.char_str(), "rb"); MY_UNUSED(err);
-        if (!fp)
+        if ( !fp )
         {
             bOk = false;    // can't open file: no file or not allowed
             break;
@@ -366,24 +367,25 @@ bool MyLinePrinter::PrintAFile(const wxString& a_fileName, const wxString& a_tit
             bOk = PrintLine(cnv);
 //            bOk = std::all_of(cnv.begin(), cnv.end(), [this]( wxChar chr ){ return this->PrintCharacter(chr);});
         }
-    } while (false);        // execute body only once
+    } while ( false );      // execute body only once
 
     EndPrint();             // print last line/page
-    if (fp) (void)fclose(fp);
+    if ( fp )
+        (void)fclose(fp);
     m_sPageTitle.clear();
     return bOk;
 }   // PrintAFile()
 
 void MyLinePrinter::InitFont(LOGFONT* pLogFontInfo)
 {
-    if (!PrinterOpen())
+    if ( !PrinterOpen() )
     {   // we really do need a printer DC for this to work...
         return;
     }
 
     LOGFONT lf = {0};
 
-    if (pLogFontInfo == nullptr)
+    if ( pLogFontInfo == nullptr )
     {
         pLogFontInfo = &lf;
         // Initialize members of the LOGFONT structure.
@@ -422,7 +424,7 @@ void MyLinePrinter::InitFont(LOGFONT* pLogFontInfo)
     - lfFaceName        = "Consolas" "Courier New" "Fixedsys" "Lucida Console" "Terminal"
     */
 
-    if (m_hNewFont != 0)
+    if ( m_hNewFont != 0 )
     {   // delete previous created font to prevent leaks;
         DeleteObject( m_hNewFont );
     }
@@ -431,7 +433,7 @@ void MyLinePrinter::InitFont(LOGFONT* pLogFontInfo)
 
     auto tmpFont = reinterpret_cast<HFONT>(SelectObject(m_hPrinter, m_hNewFont));     //activate the new font
 
-    if (m_hOriginalFont == 0)
+    if ( m_hOriginalFont == 0 )
     {   // first time creation, so keep original for later restore (don't know if needed)
         m_hOriginalFont = tmpFont;
     }
@@ -443,22 +445,22 @@ void MyLinePrinter::InitFont(LOGFONT* pLogFontInfo)
     bool        bTE     = GetTextExtentPoint32(m_hPrinter, wxT("AE34W"), 5, &size);
 
     (void)bTm;(void)bTE;  // satisfy lint for not using these vars..
-    long chWidth        = textMetrics.tmAveCharWidth;   if (chWidth){}
-    long chHeight       = textMetrics.tmHeight;         if (chHeight){}
+    long chWidth  = textMetrics.tmAveCharWidth; wxUnusedVar(chWidth);
+    long chHeight = textMetrics.tmHeight;       wxUnusedVar(chHeight);
 
     m_iCharWidth        = size.cx / 5;
     m_iCharHeight       = size.cy;
-    m_iHorizontalOffset = sc_iHorizontalMargin * m_iCharWidth;      // set left margin
-    m_iVerticalOffset   = sc_iVerticalMargin * m_iCharHeight;       // set top  margin
+    m_iHorizontalOffset = s_iHorizontalMargin * m_iCharWidth;      // set left margin
+    m_iVerticalOffset   = s_iVerticalMargin * m_iCharHeight;       // set top  margin
     m_iDeviceHeight     = GetDeviceCaps(m_hPrinter, PHYSICALHEIGHT);
     m_iDeviceWidth      = GetDeviceCaps(m_hPrinter, PHYSICALWIDTH);
 
-    int vRes            = GetDeviceCaps(m_hPrinter, VERTRES);       if (vRes){}         // usable nr of lines
-    int hRes            = GetDeviceCaps(m_hPrinter, HORZRES);       if (hRes){}         // usable horizontal pixels
-    int technology      = GetDeviceCaps(m_hPrinter, TECHNOLOGY);    if (technology){}   // DT_RASPRINTER       2   /* Raster printer  */
+    int vRes            = GetDeviceCaps(m_hPrinter, VERTRES);    wxUnusedVar(vRes);         // usable nr of lines
+    int hRes            = GetDeviceCaps(m_hPrinter, HORZRES);    wxUnusedVar(hRes);         // usable horizontal pixels
+    int technology      = GetDeviceCaps(m_hPrinter, TECHNOLOGY); wxUnusedVar(technology);   // DT_RASPRINTER       2   /* Raster printer  */
 
-    m_iMaxCharsOnLine   = m_iDeviceWidth  / m_iCharWidth  - 2*sc_iHorizontalMargin;
-    m_iMaxLinesOnPage   = m_iDeviceHeight / m_iCharHeight - 2*sc_iVerticalMargin;
+    m_iMaxCharsOnLine   = m_iDeviceWidth  / m_iCharWidth  - 2*s_iHorizontalMargin;
+    m_iMaxLinesOnPage   = m_iDeviceHeight / m_iCharHeight - 2*s_iVerticalMargin;
 }   // InitFont()
 
 void MyLinePrinter::SetFont(const wxString& a_font, LOGFONT* pLogFontInfo )
@@ -487,9 +489,10 @@ void MyLinePrinter::SelectFont()
 #endif
 
 #if 1
-    if (!ChooseFont(&cf)) return;   // user pressed cancel
+    if ( !ChooseFont(&cf) )
+        return;   // user pressed cancel
 #else
-    while (!ChooseFont(&cf))        // Display the font-dialog box, don't accept cancel!
+    while ( !ChooseFont(&cf) )      // Display the font-dialog box, don't accept cancel!
     {
         MessageBox(0, _T("Invalid font"), 0, MB_OK);
     };
@@ -508,12 +511,12 @@ void MyLinePrinter::SelectFont()
 
 bool MyLinePrinter::PrinterClose()
 {
-    if (m_hPrinter == 0)
+    if ( m_hPrinter == 0 )
     {
         return true;
     }
 
-    if (m_hOriginalFont && m_hNewFont)  // REMARK: '&&' m_hNewFont' only added to satisfy LINT
+    if ( m_hOriginalFont && m_hNewFont )    // REMARK: '&&' m_hNewFont' only added to satisfy LINT
     {   // release old stuff and restore old situation.
         (void)SelectObject( m_hPrinter, m_hOriginalFont );
         (void)DeleteObject( m_hNewFont );
@@ -528,14 +531,14 @@ bool MyLinePrinter::PrinterClose()
 
 bool MyLinePrinter::PrinterOpen()
 {
-    if (m_hPrinter)
+    if ( m_hPrinter )
     {
         return true;    // printer already opened.
     }
 
-    if (m_sPrinterName.IsEmpty())
+    if ( m_sPrinterName.IsEmpty() )
     {
-        if (!SelectPrinter())
+        if ( !SelectPrinter() )
         {
             return false;
         }
@@ -621,12 +624,12 @@ bool MyLinePrinter::BeginPrint(const wxString& a_title)
     m_iPagesPrinted = 0;
     m_sPageTitle    = a_title;
 
-    if (m_bPrint2File)
+    if ( m_bPrint2File )
     {
         return PrintLine('\n' + a_title + '\n');
     }
 
-    if (!PrinterOpen())
+    if ( !PrinterOpen() )
     {   // can't open printer!
         return false;
     }
@@ -642,16 +645,16 @@ bool MyLinePrinter::BeginPrint(const wxString& a_title)
 
 void  MyLinePrinter::EndPrint()
 {
-    if (m_bPrint2File)
+    if ( m_bPrint2File )
     {
         int result = fflush(m_fp);
-        if (result)
+        if ( result )
             LogError(_("MyLinePrinter::EndPrint(): flushing error"));
         return;
     }
 
     // print the available data and close the printing process.
-    if (m_bPrinting)
+    if ( m_bPrinting )
     {
         PrintPage();
         EndDoc(m_hPrinter);
@@ -663,9 +666,9 @@ void  MyLinePrinter::EndPrint()
 void  MyLinePrinter::Clear()
 {
     //remark: we leave the printerconnection open, if there is one! because of performance.
-    if (m_bPrinting)
+    if ( m_bPrinting )
     {
-        if (m_bPageStarted)
+        if ( m_bPageStarted )
         {
             PrintPage();
             m_bPageStarted = false;
@@ -680,16 +683,18 @@ void  MyLinePrinter::Clear()
 
 void MyLinePrinter::SetPrinterName(const wxString& a_printerName )
 {
-    if (m_sPrinterName == a_printerName)
+    if ( m_sPrinterName == a_printerName )
     {
         return;             // nothing to do...
     }
 
-    if (m_fp) (void) fclose(m_fp); m_fp = nullptr;
+    if ( m_fp )
+        (void) fclose(m_fp);
+    m_fp = nullptr;
     (void)PrinterClose();   // may error....
     m_sPrinterName = a_printerName;
 
-    if (cfg::GetFilePrinterName() == a_printerName)
+    if ( cfg::GetFilePrinterName() == a_printerName )
     {
         m_iMaxLinesOnPage = m_iDefaultLpp4List;
         m_bPrint2File = true;
@@ -703,7 +708,8 @@ void MyLinePrinter::SetPrinterName(const wxString& a_printerName )
 
 void  MyLinePrinter::Line2Printer()
 {
-    if ( m_hPrinter == nullptr ) return;        // there is no open printer yet, so just ignore
+    if ( m_hPrinter == nullptr )
+        return; // there is no open printer yet, so just ignore
 
     /*
     Caution  Using the MultiByteToWideChar function incorrectly can compromise the security
@@ -714,7 +720,7 @@ void  MyLinePrinter::Line2Printer()
     appropriate for the data type the buffer receives. For more information,
     see: https://msdn.microsoft.com/en-us/library/windows/desktop/dd374047(v=vs.85).aspx
     */
-        if (!m_bPageStarted)
+        if ( !m_bPageStarted )
         {   //first line on a page, so we need to tell the printer to prepare a new page
             {
                 auto bStatus = (bool)StartPage(m_hPrinter);     MY_UNUSED(bStatus);
@@ -723,7 +729,7 @@ void  MyLinePrinter::Line2Printer()
             m_bPageStarted = true;
         }
 
-        if (m_iLinesOnPage == 0 && !m_sPageTitle.IsEmpty())
+        if ( m_iLinesOnPage == 0 && !m_sPageTitle.IsEmpty() )
         {   // print header, if available
             wxString header = FMT("              %s %d: ", _("page"), 1+m_iPagesPrinted) + m_sPageTitle;
             (void)TextOut(m_hPrinter, X(0), Y(m_iLinesOnPage), header.c_str(), header.Len());
@@ -731,14 +737,14 @@ void  MyLinePrinter::Line2Printer()
         }
 
         m_sLineBuffer.Trim(TRIM_RIGHT);
-        if (!m_sLineBuffer.IsEmpty())
+        if ( !m_sLineBuffer.IsEmpty() )
         {
             bool bResult = TextOutW(m_hPrinter, X(0), Y(m_iLinesOnPage), m_sLineBuffer.c_str(), m_sLineBuffer.Len());          (void)bResult;
             m_sLineBuffer.clear();
         }
 
         m_iLinesOnPage++;
-        if (m_iLinesOnPage >= m_iMaxLinesOnPage)
+        if ( m_iLinesOnPage >= m_iMaxLinesOnPage )
         {
             PrintPage();
         }
@@ -746,7 +752,8 @@ void  MyLinePrinter::Line2Printer()
 
 void  MyLinePrinter::PrintPage()
 {   // called at end of page: '\f'
-    if (!m_sLineBuffer.IsEmpty()) Line2Printer();   // print the last line, if we have something;
+    if ( !m_sLineBuffer.IsEmpty() )
+        Line2Printer();                             // print the last line, if we have something;
     m_bPageStarted  = false;                        // was set in PrintLine()....
     m_iLinesOnPage  = 0;                            // back to first line on new page
     ++m_iPagesPrinted;
@@ -762,10 +769,10 @@ static bool PrintString2File(const wxString& a_string, FILE* a_fp)
 
 bool MyLinePrinter::PrintCharacter(wxChar a_char)
 {
-    if (m_bPrint2File && OpenDiskfile4Print())
+    if ( m_bPrint2File && OpenDiskfile4Print() )
     {
         // utf8 text
-        if (a_char < 0x80)
+        if ( a_char < 0x80 )
         {   // assume no conversion
             return 1 == fwrite(&a_char, 1, 1, m_fp);
         }
@@ -775,12 +782,12 @@ bool MyLinePrinter::PrintCharacter(wxChar a_char)
     }
 
     //if m_bPrint2File but OpenDiskfile4Print() failes, then next test will return false...
-    if (!m_bPrinting)
+    if ( !m_bPrinting )
     {
         return false;		// no open printer yet
     }
 
-    switch (a_char)
+    switch ( a_char )
     {
         case '\n':
             Line2Printer();
@@ -792,7 +799,7 @@ bool MyLinePrinter::PrintCharacter(wxChar a_char)
             //just ignore
             break;
         default:
-            if (m_sLineBuffer.Len() >= static_cast<size_t>(m_iMaxCharsOnLine) && m_bAutoWrap)
+            if ( m_sLineBuffer.Len() >= static_cast<size_t>(m_iMaxCharsOnLine) && m_bAutoWrap )
             {
                 Line2Printer();         // wrap to next line
             }
@@ -805,9 +812,9 @@ bool MyLinePrinter::PrintCharacter(wxChar a_char)
 
 bool MyLinePrinter::PrintLine(const wxString& a_line)
 {
-    if (m_bPrint2File)
+    if ( m_bPrint2File )
     {
-        if (!OpenDiskfile4Print())
+        if ( !OpenDiskfile4Print() )
             return false;
         return PrintString2File(a_line, m_fp);
     }
@@ -846,12 +853,12 @@ bool MyLinePrinter::SelectPrinter()
     pdlg.nStartPage     = START_PAGE_GENERAL;
     pdlg.hwndOwner      = GetActiveWindow();
 
-    if (pdlg.hwndOwner == 0)
+    if ( pdlg.hwndOwner == 0 )
         pdlg.hwndOwner = GetDesktopWindow();	// not sure if we need this..  yes, we do!
 
     result              = PrintDlgEx(&pdlg);	// Invoke the printer dialog box to get the wanted printer.
     DWORD resultAction  = pdlg.dwResultAction;	// PD_RESULT_APPLY=2 PD_RESULT_CANCEL=0 PD_RESULT_PRINT=1
-    if (( result != S_OK ) || ( resultAction == PD_RESULT_CANCEL ) || ( pdlg.hDevNames == 0 ))
+    if ( (result != S_OK) || (resultAction == PD_RESULT_CANCEL) || (pdlg.hDevNames == 0) )
     {
         return false;   //something wrong, or user has cancelled.
     }
@@ -878,27 +885,31 @@ const wxString& MyLinePrinter::GetFont() const
 void MyLinePrinter::SetLinesPerPage(int a_lines)
 {
     m_iDefaultLpp4List = a_lines;
-    if (m_bPrint2File)
+    if ( m_bPrint2File )
         m_iMaxLinesOnPage = a_lines;
 }   // SetLinesPerPage()
 
 void MyLinePrinter::PrintTable(const table::TableInfo& table)
 {   // print a set of lines and texts
-    if (m_bPrint2File) return;      // not for now
-    if (m_hPrinter == 0) return;    // no active printer
+    if ( m_bPrint2File )
+        return; // not for now
+    if ( m_hPrinter == 0 )
+        return; // no active printer
 
-    for ( size_t index = 0; index < table.textCount; ++index)
+    for ( size_t index = 0; index < table.textCount; ++index )
     {   // print all the texts in the textarray
         wxPoint  pos  = table.texts[index].begin + table.origin;
         wxString text = table.texts[index].text;
-        if (text.IsEmpty()) continue;
+        if ( text.IsEmpty() )
+            continue;
         (void)TextOut(m_hPrinter, X(pos.x), Y(pos.y), text.c_str(), text.Len());
     }
-    for (const auto& textIt : table.textsV)
+    for ( const auto& textIt : table.textsV )
     {   // print all the texts in the textvector
         wxPoint  pos  = textIt.begin + table.origin;
         wxString text = textIt.text;
-        if (text.IsEmpty()) continue;
+        if ( text.IsEmpty() )
+            continue;
         (void)TextOut(m_hPrinter, X(pos.x), Y(pos.y), text.c_str(), text.Len());
     }
 
@@ -907,14 +918,14 @@ void MyLinePrinter::PrintTable(const table::TableInfo& table)
 
     auto pen    = CreatePen(PS_SOLID, 10, RGB(0, 0, 0));
     auto oldPen = static_cast<HPEN> (SelectObject(m_hPrinter, pen));
-    for (size_t index = 0; index < table.lineCount; ++index)
+    for ( size_t index = 0; index < table.lineCount; ++index )
     {   // draw all the lines in the linearray
         wxPoint pos = table.origin + table.lines[index].begin;
         MoveToEx(m_hPrinter, TO_X(pos), TO_Y(pos), nullptr);
         pos = table.origin + table.lines[index].end;
         LineTo(m_hPrinter, TO_X(pos), TO_Y(pos));
     }
-    for (const auto& lineIt : table.linesV)
+    for ( const auto& lineIt : table.linesV )
     {   // draw all the lines in the linevector
         wxPoint pos = table.origin + lineIt.begin;
         MoveToEx(m_hPrinter, TO_X(pos), TO_Y(pos), nullptr);
@@ -928,82 +939,82 @@ void MyLinePrinter::PrintTable(const table::TableInfo& table)
 
 bool BeginPrint(const wxString& a_title)
 {
-    return thePrintclass.BeginPrint(a_title);
+    return s_thePrintclass.BeginPrint(a_title);
 }   // BeginPrint()
 
 void EndPrint()
 {
-    thePrintclass.EndPrint();
+    s_thePrintclass.EndPrint();
 }   // EndPrint()
 
 void SetPrinterName(const wxString& a_printerName)
 {
-    thePrintclass.SetPrinterName( a_printerName );
+    s_thePrintclass.SetPrinterName( a_printerName );
 }   // SetPrinterName()
 
 bool PrintCharacter(wxChar a_char)
 {
-    return thePrintclass.PrintCharacter(a_char);
+    return s_thePrintclass.PrintCharacter(a_char);
 }   // PrintCharacter()
 
 bool PrintLine(const wxString& a_line)
 {
-    return thePrintclass.PrintLine(a_line);
+    return s_thePrintclass.PrintLine(a_line);
 }   // PrintLine()
 
 const wxString& GetPrinterName()
 {
-    return thePrintclass.GetPrinterName();
+    return s_thePrintclass.GetPrinterName();
 }   // GetPrinterName()
 
 void SetFont(const wxString& a_font)
 {
-    thePrintclass.SetFont(a_font);
+    s_thePrintclass.SetFont(a_font);
 }   // SetFont()
 
 const wxString& GetFont()
 {
-    return thePrintclass.GetFont();
+    return s_thePrintclass.GetFont();
 }   // GetFont()
 
 void SelectFont()
 {
-    return thePrintclass.SelectFont();
+    return s_thePrintclass.SelectFont();
 }   // SelectFont()
 
 bool PrintAFile(const wxString& a_fileName, const wxString& a_title)
 {
-    return thePrintclass.PrintAFile( a_fileName, a_title );
+    return s_thePrintclass.PrintAFile( a_fileName, a_title );
 }   // PrintAFile()
 
 bool SelectPrinter()
 {
-    return thePrintclass.SelectPrinter();
+    return s_thePrintclass.SelectPrinter();
 }   // SelectPrinter()
 
 void SetLinesPerPage(int a_lines)
 {
-    thePrintclass.SetLinesPerPage( a_lines );
+    s_thePrintclass.SetLinesPerPage( a_lines );
 }   // SetLinesPerPage()
 
 UINT GetLinesPerPage ()
 {
-    return thePrintclass.GetLinesPerPage();
+    return s_thePrintclass.GetLinesPerPage();
 }   // GetLinesPerPage()
 
 void PrintTable(const table::TableInfo& table)
 {
-    thePrintclass.PrintTable(table);
+    s_thePrintclass.PrintTable(table);
 }   // PrintTable()
 
 unsigned int GetCharsPerLine()
 {
-    return thePrintclass.GetCharsPerLine();
+    return s_thePrintclass.GetCharsPerLine();
 }   // GetCharsPerLine()
 
 bool IsPrintToFile()
 {
-    return thePrintclass.IsPrintToFile();
+    return s_thePrintclass.IsPrintToFile();
 }  // IsPrintToFile()
 
 

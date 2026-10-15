@@ -31,64 +31,67 @@
 #include "version.h"
 #include "main.h"
 
-static wxWindow* spMainframe = nullptr;      // to reach mainframe from clients
-wxWindow* GetMainframe(){return spMainframe;}
+static wxWindow* s_pMainframe = nullptr;            // to reach mainframe from clients
+wxWindow* GetMainframe(){return s_pMainframe;}
 
-wxCheckBox* g_pCheckboxBusyMC=nullptr;  // autohotkey uses this to find out if it has to wait before sending movements to popup in ChoiceMC
-wxCheckBox* g_pCheckboxBusy=nullptr;    // autohotkey uses this to find out if it has to wait before sending more mouse/text
-static const wxString ssCheckBoxBusy   = "CommunicationCheckBox";
-static const wxString ssCheckBoxBusyMC = "CommunicationCheckBoxMC";
-static       wxString ssWinTitle;       // set in app::init() to get it translated
+static wxCheckBox*      s_pCheckboxBusyMC = nullptr;// autohotkey uses this to find out if it has to wait before sending movements to popup in ChoiceMC
+static wxCheckBox*      s_pCheckboxBusy   = nullptr;// autohotkey uses this to find out if it has to wait before sending more mouse/text
+static const wxString   s_sCheckBoxBusy   = "CommunicationCheckBox";
+static const wxString   s_sCheckBoxBusyMC = "CommunicationCheckBoxMC";
+static       wxString   s_sWinTitle;                // set in app::init() to get it translated
 
-static bool sbIdleHandleBusy= true;     // if set, next idle will uncheck Busy
-static bool sbBusySet       = false;    // we already have started the BusyCycle
+static bool s_bIdleHandleBusy= true;                // if set, next idle will uncheck Busy
+static bool s_bBusySet       = false;               // we already have started the BusyCycle
 
-#define DEBUG_BUSY if (1)
+#define DEBUG_BUSY if ( 1 )
 
 static void SetReady(wxWindow* pWin, int count)
 {   //set busy off after <count> CallAfter()
-    if (count > 0 )
+    if ( count > 0 )
         pWin->CallAfter([pWin, count]{SetReady(pWin, count-1);});
     else
     {
         DEBUG_BUSY MyLogDebug("Busy(0)");
-        sbBusySet           = false;    // not busy anymore, can be activated again
-        sbIdleHandleBusy    = true;     // let idle do the uncheck, so grid is handled more properly in autotest
-        //g_pCheckboxBusy->SetValue(false); // uncheck -> not busy == ready
+        s_bBusySet           = false;    // not busy anymore, can be activated again
+        s_bIdleHandleBusy    = true;     // let idle do the uncheck, so grid is handled more properly in autotest
+        //s_pCheckboxBusy->SetValue(false); // uncheck -> not busy == ready
     }
 }   // SetReady()
 
 void AutoTestBusy(wxWindow* a_pWin, const wxString& a_msg)
 {
-    if (!cfg::IsScriptTesting()) return;
-    if (sbBusySet) return;            // we set it already ourself, no need to do it again
-    if (sbIdleHandleBusy)
+    if ( !cfg::IsScriptTesting() )
+        return;
+    if ( s_bBusySet )
+        return; // we set it already ourself, no need to do it again
+    if ( s_bIdleHandleBusy )
         MyLogError(_("Help, new busy request while previous not yet handled by Idle???"));
-    g_pCheckboxBusy->SetValue(true);   // check
+    s_pCheckboxBusy->SetValue(true);   // check
     DEBUG_BUSY MyLogDebug("Busy(1:'%s')", a_msg);
-    if (a_pWin != nullptr)
+    if ( a_pWin != nullptr )
     {   // atleast 2* CallAfter() to ensure(?) that all is really finished
-        sbBusySet = true;
+        s_bBusySet = true;
         SetReady(a_pWin, 4);
     }
 }   // AutoTestBusy()
 
 void AutoTestBusyMC(bool a_bSetCheck)
 {
-    if (!cfg::IsScriptTesting()) return;
-    g_pCheckboxBusyMC->SetValue(a_bSetCheck);
+    if ( !cfg::IsScriptTesting() )
+        return;
+    s_pCheckboxBusyMC->SetValue(a_bSetCheck);
 }   // AutoTestBusyMC()
 
-static int idleCount = 0;
+static int s_idleCount = 0;
 void OnIdle()
 {
-    ++idleCount;
-    if (sbIdleHandleBusy)
+    ++s_idleCount;
+    if ( s_bIdleHandleBusy )
     {   // first idle after cmdready will reset busy checkbox
-        sbIdleHandleBusy= false;
-        int checked     = g_pCheckboxBusy->IsChecked();  // should be set...
-        g_pCheckboxBusy->SetValue(false);   // uncheck -> not busy == ready
-        DEBUG_BUSY MyLogDebug("Idle(%i), busy: %i --> 0",idleCount, checked);
+        s_bIdleHandleBusy= false;
+        int checked     = s_pCheckboxBusy->IsChecked();  // should be set...
+        s_pCheckboxBusy->SetValue(false);   // uncheck -> not busy == ready
+        DEBUG_BUSY MyLogDebug("Idle(%i), busy: %i --> 0",s_idleCount, checked);
     }
 }   // OnIdle()
 
@@ -113,12 +116,12 @@ private:
 * early need of logger in MyApp::OnInit()
 * must be deleted if (last) 'MyFrame' is destroyed, else program does NOT exit
 * 'MyFrame' is delayed-Destroyed and re-Created during a language change, so logger should NOT be destroyed at that time
-* increment 'siMyFrameCounter' in CTOR of 'MyFrame'
-* decrement 'siMyFrameCounter' in DTOR of 'MyFrame'
-* destroy logger when 'siMyFrameCounter' is 0 in de DTOR of 'MyFrame'
+* increment 's_iMyFrameCounter' in CTOR of 'MyFrame'
+* decrement 's_iMyFrameCounter' in DTOR of 'MyFrame'
+* destroy logger when 's_iMyFrameCounter' is 0 in de DTOR of 'MyFrame'
 */
-static MyLog*   spMyLog         = nullptr;
-static int      siMyFrameCounter= 0;
+static MyLog*   s_pMyLog            = nullptr;
+static int      s_iMyFrameCounter   = 0;
 
 int MyApp::OnExit()
 {
@@ -163,14 +166,14 @@ public:
     wxString Key2String(int key)
     {
         auto it = m_keys2String.find(key);
-        if (it != m_keys2String.end())
+        if ( it != m_keys2String.end() )
             return it->second;
         return FMT("<%04X>", key);
     }   // Key2String()
 
     int FilterEvent(wxEvent& event) final
     {
-        if (m_bBusy)
+        if ( m_bBusy )
         {   // recursive call or call when I am busy??????
             //Don't output anything now: you WILL get lots of debug-assertions
             // wxCommandEvent
@@ -180,17 +183,17 @@ public:
         m_bBusy  = true;
         int type = event.GetEventType();
         // Can't use switch(): eventid's are no defines, but dynamically assigned
-        if (type == wxEVT_KEY_DOWN || type == wxEVT_KEY_UP)
+        if ( type == wxEVT_KEY_DOWN || type == wxEVT_KEY_UP )
         {
             bool    bUp = true;
             auto    chr = (wxChar)((static_cast<wxKeyEvent*>(&event))->GetKeyCode());
-            if (type == wxEVT_KEY_DOWN)
+            if ( type == wxEVT_KEY_DOWN )
             {
                 bUp = false;
                 long timeStamp = event.GetTimestamp();
-                if ( timeStamp == m_timeStamp)
+                if ( timeStamp == m_timeStamp )
                 {
-                    if (false) if (chr == m_previousChar)
+                    if ( false ) if ( chr == m_previousChar )
                     {
                         m_bBusy = false;
                         return Event_Skip;      // same event, other source?
@@ -201,7 +204,7 @@ public:
             }
 
             m_previousChar = chr;
-            if ((chr >= ' ') && (chr < 127))
+            if ( (chr >= ' ') && (chr < 127) )
                 m_keys = chr;
             else
                 m_keys = Key2String(chr);
@@ -210,10 +213,10 @@ public:
             m_keys += updown;
             MyLogDebug("%s", m_keys);
         } else
-        if (type == wxEVT_LEFT_DOWN || type == wxEVT_LEFT_DCLICK)
+        if ( type == wxEVT_LEFT_DOWN || type == wxEVT_LEFT_DCLICK )
         {
-            bool            bChecked1   = g_pCheckboxBusy  ->IsChecked();
-            bool            bChecked2   = g_pCheckboxBusyMC->IsChecked();
+            bool            bChecked1   = s_pCheckboxBusy  ->IsChecked();
+            bool            bChecked2   = s_pCheckboxBusyMC->IsChecked();
             auto            evt         = dynamic_cast<const wxMouseEvent*>(&event);
             auto            pos         = evt->GetPosition();
             auto            pWin        = dynamic_cast<wxWindow*>(evt->GetEventObject());
@@ -229,7 +232,7 @@ public:
            )
         {   // mouse
         } else
-        if (dynamic_cast<wxCommandEvent*>(&event))
+        if ( dynamic_cast<wxCommandEvent*>(&event) )
         {   // gives 'reentrancy' problems
         } else
         if (    type == wxEVT_IDLE
@@ -270,10 +273,10 @@ public:
             // nothing
         } else
         {   // unknown/unseen yet...
-            if (true)
+            if ( true )
             {
-                bool bChecked1 = g_pCheckboxBusy  ->IsChecked();
-                bool bChecked2 = g_pCheckboxBusyMC->IsChecked();
+                bool bChecked1 = s_pCheckboxBusy  ->IsChecked();
+                bool bChecked2 = s_pCheckboxBusyMC->IsChecked();
                 MyLogDebug("Event(%i), busy: %i,%i", type, bChecked1, bChecked2);
             }
         }
@@ -333,24 +336,25 @@ private:
 
 MyFrame::~MyFrame()
 {
-    if (m_pActivePage) m_pActivePage->BackupData();
-//    delete g_pCheckboxBusy;       // destroyed by MyFrame?
-//    delete g_pCheckboxBusyMC;     // destroyed by MyFrame?
-    if ( --siMyFrameCounter == 0 )
-        delete spMyLog;             // program is exiting now
+    if ( m_pActivePage )
+        m_pActivePage->BackupData();
+//    delete s_pCheckboxBusy;       // destroyed by MyFrame?
+//    delete s_pCheckboxBusyMC;     // destroyed by MyFrame?
+    if ( --s_iMyFrameCounter == 0 )
+        delete s_pMyLog;             // program is exiting now
 }   // ~MyFrame()
 
 static void UncheckLogMenu()
 {
-    (reinterpret_cast<MyFrame*>(spMainframe))->m_pMenuBar->Check(ID_MENU_LOG, false);
+    (reinterpret_cast<MyFrame*>(s_pMainframe))->m_pMenuBar->Check(ID_MENU_LOG, false);
 }   // UncheckLogMenu()
 
 #include <wx/dir.h>
-static const wxString sLocales = "locales";   // folder name in .exe folder where translations are stored
+static const wxString s_sLocales = "locales";   // folder name in .exe folder where translations are stored
 
 static void MakeDir(const wxString& a_dir)
 {
-    if (!wxDirExists(a_dir))
+    if ( !wxDirExists(a_dir) )
     {
         wxFileName::Mkdir(a_dir, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
     }
@@ -358,7 +362,7 @@ static void MakeDir(const wxString& a_dir)
 
 static wxString GetCatalogPath()
 {   // get the catalog path and assure sub-folders 'nl' and 'en' exist
-    wxString path = wxPathOnly(wxStandardPaths::Get().GetExecutablePath()) + PS + sLocales;
+    wxString path = wxPathOnly(wxStandardPaths::Get().GetExecutablePath()) + PS + s_sLocales;
     MakeDir(path);
     MakeDir(path + PS + "nl");
     MakeDir(path + PS + "en");
@@ -373,17 +377,17 @@ static void GetInstalledLanguages(wxArrayString & a_descriptions, wxArrayInt & a
     a_identifiers.Add(wxLANGUAGE_ENGLISH);
     wxDir       dir(GetCatalogPath());
     wxString    filename;
-    for (bool bFound = dir.GetFirst(&filename, "*.*", wxDIR_DIRS); bFound; bFound = dir.GetNext(&filename))
+    for ( bool bFound = dir.GetFirst(&filename, "*.*", wxDIR_DIRS); bFound; bFound = dir.GetNext(&filename) )
     {
         MyLogMessage(_("Search for languages, folder found: '%s'"), dir.GetNameWithSep() + filename);
         auto langinfo = wxLocale::FindLanguageInfo(filename);
-        if (langinfo != nullptr)
+        if ( langinfo != nullptr )
         {
-            if (wxFileExists(dir.GetName() + PS + filename + PS + __PRG_NAME__ + ".mo"))
+            if ( wxFileExists(dir.GetName() + PS + filename + PS + __PRG_NAME__ + ".mo") )
             {
                 wxString description = langinfo->Description;
                 wxString native      = langinfo->DescriptionNative;
-                if (description != native)
+                if ( description != native )
                    description += " '" + native + "'";
                 a_descriptions.Add(description);
                 a_identifiers.Add(langinfo->Language);
@@ -421,7 +425,7 @@ void MyApp::ReInitLanguage()
     m_pMainFrame->Destroy();  // system will delete it when idle....
     auto previousMenuId = m_pMainFrame->GetCurrentMenuId();
     m_pMainFrame = new MyFrame(*this);
-    if (previousMenuId != m_pMainFrame->GetCurrentMenuId())
+    if ( previousMenuId != m_pMainFrame->GetCurrentMenuId() )
     {
         wxCommandEvent event(wxEVT_MENU, previousMenuId);
         m_pMainFrame->GetEventHandler()->AddPendingEvent(event);
@@ -432,7 +436,7 @@ void MyApp::ReInitLanguage()
 #endif
 
     const wxLanguageInfo* const langInfo = wxUILocale::GetLanguageInfo(wxLANGUAGE_DEFAULT);
-    if (langInfo)
+    if ( langInfo )
         MyLogMessage(_("Systemlanguage: id=%d, %s"), langInfo->Language, langInfo->Description);
     else
         MyLogMessage(_("Systemlanguage: the default system language"));
@@ -442,7 +446,7 @@ void MyApp::ReInitLanguage()
 
 bool MyApp::OnInit()
 {
-    if (!wxUILocale::UseDefault())
+    if ( !wxUILocale::UseDefault() )
     {;}
     //Need the stupid wxLogWindow, else you get many error-popups!
     auto logWindow = new wxLogWindow(nullptr, "Logwindow", false, false /*pass trough*/);
@@ -454,7 +458,7 @@ bool MyApp::OnInit()
     // early creation of MyLog, need it when reading cfg
     // can't be destroyed in MyApp::OnExit() because OnExit() is not called if logger still exists...
     // so we destroy it in DTOR of MyFrame
-    spMyLog = new MyLog;
+    s_pMyLog = new MyLog;
     MyLog::SetLevel(MyLog::Level::LOG_Max);
     LogMessage("------------"); // just testing...
     LogMessage("test logging");
@@ -470,7 +474,7 @@ bool MyApp::OnInit()
     SetConsoleOutputCP(437);
     SetConsoleCP(437);
     // enable console output
-    if (AttachConsole(ATTACH_PARENT_PROCESS))
+    if ( AttachConsole(ATTACH_PARENT_PROCESS) )
     {
         (void)freopen("CONOUT$", "w", stdout);
         (void)freopen("CONOUT$", "w", stderr);
@@ -481,9 +485,9 @@ bool MyApp::OnInit()
     InitLanguage();   // setup the language as requested by cfg
 
     wxArrayString myArgv;
-    for (auto ii = 0; ii < argc; ++ii)
+    for ( auto ii = 0; ii < argc; ++ii )
         myArgv.push_back(argv[ii]);
-    if (CFG_ERROR == cfg::HandleCommandline(myArgv))
+    if ( CFG_ERROR == cfg::HandleCommandline(myArgv) )
     {
         ;   // ??
     }
@@ -499,20 +503,20 @@ bool MyApp::OnInit()
     return true;
 }   //  OnInit()
 
-MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'Bridge' scoring program")) // ssWinTitle: init here because of translation for new frame!
+MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, s_sWinTitle = _("'Bridge' scoring program")) // s_sWinTitle: init here because of translation for new frame!
     , m_theApp { a_theApp }
 {   // remark: wxFrame() MUST be initialized in constructor, not in its body: it will not be (for sure) the first toplevel window!
-    ++siMyFrameCounter;   // increment counter, should be max 2 shortly during language change
+    ++s_iMyFrameCounter;   // increment counter, should be max 2 shortly during language change
     MyLog::SetMainFrame(this);
     MyLog::SetCallbackOnHide(&UncheckLogMenu);
     // autotest init
-    if (cfg::IsScriptTesting())
+    if ( cfg::IsScriptTesting() )
     {
-        g_pCheckboxBusy   = new wxCheckBox(this, wxID_ANY, ssCheckBoxBusy  , GetStaticRectPosition(), GetStaticRectSize()); g_pCheckboxBusy->Hide();
-        g_pCheckboxBusyMC = new wxCheckBox(this, wxID_ANY, ssCheckBoxBusyMC, GetStaticRectPosition(), GetStaticRectSize()); g_pCheckboxBusyMC->Hide();
+        s_pCheckboxBusy   = new wxCheckBox(this, wxID_ANY, s_sCheckBoxBusy  , GetStaticRectPosition(), GetStaticRectSize()); s_pCheckboxBusy->Hide();
+        s_pCheckboxBusyMC = new wxCheckBox(this, wxID_ANY, s_sCheckBoxBusyMC, GetStaticRectPosition(), GetStaticRectSize()); s_pCheckboxBusyMC->Hide();
 
-        g_pCheckboxBusy  ->Bind(wxEVT_CHECKBOX,[](const wxCommandEvent&){ MyLogDebug("Busy -> %i"  ,g_pCheckboxBusy  ->IsChecked());});
-        g_pCheckboxBusyMC->Bind(wxEVT_CHECKBOX,[](const wxCommandEvent&){ MyLogDebug("BusyMC -> %i",g_pCheckboxBusyMC->IsChecked());});
+        s_pCheckboxBusy  ->Bind(wxEVT_CHECKBOX,[](const wxCommandEvent&){ MyLogDebug("Busy -> %i"  ,s_pCheckboxBusy  ->IsChecked());});
+        s_pCheckboxBusyMC->Bind(wxEVT_CHECKBOX,[](const wxCommandEvent&){ MyLogDebug("BusyMC -> %i",s_pCheckboxBusyMC->IsChecked());});
 
 
         SetExtraStyle(wxWS_EX_PROCESS_IDLE);
@@ -529,7 +533,7 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     // check if cmdline has fontscaling setting 'q'
     float scale = 1.0;
     UINT fontIncrease = cfg::GetFontsizeIncrease();
-    if (fontIncrease)
+    if ( fontIncrease )
     {
         scale = 1.0 + fontIncrease/100.0;
         this->SetFont(GetFont().Scale(scale));      // only sub-frames have adapted fonts, menu's don't change: system settings
@@ -557,17 +561,20 @@ MyFrame::MyFrame(MyApp& a_theApp) : wxFrame(nullptr, wxID_ANY, ssWinTitle = _("'
     vSize = std::min(FromDIP(VSIZE_WANTED*scale), maxY-20);
     SetSize({hSize,vSize});
 
-    static wxPoint pos{ {0,0} };
-    if (pos == wxPoint({0, 0})) pos = GetPosition();    // use same position after language change
-    if (pos.x + hSize > maxX ) pos.x -= pos.x +hSize - maxX;
-    if (pos.y + vSize > maxY ) pos.y -= pos.y +vSize - maxY;
-    SetPosition(pos);
+    static wxPoint s_pos{ {0,0} };
+    if ( s_pos == wxPoint({0, 0}) )
+        s_pos = GetPosition();  // use same position after language change
+    if ( s_pos.x + hSize > maxX )
+        s_pos.x -= s_pos.x +hSize - maxX;
+    if ( s_pos.y + vSize > maxY )
+        s_pos.y -= s_pos.y +vSize - maxY;
+    SetPosition(s_pos);
     //SetPosition({10,10}); // testing mouse-coordinates
 
-    MyLogDebug(_("Mainwindow position: {%i,%i}, size: %i*%i"), pos.x, pos.y, hSize, vSize);
+    MyLogDebug(_("Mainwindow position: {%i,%i}, size: %i*%i"), s_pos.x, s_pos.y, hSize, vSize);
 
     SetIcon(wxICON(wxwin_standard_icon));
-    spMainframe = this;    // for clients to reach us
+    s_pMainframe = this;    // for clients to reach us
 
     auto menuFile = new wxMenu;
     menuFile->Append(ID_MENU_SETUPNEWMATCH  , _("&New match/session"  ), _("Match/session entry"            ));
@@ -674,7 +681,8 @@ void MyFrame::OnPrintPage(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("printPage");
     MyLogDebug(_("PrintPage()"));
-    if (m_pActivePage) m_pActivePage->PrintPage();
+    if ( m_pActivePage )
+        m_pActivePage->PrintPage();
 }   // OnPrintPage()
 
 void MyFrame::OnAbout(const wxCommandEvent& )
@@ -713,11 +721,11 @@ void SetStatusbarInfo()
 {
     wxString tmp = cfg::GetActiveMatchAndSession() + ", ";
     wxString prn = cfg::GetPrinterName();
-    if (prn == cfg::GetFilePrinterName())
+    if ( prn == cfg::GetFilePrinterName() )
         tmp +=  cfg::GetFilePrinterName();
     else
         tmp += cfg::GetWinPrintPrefix();
-    reinterpret_cast<MyFrame*>(spMainframe)->StatusBar()->SetInfo(tmp);
+    reinterpret_cast<MyFrame*>(s_pMainframe)->StatusBar()->SetInfo(tmp);
 }   // SetStatusbarInfo()
 
 void MyFrame::UpdateStatusbarInfo(const wxCommandEvent& )
@@ -727,7 +735,7 @@ void MyFrame::UpdateStatusbarInfo(const wxCommandEvent& )
 
 void SetStatusbarText(const wxString& a_msg)
 {
-    reinterpret_cast<MyFrame*>(spMainframe)->StatusBar()->SetStatusText(a_msg);
+    reinterpret_cast<MyFrame*>(s_pMainframe)->StatusBar()->SetStatusText(a_msg);
 }   // SetStatusbarText()
 
 void MyFrame::UpdateStatusbarText(const wxCommandEvent& a_event)
@@ -747,9 +755,9 @@ void MyFrame::AutotestCreatePositions()
     positionsFile.MyCreate(cfg::ConstructFilename(cfg::EXT_MAX)+"AutoTest.pos", MyTextFile::WRITE);
     positionsFile.AddLine(FMT(";definitions to use in automatic testing, created at %s", GetDateTime()));
     // NB do NOT translate the variable names themself, ONLY there value: Autotest relies on these names!
-    positionsFile.AddLine(    "WinTitle       := \"" + ssWinTitle       + "\"   ;window title of this program");
-    positionsFile.AddLine(    "SystemComBox   := \"" + ssCheckBoxBusy   + "\"   ;name of the checkbox for communication between autohotkey and the program");
-    positionsFile.AddLine(    "SystemComBoxMC := \"" + ssCheckBoxBusyMC + "\" ;name of the checkbox for communication between autohotkey and the program for ChoiceMC");
+    positionsFile.AddLine(    "WinTitle       := \"" + s_sWinTitle       + "\"   ;window title of this program");
+    positionsFile.AddLine(    "SystemComBox   := \"" + s_sCheckBoxBusy   + "\"   ;name of the checkbox for communication between autohotkey and the program");
+    positionsFile.AddLine(    "SystemComBoxMC := \"" + s_sCheckBoxBusyMC + "\" ;name of the checkbox for communication between autohotkey and the program for ChoiceMC");
     positionsFile.AddLine(    "HotkeyPos      := \""  HOTKEY  ": hotkey to request mouse-positions to be generated");
     positionsFile.AddLine(    "; menu-definitions");
     positionsFile.AddLine(    _("MenuNewMatch      := \"fn\"       ; File: New match/session"               ));
@@ -781,7 +789,7 @@ void MyFrame::AutotestCreatePositions()
 
 
     wxCommandEvent event;
-    for (auto menuId = ID_MENU_SETUP_FIRST + 1; menuId < ID_MENU_SETUP_LAST; ++menuId)
+    for ( auto menuId = ID_MENU_SETUP_FIRST + 1; menuId < ID_MENU_SETUP_LAST; ++menuId )
     {
         event.SetId(menuId);
         OnMenuChoice(event);    // create/switch-to menupage
@@ -814,7 +822,7 @@ void MyFrame::OnMenuChoice(const wxCommandEvent& a_event)
     * The new page can/will then use the most uptodate data.
     */
     auto oldPage = m_pActivePage;       // we need to hide old page when we get a new one
-    if (oldPage)
+    if ( oldPage )
     {
         MyLogDebug(_("Menu backup current(%u: %s)"), m_oldId, oldPage->GetDescription());
         oldPage->BackupData();          // backup data BEFORE new page is created/shown
@@ -825,12 +833,12 @@ void MyFrame::OnMenuChoice(const wxCommandEvent& a_event)
     UINT id = a_event.GetId();
     auto it = m_pages.find(id);         // check if we already created it
 
-    if (it != m_pages.end())
+    if ( it != m_pages.end() )
     {   // already created, so m_pActivePage is non-zero
         MyLogDebug(_("Menu old page(%u: %s)"), id, it->second->GetDescription());
-        if (m_pActivePage == it->second)
+        if ( m_pActivePage == it->second )
         {
-            if (id == ID_MENU_SETUPNEWMATCH)
+            if ( id == ID_MENU_SETUPNEWMATCH )
                 m_pActivePage->RefreshInfo();   // we COULD have changed databasetype...
             return;                             // same page, so do nothing...
         }
@@ -842,7 +850,7 @@ void MyFrame::OnMenuChoice(const wxCommandEvent& a_event)
     else
     {   // not found, create new page on demand
         MyLogDebug(_("Menu new page(%u)"), id);
-        switch (id)
+        switch ( id )
         {
             case ID_MENU_SETUPGAME:
                 m_pActivePage = new SetupGame(this,ID_MENU_SETUPGAME);
@@ -900,7 +908,8 @@ void MyFrame::OnMenuChoice(const wxCommandEvent& a_event)
         );
     }
 
-    if (oldPage) oldPage->Hide();       // hide old page so ONLY new page is visible one in m_vSizer
+    if ( oldPage )
+        oldPage->Hide();                // hide old page so ONLY new page is visible one in m_vSizer
     m_oldId = id;                       // remember for next time
     Layout();                           // re-layout all
     Refresh();                          // possibly needed???
@@ -921,13 +930,14 @@ void MyFrame::OnLanguage(const wxCommandEvent&)
     wxArrayInt      identifiers;
     GetInstalledLanguages(names, identifiers);
     int index = MyGetSingleChoiceIndex(_("Choose a language (and restart)"), _("Language selection"), names, this);
-    if (index < 0) return;  // cancel pressed
-
+    if ( index < 0 )
+        return; // cancel pressed
 
     int language = identifiers[index];
-    if (language != cfg::GetLanguage())
+    if ( language != cfg::GetLanguage() )
     {   // setting same language would result in database close (if auto restart) and result in a lot of access-errors!
-        if (m_pActivePage) m_pActivePage->BackupData();
+        if ( m_pActivePage )
+            m_pActivePage->BackupData();
         cfg::SetLanguage(language, names[index]);
         m_theApp.ReInitLanguage();  // can result in automatic restart!
         MyLogMessage(_("Languagechoice: id=%d, name=%s"), identifiers[index], names[index]); // will be shown in new logwindow, if restarted!
@@ -962,17 +972,17 @@ void MyFrame::OnImportSchema(const wxCommandEvent& )
     {
         MyLogMessage(_("Importing file <%s>"), schemaFile);
         wxFileName fn(schemaFile);
-        if (0 == cfg::GetBaseFolder().CmpNoCase(fn.GetPath()))
+        if ( 0 == cfg::GetBaseFolder().CmpNoCase(fn.GetPath()) )
         {
             wxString error(_("Don't import a schema from the basefolder itself!"));
             MyLogError(error);
             MyMessageBox(error, _("Error"));
         } else
         {   // only import if folders are different!
-            if (schema::ImportSchema(schemaFile))
+            if ( schema::ImportSchema(schemaFile) )
             {   // copy/overwrite file to/in the basefolder: load all schemafiles at startup from here
                 wxString basename = wxFileName(cfg::GetBaseFolder(), fn.GetFullName()).GetFullPath();
-                if (!wxCopyFile(schemaFile, basename, true))
+                if ( !wxCopyFile(schemaFile, basename, true) )
                 {
                     MyLogError("Could not copy <%s> to <%s>", schemaFile, basename);
                 }
@@ -986,7 +996,7 @@ void MyFrame::LoadExistingSchemaFiles()
     wxArrayString schemas;
     wxString wild("*."); wild += NBB_SCHEMA_EXTENSION;
     (void)wxDir::GetAllFiles(cfg::GetBaseFolder(), &schemas, wild, wxDIR_FILES);
-    for (const auto& schema : schemas)
+    for ( const auto& schema : schemas )
     {
         (void)schema::ImportSchema(schema, true);   // always force-load schema's during startup!
     }
@@ -996,7 +1006,7 @@ void MyFrame::LoadExistingSchemaFiles()
 // cppcheck-suppress constParameterPointer
 void SendEvent2Mainframe(int a_id, void* a_pClientData)
 {
-    if (GetMainframe())
+    if ( GetMainframe() )
     {
         wxCommandEvent event(wxEVT_USER, a_id);
         event.SetClientData(a_pClientData);

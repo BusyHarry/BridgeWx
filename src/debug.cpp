@@ -50,7 +50,7 @@ Board: https://en.wikipedia.org/wiki/Glossary_of_contract_bridge_terms
 
 *
 */
-static const wxString ssDbg = "dbg";
+static const wxString s_sDbg = "dbg";
 #define OUTPUT_TEXT_FORMATTED(fmt,...) OutputText(FMT(fmt, __VA_ARGS__))
 #define OUTPUT_TEXT           OutputText
 
@@ -110,27 +110,28 @@ private:
     wxTimer m_freezeTimer;
 };
 
-Console::Console(wxWindow* parent, const wxString& a_label, const wxString& a_prompt)
-    : wxTextCtrl(parent, wxID_ANY, a_label, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_PROCESS_ENTER)
+Console::Console(wxWindow* a_parent, const wxString& a_label, const wxString& a_prompt)
+    : wxTextCtrl(a_parent, wxID_ANY, a_label, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_PROCESS_ENTER)
 {
     ShowNativeCaret(true);
     //SetBackgroundStyle(wxBG_STYLE_PAINT);
     Bind(wxEVT_CHAR, &Console::OnChar, this);   // we need this to only allow chars AFTER the prompt
     SetPrompt(a_prompt);                        // default prompt
-    CallAfter([this]{ if(m_bFirstPrompt) ShowPrompt();});  // After userinit, we show the prompt if user hasn't done it yet
-    m_pButtonSave = new wxButton(parent, wxID_ANY, _("Save"));
+    CallAfter([this]{ if ( m_bFirstPrompt ) ShowPrompt();});  // After userinit, we show the prompt if user hasn't done it yet
+    m_pButtonSave = new wxButton(a_parent, wxID_ANY, _("Save"));
     m_pButtonSave->SetToolTip(_("save window-content"));
     m_pButtonSave->Bind(wxEVT_BUTTON, [this](const wxCommandEvent&)
         {
             AUTOTEST_BUSY("save");
             wxString filename = wxFileSelector(_("Choose a file to save the text to")
                 , wxEmptyString, "debug.txt");
-            if (!filename.IsEmpty()) this->SaveFile(filename);
+            if ( !filename.IsEmpty() )
+                this->SaveFile(filename);
             SetInsertionPoint(GetLastPosition());
             CallAfter([this]{this->SetFocus();});
         } );
 
-    m_pButtonClear = new wxButton(parent, wxID_ANY, _("Clear"));
+    m_pButtonClear = new wxButton(a_parent, wxID_ANY, _("Clear"));
     m_pButtonClear->SetToolTip(_("clear window-content"));
     m_pButtonClear->Bind(wxEVT_BUTTON, [this](const wxCommandEvent&) { this->Clear();} );
 
@@ -166,7 +167,7 @@ Console::Console(wxWindow* parent, const wxString& a_label, const wxString& a_pr
         Bind(wxEVT_KILL_FOCUS       , [this](wxFocusEvent& evt)
 #endif
             {
-                if (!m_freezeTimer.IsRunning())
+                if ( !m_freezeTimer.IsRunning() )
                 {   Freeze();
                     m_freezeTimer.StartOnce(100);
                 }
@@ -181,7 +182,7 @@ Console::Console(wxWindow* parent, const wxString& a_label, const wxString& a_pr
              HideNativeCaret();
              CallAfter([this]{Thaw();});
              return;
-//             if (!bFrozen)
+//             if ( !bFrozen )
              {
                  Freeze();
                 // bFrozen = true;
@@ -200,13 +201,13 @@ Console::Console(wxWindow* parent, const wxString& a_label, const wxString& a_pr
                                                     evt.Skip();
                                                     return;
 
-                                                    //if (bFrozen)
+                                                    //if ( bFrozen )
                                                     {
                                                         Thaw();
                                                         bFrozen = false;
                                                         ++thawCount;
                                                         LogMessage("setfocus: freeze=%i, thaw=%i)", freezeCount, thawCount);
-                                                        //if (freezeCount == thawCount) ShowNativeCaret();
+                                                        //if ( freezeCount == thawCount ) ShowNativeCaret();
                                                         evt.Skip();
                                                         CallAfter([this] {ShowPosition(GetInsertionPoint());});
                                                     }
@@ -215,7 +216,7 @@ Console::Console(wxWindow* parent, const wxString& a_label, const wxString& a_pr
                          }
                  );
 
-        Bind( wxEVT_ERASE_BACKGROUND,[this](wxEraseEvent& event){/*if (bFrozen) { Thaw(); bFrozen = false; LogMessage("erase/thaw"); }*/ LogMessage("erase %i", ++sErasecount); });
+        Bind( wxEVT_ERASE_BACKGROUND,[this](wxEraseEvent& event){/*if ( bFrozen ) { Thaw(); bFrozen = false; LogMessage("erase/thaw"); }*/ LogMessage("erase %i", ++sErasecount); });
         Bind( wxEVT_PAINT,           [this](wxPaintEvent& event){ LogMessage( "paint %i", ++sPaintcount );});
 #endif
 }   // Console()
@@ -232,7 +233,8 @@ void Console::AppendText(const wxString& text)
 void Console::Clear(bool a_bPrompt)
 {
     wxTextCtrl::Clear();
-    if (a_bPrompt) ShowPrompt();
+    if ( a_bPrompt )
+        ShowPrompt();
 }   // Clear()
 
 void Console::AsyncTextOutBegin()
@@ -248,10 +250,11 @@ void Console::AsyncTextOutEnd()
 
 void Console::ShowPrompt()
 {
-    if (m_bAsyncPrompt) return;
+    if ( m_bAsyncPrompt )
+        return;
     Freeze();
     long pos = GetLastPosition();
-    if (pos && GetRange(pos - 1, pos)[0] != '\n')
+    if ( pos && GetRange(pos - 1, pos)[0] != '\n' )
     {
         wxTextCtrl::AppendText('\n');   // force begin of line
     }
@@ -293,15 +296,16 @@ void Console::OnChar(wxKeyEvent& a_event)
     {
         // It's a character without any Unicode equivalent at all, e.g. cursor
         // arrow or function key, we never filter those.
-        if (asciiChar != WXK_BACK && asciiChar != WXK_DELETE && asciiChar != WXK_NUMPAD_DELETE)     // only set for asciiChar???????
+        if ( asciiChar != WXK_BACK && asciiChar != WXK_DELETE && asciiChar != WXK_NUMPAD_DELETE )   // only set for asciiChar???????
             return;
     }
 
-    if (asciiChar == WXK_BACK) --insertionPoint;
+    if ( asciiChar == WXK_BACK )
+        --insertionPoint;
     if ( insertionPoint < m_promptPosition )
     {
-        if (asciiChar != WXK_CONTROL_C) // don't eat ^C: leave this key, so you can copy and paste
-            a_event.Skip(false);        // eat key: don't allow changes in prompt area or area before it: readonly part
+        if ( asciiChar != WXK_CONTROL_C )   // don't eat ^C: leave this key, so you can copy and paste
+            a_event.Skip(false);            // eat key: don't allow changes in prompt area or area before it: readonly part
 // enter should be handled!       return;
     }
 
@@ -311,7 +315,8 @@ void Console::OnChar(wxKeyEvent& a_event)
         wxTextCtrl::AppendText('\n');           // users "OnEnter()" event will eat this char..
         CreateCmdLine();                        // create commandline now
         // AFTER user has handled the commandline, we will set the prompt if allowed
-        if (!m_bAsyncPrompt) CallAfter([this]() { ShowPrompt(); });
+        if ( !m_bAsyncPrompt )
+            CallAfter([this]() { ShowPrompt(); });
     }
 }   // OnChar()
 
@@ -389,7 +394,7 @@ Debug::Debug(wxWindow* a_pParent, UINT a_pageId, DebugType a_type) :Baseframe(a_
     m_pHsizerSlipsExtra->Add(pButtonPrint, 1, wxALIGN_CENTER_VERTICAL,MY_BORDERSIZE);
 
     wxString windowText;
-    switch (m_debugType)
+    switch ( m_debugType )
     {   // show only needed controls
         default:
         case DebugConsole:
@@ -465,7 +470,7 @@ void Debug::SetFocusAfter(const wxCommandEvent&)
 
 void Debug::AutotestRequestMousePositions(MyTextFile* a_pFile)
 {
-    switch(m_debugType)
+    switch ( m_debugType )
     {
         case DebugConsole:
             AutoTestAddWindowsNames(a_pFile, m_description);
@@ -497,10 +502,10 @@ void Debug::OnSelectPair(const wxCommandEvent&)
 void Debug::PrintOrExample()
 {
     bool bPrintToFile = m_bPrintNext && prn::IsPrintToFile();
-    if (bPrintToFile)
+    if ( bPrintToFile )
         m_bPrintNext = false;   // printer can't print linechars to a text-file, so we do it here
 
-    if (m_debugType == ScoreSlips)
+    if ( m_debugType == ScoreSlips )
     {
         //LogMessage("Debug::OnShowSlips()");
         UINT setSize        = m_pSetSize->GetSelection() + 1;
@@ -513,7 +518,7 @@ void Debug::PrintOrExample()
     }
     else
     {
-        if (!m_schema.IsOk())
+        if ( !m_schema.IsOk() )
         {
             m_consoleOutput.Clear();
             m_consoleOutput.push_back(_("No schema available for these data"));
@@ -521,7 +526,7 @@ void Debug::PrintOrExample()
         }
         else
         {
-            if (m_bSchema)
+            if ( m_bSchema )
             {
                 //LogMessage("Debug::OnShowSchema()");
                 PrintSchemaOverviewNew();
@@ -534,7 +539,7 @@ void Debug::PrintOrExample()
         }
     }
 
-    if (bPrintToFile)
+    if ( bPrintToFile )
     {
         for (const auto& it : m_consoleOutput)
         {
@@ -543,7 +548,7 @@ void Debug::PrintOrExample()
         }
         prn::EndPrint();    // force flush
     }
-    else if (!m_bPrintNext)
+    else if ( !m_bPrintNext )
     {
         m_pConsole->Freeze();           // stop update of display to prevent flicker (well, get less flicker!)
         m_pConsole->freezeCount++;
@@ -572,7 +577,7 @@ void Debug::OnExample(const wxCommandEvent&)
 void Debug::OutputText(const wxString& msg)
 {
     m_pConsole->AppendText(msg);
-    if (m_bPrintNext)
+    if ( m_bPrintNext )
     {
         prn::PrintLine(msg);
         ++m_linesPrinted;
@@ -632,7 +637,7 @@ MyPrint::MyPrint(wxArrayString* a_pOutArrayString)
 {
     m_bUseRealPrinter   = m_pOutArrayString == nullptr;
 
-    if (!m_bUseRealPrinter)
+    if ( !m_bUseRealPrinter )
     {
         m_pOutArrayString->clear();
         m_screen = new wxChar[MY_LINES][MY_LINESIZE];
@@ -648,7 +653,7 @@ void MyPrint::ClearScreen()
 
 void MyPrint::BeginPrint(const wxString& a_title)
 {
-    if (m_bUseRealPrinter)
+    if ( m_bUseRealPrinter )
     {
         prn::BeginPrint(a_title);
     }
@@ -666,7 +671,7 @@ void MyPrint::EndPrint()
 
 void MyPrint::EndPage()
 {
-    if  (m_bUseRealPrinter)
+    if ( m_bUseRealPrinter )
         prn::PrintCharacter('\f'); /* force new page*/
     else
         ScreenToBuffer();
@@ -674,7 +679,8 @@ void MyPrint::EndPage()
 
 void MyPrint::PrintText( const wxPoint& position, const wxString& text)
 {
-    if (text.IsEmpty()) return;
+    if ( text.IsEmpty() )
+        return;
     if ( position.y >= 0 && position.y < MY_LINES )
     {
         MY_MEMCPY(&m_screen[position.y][position.x], text.c_str(), text.Len());
@@ -688,25 +694,25 @@ void MyPrint::PrintTextLine( wxPoint& begin, wxPoint& end, int direction)
 {
     // ONLY horizontal or vertical lines.
     // lines are drawn from left to right, top to bottom
-    if (begin.x > end.x) std::swap(begin.x, end.x); // x: begin <= end
-    if (begin.y > end.y) std::swap(begin.y, end.y); // y: begin <= end
+    if ( begin.x > end.x ) std::swap(begin.x, end.x);   // x: begin <= end
+    if ( begin.y > end.y ) std::swap(begin.y, end.y);   // y: begin <= end
 
-    if (begin.x < 0) begin.x = 0;   if (begin.x >= MY_LINESIZE) return;
-    if (begin.y < 0) begin.y = 0;   if (begin.y >= MY_LINES   ) return;
-    if (end.x   < 0) end.x   = 0;   if (end.x   >= MY_LINESIZE) end.x = MY_LINESIZE-1;
-    if (end.y   < 0) end.y   = 0;   if (end.y   >= MY_LINES)    end.y = MY_LINES-1;
+    if ( begin.x < 0 ) begin.x = 0;   if ( begin.x >= MY_LINESIZE ) return;
+    if ( begin.y < 0 ) begin.y = 0;   if ( begin.y >= MY_LINES    ) return;
+    if ( end.x   < 0 ) end.x   = 0;   if ( end.x   >= MY_LINESIZE ) end.x = MY_LINESIZE-1;
+    if ( end.y   < 0 ) end.y   = 0;   if ( end.y   >= MY_LINES    ) end.y = MY_LINES-1;
     m_maxLine = std::max(m_maxLine, end.y);
     bool bOnlyHorizontal = direction == wxHORIZONTAL;
-    if  (begin.y == end.y)
+    if  ( begin.y == end.y )
     {   // horizontal
-        if (bOnlyHorizontal)
+        if ( bOnlyHorizontal )
         {
             PrintText(begin, wxString(MY_HLINE_CHAR,(size_t)1 + end.x - begin.x));
         }
     }
     else
     {   // vertical
-        if (!bOnlyHorizontal)
+        if ( !bOnlyHorizontal )
         {
             for (int y = begin.y; y <= end.y; ++y)
             {   // first: just draw the line
@@ -720,24 +726,24 @@ void MyPrint::PrintTextLine( wxPoint& begin, wxPoint& end, int direction)
     }
 }   // PrintTextLine()
 
-static const wxChar translate[16]=
+static constexpr wxChar s_acTranslate[16]=
 {   // translate the vertical linecharacter '║' to a 'smoother' one
 /*00*/    MY_VLINE_CHAR,  //hLeft   = 1,    // left   has a horizontal char
 /*01*/    MY_VLINE_CHAR,  //hRight  = 2,    // right  has a horizontal char
 /*02*/    MY_VLINE_CHAR,  //vTop    = 4,    // top    has a vertical   char
 /*03*/    MY_VLINE_CHAR,  //vBottom = 8     // bottom has a vertical   char
 /*04*/    MY_VLINE_CHAR,
-/*05*/    L'╝',
-/*06*/    L'╚',
-/*07*/    L'╩',
+/*05*/    L'╝',             // left  + top
+/*06*/    L'╚',             // right + top
+/*07*/    L'╩',             // right + left   + top
 /*08*/    MY_VLINE_CHAR,
-/*09*/    L'╗',
-/*10*/    L'╔',
-/*11*/    L'╦',
+/*09*/    L'╗',             // left  + bottom
+/*10*/    L'╔',             // right + bottom
+/*11*/    L'╦',             // right + bottom + left
 /*12*/    MY_VLINE_CHAR,
-/*13*/    L'╣',
-/*14*/    L'╠',
-/*15*/    L'╬'
+/*13*/    L'╣',             // left  + bottom + top
+/*14*/    L'╠',             // right + bottom + top
+/*15*/    L'╬'              // right + bottom + top + left
 };
 
 wxChar MyPrint::SmoothLineChar(int x, int y) const
@@ -758,34 +764,37 @@ wxChar MyPrint::SmoothLineChar(int x, int y) const
     wxChar testB=0; MY_UNUSED(testB);
     wxChar testL=0; MY_UNUSED(testL);
 
-    if (y > 0)
+    if ( y > 0 )
     {   // check above
         testA = m_screen[y-1][x];
-        if ( (testA == MY_VLINE_CHAR) || ((testA >= 0x2500)  && (testA <= 0x2580)) )
+        if ( (testA == MY_VLINE_CHAR) || ((testA >= 0x2500) && (testA <= 0x2580)) )
             state |= vTop;
     }
-    if ( x < MY_LINESIZE-1)
+    if ( x < MY_LINESIZE-1 )
     {   // check right
         testR = m_screen[y][x+1];
-        if (testR == MY_HLINE_CHAR) state |= hRight;
+        if ( testR == MY_HLINE_CHAR )
+            state |= hRight;
     }
-    if ( y < MY_LINES-1)
+    if ( y < MY_LINES-1 )
     {   // check below
         testB = m_screen[y+1][x];
-        if (testB == MY_VLINE_CHAR) state |= vBottem;
+        if ( testB == MY_VLINE_CHAR )
+            state |= vBottem;
     }
-    if ( x > 0)
+    if ( x > 0 )
     {   // check left
         testL = m_screen[y][x-1];
-        if (testL == MY_HLINE_CHAR) state |= hLeft;
+        if ( testL == MY_HLINE_CHAR )
+            state |= hLeft;
     }
 
-    return translate[state];
+    return s_acTranslate[state];
 }   // SmoothLineChar()
 
 void MyPrint::PrintTable(const prn::table::TableInfo& a_tableInfo)
 {
-    if (m_bUseRealPrinter)
+    if ( m_bUseRealPrinter )
     {
         prn::PrintTable(a_tableInfo);
     }
@@ -823,7 +832,8 @@ void MyPrint::PrintTable(const prn::table::TableInfo& a_tableInfo)
 
 void MyPrint::ScreenToBuffer()
 {
-    if (m_maxLine < 0) return;
+    if ( m_maxLine < 0 )
+        return;
     for (int line = 0; line <= m_maxLine; ++line)
     {
         wxString tmp(m_screen[line], MY_LINESIZE);
@@ -836,13 +846,15 @@ void MyPrint::ScreenToBuffer()
 
 static void SkipWhite(const wxChar* &pBuf)        // skip white chars
 {
-    while (std::isspace (*pBuf)) pBuf++;
+    while ( std::isspace (*pBuf) )
+        pBuf++;
 }   // SkipWhite()
 
 static void SkipDigits(const wxChar* &pBuf)       // skip digits
 {
     SkipWhite(pBuf);
-    while (std::isdigit(*pBuf)) pBuf++;
+    while ( std::isdigit(*pBuf) )
+        pBuf++;
     SkipWhite(pBuf);
 }   // SkipDigits()
 
@@ -850,7 +862,7 @@ UINT Debug::AtoiRound(const wxChar * pBuf)
 {
     UINT round = wxAtoi(pBuf);   // 'wide' atoi
 
-    if ((round < 1) || (round > m_rounds))
+    if ( (round < 1) || (round > m_rounds) )
     {
         round = 1;
         OUTPUT_TEXT(_("     ----> round error <---, default round 1\n"));
@@ -861,9 +873,9 @@ UINT Debug::AtoiRound(const wxChar * pBuf)
 UINT Debug::AtoiPair(const wxChar * pBuf)
 {
     UINT pair = wxAtoi(pBuf);
-    if (pair == 0 )
+    if ( pair == 0 )
         pair = 1;   // empty string, use pair 1
-    if ((pair < 1) || (pair > m_pairs))
+    if ( (pair < 1) || (pair > m_pairs) )
     {
         pair = 1;
         OUTPUT_TEXT(_("     ----> pair error <---, default pair 1\n"));
@@ -874,7 +886,7 @@ UINT Debug::AtoiPair(const wxChar * pBuf)
 [[maybe_unused]] UINT Debug::AtoiGroup(const wxChar * pBuf)
 {
     UINT group = wxAtoi(pBuf);
-    if ((group < 1) || (group >= m_groupData.size()))
+    if ( (group < 1) || (group >= m_groupData.size()) )
     {
         group = 1;
         OUTPUT_TEXT(_("     ----> group error <---, default group 1\n"));
@@ -885,7 +897,7 @@ UINT Debug::AtoiPair(const wxChar * pBuf)
 UINT Debug::AtoiTable(const wxChar * pBuf)
 {
     UINT table = wxAtoi(pBuf);
-    if ((table < 1) || (table > m_tables))
+    if ( (table < 1) || (table > m_tables) )
     {
         table = 1;
         OUTPUT_TEXT(_("     ----> table error <---\n"));
@@ -896,7 +908,7 @@ UINT Debug::AtoiTable(const wxChar * pBuf)
 UINT Debug::AtoiGame2Set(const wxChar* pBuf)
 {
     UINT game = wxAtoi(pBuf) - cfg::GetFirstGame()+1;
-    if ((game < 1) || (game > m_setSize*m_rounds))
+    if ( (game < 1) || (game > m_setSize*m_rounds) )
     {
         game = 1;
         OUTPUT_TEXT(_("     ----> game error <---, default game 1\n"));
@@ -904,16 +916,16 @@ UINT Debug::AtoiGame2Set(const wxChar* pBuf)
     return (game-1)/m_setSize+1;
 }   // AtoiGame2Set()
 
-static wxString prompt=ssDbg;
+static wxString s_sPrompt=s_sDbg;
 
 void Debug::SetPrompt()
 {
-    prompt = _("group ");
-    prompt += m_groupData[m_group-1].groupChars.IsEmpty() ? U2String(m_group) : m_groupData[m_group-1].groupChars;
-    prompt += '>';
+    s_sPrompt = _("group ");
+    s_sPrompt += m_groupData[m_group-1].groupChars.IsEmpty() ? U2String(m_group) : m_groupData[m_group-1].groupChars;
+    s_sPrompt += '>';
 
     Layout();
-    m_pConsole->SetPrompt(prompt);
+    m_pConsole->SetPrompt(s_sPrompt);
 }   // SetPrompt()
 
 void Debug::RefreshInfo()
@@ -921,7 +933,7 @@ void Debug::RefreshInfo()
     names::InitializePairNames();
     OUTPUT_TEXT_FORMATTED(_("\ntest-mode, group %u (%u)\n"), m_group, cfg::MAX_GROUPS);
     auto pTmp = cfg::GetGroupData();
-    if ( pTmp->size() >= m_groupData.size())
+    if ( pTmp->size() >= m_groupData.size() )
         m_groupData = *pTmp;                            // get active groupdata
     else
     {   // we have locally extra groups from previous 'debug', so only update possibly changed groupdata
@@ -941,7 +953,8 @@ void Debug::RefreshInfo()
 
 void Debug::InitSlips()
 {
-    if (m_debugType != ScoreSlips) return;
+    if ( m_debugType != ScoreSlips )
+        return;
     m_pSetSize      ->Init(6,3,0);      // setsizes from 1-6, default: 4 games/set
     m_pFirstSet     ->Init(24,0,0);     // first set to print from 1-24, default: 1
     m_pNrOfSets     ->Init(24,5,0);     // nr of sets to print from 1-24, default 6
@@ -951,16 +964,18 @@ void Debug::InitSlips()
 
 void Debug::InitGuideStuff()
 {
-    if (m_debugType != Guides) return;
+    if ( m_debugType != Guides )
+        return;
     const auto& groupData = *cfg::GetGroupData();
     wxArrayString choices;
     for (const auto& group : groupData)
     {
         choices.push_back(group.groupChars);
     }
-    while (choices.size() < m_group)
+    while ( choices.size() < m_group )
         choices.push_back(FMT("%u", (UINT)choices.size()+1));
-    if (choices.size() == 1 && choices[0].IsEmpty()) choices[0] = "1";  // 'just' show group "1" for the one and only group!
+    if ( choices.size() == 1 && choices[0].IsEmpty() )
+        choices[0] = "1";   // 'just' show group "1" for the one and only group!
     m_pGroupChoice->Init(choices, m_group-1);
 
     m_pPairChoice->Init(m_pairs, 0);
@@ -972,14 +987,16 @@ void Debug::InitGuideStuff()
 void Debug::HandleCommandLine(wxString cmd)
 {
     m_linesPrinted = 0;
-    if (cmd.IsEmpty()) return;
-    if (cmd.EndsWith ('\n')) cmd.RemoveLast();
+    if ( cmd.IsEmpty() )
+        return;
+    if ( cmd.EndsWith ('\n') )
+        cmd.RemoveLast();
     cmd.Trim(TRIM_LEFT);
     cmd.Trim(TRIM_RIGHT);
-    if (!cmd.IsEmpty())
+    if ( !cmd.IsEmpty() )
     {
         cmd.MakeUpper();
-        if (cmd.Len() > 1 && score::GetCardName(score::CiPass).MakeUpper().StartsWith(cmd))
+        if ( cmd.Len() > 1 && score::GetCardName(score::CiPass).MakeUpper().StartsWith(cmd) )
             OUTPUT_TEXT_FORMATTED("%s, %s 0", score::GetCardName(score::CiPass), _("score"));
         else
             DoCommand(cmd);
@@ -992,7 +1009,7 @@ void Debug::HandleCommandLine(wxString cmd)
 void Debug::PrintSeparator()
 {
     #define halfSeparator "  .   .   .   .   .   .   .   .   .   ."
-    if (m_bPrintNext )
+    if ( m_bPrintNext )
     {
         OUTPUT_TEXT(halfSeparator halfSeparator);
     }
@@ -1003,7 +1020,7 @@ void Debug::StringDoubler(const wxString& msg, UINT pair)
 {
     wxString all(msg);
 
-    if (m_bAllPairs && (pair+1 <= m_pairs))
+    if ( m_bAllPairs && (pair+1 <= m_pairs) )
         all += msg;
     all += "\n";
     OUTPUT_TEXT(all);
@@ -1016,7 +1033,8 @@ wxString Debug::GetNsEwString(UINT pair, UINT round) const
 
 wxString Debug::SetToGamesAsString(UINT set, bool bWide) const
 {
-    if (set == 0) return bWide ? "       " : "     ";   // wide: "17 - 20", non-wide: "17-20"
+    if ( set == 0 )
+        return bWide ? "       " : "     "; // wide: "17 - 20", non-wide: "17-20"
 
     UINT offset = cfg::GetFirstGame()-1;
     UINT setSize = cfg::GetSetSize();
@@ -1029,9 +1047,9 @@ UINT Debug::GetOpponent(UINT pair, UINT round) const
     UINT table = m_schema.GetTable( pair, round);
     for (opponent=1; opponent <= m_pairs; ++opponent)
     {
-        if (m_schema.GetTable( opponent, round) == table)
+        if ( m_schema.GetTable( opponent, round) == table )
         {
-            if (opponent != pair)
+            if ( opponent != pair )
                 break;
         }
     }
@@ -1041,7 +1059,8 @@ UINT Debug::GetOpponent(UINT pair, UINT round) const
 wxString Debug::GetBorrowTableAsString(UINT a_table, UINT a_round) const
 {
     UINT table = m_schema.GetBorrowTable( a_table, a_round);
-    if (table == 0) return "  ";    // no borrowing
+    if ( table == 0 )
+        return "  ";      // no borrowing
     //xgettext:TRANSLATORS: 'B' -> table to 'B'orrow boards from (same boards on different tables)
     return FMT(_("B%u"), table);
 }   // GetBorrowTableAsString()
@@ -1073,7 +1092,7 @@ void Debug::GuideCard( UINT pair, bool a_bAskExtra )
     #define NEED_SECOND m_bAllPairs && (pair+1 <= m_pairs)
     wxString explanation;
     wxString tmp;
-    if (m_bPrintNext)
+    if ( m_bPrintNext )
     {   // ask for special text on guide
         m_pConsole->AsyncTextOutBegin();    // delay prompt till ready (printing)
         constexpr auto SCHEMA_WIDTH = 34;
@@ -1085,9 +1104,9 @@ void Debug::GuideCard( UINT pair, bool a_bAskExtra )
     }
     do
     {
-        if (m_bPrintNext)
+        if ( m_bPrintNext )
         {
-            if (m_linesPrinted + 9 + m_rounds > prn::GetLinesPerPage())
+            if ( m_linesPrinted + 9 + m_rounds > prn::GetLinesPerPage() )
             {
                 PrintSeparator();
                 OUTPUT_TEXT("\f");          // next guide doesn't fit on current page
@@ -1097,7 +1116,7 @@ void Debug::GuideCard( UINT pair, bool a_bAskExtra )
             PrintSeparator();               // cutting line
                                             // names of players
             tmp = FMT("  %-37s", names::PairnrSession2GlobalText(pair+m_pActiveGroupInfo->groupOffset));
-            if (NEED_SECOND)                // 2 guides next to each other
+            if ( NEED_SECOND )              // 2 guides next to each other
                 tmp +=FMT("  %-37s",names::PairnrSession2GlobalText(pair+1+m_pActiveGroupInfo->groupOffset));
             OUTPUT_TEXT(tmp);
         }
@@ -1105,7 +1124,7 @@ void Debug::GuideCard( UINT pair, bool a_bAskExtra )
         StringDoubler(explanation, pair);
         StringDoubler(                          L"  ╔════════════════════════════════╗  ."      , pair);
         tmp = FMT(                 L"  ║ Paar %-2u               %2u paren ║  ."   , pair, m_pairs);
-        if (NEED_SECOND)
+        if ( NEED_SECOND )
             tmp += FMT(            L"  ║ Paar %-2u               %2u paren ║  ."   , pair+1, m_pairs);
         tmp += "\n";
         OUTPUT_TEXT(tmp);
@@ -1128,7 +1147,7 @@ void Debug::GuideCard( UINT pair, bool a_bAskExtra )
                             SetToGamesAsString(set),
                             GetBorrowTableAsString(table, round)
                         );
-            if (NEED_SECOND)
+            if ( NEED_SECOND )
             {
                 table = m_schema.GetTable(pair+1, round);
                 set   = m_schema.GetSet  (table , round);
@@ -1148,7 +1167,7 @@ void Debug::GuideCard( UINT pair, bool a_bAskExtra )
         pair +=2;
     } while ( m_bAllPairs && (pair <= m_pairs) );
     PrintSeparator();
-    if (m_bPrintNext)
+    if ( m_bPrintNext )
     {
         prn::EndPrint();
         m_pConsole->AsyncTextOutEnd();      // prompt wanted
@@ -1157,7 +1176,7 @@ void Debug::GuideCard( UINT pair, bool a_bAskExtra )
 
 void Debug::List(const wxChar* pBuf)
 {
-    if (strchr("@PRST",*pBuf) == nullptr)
+    if ( strchr("@PRST",*pBuf) == nullptr )
     {
         Usage();    // unknown command
         return;
@@ -1172,9 +1191,9 @@ void Debug::List(const wxChar* pBuf)
 
     UINT pair=0,set=0,table=0,round=0,mode=0,game=0;
     bool bFound;
-    while(*pBuf)
+    while ( *pBuf )
     {
-        switch (*pBuf++)
+        switch ( *pBuf++ )
         {
             case 'R':
                 mode    |= ROUND;
@@ -1203,13 +1222,13 @@ void Debug::List(const wxChar* pBuf)
         SkipDigits(pBuf);
     }
 
-    if (!m_schema.IsOk())
+    if ( !m_schema.IsOk() )
     {
         OUTPUT_TEXT(_("No schema available for these data"));
         return;
     }
 
-    switch (mode)
+    switch ( mode )
     {
         case PAIR:
             GuideCard( pair );
@@ -1228,7 +1247,7 @@ void Debug::List(const wxChar* pBuf)
             for (round = 1; round <= m_rounds; ++round)
             {
                 table = m_schema.GetTable(pair,round);
-                if (m_schema.GetSet(table, round) == set)
+                if ( m_schema.GetSet(table, round) == set )
                 {
                     OUTPUT_TEXT_FORMATTED(_("pair %u, games %s, table %u, direction %s, round %u, opponent %u\n"),
                                         pair, SetToGamesAsString(set), table, GetNsEwString(pair, round), round,
@@ -1241,7 +1260,7 @@ void Debug::List(const wxChar* pBuf)
             OUTPUT_TEXT_FORMATTED(_("pair %u, table %u:\n"), pair, table);
             for (round = 1; round <= m_rounds; ++round)
             {
-                if (m_schema.GetTable(pair,round) == table)
+                if ( m_schema.GetTable(pair,round) == table )
                     OUTPUT_TEXT_FORMATTED(_("pair %u, table %u, round %u, direction %s, games %s, opponent %u\n"),
                                     pair, table, round, GetNsEwString(pair,round),
                                     SetToGamesAsString(m_schema.GetSet(table,round)),
@@ -1265,11 +1284,11 @@ void Debug::List(const wxChar* pBuf)
             bFound = false;
             for (table = 1; table <= m_tables; ++table)
             {
-                if (m_schema.GetSet(table,round) == set)
+                if ( m_schema.GetSet(table,round) == set )
                 {
                     for (pair = 1;pair<=m_pairs; ++pair)
                     {
-                        if (m_schema.GetTable(pair,round) == table)
+                        if ( m_schema.GetTable(pair,round) == table )
                         {
                             bFound = true;
                             OUTPUT_TEXT_FORMATTED(_("round %u, games %s, pair %2u, direction %s, table %u\n"),
@@ -1280,7 +1299,7 @@ void Debug::List(const wxChar* pBuf)
                     }
                 }
             }
-            if (!bFound)
+            if ( !bFound )
                 OUTPUT_TEXT_FORMATTED(_("games %s are not played in round %u\n"),
                                         SetToGamesAsString(set),round
                                     );
@@ -1289,7 +1308,7 @@ void Debug::List(const wxChar* pBuf)
             OUTPUT_TEXT_FORMATTED(_("Round %u, table %u:\n"), round, table);
             for (pair = 1; pair <= m_pairs; ++pair)
             {
-                if ((m_schema.GetTable(pair,round) == table) && m_schema.IsNs(pair,round) )
+                if ( (m_schema.GetTable(pair,round) == table) && m_schema.IsNs(pair,round) )
                     OUTPUT_TEXT_FORMATTED(_("round %u, table %u, games %s, pairs %u (NS) + %u (EW)\n"),
                                             round,table,SetToGamesAsString(m_schema.GetSet(table,round)),
                                             pair, m_schema.GetOpponent(pair,round)
@@ -1302,10 +1321,10 @@ void Debug::List(const wxChar* pBuf)
             {
                 for (pair = 1; pair <= m_pairs; ++pair)
                 {
-                    if (m_schema.IsNs(pair,round))
+                    if ( m_schema.IsNs(pair,round) )
                     {
                         table = m_schema.GetTable(pair,round);
-                        if (m_schema.GetSet(table,round) == set)
+                        if ( m_schema.GetSet(table,round) == set )
                             OUTPUT_TEXT_FORMATTED(_("round %u, table %u, pairs %2u (NS) + %2u (EW)\n"),
                                 round,table,pair,m_schema.GetOpponent(pair,round)
                             );
@@ -1342,17 +1361,18 @@ void Debug::DoCommand(const wxString& a_cmd)
     SkipWhite(pBuf);
     m_bAllPairs = false;
 
-    switch (*pBuf++)
+    switch ( *pBuf++ )
     {
         case 'G':               // goto new group
             {
                 SkipWhite(pBuf);
-                if (isalpha(*pBuf))
+                if ( isalpha(*pBuf) )
                 {
                     UINT group;
                     for (group = 0; group < m_groupData.size(); ++group)
                     {
-                        if (pBuf == m_groupData[group].groupChars) break;
+                        if ( pBuf == m_groupData[group].groupChars )
+                            break;
                     }
                     m_group = group >= m_groupData.size() ? 1+cfg::MAX_GROUPS : group+1;
                 }
@@ -1372,7 +1392,7 @@ void Debug::DoCommand(const wxString& a_cmd)
             {
                 UINT    rounds,pairs;
                 UINT    maxGroup = cfg::GetGroupData()->size();
-                if (m_group <= maxGroup)    // don't touch!
+                if ( m_group <= maxGroup )  // don't touch!
                 {
                     OUTPUT_TEXT_FORMATTED(_("Current group is within match-schema, take group > %u\n"), maxGroup);
                     break;
@@ -1417,7 +1437,7 @@ void Debug::DoCommand(const wxString& a_cmd)
             break;
         default:
             --pBuf;         // get first char back
-            if ((*pBuf == '-') || isdigit(*pBuf))
+            if ( (*pBuf == '-') || isdigit(*pBuf) )
                 CalcScore(pBuf);
             else
                 List(pBuf);
@@ -1430,7 +1450,7 @@ void Debug::CalcScore(const wxChar* pBuf)
     wxString resultAsString;
     int scoreNv = score::GetContractScoreFromString(pBuf, false, resultAsString);
     OUTPUT_TEXT(resultAsString);
-    switch (scoreNv)
+    switch ( scoreNv )
     {
         case CONTRACT_NOT_CONSISTENT:  // contract values not consistent, error already shown through 'resultAsString'
             break;
@@ -1447,7 +1467,7 @@ void Debug::CalcScore(const wxChar* pBuf)
 
 void Debug::Usage()
 {
-    wxString sp(' ', prompt.size());
+    wxString sp(' ', s_sPrompt.size());
     sp += _(
             "^-- unknown command\n"
             "   [l]Rx[@]PySzTq = list [Round x] [Pair y] [Game z] [Table q]\n"
@@ -1464,10 +1484,10 @@ void Debug::Usage()
 
 void Debug::InitGroupData()
 {   // assume: m_group is set correctly
-    if (m_group-1 >= m_groupData.size())
+    if ( m_group-1 >= m_groupData.size() )
     {
         cfg::GROUP_DATA data = m_groupData.back();
-        while ( m_groupData.size() < m_group)       // was: m_groupData.resize(m_group);
+        while ( m_groupData.size() < m_group )  // was: m_groupData.resize(m_group);
         {   // update the groupoffset, else pairnames of first group will be used!
             data.groupOffset += data.pairs;     // so sessionpairnr will result in ""
             m_groupData.push_back(data);
@@ -1495,13 +1515,14 @@ void Debug::InitGroupData()
 
 void Debug::GroupOverview()
 {   // 'old' method, don't translate!
-    if (!m_schema.IsOk())
+    if ( !m_schema.IsOk() )
     {
         OUTPUT_TEXT(_("No schema available for these data"));
         return;
     }
 
-    if (m_bPrintNext) prn::BeginPrint();
+    if ( m_bPrintNext )
+        prn::BeginPrint();
 
     UINT    round;
     UINT    table;
@@ -1544,7 +1565,8 @@ void Debug::GroupOverview()
     OUTPUT_TEXT_FORMATTED(L" ║Schema: %-*s║\n", width-11, m_pActiveGroupInfo->schema);
 
     count = swprintf_s(buf, BUF_SIZE, R4);
-    while ( count < width)  buf[count++] = L'═';
+    while ( count < width )
+        buf[count++] = L'═';
     wcscpy(buf+width-1, L"╣\n");
     OUTPUT_TEXT(buf);
     int width_ = width - LEN(RONDE_);
@@ -1566,30 +1588,30 @@ void Debug::GroupOverview()
         for (round = 1; round <= m_rounds; ++round) wcscat(buf, L"═══════╬");
         wcscpy(buf+width-1, L"╣\n");
         OUTPUT_TEXT(buf);
-        if (table <= m_rounds)    // another existing set
+        if ( table <= m_rounds )    // another existing set
             count = swprintf_s(buf, BUF_SIZE, L" ║%c: %2u-%-2u║%2u ║",
                 'A'-1+table, firstGame, firstGame+setSize-1, table);
         else
             count = swprintf_s(buf, BUF_SIZE, L" ║        ║%2u ║", table);
         for (round = 1; round <= m_rounds; ++round)
         {
-            UINT ow = 9999;
+            UINT ew = 9999;
             for (pair = 1; pair <= m_pairs;++pair)
-                if ((m_schema.GetTable(pair, round) == table) && m_schema.IsNs(pair, round) )
+                if ( (m_schema.GetTable(pair, round) == table) && m_schema.IsNs(pair, round) )
                 {
-                    ow = m_schema.GetOpponent(pair, round);
+                    ew = m_schema.GetOpponent(pair, round);
                     break;
                 }
-            if (ow == 9999)   // this table is not played at this round!
+            if ( ew == 9999 )   // this table is not played at this round!
                 count += swprintf_s(buf+count, BUF_SIZE-count, L"       ║");
             else
             {
                 UINT set = m_schema.GetSet (table, round);
-                if (set == table)           // 'normal' games on this table
+                if ( set == table )         // 'normal' games on this table
                     wcscpy(bufje, L"  ");
                 else                        // borrow from other table
                     swprintf_s(bufje, 3, L"%c:", 'A'-1+set);
-                count += swprintf_s(buf+count, BUF_SIZE-count, L"%s%2u-%-2u║", bufje, pair, ow);
+                count += swprintf_s(buf+count, BUF_SIZE-count, L"%s%2u-%-2u║", bufje, pair, ew);
             }
         }
         wcscat(buf, L"\n");
@@ -1599,7 +1621,7 @@ void Debug::GroupOverview()
     for (round = 1; round <= m_rounds; ++round) wcscat(buf, L"╩═══════");
     wcscpy(buf+width-1, L"╝\n");
     OUTPUT_TEXT(buf);
-    if (m_tables < m_rounds)                        // only game definitions
+    if ( m_tables < m_rounds )                      // only game definitions
     {
         buf[0] = buf[1] = ' ';                      // 2 spaces offset for this line
         count = 2;
@@ -1611,7 +1633,8 @@ void Debug::GroupOverview()
     }
 
     OUTPUT_TEXT('\n');
-    if (m_bPrintNext) prn::EndPrint();
+    if ( m_bPrintNext )
+        prn::EndPrint();
 }   // GroupOverview()
 
 void Debug::TestSchemas(void)
@@ -1633,39 +1656,39 @@ void Debug::TestSchemas(void)
         {
             opponents.clear(); opponents.resize(cfg::MAX_PAIRS_PER_GROUP+1, 0);
             sets.clear(); sets.resize(cfg::MAX_SETS+1, 0);
-            UINT opponent = 0;
+            UINT nrOfOpponents = 0;
             for (UINT round = 1; round <= rounds; ++round)
             {
-                UINT tp = schema.GetOpponent(pair,round);
-                if (tp == 0)
+                UINT opponent = schema.GetOpponent(pair,round);
+                if ( opponent == 0 )
                     OUTPUT_TEXT_FORMATTED(_("pair %u has no opponent in round %u\n"), pair, round);
                 else
-                    ++opponent;
-                if (tp >= opponents.size())
+                    ++nrOfOpponents;
+                if ( opponent >= opponents.size() )
                 {
-                    OUTPUT_TEXT_FORMATTED(_("pair %u has too high opponent %u in round %u\n"), pair, tp, round);
-                    tp = 0;
+                    OUTPUT_TEXT_FORMATTED(_("pair %u has too high opponent %u in round %u\n"), pair, opponent, round);
+                    opponent = 0;
                 }
-                ++opponents[tp];
-                if (opponents[tp] > 1)
-                    OUTPUT_TEXT_FORMATTED(_("pair %u plays %u times against pair %u\n"), pair, opponents[tp], tp);
+                ++opponents[opponent];
+                if ( opponents[opponent] > 1 )
+                    OUTPUT_TEXT_FORMATTED(_("pair %u plays %u times against pair %u\n"), pair, opponents[opponent], opponent);
                 UINT set = schema.GetSet(schema.GetTable(pair,round),round);
-                if (set >= sets.size())
+                if ( set >= sets.size() )
                 {
                     OUTPUT_TEXT_FORMATTED(_("pair %u has a too large gameset %u in round %u\n"), pair, set, round);
                     set = 0;
                 }
-                if (set > rounds)
+                if ( set > rounds )
                 {
                     OUTPUT_TEXT_FORMATTED(_("pair %u has unknown gameset %u in round %u\n"), pair, set, round);
                     set = 0;
                 }
                 ++sets[set];
-                if (sets[set] > 1)
+                if ( sets[set] > 1 )
                     OUTPUT_TEXT_FORMATTED(_("pair %u playes %u times set %u\n"), pair, sets[set], set);
             }   /* end for (rounds) */
-            if (opponent != rounds)
-                OUTPUT_TEXT_FORMATTED(_("pair %u playes only %u times\n"), pair, opponent);
+            if ( nrOfOpponents != rounds )
+                OUTPUT_TEXT_FORMATTED(_("pair %u playes only %u times\n"), pair, nrOfOpponents);
         }       /* end for (paren) */
 
         for (UINT round = 1; round <= rounds; ++round)
@@ -1676,11 +1699,11 @@ void Debug::TestSchemas(void)
                 for (UINT pair2 = pair1+1; pair2 <= pairs; ++pair2)
                 {
                     UINT table2 = schema.GetTable(pair2, round);
-                    if (table1 == table2)
+                    if ( table1 == table2 )
                     {
                         bool bPair1Ns = schema.IsNs(pair1, round);
                         bool bPair2Ns = schema.IsNs(pair2, round);
-                        if ( bPair1Ns == bPair2Ns || !bPair1Ns == !bPair2Ns)
+                        if ( bPair1Ns == bPair2Ns || !bPair1Ns == !bPair2Ns )
                         {
                             OUTPUT_TEXT_FORMATTED(_("in round %u, table %u pair %u and %u are playing in the same direction (%s)\n"),
                             round, table1, pair1, pair2, bPair1Ns ? _("NS") : _("EW"));
@@ -1695,7 +1718,7 @@ void Debug::TestSchemas(void)
 void Debug::PrintScoreSlips(UINT a_setSize, UINT a_firstSet, UINT a_nrOfSets, UINT a_repeatCount, const wxString& a_extra)
 {
 #if 0
-    if (a_setSize > 6)
+    if ( a_setSize > 6 )
     {
         wxString errorMsg = FMT(_("Set-size(%u) too large,\nmaximum is 6"), a_setSize);
         MyMessageBox(errorMsg,_("Scoreslips"));
@@ -1821,7 +1844,7 @@ void Debug::PrintScoreSlips(UINT a_setSize, UINT a_firstSet, UINT a_nrOfSets, UI
                 table.textsV.push_back( {{SL_H3+1, vPos}, score::VulnerableChar(game + firstGame, true ) } );
                 table.textsV.push_back( {{SL_H4+1, vPos}, score::VulnerableChar(game + firstGame, false) } );
             }
-            if (linesPrinted + maxVPos >= prn::GetLinesPerPage())
+            if ( linesPrinted + maxVPos >= prn::GetLinesPerPage() )
             {
                 linesPrinted   = 0;
                 table.origin.y = originY;
@@ -1842,7 +1865,11 @@ static wxString MakeSeparator(UINT len)
 {
     len += len & 1; // make even, so loop will end...
     wxString sep;
-    while (len) {sep += ". "; len -=2; }
+    while ( len )
+    {
+        sep += ". ";
+        len -=2;
+    }
     return sep;
 }   // MakeSeparator()
 
@@ -1945,7 +1972,7 @@ void Debug::PrintGuideNew(UINT a_pair)
             tableInfo.textsV.push_back({{G_H0+1,G_V3+(int)round}, FMT("%2u", round)});  //ronde
             UINT table  = m_schema.GetTable(pair, round);
             UINT set    = m_schema.GetSet  (table,round);
-            if (set != 0)
+            if ( set != 0 )
             {   // set/table == 0 means: pair does not play this round
                 tableInfo.textsV.push_back({{G_H1+2,G_V3+(int)round}, FMT("%2u %s" , table,GetNsEwString(pair,round))});    // table + NS/EW
                 tableInfo.textsV.push_back({{G_H2+2,G_V3+(int)round}, FMT("%2u"    , m_schema.GetOpponent(pair,round))});   // opponent
@@ -1953,7 +1980,7 @@ void Debug::PrintGuideNew(UINT a_pair)
             }
         }
 
-        if (bAllPairs)
+        if ( bAllPairs )
         {   // add '.' separator
             for (int line = 0; line < LINES_IN_GUIDE; ++line)
             {
@@ -1964,9 +1991,10 @@ void Debug::PrintGuideNew(UINT a_pair)
         }
 
         myPrint.PrintTable(tableInfo);      // print current guide
-        if (!bAllPairs) break;              // we are done!
+        if ( !bAllPairs )
+            break;                          // we are done!
 
-        if ( (pair & 1) && (2*G_H5 <= prn::GetCharsPerLine() )) // check if 2 guides fit on 1 line
+        if ( (pair & 1) && (2*G_H5 <= prn::GetCharsPerLine()) ) // check if 2 guides fit on 1 line
         {   // next card will be placed at the right side of current one
             tableInfo.origin.x = G_H5+4;
         }
@@ -1975,7 +2003,7 @@ void Debug::PrintGuideNew(UINT a_pair)
             tableInfo.origin.x  = 0;
             linesPrinted       += LINES_PRINTED_PER_CARD;
             tableInfo.origin.y += LINES_PRINTED_PER_CARD+1;
-            if (linesPrinted + LINES_IN_GUIDE > prn::GetLinesPerPage())
+            if ( linesPrinted + LINES_IN_GUIDE > prn::GetLinesPerPage() )
             {
                 linesPrinted        = 0;
                 tableInfo.origin.y  = 0;
@@ -2072,7 +2100,7 @@ void Debug::PrintSchemaOverviewNew()
 
     for (UINT table = 1; table <= m_tables; ++table)
     {
-        if (table <= m_rounds)  // show set-info
+        if ( table <= m_rounds )    // show set-info
             tableInfo.textsV.push_back( {PNT(O_H0+1,O_V2+table*O_DV+1), FMT("%c: %s",'A'-1+table, SetToGamesAsString(table, false))});
         tableInfo.textsV.push_back    ( {PNT(O_H1+1,O_V2+table*O_DV+1), FMT("%2u", table)});
         // POS(round,table) points to the infoblocks for the rounds/tables where POS(1,1) is the topleft block
@@ -2080,8 +2108,9 @@ void Debug::PrintSchemaOverviewNew()
         schema::GameInfo info;
         for (UINT round = 1; round <= m_rounds; ++round)
         {
-            if (table == 1) tableInfo.textsV.push_back( {POS(round, 0), FMT("%4u", round)});    // print roundnr itself
-            if (m_schema.GetTableRoundInfo(table, round, info))
+            if ( table == 1 )
+                tableInfo.textsV.push_back( {POS(round, 0), FMT("%4u", round)});      // print roundnr itself
+            if ( m_schema.GetTableRoundInfo(table, round, info) )
             {   // table has players
                 wxString setData = (info.set == table) ? ES : FMT("%c:",'A'-1+info.set );
                 tableInfo.textsV.push_back({POS(round, table), FMT("%2s%2u-%-2u", setData, info.pairs.ns, info.pairs.ew)});
@@ -2089,7 +2118,7 @@ void Debug::PrintSchemaOverviewNew()
         }
     }
 
-    if (m_tables < m_rounds)                        // only set definitions left
+    if ( m_tables < m_rounds )  // only set definitions left
     {
         wxString tmp;
         for (UINT table = m_tables+1; table <= m_rounds; ++table)
@@ -2107,9 +2136,11 @@ void Debug::PrintSchemaOverviewNew()
 
 static wxString CenterText(const wxString& a_text, size_t a_length)
 {   // add spaces in front of the supplied text, so the new string will be centered in a space of 'a_length' characters
-    if (a_length > 100) a_length = 100; //maximize stringlength to 100
+    if ( a_length > 100 )
+        a_length = 100;   //maximize stringlength to 100
     size_t len = a_text.Len();
-    if (len > a_length) return a_text.substr(0, a_length);  // return 'a_length' chars at max
+    if ( len > a_length )
+        return a_text.substr(0, a_length);    // return 'a_length' chars at max
     size_t dif = a_length - len;
     return wxString(' ', dif/2) + a_text;   // add spaces to the front of the string
 }   // CenterText()
@@ -2117,5 +2148,6 @@ static wxString CenterText(const wxString& a_text, size_t a_length)
 void Debug::OnExportSchema(wxCommandEvent&)
 {   // export active group-schema
     bool bResult = schema::ExportSchema(m_pActiveGroupInfo->schema);
-    if (!bResult) {}
+    if ( !bResult )
+    {}
 }   // OnExportSchema()

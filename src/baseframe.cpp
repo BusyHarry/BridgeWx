@@ -30,10 +30,10 @@
 
 static const wxWindow* GetTopLevelWindow(const wxWindow* a_pWindow)
 {
-    while (a_pWindow)
+    while ( a_pWindow )
     {
         const wxWindow* parent = a_pWindow->GetParent();
-        if (parent == nullptr)
+        if ( parent == nullptr )
             break;
         a_pWindow = parent;
     }
@@ -42,7 +42,7 @@ static const wxWindow* GetTopLevelWindow(const wxWindow* a_pWindow)
 }   // GetTopLevelWindow()
 
 constexpr auto STATIC_SIZE = 20;
-static wxPoint spPosition={1,1};
+static wxPoint s_pPosition={1,1};
 wxSize GetStaticRectSize()
 {   // position/size for invisible static controls
     return {STATIC_SIZE, STATIC_SIZE};
@@ -50,13 +50,13 @@ wxSize GetStaticRectSize()
 
 wxPoint GetStaticRectPosition()
 {   // position/size for invisible static controls
-    spPosition.x += STATIC_SIZE;
-    if (spPosition.x > 600)
+    s_pPosition.x += STATIC_SIZE;
+    if ( s_pPosition.x > 600 )
     {
-        spPosition.x  = 0;
-        spPosition.y += STATIC_SIZE;
+        s_pPosition.x  = 0;
+        s_pPosition.y += STATIC_SIZE;
     }
-    return spPosition;
+    return s_pPosition;
 }   // GetStaticRectPosition()
 
 Baseframe::Baseframe(wxWindow* a_pParent, UINT a_pageId)
@@ -75,7 +75,7 @@ const wxString& Baseframe::GetDescription() const
 
 bool Baseframe::OnCellChanging(const CellInfo& a_cellInfo)
 {   //default implementation, derived class should implement this
-    if (a_cellInfo.oldData != a_cellInfo.newData)
+    if ( a_cellInfo.oldData != a_cellInfo.newData )
     {
         wxString msg;
         msg.Printf(_("Baseframe:: row %d, column %d changes from <%s> to <%s>")
@@ -211,7 +211,8 @@ static void AutotestAddPos(MyTextFile* a_pFile, const wxWindow* a_pWindow, wxPoi
 
 void AutotestAddLabel(MyTextFile* a_pFile, const wxString& a_label, const wxString& a_labelValue)
 {
-    if (a_labelValue.IsEmpty()) return;
+    if ( a_labelValue.IsEmpty() )
+        return;
     wxString labelName = a_label + "_L";
     a_pFile->AddLine(FMT("%-30s := \"%s\"", labelName, a_labelValue));
 }   // AutotestAddLabel()
@@ -236,10 +237,10 @@ bool Baseframe::AutotestAddMousePos(MyTextFile* a_pFile, const wxWindow* a_pWind
     };
     assert(a_pWindow);  // stupid C6011 warning: possible use of nullptr
     auto pRadio = static_cast<const MyRadioBox*>(dynamic_cast<const wxRadioBox*> (a_pWindow));
-    if (pRadio)
+    if ( pRadio )
     {
         UINT rCount = pRadio->GetCount();
-        for (UINT count = 0; count < rCount; ++count)
+        for ( UINT count = 0; count < rCount; ++count )
         {
             RECT        rect;  // left,top,right,bottom
             HWND        hwnd    = pRadio->GetHwnd_(count);
@@ -254,20 +255,22 @@ bool Baseframe::AutotestAddMousePos(MyTextFile* a_pFile, const wxWindow* a_pWind
         AutotestAddWindowPos(a_pFile, a_pWindow, a_positionName);   // mousepos info
         // next lines will try to get a 'title' of this window so we can access it by name i.s.o. mousepositions
         auto pChoiceMC = dynamic_cast<const MyChoiceMC*> (a_pWindow);
-        if (pChoiceMC) AutotestAddLabel(a_pFile, a_positionName, pChoiceMC->GetTextCtrl()->GetLabel());
+        if ( pChoiceMC )
+            AutotestAddLabel(a_pFile, a_positionName, pChoiceMC->GetTextCtrl()->GetLabel());
         else
         {
             auto pMyChoice = dynamic_cast<const MyChoice*> (a_pWindow);
-            if (pMyChoice) AutotestAddLabel(a_pFile, a_positionName, pMyChoice->GetLabel());
+            if ( pMyChoice )
+                AutotestAddLabel(a_pFile, a_positionName, pMyChoice->GetLabel());
             else
             {
                 auto pMywxComboBox = dynamic_cast<const MywxComboBox*> (a_pWindow);
-                if (pMywxComboBox)
+                if ( pMywxComboBox )
                     AutotestAddLabel(a_pFile, a_positionName, pMywxComboBox->GetLabel());
                 else
                 {
                     auto pDirPicker = dynamic_cast<const wxDirPickerCtrl*> (a_pWindow);
-                    if (pDirPicker)
+                    if ( pDirPicker )
                         AutotestAddLabel(a_pFile, a_positionName, pDirPicker->GetName());
                     else // 'normal' window: wxButton/wxTextCtrl/wxStaticText/wxCheckBox....
                         AutotestAddLabel(a_pFile, a_positionName, a_pWindow->GetLabel());
@@ -281,7 +284,7 @@ bool Baseframe::AutotestAddMousePos(MyTextFile* a_pFile, const wxWindow* a_pWind
 
 void Baseframe::AutoTestAddWindowsNames(MyTextFile* a_pFile, const wxString& a_pageName) const
 {
-    for (const auto& window : m_winNames)
+    for ( const auto& window : m_winNames )
     {
         AutotestAddMousePos(a_pFile, window.pWindow, a_pageName + "_" + window.mousePosName);
     }
@@ -293,7 +296,7 @@ void Baseframe::AutoTestAddGridInfo(MyTextFile* a_pFile, const wxString& a_pageN
     UINT colNr = 0;
     UINT colNrAuto = 0;
     auto pGrid = reinterpret_cast<const MyGrid*>(a_gridInfo.pGridWindow);
-    for (const auto& col : a_gridInfo.collumnInfo)
+    for ( const auto& col : a_gridInfo.collumnInfo )
     {
         wxPoint wTL     = {col.x + a_gridInfo.rowLabelSize, col.y + a_gridInfo.colLabelSize};
         wxPoint wBR     = {wTL.x + col.width              , wTL.y + col.height             };
@@ -323,7 +326,7 @@ MyChoice::MyChoice(wxWindow* a_parent, const wxString& a_staticText, const wxStr
 {
     SetToolTip(a_tooltip);
     m_pBoxSizer = new wxBoxSizer(wxHORIZONTAL);
-    if (!a_staticText.IsEmpty())
+    if ( !a_staticText.IsEmpty() )
     {
         auto pTitle= new wxStaticText(a_parent, wxID_ANY, a_staticText);
         m_pBoxSizer->Add(pTitle, TXT_CTRL_SIZER);
@@ -334,7 +337,7 @@ MyChoice::MyChoice(wxWindow* a_parent, const wxString& a_staticText, const wxStr
 void MyChoice::Init(UINT a_count, UINT a_selection, UINT a_offset)
 {
     Clear();
-    for (UINT count = 1; count <= a_count; ++count)
+    for ( UINT count = 1; count <= a_count; ++count )
     {
         Append(U2String(count+a_offset));
     }
@@ -360,7 +363,7 @@ MyChoiceMC::MyChoiceMC(wxWindow* a_parent, const wxString& a_staticText, const w
     SetToolTip(a_tooltip);
     m_pBoxSizer = new wxBoxSizer(wxHORIZONTAL);
 
-    if (!a_staticText.IsEmpty())
+    if ( !a_staticText.IsEmpty() )
     {
         auto pTitle= new wxStaticText(a_parent, wxID_ANY, a_staticText);
         m_pBoxSizer->Add(pTitle, TXT_CTRL_SIZER);
@@ -381,7 +384,7 @@ wxSize GetSize4EditBox(wxString& msg)    // remark: 'msg' will be adapted
     msg = "\n" + msg + "\n";                    // bit extra space on top and bottem
     wxArrayString array = wxSplit(msg, '\n');
     msg.clear();
-    for (const auto& it : array)
+    for ( const auto& it : array )
     {
         wxString tmp = "     " + it;  // bit extra space on left and right side
         wxSize   sz  = txtCtrl.GetTextExtent(tmp +  "     ");  // gives {0,0} if empty...
@@ -395,18 +398,19 @@ wxSize GetSize4EditBox(wxString& msg)    // remark: 'msg' will be adapted
 }   // GetSize4EditBox()
 
 #define ADD_BUTTON_TO_MSGBOX(style,flag,label,pSizer,dialog)\
-if (style & flag)                                           \
+if ( style & flag )                                         \
 {                                                           \
     auto pButton = new wxButton(&dialog, wxID_ANY, label);  \
     pButton->SetFont(pButton->GetFont().Scale(0.8f));       \
     pButton->Bind(wxEVT_BUTTON, [&dialog](const wxCommandEvent&){dialog.EndModal(flag);}); \
     pSizer->Add(pButton, 0, wxRIGHT, 5);                    \
-    if (style & flag##_DEFAULT) pButton->SetFocus();        \
+    if ( style & flag##_DEFAULT ) pButton->SetFocus();      \
 }
 float GetScale()
 {   // calculate a scale from the fontsize of the mainframe and a default txtCtrl
     auto pMain = GetMainframe();    // this guarantees MY main window
-    if (nullptr == pMain) return 1.0;
+    if ( nullptr == pMain )
+        return 1.0;
     wxTextCtrl  txtCtrl;
     auto        mainSize    = pMain-> GetFont().GetFractionalPointSize();
     auto        defaultSize = txtCtrl.GetFont().GetFractionalPointSize();
@@ -416,7 +420,7 @@ float GetScale()
 int MyMessageBox(const wxString& message, const wxString& caption, long style, const wxPoint& position)
 {
     auto pMain = GetMainframe();    // this guarantees MY main window
-    if (pMain == nullptr)
+    if ( pMain == nullptr )
     {
         return wxMessageBox(message, caption, style, 0, position.x, position.y);
     }
@@ -443,9 +447,9 @@ int MyMessageBox(const wxString& message, const wxString& caption, long style, c
     vBox->Add(hButtonSizer, 0, wxALIGN_RIGHT | wxALL, 8);
     dialog.SetSizerAndFit(vBox);
 
-    if (position == wxDefaultPosition)
+    if ( position == wxDefaultPosition )
     {   // center on main-window
-        //if (style & wxCENTER ){;} else {;}	// not implemeted (yet)
+        //if ( style & wxCENTER ){;} else {;}	// not implemeted (yet)
         wxPoint     mainPos = pMain->GetPosition();
         wxSize      mainSize= pMain->GetSize();
         wxSize      mySize  = dialog.GetSize();
@@ -475,7 +479,7 @@ void BusyBox(const wxString& message, int milisecondsShow, const wxPoint& positi
             size.x          += pTxtCtrl->GetCharWidth()/2;      // add 'half' char at end to get some symmetry!
             wxPoint pos      = position;
 
-            if (pos == wxDefaultPosition)
+            if ( pos == wxDefaultPosition )
             {
                 pos = wxGetMousePosition();
                 pos.x -= size.x/2;    // center at mousetip;
@@ -502,7 +506,8 @@ void BusyBox(const wxString& message, int milisecondsShow, const wxPoint& positi
             m_raiseTimer.Bind(wxEVT_TIMER,
                 [this](const wxTimerEvent&)
                 {   // Simulate topwindow, without being one
-                    if (m_pBusyFrame) m_pBusyFrame->Raise();   // bring to top, if hidden...
+                    if ( m_pBusyFrame )
+                        m_pBusyFrame->Raise();   // bring to top, if hidden...
                 });
             m_raiseTimer.Start(100);
         }
@@ -516,7 +521,7 @@ void BusyBox(const wxString& message, int milisecondsShow, const wxPoint& positi
         wxBusyCursor    m_busyCursor;
     };
 
-    if (!cfg::IsScriptTesting())
+    if ( !cfg::IsScriptTesting() )
         new bb(message, milisecondsShow, position);
 }   // BusyBox()
 
@@ -535,16 +540,17 @@ void MyTextFile::MyCreate(const wxString& a_filename, AccessType a_access, wxTex
 
     Close();    // if opened previous, it will reinitialize/reset the class
     m_bOk = Open(m_fileName, wxCSConv(wxFONTENCODING_CP437));
-    if (m_access != READ)
+    if ( m_access != READ )
     {
-        if (m_bOk)
+        if ( m_bOk )
         {
-            if ( m_access == WRITE) Clear(); // empty existing file
+            if ( m_access == WRITE )
+                Clear();    // empty existing file
         }
         else
         {
             m_bOk = Create();    // create file if it does not yet exists
-            if (m_bOk)
+            if ( m_bOk )
                 m_bOk = Open(m_fileName);
         }
     }
@@ -562,7 +568,7 @@ MyTextFile::~MyTextFile()
 
 void MyTextFile::Flush()
 {
-    if (IsOpened() && ( m_access != READ) )
+    if ( IsOpened() && ( m_access != READ) )
         m_bOk = Write(m_textType, wxCSConv(wxFONTENCODING_CP437));  // write changes to disk
 }   // Flush()
 
@@ -616,7 +622,8 @@ wxString MywxComboBox::GetLabel() const
 int MyGetSingleChoiceIndex(const wxString& a_message, const wxString& a_caption, const wxArrayString& a_names, wxWindow* a_pParent, int a_selection)
 {   // replacement for wxGetSingleChoiceIndex() to get a fontsize equal to its parent
     wxSingleChoiceDialog dialog;
-    if (a_pParent) dialog.SetFont(a_pParent->GetFont());    // get parent sized font in the dialog
+    if ( a_pParent )
+        dialog.SetFont(a_pParent->GetFont());   // get parent sized font in the dialog
     dialog.Create(0, a_message, a_caption, a_names);
     dialog.SetSelection(a_selection);
     return dialog.ShowModal() == wxID_OK ? dialog.GetSelection() : -1;

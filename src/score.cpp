@@ -9,7 +9,7 @@
 #include "names.h"
 #include "fileio.h"
 
-static vvScoreData svGameSetData;
+static vvScoreData s_vGameSetData;
 
 namespace score
 {
@@ -26,11 +26,11 @@ UINT GetNumberOfGamesPlayedByGlobalPair(UINT a_globalPairnr)
     ReadScoresFromDisk();
     UINT sessionPair = names::PairnrGlobal2SessionPairnr(a_globalPairnr);
     UINT count = 0;
-    for (const auto& itGame : svGameSetData)
+    for ( const auto& itGame : s_vGameSetData )
     {
-        for (const auto& itSet : itGame)
+        for ( const auto& itSet : itGame )
         {
-            if ( itSet.pairNS == sessionPair || itSet.pairEW == sessionPair)
+            if ( itSet.pairNS == sessionPair || itSet.pairEW == sessionPair )
             {
                 ++count;
                 break;
@@ -63,14 +63,14 @@ bool GetSessionRankTotalPrevious(std::vector<unsigned int>& a_vPreviousRank)
 const vvScoreData* GetScoreData()
 {
     ReadScoresFromDisk();
-    return &svGameSetData;
+    return &s_vGameSetData;
 }   // GetScoreData()
 
 void SetScoreData(const vvScoreData& newData )
 {
-    if (newData != svGameSetData)
+    if ( newData != s_vGameSetData )
     {
-        svGameSetData = newData;
+        s_vGameSetData = newData;
         WriteScoresToDisk();
         (void)ConfigChanged(true);
     }
@@ -78,14 +78,15 @@ void SetScoreData(const vvScoreData& newData )
 
 void ReadScoresFromDisk()
 {
-    if (!ConfigChanged()) return;
-    io::ScoresRead(svGameSetData, cfg::GetActiveSession());
+    if ( !ConfigChanged() )
+        return;
+    io::ScoresRead(s_vGameSetData, cfg::GetActiveSession());
 }   // ReadScoresFromDisk()
 
 void WriteScoresToDisk()
 {   // for compatability with the original programm:
     // sort all sets for each game on increasing NS player
-    for (auto& gamesets : svGameSetData)
+    for ( auto& gamesets : s_vGameSetData )
     {   // we need a reference, else sorting is done on a copy of the data
         // which is thrown away after sorting...
         std::ranges::sort(gamesets, [](const auto& left, const auto& right)
@@ -94,17 +95,19 @@ void WriteScoresToDisk()
                     }
                  );
     }
-    io::ScoresWrite(svGameSetData, cfg::GetActiveSession());
+    io::ScoresWrite(s_vGameSetData, cfg::GetActiveSession());
 }   // WriteScoresToDisk()
 
 UINT GetNumberOfGames(const vvScoreData* a_scoreData)
 {
-    const vvScoreData& scores = a_scoreData == nullptr ? svGameSetData : *a_scoreData;
+    const vvScoreData& scores = a_scoreData == nullptr ? s_vGameSetData : *a_scoreData;
     auto count = scores.size();
-    if (count == 0) return 0;
-    for (--count; count; --count)
+    if ( count == 0 )
+        return 0;
+    for ( --count; count; --count )
     {
-        if (scores[count].size()) break;
+        if ( scores[count].size() )
+            break;
     }
 
     return (UINT)count;
@@ -124,24 +127,24 @@ wxString ScoreToString(int a_score)
 {
     wxString result;
 
-    if (a_score == SCORE_NONE)
+    if ( a_score == SCORE_NONE )
     {
         return result;              // empty if no score
     }
 
-    if (a_score == SCORE_NP)
+    if ( a_score == SCORE_NP )
     {
         return _("NP");                // not played
     }
 
-    if (abs(a_score) > MAX_REAL)
+    if ( abs(a_score) > MAX_REAL )
     {   // filter special cases
-        if ((a_score >= OFFSET_REAL - MAX_REAL) && (a_score <= OFFSET_REAL + MAX_REAL))
+        if ( (a_score >= OFFSET_REAL - MAX_REAL) && (a_score <= OFFSET_REAL + MAX_REAL) )
         {
             a_score -= OFFSET_REAL;     // a real adjusted score
             result = 'R';
         }
-        else if (score::IsProcent(a_score))
+        else if ( score::IsProcent(a_score) )
         {
             a_score -= OFFSET_PROCENT;  // an adjusted % score
             result = '%';
@@ -160,29 +163,33 @@ int ScoreFromString(const wxString& a_score)
     tmp.Trim(TRIM_LEFT);
     tmp.MakeUpper();
 
-    if (tmp.IsEmpty()) return SCORE_NONE;
+    if ( tmp.IsEmpty() )
+        return SCORE_NONE;
     int score = 0;
     UINT uScore;
     wxChar chr;
     constexpr auto BAD_SCORE = 1; /* returned value, if input somehow not ok*/
 
 #define FORCE_INRANGE(x) std::clamp((x), -MAX_REAL+1, MAX_REAL-1) /* force 'real' score to be (absolute) less then MAX_REAL*/
-    if ( 1 == wxSscanf(tmp," %i %c"  , &score , &chr)) return FORCE_INRANGE(score);                     // 'normal' score
-    if ( 1 == wxSscanf(tmp," %%%u %c", &uScore, &chr)) return std::min(uScore,101U)+OFFSET_PROCENT;     // % score
-    if ( 1 == wxSscanf(tmp," R%i %c" , &score , &chr)) return FORCE_INRANGE(score)+OFFSET_REAL;         // 'real' aribitrary score
-    if ( (tmp == _("NP")) || (tmp == "NP") )    // remark: one fixed "NP" and one translatable
+    if ( 1 == wxSscanf(tmp," %i %c"  , &score , &chr) )
+        return FORCE_INRANGE(score);                    // 'normal' score
+    if ( 1 == wxSscanf(tmp," %%%u %c", &uScore, &chr) )
+        return std::min(uScore,101U)+OFFSET_PROCENT;    // % score
+    if ( 1 == wxSscanf(tmp," R%i %c" , &score , &chr) )
+        return FORCE_INRANGE(score)+OFFSET_REAL;        // 'real' aribitrary score
+    if ( (tmp == _("NP")) || (tmp == "NP") )            // remark: one fixed "NP" and one translatable
         return SCORE_NP;
     return BAD_SCORE;   // bad score, rangecheck will get it
 }   // ScoreFromString()
 
 char VulnerableChar(UINT a_game, bool a_bNS)
 {
-    static const char nsInfo[] = " * ** *  * ** * ";    /* 2,4,5,7,10,12,13,15 */
-    static const char ewInfo[] = "  ** ** **  *  *";    /* 3,4,6,7,9,10,13,16  */
+    static const char s_nsInfo[] = " * ** *  * ** * ";  /* 2,4,5,7,10,12,13,15 */
+    static const char s_ewInfo[] = "  ** ** **  *  *";  /* 3,4,6,7,9,10,13,16  */
 
     a_game -= 1;        // games from 1 to N
     a_game &= 0x0f;     // vulnerability is equal each 16 games
-    return a_bNS ? nsInfo[a_game] : ewInfo[a_game];
+    return a_bNS ? s_nsInfo[a_game] : s_ewInfo[a_game];
 }   // VulnerableChar()
 
 bool IsVulnerable(UINT a_game, bool a_bNS)
@@ -191,7 +198,7 @@ bool IsVulnerable(UINT a_game, bool a_bNS)
 }   // IsVulnerable()
 
 
-static const int scoresNormalVulnerableNo[]=
+static const int s_scoresNormalVulnerableNo[]=
 {   // generated by maakscr3.bas, LevelsHjj, 03-26-2000, 14:45:29
 
     // data for non-vulnerable non-doubled results, max 3 down
@@ -202,7 +209,7 @@ static const int scoresNormalVulnerableNo[]=
     520,  920,  940,  980,  990, 1010, 1020, 1440, 1510, 1520
 };
 
-static const int scoresNormalVulnerableYes[]=
+static const int s_scoresNormalVulnerableYes[]=
 {   // , max 3 down
     // ->special    -1300,-1200,-1100,-1000, -900, -800, -700, -600, -500, -400,
     -300, -200, -100,    0,   70,   80,   90,  110,  120,  130,
@@ -211,7 +218,7 @@ static const int scoresNormalVulnerableYes[]=
     720, 1370, 1390, 1430, 1440, 1460, 1470, 2140, 2210, 2220
 };
 
-static const int scoresSpecialVulnerableNo[]=
+static const int s_scoresSpecialVulnerableNo[]=
 {
     // data for non-vulnerable (re)doubled results, or >= 4 down
     -7000,-6400,-5800,-5200,-4600,-4000,-3500,-3400,-3200,-2900,
@@ -230,7 +237,7 @@ static const int scoresSpecialVulnerableNo[]=
     1860, 1960, 2240, 2280
 };
 
-static const int scoresSpecialVulnerableYes[]=
+static const int s_scoresSpecialVulnerableYes[]=
 {
     // data for vulnerable (re)doubled results, or >= 4 down
     -7600,-7000,-6400,-5800,-5200,-4600,-4000,-3800,-3500,-3400,
@@ -254,22 +261,25 @@ static const int scoresSpecialVulnerableYes[]=
 static ScoreValidation FindScore(int a_score, bool a_bVulnerable, bool a_bSpecial)
 {
 #define elements(x) sizeof(x)/sizeof(x[0])
-    static struct {const int* table; const size_t count;} const scoreInfo[4]=
+    static struct {const int* table; const size_t count;} const s_scoreInfo[4]=
     {
-          {scoresNormalVulnerableNo,   elements(scoresNormalVulnerableNo  )}
-        , {scoresNormalVulnerableYes,  elements(scoresNormalVulnerableYes )}
-        , {scoresSpecialVulnerableNo,  elements(scoresSpecialVulnerableNo )}
-        , {scoresSpecialVulnerableYes, elements(scoresSpecialVulnerableYes)}
+          {s_scoresNormalVulnerableNo,   elements(s_scoresNormalVulnerableNo  )}
+        , {s_scoresNormalVulnerableYes,  elements(s_scoresNormalVulnerableYes )}
+        , {s_scoresSpecialVulnerableNo,  elements(s_scoresSpecialVulnerableNo )}
+        , {s_scoresSpecialVulnerableYes, elements(s_scoresSpecialVulnerableYes)}
     };
 
     UINT index = 0;
-    if (a_bSpecial)    index += 2;
-    if (a_bVulnerable) index += 1;
+    if ( a_bSpecial )
+        index += 2;
+    if ( a_bVulnerable )
+        index += 1;
 
-    bool bFound = std::binary_search(scoreInfo[index].table, scoreInfo[index].table + scoreInfo[index].count, a_score);
-    if (bFound)
+    bool bFound = std::binary_search(s_scoreInfo[index].table, s_scoreInfo[index].table + s_scoreInfo[index].count, a_score);
+    if ( bFound )
     {
-        if (a_bSpecial) return ScoreSpecial;
+        if ( a_bSpecial )
+            return ScoreSpecial;
         return ScoreValid;
     }
     return ScoreInvalid;
@@ -277,10 +287,12 @@ static ScoreValidation FindScore(int a_score, bool a_bVulnerable, bool a_bSpecia
 
 ScoreValidation IsScoreValid(int a_score, UINT a_game, bool a_bNS)
 {
-    if (cfg::IsScriptTesting()) return ScoreValid;    // always ok!
-    if (!score::IsReal(a_score))
+    if ( cfg::IsScriptTesting() )
+        return ScoreValid;  // always ok!
+    if ( !score::IsReal(a_score) )
     {   // not a 'normal' score
-        if (score::IsProcent(a_score)) return IsInRange(a_score, OFFSET_PROCENT, OFFSET_PROCENT+100) ? ScoreValid : ScoreInvalid;
+        if ( score::IsProcent(a_score) )
+            return IsInRange(a_score, OFFSET_PROCENT, OFFSET_PROCENT+100) ? ScoreValid : ScoreInvalid;
         a_score -= OFFSET_REAL; // now we have a 'normal' score, check it below
     }
 
@@ -289,17 +301,20 @@ ScoreValidation IsScoreValid(int a_score, UINT a_game, bool a_bNS)
 
     ScoreValidation result;
     result = FindScore( a_score, score::IsVulnerable(a_game, a_bNS), NORMAL );      // check normal NS scores first, should happen more often
-    if (result != ScoreInvalid) return result;
+    if ( result != ScoreInvalid )
+        return result;
     result = FindScore(-a_score, score::IsVulnerable(a_game,!a_bNS), NORMAL );      //  NS <->EW
-    if (result != ScoreInvalid) return result;
+    if ( result != ScoreInvalid )
+        return result;
     result = FindScore( a_score, score::IsVulnerable(a_game, a_bNS), SPECIAL);       // check special scores last, should happen less
-    if (result != ScoreInvalid) return result;
+    if ( result != ScoreInvalid )
+        return result;
     return FindScore(-a_score, score::IsVulnerable  (a_game,!a_bNS), SPECIAL);      //  NS <->EW
 }   // IsScoreValid()
 
 int Score2Real(int score)
 {
-    if ((score >= OFFSET_REAL-MAX_REAL) && (score <= OFFSET_REAL+MAX_REAL))
+    if ( (score >= OFFSET_REAL-MAX_REAL) && (score <= OFFSET_REAL+MAX_REAL) )
         score -= OFFSET_REAL;      //separation in % and 'real' scores
     return score;
 }   // Score2Real()
@@ -311,16 +326,16 @@ int Procentscore2Procent(int score)
 
 int ScoreEwToNs(int ewScore)
 {   // remark: scores are real or % scores, so we don't need to check for real adjusted scores
-    if (score::IsProcent(ewScore))
+    if ( score::IsProcent(ewScore) )
         return 100+2*OFFSET_PROCENT-ewScore;
     return -ewScore;
 }   // ScoreEwToNs()
 
 bool ExistGameData()
 {
-    for (const auto& gamesData : svGameSetData)
+    for ( const auto& gamesData : s_vGameSetData )
     {   // for all games
-        if (gamesData.size())
+        if ( gamesData.size() )
             return true;
     }
 
@@ -330,16 +345,16 @@ bool ExistGameData()
 bool AdjustPairNrs(UINT a_fromPair, int a_delta)
 {
     bool bChanged = false;
-    for (auto& gamesData : svGameSetData)
+    for ( auto& gamesData : s_vGameSetData )
     {   // for all games
-        for (auto& score : gamesData)
+        for ( auto& score : gamesData )
         {   // for all scores
-            if (score.pairNS >= a_fromPair)
+            if ( score.pairNS >= a_fromPair )
             {
                 score.pairNS += a_delta;
                 bChanged = true;
             }
-            if (score.pairEW >= a_fromPair)
+            if ( score.pairEW >= a_fromPair )
             {
                 score.pairEW += a_delta;
                 bChanged = true;
@@ -353,11 +368,11 @@ bool AdjustPairNrs(UINT a_fromPair, int a_delta)
 bool DeleteScoresFromPair(UINT a_pair)
 {
     bool bDeleted = false;
-    for (auto& gamesData : svGameSetData)
+    for ( auto& gamesData : s_vGameSetData )
     {   // for all games
-        for ( auto score = gamesData.begin(); score!= gamesData.end(); ++score)
+        for ( auto score = gamesData.begin(); score!= gamesData.end(); ++score )
         {   // for all scores in this game
-            if ((score->pairNS == a_pair) || (score->pairEW == a_pair))
+            if ( (score->pairNS == a_pair) || (score->pairEW == a_pair) )
             {
                 gamesData.erase(score);
                 bDeleted = true;
@@ -385,18 +400,19 @@ bool DeleteScoresFromPair(UINT a_pair)
         CardId      id      = CardIdFirst;      // suit-id of 'name'
     };
 
-    static std::vector<CardNameAndType> svCardNames;            // identification of all suits
-    static std::vector<CardNameAndType> svCardNamesLowercase;   // lowercased version of 'svCardNames'
-    static std::vector<wxString>        svDoubledTypeNames;     // names of all the 'DoubledType' types
-    static std::vector<wxString>        svPlayTypeNames;        // names of all the 'PlayType' types
+    static std::vector<CardNameAndType> s_vCardNames;           // identification of all suits
+    static std::vector<CardNameAndType> s_vCardNamesLowercase;  // lowercased version of 's_vCardNames'
+    static std::vector<wxString>        s_vDoubledTypeNames;    // names of all the 'DoubledType' types
+    static std::vector<wxString>        s_vPlayTypeNames;       // names of all the 'PlayType' types
 
     void InitTexts4Translation(bool a_bForce)
     {   // needed for text-translations: static text are initialized before the translation is setup
-        static bool bInit = false;
-        if (bInit && !a_bForce) return;
-        bInit = true;
+        static bool s_bInit = false;
+        if ( s_bInit && !a_bForce )
+            return;
+        s_bInit = true;
 
-        svCardNames =
+        s_vCardNames =
         {
               {_("Clubs"   ), PlayType::PtClubsDiamonds, CardId::CiClubs   }
             , {_("Diamonds"), PlayType::PtClubsDiamonds, CardId::CiDiamonds}
@@ -406,45 +422,49 @@ bool DeleteScoresFromPair(UINT a_pair)
             , {_("Pass"    ), PlayType::PtPass         , CardId::CiPass    }    // game not played: no player did a bid
             , {  "Z"        , PlayType::PtNoTrump      , CardId::CiNoTrump }    // extra: 'special' shorthand for Dutch language
         };
-        svPlayTypeNames      = {_("Clubs/Diamonds"), _("Hearts/Spades"), _("NoTrump")};
-        svDoubledTypeNames   = {"", _("doubled"), _("redoubled")};
-        svCardNamesLowercase = svCardNames; // need lowercase for matching contracts
-        for (auto& str : svCardNamesLowercase) { str.name.MakeLower(); }
+        s_vPlayTypeNames      = {_("Clubs/Diamonds"), _("Hearts/Spades"), _("NoTrump")};
+        s_vDoubledTypeNames   = {"", _("doubled"), _("redoubled")};
+        s_vCardNamesLowercase = s_vCardNames; // need lowercase for matching contracts
+        for ( auto& str : s_vCardNamesLowercase )
+            str.name.MakeLower();
     }   // InitTexts4Translation()
 
-    static const int siDoubleFactor [] = {  1,  2,   4 }; // multiplication for specific 'doubledType', indexed with 'DoubledType'
-    static const int siInsultBonus  [] = {  0, 50, 100 }; // bonus when doubled, indexed with 'DoubledType'
-    static const int siPlayTypeValue[] = { 20, 30,  30 }; // trick-value, indexed with 'PlayType'
-    static const int siPlayTypeExtra[] = {  0,  0,  10 }; // extra score for first trick of specific 'PlayType', indexed with 'PlayType'
-    static const int siDoubledNotVulnerable[14] =
+    static constexpr int s_iDoubleFactor [] = {  1,  2,   4 };  // multiplication for specific 'doubledType', indexed with 'DoubledType'
+    static constexpr int s_iInsultBonus  [] = {  0, 50, 100 };  // bonus when doubled, indexed with 'DoubledType'
+    static constexpr int s_iPlayTypeValue[] = { 20, 30,  30 };  // trick-value, indexed with 'PlayType'
+    static constexpr int s_iPlayTypeExtra[] = {  0,  0,  10 };  // extra score for first trick of specific 'PlayType', indexed with 'PlayType'
+    static constexpr int s_iDoubledNotVulnerable[14] =
     {   // scores for down, doubled, not-vulnerable, indexed with '-overTricks'
         0, -100, -300, -500, -800,  -1100, -1400, -1700, -2000, -2300, -2600, -2900, -3200, -3500
     };
-    static const int siDoubledVulnerable[14] =
+    static const int s_iDoubledVulnerable[14] =
     {   // scores for down, doubled, vulnerable, indexed with '-overTricks'
         0, -200, -500, -800, -1100, -1400, -1700, -2000, -2300, -2600, -2900, -3200, -3500, -3800
     };
-    static const wxString sQuestionMarks("???");
+    static const wxString s_sQuestionMarks("???");
 
     wxString GetCardName(CardId id)
     {
         InitTexts4Translation();
-        if (id >= svCardNames.size()) return sQuestionMarks;
-        return svCardNames[id].name;
+        if ( id >= s_vCardNames.size() )
+            return s_sQuestionMarks;
+        return s_vCardNames[id].name;
     }   // GetCardName()
 
     wxString GetPlayTypeName(PlayType type)
     {
         InitTexts4Translation();
-        if (type >= svPlayTypeNames.size()) return sQuestionMarks;
-        return svPlayTypeNames[type];
+        if ( type >= s_vPlayTypeNames.size() )
+            return s_sQuestionMarks;
+        return s_vPlayTypeNames[type];
     }   // GetPlayTypeName
 
     wxString GetDoubledTypeName(int type)
     {
         InitTexts4Translation();
-        if ((size_t)type >= svDoubledTypeNames.size()) return sQuestionMarks;
-        return svDoubledTypeNames[(size_t)type];
+        if ( (size_t)type >= s_vDoubledTypeNames.size() )
+            return s_sQuestionMarks;
+        return s_vDoubledTypeNames[(size_t)type];
     }   // GetDoubledTypeName
 
     struct Contract
@@ -463,11 +483,11 @@ bool DeleteScoresFromPair(UINT a_pair)
     {   // 1 <= level <= 7, -13 <= overTricks <= 6
         int score;
         int vulnerableFactor = a_bVulnerable ? 2 : 1;
-        if (a_contract.overTricks < 0)
+        if ( a_contract.overTricks < 0 )
         {   // contract down
-            if (a_contract.level == 0)
+            if ( a_contract.level == 0 )
             {   // only '-N' was given as contract
-                if (a_contract.overTricks < -13)
+                if ( a_contract.overTricks < -13 )
                 {
                     a_errorDescription = _("more down then contract-tricks??\n");
                     return CONTRACT_NOT_CONSISTENT;
@@ -475,21 +495,21 @@ bool DeleteScoresFromPair(UINT a_pair)
             }
             else
             {   // full contract info, now we can be more precise
-                if (!IsInRange(a_contract.level, 1, 7))
+                if ( !IsInRange(a_contract.level, 1, 7) )
                 {
                     a_errorDescription = _("more tricks then possible in a game??\n");
                     return CONTRACT_NOT_CONSISTENT;
                 }
-                if (a_contract.overTricks < -(6 + a_contract.level))
+                if ( a_contract.overTricks < -(6 + a_contract.level) )
                 {
                     a_errorDescription = _("more down then contract-tricks??\n");
                     return CONTRACT_NOT_CONSISTENT;
                 }
             }
 
-            if (a_contract.doubled == 0)
+            if ( a_contract.doubled == 0 )
                 return a_contract.overTricks * vulnerableFactor * 50;
-            auto& penalty = a_bVulnerable ? siDoubledVulnerable : siDoubledNotVulnerable;
+            auto& penalty = a_bVulnerable ? s_iDoubledVulnerable : s_iDoubledNotVulnerable;
             score  = penalty[-a_contract.overTricks];
             score *= a_contract.doubled;
             return score;
@@ -500,28 +520,28 @@ bool DeleteScoresFromPair(UINT a_pair)
             a_errorDescription = _("more tricks then possible in a game??\n");
             return CONTRACT_NOT_CONSISTENT;
         }
-        score  = a_contract.level * siPlayTypeValue[a_contract.type];
-        score += siPlayTypeExtra[a_contract.type];
-        score *= siDoubleFactor [a_contract.doubled];
+        score  = a_contract.level * s_iPlayTypeValue[a_contract.type];
+        score += s_iPlayTypeExtra[a_contract.type];
+        score *= s_iDoubleFactor [a_contract.doubled];
 
         // determine bonus
-        if (score < 100)
+        if ( score < 100 )
             score += 50;                                // part score bonus
         else
         {
             score += a_bVulnerable ? 500 : 300;         // game bonus
-            if (a_contract.level == 6)
+            if ( a_contract.level == 6 )
                 score += a_bVulnerable ? 750 : 500;     // small slam bonus
-            else if (a_contract.level == 7)
+            else if ( a_contract.level == 7 )
                 score += a_bVulnerable ? 1500 : 1000;   // grand slam bonus
         }
 
-        score += siInsultBonus[a_contract.doubled];     // insult bonus
+        score += s_iInsultBonus[a_contract.doubled];     // insult bonus
 
-        if (a_contract.overTricks > 0)
+        if ( a_contract.overTricks > 0 )
         {                                               // overtrick bonus
-            if (a_contract.doubled == 0)
-                score += a_contract.overTricks * siPlayTypeValue[a_contract.type];
+            if ( a_contract.doubled == 0 )
+                score += a_contract.overTricks * s_iPlayTypeValue[a_contract.type];
             else
                 score += a_contract.overTricks * a_contract.doubled * vulnerableFactor * 100;
         }   // overtricks
@@ -530,14 +550,16 @@ bool DeleteScoresFromPair(UINT a_pair)
 
     static void SkipDigits(const wxChar* &pBuf)       // skip digits
     {
-        while (std::isdigit(*pBuf)) ++pBuf;
+        while ( std::isdigit(*pBuf) )
+            ++pBuf;
     }   // SkipDigits()
 
     static void GetDoubled(const wxChar* &pBuf, int& doubled)   // get all 'doubled' characters
     {
-        while ('*' == *pBuf)
+        while ( '*' == *pBuf )
         {
-            if (doubled < 2) ++doubled; // max == re-doubled!
+            if ( doubled < 2 )
+                ++doubled;  // max == re-doubled!
             ++pBuf;
         }
     }   // GetDoubled()
@@ -547,39 +569,48 @@ bool DeleteScoresFromPair(UINT a_pair)
         wxString input = a_input.Lower();   // lowercase for easier compare
         input.Replace(' ', "");             // remove all spaces
         const wxChar* pInput = input.c_str();
-        if (*pInput == '-')
+        if ( *pInput == '-' )
         {   // only number of down tricks given
             a_contract.overTricks = wxAtoi(pInput);
-            if (a_contract.overTricks == 0) return false;
+            if ( a_contract.overTricks == 0 )
+                return false;
             SkipDigits(++pInput);
             GetDoubled(pInput, a_contract.doubled);
             return true;
         }   // contract down
 
-        if (svCardNamesLowercase[CiPass].name.StartsWith(input))
+        if ( s_vCardNamesLowercase[CiPass].name.StartsWith(input) )
         {
             a_contract.id = CiPass;
             return true;
         }
         a_contract.level = wxAtoi(pInput);          // determine the bidlevel
-        if (0 == a_contract.level) return false;    // can't have a 0 contract
+        if ( 0 == a_contract.level )
+            return false;                           // can't have a 0 contract
         SkipDigits(pInput);
         // now we expect the suit. Match all the alpha-characters in the input with pre-defined cardnames
         size_t len = 0; wxString expectedChars = "*-+0123456789";
-        while (pInput[len] && -1 == expectedChars.Find(pInput[len])) {++len;}   // find first non-name char
-        if (len == 0) return false; // no (abbreviated) suit found
+        while ( pInput[len] && -1 == expectedChars.Find(pInput[len]) )
+        {   // find first non-name char
+            ++len;
+        }
+        if ( len == 0 )
+            return false;   // no (abbreviated) suit found
         wxString tmp = wxString(pInput).Mid(0, len);
         // find the first (partial) match of a card-name
-        const auto it = std::ranges::find_if(svCardNamesLowercase, [&tmp](const auto& it){return it.name.StartsWith(tmp);});
-        if (it == svCardNamesLowercase.end()) return false;    // no (partial) match found
+        const auto it = std::ranges::find_if(s_vCardNamesLowercase, [&tmp](const auto& it){return it.name.StartsWith(tmp);});
+        if ( it == s_vCardNamesLowercase.end() )
+            return false;   // no (partial) match found
         a_contract.type = it->type;
         a_contract.id   = it->id;
         pInput += len;
         //now we expect a (signed) number or '*' for double
         GetDoubled(pInput, a_contract.doubled);
         // now there could be a (signed) number
-        if (!*pInput) return true;  // end of string, just level and contract given
-        if (-1 == expectedChars.Find(*pInput)) return false;
+        if ( !*pInput )
+            return true;    // end of string, just level and contract given
+        if ( -1 == expectedChars.Find(*pInput) )
+            return false;
         a_contract.overTricks = wxAtoi(pInput); SkipDigits(++pInput);
         GetDoubled(pInput, a_contract.doubled);
         return true;    // could give error if not eol, but we just ignore rest, if present.....
@@ -593,17 +624,17 @@ bool DeleteScoresFromPair(UINT a_pair)
         a_sResult.clear();
         Contract contract;
 
-        if (!ExtractContract(a_input, contract))
+        if ( !ExtractContract(a_input, contract) )
             return CONTRACT_MALFORMED;  // error in contract description, show usage
-        if (contract.id == CiPass)
+        if ( contract.id == CiPass )
         {
-            a_sResult = svCardNames[CiPass].name;
+            a_sResult = s_vCardNames[CiPass].name;
             return 0;
         }
         int score = CalculateScore4Contract(contract, a_bVulnerable, a_sResult);
-        if (score != CONTRACT_NOT_CONSISTENT) // if so, a_sResult contains an error description
+        if ( score != CONTRACT_NOT_CONSISTENT ) // if so, a_sResult contains an error description
         {
-            if (contract.overTricks < 0)
+            if ( contract.overTricks < 0 )
             {
                 a_sResult = FMT(_("%i down %s"), -contract.overTricks, GetDoubledTypeName(contract.doubled));
             }
@@ -632,7 +663,7 @@ bool DeleteScoresFromPair(UINT a_pair)
             "      'SUIT' = the type of the contract (or, when abbreviated, the first match in the suit-names)\n"
           );
             result += FMT("      %s:", _("SUIT"));
-            for (int index = CardId::CardIdFirst; index <= CardId::CardIdLast; ++index)
+            for ( int index = CardId::CardIdFirst; index <= CardId::CardIdLast; ++index )
             {   // can't use 'score::CardId' for index: it doesn't go above last typevalue! (I made it so!)
                 result += FMT(" '%s' |",  score::GetCardName(static_cast<CardId>(index)));
             }

@@ -117,22 +117,24 @@ void CorrectionsSession::AutotestRequestMousePositions(MyTextFile* a_pFile)
 
 /*virtual*/ void CorrectionsSession::BackupData()
 {
-    if (!m_bDataChanged) return;    //nothing to do...
+    if ( !m_bDataChanged )
+        return; //nothing to do...
     m_bDataChanged = false;
 
     cor::mCorrectionsSession corrections;    // map of session corrections
     int rows = m_theGrid->GetNumberRows();
-    for (int row = 0; row < rows; ++row)
+    for ( int row = 0; row < rows; ++row )
     {
         wxString procent = m_theGrid->GetCellValue(row, COL_COR_PROCENT);
         wxString mp      = m_theGrid->GetCellValue(row, COL_COR_MP     );
         wxString maxe    = m_theGrid->GetCellValue(row, COL_COR_MAX    );
         wxString extra   = m_theGrid->GetCellValue(row, COL_COR_EXTRA  );
         wxString games   = m_theGrid->GetCellValue(row, COL_COR_GAMES  );
-        if ( procent.IsEmpty() && mp.IsEmpty() && maxe.IsEmpty() && extra.IsEmpty() ) continue;
+        if ( procent.IsEmpty() && mp.IsEmpty() && maxe.IsEmpty() && extra.IsEmpty() )
+            continue;
 
         cor::CORRECTION_SESSION cor;
-        if (mp.IsEmpty())
+        if ( mp.IsEmpty() )
         {   // if procent AND mp are empty, we use '%' type
             cor.type = '%';
             cor.correction = wxAtoi(procent);
@@ -159,8 +161,10 @@ void CorrectionsSession::AutotestRequestMousePositions(MyTextFile* a_pFile)
 static wxString ForceInRange( const wxString& a_val2Check, int a_minVal, int a_maxVal)
 {
     Fdp val2Check(a_val2Check);
-    if ( val2Check < a_minVal ) val2Check = a_minVal;
-    if ( val2Check > a_maxVal ) val2Check = a_maxVal;
+    if ( val2Check < a_minVal )
+        val2Check = a_minVal;
+    if ( val2Check > a_maxVal )
+        val2Check = a_maxVal;
     return val2Check.AsString1E();
 }   // ForceInRange()
 
@@ -197,7 +201,7 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
     wxString    newData = a_cellInfo.newData;
     int         value   = wxAtoi(newData);
 
-    switch (col)
+    switch ( col )
     {
         case COL_COR_PROCENT:
             if ( !newData.IsEmpty() )
@@ -276,13 +280,14 @@ bool CorrectionsSession::OnCellChanging(const CellInfo& a_cellInfo)
 
 void CorrectionsSession::InitButlerProcent()
 {
-    static wxString explanation;    // MUST be initialized dynamically: translation, static: must survive this function!
-    SendEvent2Mainframe(this, ID_STATUSBAR_SETTEXT, &explanation);
-    if (m_bButler == cfg::GetButler()) return;  // no change
+    static wxString s_sExplanation;    // MUST be initialized dynamically: translation, static: must survive this function!
+    SendEvent2Mainframe(this, ID_STATUSBAR_SETTEXT, &s_sExplanation);
+    if ( m_bButler == cfg::GetButler() )
+        return; // no change
     m_bButler = !m_bButler;
 
     wxString toolTip;
-    if (m_bButler)
+    if ( m_bButler )
     {
         toolTip = _(
             "combi-table:"
@@ -292,7 +297,7 @@ void CorrectionsSession::InitButlerProcent()
         m_theGrid->SetColSize      (COL_COR_PROCENT, 0);
         m_theGrid->SetColSize      (COL_COR_MAX    , 0);
         m_theGrid->SetColLabelValue(COL_COR_MP     , _("imps"));
-        explanation = _("SESSION CORRECTIONS in imps and results from a combi-table");
+        s_sExplanation = _("SESSION CORRECTIONS in imps and results from a combi-table");
     }
     else
     {
@@ -305,7 +310,7 @@ void CorrectionsSession::InitButlerProcent()
         m_theGrid->SetColSize      (COL_COR_PROCENT, SIZE_PROCENT);
         m_theGrid->SetColSize      (COL_COR_MAX    , SIZE_MP     );
         m_theGrid->SetColLabelValue(COL_COR_MP     , _("mp")     );
-        explanation = _("SESSION CORRECTIONS in full % or mp (matchpoints) and results from a combi-table");
+        s_sExplanation = _("SESSION CORRECTIONS in full % or mp (matchpoints) and results from a combi-table");
     }
 
     m_theGrid->GetGridColLabelWindow()->SetToolTip(toolTip);
@@ -320,7 +325,7 @@ void CorrectionsSession::RefreshInfo()
     m_bDataChanged = false;
 
     UINT sessionPairs = cfg::GetNrOfSessionPairs();
-    if (sessionPairs == 0)
+    if ( sessionPairs == 0 )
     {
         MyMessageBox(_("No session data yet.."));
         return;
@@ -331,7 +336,7 @@ void CorrectionsSession::RefreshInfo()
     int minVal = bButler ? -COR_EXTRA_MAX : COR_EXTRA_MIN;
 
     m_theGrid->EmptyGrid();                     // remove all if we have 'old' data
-    for (int row = 0; row < (int)sessionPairs; ++row)  // first get all pairnames
+    for ( int row = 0; row < (int)sessionPairs; ++row ) // first get all pairnames
     {
         m_theGrid->AppendRows(1);
         m_theGrid->SetCellValue (row, COL_PAIRNAME_SESSION,       names::PairnrSession2SessionText(row+1, true));
@@ -346,11 +351,11 @@ void CorrectionsSession::RefreshInfo()
     }
 
     const auto& corrections = *cor::GetCorrectionsSession();
-    for (const auto& [sessionPair, cs] : corrections)
+    for ( const auto& [sessionPair, cs] : corrections )
     {
         int row = sessionPair - 1;
         int col = cs.type == '%' ? COL_COR_PROCENT : COL_COR_MP;
-        if (cs.correction)  // zero means: not present
+        if ( cs.correction )    // zero means: not present
             m_theGrid->SetCellValue(row, col, I2String(cs.correction));
         if ( cs.maxExtra || cs.extra || cs.games )
         {   // some combi result

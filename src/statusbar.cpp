@@ -42,7 +42,7 @@ void MyStatusBar::SetInfo(const wxString& a_info)
 
 void MyStatusBar::SetClock()
 {
-    if (cfg::GetClock() && !cfg::IsScriptTesting())
+    if ( cfg::GetClock() && !cfg::IsScriptTesting() )
     {
         m_timer.Start(1000);    // 1 second
         UpdateClock();
@@ -60,7 +60,7 @@ void MyStatusBar::SetClock()
 
 MyStatusBar::~MyStatusBar()
 {
-    if (m_timer.IsRunning())
+    if ( m_timer.IsRunning() )
     {
         m_timer.Stop();
     }
@@ -71,7 +71,7 @@ void MyStatusBar::UpdateClock()
     SetStatusText(wxDateTime::Now().FormatTime(), FIELD_CLOCK);
 }   // UpdateClock()
 
-void MyStatusBar::OnTimer(const wxTimerEvent& WXUNUSED(event))
+void MyStatusBar::OnTimer(const wxTimerEvent&)
 {
     UpdateClock();
 }   // OnTimer()

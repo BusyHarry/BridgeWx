@@ -18,11 +18,11 @@ namespace cor
     static bool CorrectionsEndWrite();
 
 
-    static bool bCorrectionsSessionChanged = false;
-    static bool bCorrectionsEndChanged     = false;
+    static bool s_bCorrectionsSessionChanged = false;
+    static bool s_bCorrectionsEndChanged     = false;
 
-    static mCorrectionsSession  sm_correctionsSession;
-    static mCorrectionsEnd      sm_correctionsEndSession;
+    static mCorrectionsSession  s_mCorrectionsSession;
+    static mCorrectionsEnd      s_mCorrectionsEndSession;
 
     void SaveCorrections()
     {
@@ -32,31 +32,32 @@ namespace cor
 
     void InitializeCorrections()
     {
-        if (!ConfigChanged()) return;
+        if ( !ConfigChanged() )
+            return;
         (void)CorrectionsSessionRead();
         (void)CorrectionsEndReadSession();
     }   // InitializeCorrections()
 
     const mCorrectionsSession* GetCorrectionsSession()
     {
-        return &sm_correctionsSession;
+        return &s_mCorrectionsSession;
     }   // GetCorrectionsSession()
 
     const mCorrectionsEnd* GetCorrectionsEnd()
     {
-        return &sm_correctionsEndSession;
+        return &s_mCorrectionsEndSession;
     }   // GetCorrectionsEnd()
 
     void SetCorrectionsSession(const mCorrectionsSession* pCorSession)
     {
-        sm_correctionsSession = *pCorSession;
-        bCorrectionsSessionChanged = true;
+        s_mCorrectionsSession = *pCorSession;
+        s_bCorrectionsSessionChanged = true;
     }   // SetCorrectionsSession()
 
     void SetCorrectionsEnd(const mCorrectionsEnd* pCorEnd)
     {
-        sm_correctionsEndSession = *pCorEnd;
-        bCorrectionsEndChanged = true;
+        s_mCorrectionsEndSession = *pCorEnd;
+        s_bCorrectionsEndChanged = true;
     }   // SetCorrectionsEnd()
 
     bool IsValidCorrectionSession(UINT a_sessionPair, CORRECTION_SESSION& a_correctionSession, const wxString& a_input, bool a_bHasError)
@@ -76,23 +77,25 @@ namespace cor
             return false;
         }
 
-        if (a_correctionSession.type == '%') a_correctionSession.correction = std::clamp(a_correctionSession.correction, -100, 100);
+        if ( a_correctionSession.type == '%' )
+            a_correctionSession.correction = std::clamp(a_correctionSession.correction, -100, 100);
 
         return true;
     }   // IsValidCorrectionSession()
 
     static bool CorrectionsSessionRead()    //unconditional read
     {
-        return io::CorrectionsSessionRead(sm_correctionsSession, cfg::GetActiveSession());
+        return io::CorrectionsSessionRead(s_mCorrectionsSession, cfg::GetActiveSession());
     }   // CorrectionsSessionRead()
 
     static bool CorrectionsSessionWrite()
     {
-        if (!bCorrectionsSessionChanged) return true;
+        if ( !s_bCorrectionsSessionChanged )
+            return true;
         (void)ConfigChanged(true);  // refresh config
-        bCorrectionsSessionChanged = false; // set false, even if errors occur...
+        s_bCorrectionsSessionChanged = false; // set false, even if errors occur...
 
-        return io::CorrectionsSessionWrite(sm_correctionsSession, cfg::GetActiveSession());
+        return io::CorrectionsSessionWrite(s_mCorrectionsSession, cfg::GetActiveSession());
     }   // CorrectionsSessionWrite()
 
     bool IsValidCorrectionEnd(UINT a_globalPair, const CORRECTION_END& a_ce, const wxString& a_input, bool a_bHasError)
@@ -120,16 +123,17 @@ namespace cor
 
     static bool CorrectionsEndReadSession()   //unconditional read for editing
     {
-        sm_correctionsEndSession.clear();
-        return io::CorrectionsEndRead(sm_correctionsEndSession, cfg::GetActiveSession(), true);
+        s_mCorrectionsEndSession.clear();
+        return io::CorrectionsEndRead(s_mCorrectionsEndSession, cfg::GetActiveSession(), true);
     }   // CorrectionsEndReadSession()
 
     static bool CorrectionsEndWrite()
     {
-        if (!bCorrectionsEndChanged) return true;
+        if ( !s_bCorrectionsEndChanged )
+            return true;
         (void)ConfigChanged(true);      // refresh config
-        bCorrectionsEndChanged = false; // set false, even if errors occur...
+        s_bCorrectionsEndChanged = false; // set false, even if errors occur...
 
-        return io::CorrectionsEndWrite(sm_correctionsEndSession, cfg::GetActiveSession());
+        return io::CorrectionsEndWrite(s_mCorrectionsEndSession, cfg::GetActiveSession());
     }
 }   // CorrectionsEndWrite()

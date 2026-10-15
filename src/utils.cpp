@@ -34,12 +34,13 @@ int Unicode2Ascii(const wxString& a_inbuf, char* a_outbuf, int a_outsize, int a_
 wxString Ascii2Unicode(const char* a_inbuf, int a_length, int a_codePage)
 {
     wxString out;
-    if (a_inbuf == nullptr || *a_inbuf == 0) return out;  // if no input, return empty string
+    if ( a_inbuf == nullptr || *a_inbuf == 0 )
+        return out; // if no input, return empty string
 
-    if (a_length == 0)  // zero-terminated string
+    if ( a_length == 0 )    // zero-terminated string
         a_length = strlen(a_inbuf);
 
-    for (int ii = 0 ; ii < a_length; ++ii)
+    for ( int ii = 0 ; ii < a_length; ++ii )
     {
         char toConvert = a_inbuf[ii];
         if ( (toConvert >= ' ') && (toConvert <= '{') )
@@ -82,7 +83,7 @@ wxString L2String(long x)
 
 long RoundLong(long a,int b)    // rounding when deviding long by int
 {
-    if (b == 0)
+    if ( b == 0 )
         return 0;
 
     auto xx = (10*a)/b;
@@ -128,19 +129,22 @@ Format Description: formatting time/date representation
 */
 wxString GetDate()
 {
-    if (cfg::IsScriptTesting()) return __DATE__AUTO;
+    if ( cfg::IsScriptTesting() )
+        return __DATE__AUTO;
     return wxDateTime::Now().Format("%A %x");   //%d %B %G");             //zaterdag 12 augustus 1923
 }   // GetDate()
 
 wxString GetTime()
 {
-    if (cfg::IsScriptTesting()) return __TIME__AUTO;
+    if ( cfg::IsScriptTesting() )
+        return __TIME__AUTO;
     return wxDateTime::Now().FormatTime();              //16:44:03 or 04:44:03 PM
 }   // GetTime()
 
 wxString GetDateTime()
 {
-    if (cfg::IsScriptTesting()) return __DAY__AUTO + " " + __DATE__AUTO + " "  __TIME__AUTO;
+    if ( cfg::IsScriptTesting() )
+        return __DAY__AUTO + " " + __DATE__AUTO + " "  __TIME__AUTO;
     //xgettext:TRANSLATORS: Set order of types to your country order
     return wxDateTime::Now().Format(_("%A %B %d, %G %X"));    //zaterdag 12 augustus 2023 16:44:03
 }   // GetDateTime()
@@ -148,13 +152,13 @@ wxString GetDateTime()
 UINT MyGetFilesize(const wxString& a_file)
 {
     auto size = wxFileName::GetSize(a_file);
-    if (size == wxInvalidSize)
+    if ( size == wxInvalidSize )
         return UINT_MAX;
     return size.GetLo();
 #if 0
     wxStructStat buf;
     int result = wxStat(a_file, &buf);
-    if (result == 0)
+    if ( result == 0 )
         return buf.st_size;
     return -1;
 #endif
@@ -167,7 +171,7 @@ bool WriteFileBinairy(const wxString& a_file, void* a_buffer, UINT a_bufSize)
 
     wxFFile fn;
     fn.Open(a_file, "wb");
-    if (a_bufSize != fn.Write(a_buffer, a_bufSize))
+    if ( a_bufSize != fn.Write(a_buffer, a_bufSize) )
     {
         bOk = false;
         sError = _(": write error");
@@ -175,7 +179,7 @@ bool WriteFileBinairy(const wxString& a_file, void* a_buffer, UINT a_bufSize)
 
     fn.Close();
 
-    if (!bOk)
+    if ( !bOk )
     {
         LogMessage(a_file+sError);
         MyMessageBox(a_file+_(": error writing to file"));
@@ -190,13 +194,13 @@ bool ReadFileBinairy(const wxString& a_file, void* a_buffer, UINT a_bufSize)
     wxString sError;
     wxFFile fn;
 
-    if (!wxFileExists(a_file))
+    if ( !wxFileExists(a_file) )
     {   // file does not exist yet, ///// do not: create and zero it (else Open() will give a popup error...)
         memset(a_buffer, 0, a_bufSize);
         return false; //don't create file if not existing yet
 #if 0
         fn.Open(a_file,"wb");
-        if (a_bufSize != fn.Write(a_buffer, a_bufSize))
+        if ( a_bufSize != fn.Write(a_buffer, a_bufSize) )
         {
             bOk = false;
             sError = _(": write error");
@@ -207,21 +211,21 @@ bool ReadFileBinairy(const wxString& a_file, void* a_buffer, UINT a_bufSize)
     }
 
     fn.Open(a_file,"rb");
-    if (!fn.IsOpened())
+    if ( !fn.IsOpened() )
     {
         bOk = false;
     }
     else
     {
         auto fileSize = fn.Length();
-        if (fileSize != a_bufSize)
+        if ( fileSize != a_bufSize )
         {
             bOk = false;
             sError = _("wrong size");
         }
         else
         {
-            if (a_bufSize != fn.Read(a_buffer, a_bufSize))
+            if ( a_bufSize != fn.Read(a_buffer, a_bufSize) )
             {
                 bOk = false;
                 sError = _("readerror");
@@ -229,7 +233,7 @@ bool ReadFileBinairy(const wxString& a_file, void* a_buffer, UINT a_bufSize)
         }
     }
 
-    if (!bOk)
+    if ( !bOk )
     {
         sError = a_file + ": " + sError;
         LogError(sError);
@@ -244,16 +248,16 @@ wxString BoolToString(bool a_bValue)
 }   // BoolToString()
 
 // if something is wrong when autotesting, we want to hear it!
-static bool sbBellActive = !wxValidator::IsSilent() || cfg::IsScriptTesting();
+static bool s_bBellActive = !wxValidator::IsSilent() || cfg::IsScriptTesting();
 bool EnableBell(bool a_bBell)
 {
-    bool bOld = sbBellActive;
-    sbBellActive = a_bBell;
+    bool bOld = s_bBellActive;
+    s_bBellActive = a_bBell;
     return bOld;
 }   // EnableBell()
 
 void RingBell()
 {
-    if ( sbBellActive )
+    if ( s_bBellActive )
         wxBell();
 }   // RingBell()

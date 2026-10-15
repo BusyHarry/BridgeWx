@@ -79,7 +79,7 @@ void MyImagePanel::keyReleased(wxKeyEvent& event) {}
 
 static wxString ConvertType2String(wxBitmapType format)
 {
-    switch(format)
+    switch ( format )
     {
         case wxBITMAP_TYPE_JPEG:
         case wxBITMAP_TYPE_JPEG_RESOURCE:
@@ -96,14 +96,15 @@ MyImagePanel::MyImagePanel(wxWindow* a_parent, const wxString& a_resName, wxBitm
     wxPanel(a_parent)
 {
     // load the file... ideally add a check to see if loading was successful
-    if (!m_image.LoadFile(a_resName, a_format))
+    if ( !m_image.LoadFile(a_resName, a_format) )
     {
         //    bool  bResult = LoadImageFromResource("BRIDGE_JPG", "JPG", m_image);
-        if (!LoadImageFromResource(a_resName, ConvertType2String(a_format), m_image))
+        if ( !LoadImageFromResource(a_resName, ConvertType2String(a_format), m_image) )
         {
             wxBitmap png(a_resName, a_format);
             m_image =  png.ConvertToImage();
-            if (!m_image.IsOk()) {/*???*/ }
+            if ( !m_image.IsOk() )
+            {/*???*/ }
         }
     }
 
@@ -149,7 +150,7 @@ void MyImagePanel::render(wxDC&  a_dc)
     int newW, newH;
     a_dc.GetSize( &newW, &newH );
 
-    if( newW != m_width || newH != m_height )
+    if ( newW != m_width || newH != m_height )
     {
         m_resizedBM = wxBitmap( m_image.Scale( newW, newH /*, wxIMAGE_QUALITY_HIGH*/ ) );
         m_width     = newW;
@@ -173,7 +174,7 @@ void MyImagePanel::OnSize(wxSizeEvent& a_event)
     a_event.Skip();
 }   // OnSize()
 
-static const char* bridges[]=
+static const char* s_vBridges[]=
 {   // bridge-pics included as resource
       "BRIDGE_JPG_X0"
     , "BRIDGE_JPG_X1"
@@ -190,8 +191,8 @@ void ShowStartImage(wxWindow* a_pParent)
     wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
     // then simply create like this
 #if 1
-    UINT rand = wxDateTime::UNow().GetMillisecond() % (sizeof(bridges)/sizeof(bridges[0]));
-    auto drawPane = new MyImagePanel( a_pParent, bridges[rand], wxBITMAP_TYPE_JPEG_RESOURCE);
+    UINT rand = wxDateTime::UNow().GetMillisecond() % (sizeof(s_vBridges)/sizeof(s_vBridges[0]));
+    auto drawPane = new MyImagePanel( a_pParent, s_vBridges[rand], wxBITMAP_TYPE_JPEG_RESOURCE);
     //auto drawPane = new MyImagePanel( a_pParent, "BRIDGE_JPG", wxBITMAP_TYPE_JPEG_RESOURCE);
 #else
     auto drawPane = new MyImagePanel( pParent, "BRIDGE_PNG", wxBITMAP_TYPE_PNG_RESOURCE);
@@ -212,16 +213,20 @@ wxMemoryInputStream *GetResourceInputStream(const wxString& a_resource_name, con
     HMODULE nil = nullptr;   // equals the HMODULE of the executable!
 
     HRSRC hrsrc=FindResource(nil, a_resource_name, a_resource_type);
-    if(hrsrc==nullptr) return nullptr;
+    if ( hrsrc==nullptr )
+        return nullptr;
 
     HGLOBAL hglobal=LoadResource(nil, hrsrc);
-    if(hglobal==nullptr) return nullptr;
+    if ( hglobal==nullptr )
+        return nullptr;
 
     void *data=LockResource(hglobal);
-    if(data==nullptr) return nullptr;
+    if ( data==nullptr )
+        return nullptr;
 
     DWORD datalen=SizeofResource(nil, hrsrc);
-    if(datalen<1) return nullptr;
+    if ( datalen<1 )
+        return nullptr;
 
     return new wxMemoryInputStream(data, datalen);
 }   // GetResourceInputStream()
@@ -230,10 +235,12 @@ bool HasResource(const wxString& a_resource_name, const wxString& a_resource_typ
 {
     HMODULE nil = nullptr;   // equals the HMODULE of the executable!
     HRSRC hrsrc=FindResource(nil, a_resource_name, a_resource_type);
-    if(hrsrc==nullptr) return false;
+    if ( hrsrc==nullptr )
+        return false;
 
     HGLOBAL hglobal=LoadResource(nil, hrsrc);
-    if(hglobal==nullptr) return false;
+    if ( hglobal==nullptr )
+        return false;
 
     return true;
 }   // HasResource()
@@ -242,7 +249,7 @@ static bool LoadImageFromResource(const wxString& a_resName, const wxString& a_r
 {
     bool bResult = false;
     wxMemoryInputStream* stream = GetResourceInputStream(a_resName, a_resType);
-    if(stream != nullptr)
+    if ( stream != nullptr )
     {
         bResult = a_image.LoadFile(*stream);
         delete stream;

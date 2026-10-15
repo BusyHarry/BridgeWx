@@ -14,7 +14,7 @@
 
 namespace db
 {
-static const long dbVersion = 100;  // assumed version (or smaller) for the code below
+static const long s_lDbVersion = 100;  // assumed version (or smaller) for the code below
 static void InitSdb();
 
 static auto constexpr TEST = 0;
@@ -23,19 +23,19 @@ static auto constexpr TEST = 0;
     static void Test2();
 #endif
 
-static bool                     sbGlobelNames = false;  // using names/clubs from a global database
+//static bool                     s_bGlobalNames = false; // using names/clubs from a global database
 static wxFileConfig*            s_pConfig = nullptr;    // current database manager
 static wxFileConfig*            s_pConfigGlobalNames = nullptr; // dbase if globalPairNames active
-static wxString                 sDbFile;                // current database, empty if database closed
-static std::map<enum keyId,wxString>   dbKeys;          // map, translating db_id to key
-static wxChar                   theSeparator = '@';     // default separator
+static wxString                 s_sDbFile;              // current database, empty if database closed
+static std::map<enum keyId,wxString> s_mDbKeys;         // map, translating db_id to key
+static wxChar                   s_cTheSeparator = '@';  // default separator
 
-static const struct { char input{' '}; wxString replace; } charEncoding[] = { {'"',  "&quot;"} };
+static const struct { char input{' '}; wxString replace; } s_aCharEncoding[] = { {'"',  "&quot;"} };
 static wxString EncodeString(const wxString& a_string)
 {   // encode special char in a string
     wxString result(a_string);
 
-    for (const auto& it : charEncoding)
+    for ( const auto& it : s_aCharEncoding )
         result.Replace(it.input, it.replace);
     return result;
 }   // EncodeString()
@@ -44,7 +44,7 @@ static wxString DecodeString(const wxString& a_string)
 {   // decode special char in a string
     wxString result(a_string);
 
-    for (const auto& it : charEncoding)
+    for ( const auto& it : s_aCharEncoding )
         result.Replace(it.replace, it.input);
     return result;
 }   // DecodeString()
@@ -78,8 +78,8 @@ private:
 static wxString MakePath(keyId a_id, UINT a_session = DEFAULT_SESSION )
 {
     return a_session == DEFAULT_SESSION ?
-        "/main/" + dbKeys[a_id]
-      : FMT("/%u/%s", a_session, dbKeys[a_id]);
+        "/main/" + s_mDbKeys[a_id]
+      : FMT("/%u/%s", a_session, s_mDbKeys[a_id]);
 }   // MakePath()
 
 bool ExistSession(UINT a_session)
@@ -90,7 +90,7 @@ bool ExistSession(UINT a_session)
 static bool UintVectorWrite(const UINT_VECTOR& vUint, UINT session, keyId id);
 static bool UintVectorRead(       UINT_VECTOR& vUint, UINT session, keyId id);
 
-wxString GetDbFileName() {return sDbFile;}
+wxString GetDbFileName() {return s_sDbFile;}
 
 bool DatabaseIsOpen(io::GlbDbType /*dbType*/)
 {
@@ -101,7 +101,7 @@ bool DatabaseClose(io::GlbDbType /*dbType*/)
 {
     delete s_pConfig;   // will flush pending changes
     s_pConfig = nullptr;
-    sDbFile.clear();
+    s_sDbFile.clear();
 
     delete s_pConfigGlobalNames;
     s_pConfigGlobalNames = nullptr;
@@ -139,9 +139,9 @@ static wxFileConfig* InitDatabase(const wxString& a_dbFile)
     pCfg->SetRecordDefaults();   //write all requested entries to the file, if not present
     // set some info-records
     std::swap(s_pConfig, pCfg);       // have the correct value for the next two calls....
-    long version = ReadValueLong(KEY_DB_VERSION , dbVersion);
-    if ( version > dbVersion )
-        MyMessageBox(wxString::Format(_("Database version error, expected <= %ld, found %ld"), dbVersion, version));
+    long version = ReadValueLong(KEY_DB_VERSION , s_lDbVersion);
+    if ( version > s_lDbVersion )
+        MyMessageBox(wxString::Format(_("Database version error, expected <= %ld, found %ld"), s_lDbVersion, version));
     (void) ReadValue    (KEY_PRG_VERSION, cfg::GetVersion());
     std::swap(s_pConfig, pCfg);       // back to how it was
     return pCfg;
@@ -149,9 +149,10 @@ static wxFileConfig* InitDatabase(const wxString& a_dbFile)
 
 CfgFileEnum DatabaseOpen(io::GlbDbType /*dbType*/, CfgFileEnum a_how2Open)
 {
-    theSeparator = glb::GetSeparator();  // defined in the glb namespace
+    s_cTheSeparator = glb::GetSeparator();  // defined in the glb namespace
     wxFileName db(cfg::ConstructFilename(cfg::EXT_DATABASE));
-    if ( db.GetFullPath() == sDbFile && s_pConfig != nullptr ) return CFG_OK;
+    if ( db.GetFullPath() == s_sDbFile && s_pConfig != nullptr )
+        return CFG_OK;
     delete s_pConfig;   // will flush pending changes
     s_pConfig = nullptr;
     InitSdb();
@@ -175,21 +176,24 @@ CfgFileEnum DatabaseOpen(io::GlbDbType /*dbType*/, CfgFileEnum a_how2Open)
         db = wxFileName(dir, db.GetFullName());
     }
 
-    sDbFile = db.GetFullPath();
-    s_pConfig = InitDatabase(sDbFile);
+    s_sDbFile = db.GetFullPath();
+    s_pConfig = InitDatabase(s_sDbFile);
     return CFG_OK;
 } // DatabaseOpen()
 
 bool DatabaseFlush(io::GlbDbType /*dbType*/)
 {
-    if ( !s_pConfig ) return true;
-    if ( s_pConfigGlobalNames ) s_pConfigGlobalNames->Flush();
+    if ( !s_pConfig )
+        return true;
+    if ( s_pConfigGlobalNames )
+        s_pConfigGlobalNames->Flush();
     return s_pConfig->Flush();
 }   // DatabaseFlush()
 
 static void InitGlobalNames()
 {   // use a global db for pairnames/clubnames
-    if ( !cfg::GetGlobalNameUse() ) return;     // use names from active match db
+    if ( !cfg::GetGlobalNameUse() )
+        return; // use names from active match db
 
     // swap db-pointers at begin and end of functions that access pairnames/clubnames
     if ( s_pConfigGlobalNames == nullptr )  // create/open global names db
@@ -199,16 +203,18 @@ static void InitGlobalNames()
 
 bool PairnamesWrite(const names::PairInfoData& a_pairInfo)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     InitGlobalNames();  // use global db, if set so
     wxString path = MakePath(KEY_MATCH_PAIRNAMES);
     s_pConfig->DeleteGroup(path);
     s_pConfig->SetPath(path);
     UINT index = 0;
     bool bResult = true;
-    for (const auto& it : a_pairInfo)
+    for ( const auto& it : a_pairInfo )
     {
-        if ( index && !s_pConfig->Write(FMT("%u",index), FMT("{\"%s\",%u}", EncodeString(it.pairName), it.clubIndex)) ) bResult = false;
+        if ( index && !s_pConfig->Write(FMT("%u",index), FMT("{\"%s\",%u}", EncodeString(it.pairName), it.clubIndex)) )
+            bResult = false;
         ++index;
     }
     InitGlobalNames();  // back to local db
@@ -219,7 +225,8 @@ bool PairnamesRead(names::PairInfoData& a_pairInfo)
 {
     a_pairInfo.clear();
     a_pairInfo.resize(cfg::MAX_PAIRS+1);
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
 
     InitGlobalNames();  // use global db, if set so
     wxString path = MakePath(KEY_MATCH_PAIRNAMES);
@@ -227,10 +234,14 @@ bool PairnamesRead(names::PairInfoData& a_pairInfo)
     size_t maxPair = rd.GetNumberOfEntries();
     a_pairInfo.resize(maxPair+1);
     wxString key,value;
-    while (rd.GetNextEntry(key, value))
+    while ( rd.GetNextEntry(key, value) )
     {
         UINT pair = wxAtoi(key);
-        if ( pair > maxPair ) { MyLogError(_("Reading pairnames: pairnr <%s> too high!"), key); continue; }
+        if ( pair > maxPair )
+        {
+            MyLogError(_("Reading pairnames: pairnr <%s> too high!"), key);
+            continue;
+        }
         names::PairInfo info;
         char name[2*cfg::MAX_NAME_SIZE+1]={0};
         auto count = wxSscanf(value,R"( { "%50[^"]" , %u })", name, &info.clubIndex);   // hardcoded maxsize == 50!
@@ -251,16 +262,21 @@ bool ClubnamesRead(std::vector<wxString>& a_clubNames, UINT& a_uMaxId)
     a_clubNames.clear();
     a_clubNames.resize(cfg::MAX_CLUBNAMES+1);
     a_uMaxId = cfg::MAX_CLUBID_UNION;    // 'free' added clubnames get an id starting here
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
 
     InitGlobalNames();  // use global db, if set so
     wxString path = MakePath(KEY_MATCH_CLUBNAMES);
     ReadConfigGroup rd(s_pConfig, path);
     wxString key, value;
-    while (rd.GetNextEntry(key, value))
+    while ( rd.GetNextEntry(key, value) )
     {
         UINT club = wxAtoi(key);
-        if ( club > cfg::MAX_CLUBNAMES ) { MyLogError(_("Reading clubnames: clubnr <%u> too high!"), club ); continue; }
+        if ( club > cfg::MAX_CLUBNAMES )
+        {
+            MyLogError(_("Reading clubnames: clubnr <%u> too high!"), club );
+            continue;
+        }
         char name[2*cfg::MAX_CLUB_SIZE+1]={0};
         auto count = wxSscanf(value, R"( "%50[^"]" )", name);   // hardcoded maxsize == 50!
         if ( count != 1 )
@@ -278,17 +294,19 @@ bool ClubnamesRead(std::vector<wxString>& a_clubNames, UINT& a_uMaxId)
 
 bool ClubnamesWrite(const std::vector<wxString>& a_clubNames)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     InitGlobalNames();  // use global db, if set so
     wxString path = MakePath(KEY_MATCH_CLUBNAMES);
     s_pConfig->DeleteGroup(path);
     s_pConfig->SetPath(path);
     UINT index = 0;
     bool bResult = true;
-    for (const auto& it : a_clubNames)
+    for ( const auto& it : a_clubNames )
     {
         if ( index && !it.IsEmpty() )
-            if ( !s_pConfig->Write(FMT("%u",index), FMT("\"%s\"", EncodeString(it))) ) bResult = false;;
+            if ( !s_pConfig->Write(FMT("%u",index), FMT("\"%s\"", EncodeString(it))) )
+                bResult = false;;
         ++index;
     }
 
@@ -304,7 +322,8 @@ static bool CB_ScoresReadLine(wxString& a_game, wxString& a_gameScores, void* a_
 
 bool ScoresRead(vvScoreData& a_scoreData, UINT a_session)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString        path = MakePath(KEY_SESSION_GAMERESULT, a_session);
     ReadConfigGroup configGroup(s_pConfig, path);
     return glb::ScoresRead(a_scoreData, CB_ScoresReadLine, &configGroup);
@@ -318,7 +337,8 @@ static bool CB_ScoresWriteGame(UINT a_game, const wxString& a_gameScores, void* 
 
 bool ScoresWrite(const vvScoreData& a_scoreData, UINT a_session)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString path = MakePath(KEY_SESSION_GAMERESULT, a_session);
     s_pConfig->DeleteGroup(path);
     s_pConfig->SetPath(path);
@@ -327,97 +347,107 @@ bool ScoresWrite(const vvScoreData& a_scoreData, UINT a_session)
 
 static void InitSdb()
 {
-    static bool bIsInited = false;
-    if ( bIsInited ) return;
-    bIsInited = true;
+    static bool s_bIsInited = false;
+    if ( s_bIsInited )
+        return;
+    s_bIsInited = true;
 
-    dbKeys[KEY_DB_VERSION]               = "databaseVersion";
-    dbKeys[KEY_PRG_VERSION]              = "programVersion";
+    s_mDbKeys[KEY_DB_VERSION]               = "databaseVersion";
+    s_mDbKeys[KEY_PRG_VERSION]              = "programVersion";
 
-    dbKeys[KEY_MATCH_MAX_ABSENT]         = "maxAbsent";
-    dbKeys[KEY_MATCH_PRNT]               = "printer";
-    dbKeys[KEY_MATCH_MAXMEAN]            = "maxMean";
-    dbKeys[KEY_MATCH_CLOCK]              = "clock";
-    dbKeys[KEY_MATCH_WEIGHTAVG]          = "weightedAverage";
-    dbKeys[KEY_MATCH_LINESPP]            = "linesPerPage";
-    dbKeys[KEY_MATCH_NEUBERG]            = "neuberg";
-    dbKeys[KEY_MATCH_GRPRESULT]          = "groupResult";
-    dbKeys[KEY_MATCH_MMCLUB]             = "minMaxClub";
-    dbKeys[KEY_MATCH_GLOBALNAMES]        = "centralNames";
-    dbKeys[KEY_MATCH_SESSION]            = "session";
-    dbKeys[KEY_MATCH_PAIRNAMES]          = "pairNames";
-    dbKeys[KEY_MATCH_CLUBNAMES]          = "clubNames";
+    s_mDbKeys[KEY_MATCH_MAX_ABSENT]         = "maxAbsent";
+    s_mDbKeys[KEY_MATCH_PRNT]               = "printer";
+    s_mDbKeys[KEY_MATCH_MAXMEAN]            = "maxMean";
+    s_mDbKeys[KEY_MATCH_CLOCK]              = "clock";
+    s_mDbKeys[KEY_MATCH_WEIGHTAVG]          = "weightedAverage";
+    s_mDbKeys[KEY_MATCH_LINESPP]            = "linesPerPage";
+    s_mDbKeys[KEY_MATCH_NEUBERG]            = "neuberg";
+    s_mDbKeys[KEY_MATCH_GRPRESULT]          = "groupResult";
+    s_mDbKeys[KEY_MATCH_MMCLUB]             = "minMaxClub";
+    s_mDbKeys[KEY_MATCH_GLOBALNAMES]        = "centralNames";
+    s_mDbKeys[KEY_MATCH_SESSION]            = "session";
+    s_mDbKeys[KEY_MATCH_PAIRNAMES]          = "pairNames";
+    s_mDbKeys[KEY_MATCH_CLUBNAMES]          = "clubNames";
 
-    dbKeys[KEY_MATCH_CMNT]               = "comment";       // filter out: old
-    dbKeys[KEY_MATCH_FF]                 = "form_feed";     // filter out: old
-    dbKeys[KEY_MATCH_VIDEO]              = "bios_video";    // filter out: old
-    dbKeys[KEY_MATCH_DISCR]              = "description";
-    dbKeys[KEY_MATCH_BUTLER]             = "butler";
+    s_mDbKeys[KEY_MATCH_CMNT]               = "comment";       // filter out: old
+    s_mDbKeys[KEY_MATCH_FF]                 = "form_feed";     // filter out: old
+    s_mDbKeys[KEY_MATCH_VIDEO]              = "bios_video";    // filter out: old
+    s_mDbKeys[KEY_MATCH_DISCR]              = "description";
+    s_mDbKeys[KEY_MATCH_BUTLER]             = "butler";
 
-    dbKeys[KEY_SESSION_DISCR]            = "description";
-    dbKeys[KEY_SESSION_SCHEMA]           = "schema";
-    dbKeys[KEY_SESSION_GAMERESULT]       = "gameResult";
-    dbKeys[KEY_SESSION_ASSIGNMENTS]      = "assignments";        // array of global pairnr's
-    dbKeys[KEY_SESSION_ASSIGNMENTS_NAME] = "assignmentsName";    // array for global pairnr's of session names
-    dbKeys[KEY_SESSION_CORRECTION]       = "correctionsSession"; // corrections for this session
-    dbKeys[KEY_SESSION_CORRECTION_END]   = "correctionsEnd";     // corrections for total/end calculation
-    dbKeys[KEY_SESSION_RESULT]           = "sessionResult";      // short session result, used for total/end calculation
-    dbKeys[KEY_SESSION_RANK_SESSION]     = "sessionrank";        // rank in the sessionresult
-    dbKeys[KEY_SESSION_RANK_TOTAL]       = "totalrank";          // rank in the totalresult for this session
+    s_mDbKeys[KEY_SESSION_DISCR]            = "description";
+    s_mDbKeys[KEY_SESSION_SCHEMA]           = "schema";
+    s_mDbKeys[KEY_SESSION_GAMERESULT]       = "gameResult";
+    s_mDbKeys[KEY_SESSION_ASSIGNMENTS]      = "assignments";        // array of global pairnr's
+    s_mDbKeys[KEY_SESSION_ASSIGNMENTS_NAME] = "assignmentsName";    // array for global pairnr's of session names
+    s_mDbKeys[KEY_SESSION_CORRECTION]       = "correctionsSession"; // corrections for this session
+    s_mDbKeys[KEY_SESSION_CORRECTION_END]   = "correctionsEnd";     // corrections for total/end calculation
+    s_mDbKeys[KEY_SESSION_RESULT]           = "sessionResult";      // short session result, used for total/end calculation
+    s_mDbKeys[KEY_SESSION_RANK_SESSION]     = "sessionrank";        // rank in the sessionresult
+    s_mDbKeys[KEY_SESSION_RANK_TOTAL]       = "totalrank";          // rank in the totalresult for this session
 
 }  // InitSdb()
 
 wxString ReadValue(keyId a_id, const wxString& a_defaultValue, UINT a_session)
 {
-    if ( !s_pConfig ) return a_defaultValue;
+    if ( !s_pConfig )
+        return a_defaultValue;
     return DecodeString(s_pConfig->Read(MakePath(a_id, a_session), a_defaultValue));
 }   // ReadValue()
 
 bool ReadValueBool(keyId a_id, bool a_defaultValue, UINT a_session)
 {
-    if ( !s_pConfig ) return a_defaultValue;
+    if ( !s_pConfig )
+        return a_defaultValue;
     return s_pConfig->ReadBool(MakePath(a_id, a_session), a_defaultValue);
 }   // ReadValueBool()
 
 long ReadValueLong(keyId a_id, long a_defaultValue, UINT a_session)
 {
-    if ( !s_pConfig ) return a_defaultValue;
+    if ( !s_pConfig )
+        return a_defaultValue;
     return s_pConfig->ReadLong(MakePath(a_id, a_session), a_defaultValue);
 }   // ReadValueLong()
 
 UINT ReadValueUINT(keyId a_id, UINT a_defaultValue, UINT a_session)
 {
-    if ( !s_pConfig ) return a_defaultValue;
+    if ( !s_pConfig )
+        return a_defaultValue;
     return s_pConfig->ReadLong(MakePath(a_id, a_session), a_defaultValue);
 }   // ReadValueUINT()
 
 bool WriteValue(keyId a_id, const wxString& a_value, UINT a_session)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     return s_pConfig->Write(MakePath(a_id, a_session), EncodeString(a_value));
 }   // WriteValue()
 
 bool WriteValue(keyId a_id, bool a_value, UINT a_session)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     return s_pConfig->Write(MakePath(a_id, a_session), a_value);
 }   // WriteValue()
 
 bool WriteValue(keyId a_id, long a_value, UINT a_session)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     return s_pConfig->Write(MakePath(a_id, a_session), a_value);
 }   // WriteValue()
 
 bool WriteValue(keyId a_id, UINT a_value, UINT a_session)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     return s_pConfig->Write(MakePath(a_id, a_session), a_value);
 }   // WriteValue()
 
 bool SchemaRead(cfg::SessionInfo& a_info, UINT a_session)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString defaultValue = glb::GetDefaultSchema();
     wxString schema = s_pConfig->Read(MakePath(KEY_SESSION_SCHEMA, a_session), defaultValue);
     return glb::SchemaRead(a_info, schema);
@@ -425,27 +455,31 @@ bool SchemaRead(cfg::SessionInfo& a_info, UINT a_session)
 
 bool SchemaWrite(const cfg::SessionInfo& a_info, UINT a_session)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString info = glb::SchemaWrite(a_info);
     return s_pConfig->Write(MakePath(KEY_SESSION_SCHEMA, a_session), info);
 }   // SchemaWrite()
 
 bool MaxmeanRead(Fdp& a_maxmean)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     a_maxmean= s_pConfig->Read(MakePath(KEY_MATCH_MAXMEAN), a_maxmean.AsString2F());
     return true;
 }   // MaxmeanRead()
 
 bool MaxmeanWrite(const Fdp& a_maxmean)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     return s_pConfig->Write(MakePath(KEY_MATCH_MAXMEAN), a_maxmean.AsString2F());
 } // MaxmeanWrite()
 
 bool MinMaxClubRead(UINT& a_min, UINT& a_max)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString defaultValue = FMT("{%u,%u}", a_min, a_max);
     wxString sMinMax = s_pConfig->Read(MakePath(KEY_MATCH_MMCLUB), defaultValue);
     auto count = wxSscanf(sMinMax, " {%u ,%u }", &a_min, &a_max);
@@ -454,7 +488,8 @@ bool MinMaxClubRead(UINT& a_min, UINT& a_max)
 
 bool MinMaxClubWrite(UINT a_min, UINT a_max)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString sMinMax = FMT("{%u,%u}", a_min, a_max);
     return s_pConfig->Write(MakePath(KEY_MATCH_MMCLUB), sMinMax);
 } // MinMaxClubWrite()
@@ -475,14 +510,16 @@ bool Session2GlobalIdsWrite(const UINT_VECTOR& a_vuPairnrSession2Global, UINT a_
 
 bool SessionNamesWrite(const wxArrayString& a_names, UINT a_session)
 {   // sessionnames for globalpairnrs of a session
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString info = glb::SessionNamesWrite(a_names);
     return s_pConfig->Write(MakePath(KEY_SESSION_ASSIGNMENTS_NAME, a_session), info);
 }   // SessionNamesWrite()
 
 bool SessionNamesRead(wxArrayString& a_assignmentsName, UINT a_session)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString info = s_pConfig->Read(MakePath(KEY_SESSION_ASSIGNMENTS_NAME, a_session), ES);
     return glb::SessionNamesRead(a_assignmentsName, info);
 }   // SessionNamesRead()
@@ -490,42 +527,48 @@ bool SessionNamesRead(wxArrayString& a_assignmentsName, UINT a_session)
 bool CorrectionsSessionRead(cor::mCorrectionsSession& a_mCorrectionsSession, UINT a_session)
 {
     a_mCorrectionsSession.clear();
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString corrections = s_pConfig->Read(MakePath(KEY_SESSION_CORRECTION, a_session), ES);
     return glb::CorrectionsSessionRead(a_mCorrectionsSession, corrections);
 }   // CorrectionsSessionRead()
 
 bool CorrectionsSessionWrite(const cor::mCorrectionsSession& a_m_correctionsSession, UINT a_session)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString correction = glb::CorrectionsSessionWrite(a_m_correctionsSession);
     return s_pConfig->Write(MakePath(KEY_SESSION_CORRECTION, a_session), correction);
 }   // CorrectionsSessionWrite()
 
 bool CorrectionsEndRead(cor::mCorrectionsEnd& a_mCorrectionsEnd, UINT a_session, bool a_bEdit)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString data = s_pConfig->Read(MakePath(KEY_SESSION_CORRECTION_END, a_session), ES);
     return glb::CorrectionsEndRead(a_mCorrectionsEnd, a_bEdit, data);
 }   // CorrectionsEndRead()
 
 bool CorrectionsEndWrite(const cor::mCorrectionsEnd& a_m_correctionsEnd, UINT a_session)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString correction = glb::CorrectionsEndWrite(a_m_correctionsEnd);
     return s_pConfig->Write(MakePath(KEY_SESSION_CORRECTION_END, a_session), correction);
 }   // CorrectionsEndWrite()
 
 bool SessionResultRead(cor::mCorrectionsEnd& a_mSessionResult, UINT a_session)    // write and read: different params!
 {   // NB input MAP is initialized, so don't clear or resize it or add 'new' pairnrs!
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString info = s_pConfig->Read(MakePath(KEY_SESSION_RESULT, a_session));
     return glb::SessionResultRead(a_mSessionResult, info);
 } //SessionResultRead()
 
 bool SessionResultWrite(const cor::mCorrectionsEnd& a_mSessionResult, UINT a_session)
 {
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString result = glb::SessionResultWrite(a_mSessionResult);
     return s_pConfig->Write(MakePath(KEY_SESSION_RESULT, a_session), result);
 }   // SessionResultWrite()
@@ -552,15 +595,17 @@ bool TotalRankWrite(const UINT_VECTOR& a_vuRank, UINT a_session)
 
 static bool UintVectorRead(UINT_VECTOR& a_vUint, UINT a_session, keyId a_id)
 {   // Resize vector to cfg::MAX_PAIRS and read a set of UINTs and put them in a vector.
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString key  = MakePath(a_id, a_session);
     wxString info = s_pConfig->Read(key, ES);
-    return glb::UintVectorRead(a_vUint, info, sDbFile, key, _("database error"));
+    return glb::UintVectorRead(a_vUint, info, s_sDbFile, key, _("database error"));
 }   //UintVectorRead()
 
 static bool UintVectorWrite(const UINT_VECTOR& a_vUint, UINT a_session, keyId a_id)
 {   // write contents of vector as UINT, ignoring entry 0
-    if ( !s_pConfig ) return false;
+    if ( !s_pConfig )
+        return false;
     wxString  key = MakePath(a_id, a_session);
     wxString info = glb::UintVectorWrite(a_vUint);
     return s_pConfig->Write(key, info);
@@ -574,10 +619,13 @@ static bool UintVectorWrite(const UINT_VECTOR& a_vUint, UINT a_session, keyId a_
 
 int ScoresWriteEx(const wxString& a_dBase, const vvScoreData& a_scoreData, UINT a_session)
 {   // only write to existing files
-    if ( !wxFile::Exists(a_dBase) )             return EX_RESULT_NOT_EXIST;
-    if ( a_dBase.Lower() == sDbFile.Lower() )   return EX_RESULT_CURRENT;  // don't open current active system db
+    if ( !wxFile::Exists(a_dBase) )
+        return EX_RESULT_NOT_EXIST;
+    if ( a_dBase.Lower() == s_sDbFile.Lower() )
+        return EX_RESULT_CURRENT;  // don't open current active system db
     wxFileConfig* pConfigEx = InitDatabase(a_dBase);
-    if ( pConfigEx == nullptr ) return EX_RESULT_ERROR;
+    if ( pConfigEx == nullptr )
+        return EX_RESULT_ERROR;
 
     bool bResult = false;;
     std::swap(s_pConfig, pConfigEx);        // have the correct value for the next calls....
@@ -595,17 +643,17 @@ static void DoGroup(wxFileConfig& config, wxString group)
     wxString base = group;
     wxString key;
     long entry_index;
-    for (bool bHasNextEntry = config.GetFirstEntry(key, entry_index);
+    for ( bool bHasNextEntry = config.GetFirstEntry(key, entry_index);
         bHasNextEntry;
-        bHasNextEntry = config.GetNextEntry(key, entry_index))
+        bHasNextEntry = config.GetNextEntry(key, entry_index) )
     {   // show entries in current group
         wxString value = config.Read(key, ES);
         wxMessageOutputDebug d;
         d.Printf("[%s] %s = %s", group, key, value);
     }
-    for (bool bHasSubGroup = config.GetFirstGroup(group, group_index);
+    for ( bool bHasSubGroup = config.GetFirstGroup(group, group_index);
         bHasSubGroup;
-        bHasSubGroup = config.GetNextGroup(group, group_index))
+        bHasSubGroup = config.GetNextGroup(group, group_index) )
     {   // handle all sub-groups
         DoGroup(config, base + '/' + group); // search for entries/groups within this group
         config.SetPath(base);   // need to restore path!

@@ -13,19 +13,19 @@
 #include "fileio.h"
 #include "main.h"
 
-static const auto sButlerRemoveScoresPercent = 10;  // remove N % of highest/lowest scores
-static const auto sButlerMinimumScores       = 3;   // we want atleast N scores after removal
-static const auto sButlerImpsPer10Procent    = 2;   // referee scores: each 10% above/below 50% equals N imps, ASSUME scores are multiple of 5%
+static const auto s_iButlerRemoveScoresPercent = 10;    // remove N % of highest/lowest scores
+static const auto s_iButlerMinimumScores       = 3;     // we want atleast N scores after removal
+static const auto s_iButlerImpsPer10Procent    = 2;     // referee scores: each 10% above/below 50% equals N imps, ASSUME scores are multiple of 5%
 
 struct ButlerFkw{bool bInit = false; long scoreNs=0;long deltaNs=0; int impsNs=0; long scoreEw=0; long deltaEw=0;int impsEw=0;};
 
 using ButlerFkwMap = std::map<long, ButlerFkw>;
-static std::vector<ButlerFkwMap> svButlerFkw;
+static std::vector<ButlerFkwMap> s_vButlerFkw;
 
 struct DatumScore{int dsNS=0; int dsEW=0;};
-static std::vector<DatumScore> svDatumScores;
+static std::vector<DatumScore> s_vDatumScores;
 struct lowHighImp { int low; int high; int mp; };
-static const lowHighImp suImpTable[]=
+static const lowHighImp s_uImpTable[]=
 {
     {0   , 10  , 0 }, {20  , 40  , 1 }, {50  , 80  , 2 }, {90  , 120 , 3 }, {130 , 160 , 4 }, {170 , 210 , 5 },
     {220 , 260 , 6 }, {270 , 310 , 7 }, {320 , 360 , 8 }, {370 , 420 , 9 }, {430 , 490 , 10}, {500 , 590 , 11},
@@ -38,10 +38,10 @@ static Fdp NeubergPoints(const Fdp& points, UINT gameCount, UINT comparableCount
 
 int ButlerGetMpsFromScore(int a_score, int a_datumScore)
 {
-    if (score::IsProcent(a_score))
+    if ( score::IsProcent(a_score) )
     {   // for now, assume a procentscore is a multiple of 5%
         auto deltaProcent = score::Procentscore2Procent(a_score) - 50;
-        return sButlerImpsPer10Procent*deltaProcent/10;
+        return s_iButlerImpsPer10Procent*deltaProcent/10;
     }
 
     // now we have a 'normal' score
@@ -50,9 +50,9 @@ int ButlerGetMpsFromScore(int a_score, int a_datumScore)
     auto        absDiff = std::abs(diff);
     int         sign    = diff < 0 ? -1 : 1;
 
-    for (const auto& score : suImpTable)
+    for ( const auto& score : s_uImpTable )
     {
-        if (absDiff >= score.low && absDiff <= score.high)
+        if ( absDiff >= score.low && absDiff <= score.high )
             return sign*score.mp;   // could have done: return sign*index
     }
     return 0;   // should not happen....
@@ -82,21 +82,21 @@ struct TopsPerGame
     UINT topEW = 0;
 };
 
-static const vvScoreData*               spvGameSetData;
-static       cor::mCorrectionsSession   smCorSessionValidated;          // contains ONLY correct (combi-)data, created in ValidateSessionCorrections()
-static bool                             sbHaveValidCombi { false };     // (re)set in ValidateSessionCorrections() for combi results
-static bool                             sbHaveValidNormal{ false };     // (re)set in ValidateSessionCorrections() for normal corrections
+static const vvScoreData*               s_pvGameSetData;
+static       cor::mCorrectionsSession   s_mCorSessionValidated;     // contains ONLY correct (combi-)data, created in ValidateSessionCorrections()
+static bool                             s_bHaveValidCombi { false };// (re)set in ValidateSessionCorrections() for combi results
+static bool                             s_bHaveValidNormal{ false };// (re)set in ValidateSessionCorrections() for normal corrections
 
-static std::vector<Total>               svSessionResult;        // session result for all pairs
-static std::vector<UINT>                svSessionRankToPair;    // index array for session results: [a]=b -> at rank 'a' is sessionpair 'b'
-static std::vector<UINT>                svSessionPairToRank;    // index array for session results: [a]=b -> sessionpair 'a' has rank 'b'
-static std::vector<ScoreInfo>           svTotalResult;          // total result for all pairs
-static std::vector<UINT>                svTotalRankToPair;      // index array for total results: [a]=b -> at rank 'a' is globalpair 'b'
-static std::vector<UINT>                svTotalPairToRank;      // index array for total results: [a]=b -> globalpair 'a' has rank 'b'
-static std::vector<TopsPerGame>         svGameTops;             // max points per game for NS/EW
+static std::vector<Total>               s_vSessionResult;           // session result for all pairs
+static std::vector<UINT>                s_vSessionRankToPair;       // index array for session results: [a]=b -> at rank 'a' is sessionpair 'b'
+static std::vector<UINT>                s_vSessionPairToRank;       // index array for session results: [a]=b -> sessionpair 'a' has rank 'b'
+static std::vector<ScoreInfo>           s_vTotalResult;             // total result for all pairs
+static std::vector<UINT>                s_vTotalRankToPair;         // index array for total results: [a]=b -> at rank 'a' is globalpair 'b'
+static std::vector<UINT>                s_vTotalPairToRank;         // index array for total results: [a]=b -> globalpair 'a' has rank 'b'
+static std::vector<TopsPerGame>         s_vGameTops;                // max points per game for NS/EW
 
-static CalcScore::FS                    svFrequencyInfo;        // combined frq table for all games
-static std::vector<std::vector<wxString> > svFrqstringTable;    // for each (internal) gamenr its string representation
+static CalcScore::FS                    s_vFrequencyInfo;           // combined frq table for all games
+static std::vector<std::vector<wxString> > s_vFrqstringTable;       // for each (internal) gamenr its string representation
 
 static void AddHeader(MyTextFile& a_file);
 static bool IsCombiCandidate (UINT sessionPair);    // true, if pair plays against 'absent pair'
@@ -108,9 +108,11 @@ static void GetSessionCorrectionStrings(UINT a_sessionPair, wxString& a_sCombiRe
 {   // get combi/corrections for a sessionPair as strings
     a_sCombiResult.Clear();
     a_sCorrectionResult.Clear();
-    if ( !smCorSessionValidated.size() ) return;           // no results, if no corrections at all
-    auto it = smCorSessionValidated.find(a_sessionPair);
-    if ( it == smCorSessionValidated.end() ) return;       // no results, if pair has no corrections
+    if ( !s_mCorSessionValidated.size() )
+        return; // no results, if no corrections at all
+    auto it = s_mCorSessionValidated.find(a_sessionPair);
+    if ( it == s_mCorSessionValidated.end() )
+        return; // no results, if pair has no corrections
 
     bool bButler = cfg::GetButler();
     if ( it->second.games )
@@ -137,12 +139,12 @@ static void GetSessionCorrectionStrings(UINT a_sessionPair, wxString& a_sCombiRe
 
 static void InitPairToRankVector(bool a_bSession)
 {
-    #define SCORE(pair) (a_bSession ? svSessionResult[pair].procentScore : svTotalResult[pair].totalN)
-          std::vector<UINT>& pairToRank = a_bSession ? svSessionPairToRank : svTotalPairToRank;
-    const std::vector<UINT>& rankToPair = a_bSession ? svSessionRankToPair : svTotalRankToPair;
+    #define SCORE(pair) (a_bSession ? s_vSessionResult[pair].procentScore   : s_vTotalResult[pair].totalN)
+          std::vector<UINT>& pairToRank = a_bSession ? s_vSessionPairToRank : s_vTotalPairToRank;
+    const std::vector<UINT>& rankToPair = a_bSession ? s_vSessionRankToPair : s_vTotalRankToPair;
     pairToRank.clear();
     pairToRank.resize(rankToPair.size());
-    for (UINT rank = 1; rank < rankToPair.size(); ++rank)
+    for ( UINT rank = 1; rank < rankToPair.size(); ++rank )
     {   // todo? if pair == 0, skip this?
         UINT pair       = rankToPair[rank];
         Fdp  score      = SCORE(pair);
@@ -233,7 +235,7 @@ void CalcScore::ShowChoice()
 {
     wxString title;
     const MyTextFile* pTextFile;
-    switch (m_choiceResult)
+    switch ( m_choiceResult )
     {
         case ResultSession:
             title = _("Session result");
@@ -282,7 +284,7 @@ void CalcScore::ShowChoice()
     m_pListBox->InsertColumn(0, title); // only one column
 
     auto lineCount = (long)pTextFile->GetLineCount();
-    for (long line = 0 ; line < lineCount;  ++line)
+    for ( long line = 0 ; line < lineCount;  ++line )
     {
         m_pListBox->InsertItem(line, pTextFile->GetLine(line));
     }
@@ -302,17 +304,17 @@ void CalcScore::RefreshInfo()
     m_vChoices.push_back(ResultFrqTable);
     m_vChoices.push_back(ResultGroup);
     // now add dynamic parts
-    if ( cfg::GetActiveSession() != 0)
+    if ( cfg::GetActiveSession() != 0 )
     {
         choices.push_back(_("final"));
         m_vChoices.push_back(ResultTotal);
     }
     // club related parts
-    if (names::ExistSessionPairWithClub())
+    if ( names::ExistSessionPairWithClub() )
     {
         choices.push_back(_("club session"));
         m_vChoices.push_back(ResultClubSession);
-        if ( cfg::GetActiveSession() != 0)
+        if ( cfg::GetActiveSession() != 0 )
         {
             choices.push_back(_("club total"));
             m_vChoices.push_back(ResultClubTotal);
@@ -325,9 +327,9 @@ void CalcScore::RefreshInfo()
     const auto&     groupInfo = *cfg::GetGroupData();
     wxArrayString   pairNames;
 
-    for (const auto& it : groupInfo)
+    for ( const auto& it : groupInfo )
     {
-        for (auto pair = 1U; pair <= it.pairs; ++pair)
+        for ( auto pair = 1U; pair <= it.pairs; ++pair )
         {
             pairNames.push_back(names::PairnrSession2SessionText(pair+it.groupOffset));
         }
@@ -337,7 +339,7 @@ void CalcScore::RefreshInfo()
     m_pGameSelect->Init(score::GetNumberOfGames(), (UINT)(-1));
     cfg::FLushConfigs();            // write all to disk
     Layout();
-    if (FindBadGameData())
+    if ( FindBadGameData() )
     {   // show messagebox on top of the result
         CallAfter([this] {MyMessageBox(m_txtBadGameData, _("Error")); });
     }
@@ -346,16 +348,18 @@ void CalcScore::RefreshInfo()
 void CalcScore::PrintPage()
 {
     auto itemCount = m_pListBox->GetItemCount();
-    if (itemCount == 0) return;     // nothing to print
+    if ( itemCount == 0 )
+        return; // nothing to print
     wxListItem result;
     result.SetMask(wxLIST_MASK_TEXT);
     bool bResult        = m_pListBox->GetColumn(0, result); MY_UNUSED(bResult);
     wxString headerTxt  = result.GetText();
     bResult             = prn::BeginPrint(headerTxt); MY_UNUSED(bResult);
-    for (int line = 0; line < itemCount; ++line)
+    for ( int line = 0; line < itemCount; ++line )
     {
         wxString info = m_pListBox->GetItemText(line);
-        if (info.IsEmpty() || '\n' != *info.rbegin()) info += '\n';    // Last()== *info.rbegin()
+        if ( info.IsEmpty() || '\n' != *info.rbegin() )
+            info += '\n';   // Last()== *info.rbegin()
         prn::PrintLine(info);
     }
 
@@ -378,12 +382,12 @@ void CalcScore::BackupData()
     search.MakeLower();
     int itemCount = m_pListBox->GetItemCount();
     // wxString wxListCtrl::GetItemText 	( 	long  	item,  int  	col = 0   ) 		const
-    for (long ii = 1; ii <= itemCount; ++ii)
+    for ( long ii = 1; ii <= itemCount; ++ii )
     {
         long line = (ii + m_findPos) % itemCount;
         wxString fnd = m_pListBox->GetItemText(line, 0);
         fnd.MakeLower();
-        if (wxNOT_FOUND != m_pListBox->GetItemText(line, 0).MakeLower().Find(search))
+        if ( wxNOT_FOUND != m_pListBox->GetItemText(line, 0).MakeLower().Find(search) )
         {
             m_findPos= line;
             m_pListBox->Select(m_findPos);
@@ -395,11 +399,11 @@ void CalcScore::BackupData()
 
 void CalcScore::MergeFrqTables( FS_INFO& ns, const FS_INFO& ew) const
 {
-    for (const auto& itEW : ew)    // now merge ew into ns
+    for ( const auto& itEW : ew )   // now merge ew into ns
     {
         int nsScore  = score::ScoreEwToNs(itEW.score); // transform ew-score to a comparable ns-score
         auto itNS    = std::ranges::find_if(ns, [nsScore](const FrequencyState& fq){return nsScore == fq.score;});
-        if (itNS != ns.end())
+        if ( itNS != ns.end() )
         {
             itNS->pointsEW = itEW.points;  // already existing NS score, so just add EW points for this score
         }
@@ -418,21 +422,21 @@ void CalcScore::CalcSession()
 {
     m_maxGame = score::GetNumberOfGames();       // highest gamenr
 
-    svFrequencyInfo.clear();
-    svFrequencyInfo.resize(m_maxGame+1ULL);
-    svSessionResult.clear();
-    svSessionResult.resize(m_numberOfSessionPairs+1ULL);
-    svGameTops.resize(m_maxGame+1ULL);
-    if (m_bButler)
+    s_vFrequencyInfo.clear();
+    s_vFrequencyInfo.resize(m_maxGame+1ULL);
+    s_vSessionResult.clear();
+    s_vSessionResult.resize(m_numberOfSessionPairs+1ULL);
+    s_vGameTops.resize(m_maxGame+1ULL);
+    if ( m_bButler )
     {
-        svDatumScores.resize(m_maxGame+1ULL);
-        svButlerFkw.clear();
-        svButlerFkw.resize(m_maxGame + 1ULL);
+        s_vDatumScores.resize(m_maxGame+1ULL);
+        s_vButlerFkw.clear();
+        s_vButlerFkw.resize(m_maxGame + 1ULL);
     }
-    for (UINT game=1; game <= m_maxGame; ++game)            // calc all games
+    for ( UINT game=1; game <= m_maxGame; ++game )  // calc all games
     {
         const auto NS_SCORE = true;
-        if (m_bButler)
+        if ( m_bButler )
         {
             CalcGameButler (game,  NS_SCORE);
             CalcGameButler (game, !NS_SCORE);
@@ -441,9 +445,9 @@ void CalcScore::CalcSession()
         else
         {
             FS_INFO fsInfoEW;
-            CalcGamePercent(game,  NS_SCORE, svFrequencyInfo[game]);    // first scores for NS, add results to 'svSessionResult'
+            CalcGamePercent(game,  NS_SCORE, s_vFrequencyInfo[game]);   // first scores for NS, add results to 's_vSessionResult'
             CalcGamePercent(game, !NS_SCORE, fsInfoEW);                 // then for EW
-            MergeFrqTables( svFrequencyInfo[game], fsInfoEW);           // merge ew to main table frequencyInfo
+            MergeFrqTables( s_vFrequencyInfo[game], fsInfoEW);          // merge ew to main table frequencyInfo
         }
     }
 
@@ -451,18 +455,19 @@ void CalcScore::CalcSession()
     SaveSessionResults();
     SaveGroupResult();
     SaveFrequencyTable();
-    score::WriteSessionRank(svSessionRankToPair);
+    score::WriteSessionRank(s_vSessionRankToPair);
     SaveSessionResultShort();
     CalcClub(false);        // club-result for this session
 }   // CalcSession()
 
 void CalcScore::InitializeAndCalcScores()
 {
-    if (!ConfigChanged()) return;
+    if ( !ConfigChanged() )
+        return;
     names::InitializePairNames();                   // get all nameinfo
     cor::InitializeCorrections();                   //   and needed corrections
-    spvGameSetData  = score::GetScoreData();        //      and scores
-    ValidateSessionCorrections(cor::GetCorrectionsSession());   // ouput in 'smCorSessionValidated'
+    s_pvGameSetData = score::GetScoreData();        //      and scores
+    ValidateSessionCorrections(cor::GetCorrectionsSession());   // ouput in 's_mCorSessionValidated'
 
     CalcSession();
     CalcTotal();
@@ -470,14 +475,15 @@ void CalcScore::InitializeAndCalcScores()
 
 void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
 {
-    auto sets = (UINT)((*spvGameSetData)[game].size());
-    if (sets == 0) return;      // nothing to do, not played yet
+    auto sets = (UINT)((*s_pvGameSetData)[game].size());
+    if ( sets == 0 )
+        return; // nothing to do, not played yet
 
     UINT  adjustedScoreCount = 0;
     std::vector<int> tmpScores;
-    for ( const auto& it : (*spvGameSetData)[game])
+    for ( const auto& it : (*s_pvGameSetData)[game] )
     {
-        if (it.pairNS > m_numberOfSessionPairs || it.pairEW > m_numberOfSessionPairs)
+        if ( it.pairNS > m_numberOfSessionPairs || it.pairEW > m_numberOfSessionPairs )
             continue;   // just ignore scores with a bad pair involved
         if ( it.scoreNS == SCORE_NP || it.scoreEW == SCORE_NP )
             continue;   // ignore explicitly non-played games!
@@ -485,7 +491,7 @@ void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
         int score = bNs ? it.scoreNS : it.scoreEW;
         score = score::Score2Real(score);   //we only want/need real scores or %
         tmpScores.push_back(score);
-        if (score::IsProcent(score))      // determine adjustedscore count
+        if ( score::IsProcent(score) )      // determine adjustedscore count
             ++adjustedScoreCount;
     }
 
@@ -493,16 +499,16 @@ void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
     UINT normalTop      = (sets-1)*2;
     UINT top            = normalTop-adjustedScoreCount;
     UINT neubergCount   = 0;
-    if (cfg::GetNeuberg())
+    if ( cfg::GetNeuberg() )
     {
         neubergCount = sets-adjustedScoreCount;    // nr of comparable scores
         top -= adjustedScoreCount;                 // == sets-1-adjustedScoreCount*2
     }
 
-    if (bNs)
-        svGameTops[game].topNS = normalTop;
+    if ( bNs )
+        s_vGameTops[game].topNS = normalTop;
     else
-        svGameTops[game].topEW = normalTop;
+        s_vGameTops[game].topEW = normalTop;
 
     size_t maxIndex = tmpScores.size();
     if ( maxIndex == 0 )
@@ -512,7 +518,7 @@ void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
     {   // determine the different scores and there appearance count
         int score = tmpScores[index++];
         UINT equalCount = 1;
-        while (index < maxIndex && score == tmpScores[index] )
+        while ( index < maxIndex && score == tmpScores[index] )
         {
             ++equalCount;
             ++index;
@@ -527,7 +533,7 @@ void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
         * All normal operations are available: conversion from/to string, * / + - and all comparison operators.
         */
         Fdp points;
-        if (score::IsProcent(score))
+        if ( score::IsProcent(score) )
         {
             points = normalTop*Fdp::FromProcent(score::Procentscore2Procent(score));
             if ( cfg::GetNeuberg() )
@@ -546,39 +552,40 @@ void CalcScore::CalcGamePercent(UINT game, bool bNs, FS_INFO& fsInfo)
         fs.points=points;
         fs.pointsEW = 0;
         fsInfo.push_back(fs);
-    } while (index  < maxIndex);
+    } while ( index < maxIndex );
 
     // now update scores for pairs
 
-    for ( const auto& it : (*spvGameSetData)[game])
+    for ( const auto& it : (*s_pvGameSetData)[game] )
     {   // update totals for each pair that played this game
-        if (it.pairNS > m_numberOfSessionPairs || it.pairEW > m_numberOfSessionPairs)
+        if ( it.pairNS > m_numberOfSessionPairs || it.pairEW > m_numberOfSessionPairs )
             continue;   // just ignore scores with a bad pair involved
         UINT pair = bNs ? it.pairNS  : it.pairEW;
         int score = bNs ? it.scoreNS : it.scoreEW;
         score = score::Score2Real(score);   //we only want/need real scores or %
-        svSessionResult[pair].maxScore += normalTop;
-        svSessionResult[pair].nrOfGames++;
+        s_vSessionResult[pair].maxScore += normalTop;
+        s_vSessionResult[pair].nrOfGames++;
         auto pScore = std::ranges::find_if(fsInfo, [score](const auto& it){return score == it.score;});
         if ( pScore != fsInfo.end() ) // should always be the case....
-            svSessionResult[pair].points += pScore->points;
+            s_vSessionResult[pair].points += pScore->points;
     }
 }   // CalcGamePercent()
 
 void CalcScore::CalcGameButler(UINT a_game, bool a_bNs) const
 {
-    auto sets = (UINT)((*spvGameSetData)[a_game].size());
-    if (sets == 0) return;      // nothing to do, not played yet
+    auto sets = (UINT)((*s_pvGameSetData)[a_game].size());
+    if ( sets == 0 )
+        return; // nothing to do, not played yet
 
     std::vector<int> tmpScores;
-    for ( const auto& it : (*spvGameSetData)[a_game])
+    for ( const auto& it : (*s_pvGameSetData)[a_game] )
     {
-        if (it.pairNS > m_numberOfSessionPairs || it.pairEW > m_numberOfSessionPairs)
+        if ( it.pairNS > m_numberOfSessionPairs || it.pairEW > m_numberOfSessionPairs )
             continue;   // just ignore scores with a bad pair involved
         if ( it.scoreNS == SCORE_NP || it.scoreEW == SCORE_NP )
             continue;   // ignore explicitly non-played games!
         int score = a_bNs ? it.scoreNS : it.scoreEW;
-        if (!score::IsProcent(score))
+        if ( !score::IsProcent(score) )
         {   //we only want/need real scores, percent-scores will be converted to imps lateron
             score = score::Score2Real(score);
             tmpScores.push_back(score);
@@ -588,13 +595,14 @@ void CalcScore::CalcGameButler(UINT a_game, bool a_bNs) const
     std::ranges::sort(tmpScores, [](int a, int b){return a > b;});  // from high to low
 
     wxString log = FMT("butler: %s, game=%u, scoreCount=%u", a_bNs?"NS":"EW", a_game, (UINT)tmpScores.size());
-    if (tmpScores.size() > sButlerMinimumScores + 2)
-    {   // want at least 'sButlerMinimumScores' scores after removal of highest/lowest scores
+    if ( tmpScores.size() > s_iButlerMinimumScores + 2 )
+    {   // want at least 's_iButlerMinimumScores' scores after removal of highest/lowest scores
         // We ALWAYS round-up! So 10 scores -> 1, 11 -> 2 scores to remove
-        auto removeCount = (tmpScores.size()*sButlerRemoveScoresPercent+90)/100;
-        if (removeCount == 0) removeCount = 1;
+        auto removeCount = (tmpScores.size()*s_iButlerRemoveScoresPercent+90)/100;
+        if ( removeCount == 0 )
+            removeCount = 1;
         log += FMT(", removeCount = %u", (UINT)removeCount);
-        for (; removeCount; --removeCount)
+        for ( ; removeCount; --removeCount )
         {
             tmpScores.pop_back();
             tmpScores.erase(tmpScores.begin());
@@ -606,36 +614,40 @@ void CalcScore::CalcGameButler(UINT a_game, bool a_bNs) const
     if ( count == 0 )
         return;    // no scores ??, return to prevent outOfRange vector access or divide zero
     int sum = 0;
-    for (auto it : tmpScores) sum += it;
+    for ( auto it : tmpScores )
+        sum += it;
     int datumScore = sum/count; // remark: DON'T round here! -> 4.9 -> 4 -> 0 and not 4.9 -> 5 -> 10 as datum score!
     datumScore = ((datumScore + ((datumScore<0)?-5:+5))/10)*10;   //round to nearest multiple of 10
     log += FMT(", datumScore = %i", datumScore);
 //    MyLogDebug(log);
-    if (a_bNs)
-        svDatumScores[a_game].dsNS = datumScore;
+    if ( a_bNs )
+        s_vDatumScores[a_game].dsNS = datumScore;
     else
-        svDatumScores[a_game].dsEW = datumScore;
+        s_vDatumScores[a_game].dsEW = datumScore;
     // now determine the mps for all boards/players
-    for ( const auto& it : (*spvGameSetData)[a_game])
+    for ( const auto& it : (*s_pvGameSetData)[a_game] )
     {
-        if (it.pairNS > m_numberOfSessionPairs || it.pairEW > m_numberOfSessionPairs)
+        if ( it.pairNS > m_numberOfSessionPairs || it.pairEW > m_numberOfSessionPairs )
             continue;   // just ignore scores with a bad pair involved
         auto pair = a_bNs ? it.pairNS  : it.pairEW;
         auto score= a_bNs ? it.scoreNS : it.scoreEW;
 
-        svSessionResult[pair].butlerMp += ButlerGetMpsFromScore(score, datumScore); // %scores are handled in there
-        svSessionResult[pair].nrOfGames++;
+        s_vSessionResult[pair].butlerMp += ButlerGetMpsFromScore(score, datumScore); // %scores are handled in there
+        s_vSessionResult[pair].nrOfGames++;
     }
 }   // CalcGameButler()
 
 static wxString DottedName(const wxString& a_name)
 {   // return string with size MAX_NAME_SIZE and a_name padded with " ."
     char dots[]=" . . . . . . . . . . . . . . . . . . . . . . . . .";
-    size_t nLen = a_name.Len(); if (nLen >= cfg::MAX_NAME_SIZE) return a_name;
+    size_t nLen = a_name.Len();
+    if ( nLen >= cfg::MAX_NAME_SIZE )
+        return a_name;
     size_t dLen = sizeof(dots);
     size_t neededChars = cfg::MAX_NAME_SIZE - nLen;
     wxString dottedName = a_name+&dots[dLen-neededChars-1];
-    if (dottedName[nLen] == '.') dottedName[nLen] = ' ';
+    if ( dottedName[nLen] == '.' )
+        dottedName[nLen] = ' ';
     return dottedName;
 }   // DottedName()
 
@@ -649,12 +661,13 @@ struct PlayerInfo
 
 bool GetPlayerInfo(UINT a_pair, UINT a_game, PlayerInfo& a_playerInfo)
 {   // get info for player/game of the current session
-    auto begin  = (*spvGameSetData)[a_game].begin();
-    auto end    = (*spvGameSetData)[a_game].end();
+    auto begin  = (*s_pvGameSetData)[a_game].begin();
+    auto end    = (*s_pvGameSetData)[a_game].end();
     auto it     = std::find_if (begin, end,
         [a_pair](const auto& setInfo){return setInfo.pairNS == a_pair || setInfo.pairEW == a_pair;});
 
-    if (it == end) return false;
+    if ( it == end )
+        return false;
     a_playerInfo.bHasPlayed = true;
     bool bIsNS = it->pairNS == a_pair;
     a_playerInfo.bIsNS      = bIsNS;
@@ -665,7 +678,7 @@ bool GetPlayerInfo(UINT a_pair, UINT a_game, PlayerInfo& a_playerInfo)
 
 static Fdp GetGameResultButler(UINT game, bool a_bNs, int a_score)
 {
-    int datumScore = a_bNs ? svDatumScores[game].dsNS : svDatumScores[game].dsEW;
+    int datumScore = a_bNs ? s_vDatumScores[game].dsNS : s_vDatumScores[game].dsEW;
     Fdp gameResult = ButlerGetMpsFromScore(a_score, datumScore);
     return gameResult;
 }   // GetGameResultButler()
@@ -675,10 +688,11 @@ static Fdp GetGameResultPercent(UINT game, bool a_bNs, int a_score)
     Fdp gameResult;
     int score = a_bNs ? a_score : score::ScoreEwToNs(a_score);
     score = score::Score2Real(score);
-    auto end2 = svFrequencyInfo[game].end();
-    auto it2  = std::find_if(svFrequencyInfo[game].begin(), end2,
+    auto end2 = s_vFrequencyInfo[game].end();
+    auto it2  = std::find_if(s_vFrequencyInfo[game].begin(), end2,
         [score](const auto& info){return info.score == score;});
-    if (it2 != end2) gameResult = a_bNs ? it2->points : it2->pointsEW;
+    if ( it2 != end2 )
+        gameResult = a_bNs ? it2->points : it2->pointsEW;
     return gameResult;
 }   // GetGameResultPercent()
 
@@ -686,20 +700,22 @@ Fdp CalcScore::GetSetResult(UINT pair, UINT firstGame, UINT nrOfGames, UINT* a_p
 {
     Fdp setResult;
 
-    if (a_pGamesPlayed) *a_pGamesPlayed = 0;    // nr of games played for the requested count
-    for (UINT ii = 0; ii < nrOfGames; ++ii)
+    if ( a_pGamesPlayed )
+        *a_pGamesPlayed = 0;    // nr of games played for the requested count
+    for ( UINT ii = 0; ii < nrOfGames; ++ii )
     {
         UINT game = firstGame+ii;
-        auto begin = (*spvGameSetData)[game].begin();
-        auto end   = (*spvGameSetData)[game].end();
+        auto begin = (*s_pvGameSetData)[game].begin();
+        auto end   = (*s_pvGameSetData)[game].end();
         auto it = std::find_if (begin, end,
             [pair](const auto& setInfo){return setInfo.pairNS == pair || setInfo.pairEW == pair;});
-        if (it != end)
+        if ( it != end )
         {   // pair has played game, so get its matchpoints
             bool bNs  = it->pairNS == pair;
             int score = bNs ? it->scoreNS : it->scoreEW;
             setResult += m_bButler ? GetGameResultButler(game, bNs, score) : GetGameResultPercent(game, bNs, score);
-            if (a_pGamesPlayed) (*a_pGamesPlayed )++;
+            if ( a_pGamesPlayed )
+                (*a_pGamesPlayed )++;
         }
     }
     return setResult;
@@ -716,7 +732,8 @@ void CalcScore::SaveGroupResult()
     m_txtFileResultGroup.AddLine(ES);
 
     wxString tmp;
-    if (session) tmp.Printf(_(", session %u"), session);
+    if ( session )
+        tmp.Printf(_(", session %u"), session);
     tmp = FMT(_("Group-result of match '%s'%s"), cfg::GetDescription(),  tmp);
     m_txtFileResultGroup.AddLine(tmp);
     m_txtFileResultGroup.AddLine(ES);
@@ -735,8 +752,8 @@ void CalcScore::SaveGroupResult()
               {SIZE_GRP_PAIR         , FormBuilder::Align::RIGHT       , ES, true}
             , {SIZE_GRP_NAME         , FormBuilder::Align::LEFT        , ES, true}
                 // setinfo added later
-            , {SIZE_GRP_COMBI        , FormBuilder::Align::CENTER      , ES, sbHaveValidCombi}
-            , {SIZE_GRP_CORRECTION   , FormBuilder::Align::RIGHT_SPACE1, ES, sbHaveValidNormal}
+            , {SIZE_GRP_COMBI        , FormBuilder::Align::CENTER      , ES, s_bHaveValidCombi}
+            , {SIZE_GRP_CORRECTION   , FormBuilder::Align::RIGHT_SPACE1, ES, s_bHaveValidNormal}
             , {SIZE_GRP_GAMES        , FormBuilder::Align::RIGHT_SPACE2, ES, true}
             , {SIZE_GRP_TOTAL        , FormBuilder::Align::RIGHT       , ES, true}
             , {SIZE_GRP_SCORE        , FormBuilder::Align::RIGHT       , ES, true}
@@ -754,7 +771,7 @@ void CalcScore::SaveGroupResult()
         , {FormBuilder::Align::LEFT   , ES, _("score"  )}
     };
 
-    for (UINT ii = 0; ii < sets; ++ii)
+    for ( UINT ii = 0; ii < sets; ++ii )
     {   // add set-info for form and header
         wxString tmp2 = FMT("%u-%u", offsetFirstGame + setSize * ii + 1, offsetFirstGame + setSize * ii + setSize);
         headerInfo.emplace(headerInfo.begin() + GRP_INSERT_POS + ii, FormBuilder::Align::CENTER, ES, tmp2);
@@ -767,11 +784,11 @@ void CalcScore::SaveGroupResult()
     wxString tmp2 = group.CreateHeader(headerInfo);
     tmp2 += " " + (m_bButler ? _("(imps/game)") : wxString("(%)"));
     m_txtFileResultGroup.AddLine(tmp2);
-    for (UINT pair=1; pair <= m_maxPair; ++pair)
+    for ( UINT pair=1; pair <= m_maxPair; ++pair )
     {
-        if (svSessionResult[pair].nrOfGames == 0)
+        if ( s_vSessionResult[pair].nrOfGames == 0 )
         {
-            if (cfg::IsSessionPairAbsent(pair))
+            if ( cfg::IsSessionPairAbsent(pair) )
                 tmp.Printf("%*s --> %s", (int)SIZE_GRP_PAIR, names::PairnrSession2SessionText(pair,true),  _("absent"));
             else
                 tmp.Printf("%*s %s --> %s", (int)SIZE_GRP_PAIR, names::PairnrSession2SessionText(pair), names::PairnrSession2GlobalText(pair), _("NOT PLAYED"));  // ???? not possible if session ready!
@@ -780,11 +797,11 @@ void CalcScore::SaveGroupResult()
         }
         std::vector<wxString> rowInfo = {names::PairnrSession2SessionText(pair), DottedName(names::PairnrSession2GlobalText(pair))};
 
-        for (UINT ii = 0; ii < sets; ++ii)
+        for ( UINT ii = 0; ii < sets; ++ii )
         {
             UINT gamesPlayed = 0;
             Fdp points = GetSetResult(pair, offsetFirstGame + setSize * ii + 1, setSize, &gamesPlayed);
-            if (gamesPlayed)    // if at least played once in this set, show score
+            if ( gamesPlayed )  // if at least played once in this set, show score
                 rowInfo.push_back( points.AsString1E() );
             else
                 rowInfo.emplace_back("-----");
@@ -795,9 +812,9 @@ void CalcScore::SaveGroupResult()
         GetSessionCorrectionStrings(pair, combi, correction);
         rowInfo.push_back(combi);
         rowInfo.push_back(correction);
-        rowInfo.push_back(U2String(svSessionResult[pair].nrOfGames));
-        rowInfo.push_back(m_bButler ? svSessionResult[pair].butlerMp.AsString() : svSessionResult[pair].points.AsString1E());
-        rowInfo.push_back(svSessionResult[pair].procentScore.AsString2F());
+        rowInfo.push_back(U2String(s_vSessionResult[pair].nrOfGames));
+        rowInfo.push_back(m_bButler ? s_vSessionResult[pair].butlerMp.AsString() : s_vSessionResult[pair].points.AsString1E());
+        rowInfo.push_back(s_vSessionResult[pair].procentScore.AsString2F());
         m_txtFileResultGroup.AddLine(group.CreateRow(rowInfo));
     }
 
@@ -824,8 +841,8 @@ void CalcScore::SaveSessionResultsProcent()
         , {SIZE_RP_TOTAL      , FormBuilder::Align::RIGHT       , ES , true}
         , {SIZE_RP_MAX        , FormBuilder::Align::RIGHT       , ES , true}
         , {SIZE_RP_SCORE      , FormBuilder::Align::RIGHT       , '%', true}
-        , {SIZE_RP_COMBI      , FormBuilder::Align::CENTER      , ES , sbHaveValidCombi}
-        , {SIZE_RP_CORRECTION , FormBuilder::Align::RIGHT_SPACE1, ES , sbHaveValidNormal}
+        , {SIZE_RP_COMBI      , FormBuilder::Align::CENTER      , ES , s_bHaveValidCombi}
+        , {SIZE_RP_CORRECTION , FormBuilder::Align::RIGHT_SPACE1, ES , s_bHaveValidNormal}
         , {SIZE_RP_GROUPRESULT, FormBuilder::Align::LEFT        , ES , true}
     };
 
@@ -839,7 +856,7 @@ void CalcScore::SaveSessionResultsProcent()
         , {FormBuilder::Align::RIGHT , ' ', _("score"   )}
         , {FormBuilder::Align::RIGHT , ES , _("combi"   )}
         , {FormBuilder::Align::RIGHT , ES , _("corr."   )}
-        , {FormBuilder::Align::LEFT  , ES , GetGroupResultString(0, &svSessionRankToPair, GROUPRESULT_SESSION)}
+        , {FormBuilder::Align::LEFT  , ES , GetGroupResultString(0, &s_vSessionRankToPair, GROUPRESULT_SESSION)}
     };
 
     FormBuilder percentResult(formInfo);
@@ -848,13 +865,14 @@ void CalcScore::SaveSessionResultsProcent()
     m_txtFileResultSession.AddLine(tmp);m_txtFileResultOnName.AddLine(tmp);
     auto startLine = (UINT)m_txtFileResultSession.GetLineCount();    //from here the pairinfo is addded
     // pre-create empty lines for result on name-order
-    for (UINT lc = 1; lc <= m_maxPair;++lc) m_txtFileResultOnName.AddLine(ES);
+    for ( UINT lc = 1; lc <= m_maxPair;++lc )
+        m_txtFileResultOnName.AddLine(ES);
 
-    for (UINT rank=1; rank < svSessionRankToPair.size(); ++rank)
+    for ( UINT rank=1; rank < s_vSessionRankToPair.size(); ++rank )
     {
-        UINT pair   = svSessionRankToPair[rank];
-        Fdp  score  = svSessionResult[pair].procentScore;
-        if (svSessionResult[pair].maxScore == 0)
+        UINT pair   = s_vSessionRankToPair[rank];
+        Fdp  score  = s_vSessionResult[pair].procentScore;
+        if ( s_vSessionResult[pair].maxScore == 0 )
             continue;                   // pair didn't play
 
         wxString combi;
@@ -862,11 +880,11 @@ void CalcScore::SaveSessionResultsProcent()
         GetSessionCorrectionStrings(pair, combi, correction);
         std::vector<wxString> rowInfo =
         {
-              U2String(svSessionPairToRank[pair])
+              U2String(s_vSessionPairToRank[pair])
             , names::PairnrSession2SessionText(pair)
             , DottedName(names::PairnrSession2GlobalText(pair))
-            , svSessionResult[pair].points.AsString1E()
-            , U2String(svSessionResult[pair].maxScore)
+            , s_vSessionResult[pair].points.AsString1E()
+            , U2String(s_vSessionResult[pair].maxScore)
             , score.AsString2F()
             , combi
             , correction
@@ -898,8 +916,8 @@ void CalcScore::SaveSessionResultsButler()
         , {SIZE_RI_IMPS       , FormBuilder::Align::RIGHT       , ES , true}
         , {SIZE_RI_GAMES      , FormBuilder::Align::RIGHT_SPACE2, ES , true}
         , {SIZE_RI_SCORE      , FormBuilder::Align::RIGHT       , ES , true}
-        , {SIZE_RI_COMBI      , FormBuilder::Align::CENTER      , ES , sbHaveValidCombi}
-        , {SIZE_RI_CORRECTION , FormBuilder::Align::RIGHT_SPACE1, ES , sbHaveValidNormal}
+        , {SIZE_RI_COMBI      , FormBuilder::Align::CENTER      , ES , s_bHaveValidCombi}
+        , {SIZE_RI_CORRECTION , FormBuilder::Align::RIGHT_SPACE1, ES , s_bHaveValidNormal}
         , {SIZE_RI_GROUPRESULT, FormBuilder::Align::LEFT        , ES , true}
     };
 
@@ -913,7 +931,7 @@ void CalcScore::SaveSessionResultsButler()
         , {FormBuilder::Align::RIGHT , ES , _("score"   )}
         , {FormBuilder::Align::RIGHT , ES , _("combi"   )}
         , {FormBuilder::Align::RIGHT , ES , _("corr."   )}
-        , {FormBuilder::Align::LEFT  , ES , GetGroupResultString(0, &svSessionRankToPair, GROUPRESULT_SESSION)}
+        , {FormBuilder::Align::LEFT  , ES , GetGroupResultString(0, &s_vSessionRankToPair, GROUPRESULT_SESSION)}
     };
 
     FormBuilder impsResult(formInfo);
@@ -922,13 +940,14 @@ void CalcScore::SaveSessionResultsButler()
     m_txtFileResultSession.AddLine(tmp);m_txtFileResultOnName.AddLine(tmp);
     auto startLine = m_txtFileResultSession.GetLineCount();    //from here the pairinfo is addded
     // pre-create empty lines for result on name-order
-    for (UINT lc = 1; lc <= m_maxPair;++lc) m_txtFileResultOnName.AddLine(ES);
+    for ( UINT lc = 1; lc <= m_maxPair;++lc )
+        m_txtFileResultOnName.AddLine(ES);
 
-    for (UINT rank=1; rank < svSessionRankToPair.size(); ++rank)
+    for ( UINT rank=1; rank < s_vSessionRankToPair.size(); ++rank )
     {
-        UINT pair   = svSessionRankToPair[rank];
-        Fdp  score  = svSessionResult[pair].mpPerGame;
-        if (svSessionResult[pair].nrOfGames == 0)
+        UINT pair   = s_vSessionRankToPair[rank];
+        Fdp  score  = s_vSessionResult[pair].mpPerGame;
+        if ( s_vSessionResult[pair].nrOfGames == 0 )
             continue;                   // pair didn't play
 
         wxString combi;
@@ -936,11 +955,11 @@ void CalcScore::SaveSessionResultsButler()
         GetSessionCorrectionStrings(pair, combi, correction);
         std::vector<wxString> rowInfo =
         {
-              U2String(svSessionPairToRank[pair])
+              U2String(s_vSessionPairToRank[pair])
             , names::PairnrSession2SessionText(pair)
             , DottedName(names::PairnrSession2GlobalText(pair))
-            , svSessionResult[pair].butlerMp.AsString()
-            , U2String(svSessionResult[pair].nrOfGames)
+            , s_vSessionResult[pair].butlerMp.AsString()
+            , U2String(s_vSessionResult[pair].nrOfGames)
             , score.AsString2F()
             , combi
             , correction
@@ -961,7 +980,7 @@ void CalcScore::SaveSessionResults()
     AddHeader(m_txtFileResultOnName);
     m_txtFileResultSession.AddLine(ES); m_txtFileResultOnName.AddLine(ES);
 
-    if (m_bButler)
+    if ( m_bButler )
         SaveSessionResultsButler();
     else
         SaveSessionResultsProcent();
@@ -985,7 +1004,7 @@ long CalcScore::NeubergPoints(long points, UINT gameCount, UINT comparableCount)
     long nbpoints;
     long temp;
     // input 'points' are the 'real' points, return value = points*10: so 10.1 --> 101
-    switch (comparableCount)
+    switch ( comparableCount )
     {
     case 2: // (points/10.0+1.1)*(gameCount-1);
         nbpoints = (points+11L)*(gameCount-1);
@@ -996,9 +1015,9 @@ long CalcScore::NeubergPoints(long points, UINT gameCount, UINT comparableCount)
     default:// (points+1)*gameCount/comparable - 1;
         temp = 100L*(points+1)*gameCount;
         nbpoints = temp/comparableCount - 100L;
-        if ((temp % comparableCount) == 0)  //multiples!
-            if (((temp/comparableCount) % 10) == 5) // x.x5!!!
-                if (nbpoints > 100L*((long)gameCount-1)) //above medium
+        if ( (temp % comparableCount) == 0 )                //multiples!
+            if ( ((temp/comparableCount) % 10) == 5 )       // x.x5!!!
+                if ( nbpoints > 100L*((long)gameCount-1) )  //above medium
                     nbpoints -= 5;  // ?.?5 --> ?.?0
                                     //above medium: medium multiples of .05 get a cutoff!
         nbpoints = (nbpoints+5)/10; //round to 1 digit after dp
@@ -1011,69 +1030,69 @@ void CalcScore::ApplySessionCorrections(void)
 {
     m_maxPair = 1;
 
-    for (UINT pair = 1; pair < svSessionResult.size(); ++pair)
+    for ( UINT pair = 1; pair < s_vSessionResult.size(); ++pair )
     {
-        if (svSessionResult[pair].nrOfGames == 0)  // valid for percent AND butler score
+        if ( s_vSessionResult[pair].nrOfGames == 0 )    // valid for percent AND butler score
             continue;    // pair did not play any game, so no corrections possible
-        if ( !m_bButler && svSessionResult[pair].maxScore == 0 )
+        if ( !m_bButler && s_vSessionResult[pair].maxScore == 0 )
             continue;   // ??? will get divide by zero: not enough data present
 
         Fdp     correctionProcent;
-        auto    it            = smCorSessionValidated.find(pair);
+        auto    it            = s_mCorSessionValidated.find(pair);
         Fdp     butlerCorImps;  // corrections in imps for butler
 
         m_maxPair = pair;
-        if (it != smCorSessionValidated.end())
+        if ( it != s_mCorSessionValidated.end() )
         {
             cor::CORRECTION_SESSION cs = it->second;
             // now handle the different types of correction
-            if (cs.correction)
+            if ( cs.correction )
             {   // some correction in 'mp' or '% '
-                if (cs.type == '%')
+                if ( cs.type == '%' )
                 {
                     correctionProcent = cs.correction;
-                    //butlerCorImps = cs.correction*sButlerImpsPer10Procent;
+                    //butlerCorImps = cs.correction*s_iButlerImpsPer10Procent;
                 }
                 else
                 {   // assume imps in % calculation. If butler, then .points is ignored...
-                    svSessionResult[pair].points += cs.correction;
+                    s_vSessionResult[pair].points += cs.correction;
                     butlerCorImps = cs.correction;
                 }
             }
 
-            if (cs.maxExtra)    // can ONLY be true, if no butler!
+            if ( cs.maxExtra )  // can ONLY be true, if no butler!
             {   // from a combi-table, calculated separately!
                 UINT combiTop  = 2 * (GetNumberOfRounds(pair) - 1);
                 UINT normalTop = cfg::GetNrOfSessionPairs() - 2 - 2;
                 Fdp  extra     = ((normalTop*cs.extra)/combiTop).Round(1);
                 int  maxExtra  = RoundLong(normalTop * (long)cs.maxExtra, combiTop);    // CodeQL
-                svSessionResult[pair].points   += extra;
-                svSessionResult[pair].maxScore += maxExtra;
+                s_vSessionResult[pair].points   += extra;
+                s_vSessionResult[pair].maxScore += maxExtra;
             }
             else
                 butlerCorImps += cs.extra;
 
-            svSessionResult[pair].nrOfGames += cs.games;
+            s_vSessionResult[pair].nrOfGames += cs.games;
         }   // end of correction calculation
 
         //  now all corrections are handled: mp and combinationtables are in (max)points, the '%' waits in scoreProcent
-        if (m_bButler)
+        if ( m_bButler )
         {
-            svSessionResult[pair].procentScore = // for now: too many things depend on it
-            svSessionResult[pair].mpPerGame = ((butlerCorImps + svSessionResult[pair].butlerMp)/ (int)svSessionResult[pair].nrOfGames).Round(2);
-            svSessionResult[pair].butlerMp += butlerCorImps;
+            s_vSessionResult[pair].procentScore =   // for now: too many things depend on it
+            s_vSessionResult[pair].mpPerGame = ((butlerCorImps + s_vSessionResult[pair].butlerMp)/ (int)s_vSessionResult[pair].nrOfGames).Round(2);
+            s_vSessionResult[pair].butlerMp += butlerCorImps;
         }
         else
-            svSessionResult[pair].procentScore = correctionProcent + ((100*svSessionResult[pair].points)/svSessionResult[pair].maxScore).Round(2);
+            s_vSessionResult[pair].procentScore = correctionProcent + ((100*s_vSessionResult[pair].points)/s_vSessionResult[pair].maxScore).Round(2);
     }
     m_maxPair = std::min(m_maxPair, m_numberOfSessionPairs);    // no more then we have active players!
-    svSessionRankToPair.resize(m_maxPair+1ULL);
-    std::iota (svSessionRankToPair.begin(), svSessionRankToPair.end(), 0); // Fill with 0, 1, ..., i.e. non-sorted! 0->0, 1->1 etc
-    std::sort(svSessionRankToPair.begin()+1, svSessionRankToPair.begin()+m_maxPair+1,
-        [](UINT left, UINT right){return svSessionResult[left].nrOfGames && svSessionResult[left].procentScore > svSessionResult[right].procentScore; });
-    UINT lastPair = svSessionRankToPair[m_maxPair];
-    if (svSessionResult[lastPair].nrOfGames == 0)
-        svSessionRankToPair[m_maxPair] = 0; // pair is absent, so no rank
+    s_vSessionRankToPair.resize(m_maxPair+1ULL);
+    std::iota (s_vSessionRankToPair.begin(), s_vSessionRankToPair.end(), 0);    // Fill with 0, 1, ..., i.e. non-sorted! 0->0, 1->1 etc
+    std::sort(s_vSessionRankToPair.begin()+1, s_vSessionRankToPair.begin()+m_maxPair+1,
+        [](UINT left, UINT right){return s_vSessionResult[left].nrOfGames && s_vSessionResult[left].procentScore > s_vSessionResult[right].procentScore; });
+    UINT lastPair = s_vSessionRankToPair[m_maxPair];
+    if ( s_vSessionResult[lastPair].nrOfGames == 0 )
+        s_vSessionRankToPair[m_maxPair] = 0;    // pair is absent, so no rank
     InitPairToRankVector(true);
 }   // ApplySessionCorrections()
 
@@ -1083,9 +1102,9 @@ void CalcScore::MakeFrequenceTable(UINT a_game, std::vector<wxString>& a_stringT
     wxString tmp;
     tmp.Printf("%s %u", _("game"), a_game + cfg::GetFirstGame() - 1);
     a_stringTable.push_back(tmp);
-    if (m_bButler)
+    if ( m_bButler )
     {
-        a_stringTable.push_back(FMT("%s %s: %i, %s: %i", _("datumscore"), _("NS"), svDatumScores[a_game].dsNS, _("EW"), svDatumScores[a_game].dsEW));
+        a_stringTable.push_back(FMT("%s %s: %i, %s: %i", _("datumscore"), _("NS"), s_vDatumScores[a_game].dsNS, _("EW"), s_vDatumScores[a_game].dsEW));
         // form definitions
         const size_t SIZE_FT_SCORE  (5);
         const size_t SIZE_FT_DELTA  (5);
@@ -1114,7 +1133,7 @@ void CalcScore::MakeFrequenceTable(UINT a_game, std::vector<wxString>& a_stringT
         FormBuilder frequencyTable(formInfo);
         tmp = frequencyTable.CreateHeader(headerInfo);
         a_stringTable.push_back(tmp);
-        for (auto it = svButlerFkw[a_game].rbegin(); it != svButlerFkw[a_game].rend(); ++it)
+        for ( auto it = s_vButlerFkw[a_game].rbegin(); it != s_vButlerFkw[a_game].rend(); ++it )
         {   //scores high to low overview
             std::vector<wxString> rowInfo = {     score::ScoreToString(it->second.scoreNs)
                                                 , L2String(it->second.deltaNs)
@@ -1148,11 +1167,11 @@ void CalcScore::MakeFrequenceTable(UINT a_game, std::vector<wxString>& a_stringT
 
         FormBuilder frequencyTable(formInfo);
         a_stringTable.push_back(frequencyTable.CreateHeader(headerInfo));
-        std::vector<wxString> rowInfo = { _("top:"), U2String(svGameTops[a_game].topNS)+"  ", U2String(svGameTops[a_game].topEW)+"  "};
+        std::vector<wxString> rowInfo = { _("top:"), U2String(s_vGameTops[a_game].topNS)+"  ", U2String(s_vGameTops[a_game].topEW)+"  "};
         a_stringTable.push_back(frequencyTable.CreateRow(rowInfo));
 
-        const auto& frqInfo = svFrequencyInfo[a_game];
-        for (const auto& it : frqInfo)
+        const auto& frqInfo = s_vFrequencyInfo[a_game];
+        for ( const auto& it : frqInfo )
         {
             rowInfo = {score::ScoreToString(it.score), it.points.AsString1E(), it.pointsEW.AsString1E()};
             a_stringTable.push_back(frequencyTable.CreateRow(rowInfo));
@@ -1163,15 +1182,15 @@ void CalcScore::MakeFrequenceTable(UINT a_game, std::vector<wxString>& a_stringT
 void CalcScore::SaveFrequencyTable()
 {
     UINT maxGame = score::GetNumberOfGames();
-    svFrqstringTable.clear();
-    svFrqstringTable.resize(maxGame+1ULL);
+    s_vFrqstringTable.clear();
+    s_vFrqstringTable.resize(maxGame+1ULL);
     std::vector<size_t> tableSize;  // the size of each frq table
     tableSize.resize(maxGame+1ULL);
 
-    for (UINT game = 1; game <= maxGame; ++game)
+    for ( UINT game = 1; game <= maxGame; ++game )
     {   // fkw per game
-        MakeFrequenceTable(game, svFrqstringTable[game]);
-        tableSize[game] = svFrqstringTable[game].size();
+        MakeFrequenceTable(game, s_vFrqstringTable[game]);
+        tableSize[game] = s_vFrqstringTable[game].size();
     }
 
     m_txtFileFrqTable.MyCreate(cfg::ConstructFilename(cfg::EXT_FKW), MyTextFile::WRITE);
@@ -1181,28 +1200,28 @@ void CalcScore::SaveFrequencyTable()
     const UINT suNrOfFrqColumns = m_bButler ?  2 :  4;  // number of frq tables next to eachother
 
     // now add all tables in 'suNrOfFrqColumns' columns
-    for (UINT game = 1; game <= maxGame; game += suNrOfFrqColumns)
+    for ( UINT game = 1; game <= maxGame; game += suNrOfFrqColumns )
     {
         size_t maxLines = 0;
-        for (UINT ii = 0; ii < suNrOfFrqColumns && game + ii <= maxGame; ++ii)
+        for ( UINT ii = 0; ii < suNrOfFrqColumns && game + ii <= maxGame; ++ii )
         {
             maxLines = std::max(maxLines,tableSize[static_cast<size_t>(game)+ii]);
         }
 
-        if (linesOnPage + 2ULL + maxLines > cfg::GetLinesPerPage())
+        if ( linesOnPage + 2ULL + maxLines > cfg::GetLinesPerPage() )
         {   // doesn't fit on current page, so give a formfeed ('\f')
             m_txtFileFrqTable.AddLine('\f');
             linesOnPage = 0;
         }
         linesOnPage += 2ULL + maxLines;
         m_txtFileFrqTable.AddLine(ES); m_txtFileFrqTable.AddLine(ES);
-        for (size_t line = 0; line < maxLines; ++line)
+        for ( size_t line = 0; line < maxLines; ++line )
         {
             wxString tmp;
-            for (UINT ii = 0; ii < suNrOfFrqColumns && game + ii <= maxGame; ++ii)
+            for ( UINT ii = 0; ii < suNrOfFrqColumns && game + ii <= maxGame; ++ii )
             {
-//                tmp += line < tableSize[0ULL+game+ii] ? svFrqstringTable[0ULL+game+ii][line] : wxString('.',suFrqStringSize);
-                tmp += FMT("%-*s", suFrqStringSize,  (line < tableSize[0ULL+game+ii]) ? svFrqstringTable[0ULL + game + ii][line] : ES);
+//                tmp += line < tableSize[0ULL+game+ii] ? s_vFrqstringTable[0ULL+game+ii][line] : wxString('.',suFrqStringSize);
+                tmp += FMT("%-*s", suFrqStringSize,  (line < tableSize[0ULL+game+ii]) ? s_vFrqstringTable[0ULL + game + ii][line] : ES);
             }
             m_txtFileFrqTable.AddLine(tmp);
         }
@@ -1216,7 +1235,7 @@ static void AddHeader(MyTextFile& a_file)
     a_file.AddLine('\'' + cfg::GetDescription() + '\'');
 
     wxString tmp;
-    if (cfg::GetActiveSession() >= 1)
+    if ( cfg::GetActiveSession() >= 1 )
         tmp.Printf(_("result of session %u"), cfg::GetActiveSession());
     else
         tmp = _("result");
@@ -1225,16 +1244,16 @@ static void AddHeader(MyTextFile& a_file)
 
 void CalcScore::SaveSessionResultShort()
 {
-    if (cfg::GetActiveSession()==0)
+    if ( cfg::GetActiveSession()==0 )
         return;         // 0 ==> stand-alone session: this data would only be used in next session!
 
     cor::mCorrectionsEnd mce;    // transform data to write into same format as its being read
-    for (UINT pair = 1; pair < svSessionResult.size(); ++pair)          // save score of all pairs
+    for ( UINT pair = 1; pair < s_vSessionResult.size(); ++pair )       // save score of all pairs
     {
-        if (svSessionResult[pair].nrOfGames != 0)                       // check if pair has played
+        if ( s_vSessionResult[pair].nrOfGames != 0 )                    // check if pair has played
         {   // pair has played
             auto globalPair = names::PairnrSession2GlobalPairnr(pair);
-            if (globalPair == 0)
+            if ( globalPair == 0 )
             {   // can't store this result (for possible use in next session), because we do not know to whom it belongs...
                 // remark: no scoring-data lost!
                 wxString infoMsg = wxString::Format(_("Pair '%s' has played, but was NOT assigned to a global name"), names::PairnrSession2SessionText(pair));
@@ -1243,8 +1262,8 @@ void CalcScore::SaveSessionResultShort()
                 continue;
             }
             cor::CORRECTION_END ce;
-            ce.score = svSessionResult[pair].procentScore;
-            ce.games = svSessionResult[pair].nrOfGames;
+            ce.score = s_vSessionResult[pair].procentScore;
+            ce.games = s_vSessionResult[pair].nrOfGames;
             mce[globalPair] = ce;           // need global pairnr!
         }
     }
@@ -1254,44 +1273,46 @@ void CalcScore::SaveSessionResultShort()
 
 static Fdp GetResultScore(UINT a_sessionPairnr, bool a_bSession)
 {   // just for use in GetGroupResultString() to find equal scores (and so ranks)
-    if (a_bSession) return svSessionResult[a_sessionPairnr].procentScore;
-    return svTotalResult[names::PairnrSession2GlobalPairnr(a_sessionPairnr)].totalN;
+    if ( a_bSession )
+        return s_vSessionResult[a_sessionPairnr].procentScore;
+    return s_vTotalResult[names::PairnrSession2GlobalPairnr(a_sessionPairnr)].totalN;
 }   // GetResultScore()
 
 wxString CalcScore::GetGroupResultString(UINT a_sessionPair, const std::vector<UINT>* a_pRankIndex, bool a_bSession) const
 {
     // on init: 3 chars per group, empty if only one group:  " BL YE RE GR" for group BLue YEllow REd and GReen
     // for a pair: the rank in its group, a '.' if none   :  "  .  .  7  ." for pair being rank 7 in group 'RE'
-    static std::vector<UINT> svGroupRank;   // rank within group for sessionPair
+    static std::vector<UINT> s_vGroupRank;  // rank within group for sessionPair
     const auto& groupInfo  = *cfg::GetGroupData();
 
     if ( groupInfo.size() <= 1 || !cfg::GetGroupResult() ) return ES;   // if only 1 group, or cfg says no grp-info, then ES
 
     wxString result;
-    if (a_pRankIndex != nullptr)
-    {   // init of data: get string of all group characters and init svGroupRank
-        svGroupRank.clear();
-        svGroupRank.resize(a_pRankIndex->size(), 0);
-        for (const auto& itGroup : groupInfo)
+    if ( a_pRankIndex != nullptr )
+    {   // init of data: get string of all group characters and init s_vGroupRank
+        s_vGroupRank.clear();
+        s_vGroupRank.resize(a_pRankIndex->size(), 0);
+        for ( const auto& itGroup : groupInfo )
         {
             auto minPair = itGroup.groupOffset;
             auto maxPair = minPair + itGroup.pairs;
-            for (auto pair = minPair+1 ; pair <= maxPair; ++pair )  // so these are session-pairnumbers!
+            for ( auto pair = minPair+1 ; pair <= maxPair; ++pair ) // so these are session-pairnumbers!
             {   // determine rank in group
                 UINT rank           = 1;
                 UINT groupRank      = 1;
                 Fdp  previousScore  = -1;
-                for (auto rankPair : *a_pRankIndex)
+                for ( auto rankPair : *a_pRankIndex )
                 {
                     Fdp score = GetResultScore(rankPair, a_bSession);
-                    if (score != previousScore) groupRank = rank;    // check for equal scores-->equal rank
+                    if ( score != previousScore )
+                        groupRank = rank;   // check for equal scores-->equal rank
                     previousScore = score;
-                    if (rankPair == pair)
+                    if ( rankPair == pair )
                     {
-                        svGroupRank[pair] = groupRank;   // rank within group
+                        s_vGroupRank[pair] = groupRank;     // rank within group
                         break;
                     }
-                    if (rankPair > minPair && rankPair <= maxPair)
+                    if ( rankPair > minPair && rankPair <= maxPair )
                     {
                         ++rank;     // pair in same group with higher ranking, so rank for current pair is incremented
                     }
@@ -1299,17 +1320,20 @@ wxString CalcScore::GetGroupResultString(UINT a_sessionPair, const std::vector<U
             }
         }
         // also init the group-string
-        for (const auto& it : groupInfo) {result += FMT("%3s", it.groupChars);}
+        for ( const auto& it : groupInfo )
+        {
+            result += FMT("%3s", it.groupChars);
+        }
         return result;  // " BL GR YE OR" : 3 chars per group
     }
 
     // create string showing rank within group:  "  .  .  5  .  ." --> 3 chars per group: rank or "  ."
-    for (const auto& itGroup : groupInfo)
+    for ( const auto& itGroup : groupInfo )
     {
         auto minPair = itGroup.groupOffset;
         auto maxPair = minPair + itGroup.pairs;
         result += ( (a_sessionPair > minPair) && (a_sessionPair <= maxPair) ) ?
-            FMT("%3u", svGroupRank[a_sessionPair]) : wxString("  .");
+            FMT("%3u", s_vGroupRank[a_sessionPair]) : wxString("  .");
     }
 
     return result;
@@ -1375,22 +1399,24 @@ static void CalcTotalSub(ScoreInfo& a_pairResult, UINT a_absentCount, bool& a_bB
 void CalcScore::CalcTotal()
 {
     UINT maxSession = cfg::GetActiveSession();
-    if (maxSession == 0) return;       // no total result: session result == end result
+    if ( maxSession == 0 )
+        return; // no total result: session result == end result
 
     UINT globalPairs = names::GetNumberOfGlobalPairs();
-    if (globalPairs == 0)
+    if ( globalPairs == 0 )
     {
-        if (!m_bIsScriptTesting)
+        if ( !m_bIsScriptTesting )
             MyMessageBox(_("No names entered yet!"));
         return;  // no names yet
     }
     std::vector<cor::mCorrectionsEnd> sessionResults;       // corrections have same data as session-results
     sessionResults.resize(maxSession+1ULL);
     std::vector<UINT> gamesPerSession(maxSession+1ULL,0U);  // max games in a session, needed for average calculation
-    for (UINT session = 1; session <= maxSession; ++session)
+    for ( UINT session = 1; session <= maxSession; ++session )
     {
         cor::CORRECTION_END ce; // preset pairnr's
-        for (UINT pair = 0; pair <= globalPairs; ++pair) sessionResults[session][pair] = ce;
+        for ( UINT pair = 0; pair <= globalPairs; ++pair )
+            sessionResults[session][pair] = ce;
         //load session result
         (void)io::SessionResultRead(sessionResults[session], session);
         for ( auto const& it : sessionResults[session] )
@@ -1405,25 +1431,25 @@ void CalcScore::CalcTotal()
         (void)io::CorrectionsEndRead(sessionResults[session], session, false);
     }
 
-    svTotalResult.clear();
-    svTotalResult.resize(globalPairs+1ULL);
+    s_vTotalResult.clear();
+    s_vTotalResult.resize(globalPairs+1ULL);
     bool bBonus4Display = false;
-    for (UINT pair=1; pair <= globalPairs; ++pair)   // calc total+average
+    for ( UINT pair=1; pair <= globalPairs; ++pair )    // calc total+average
     {
         UINT absentCount     = 0;
         UINT noSessionCount  = 0;   // nr of times the session score is not added to end/total count (== endcorrection)
-        auto& pairResult     = svTotalResult[pair];
+        auto& pairResult     = s_vTotalResult[pair];
         pairResult.nrOfSessions = maxSession;  // assume all played sessions account to end/total result
-        for (UINT session=1;session <= maxSession;++session)
+        for ( UINT session=1;session <= maxSession;++session )
         {
             Fdp score = sessionResults[session][pair].score;
-            if (score == SCORE_NO_TOTAL)
+            if ( score == SCORE_NO_TOTAL )
             {
                 ++noSessionCount;
                 --pairResult.nrOfSessions;
                 continue;
             }
-            if (sessionResults[session][pair].games == 0)
+            if ( sessionResults[session][pair].games == 0 )
                 ++absentCount;
             else
             {
@@ -1457,28 +1483,29 @@ void CalcScore::CalcTotal()
     }   // end for all pairs
 
     bool bWeightedAvg = cfg::GetWeightedAvg();
-    svTotalRankToPair.resize(globalPairs+1ULL);
-    std::iota(svTotalRankToPair.begin(), svTotalRankToPair.end(), 0);   // fill with 0,1,2,3....
+    s_vTotalRankToPair.resize(globalPairs+1ULL);
+    std::iota(s_vTotalRankToPair.begin(), s_vTotalRankToPair.end(), 0); // fill with 0,1,2,3....
     if ( bWeightedAvg ) 
-        std::sort(svTotalRankToPair.begin()+1, svTotalRankToPair.end(),
-            [](auto left, auto right){return svTotalResult[left].bHasPlayed && svTotalResult[left].totalW > svTotalResult[right].totalW;} );
+        std::sort(s_vTotalRankToPair.begin()+1, s_vTotalRankToPair.end(),
+            [](auto left, auto right){return s_vTotalResult[left].bHasPlayed && s_vTotalResult[left].totalW > s_vTotalResult[right].totalW;} );
     else
-        std::sort(svTotalRankToPair.begin()+1, svTotalRankToPair.end(), 
-            [](auto left, auto right){return svTotalResult[left].bHasPlayed && svTotalResult[left].totalN > svTotalResult[right].totalN;} );
+        std::sort(s_vTotalRankToPair.begin()+1, s_vTotalRankToPair.end(), 
+            [](auto left, auto right){return s_vTotalResult[left].bHasPlayed && s_vTotalResult[left].totalN > s_vTotalResult[right].totalN;} );
 
-    for (auto it = svTotalRankToPair.rbegin(); it != svTotalRankToPair.rend(); ++it)
+    for ( auto it = s_vTotalRankToPair.rbegin(); it != s_vTotalRankToPair.rend(); ++it )
     {
-        if (svTotalResult[*it].bHasPlayed) break;   // from here on, all pairs have played
+        if ( s_vTotalResult[*it].bHasPlayed )
+            break;  // from here on, all pairs have played
         *it = 0;    // set pair-id to 0 if pair has not played yet, so has no rank yet
     }
 
     InitPairToRankVector(false);
 
     std::vector<UINT> indexSessionPairnr;    // index with session pairnrs in it for getting group-string if wanted
-    indexSessionPairnr.resize(svTotalRankToPair.size());
-    for ( UINT ii = 1; ii < indexSessionPairnr.size(); ++ii)
+    indexSessionPairnr.resize(s_vTotalRankToPair.size());
+    for ( UINT ii = 1; ii < indexSessionPairnr.size(); ++ii )
     {
-        indexSessionPairnr[ii] = names::PairnrGlobal2SessionPairnr(svTotalRankToPair[ii]);
+        indexSessionPairnr[ii] = names::PairnrGlobal2SessionPairnr(s_vTotalRankToPair[ii]);
     }
     indexSessionPairnr[0] = 0;
 
@@ -1521,7 +1548,7 @@ void CalcScore::CalcTotal()
         , {FormBuilder::Align::LEFT , ES , GetGroupResultString(0, &indexSessionPairnr, GROUPRESULT_FINAL)}
     };
 
-    for (UINT session=1; session <= maxSession; ++session)
+    for ( UINT session=1; session <= maxSession; ++session )
     {
         formInfo  .emplace(formInfo.begin()   + RT_INSERT_POS + session - 1, SIZE_RT_SESSION, FormBuilder::Align::RIGHT, ES, true);
         //xgettext:TRANSLATORS: 'S' is first character of 'Session'
@@ -1532,23 +1559,23 @@ void CalcScore::CalcTotal()
     wxString tmp = totalResult.CreateHeader(headerInfo);
     m_txtFileResultTotal.AddLine(tmp);
 
-    for (UINT rank = 1; rank < svTotalRankToPair.size(); ++rank)
+    for ( UINT rank = 1; rank < s_vTotalRankToPair.size(); ++rank )
     {
-        UINT pair       = svTotalRankToPair[rank];
-        if (!svTotalResult[pair].bHasPlayed)
+        UINT pair       = s_vTotalRankToPair[rank];
+        if ( !s_vTotalResult[pair].bHasPlayed )
             break;  // all global players that have not played yet, should be at end of rank-array!
-        Fdp totalScore  = bWeightedAvg ? svTotalResult[pair].totalW : svTotalResult[pair].totalN;
-        Fdp average     = bWeightedAvg ? svTotalResult[pair].avgW   : svTotalResult[pair].avgN;
-        std::vector<wxString> rowInfo = {U2String(svTotalPairToRank[pair]), DottedName(names::PairnrGlobal2GlobalText(pair))};
+        Fdp totalScore  = bWeightedAvg ? s_vTotalResult[pair].totalW : s_vTotalResult[pair].totalN;
+        Fdp average     = bWeightedAvg ? s_vTotalResult[pair].avgW   : s_vTotalResult[pair].avgN;
+        std::vector<wxString> rowInfo = {U2String(s_vTotalPairToRank[pair]), DottedName(names::PairnrGlobal2GlobalText(pair))};
 
-        wxString averageAbsent = (bWeightedAvg ? svTotalResult[pair].avgAbsentW : svTotalResult[pair].avgAbsentN).AsString2F();
-        for (UINT session=1; session <= maxSession; ++session)
+        wxString averageAbsent = (bWeightedAvg ? s_vTotalResult[pair].avgAbsentW : s_vTotalResult[pair].avgAbsentN).AsString2F();
+        for ( UINT session=1; session <= maxSession; ++session )
         {
             char extra = ' ';
             Fdp score = sessionResults[session][pair].score;
             if ( score == SCORE_NO_TOTAL )
                 rowInfo.emplace_back("-----");
-            else if (sessionResults[session][pair].games == 0)
+            else if ( sessionResults[session][pair].games == 0 )
             {
                 rowInfo.push_back(averageAbsent);
                 extra = 'a';
@@ -1559,26 +1586,26 @@ void CalcScore::CalcTotal()
             formInfo[RT_INSERT_POS + session - 1].extra = extra;
         }
         wxString bonusString;
-        if ( svTotalResult[pair].bonus )    // yes, this pair has a bonus!
-            bonusString = svTotalResult[pair].bonus.AsString2F();
+        if ( s_vTotalResult[pair].bonus )   // yes, this pair has a bonus!
+            bonusString = s_vTotalResult[pair].bonus.AsString2F();
         rowInfo.push_back(bonusString);
         wxString totalString = totalScore.AsString2F();
         if ( bWeightedAvg )
         {   // some pairs did have non-playing table(s)
-            if (svTotalResult[pair].bWeightedAvg)
+            if ( s_vTotalResult[pair].bWeightedAvg )
                 totalString += '+';     // this pair did have non-playing table(s)
             else
                 totalString += ' ';
         }
         rowInfo.push_back(totalString);
         rowInfo.push_back(average.AsString2F());
-        rowInfo.push_back(svTotalResult[pair].bNoTotal ? ES : GetGroupResultString(names::PairnrGlobal2SessionPairnr(pair)));
+        rowInfo.push_back(s_vTotalResult[pair].bNoTotal ? ES : GetGroupResultString(names::PairnrGlobal2SessionPairnr(pair)));
         tmp = totalResult.CreateRow(rowInfo);
         m_txtFileResultTotal.AddLine(tmp);
     }   // end for all ranks
 
     m_txtFileResultTotal.Flush();
-    score::WriteTotalRank(svTotalRankToPair);  // rankorder for support of pair-assignments in next session
+    score::WriteTotalRank(s_vTotalRankToPair);  // rankorder for support of pair-assignments in next session
     CalcClub(true);
 }   // CalcTotal()
 
@@ -1594,11 +1621,11 @@ struct CLUB_DATA
 static bool CompareClubs(const CLUB_DATA& left, const CLUB_DATA& right)
 {   // compare function for sorting the club-results
     UINT state = 0;
-    if (left.clubCount >= cfg::GetMinClubcount())
+    if ( left.clubCount >= cfg::GetMinClubcount() )
         state  = 1;
-    if (right.clubCount >= cfg::GetMinClubcount())
+    if ( right.clubCount >= cfg::GetMinClubcount() )
         state |= 2;
-    switch (state)
+    switch ( state )
     {
         case 1: return true;    // left  within limits, right not: so left  is larger!
         case 2: return false;   // right within limits, left  not: so right is larger!
@@ -1613,7 +1640,7 @@ static bool CompareClubs(const CLUB_DATA& left, const CLUB_DATA& right)
 void CalcScore::CalcClub( bool a_bTotal)
 {   // results for clubs, if you have assigned pairnames to a club
     UINT                maxClubIndex= 0;
-    const std::vector<UINT>& rankToPair = a_bTotal ? svTotalRankToPair    : svSessionRankToPair;
+    const std::vector<UINT>& rankToPair = a_bTotal ? s_vTotalRankToPair   : s_vSessionRankToPair;
     MyTextFile&         txtFile     = a_bTotal ? m_txtFileResultClubTotal : m_txtFileResultClubSession;
     UINT                session     = cfg::GetActiveSession();
     UINT                maxSession  = a_bTotal ? session : 1;
@@ -1625,21 +1652,22 @@ void CalcScore::CalcClub( bool a_bTotal)
 
     UINT maxClubCount = cfg::GetMaxClubcount();
     UINT minClubCount = cfg::GetMinClubcount();
-    for (UINT rank = 1; rank < rankToPair.size(); ++rank)   // sum first N scores per club
+    for ( UINT rank = 1; rank < rankToPair.size(); ++rank ) // sum first N scores per club
     {
         UINT pair = rankToPair[rank];
-        if (pair)                                           // a pair that has played
+        if ( pair )                                         // a pair that has played
         {
             // for total, use sum of session-results for better accuracy
             // like: (x.01+x.00)/2 = x.01   and (x.01+x.01)/2=x.01, but its 'more'!
-            Fdp score = a_bTotal ? svTotalResult[pair].totalN : svSessionResult[pair].procentScore;                 // score bepalen
-            if (score)
+            Fdp score = a_bTotal ? s_vTotalResult[pair].totalN : s_vSessionResult[pair].procentScore;                 // score bepalen
+            if ( score )
             {
-                if (!a_bTotal) pair = names::PairnrSession2GlobalPairnr(pair);
+                if ( !a_bTotal )
+                    pair = names::PairnrSession2GlobalPairnr(pair);
                 UINT clubId =  names::GetGlobalPairInfo(pair).clubIndex;         // club-id
-                if (clubId > maxClubIndex)
+                if ( clubId > maxClubIndex )
                     maxClubIndex = clubId;
-                if (club[clubId].clubCount < maxClubCount)
+                if ( club[clubId].clubCount < maxClubCount )
                 {
                     club[clubId].score += score;        // sum allowable scores
                     club[clubId].clubId = clubId;       // and remember its id
@@ -1652,7 +1680,8 @@ void CalcScore::CalcClub( bool a_bTotal)
         }
     }
     // now we have all scores
-    if (maxClubIndex == 0) return;      // without clubs, no clubresults!
+    if ( maxClubIndex == 0 )
+        return; // without clubs, no clubresults!
 
     std::sort(club.begin()+1, club.begin()+maxClubIndex+1, CompareClubs);
     txtFile.MyCreate(fileName, MyTextFile::WRITE);
@@ -1707,15 +1736,16 @@ void CalcScore::CalcClub( bool a_bTotal)
     UINT actualRank         = 1;
     Fdp  previousAvgScore   = 99999;    // just some impossible score..
 
-    for (UINT clubIndex = 1; clubIndex <= maxClubIndex; ++clubIndex)
+    for ( UINT clubIndex = 1; clubIndex <= maxClubIndex; ++clubIndex )
     {
         UINT clubCount = club[clubIndex].clubCount;
-        if (clubCount == 0) continue;      // this club was not present in match
+        if ( clubCount == 0 )
+            continue;   // this club was not present in match
 
-        if (clubCount > maxClubCount)
+        if ( clubCount > maxClubCount )
             clubCount = maxClubCount;
         Fdp avgScore = club[clubIndex].score/(clubCount * maxSession);
-        if (avgScore != previousAvgScore)
+        if ( avgScore != previousAvgScore )
         {   // check if previous score is equal, and then emit equal rank
             actualRank = rank;
             previousAvgScore = avgScore;
@@ -1738,7 +1768,7 @@ void CalcScore::CalcClub( bool a_bTotal)
         ++rank;
     }
 
-    if (club[0].clubCount)
+    if ( club[0].clubCount )
     {   // pairs, not a member of a club
         txtFile.AddLine(ES);
         tmp = FMT(_("individual pairs: %u, score: %6s (%5s)"),
@@ -1757,9 +1787,9 @@ void CalcScore::CalcResultPairHelper(Fdp& sumPoints, UINT& sumTops, UINT& gamesP
     #undef ADDLINE
     #define ADDLINE m_txtFileResultPair.AddLine
 
-    if (gamesPlayed)
+    if ( gamesPlayed )
     {
-        if (m_bButler)
+        if ( m_bButler )
             tmp += FMT(" %s: %s (%s %s)", _("set-score"), sumPoints.AsString(), (sumPoints / (int)gamesPlayed).Round(2).AsString2F(), _("imps/game"));
         else if ( sumTops ) // prevent divide-zero if there is not enough data
             tmp += FMT(" %s: %s(%s%%)", _("set-score"), sumPoints.AsString1E(), ((sumPoints * 100) / sumTops).Round(0).AsString());
@@ -1790,9 +1820,9 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
     ADDLINE(FMT(_("Result of pair %s '%s' for '%s'%s"), names::PairnrSession2SessionText(pair), names::PairnrSession2GlobalText(pair), cfg::GetDescription(), sessionString ));
     ADDLINE(ES);
 
-    if (svSessionResult[pair].nrOfGames == 0)
+    if ( s_vSessionResult[pair].nrOfGames == 0 )
     {
-        if (cfg::IsSessionPairAbsent(pair))
+        if ( cfg::IsSessionPairAbsent(pair) )
             ADDLINE(_("absent"));
         else
             ADDLINE(_("Pair has not played (yet)"));
@@ -1803,14 +1833,14 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
     Fdp  sumPoints;
     UINT sumTops    = 0;
     UINT gamesPlayed= 0;    // nr of games played at a table
-    for (UINT game = 1; game <= maxGame; ++game)
+    for ( UINT game = 1; game <= maxGame; ++game )
     {
         tmp.Printf(_("Game %2u: "), game+firstGame);
         PlayerInfo playerInfo;
-        if (!GetPlayerInfo(pair, game, playerInfo))
+        if ( !GetPlayerInfo(pair, game, playerInfo) )
         {
             tmp += _("not played");
-            if ((game % setSize) == 0)
+            if ( (game % setSize) == 0 )
             {
                 CalcResultPairHelper(sumPoints, sumTops, gamesPlayed, tmp);
             }
@@ -1820,15 +1850,16 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
         }
 
         ++gamesPlayed;
-        UINT top    = playerInfo.bIsNS ? svGameTops[game].topNS : svGameTops[game].topEW;
-        if  (!m_bButler && top == 0) continue;    // no top yet, only playd once??
+        UINT top    = playerInfo.bIsNS ? s_vGameTops[game].topNS : s_vGameTops[game].topEW;
+        if ( !m_bButler && top == 0 )
+            continue;   // no top yet, only playd once??
         long score  = playerInfo.score;
         Fdp points = GetSetResult(pair, game, 1);
         sumPoints  += points;
         sumTops    += top;
         tmp        += playerInfo.bIsNS ? _("NS") : _("EW");
         tmp        += FMT(_(", score: %5s"), score::ScoreToString(score)  );
-        if (m_bButler)
+        if ( m_bButler )
             tmp    += FMT(_(", imps %3ld" )  , points.AsLong() );
 
         else
@@ -1837,10 +1868,10 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
             tmp += FMT(" %3ld%%", ((100*points)/top).AsLong());
         }
 
-        if ((game % setSize) == 1)  // first game of set, show opponent
+        if ( (game % setSize) == 1 )    // first game of set, show opponent
             tmp += FMT(_(" Played against (%s): %s"), names::PairnrSession2SessionText(playerInfo.opponent), names::PairnrSession2GlobalText(playerInfo.opponent));
 
-        if ((game % setSize) == 0)
+        if ( (game % setSize) == 0 )
         {
             CalcResultPairHelper(sumPoints, sumTops, gamesPlayed, tmp);
         }
@@ -1857,7 +1888,7 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
     if ( combiString     .Len() ) state  = 1;
     if ( correctionString.Len() ) state |= 2;
 
-    switch (state)
+    switch ( state )
     {
         case 1:
             corrections = " (" + combiString + ')';
@@ -1869,26 +1900,26 @@ void CalcScore::OnCalcResultPair(const wxCommandEvent& a_evt)
             corrections = " (" + combiString + ", " + correctionString + ')';
     }
 
-    Fdp score = svSessionResult[pair].procentScore;
-    if (m_bButler)
+    Fdp score = s_vSessionResult[pair].procentScore;
+    if ( m_bButler )
     {
         ADDLINE(FMT(_("imps: %ld, games: %u, sessionscore: %s imps/game%s, rank: %u"),
-            svSessionResult[pair].butlerMp.AsLong(),
-            svSessionResult[pair].nrOfGames,
+            s_vSessionResult[pair].butlerMp.AsLong(),
+            s_vSessionResult[pair].nrOfGames,
             score.AsString2F(),
             corrections,
-            svSessionPairToRank[pair]
+            s_vSessionPairToRank[pair]
         ));
 
     }
     else
         ADDLINE(FMT(_("points: %s (%i), games: %u, sessionscore: %s%%%s, rank: %u"),
-            svSessionResult[pair].points.AsString1E(),
-            svSessionResult[pair].maxScore,
-            svSessionResult[pair].nrOfGames,
+            s_vSessionResult[pair].points.AsString1E(),
+            s_vSessionResult[pair].maxScore,
+            s_vSessionResult[pair].nrOfGames,
             score.AsString2F(),
             corrections,
-            svSessionPairToRank[pair]
+            s_vSessionPairToRank[pair]
             ));
 
     m_choiceResult = ResultPair;
@@ -1909,7 +1940,7 @@ void CalcScore::OnCalcResultGame(const wxCommandEvent& a_evt)
     ADDLINE(ES);
     ADDLINE(FMT(_("Result of game %u for '%s'%s"), game, cfg::GetDescription(), sessionString ));
     ADDLINE(ES);
-    for (const auto& frq : svFrqstringTable[game])
+    for ( const auto& frq : s_vFrqstringTable[game] )
     {
         ADDLINE(frq);
     }
@@ -1923,7 +1954,7 @@ void CalcScore::OnCalcResultGame(const wxCommandEvent& a_evt)
     auto        SIZE_SCORE  = 12;
     wxString    tmp;
 
-    for (int count = 1; count <= setsPerLine; ++count)
+    for ( int count = 1; count <= setsPerLine; ++count )
     {
 //        tmp += FMT(_("  NS   EW  SCORE       "));
         tmp +=   FormBuilder::CreateColumn(_("NS"   ), SIZE_NS   , FormBuilder::Align::RIGHT_SPACE1)
@@ -1935,7 +1966,7 @@ void CalcScore::OnCalcResultGame(const wxCommandEvent& a_evt)
     ADDLINE(tmp);
     tmp.clear();
     int count = 1;
-    for (const auto& setData : scores)
+    for ( const auto& setData : scores )
     {
         int scoreNs = setData.scoreNS;
         tmp += FMT("%4s %4s %6s%s"
@@ -1947,7 +1978,7 @@ void CalcScore::OnCalcResultGame(const wxCommandEvent& a_evt)
                                 : FMT(",%-6s",score::ScoreToString(setData.scoreEW))
                  );
 
-        if (++count > setsPerLine)
+        if ( ++count > setsPerLine )
         {
             ADDLINE(tmp);
             tmp.clear();
@@ -1970,32 +2001,32 @@ static long GetDelta(long score, long datum)
 
 void CalcScore::CalcButlerFkw(UINT a_game) const
 {   // called when 'agame' is calculated, so datum-scores are available
-    if ( (*spvGameSetData)[a_game].empty() )
+    if ( (*s_pvGameSetData)[a_game].empty() )
         return; // game not played
 
     ButlerFkwMap  gameMap;
-    for (const auto& it : (*spvGameSetData)[a_game])
+    for ( const auto& it : (*s_pvGameSetData)[a_game] )
     {
         long scoreNs = it.scoreNS;
-        if ( svButlerFkw[a_game].contains(scoreNs) )
+        if ( s_vButlerFkw[a_game].contains(scoreNs) )
             continue;   // score already present
         ButlerFkw fkw;
         fkw.bInit   = true;
         fkw.scoreNs = scoreNs;
-        auto datum  = svDatumScores[a_game].dsNS;
+        auto datum  = s_vDatumScores[a_game].dsNS;
         fkw.deltaNs = GetDelta(fkw.scoreNs, datum);
         fkw.impsNs  = ButlerGetMpsFromScore(fkw.scoreNs, datum);
 
         fkw.scoreEw = it.scoreEW;
-        datum       = svDatumScores[a_game].dsEW;
+        datum       = s_vDatumScores[a_game].dsEW;
         fkw.deltaEw = GetDelta(fkw.scoreEw, datum);
         fkw.impsEw  = ButlerGetMpsFromScore(fkw.scoreEw, datum);
 
         gameMap[scoreNs] = fkw;
     }
-    svButlerFkw[a_game] = gameMap;
+    s_vButlerFkw[a_game] = gameMap;
 
-    if (0) for ( const auto& [score, data] : svButlerFkw[a_game])
+    if ( 0 ) for ( const auto& [score, data] : s_vButlerFkw[a_game] )
         MyLogDebug("Game=%2u, scoreNs=%6s, delta=%5ld, imps=%3i, scoreEw=%6s, delta=%5ld, imps=%3i"
             , a_game
             , score::ScoreToString(data.scoreNs)
@@ -2015,23 +2046,23 @@ bool CalcScore::FindBadGameData()
     m_txtBadGameData = _("In game results:\n\n");
     std::vector<UINT> badPairs;
 #define CHECK_PAIR(pair) \
-        if ( (pair > m_numberOfSessionPairs) && badPairs.end() == std::find(badPairs.begin(), badPairs.end(), pair )) \
+        if ( (pair > m_numberOfSessionPairs) && badPairs.end() == std::find(badPairs.begin(), badPairs.end(), pair) ) \
         {\
             m_txtBadGameData += FMT(_("Pairnr out of range:%3u, score(s) found for this pair.\n"), pair);\
             badPairs.push_back(pair);\
             bBadGameData = true;\
         }
 
-    for (const auto& gamesData : (*spvGameSetData))
+    for ( const auto& gamesData : (*s_pvGameSetData) )
     {   // for all games
-        for (const auto& result : gamesData)
+        for ( const auto& result : gamesData )
         {   // for all gameresults
             CHECK_PAIR(result.pairNS);
             CHECK_PAIR(result.pairEW);
         }
     }
 
-    if (bBadGameData)
+    if ( bBadGameData )
     {
         m_txtBadGameData +=     _("\nDid you lower the number of players in any group?");
         m_txtBadGameData += FMT(_("\nMaximum pair nr: %u (== sum of pairs in all groups)."), m_numberOfSessionPairs);
@@ -2051,13 +2082,13 @@ static bool IsCombiCandidate(UINT a_sessionPair)
 
 static void ValidateSessionCorrections(const cor::mCorrectionsSession* a_pNonValidatedCorrections)
 {   // validate session corrections once, so we don't constantly need to check its validity
-    bool bButler      = cfg::GetButler();
-    sbHaveValidCombi  = false;
-    sbHaveValidNormal = false;
-    smCorSessionValidated.clear();
+    bool bButler       = cfg::GetButler();
+    s_bHaveValidCombi  = false;
+    s_bHaveValidNormal = false;
+    s_mCorSessionValidated.clear();
     wxString errorMsg;
 
-    for (const auto& [pair, correction] : *a_pNonValidatedCorrections)
+    for ( const auto& [pair, correction] : *a_pNonValidatedCorrections )
     {
         constexpr auto OK_NORMAL = 1;
         constexpr auto OK_COMBI  = 2;
@@ -2102,14 +2133,14 @@ static void ValidateSessionCorrections(const cor::mCorrectionsSession* a_pNonVal
                     cs.extra = cs.maxExtra = cs.games = 0;
                 else
                     state |= OK_COMBI;
-            } while (false);
+            } while ( false );
         }
 
         if ( state )    // some valid data
         {
-            sbHaveValidNormal |= 0 != (state & OK_NORMAL);
-            sbHaveValidCombi  |= 0 != (state & OK_COMBI);
-            smCorSessionValidated[pair] = cs;
+            s_bHaveValidNormal |= 0 != (state & OK_NORMAL);
+            s_bHaveValidCombi  |= 0 != (state & OK_COMBI);
+            s_mCorSessionValidated[pair] = cs;
         }
 
         if ( cs != correction && !cfg::IsScriptTesting() )
@@ -2143,7 +2174,7 @@ static void GetValidatedEndCorrections4Session(cor::mCorrectionsEnd& a_ce, UINT 
     bool bButler = cfg::GetButler();
     bool bTesting= cfg::IsScriptTesting();
 
-    for (const auto& [globalPair, ce] : a_ce)
+    for ( const auto& [globalPair, ce] : a_ce )
     {
         auto realScore = (ce.score == SCORE_IGNORE || ce.score == SCORE_NO_TOTAL) ? 0 : ce.score;
         if (
@@ -2194,15 +2225,15 @@ static UINT GetNumberOfRounds(UINT a_sessionPair)
 wxString FormBuilder::CreateHeader(const std::vector<ColumnInfoHeader>& a_headerInfo) const
 {   // creation of the header, called once
     auto size = a_headerInfo.size();
-    if (size != m_rowInfo.size())   // no translation: error should popup during development!
+    if ( size != m_rowInfo.size() ) // no translation: error should popup during development!
         return "Error: mismatch in size of headerInfo and rowInfo";
     wxString result;
     auto rowInfo = m_rowInfo.begin();
-    for (const auto& column : a_headerInfo)
+    for ( const auto& column : a_headerInfo )
     {
-        if (rowInfo->active)
+        if ( rowInfo->active )
         {
-            if (FormBuilder::NO_LIMIT == rowInfo->size)
+            if ( FormBuilder::NO_LIMIT == rowInfo->size )
                 result += column.header;
             else
                 result += CreateColumn(column.header, rowInfo->size, column.align);
@@ -2217,15 +2248,15 @@ wxString FormBuilder::CreateHeader(const std::vector<ColumnInfoHeader>& a_header
 wxString FormBuilder::CreateRow(const std::vector<wxString>& a_columsContent) const
 {   // called for each data-row
     size_t size = a_columsContent.size();
-    if (size != m_rowInfo.size())   // no translation: error should popup during development!
+    if ( size != m_rowInfo.size() ) // no translation: error should popup during development!
         return "Error: mismatch in size of columnInfo and rowInfo";
     wxString result;
     auto content = a_columsContent.begin();
-    for (const auto& column : m_rowInfo)
+    for ( const auto& column : m_rowInfo )
     {
-        if (column.active)
+        if ( column.active )
         {
-            if (FormBuilder::NO_LIMIT == column.size)
+            if ( FormBuilder::NO_LIMIT == column.size )
                 result += *content;
             else
                 result += CreateColumn(*content, column.size, column.align);
@@ -2240,9 +2271,9 @@ wxString FormBuilder::CreateRow(const std::vector<wxString>& a_columsContent) co
 wxString FormBuilder::CreateColumn(const wxString& a_input, size_t a_len, Align a_align)
 {   // create a string with the wanted columnsize and alignment
     size_t len = a_input.Len();
-    if (len == a_len)
+    if ( len == a_len )
         return a_input;
-    if (len > a_len)
+    if ( len > a_len )
         return a_input.Left(a_len);
     wxString result;
     #define _TEST_ 0
@@ -2253,7 +2284,7 @@ wxString FormBuilder::CreateColumn(const wxString& a_input, size_t a_len, Align 
         constexpr auto FILL_LEFT  = ' ';
         constexpr auto FILL_RIGHT = ' ';
     #endif
-    switch (a_align)
+    switch ( a_align )
     {
         using enum FormBuilder::Align;
         case LEFT:

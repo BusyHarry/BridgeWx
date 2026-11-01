@@ -196,7 +196,7 @@ namespace cfg
     bool        GetNeuberg();                               // state of the Neuberg calculation
     bool        GetWeightedAvg();                           // the type of calculation over more matches
 
-    int         HandleCommandline(const wxArrayString& argv, bool bInit = true);  //...
+    int         HandleCommandline(const std::vector<wxString>& argv, bool bInit = true);  //...
     bool        IsDark();                                   // return true if darmode is active
     bool        IsDebug();                                  // true if we want some extra output
     bool        IsScriptTesting();                          // true if running auto-tests

@@ -520,7 +520,7 @@ void Debug::PrintOrExample()
     {
         if ( !m_schema.IsOk() )
         {
-            m_consoleOutput.Clear();
+            m_consoleOutput.clear();
             m_consoleOutput.push_back(_("No schema available for these data"));
             m_bPrintNext = false;       // force console output
         }
@@ -600,7 +600,7 @@ void Debug::PrintPage()
 class MyPrint
 {
 public:
-    explicit MyPrint(wxArrayString* outArrayString);
+    explicit MyPrint(std::vector<wxString>* outArrayString);
     ~MyPrint();
     void BeginPrint         (const wxString& title);
     void EndPrint           ();
@@ -614,11 +614,11 @@ private:
     wxChar  SmoothLineChar  (int x, int y) const;
     static constexpr auto MY_LINES    = 100;
     static constexpr auto MY_LINESIZE = 100;
-    wxChar          (*m_screen)[MY_LINESIZE] = nullptr;
-    int             m_maxLine = -1;
-    size_t          m_screenLength = MY_LINES*MY_LINESIZE;
-    wxArrayString*  m_pOutArrayString;
-    bool            m_bUseRealPrinter;
+    wxChar                  (*m_screen)[MY_LINESIZE] = nullptr;
+    int                     m_maxLine = -1;
+    size_t                  m_screenLength = MY_LINES*MY_LINESIZE;
+    std::vector<wxString>*  m_pOutArrayString;
+    bool                    m_bUseRealPrinter;
 #if defined _UNICODE
     #define MY_MEMCPY wmemcpy
     #define MY_MEMSET wmemset
@@ -632,7 +632,7 @@ private:
 
 MyPrint::~MyPrint(){delete[] m_screen;}
 
-MyPrint::MyPrint(wxArrayString* a_pOutArrayString)
+MyPrint::MyPrint(std::vector<wxString>* a_pOutArrayString)
     : m_pOutArrayString (a_pOutArrayString)
 {
     m_bUseRealPrinter   = m_pOutArrayString == nullptr;

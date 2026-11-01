@@ -94,10 +94,10 @@ private:
     MyChoiceMC*     m_pNrOfSets;
     MyChoiceMC*     m_pRepeatCount;
     wxTextCtrl*     m_pTxtCtrlExtra;
-    wxArrayString   m_consoleOutput;
 
-    std::vector<cfg::GROUP_DATA> m_groupData;
-    cfg::GROUP_DATA* m_pActiveGroupInfo;
+    std::vector<wxString>           m_consoleOutput;
+    std::vector<cfg::GROUP_DATA>    m_groupData;
+    cfg::GROUP_DATA*                m_pActiveGroupInfo;
 };
 
 #endif

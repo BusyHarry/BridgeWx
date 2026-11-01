@@ -484,9 +484,9 @@ bool MyApp::OnInit()
 
     InitLanguage();   // setup the language as requested by cfg
 
-    wxArrayString myArgv;
+    std::vector<wxString> myArgv;
     for ( auto ii = 0; ii < argc; ++ii )
-        myArgv.push_back(argv[ii]);
+        myArgv.emplace_back(argv[ii]);
     if ( CFG_ERROR == cfg::HandleCommandline(myArgv) )
     {
         ;   // ??

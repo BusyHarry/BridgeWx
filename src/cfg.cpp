@@ -129,7 +129,7 @@ namespace cfg
         s_sActiveMatchPath   = s_sActiveMatchPathBackup;
         s_uSession           = s_uSessionBackup;
         s_bIsBackuped        = false;
-        wxArrayString empty;
+        std::vector<wxString>  empty;
         HandleCommandline( empty, false ); // open original db again
     }   // DataConversionRestore()
 
@@ -804,7 +804,7 @@ namespace cfg
     }   // IsInputRedirected()
 #endif
 
-    int HandleCommandline( const wxArrayString& a_argv, bool a_bInit )
+    int HandleCommandline( const std::vector<wxString>& a_argv, bool a_bInit )
     {
         // first we check if we are autotesting:
         // we need it set/reset on return of this function, even if we have an error

@@ -28,7 +28,7 @@ MyTextCtrlWithValidator::MyTextCtrlWithValidator(wxWindow *a_parent, wxWindowID 
     : wxTextCtrl(a_parent, a_id, a_value, a_pos, a_size, a_style | wxTE_PROCESS_ENTER)
 // we need the wxTE_PROCESS_ENTER else we don't get the '\n' char at all!
 {
-    if ( !(a_style & wxTE_PROCESS_ENTER) )                      // derived class does not want/need enter-event
+    if ( !(a_style & wxTE_PROCESS_ENTER) )                          // derived class does not want/need enter-event
         this->Bind(wxEVT_TEXT_ENTER,[](const wxCommandEvent& ){});  // dummy handler to consume event (prevent bell)
     MyValidator::SetTextCtrl(this);
 }   // MyTextCtrlWithValidator()
@@ -49,7 +49,11 @@ bool MyValidator::IsValidStartKey(wxChar a_key)
         if ( IsExtraChar(a_key)                           ) break;
         bValid = false;
     } while ( false );
-    if ( !bValid )
+    // wxwidgets 3.3.4 sends an 'a' on cell selection/navigation
+    // from  wxGrid::UpdateIME(), *\src\generic\grid.cpp, line 6325
+    // to probe if it can activate the cell-editor.
+    // We need to filter it out (#27204 already solved by #27206 within 2 hours!)
+    if ( !bValid && (a_key != 'a') )    // leave check in!
         RingBell();
     return bValid;
 }   //  MyValidator::IsValidStartKey()
@@ -133,9 +137,11 @@ void MyValidator::OnChar(wxKeyEvent& a_event)
             break;
         }
 
-        if ( chr == ',' && m_bIsFloat ) chr = '.';
+        if ( chr == ',' && m_bIsFloat )
+            chr = '.';
         bOk = IsCharOk(currentVal, pos, chr);
-        if ( !bOk ) break;
+        if ( !bOk )
+            break;
 
         currentVal.insert(pos, 1, chr);  // get 'new' string
         if ( chr == '.' )
@@ -147,9 +153,18 @@ void MyValidator::OnChar(wxKeyEvent& a_event)
         }
         double xx;
         bOk = currentVal.ToCDouble(&xx);                // dp is ALWAYS '.' here
-        if ( !bOk ) break;
-        if ( m_bSignOk   && xx < m_dMin ) { bOk = false; break;}    // too small: smaller then negative minimum
-        if ( m_dMax >= 0 && xx > m_dMax ) { bOk = false; break;}    // too large: larger  then positive maximum
+        if ( !bOk )
+            break;
+        if ( m_bSignOk && xx < m_dMin )
+        {   // too small: smaller then negative minimum
+            bOk = false;
+            break;
+        }
+        if ( m_dMax >= 0 && xx > m_dMax )
+        {   // too large: larger then positive maximum
+            bOk = false;
+            break;
+        }
     } while ( false );
 
     if ( !bOk )
@@ -169,10 +184,12 @@ void MyValidator::UpdateDouble(const wxString& a_current, const double& a_val)
 
 bool MyValidator::DoValidate(bool a_bForceInRange)
 {
-    if ( !m_bValidate || nullptr == m_pTextCtrl ) return true;  // no validator, so all ok
+    if ( !m_bValidate || nullptr == m_pTextCtrl )
+        return true;    // no validator, so all ok
     wxString currentVal = m_pTextCtrl->GetValue();
     auto len = currentVal.Len();
-    if ( len == 0 ) return true;                                // empty, so all ok
+    if ( len == 0 )
+        return true;    // empty, so all ok
     currentVal.Replace(',', '.');                               // ',' -> '.'
     wxChar char0 = currentVal[0];
     if (    ( (len == 1) && (char0 == ' '  ||   char0         == '.' || char0         == '-') )
@@ -205,7 +222,8 @@ bool MyValidator::DoValidate(bool a_bForceInRange)
     else
     {
         auto xx = (double)wxAtol(currentVal);
-        if ( xx >= m_dMin && xx <= m_dMax ) return true;
+        if ( xx >= m_dMin && xx <= m_dMax )
+            return true;
         if ( a_bForceInRange )
         {
             xx = std::clamp(xx, m_dMin, m_dMax);
@@ -272,8 +290,9 @@ bool MyValidator::IsMinusOk(const wxString& a_val, int a_pos) const
 
 bool MyValidator::IsCharOk(const wxString& a_val, int a_pos, wxChar a_chr) const
 {
-    if ( !m_bIsFloat ) return ( a_chr >= '0' && a_chr <= '9' );
-    const wxChar separator =  '.' ;     // NB, the OnChar() transforms a ',' to a '.'
+    if ( !m_bIsFloat )
+        return ( a_chr >= '0' && a_chr <= '9' );
+    constexpr wxChar separator =  '.' ;     // NB, the OnChar() transforms a ',' to a '.'
     if ( a_chr == separator )
     {
         if ( a_val.find(separator) != wxString::npos )
@@ -315,7 +334,8 @@ bool MyValidator::IsCharOk(const wxString& a_val, int a_pos, wxChar a_chr) const
 void MyValidator::SetMinMax(double a_min, double a_max, int a_precision)
 {
     // Bind() for chars and lostfocus is setup when we get a textCtrl!
-    if ( a_min > a_max ) std::swap( a_min, a_max );
+    if ( a_min > a_max )
+        std::swap( a_min, a_max );
     m_bSignOk           = (a_min < 0) ;
     m_dMin              = a_min;
     m_dMax              = a_max;
@@ -349,7 +369,8 @@ void MyValidator::UpdatePrecision(int a_precision)
 
 void MyValidator::SetTextCtrl(wxTextCtrl* a_pTextCtrl)
 {
-    if ( m_bBindDone ) return;  // we can have only one textCtrl!
+    if ( m_bBindDone )
+        return; // we can have only one textCtrl!
     m_pTextCtrl = a_pTextCtrl;
     if ( m_bValidate && nullptr != m_pTextCtrl )
     {   // TRY to get the event first..
@@ -368,12 +389,17 @@ bool MyString2Double(wxString& a_string, double& a_value)
     // valid:  [ ]*[+-][digits][.,][digits]
     a_value = 0.0;
     auto pChar = a_string.wc_str();
-    while ( *pChar && *pChar == ' ' ) ++pChar;      // skip leading spaces
-    if ( *pChar == 0 ) return false;                // empty string
+    while ( *pChar && *pChar == ' ' )
+        ++pChar;                                    // skip leading spaces
+    if ( *pChar == 0 )
+        return false;                               // empty string
     bool bSign = (*pChar == '-');                   // determine sign
-    if ( *pChar == '-' || *pChar == '+' ) ++pChar;  // skip sign
-    if ( *pChar == 0 ) return false;                // only sign
-    if ( (*pChar == ',' || *pChar == '.' ) && pChar[1] == 0 ) return false; // only decimal point
+    if ( *pChar == '-' || *pChar == '+' )
+        ++pChar;                                    // skip sign
+    if ( *pChar == 0 )
+        return false;                               // only sign
+    if ( (*pChar == ',' || *pChar == '.' ) && pChar[1] == 0 )
+        return false;                               // only decimal point
     bool bDecimalPoint = false;
     double factor = 1.0;
     for ( ; *pChar ; ++pChar )
@@ -381,19 +407,22 @@ bool MyString2Double(wxString& a_string, double& a_value)
         if ( isdigit(*pChar) )
         {
             a_value = a_value*10 + (*pChar - '0');
-            if ( bDecimalPoint ) factor *= 10.0;
+            if ( bDecimalPoint )
+                factor *= 10.0;
         }
         else
             if ( *pChar == ',' || *pChar == '.' )
             {
-                if ( bDecimalPoint ) return false;  // can't have two of them
+                if ( bDecimalPoint )
+                    return false;   // can't have two of them
                 bDecimalPoint = true;
             }
             else return false;                      // unknown char
     }
 
     a_value /= factor;
-    if ( bSign ) a_value = -a_value;
+    if ( bSign )
+        a_value = -a_value;
     return true;
 }   // MyString2Double()
 #endif

@@ -84,12 +84,12 @@ void NameEditor::AutotestRequestMousePositions(MyTextFile* a_pFile)
 bool NameEditor::OnCellChanging(const CellInfo& a_cellInfo)
 {
     AUTOTEST_BUSY("cellChanging");
-    if (a_cellInfo.pList != m_theGrid)
+    if ( a_cellInfo.pList != m_theGrid )
     {
         return CELL_CHANGE_OK;  //hm, its not my grid
     }
 
-    if (m_bIsScriptTesting)
+    if ( m_bIsScriptTesting )
     {
         wxString msg;
         msg.Printf(_("NameEditor: row %d, column %d changes from <%s> to <%s>")
@@ -105,29 +105,29 @@ bool NameEditor::OnCellChanging(const CellInfo& a_cellInfo)
 
     m_bDataChanged = true;              // ALWAYS set to true: the CELL_CHANGE_REJECTED is (mis-)used to change the changing column!
     int col = a_cellInfo.column;
-    if (col == COL_PAIRNAME)            // pairnames may change, we handle them on Ok/Cancel
+    if ( col == COL_PAIRNAME )          // pairnames may change, we handle them on Ok/Cancel
     {
         return CELL_CHANGE_OK;          // accept change
     }
 
     int row = a_cellInfo.row;
-    if (col == COL_CLUBNAME)
+    if ( col == COL_CLUBNAME )
     {
         wxString    newName = a_cellInfo.newData;
         int         clubId  = wxAtoi(m_theGrid->GetCellValue (row, COL_CLUBID));
-        if (newName.IsEmpty())
+        if ( newName.IsEmpty() )
         {   // remove club info for this pair
             m_theGrid->SetCellValue (row, COL_CLUBID, ES);
         }
         else
         {   // non empty name
-            if (clubId == 0)
+            if ( clubId == 0 )
             {   // no clubname assigned yet: check for exsting clubname
                 clubId = GetClubIndex(newName);
-                if (clubId == 0)
+                if ( clubId == 0 )
                 {   // new clubname, add to database and update pairinfo
                     clubId = AddClubName(newName);
-                    if (clubId == 0)
+                    if ( clubId == 0 )
                         return CELL_CHANGE_REJECTED; // no more room in club table
                     m_theGrid->SetCellValue (row, COL_CLUBID, U2String(clubId));
                 }
@@ -150,10 +150,11 @@ bool NameEditor::OnCellChanging(const CellInfo& a_cellInfo)
                 // change clubname in database and for other pairs
                 bool bResult = SetClubName( newName, clubId); MY_UNUSED(bResult);
                 //  RefreshInfo()?????
-                for ( int checkRow = 0; checkRow < m_theGrid->GetNumberRows(); ++checkRow)
+                for ( int checkRow = 0; checkRow < m_theGrid->GetNumberRows(); ++checkRow )
                 {
-                    if (checkRow == row) continue;
-                    if (clubId == wxAtoi(m_theGrid->GetCellValue (checkRow, COL_CLUBID)))
+                    if ( checkRow == row )
+                        continue;
+                    if ( clubId == wxAtoi(m_theGrid->GetCellValue (checkRow, COL_CLUBID)) )
                     {
                         m_theGrid->SetCellValue (checkRow, COL_CLUBNAME, newName);
                     }
@@ -164,7 +165,7 @@ bool NameEditor::OnCellChanging(const CellInfo& a_cellInfo)
     else
     {   // change in clubId
         int newId = wxAtoi(a_cellInfo.newData);
-        if (newId == 0)
+        if ( newId == 0 )
         {   // remove clubinfo for this pair
             m_theGrid->SetCellValue (row, COL_CLUBNAME, ES);
             m_theGrid->SetCellValue (row, COL_CLUBID  , ES);
@@ -172,7 +173,7 @@ bool NameEditor::OnCellChanging(const CellInfo& a_cellInfo)
         }
         else
         {
-            if (ExistClub(newId))
+            if ( ExistClub(newId) )
                 m_theGrid->SetCellValue ( row, COL_CLUBNAME, GetClubName(newId) );
             else
                 return CELL_CHANGE_REJECTED;    // not allowed to create clubid
@@ -195,10 +196,10 @@ void NameEditor::RefreshInfo()
     m_theGrid->BeginBatch();    // no screenupdates for a while
     m_theGrid->EmptyGrid();     // just in case...
 
-    for (auto it = pairInfo.begin()+1; it != pairInfo.end(); ++it)
+    for ( auto it = pairInfo.begin()+1; it != pairInfo.end(); ++it )
     {
         int index = it->clubIndex;
-        if (index)
+        if ( index )
             AddName(it->pairName, GetClubName(index), FMT("%2d",index));
         else
             AddName(it->pairName);
@@ -217,7 +218,7 @@ void NameEditor::RefreshInfo()
 void NameEditor::AddName(const wxString& a_pairName, const wxString& a_clubName, const wxString& a_clubId)
 {
     int count = m_theGrid->GetNumberRows();
-    if (count < cfg::MAX_PAIRS)
+    if ( count < cfg::MAX_PAIRS )
     {
         m_theGrid->AppendRows(1);
         if ( a_pairName.IsEmpty() )
@@ -249,17 +250,18 @@ void NameEditor::OnAddName(const wxCommandEvent& /*event*/)
 {
     MyLogMessage("NameEditor::BackupData()");
 
-    if (!m_bDataChanged) return;
+    if ( !m_bDataChanged )
+        return;
     m_bDataChanged = false;
     using namespace names;
 
     int maxRows = m_theGrid->GetNumberRows();
-    for (int row = 0; row < maxRows; ++row)
+    for ( int row = 0; row < maxRows; ++row )
     {
         wxString    name    =  m_theGrid->GetCellValue(row, COL_PAIRNAME);
         int         clubId  =  wxAtoi( m_theGrid->GetCellValue(row, COL_CLUBID));
         PairInfo    info( name, clubId);
-        if (ExistGlobalPairnr(row+1))
+        if ( ExistGlobalPairnr(row+1) )
             ChangePairInfo(info, row+1);
         else
             AddGlobalPairInfo(info);

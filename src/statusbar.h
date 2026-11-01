@@ -18,7 +18,7 @@ public:
 
 protected:
     // event handlers
-    void OnTimer(const wxTimerEvent& WXUNUSED(event));
+    void OnTimer(const wxTimerEvent&);
 
 private:
     enum

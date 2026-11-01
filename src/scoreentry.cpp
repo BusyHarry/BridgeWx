@@ -32,7 +32,7 @@ enum
     , COL_NR_OF         // nr of columns in this grid
 };
 
-static std::vector< std::vector<score::GameSetData> > svGameSetData;   // [cfg::max_games+1]
+static std::vector< std::vector<score::GameSetData> > s_vGameSetData;   // [cfg::max_games+1]
 static bool     GetScore        (UINT theGame, UINT nsPair, score::GameSetData& setData, bool& a_bReversed); // return requested data. true if found. if NS-EW are a_bReversed, flag is set
 
 constexpr auto CHOICE_ID_SLIP   = 0ULL; // slip/game added FIRST to this sizer
@@ -151,7 +151,7 @@ ScoreEntry::ScoreEntry(wxWindow* a_pParent, UINT a_pageId) :Baseframe(a_pParent,
     SetSizer(vBox);     // add to panel
 
     m_uActiveGame = cfg::GetFirstGame();
-    svGameSetData.resize(cfg::MAX_GAMES+1); //expected to be present: no checks are done...
+    s_vGameSetData.resize(cfg::MAX_GAMES+1); //expected to be present: no checks are done...
 
     RefreshInfo();                  // fill the grid with data
     Bind(wxEVT_GRID_CELL_LEFT_CLICK, &ScoreEntry::OnSelectCell, this, wxID_ANY);    // AFTER refreshinfo
@@ -191,12 +191,12 @@ static int PopUp(MyGrid* pGrid, const CellInfo& a_cellInfo, const wxString& msg,
 bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
 {
     AUTOTEST_BUSY("cellChanging");
-    if (a_cellInfo.pList != m_theGrid)
+    if ( a_cellInfo.pList != m_theGrid )
     {
         return CELL_CHANGE_OK;  //hm, its not my grid
     }
 
-    if ((a_cellInfo.column == COL_CONTRACT_NS) || (a_cellInfo.column == COL_CONTRACT_EW))
+    if ( (a_cellInfo.column == COL_CONTRACT_NS) || (a_cellInfo.column == COL_CONTRACT_EW) )
     {
         wxString    newData     = a_cellInfo.newData;
         int         row         = a_cellInfo.row;
@@ -206,9 +206,10 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
         bool bVulnerable = '*' == sessionPair[0];
         wxString    result;
         int score = score::GetContractScoreFromString(newData, bVulnerable, result);
-        if (score == CONTRACT_MALFORMED || score == CONTRACT_NOT_CONSISTENT)
+        if ( score == CONTRACT_MALFORMED || score == CONTRACT_NOT_CONSISTENT )
         {
-            if (result.IsEmpty()) result = _("Can't interpret contract!") + "\n\n" + score::GetContractExplanation();
+            if ( result.IsEmpty() )
+                result = _("Can't interpret contract!") + "\n\n" + score::GetContractExplanation();
             PopUp(m_theGrid, a_cellInfo, result);
             m_theGrid->CallAfter([this,a_cellInfo](){this->m_theGrid->GoToCell(a_cellInfo.row, a_cellInfo.column);});
         }
@@ -228,7 +229,7 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
     if ( (a_cellInfo.column != COL_SCORE_NS ) && (a_cellInfo.column != COL_SCORE_EW) )
         return CELL_CHANGE_REJECTED;    // should not happen...
 
-    if (m_bIsScriptTesting)
+    if ( m_bIsScriptTesting )
     {
         wxString msg;
         msg.Printf(_("ScoreEntry:: row %2d, column %d changing from <%s> to <%s>")
@@ -248,21 +249,21 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
     int         score       = score::ScoreFromString(newData);
     m_startrow4EmptyScore   = row;
 
-    if (score == SCORE_NONE)
+    if ( score == SCORE_NONE )
     {   // empty string
-        if (bNS)    // remove EW score, if present...
+        if ( bNS )  // remove EW score, if present...
             m_theGrid->SetCellValue(row, COL_SCORE_EW, ES);
     }
     else
     {   // we have a non-empty score, now test if its a possible one
         score::ScoreValidation result = score::IsScoreValid(score, game, bNS);
-        if ((score != SCORE_NP) && !result == score::ScoreValid)
+        if ( (score != SCORE_NP) && !result == score::ScoreValid )
         {
             wxString msg = result == score::ScoreSpecial
                 ? _("unexpected/special score, accept anyway?")
                 : _("invalid score, accept anyway?");
 
-            if (wxNO == PopUp(m_theGrid, a_cellInfo, msg, wxYES_NO | wxICON_INFORMATION))
+            if ( wxNO == PopUp(m_theGrid, a_cellInfo, msg, wxYES_NO | wxICON_INFORMATION) )
             {
                 // 'new' data stays in grid, so putback old again.....
                 m_theGrid->SetCellValue(row, col, a_cellInfo.oldData);
@@ -274,9 +275,9 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
 
         // now we have valid score or accepted a for me unknown score...
         // check if NS and adjusted --> goto EW for adjusted score
-        if (score::IsReal(score))
+        if ( score::IsReal(score) )
         {
-            if (!bNS)
+            if ( !bNS )
             {   // EW should ALWAYS be adjusted!
                 RingBell();
                 m_theGrid->CallAfter([this,a_cellInfo](){this->m_theGrid->GoToCell(a_cellInfo.row, COL_SCORE_EW);});
@@ -286,7 +287,7 @@ bool ScoreEntry::OnCellChanging(const CellInfo& a_cellInfo)
         else
         {
             m_theGrid->CallAfter([this,a_cellInfo](){this->m_theGrid->SetCellValue(a_cellInfo.row, a_cellInfo.column, a_cellInfo.newData.Upper());});
-            if (bNS && (score != SCORE_NP))
+            if ( bNS && (score != SCORE_NP) )
             {
                 m_theGrid->SetReadOnly(a_cellInfo.row, COL_SCORE_EW, false );   // set it editable...
                 m_theGrid->CallAfter([this,a_cellInfo](){this->m_theGrid->GoToCell(a_cellInfo.row, COL_SCORE_EW);});
@@ -320,13 +321,13 @@ void ScoreEntry::SaveRowData()
     UINT game   = wxAtoi(m_theGrid->GetCellValue(m_iRowToSave, COL_GAME));
     UINT ns     = GetSessionPairnrFromGrid(m_theGrid, m_iRowToSave, COL_NS);
     int scoreNS = score::ScoreFromString(m_theGrid->GetCellValue(m_iRowToSave, COL_SCORE_NS));
-    std::vector<score::GameSetData>& scores = svGameSetData[game];
+    std::vector<score::GameSetData>& scores = s_vGameSetData[game];
     score::GameSetData setData;
     auto it = std::ranges::find_if(scores, [ns](const score::GameSetData& lhs){return lhs.pairNS == ns || lhs.pairEW == ns;});
 
     if ( (scoreNS == SCORE_NONE) || (scoreNS == SCORE_NP) ) // remove NP for compatibility with old programm
     {   // empty score or not played, remove from data
-            if (it != scores.end() )
+            if ( it != scores.end() )
             {
                 scores.erase(it);
             }
@@ -343,7 +344,7 @@ void ScoreEntry::SaveRowData()
     setData.scoreEW= scoreEW;
     setData.contractNS = m_theGrid->GetCellValue(m_iRowToSave, COL_CONTRACT_NS);
     setData.contractEW = m_theGrid->GetCellValue(m_iRowToSave, COL_CONTRACT_EW);
-    if (it != scores.end() )
+    if ( it != scores.end() )
     {
         *it = setData;
     }
@@ -370,33 +371,36 @@ void ScoreEntry::OnSelectGame(const wxCommandEvent&)
 bool ScoreEntry::FindEmptyScore()
 {
     int maxRow  = m_theGrid->GetNumberRows();
-    if (maxRow == 0) return false;    //  nothing to do
+    if ( maxRow == 0 )
+        return false;   //  nothing to do
     int     row         = m_startrow4EmptyScore;
     bool    bFoundEmpty = false;
     int     count       = 0;
     do
     {
         ++count;
-        if (++row >= maxRow) row = 0;
-        if ( (m_startrow4EmptyScore == INIT_ROW) && (row == 0) ) m_startrow4EmptyScore = 0;    // prevent endless loop if no empty scores
+        if ( ++row >= maxRow )
+            row = 0;
+        if ( (m_startrow4EmptyScore == INIT_ROW) && (row == 0) )
+            m_startrow4EmptyScore = 0;  // prevent endless loop if no empty scores
         wxString score = m_theGrid->GetCellValue(row, COL_SCORE_NS);
         int col = COL_SCORE_NS;
 
-        if (score.Trim().IsEmpty())
+        if ( score.Trim().IsEmpty() )
         {
             bFoundEmpty = true;
         }
         else
         {
             wxChar firstChar = score[0];
-            if ( (firstChar == '%' || firstChar == 'R') && m_theGrid->GetCellValue(row, COL_SCORE_EW).IsEmpty())
+            if ( (firstChar == '%' || firstChar == 'R') && m_theGrid->GetCellValue(row, COL_SCORE_EW).IsEmpty() )
             {
                 col = COL_SCORE_EW;
                 bFoundEmpty = true;
             }
         }
 
-        if (bFoundEmpty)
+        if ( bFoundEmpty )
         {
             // MyLogDebug("NextEmpty(): van rij %i naar rij %i, colom %u", m_startrow4EmptyScore, row, col);
             m_theGrid->SetFocus();
@@ -407,7 +411,7 @@ bool ScoreEntry::FindEmptyScore()
             break;
         }
 
-    } while (count != maxRow );
+    } while ( count != maxRow );
 
 //    MyLogInfo(_("NextEmpty(%i,%i): %s"), row, col, bFoundEmpty ? _("yes") : _("no"));
      return bFoundEmpty;
@@ -451,12 +455,13 @@ void ScoreEntry::RefreshInfo()
         m_uActiveGame = firstGame;  // force inrange if firstgame was changed inbetween...
 
     bool bMissingSchema = false;
-    for (auto itGrp = pGrp->begin(); itGrp != pGrp->end(); ++itGrp)
+    for ( auto itGrp = pGrp->begin(); itGrp != pGrp->end(); ++itGrp )
     {   //GameInfo{UINT round=0; UINT set=0; NS_EW pairs;};
-        if (itGrp->schemaId == schema::ID_NONE) bMissingSchema = true;
+        if ( itGrp->schemaId == schema::ID_NONE )
+            bMissingSchema = true;
         UINT pairBase   = itGrp->groupOffset;
         UINT pairAbsent = itGrp->absent+pairBase;
-        if (m_bSlipOrder)
+        if ( m_bSlipOrder )
         {
             schema::GetRoundInfo(itGrp->schemaId, m_uActiveRound, m_bGameOrder, info);
         }
@@ -469,13 +474,14 @@ void ScoreEntry::RefreshInfo()
         {
             UINT        nsPair      = itSet.pairs.ns+pairBase;
             UINT        ewPair      = itSet.pairs.ew+pairBase;
-            if (pairAbsent == nsPair || pairAbsent == ewPair) continue; // don't show entry for absent pair
+            if ( pairAbsent == nsPair || pairAbsent == ewPair )
+                continue;   // don't show entry for absent pair
             UINT        gameBase    = (itSet.set - 1)*setSize + firstGame - 1;
             wxString    nsName      = names::PairnrSession2SessionText(nsPair);
             wxString    ewName      = names::PairnrSession2SessionText(ewPair);
 
             UINT        setSizeTmp = m_bSlipOrder ? setSize : 1;
-            for (UINT game = 1; game <= setSizeTmp; ++game,++currentRow)
+            for ( UINT game = 1; game <= setSizeTmp; ++game,++currentRow )
             {
                 UINT theGame = m_bSlipOrder ? gameBase+game : m_uActiveGame;
                 m_theGrid->AppendRows(1);
@@ -484,14 +490,14 @@ void ScoreEntry::RefreshInfo()
                 score::GameSetData data;
                 bool bReversed = false;
                 wxString scoreNS, scoreEW;
-                if (GetScore(theGame, nsPair, data, bReversed))
+                if ( GetScore(theGame, nsPair, data, bReversed) )
                 {
                     scoreNS = score::ScoreToString(data.scoreNS);
                     if ( data.scoreNS != SCORE_NP )
                         scoreEW = score::ScoreToString(data.scoreEW);
                 }
 
-                if (bReversed)
+                if ( bReversed )
                 {   // temporary swap NS-EW values
                     std::swap(nsName,ewName);
                     std::swap(nsPair,ewPair);
@@ -503,21 +509,21 @@ void ScoreEntry::RefreshInfo()
                 m_theGrid->SetCellValue(currentRow, COL_EW         , score::VulnerableChar(theGame, IS_EW) + ewName);
                 m_theGrid->SetCellValue(currentRow, COL_CONTRACT_NS, data.contractNS);
                 m_theGrid->SetCellValue(currentRow, COL_CONTRACT_EW, data.contractEW);
-                if (game == 1)
+                if ( game == 1 )
                 {   // if scoreslips, only display playernames for first game on the slip
                     m_theGrid->SetCellValue(currentRow, COL_NAME_NS , names::PairnrSession2GlobalText(nsPair) );
                     m_theGrid->SetCellValue(currentRow, COL_NAME_EW , names::PairnrSession2GlobalText(ewPair) );
-                    if (setSizeTmp != 1)
+                    if ( setSizeTmp != 1 )
                         m_theGrid->SetRowBackground(currentRow, myLightGrey /* *wxLIGHT_GREY*/);
                 }
 
-                if (bReversed)
+                if ( bReversed )
                 {   // swap back....
                     std::swap(nsName,ewName);
                     std::swap(nsPair,ewPair);
                 }
                 m_theGrid->SetCellValue(currentRow, COL_SCORE_NS, scoreNS);
-                if ( data.scoreNS != -data.scoreEW) // only display EW-score if adjusted
+                if ( data.scoreNS != -data.scoreEW )    // only display EW-score if adjusted
                     m_theGrid->SetCellValue(currentRow, COL_SCORE_EW, scoreEW);
 
                 m_theGrid->SetReadOnly(currentRow, COL_GAME     );
@@ -538,7 +544,7 @@ void ScoreEntry::RefreshInfo()
     m_theGrid->EndBatch();                  // now you can show the changes
 
     // update/show wanted control(s), hide non-needed control(s)
-    if (m_bSlipOrder)
+    if ( m_bSlipOrder )
     {
         m_pChoiceRound->Init( nrOfGames/setSize, m_uActiveRound - 1 );
         m_pSizerAllChoices->Show(CHOICE_ID_GAME_NS);
@@ -558,10 +564,10 @@ void ScoreEntry::RefreshInfo()
     m_theGrid->SetColSize(COL_CONTRACT_EW, m_pCheckboxContract->GetValue() ? SIZE_CONTRACT : 0);
 
     Layout();
-    static wxString explanation;    // MUST be initialized dynamically: translation
-    explanation = _("Scoreentry: normal: <score>, adjusted: '%'<score> or 'r'<score> or 'np'=not played, contract: <y>'SUIT'[[+|-]<x>][*[*]]");
-    SendEvent2Mainframe(this, ID_STATUSBAR_SETTEXT, &explanation);
-    if (bMissingSchema)
+    static wxString s_explanation;    // MUST be initialized dynamically: translation
+    s_explanation = _("Scoreentry: normal: <score>, adjusted: '%'<score> or 'r'<score> or 'np'=not played, contract: <y>'SUIT'[[+|-]<x>][*[*]]");
+    SendEvent2Mainframe(this, ID_STATUSBAR_SETTEXT, &s_explanation);
+    if ( bMissingSchema )
     {
         wxString msg = _("not all groups have a valid schema");
         MyLogDebug("ScoreEntry: %s", msg);
@@ -629,7 +635,8 @@ void ScoreEntry::OnSwitchNsEw(const wxCommandEvent& )
     m_theGrid->SetCellBackgroundColour(row, COL_NS, org);
     m_theGrid->SetCellBackgroundColour(row, COL_EW, org);
     m_theGrid->Refresh();
-    if (bNo) return;
+    if ( bNo )
+        return;
 
     m_theGrid->SetCellValue(row, COL_NS, nsNew);
     m_theGrid->SetCellValue(row, COL_EW, ewNew);
@@ -646,16 +653,17 @@ void ScoreEntry::OnSwitchNsEw(const wxCommandEvent& )
 
 void ScoreEntry::WriteScoresToDisk()
 {
-    if (!m_bDataChanged) return;
-    score::SetScoreData(svGameSetData);
+    if ( !m_bDataChanged )
+        return;
+    score::SetScoreData(s_vGameSetData);
     m_bDataChanged = false;
 }   // WriteScoresToDisk()
 
 void ScoreEntry::InitializeScores()
 {
-    if (ConfigChanged() || m_bCancelInProgress)
+    if ( ConfigChanged() || m_bCancelInProgress )
     {
-        svGameSetData       = *score::GetScoreData();
+        s_vGameSetData      = *score::GetScoreData();
         m_bDataChanged      = false;
         m_bCancelInProgress = false;
     }
@@ -665,7 +673,7 @@ void ScoreEntry::AutotestRequestMousePositions(MyTextFile* a_pFile)
 {
     // position/size of "ChoiceRound" and "ChoiceGame" are only actual if they were setup before,
     // so init both situations to be sure!
-    for ([[maybe_unused]] auto ii : {1,2} )
+    for ( [[maybe_unused]] auto ii : {1,2} )
     {
         m_bSlipOrder = !m_bSlipOrder;
         RefreshInfo();
@@ -694,21 +702,22 @@ void ScoreEntry::OnCheckboxContract(const wxCommandEvent&)
 static bool GetScore(UINT a_theGame, UINT a_nsPair, score::GameSetData& a_setData, bool& a_bReversed)
 {
     assert (a_theGame <= cfg::MAX_GAMES);
-    if ( a_theGame > cfg::MAX_GAMES) return false;
+    if ( a_theGame > cfg::MAX_GAMES )
+        return false;
     bool bScoreFound        = false;
-    const auto& gameData    = svGameSetData[a_theGame];
+    const auto& gameData    = s_vGameSetData[a_theGame];
 
     a_bReversed = false;    // assume ok
     a_setData={0};
-    for (const auto& setData : gameData)
+    for ( const auto& setData : gameData )
     {
-        if (setData.pairNS == a_nsPair)
+        if ( setData.pairNS == a_nsPair )
         {
             a_setData = setData;
             bScoreFound = true;
             break;
         }
-        if (setData.pairEW == a_nsPair)
+        if ( setData.pairEW == a_nsPair )
         {
             a_setData = setData;
             a_bReversed = true;

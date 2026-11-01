@@ -24,10 +24,10 @@ namespace  org
     constexpr UINT MAX_CLUBID_UNION3= 60;   //cfg::MAX_CLUBID_UNION
     constexpr UINT MAX_CLUB_SIZE3   = 25;   //cfg::MAX_CLUB_SIZE
 
-    static wxFileConfig*    spConfigMatch    = nullptr;     // match global configuration items
-    static wxFileConfig*    spConfigSession  = nullptr;     // session specific configuration items
-    static wxString currentIniMatch;
-    static wxString currentIniSession;
+    static wxFileConfig*    s_pConfigMatch    = nullptr;    // match global configuration items
+    static wxFileConfig*    s_pConfigSession  = nullptr;    // session specific configuration items
+    static wxString         s_sCurrentIniMatch;
+    static wxString         s_sCurrentIniSession;
 
     int ScoresWriteEx(const wxString& /*a_dBase*/, const vvScoreData& /*a_scoreData*/, UINT /*a_session*/)
     {
@@ -45,7 +45,7 @@ namespace  org
 
     wxFileConfig* GetpCfg(keyId a_id)
     {
-        switch (a_id)
+        switch ( a_id )
         {
             case KEY_SESSION_DISCR:
             case KEY_SESSION_SCHEMA:
@@ -57,49 +57,51 @@ namespace  org
             case KEY_SESSION_RESULT:
             case KEY_SESSION_RANK_SESSION:
             case KEY_SESSION_RANK_TOTAL:
-                return spConfigSession;
+                return s_pConfigSession;
             default:
-                return spConfigMatch;
+                return s_pConfigMatch;
         }
     }   // GetpCfg()
 
-    static bool sbIsInit = false;
-    static std::map<keyId, wxString> smKeyToString;
+    static bool s_bIsInit = false;
+    static std::map<keyId, wxString> s_mKeyToString;
     static wxString GetKeyName(keyId a_id)
     {
-        if (!sbIsInit)
+        if ( !s_bIsInit )
         {   // DON'T change keywords: database from other language will not be readable!
-            sbIsInit = true;
-            smKeyToString[KEY_PRG_VERSION]          = "versie";
-            smKeyToString[KEY_MATCH_CMNT]           = "kommentaar";
-            smKeyToString[KEY_MATCH_SESSION]        = "ronde";
-            smKeyToString[KEY_MATCH_PRNT]           = "printer";
-            smKeyToString[KEY_MATCH_MAX_ABSENT]     = "max_afwezig";
-            smKeyToString[KEY_MATCH_MAXMEAN]        = "max_gemiddelde";
-            smKeyToString[KEY_MATCH_CLOCK]          = "klok";
-            smKeyToString[KEY_MATCH_WEIGHTAVG]      = "gewogengemiddelde";
-            smKeyToString[KEY_MATCH_VIDEO]          = "bios_video";             //??
-            smKeyToString[KEY_MATCH_LINESPP]        = "regels_per_blz";
-            smKeyToString[KEY_MATCH_NEUBERG]        = "neuberg";
-            smKeyToString[KEY_MATCH_GRPRESULT]      = "groep_uitslag";
-            smKeyToString[KEY_MATCH_MMCLUB]         = "min_maks_club";
-            smKeyToString[KEY_MATCH_FF]             = "form_feed";              //??
-            smKeyToString[KEY_MATCH_GLOBALNAMES]    = "centrale_namen";         //??
-            smKeyToString[KEY_SESSION_DISCR]        = "beschrijving";
-            smKeyToString[KEY_MATCH_DISCR]          = "beschrijving";
-            smKeyToString[KEY_MATCH_BUTLER]         = "butler";
-            smKeyToString[KEY_SESSION_SCHEMA]       = "schema";
-            smKeyToString[KEY_SESSION_GROUPLETTERS] = "groepletters";           //??
-            smKeyToString[KEY_SESSION_FIRSTGAME]    = "eerste_spel";            //??
+            s_bIsInit = true;
+            s_mKeyToString[KEY_PRG_VERSION]          = "versie";
+            s_mKeyToString[KEY_MATCH_CMNT]           = "kommentaar";
+            s_mKeyToString[KEY_MATCH_SESSION]        = "ronde";
+            s_mKeyToString[KEY_MATCH_PRNT]           = "printer";
+            s_mKeyToString[KEY_MATCH_MAX_ABSENT]     = "max_afwezig";
+            s_mKeyToString[KEY_MATCH_MAXMEAN]        = "max_gemiddelde";
+            s_mKeyToString[KEY_MATCH_CLOCK]          = "klok";
+            s_mKeyToString[KEY_MATCH_WEIGHTAVG]      = "gewogengemiddelde";
+            s_mKeyToString[KEY_MATCH_VIDEO]          = "bios_video";             //??
+            s_mKeyToString[KEY_MATCH_LINESPP]        = "regels_per_blz";
+            s_mKeyToString[KEY_MATCH_NEUBERG]        = "neuberg";
+            s_mKeyToString[KEY_MATCH_GRPRESULT]      = "groep_uitslag";
+            s_mKeyToString[KEY_MATCH_MMCLUB]         = "min_maks_club";
+            s_mKeyToString[KEY_MATCH_FF]             = "form_feed";              //??
+            s_mKeyToString[KEY_MATCH_GLOBALNAMES]    = "centrale_namen";         //??
+            s_mKeyToString[KEY_SESSION_DISCR]        = "beschrijving";
+            s_mKeyToString[KEY_MATCH_DISCR]          = "beschrijving";
+            s_mKeyToString[KEY_MATCH_BUTLER]         = "butler";
+            s_mKeyToString[KEY_SESSION_SCHEMA]       = "schema";
+            s_mKeyToString[KEY_SESSION_GROUPLETTERS] = "groepletters";           //??
+            s_mKeyToString[KEY_SESSION_FIRSTGAME]    = "eerste_spel";            //??
         }
 
-        return smKeyToString[a_id];
+        return s_mKeyToString[a_id];
     }   // GetKeyName()
 
     bool DatabaseFlush(io::GlbDbType a_type)
     {
-        if (spConfigMatch   && (a_type & io::DB_MATCH  ) ) spConfigMatch  ->Flush();
-        if (spConfigSession && (a_type & io::DB_SESSION) ) spConfigSession->Flush();
+        if ( s_pConfigMatch && (a_type & io::DB_MATCH  ) )
+            s_pConfigMatch->Flush();
+        if ( s_pConfigSession && (a_type & io::DB_SESSION) )
+            s_pConfigSession->Flush();
         return false;
     }   // DatabaseFlush()
 
@@ -108,27 +110,27 @@ namespace  org
         wxString*           oldIni;
         wxFileConfig**      fileCfg;
         cfg::FileExtension  fe;
-        if (a_dbType == io::DB_MATCH)
+        if ( a_dbType == io::DB_MATCH )
         {
-            oldIni    = &currentIniMatch;
-            fileCfg   = &spConfigMatch;
+            oldIni    = &s_sCurrentIniMatch;
+            fileCfg   = &s_pConfigMatch;
             fe        = cfg::EXT_MAIN_INI;
         }
         else
         {
-            oldIni    = &currentIniSession;
-            fileCfg   = &spConfigSession;
+            oldIni    = &s_sCurrentIniSession;
+            fileCfg   = &s_pConfigSession;
             fe        = cfg::EXT_SESSION_INI;
         }
 
         wxString newIni = _ConstructFilename(fe);
-        if (a_how2Open == CFG_ONLY_READ)
+        if ( a_how2Open == CFG_ONLY_READ )
         {   // only handle file if it already exists, so don't create it yet
-            if (!wxFile::Exists(newIni))
+            if ( !wxFile::Exists(newIni) )
                 return CFG_ERROR;
         }
 
-        if (*oldIni != newIni || *fileCfg == nullptr)
+        if ( *oldIni != newIni || *fileCfg == nullptr )
         {   // we have new config file, so close current and create a new one
             *oldIni = newIni;
             delete *fileCfg;
@@ -143,90 +145,126 @@ namespace  org
 
     bool DatabaseClose(io::GlbDbType a_type)
     {
-        if (spConfigMatch   && (a_type & io::DB_MATCH  ) ) { delete spConfigMatch;   spConfigMatch   = nullptr;currentIniMatch.clear();}
-        if (spConfigSession && (a_type & io::DB_SESSION) ) { delete spConfigSession; spConfigSession = nullptr;currentIniSession.clear();}
+        if ( s_pConfigMatch && (a_type & io::DB_MATCH) )
+        {
+            delete s_pConfigMatch;
+            s_pConfigMatch= nullptr;
+            s_sCurrentIniMatch.clear();
+        }
+        if ( s_pConfigSession && (a_type & io::DB_SESSION) )
+        {
+            delete s_pConfigSession;
+            s_pConfigSession = nullptr;
+            s_sCurrentIniSession.clear();
+        }
         return true;
     }   // DatabaseClose()
 
     bool DatabaseIsOpen(io::GlbDbType a_dbType)
     {
-        return (a_dbType == io::DB_MATCH) ? (spConfigMatch != nullptr) : (spConfigSession != nullptr);
+        return (a_dbType == io::DB_MATCH) ? (s_pConfigMatch != nullptr) : (s_pConfigSession != nullptr);
     }   // DatabaseIsOpen()
 
     wxString ReadValue(keyId a_id, const wxString& a_default, UINT /*session*/)
     {
-        const wxFileConfig* pCfg = GetpCfg(a_id); if (pCfg == nullptr) return a_default;
+        const wxFileConfig* pCfg = GetpCfg(a_id);
+        if ( pCfg == nullptr )
+            return a_default;
         return pCfg->Read(GetKeyName(a_id), a_default);
     }   // ReadValue()
 
     bool ReadValueBool(keyId a_id, bool a_default, UINT /*session*/)
     {
-        const wxFileConfig* pCfg = GetpCfg(a_id); if (pCfg == nullptr) return a_default;
+        const wxFileConfig* pCfg = GetpCfg(a_id);
+        if ( pCfg == nullptr )
+            return a_default;
         return pCfg->ReadBool(GetKeyName(a_id), a_default);
     }   // ReadValueBool()
 
     long ReadValueLong(keyId a_id, long a_default, UINT /*session*/)
     {
-        const wxFileConfig* pCfg = GetpCfg(a_id); if (pCfg == nullptr) return a_default;
+        const wxFileConfig* pCfg = GetpCfg(a_id);
+        if ( pCfg == nullptr )
+            return a_default;
         return pCfg->Read(GetKeyName(a_id), a_default);
     }   // ReadValueLong()
 
     UINT ReadValueUINT(keyId a_id, UINT a_default, UINT /*session*/)
     {
-        const wxFileConfig* pCfg = GetpCfg(a_id); if (pCfg == nullptr) return a_default;
+        const wxFileConfig* pCfg = GetpCfg(a_id);
+        if ( pCfg == nullptr )
+            return a_default;
         return GetpCfg(a_id)->Read(GetKeyName(a_id), a_default);
     }   // ReadValueUINT()
 
     bool WriteValue(keyId a_id, const wxString& a_value, UINT /*session*/)
     {
-        wxFileConfig* pCfg = GetpCfg(a_id); if (pCfg == nullptr) return false;
+        wxFileConfig* pCfg = GetpCfg(a_id);
+        if ( pCfg == nullptr )
+            return false;
         return pCfg->Write(GetKeyName(a_id), a_value);
     }   // WriteValue()
 
     bool WriteValue(keyId a_id, bool a_value, UINT /*session*/)
     {
-        wxFileConfig* pCfg = GetpCfg(a_id); if (pCfg == nullptr) return false;
+        wxFileConfig* pCfg = GetpCfg(a_id);
+        if ( pCfg == nullptr )
+            return false;
         return pCfg->Write(GetKeyName(a_id), a_value);
     }   // WriteValue()
 
     bool WriteValue(keyId a_id, long a_value, UINT /*session*/)
     {
-        wxFileConfig* pCfg = GetpCfg(a_id); if (pCfg == nullptr) return false;
+        wxFileConfig* pCfg = GetpCfg(a_id);
+        if ( pCfg == nullptr )
+            return false;
         return pCfg->Write(GetKeyName(a_id), a_value);
     }   // WriteValue()
 
     bool WriteValue(keyId a_id, UINT a_value, UINT /*session*/)
     {
-        if (a_id == KEY_MATCH_LINESPP)
-            {int x =1; (void)x;}
-        wxFileConfig* pCfg = GetpCfg(a_id); if (pCfg == nullptr) return false;
+        if ( a_id == KEY_MATCH_LINESPP )
+            {int x =1; wxUnusedVar(x);}
+        wxFileConfig* pCfg = GetpCfg(a_id);
+        if ( pCfg == nullptr )
+            return false;
         return pCfg->Write(GetKeyName(a_id), a_value);
     }   // WriteValue()
 
     bool MaxmeanRead(Fdp& a_maxmean)
     {
-        const wxFileConfig* pCfg = GetpCfg(KEY_MATCH_MAXMEAN); if (pCfg == nullptr) return false;
+        const wxFileConfig* pCfg = GetpCfg(KEY_MATCH_MAXMEAN);
+        if ( pCfg == nullptr )
+            return false;
         a_maxmean = pCfg->Read(GetKeyName(KEY_MATCH_MAXMEAN), a_maxmean.AsString2F());
         return true;
     }   // MaxmeanRead()
 
     bool MaxmeanWrite(const Fdp& a_maxmean)
     {
-        wxFileConfig* pCfg = GetpCfg(KEY_MATCH_MAXMEAN); if (pCfg == nullptr) return false;
+        wxFileConfig* pCfg = GetpCfg(KEY_MATCH_MAXMEAN);
+        if ( pCfg == nullptr )
+            return false;
         return pCfg->Write(GetKeyName(KEY_MATCH_MAXMEAN), a_maxmean.AsString2F());
     }   // MaxmeanWrite()
 
     static void ValidateMinMaxClub(UINT& a_min, UINT& a_max)
     {
-        if (a_max > MAX_PAIRS3) a_max = MAX_PAIRS3;
-        if (a_max == 0) a_max = 1;
-        if (a_min == 0) a_min = 1;
-        if (a_min > a_max) a_min = a_max;
+        if ( a_max > MAX_PAIRS3 )
+            a_max = MAX_PAIRS3;
+        if ( a_max == 0 )
+            a_max = 1;
+        if ( a_min == 0 )
+            a_min = 1;
+        if ( a_min > a_max )
+            a_min = a_max;
     }   // ValidateMinMaxClub()
 
     bool MinMaxClubRead(UINT& a_min, UINT& a_max)
     {
-        const wxFileConfig* pCfg = GetpCfg(KEY_MATCH_MMCLUB); if (pCfg == nullptr) return false;
+        const wxFileConfig* pCfg = GetpCfg(KEY_MATCH_MMCLUB);
+        if ( pCfg == nullptr )
+            return false;
         wxString tmp = pCfg->Read(GetKeyName(KEY_MATCH_MMCLUB), FMT("%u %u", a_min, a_max));
         wxSscanf(tmp, "%u %u", &a_min, &a_max);
         ValidateMinMaxClub(a_min, a_max);
@@ -235,7 +273,9 @@ namespace  org
 
     bool MinMaxClubWrite(UINT a_min, UINT a_max)
     {
-        wxFileConfig* pCfg = GetpCfg(KEY_MATCH_MMCLUB); if (pCfg == nullptr) return false;
+        wxFileConfig* pCfg = GetpCfg(KEY_MATCH_MMCLUB);
+        if ( pCfg == nullptr )
+            return false;
         ValidateMinMaxClub(a_min, a_max);
         return pCfg->Write(GetKeyName(KEY_MATCH_MMCLUB), FMT("%u %u", a_min, a_max));
     }   // MinMaxClubWrite()
@@ -272,7 +312,11 @@ namespace  org
         do // dummy while loop: easy exit via 'break'!
         {
             int items = wxSscanf(pData, wxT("S%uS%u"), &nrOfGames, &setSize);
-            if (items != 2) { bError = true; break; }
+            if ( items != 2 )
+            {
+                bError = true;
+                break;
+            }
 
             //now we have the nr of games and the setsize: get the values for all groups: {PxxAxx"schema"}*n
             size_t  offset      = a_schemaString.find('P');
@@ -280,10 +324,18 @@ namespace  org
             UINT    groupOffset = 0;
             while ( offset != wxString::npos )
             {   //sets of "PxxAxx[Oxx]"schema"
-                if (group >= MAX_GROUPS3)   { bError = true; break; }
+                if ( group >= MAX_GROUPS3 )
+                {
+                    bError = true;
+                    break;
+                }
                 int pairs, absent;
                 items = wxSscanf(pData+offset, wxT("P%uA%u"), &pairs, &absent);
-                if (items != 2) { bError = true; break; }
+                if ( items != 2 )
+                {
+                    bError = true;
+                    break;
+                }
                 cfg::GROUP_DATA tmp;
                 tmp.pairs       = pairs;
                 tmp.absent      = absent;
@@ -312,7 +364,11 @@ namespace  org
                 {
                     size_t end;
                     end = a_schemaString.find('"', start + 1);    // find end of schema definition
-                    if ( end == wxString::npos ) { bError = true; break; }
+                    if ( end == wxString::npos )
+                    {
+                        bError = true;
+                        break;
+                    }
                     tmp.schema = a_schemaString.substr(start + 1, end - start - 1);
                     tmp.schemaId = schema::GetId(tmp.schema);
                 }
@@ -321,9 +377,9 @@ namespace  org
                 offset = a_schemaString.find('P', offset + 1);  // find start of next definition
             }
             break;
-        } while (false);
+        } while ( false );
 
-        if (bError)
+        if ( bError )
         {
             LogError(_("groupcount: %u, schema: <%s>"), (UINT)groupData.size(), a_schemaString);
             MyMessageBox(a_schemaString, _("error in schema/groupchars"), wxOK | wxICON_INFORMATION);
@@ -338,7 +394,9 @@ namespace  org
 
     bool SchemaRead(cfg::SessionInfo& a_sessionInfo, UINT /*session*/)
     {
-        const wxFileConfig* pCfg = GetpCfg(KEY_SESSION_SCHEMA); if (pCfg == nullptr) return false;
+        const wxFileConfig* pCfg = GetpCfg(KEY_SESSION_SCHEMA);
+        if ( pCfg == nullptr )
+            return false;
 
         wxString tmp = pCfg->Read(GetKeyName(KEY_SESSION_SCHEMA), "S24S4P14A0\"6multi14\"");// "S24S4P14A0\"6multi14\"P16A3\"6t14\"" ); // <-- change to ""
         Handleschema(tmp, a_sessionInfo);
@@ -374,12 +432,14 @@ namespace  org
 
     bool SchemaWrite(const cfg::SessionInfo& a_sessionInfo, UINT /*session*/)
     {
-        wxFileConfig* pCfg = GetpCfg(KEY_SESSION_SCHEMA); if (pCfg == nullptr) return false;
+        wxFileConfig* pCfg = GetpCfg(KEY_SESSION_SCHEMA);
+        if ( pCfg == nullptr )
+            return false;
 
         auto maxGroup = (UINT)a_sessionInfo.groupData.size();
         wxString groupChars;
         wxString schema = FMT("S%uS%u", a_sessionInfo.nrOfGames, a_sessionInfo.setSize);
-        for (UINT group = 0; group < maxGroup; ++group)
+        for ( UINT group = 0; group < maxGroup; ++group )
         {
             groupChars += " " + a_sessionInfo.groupData[group].groupChars;
             schema += FMT("P%uA%u\"%s\""
@@ -414,14 +474,14 @@ namespace  org
         wxString pairNames = _ConstructFilename(cfg::EXT_NAMES);
         wxFFile fn;
         fn.Open( pairNames, "wb");
-        if (!fn.IsOpened())
+        if ( !fn.IsOpened() )
         {
             MyMessageBox(_("Cannot open file for write: ") + pairNames);
             return false;
         }
 
         int iErrors = 0;
-        for (size_t ii = 0; ii <= MAX_PAIRS3; ++ii)
+        for ( size_t ii = 0; ii <= MAX_PAIRS3; ++ii )
         {
             union
             {
@@ -438,7 +498,7 @@ namespace  org
             }
             else
             {
-                if ( ii < a_pairInfo.size())
+                if ( ii < a_pairInfo.size() )
                 {
                     int count = Unicode2Ascii(a_pairInfo[ii].pairName, thePairData.pairInfo.name, MY_NAMESIZE);
                     MY_UNUSED(count);
@@ -446,11 +506,11 @@ namespace  org
                 }
             }
 
-            if (MY_BUFSIZE != fn.Write(&thePairData.pairInfo, MY_BUFSIZE) )
+            if ( MY_BUFSIZE != fn.Write(&thePairData.pairInfo, MY_BUFSIZE) )
                 ++iErrors;
         }
 
-        if (iErrors)
+        if ( iErrors )
         {
             MyMessageBox(_("Error(s) at writing to file: ") + pairNames);
         }
@@ -507,45 +567,46 @@ namespace  org
         a_pairInfo.emplace_back();     // dummy first entry
 
         wxString pairNames = _ConstructFilename(cfg::EXT_NAMES);
-        if (!wxFileExists(pairNames)) return true;   // else error-popup when using logwindow :(
+        if ( !wxFileExists(pairNames) )
+            return true;    // else error-popup when using logwindow :(
         wxFFile fn;
         fn.Open(pairNames, "rb");
-        if (!fn.IsOpened())
+        if ( !fn.IsOpened() )
             return false;
 
         auto fileSize = fn.Length();
-        if (fileSize > sizeof(theData))
+        if ( fileSize > sizeof(theData) )
             return false;  // unhandled (old-) filesize
 
         fn.Read(&theData, fileSize);
         nrOfPairs = theData.pairs;
 
         bool bHandled = true;
-        if (fileSize == FILE_LENGTH_NAMES_OLD1)             // 'old' setup
+        if ( fileSize == FILE_LENGTH_NAMES_OLD1 )           // 'old' setup
         {
             nrOfPairs = std::min(nrOfPairs, AP_OLD1);       // nr of active pairs in data
 
-            for (UINT ii = 1; ii <= nrOfPairs;  ++ii)
+            for ( UINT ii = 1; ii <= nrOfPairs;  ++ii )
             {
                 a_pairInfo.emplace_back(Ascii2Unicode(theData.old1[ii]));// only name present
             }
         }   // end old1 name-structure
         else
-            if (fileSize == FILE_LENGTH_NAMES_OLD2)         // 'old' setup2
+            if ( fileSize == FILE_LENGTH_NAMES_OLD2 )       // 'old' setup2
             {
                 nrOfPairs = std::min(nrOfPairs, AP_OLD2);   // nr of active pairs in data
 
-                for (UINT ii=1; ii <= nrOfPairs; ++ii)
+                for ( UINT ii=1; ii <= nrOfPairs; ++ii )
                 {
                     a_pairInfo.emplace_back(Ascii2Unicode(theData.old2[ii].name), theData.old2[ii].clubindex);
                 }
             }
             else
-                if (fileSize == FILE_LENGTH_NAMES_OLD3)  // 'newest' setup
+                if ( fileSize == FILE_LENGTH_NAMES_OLD3 )// 'newest' setup
                 {
                     nrOfPairs = std::min(nrOfPairs, MAX_PAIRS3);
 
-                    for (UINT ii = 1; ii <= nrOfPairs; ++ii)
+                    for ( UINT ii = 1; ii <= nrOfPairs; ++ii )
                     {
                         wxString name = Ascii2Unicode(theData.old3[ii].name);
                         a_pairInfo.emplace_back(name, theData.old3[ii].clubindex);
@@ -569,10 +630,11 @@ namespace  org
             return;
 
         size_t fileSize = fn.Length();
-        if ( FILE_LENGTH_NAMES_OLD2 != fileSize ) return;           // not the expected file..
+        if ( FILE_LENGTH_NAMES_OLD2 != fileSize )
+            return; // not the expected file..
         fn.Read(&theData, fileSize);
         UINT nrOfPairs = std::min((UINT)theData.pairs, AP_OLD2);    // nr of active pairs in data
-        for (UINT pair = 1; pair <= nrOfPairs; ++pair)
+        for ( UINT pair = 1; pair <= nrOfPairs; ++pair )
         {
             auto clubIndex = (UINT)theData.old2[pair].clubindex;
             if ( clubIndex < a_clubNames.size() )
@@ -591,7 +653,7 @@ namespace  org
         vuPairnrSession2Global.resize(MAX_PAIRS3+1ULL, 0);
         auto size = sizeof(pairIndex);
         bool bResult = ReadFileBinairy(_ConstructFilename(cfg::EXT_SESSION_ASSIGNMENT_ID), &pairIndex, size);
-        for (UINT pairnr = 1; pairnr <= MAX_PAIRS3; ++pairnr)
+        for ( UINT pairnr = 1; pairnr <= MAX_PAIRS3; ++pairnr )
         {
             vuPairnrSession2Global[pairnr] = pairIndex[pairnr];
         }
@@ -602,7 +664,7 @@ namespace  org
     {
         UINT16 pairIndex[1+MAX_PAIRS3]={0};
 
-        for (size_t pair = 0; (pair < vuPairnrSession2Global.size()) && (pair <= MAX_PAIRS3); ++pair)
+        for ( size_t pair = 0; (pair < vuPairnrSession2Global.size()) && (pair <= MAX_PAIRS3); ++pair )
         {
             pairIndex[pair] = vuPairnrSession2Global[pair];
         }
@@ -624,17 +686,17 @@ namespace  org
         }
         wxTextFile tf ;
         tf.Open(clubNames, wxCSConv(wxFONTENCODING_CP437));
-        if (!tf.IsOpened())
+        if ( !tf.IsOpened() )
             return false;             // no clubname file, no error...
 
         //for getting the clubId, a ',' and as clubname the rest of the line with max size of MAX_CLUB_SIZE3
         wxString format=FMT(" %%u , %%%u[^\n]", MAX_CLUB_SIZE3 );
         // giving somthing like: " %u , %25[^\n]"     took me 3 hours to figure out :(  [xxx] means set of chars!
 
-        for (auto buf = tf.GetFirstLine(); !tf.Eof(); buf = tf.GetNextLine())
+        for ( auto buf = tf.GetFirstLine(); !tf.Eof(); buf = tf.GetNextLine() )
         {
             buf.Trim(TRIM_LEFT);buf.Trim(TRIM_RIGHT);    // remove spaces in front and back
-            if (buf.IsEmpty() || buf[0]==';')
+            if ( buf.IsEmpty() || buf[0]==';' )
                 continue;                                // ignore empty lines and comment lines
 
             UINT id;
@@ -647,7 +709,7 @@ namespace  org
             }
 
             a_clubNames[id] = name;      //update info
-            if (id > a_uMaxId)
+            if ( id > a_uMaxId )
                 a_uMaxId = id;
         }
         return true;
@@ -670,7 +732,7 @@ namespace  org
             , MAX_CLUB_SIZE3);
         tf.AddLine(formatOfFile);
 
-        for ( UINT ii = 1; ii < a_clubNames.size(); ++ii)
+        for ( UINT ii = 1; ii < a_clubNames.size(); ++ii )
         {
             if ( !a_clubNames[ii].IsEmpty() )
             {
@@ -689,7 +751,7 @@ namespace  org
     bool SessionNamesWrite(const wxArrayString& a_names, UINT /*session*/)
     {
         char names[MAX_PAIRS3+1][5] = {0};
-        for (UINT pair = 0; (pair < a_names.size()) && (pair <= MAX_PAIRS3); ++pair)
+        for ( UINT pair = 0; (pair < a_names.size()) && (pair <= MAX_PAIRS3); ++pair )
         {
             // remark: (const char*) is a function cast: it will return a temp char pointer of the wxString
             strncpy(names[pair], a_names[pair].mb_str(wxConvUTF8),5);
@@ -704,7 +766,8 @@ namespace  org
         a_assignmentsName.resize(MAX_PAIRS3+1, names::GetNotSet()); // if file does not exist: default to 'not assigned'
         wxString file = _ConstructFilename(cfg::EXT_SESSION_ASSIGNMENT_NAME, a_session);
         UINT size = MyGetFilesize(file);
-        if (size == UINT_MAX) return true;  // file does not exist
+        if ( size == UINT_MAX )
+            return true;    // file does not exist
 
         union assignments
         {
@@ -726,10 +789,10 @@ namespace  org
                 return false;
         }
 
-        if (! ReadFileBinairy(file, &buf, size))
+        if ( !ReadFileBinairy(file, &buf, size) )
             return false;
 
-        for (UINT pair = 0; pair <= MAX_PAIRS3; ++pair)
+        for ( UINT pair = 0; pair <= MAX_PAIRS3; ++pair )
         {
             a_assignmentsName[pair] =
                   type == AssignType::old
@@ -814,17 +877,17 @@ namespace  org
         a_scoreData.resize(MAX_GAMES3+1);       //  and assure room voor all games. We depend on the entries of this vector!
         Scores_ gamesetdata[MAX_PAIRS3/2+1];
         std::vector<score::GameSetData> scores;
-        for (UINT game = 1; game <= a_nrOfGames; ++game)
+        for ( UINT game = 1; game <= a_nrOfGames; ++game )
         {
-            if (fread(&gamesetdata[0],sizeof(gamesetdata[0]),1,a_fp) != 1)
+            if ( fread(&gamesetdata[0],sizeof(gamesetdata[0]),1,a_fp) != 1 )
                 { a_errorMsg = _("unhandled scoreformat"); return false; }
             UINT nrOfSets = gamesetdata[0].setCount.nrOfSets;
             if ( nrOfSets > MAX_PAIRS3 / 2 )    // bad data
                 { a_errorMsg = _("unhandled scoreformat"); return false; }
-            if (fread(&gamesetdata[1], sizeof(gamesetdata[0]), nrOfSets, a_fp) != nrOfSets)
+            if ( fread(&gamesetdata[1], sizeof(gamesetdata[0]), nrOfSets, a_fp) != nrOfSets )
                 { return false; }
             scores.clear();
-            for (UINT sets = 1; sets <= nrOfSets; ++sets)
+            for ( UINT sets = 1; sets <= nrOfSets; ++sets )
             {
                 score::GameSetData newData;    // old to new
                 newData.pairNS  = gamesetdata[sets].setData.pairNS;
@@ -849,15 +912,15 @@ namespace  org
         a_scoreData.clear();                    // remove old data
         a_scoreData.resize(MAX_GAMES3+1);       //  and assure room voor all games. We depend on the entries of this vector!
         FILE* fp; auto err = fopen_s(&fp, scoreFile, "rb"); MY_UNUSED(err);
-        if (fp != nullptr)                      /*file exists*/
+        if ( fp != nullptr )                    //file exists
         {
             size_t headerSize = sizeof(gamesetdata);
-            if (fread(gamesetdata, headerSize, 1, fp) != 1) //read header
+            if ( fread(gamesetdata, headerSize, 1, fp) != 1 )   //read header
             {
                 bError = true;
                 goto error;
             }
-            switch (gamesetdata[0].description.dataType)
+            switch ( gamesetdata[0].description.dataType )
             {
                 case CURRENT_TYPE: // only type for now...
                 {
@@ -865,15 +928,15 @@ namespace  org
                     UINT nrOfGames = gamesetdata[0].description.nrOfGamesWithData;
                     if ( nrOfGames > MAX_GAMES3 )
                         { bError = true; errorMsg = _("unhandled scoreformat"); goto error; }
-                    for (UINT game = 1; game <= nrOfGames; ++game)
+                    for ( UINT game = 1; game <= nrOfGames; ++game )
                     {
-                        if (fread(&gamesetdata[0],sizeof(gamesetdata[0]),1,fp) != 1)
+                        if ( fread(&gamesetdata[0],sizeof(gamesetdata[0]),1,fp) != 1 )
                             { bError = true; errorMsg = _("unhandled scoreformat"); goto error; }
 
                         UINT nrOfSets = gamesetdata[0].setCount.nrOfSets;
                         if ( nrOfSets > MAX_PAIRS3 / 2 )    // bad data, possibly old set-data with 'group' included
                             { bError = true; errorMsg = _("unhandled scoreformat"); goto error; }
-                        if (fread(&gamesetdata[1], sizeof(gamesetdata[0]), nrOfSets, fp) != nrOfSets)
+                        if ( fread(&gamesetdata[1], sizeof(gamesetdata[0]), nrOfSets, fp) != nrOfSets )
                             { bError = true; goto error; }
                         if ( gamesetdata[1].setData.pairNS == 0 && gamesetdata[1].setData.pairEW == 0 )
                         {   // hm, we DO have a very old format with INT16 'group' after the score/nrOfSets
@@ -881,7 +944,7 @@ namespace  org
                             goto error; // always stop....
                         }
                         scores.clear();
-                        for (UINT sets = 1; sets <= nrOfSets; ++sets)
+                        for ( UINT sets = 1; sets <= nrOfSets; ++sets )
                         {
                             score::GameSetData newData;    // old to new
                             newData.pairNS  = gamesetdata[sets].setData.pairNS;
@@ -898,7 +961,7 @@ namespace  org
             }
 
         error:
-            if (bError)
+            if ( bError )
             {
                 // on error: keep what we could read.
                 // svGameSetData.clear();
@@ -906,7 +969,8 @@ namespace  org
                 MyMessageBox(scoreFile + ": " + errorMsg, _("Problem reading score-file"));
             }
 
-            if (fp) (void)fclose(fp);
+            if ( fp )
+                (void)fclose(fp);
         }
 
         return !bError;
@@ -917,7 +981,7 @@ namespace  org
         wxString scoreFile = _ConstructFilename( cfg::EXT_SESSION_SCORE, a_session );
 
         FILE* fp; auto err = fopen_s(&fp, scoreFile, "wb"); MY_UNUSED(err);
-        if (fp == nullptr)
+        if ( fp == nullptr )
         {
             MyMessageBox(scoreFile + _(": open error"), _("Problem opening score-file"));
             return false;
@@ -929,27 +993,27 @@ namespace  org
         UINT        nrOfGames   = score::GetNumberOfGames(&a_scoreData);
 
 //      UINT        rst = std::accumulate(a_scoreData.begin() + 1, a_scoreData.begin() + nrOfGames + 1, 0U, [](UINT rst, const auto& data) {return rst + data.size(); });
-        for (UINT game = 1; game <= nrOfGames; ++game)
+        for ( UINT game = 1; game <= nrOfGames; ++game )
             restSize += 1+a_scoreData[game].size();
         restSize *= sizeof(Scores);
         gamesetdata[0].description.dataType             = CURRENT_TYPE;
         gamesetdata[0].description.nrOfGamesWithData    = nrOfGames;
         gamesetdata[0].description.restSize             = restSize;
-        if (fwrite(gamesetdata, sizeof(gamesetdata), 1 , fp) != 1)      //write header
+        if ( fwrite(gamesetdata, sizeof(gamesetdata), 1 , fp) != 1 )    //write header
         { bError = true; goto error; }
 
         gamesetdata[0].description={0}; // clear entry 0 completely!
                                         // now  write all game info
-        for (UINT game = 1; game <= nrOfGames; ++game)
+        for ( UINT game = 1; game <= nrOfGames; ++game )
         {
             const std::vector<score::GameSetData>& gameData = a_scoreData[game];
             // done in score::WriteScoresToDisk() std::sort(gameData.begin(), gameData.end());   // 'old' programm did this ???
             UINT nrOfSets = gameData.size();
             gamesetdata[0].setCount.nrOfSets = nrOfSets;
-            if (fwrite(&gamesetdata[0], sizeof(gamesetdata[0]), 1, fp) != 1)    // write sub-header
+            if ( fwrite(&gamesetdata[0], sizeof(gamesetdata[0]), 1, fp) != 1 )  // write sub-header
             {    bError = true; goto error; }
 
-            for (UINT set = 1; set <= nrOfSets; ++set)
+            for ( UINT set = 1; set <= nrOfSets; ++set )
             {
                 GameSetDataOrg oldData;    // new to old, ignoring possible contracts
                 oldData.pairNS  = gameData[set-1].pairNS;
@@ -958,13 +1022,13 @@ namespace  org
                 oldData.scoreEW = gameData[set-1].scoreEW;
                 gamesetdata[set].setData = oldData;
             }
-            if (fwrite(&gamesetdata[1], sizeof(gamesetdata[0]), nrOfSets, fp) != nrOfSets)  // write set-data
+            if ( fwrite(&gamesetdata[1], sizeof(gamesetdata[0]), nrOfSets, fp) != nrOfSets )    // write set-data
             {    bError = true; goto error; }
         }
 
     error:
         (void)fclose(fp);
-        if (bError)
+        if ( bError )
         {
             MyMessageBox(scoreFile + _(": write error"), _("Problem writing score-file"));
         }
@@ -976,7 +1040,7 @@ namespace  org
     {
         UINT16 buf[MAX_PAIRS3+1] = {0};
         wxASSERT(a_vUINT.size()<=MAX_PAIRS3+1);
-        for (UINT ii = 0; ii < a_vUINT.size(); ++ii)
+        for ( UINT ii = 0; ii < a_vUINT.size(); ++ii )
         {
             buf[ii] = a_vUINT[ii];
         }
@@ -990,7 +1054,8 @@ namespace  org
         a_vUINT.resize(MAX_PAIRS3+1, 0); // default to rank 0
 
         UINT size = MyGetFilesize(a_file);
-        if (size == UINT_MAX) return false;  // file does not exist
+        if ( size == UINT_MAX )
+            return false;   // file does not exist
 
         union { UINT16 cur[MAX_PAIRS3 + 1]; UINT32 xxx[MAX_PAIRS3 + 1]; } buf;
         int type = (size == sizeof(buf.cur)) ? 0 : (size == sizeof(buf.xxx)) ? 1 : 2;
@@ -1000,10 +1065,10 @@ namespace  org
             return false;
         }
 
-        if (!ReadFileBinairy(a_file, &buf, size))
+        if ( !ReadFileBinairy(a_file, &buf, size) )
             return false;
 
-        for (UINT ii = 0; ii <= MAX_PAIRS3; ++ii)
+        for ( UINT ii = 0; ii <= MAX_PAIRS3; ++ii )
         {
             a_vUINT[ii] = std::min((UINT) type == 0 ? buf.cur[ii] : buf.xxx[ii], MAX_PAIRS3);
         }
@@ -1042,11 +1107,12 @@ namespace  org
     {
         // ;score.2 glbpaar bonus.2 spellen paarnaam
         // 100.00     1     11.00   s16     xxx - xxx
-        if ( a_correctionsEnd.size() == 0 ) return true;    // don't create empty file
+        if ( a_correctionsEnd.size() == 0 )
+            return true;    // don't create empty file
         wxString correctionFile = _ConstructFilename( cfg::EXT_SESSION_CORRECTION_END, a_session );
         MyTextFile file(correctionFile, MyTextFile::WRITE);
 
-        if (!file.IsOk())
+        if ( !file.IsOk() )
         {
             wxString msg = FMT(_("Unable to write corrections to: %s"), correctionFile);
             MyLogError(msg);
@@ -1055,7 +1121,7 @@ namespace  org
         }
 
         file.AddLine(_(";score.2 glbpair bonus.2 games   pairname"));    // content description/spec
-        for (const auto&[pair,data] : a_correctionsEnd)
+        for ( const auto&[pair,data] : a_correctionsEnd )
         {
             wxString correction = FMT("%+6s   %3d     %5s   s%-4u   %-s"
                 , data.score.AsString2F()
@@ -1079,14 +1145,15 @@ namespace  org
         bool        bResult = true;
         MyTextFile  tfile(a_fileName, MyTextFile::READ);
 
-        if (!tfile.IsOk())
+        if ( !tfile.IsOk() )
             return false;   // file does not exist
-        for(wxString str = tfile.GetFirstLine(); !tfile.Eof(); str = tfile.GetNextLine()) // read all lines one by one, until the end of the file
+        for ( wxString str = tfile.GetFirstLine(); !tfile.Eof(); str = tfile.GetNextLine() )    // read all lines one by one, until the end of the file
         {   // <pairname> only for info
             // <score.2> <glbpair> <bonus.2> S<games> <pairname>
             // +100.00    1        [-99.99 ] s16   xxx - xxx
             str.Trim(TRIM_LEFT); str.Trim(TRIM_RIGHT);
-            if ( str.IsEmpty() || str[0] == ';' ) continue;
+            if ( str.IsEmpty() || str[0] == ';' )
+                continue;
 
             bool    bLineError  = false;
             int     count;
@@ -1098,7 +1165,7 @@ namespace  org
             char scoreBuf[MAX_SIZE+1]={0};
             char bonusBuf[MAX_SIZE+1]={0};
 
-            if (a_bCorrections)
+            if ( a_bCorrections )
             {   //;<score.2> <glbpair> <bonus.2> S<games> <pairname>
                 count = wxSscanf(str, "%9s %u %9s %c%u", &scoreBuf, &pairnr, &bonusBuf, &charS, &ce.games);
             }
@@ -1116,13 +1183,14 @@ namespace  org
 
             ce.score = Fdp(scoreBuf);
             ce.bonus = Fdp(bonusBuf);
-            if ( ce == cor::CORRECTION_END() ) continue;    // only during conversion old --> db
+            if ( ce == cor::CORRECTION_END() )
+                continue;   // only during conversion old --> db
 
-            if (cor::IsValidCorrectionEnd(pairnr, ce, str, bLineError))
+            if ( cor::IsValidCorrectionEnd(pairnr, ce, str, bLineError) )
             {   // add info to map
                 if ( a_bForceAdd || !a_bCorrections || a_correctionsEnd.contains(pairnr) )
                 {   // if corrections: only accept existing pairnr
-                    if (!a_bForceAdd && a_bCorrections && ce.score == SCORE_IGNORE)
+                    if ( !a_bForceAdd && a_bCorrections && ce.score == SCORE_IGNORE )
                         ce.score = a_correctionsEnd[pairnr].score;
                     a_correctionsEnd[pairnr] = ce;
                 }
@@ -1138,7 +1206,8 @@ namespace  org
 
     bool CorrectionsEndRead(cor::mCorrectionsEnd& a_correctionsEnd, UINT a_session, bool a_bEdit)
     {   // if edit, we need all data, when calctotal, we only ADD data for existing pairs
-        if (a_bEdit) a_correctionsEnd.clear();
+        if ( a_bEdit )
+            a_correctionsEnd.clear();
         wxString fileName = _ConstructFilename(cfg::EXT_SESSION_CORRECTION_END, a_session);
         return CorrectionsEndRead(fileName, a_correctionsEnd, true, a_bEdit);
     }   // CorrectionsEndRead()
@@ -1147,11 +1216,12 @@ namespace  org
     {
         //;<correctie><type> <sessie paarnr> <extra.1> <max extra> <paarnaam
         //    +3        %      1              0           0      paar 28
-        if ( a_correctionsSession.size() == 0 ) return true;    // don't create empty file
+        if ( a_correctionsSession.size() == 0 )
+            return true;    // don't create empty file
         wxString correctionFile = _ConstructFilename( cfg::EXT_SESSION_CORRECTION, a_session );
         MyTextFile file(correctionFile, MyTextFile::WRITE);
 
-        if (!file.IsOk())
+        if ( !file.IsOk() )
         {
             wxString msg = FMT(_("Unable to write corrections to: %s"), correctionFile);
             MyLogError(msg);
@@ -1161,7 +1231,7 @@ namespace  org
 
         // newer versions have also a <games> value, used for butler calculation. We ignore this in an old config!
         file.AddLine(_(";<correction><type> <session pairnr> <extra.1> <max extra> <pairname>"));    // content description/spec
-        for (const auto&[pair, data] : a_correctionsSession)
+        for ( const auto&[pair, data] : a_correctionsSession )
         {
             wxString correction = FMT("%+5i%c%20u%15s%12i     %s"
                 , data.correction
@@ -1185,14 +1255,15 @@ namespace  org
         bool        bError      = false;
         MyTextFile  tfile(fileName, MyTextFile::READ);
 
-        if (!tfile.IsOk())
+        if ( !tfile.IsOk() )
             return false;   // file does not exist
-        for(wxString str = tfile.GetFirstLine(); !tfile.Eof(); str = tfile.GetNextLine()) // read all lines one by one, until the end of the file
+        for ( wxString str = tfile.GetFirstLine(); !tfile.Eof(); str = tfile.GetNextLine() )    // read all lines one by one, until the end of the file
         {
             //;<correctie><type> <sessiepaarnr> <extra.1> <max extra> <paarnaam>
             //    +3        %      28              0           0      paar 28
             str.Trim(TRIM_LEFT); str.Trim(TRIM_RIGHT);
-            if ( str.IsEmpty() || str[0] == ';' ) continue;
+            if ( str.IsEmpty() || str[0] == ';' )
+                continue;
 
             UINT    charCount;
             UINT    sessionPairnr;
@@ -1207,7 +1278,7 @@ namespace  org
             #define formatstring  FORMAT(MAX_SIZE)
             bool bEntryError = (5 !=  wxSscanf(str, formatstring, &cs.correction, &cs.type, &sessionPairnr, &extraBuf, &charCount, &cs.maxExtra));
             cs.extra = Fdp(extraBuf);
-            if (IsValidCorrectionSession(sessionPairnr, cs, str, bEntryError))
+            if ( IsValidCorrectionSession(sessionPairnr, cs, str, bEntryError) )
             {   // add info to map
                 cs.games = cs.maxExtra ? 4 : 0;  // we need/use this for butler. Assume a default setsize of 4
                 a_correctionsSession[sessionPairnr] = cs;
@@ -1223,14 +1294,16 @@ namespace  org
 
     bool SessionResultWrite(const cor::mCorrectionsEnd& a_mSessionResult, UINT a_session)
     {   // write and read: different params!
-        if ( a_mSessionResult.end() == std::ranges::find_if(a_mSessionResult, [](const auto& res){return res.second.games != 0U;}))
+        if ( a_mSessionResult.end() == std::ranges::find_if(a_mSessionResult, [](const auto& res){return res.second.games != 0U;}) )
               return true;  // no results, so just return success
         MyTextFile file(_ConstructFilename(cfg::EXT_SESSION_RESULT, a_session), MyTextFile::WRITE);
-        if (!file.IsOk()) return false;
+        if ( !file.IsOk() )
+            return false;
         file.AddLine(_(";score 'glb pair' s<games>   name"));
-        for (const auto&[pair,data] : a_mSessionResult)              // save score of all pairs
+        for ( const auto&[pair,data] : a_mSessionResult )   // save score of all pairs
         {
-            if ( data.games == 0 ) continue;            // pair has not played
+            if ( data.games == 0 )
+                continue;                               // pair has not played
             wxString tmp;
             tmp.Printf("%5s %3u  s%-2u %s",
                 data.score.AsString2F(),                // score

@@ -117,7 +117,7 @@ void PopupChoiceMC::Append( const wxString& selstr )
 
 bool PopupChoiceMC::SetSelection(int a_selection)  // return true if new selection within limits
 {
-    if ( a_selection >= 0 && a_selection < GetItemCount())
+    if ( a_selection >= 0 && a_selection < GetItemCount() )
     {
         m_selection = a_selection;
         return true;
@@ -130,7 +130,7 @@ void PopupChoiceMC::OnMouseMove(wxMouseEvent& event)
     // Move selection to cursor if it is inside the popup
     int resFlags;
     int itemHere = HitTest(event.GetPosition(),resFlags);
-    if ( itemHere != wxNOT_FOUND && itemHere != m_itemHere)
+    if ( itemHere != wxNOT_FOUND && itemHere != m_itemHere )
     {   // prevent multiple events for same selection
         wxListView::Select(itemHere, true);
     }
@@ -138,14 +138,15 @@ void PopupChoiceMC::OnMouseMove(wxMouseEvent& event)
     event.Skip();
 }   // OnMouseMove()
 
-void PopupChoiceMC::OnMouseClick(const wxMouseEvent& WXUNUSED(event))
+void PopupChoiceMC::OnMouseClick(const wxMouseEvent&)
 {
     ItemActivated();
 }   // OnMouseClick()
 
 void PopupChoiceMC::ItemActivated()
 { // On mouse left/ENTER, set the value, send event and close the popup
-    if (m_itemHere == wxNOT_FOUND) return;      //nothing choosen yet, perhaps click on ruler
+    if ( m_itemHere == wxNOT_FOUND )
+        return;                                 //nothing choosen yet, perhaps click on ruler
     m_selection = m_itemHere;                   // result from mousemove/ENTER
     wxCommandEvent event(wxEVT_CHOICE, m_mainWinId);
     event.SetInt(m_selection);
@@ -175,7 +176,7 @@ ChoiceMC::ChoiceMC(wxWindow* a_pParent, const wxString& a_textCtrlTitle) : wxCom
     m_pPopup->SetFont(m_pTxtctrl->GetFont());       // at least in windows, the wxListView does NOT use its parent fontsize! But some(?) global defined one.
     m_pTxtctrl->Bind(wxEVT_LEFT_DOWN , [this](const wxMouseEvent&)
             {   // on mouseclick in editctrl, show popup or do nothing...
-                if (m_timerPopupKillFocus.IsRunning())
+                if ( m_timerPopupKillFocus.IsRunning() )
                 {   // apparently(!) popup receives killfocus before we get the mouse
                     IF_TEST MyLogDebug(_("ChoiceMC->mouseclick(timer running)"));
                     m_timerPopupKillFocus.Stop();
@@ -232,10 +233,10 @@ bool ChoiceMC::SetStringSelection(const wxString& a_sel)
 
 void ChoiceMC::CheckAutoSize(const wxString& a_choice)
 {   // should be called BEFORE an item is added/inserted
-    if (m_bAutoSize)
+    if ( m_bAutoSize )
     {
         int width = m_pPopup->GetTextExtent(a_choice).GetWidth() + MIN_SIZE_COLUMN;
-        if (width > m_currentColumnWidth)
+        if ( width > m_currentColumnWidth )
         {   // update size of txtctrl in combo and columnwidth in popup
             m_currentColumnWidth = width;
             m_pPopup->SetColumnWidth(0, m_currentColumnWidth);
@@ -268,9 +269,10 @@ int ChoiceMC::GetSelection() const
     return m_pPopup->GetSelection();
 }   // GetSelection()
 
-[[maybe_unused]] bool ChoiceMC::AnimateShow( const wxRect& rect, int WXUNUSED(flags) )
+[[maybe_unused]] bool ChoiceMC::AnimateShow( const wxRect& rect, int)
 {
-    if (m_numberOfRows == 0) return false;    // nothing to show...
+    if ( m_numberOfRows == 0 )
+        return false;   // nothing to show...
     // Customize(wxCC_NO_TEXT_AUTO_SELECT);   // DOES prevent selectAll, but still cursor present
     wxWindow* win = GetPopupWindow();
 //    wxRect& pRect = (wxRect&)rect; pRect.x=100; pRect.y=100; // repos window....
@@ -301,7 +303,7 @@ void ChoiceMC::Init(UINT a_count, UINT a_selection, UINT a_offset)
 {
     ExpandNrOfRows(a_count, true);  // preset needed nr of rows
     Clear();
-    for (unsigned int count = 1; count <= a_count; ++count)
+    for ( unsigned int count = 1; count <= a_count; ++count )
     {
         Append(FMT("%u", count + a_offset));
     }
@@ -313,7 +315,7 @@ void ChoiceMC::Set(const wxArrayString& a_items)
 {
     ExpandNrOfRows(a_items.size(), true);   // preset needed nr of rows
     Clear();
-    for (const auto& it : a_items)
+    for ( const auto& it : a_items )
         Append(it);
 }   // Set()
 
@@ -345,7 +347,8 @@ void ChoiceMC::SetMaxNumberOfRows(UINT a_numberOfRows)
 void ChoiceMC::ExpandNrOfRows(UINT a_itemNumber, bool a_bInit)
 {
     UINT rows = std::min(a_itemNumber, m_maxNumberOfRows);
-    if ( !a_bInit && rows <= m_numberOfRows ) return;
+    if ( !a_bInit && rows <= m_numberOfRows )
+        return;
 
     int borderSizeY = wxSystemSettings::GetMetric(wxSYS_BORDER_Y, m_pPopup);
     int scrollBarHeight = wxSystemSettings::GetMetric(wxSYS_HSCROLL_Y, m_pPopup);
@@ -368,13 +371,13 @@ void ChoiceMC::SetAutoColumnWidth(bool a_bAuto)
 void ChoiceMC::SetPopupWidth(int a_size)
 {
 
-    if (m_nrOfColumns > 2)  // allow at least 2 columns
+    if ( m_nrOfColumns > 2 )    // allow at least 2 columns
     {
         a_size = std::min(a_size, m_popupMaxWidth);
-        if (a_size == m_popupMaxWidth)  // max size for popup: larger values will give scrollbar
+        if ( a_size == m_popupMaxWidth )    // max size for popup: larger values will give scrollbar
             a_size -= m_popupMaxWidth % m_currentColumnWidth;   // need multiple of column-width!
     }
-    if (a_size != m_popupWidth)
+    if ( a_size != m_popupWidth )
     {
         m_popupWidth = a_size;
         SetPopupMinWidth(m_popupWidth);

@@ -12,9 +12,9 @@
 
 namespace glb
 {
-    static wxChar theSeparator = '@';   // between the datasets
-    wxChar GetSeparator()                   { return theSeparator; }
-    void   SetSeparator(wxChar a_separator) { theSeparator = a_separator; }
+    static wxChar s_cTheSeparator = '@';    // between the datasets
+    wxChar GetSeparator()                   { return s_cTheSeparator; }
+    void   SetSeparator(wxChar a_separator) { s_cTheSeparator = a_separator; }
 
     static char* TrimContract(char a_contract[])
     {   // remove spaces and '"' at end of input
@@ -36,8 +36,12 @@ namespace glb
         while ( a_pFunReadLine(sGame, scores, a_pUserData) )
         {
             UINT game = wxAtoi(sGame);
-            if ( game > cfg::MAX_GAMES ) { MyLogError(_("Reading scores: gamenr <%s> too high!"), sGame); continue; }
-            auto splitValues = wxSplit(scores, theSeparator);
+            if ( game > cfg::MAX_GAMES )
+            {
+                MyLogError(_("Reading scores: gamenr <%s> too high!"), sGame);
+                continue;
+            }
+            auto splitValues = wxSplit(scores, s_cTheSeparator);
             std::vector<score::GameSetData> gameData;
             for ( const auto& it : splitValues )
             {
@@ -86,7 +90,7 @@ namespace glb
                         contracts = FMT(R"(,"%s","%s")", score.contractNS, score.contractEW);
                     theScores += FMT("%c{%u,%u,%s,%s%s}", separator, score.pairNS, score.pairEW,
                         score::ScoreToString(score.scoreNS), score::ScoreToString(score.scoreEW), contracts);
-                    separator = theSeparator;
+                    separator = s_cTheSeparator;
                 }
                 if ( !a_pFunWriteLine(game, theScores, a_pUserData) )
                     bResult = false;
@@ -99,8 +103,9 @@ namespace glb
 
     bool CorrectionsEndRead(cor::mCorrectionsEnd& a_mCorrectionsEnd, bool a_bEdit, const wxString& a_data)
     {
-        if ( a_data.IsEmpty() ) return true;    // no results, but no error!
-        auto split = wxSplit(a_data, theSeparator);
+        if ( a_data.IsEmpty() )
+            return true;    // no results, but no error!
+        auto split = wxSplit(a_data, s_cTheSeparator);
         bool bOk   = true;
         for ( const auto& it : split )
         {   // {<global pairnr>,<score.2>,<bonus.2>,<games>}
@@ -144,16 +149,17 @@ namespace glb
                 , data.bonus.AsString2F()
                 , data.games
             );
-            separator = theSeparator;
+            separator = s_cTheSeparator;
         }
         return correction;
     }   // CorrectionsEndWrite()
 
     bool CorrectionsSessionRead(cor::mCorrectionsSession& a_mCorrectionsSession, const wxString& a_corrections)
     {
-        if ( a_corrections.IsEmpty() ) return true;
+        if ( a_corrections.IsEmpty() )
+            return true;
         bool bResult = true;    // assume all is ok
-        auto split   = wxSplit(a_corrections, theSeparator);
+        auto split   = wxSplit(a_corrections, s_cTheSeparator);
         for ( const auto& it : split )
         {
             UINT sessionPairnr;
@@ -194,21 +200,22 @@ namespace glb
                 , data.maxExtra
                 , data.games
             );
-            separator = theSeparator;
+            separator = s_cTheSeparator;
         }
         return correction;
     }   // CorrectionsSessionWrite()
 
     wxString GetDefaultSchema()
     {
-        return FMT(R"({24,4,1}%c{14,0,"6multi14",""})", theSeparator);
+        return FMT(R"({24,4,1}%c{14,0,"6multi14",""})", s_cTheSeparator);
     }   // GetDefaultSchema()
 
     bool SchemaRead(cfg::SessionInfo& a_sessionInfo, const wxString& a_schema)
     {
         wxString info         = a_schema;
         wxString defaultValue = GetDefaultSchema();
-        if ( info.IsEmpty() ) info = defaultValue;
+        if ( info.IsEmpty() )
+            info = defaultValue;
         auto count = wxSscanf(info, " {%u ,%u ,%u }", &a_sessionInfo.nrOfGames, &a_sessionInfo.setSize, &a_sessionInfo.firstGame);
         if ( count != 3 )
         {   // on error, we just take a default value
@@ -218,7 +225,7 @@ namespace glb
             a_sessionInfo.setSize   = 4;
             a_sessionInfo.firstGame = 1;
         }
-        auto split = wxSplit(info, theSeparator);
+        auto split = wxSplit(info, s_cTheSeparator);
         split.erase(split.begin()); // now we have only schema descriptions
         a_sessionInfo.groupData.clear();
         cfg::GROUP_DATA groupData;
@@ -240,7 +247,8 @@ namespace glb
             {   // schema and groupchars empty
                 MyLogError(_("Error while reading schema <%s>"), info);
             }
-            if ( (groupChars[0] == ' ') && (groupChars[1] == 0) ) groupChars[0] = 0; // remove single space
+            if ( (groupChars[0] == ' ') && (groupChars[1] == 0) )
+                groupChars[0] = 0;  // remove single space
             groupData.schema      = schema;
             groupData.groupChars  = groupChars;
             groupData.schemaId    = schema::GetId(groupData.schema);
@@ -257,7 +265,7 @@ namespace glb
         for ( const auto& it : a_info.groupData )
         {
             wxString groupChars = it.groupChars;
-            schema += FMT(R"(%c{%u,%u,"%s","%s"})", theSeparator, it.pairs, it.absent, it.schema, groupChars);
+            schema += FMT(R"(%c{%u,%u,"%s","%s"})", s_cTheSeparator, it.pairs, it.absent, it.schema, groupChars);
         }
 
         return schema;
@@ -265,7 +273,7 @@ namespace glb
 
     bool SessionNamesRead(wxArrayString& a_assignmentsName, const wxString& a_info)
     {
-        a_assignmentsName = wxSplit(a_info, theSeparator);
+        a_assignmentsName = wxSplit(a_info, s_cTheSeparator);
         a_assignmentsName.insert(a_assignmentsName.begin(), names::GetNotSet());
         a_assignmentsName.resize(cfg::MAX_PAIRS + 1, names::GetNotSet());
         a_assignmentsName[1].Trim(TRIM_LEFT);   // first name has a ' ' in front of it
@@ -277,23 +285,25 @@ namespace glb
         size_t max;
         for ( max = a_names.size() - 1; max > 0; --max )
         {   // no const reverse-iterator for wxArrayString....
-            if ( a_names[max] != names::GetNotSet() ) break;    // found highest present pair
+            if ( a_names[max] != names::GetNotSet() )
+                break;  // found highest present pair
         }
         wxString info;
         wxChar separator = ' ';
         for ( size_t pair = 1; pair <= max; ++pair )
         {
             info += FMT("%c%s", separator, a_names[pair]);
-            separator = theSeparator;
+            separator = s_cTheSeparator;
         }
         return info;
     }   // SessionNamesWrite()
 
     bool SessionResultRead(cor::mCorrectionsEnd& a_mSessionResult, const wxString& a_info)    // write and read: different params!
     {   // NB input MAP is initialized, so don't clear or resize it or add 'new' pairnrs!
-        if ( a_info.IsEmpty() ) return true;    // no results, but no error!
+        if ( a_info.IsEmpty() )
+            return true;    // no results, but no error!
         bool bResult = true;    // assume all is ok
-        auto split   = wxSplit(a_info, theSeparator);
+        auto split   = wxSplit(a_info, s_cTheSeparator);
         for ( const auto& it : split )
         {   // {<global pairnr>,<score.2>,<games>}
             cor::CORRECTION_END ce;
@@ -319,14 +329,15 @@ namespace glb
         wxChar   separator = ' ';
         for ( const auto&[pair, data] : a_mSessionResult )   // save score of all pairs
         {
-            if ( data.games == 0 ) continue;   // only present on conversion old --> db
+            if ( data.games == 0 )
+                continue;   // only present on conversion old --> db
             result += FMT("%c{%u,%s,%u}"
                 , separator
                 , pair                         // global pairnr
                 , data.score.AsString2F()      // score
                 , data.games                   // played games
             );
-            separator = theSeparator;
+            separator = s_cTheSeparator;
         }
 
         return result;
@@ -339,10 +350,10 @@ namespace glb
         auto maxPair = (int)(a_vUint.rend() - it - 1LL);  // index of highest pair in session, -1 if none found
 
         wxChar separator = ' ';
-        for ( int pair = 1; pair <= maxPair; ++pair)
+        for ( int pair = 1; pair <= maxPair; ++pair )
         {
             info += FMT("%c%u", separator, a_vUint[pair]);
-            separator = theSeparator;
+            separator = s_cTheSeparator;
         }
         return info;
     }   // UintVectorWrite()
@@ -352,10 +363,10 @@ namespace glb
         bool bOk = true;
         a_vUint.clear();
         a_vUint.resize(cfg::MAX_PAIRS+1ULL, 0);
-        auto split = wxSplit(a_info, theSeparator);
+        auto split = wxSplit(a_info, s_cTheSeparator);
         UINT entry = 0;  // entry zero is a  dummy
         UINT max   = names::GetNumberOfGlobalPairs();
-        for (const auto& it : split)
+        for ( const auto& it : split )
         {
             if ( ++entry > cfg::MAX_PAIRS )
                 break;

@@ -10,7 +10,7 @@ using UINT = unsigned int;
 #define FMT wxString::Format
 extern const wxString ES;       // an Empty String
 
-#define MY_UNUSED(x) do {} while(0 && (x) )
+#define MY_UNUSED(x) do {} while( 0 && (x) )
 
 template <typename T>
 bool IsInRange(const T& value, const T& low, const T& high)
@@ -44,12 +44,12 @@ wxString GetDateTime();                         // get current datetime as : Get
 #else   // my own stuf AND wx stuf
 // log to wxLog and Mylog
 #include <wx/log.h>
-#define LogMessage(msg,...) do {wxLogMessage(msg, __VA_ARGS__); MyLogMessage(msg, __VA_ARGS__);} while (0)
-#define LogWarning(msg,...) do {wxLogWarning(msg, __VA_ARGS__); MyLogWarning(msg, __VA_ARGS__);} while (0)
-#define   LogError(msg,...) do {  wxLogError(msg, __VA_ARGS__);   MyLogError(msg, __VA_ARGS__);} while (0)
-#define    LogInfo(msg,...) do {   wxLogInfo(msg, __VA_ARGS__);    MyLogInfo(msg, __VA_ARGS__);} while (0)
-#define   LogDebug(msg,...) do {  wxLogDebug(msg, __VA_ARGS__);   MyLogDebug(msg, __VA_ARGS__);} while (0)
-#define LogVerbose(msg,...) do {wxLogVerbose(msg, __VA_ARGS__);    MyLogInfo(msg, __VA_ARGS__);} while (0)
+#define LogMessage(msg,...) do {wxLogMessage(msg, __VA_ARGS__); MyLogMessage(msg, __VA_ARGS__);} while ( 0 )
+#define LogWarning(msg,...) do {wxLogWarning(msg, __VA_ARGS__); MyLogWarning(msg, __VA_ARGS__);} while ( 0 )
+#define   LogError(msg,...) do {  wxLogError(msg, __VA_ARGS__);   MyLogError(msg, __VA_ARGS__);} while ( 0 )
+#define    LogInfo(msg,...) do {   wxLogInfo(msg, __VA_ARGS__);    MyLogInfo(msg, __VA_ARGS__);} while ( 0 )
+#define   LogDebug(msg,...) do {  wxLogDebug(msg, __VA_ARGS__);   MyLogDebug(msg, __VA_ARGS__);} while ( 0 )
+#define LogVerbose(msg,...) do {wxLogVerbose(msg, __VA_ARGS__);    MyLogInfo(msg, __VA_ARGS__);} while ( 0 )
 #endif
 
 wxString U2String       (UINT x);  // (unsigned) int to string

@@ -11,19 +11,21 @@
 namespace io
 {   // all persistent match-io arrives here and is distributed to the wanted data-interface.
 
-    static ActiveDbType seTheType = DB_ORG; // actions (only) applied to active type
+    static ActiveDbType s_eTheType = DB_ORG; // actions (only) applied to active type
 
     void DatabaseTypeSet(ActiveDbType a_type, bool a_bQuiet)
     {
-        if (seTheType == a_type) return;
+        if ( s_eTheType == a_type )
+            return;
         DatabaseClose(DB_ALL);  // close all open databases.
-        seTheType = a_type;
-        if (!a_bQuiet && !cfg::IsScriptTesting()) MyMessageBox(_("Active match closed.\nSetup new match"));
+        s_eTheType = a_type;
+        if ( !a_bQuiet && !cfg::IsScriptTesting() )
+            MyMessageBox(_("Active match closed.\nSetup new match"));
     }   // DatabaseTypeSet()
 
     ActiveDbType DatabaseTypeGet()
     {
-        return seTheType;
+        return s_eTheType;
     }   // DatabaseTypeGet()
 
     wxString GetDbFileName(){ return db::GetDbFileName();}
@@ -33,9 +35,9 @@ namespace io
     typeReturn name() \
     {\
         typeReturn ret(defaultReturn);\
-        if (seTheType & DB_ORG)      ret = org::name(); \
-        if (seTheType & DB_DATABASE) ret =  db::name(); \
-        if (seTheType & DB_SQLITE)   ret = sql::name(); \
+        if ( s_eTheType & DB_ORG      ) ret = org::name(); \
+        if ( s_eTheType & DB_DATABASE ) ret =  db::name(); \
+        if ( s_eTheType & DB_SQLITE   ) ret = sql::name(); \
         return ret;\
     }
 
@@ -43,9 +45,9 @@ namespace io
     typeReturn name(typeParam1 p1) \
     {\
         typeReturn ret(defaultReturn);\
-        if (seTheType & DB_ORG)      ret = org::name(p1); \
-        if (seTheType & DB_DATABASE) ret =  db::name(p1); \
-        if (seTheType & DB_SQLITE)   ret = sql::name(p1); \
+        if ( s_eTheType & DB_ORG      ) ret = org::name(p1); \
+        if ( s_eTheType & DB_DATABASE ) ret =  db::name(p1); \
+        if ( s_eTheType & DB_SQLITE   ) ret = sql::name(p1); \
         return ret;\
     }
 
@@ -53,9 +55,9 @@ namespace io
     typeReturn name(typeParam1 p1, typeParam2 p2) \
     {\
         typeReturn ret(defaultReturn);\
-        if (seTheType & DB_ORG)      ret = org::name(p1,p2); \
-        if (seTheType & DB_DATABASE) ret =  db::name(p1,p2); \
-        if (seTheType & DB_SQLITE)   ret = sql::name(p1,p2); \
+        if ( s_eTheType & DB_ORG      ) ret = org::name(p1,p2); \
+        if ( s_eTheType & DB_DATABASE ) ret =  db::name(p1,p2); \
+        if ( s_eTheType & DB_SQLITE   ) ret = sql::name(p1,p2); \
         return ret;\
     }
 
@@ -63,9 +65,9 @@ namespace io
     typeReturn name(typeParam1 p1, typeParam2 p2, typeParam3 p3) \
     {\
         typeReturn ret(defaultReturn);\
-        if (seTheType & DB_ORG)      ret = org::name(p1,p2,p3); \
-        if (seTheType & DB_DATABASE) ret =  db::name(p1,p2,p3); \
-        if (seTheType & DB_SQLITE)   ret = sql::name(p1,p2,p3); \
+        if ( s_eTheType & DB_ORG      ) ret = org::name(p1,p2,p3); \
+        if ( s_eTheType & DB_DATABASE ) ret =  db::name(p1,p2,p3); \
+        if ( s_eTheType & DB_SQLITE   ) ret = sql::name(p1,p2,p3); \
         return ret;\
     }
 
@@ -112,8 +114,9 @@ namespace io
 
     static bool CanContinue(const wxString& a_targetFile)
     {
-        if (!wxFile::Exists(a_targetFile)) return true;
-        if (wxCANCEL == MyMessageBox(FMT(_("Target file <%s> exists.\nRemove?"), a_targetFile), _("Check"),  wxYES|wxCANCEL))
+        if ( !wxFile::Exists(a_targetFile) )
+            return true;
+        if ( wxCANCEL == MyMessageBox(FMT(_("Target file <%s> exists.\nRemove?"), a_targetFile), _("Check"),  wxYES|wxCANCEL) )
             return false;
         wxRemoveFile(a_targetFile);
         return true;
@@ -123,7 +126,8 @@ namespace io
     {
         wxString fileTypes = (a_how == FromOldToDb ) ? _("ini files (*.ini)|*.ini") : _("db files (*.db)|*.db");
         wxFileDialog dialog(nullptr, _("'Bridge' Datafiles"), cfg::GetActiveMatchPath(), "", fileTypes, wxFD_OPEN|wxFD_FILE_MUST_EXIST);
-        if (dialog.ShowModal() == wxID_CANCEL) return;
+        if ( dialog.ShowModal() == wxID_CANCEL )
+            return;
         wxFileName fileName = dialog.GetPath();
         wxString folder     = fileName.GetPath();
         wxString match      = fileName.GetName();
@@ -161,9 +165,10 @@ namespace io
         wxString                    dbFile  = cfg::ConstructFilename(cfg::EXT_DATABASE);
         wxString                    iniFile = cfg::ConstructFilename(cfg::EXT_MAIN_INI);
 
-        if (a_how == FromOldToDb)
+        if ( a_how == FromOldToDb )
         {   // transfer <match>.ini data to <match>.db
-            if (!CanContinue(dbFile)) return;  // check destination for unwanted overwrite
+            if ( !CanContinue(dbFile) )
+                return; // check destination for unwanted overwrite
             org::DatabaseOpen(DB_MATCH, CFG_ONLY_READ);
              db::DatabaseOpen(DB_MATCH, CFG_WRITE);
             tmpS = org::ReadValue     (KEY_PRG_VERSION      , ES   ); db::WriteValue      (KEY_PRG_VERSION        , tmpS);
@@ -187,9 +192,10 @@ namespace io
                    org::PairnamesRead(pairNames);                     db::PairnamesWrite  (pairNames);
                    org::ClubnamesRead(clubNames,tmpU);                db::ClubnamesWrite  (clubNames);
             // transfer session data of <match>.<x><session> data to <match>.db
-            for (UINT session = 0; session <= cfg::MAX_SESSIONS; ++session)
+            for ( UINT session = 0; session <= cfg::MAX_SESSIONS; ++session )
             {
-                        if (!wxFile::Exists(cfg::ConstructFilename(cfg::EXT_SESSION_INI, session))) continue;    // only existing data
+                        if ( !wxFile::Exists(cfg::ConstructFilename(cfg::EXT_SESSION_INI, session)) )
+                            continue;   // only existing data
                         cfg::DataConversionSetSession(session);     // datafiles use cfg-local sessionId
                         names::InitNames4Conversion(session);       // need actual names/assignments for scores/corrections
                         ce.clear();
@@ -209,7 +215,8 @@ namespace io
         }
         else
         {   // FromDbToOld
-            if (!CanContinue(iniFile)) return;  // check destination for unwanted overwrite
+            if ( !CanContinue(iniFile) )
+                return; // check destination for unwanted overwrite
 
              org::DatabaseOpen(DB_MATCH, CFG_WRITE);
               db::DatabaseOpen(DB_MATCH, CFG_ONLY_READ);
@@ -235,9 +242,10 @@ namespace io
              db::PairnamesRead(pairNames);                     org::PairnamesWrite(pairNames);
              db::ClubnamesRead(clubNames,tmpU);                org::ClubnamesWrite(clubNames);
              // transfer session data of <match>.<x><session> data to <match>.db
-             for (UINT session = 0; session <= cfg::MAX_SESSIONS; ++session)
+             for ( UINT session = 0; session <= cfg::MAX_SESSIONS; ++session )
              {
-                if (!db::ExistSession(session)) continue;
+                if ( !db::ExistSession(session) )
+                    continue;
                 names::InitNames4Conversion(session);               // need actual names/assignments for scores/corrections
                 cfg::DataConversionSetSession(session);             // datafiles use cfg-local sessionId
                 wxString sessionIni = cfg::ConstructFilename(cfg::EXT_SESSION_INI, session);
@@ -255,7 +263,8 @@ namespace io
                          db::CorrectionsEndRead     (ce     , session, true);           org::CorrectionsEndWrite     (ce    , session);
                          db::SessionNamesRead       (arrayS , session);                 org::SessionNamesWrite       (arrayS, session);
                 ce.clear();    // preset pairnr's
-                for (UINT pair = 1; pair <= names::GetNumberOfGlobalPairs(); ++pair) ce[pair] = cor::CORRECTION_END();  // init ce map
+                for ( UINT pair = 1; pair <= names::GetNumberOfGlobalPairs(); ++pair )
+                    ce[pair] = cor::CORRECTION_END();   // init ce map
                          db::SessionResultRead      (ce     , session);                 org::SessionResultWrite      (ce     , session);
              }
         }

@@ -17,7 +17,8 @@ MyGrid::MyGrid(Baseframe* a_pParent, const wxString& a_ahkLabel) : wxGrid(a_pPar
     wxWANTS_CHARS | wxBORDER_SIMPLE, a_ahkLabel)
     , m_pParent(a_pParent)
 {
-    if (a_pParent) SetLabelFont(a_pParent->GetFont());  // just incase the parent font is NOT standard
+    if ( a_pParent )
+        SetLabelFont(a_pParent->GetFont()); // just incase the parent font is NOT standard
     SetColLabelAlignment(wxALIGN_LEFT, wxALIGN_CENTER);
     SetTabBehaviour(Tab_Wrap);  // wrap to next/previous row: till end/begin
     UseNativeColHeader(true);   //dark: ok but text doesnot fit,.  V3.3.*: disables highlight of columnheader when a cell is selected AND SetColLabelValue does NOT work beteen Begin/EndBatch() --> A B C etc!
@@ -73,37 +74,40 @@ void MyGrid::SetLimitMinMax(int a_row, int a_col, double a_min, double a_max) co
 void MyGrid::PrintGrid( const wxString& a_title, UINT a_nrOfColumnsToPrint, UINT a_notEmptyfrom) const
 {
     int rows = GetNumberRows();
-    if (rows <= 0) return; //nothing to print
+    if ( rows <= 0 )
+        return; //nothing to print
 
     auto cols   = (UINT)GetNumberCols();
     int cWidth  = GetCharWidth();
-    if (a_nrOfColumnsToPrint > cols) a_nrOfColumnsToPrint = cols;
+    if ( a_nrOfColumnsToPrint > cols )
+        a_nrOfColumnsToPrint = cols;
 
     prn::BeginPrint(a_title);
     wxString header = "\n   ";  // 3 spaces: 3 digit rownumber
-    for (UINT col = 0; col < a_nrOfColumnsToPrint; ++col)
+    for ( UINT col = 0; col < a_nrOfColumnsToPrint; ++col )
     {
         int size=GetColSize(col);
-        if (size <= 0) // ignore 'hidden' columns, they have a size of 0
+        if ( size <= 0 )    // ignore 'hidden' columns, they have a size of 0
             continue;
         header += FMT(" %-*s", size/cWidth, GetColLabelValue(col));
     }
     prn::PrintLine(header + "\n");
 
-    for (int row = 0; row < rows; ++row)
+    for ( int row = 0; row < rows; ++row )
     {
         bool bData = false;    // check if wanted columns have data
         wxString info = FMT("%3d", row+1);
-        for (UINT col = 0; col < a_nrOfColumnsToPrint; ++col)
+        for ( UINT col = 0; col < a_nrOfColumnsToPrint; ++col )
         {
             int size=GetColSize(col);
-            if (size <= 0)
+            if ( size <= 0 )
                 continue;
             wxString columnValue = GetCellValue(row, col);
-            if ( col >= a_notEmptyfrom && !columnValue.IsEmpty() ) bData = true;
+            if ( col >= a_notEmptyfrom && !columnValue.IsEmpty() )
+                bData = true;
             info += FMT(" %-*s", size/cWidth, columnValue);
         }
-        if (bData || a_nrOfColumnsToPrint < a_notEmptyfrom)
+        if ( bData || a_nrOfColumnsToPrint < a_notEmptyfrom )
         {
             info.Trim(TRIM_RIGHT);
             prn::PrintLine(info + "\n");
@@ -121,7 +125,7 @@ void MyGrid::OnCellChanging(wxGridEvent& a_event)
     wxString oldData    = GetCellValue(row, col);
     wxString newData    = a_event.GetString();
 
-    if (oldData != newData)
+    if ( oldData != newData )
     {   // let owner check if new data is ok
         CellInfo cellInfo( this, row, col, oldData, newData);
         if ( CELL_CHANGE_REJECTED == m_pParent->OnCellChanging(cellInfo) )
@@ -136,7 +140,8 @@ void MyGrid::OnCellChanging(wxGridEvent& a_event)
 bool MyGrid::Search(const wxString& a_s2Search )
 {
     int rows = GetNumberRows();
-    if ((rows == 0) || a_s2Search.IsEmpty()) return false;      // no data to search for
+    if ( (rows == 0) || a_s2Search.IsEmpty() )
+        return false;   // no data to search for
 
     wxString search(a_s2Search);
     search.MakeLower();
@@ -152,15 +157,15 @@ bool MyGrid::Search(const wxString& a_s2Search )
 
     do
     {   // loop over columns from left to right, top to bottem
-        if (++searchCol >= cols)     // update search row/col, also if found! Next search starts 1 up!
+        if ( ++searchCol >= cols )  // update search row/col, also if found! Next search starts 1 up!
         {
             searchCol = 0;
-            if (++searchRow >= rows)
+            if ( ++searchRow >= rows )
                 searchRow = 0;
         }
 
         wxString cel = wxGrid::GetCellValue(searchRow, searchCol).MakeLower();    // unsorted row needed
-        if (wxString::npos != cel.find(search))
+        if ( wxString::npos != cel.find(search) )
         {
             bFound = true;      // got you!
             SetFocus();
@@ -176,7 +181,8 @@ bool MyGrid::Search(const wxString& a_s2Search )
 void MyGrid::EmptyGrid()
 {
     int rows = GetNumberRows();
-    if (rows) DeleteRows(0, rows);
+    if ( rows )
+        DeleteRows(0, rows);
 #ifdef MY_GRIDSORT
     m_sortType = SORT_NONE;
     m_sortedRows.clear();
@@ -207,7 +213,7 @@ void MyGrid::OnLeftClickLabel(const wxGridEvent& a_event)
 {   // eat it, if its a column label: no whole column selection
     int col = a_event.GetCol();
     LogMessage(_("MyGrid::OnLeftClickLabel(column: %i)"), col);
-//    if ( col == wxNOT_FOUND)    // left-edge -> select all
+//    if ( col == wxNOT_FOUND )    // left-edge -> select all
 //        a_event.Skip(); // passtrough if its not a column header
 }   // OnLeftClickLabel()
 
@@ -226,7 +232,7 @@ const MyGrid::GridInfo& MyGrid::GetGridInfo()
 
     AppendRows(1);   // be sure to have atleast one row
     auto nrOfCols = GetNumberCols();
-    for (int col = 0; col < nrOfCols; ++col)
+    for ( int col = 0; col < nrOfCols; ++col )
     {
         m_gridInfo.collumnInfo.push_back(CellToRect(0, col));
     }
@@ -262,7 +268,7 @@ static void GridEventSetRow(wxGridEvent& a_evt, int a_row)
     pMy->SetRow(a_row);
 }   // GridEventSetRow()
 
-#define ROW2EXTERN_SKIP(event)  do {event.Skip(); if (m_sortType != SORT_NONE) GridEventSetRow(event, GridRowToExtern(event.GetRow()));} while (0)  /* let the real method do its work*/
+#define ROW2EXTERN_SKIP(event)  do {event.Skip(); if ( m_sortType != SORT_NONE ) GridEventSetRow(event, GridRowToExtern(event.GetRow()));} while ( 0 )  /* let the real method do its work*/
 
 void MyGrid::SortOnCellChanging(wxGridEvent& a_event)
 {
@@ -276,7 +282,7 @@ void MyGrid::SortOnSelectCell(wxGridEvent& a_event)
 
 int MyGrid::GridRowToExtern(int a_row)
 {
-    if ( (m_sortType != SORT_NONE) && (static_cast<size_t>(abs(a_row)) < m_sortedRows.size()))
+    if ( (m_sortType != SORT_NONE) && (static_cast<size_t>(abs(a_row)) < m_sortedRows.size()) )
     {
         a_row = m_sortedRows[a_row];
     }
@@ -286,10 +292,10 @@ int MyGrid::GridRowToExtern(int a_row)
 
 int MyGrid::GridRowToIntern(int a_row) const
 {
-    if (m_sortType != SORT_NONE)
+    if ( m_sortType != SORT_NONE )
     {
         auto it = std::ranges::find(m_sortedRows, a_row);
-        if (it != m_sortedRows.end())
+        if ( it != m_sortedRows.end() )
         {
             a_row = (int)(it - m_sortedRows.begin());  // = index in table
         }
@@ -353,11 +359,13 @@ static wxString NormaliseSessionName(wxString str)
     const wxChar* ps = str.c_str();
     auto len = str.Len();
     size_t ii;
-    for (ii=0; ii < len-1; ++ii)
+    for ( ii=0; ii < len-1; ++ii )
     {
-        if (std::isdigit(ps[ii])) break;
+        if ( std::isdigit(ps[ii]) )
+            break;
     }
-    if (ii == len-1 ) str.insert(ii, ' ');  // convert single digit to 'double' digit
+    if ( ii == len-1 )
+        str.insert(ii, ' ');    // convert single digit to 'double' digit
     return str;
 }   // NormaliseSessionName()
 
@@ -373,7 +381,7 @@ bool CompareSessionNames(const wxString& s1, const wxString& s2)
 bool MyCompare(const wxString& s1, const wxString& s2, MyGrid::SortMethod a_sortType, bool a_bUp)
 {
     bool  bResult(false);
-    switch(a_sortType)
+    switch ( a_sortType )
     {
         case MyGrid::SORT_SESSIONNAME:
             bResult = CompareSessionNames(s1, s2);
@@ -385,17 +393,21 @@ bool MyCompare(const wxString& s1, const wxString& s2, MyGrid::SortMethod a_sort
             {
                 int n1 =  wxAtoi(s1);
                 int n2 =  wxAtoi(s2);
-                if ( (n1 == 0) && s1.IsEmpty() ) n1 = a_bUp ? INT_MAX-1 : INT_MIN+1;
-                if ( (n2 == 0) && s2.IsEmpty() ) n2 = a_bUp ? INT_MAX-1 : INT_MIN+1;
+                if ( (n1 == 0) && s1.IsEmpty() )
+                    n1 = a_bUp ? INT_MAX-1 : INT_MIN+1;
+                if ( (n2 == 0) && s2.IsEmpty() )
+                    n2 = a_bUp ? INT_MAX-1 : INT_MIN+1;
                 bResult = n1 < n2;
             }
             break;
         case MyGrid::SORT_STRING_NONEMPTY:    // string compare: empty strings ALWAYS displayed after non-empty strings
             {
                 int type=0;
-                if (s1.IsEmpty()) type  = 1;
-                if (s2.IsEmpty()) type += 2;
-                switch (type)
+                if ( s1.IsEmpty() )
+                    type  = 1;
+                if ( s2.IsEmpty() )
+                    type += 2;
+                switch ( type )
                 {
                     case 0: // 2 non-empty strings
                         bResult = (s1.CmpNoCase(s2) < 0);   // "a" < "b"  -> true
@@ -425,7 +437,7 @@ void MyGrid::OnSortColumn(wxGridEvent& a_event)
     int rows    = GetNumberRows();
     int sortCol = a_event.GetCol();
 
-    if ( (sortCol == wxNOT_FOUND) || (rows == 0) || !m_bEnableSort)
+    if ( (sortCol == wxNOT_FOUND) || (rows == 0) || !m_bEnableSort )
     {
         a_event.Skip(); // we don't handle this one
         return;
@@ -436,11 +448,11 @@ void MyGrid::OnSortColumn(wxGridEvent& a_event)
     int cols = GetNumberCols();
     std::vector< std::vector<wxString> > data;
     data.resize(rows);
-    for (int row = 0; row < rows; ++row)
+    for ( int row = 0; row < rows; ++row )
     {   // get data from grid in original order, so we can sort and put it back in the grid in (new) order
         int sortedRow = (m_sortType == SORT_NONE) ? row : m_sortedRows[row];    // if sorted, then this vector should be initialized!
         data[sortedRow].resize(cols);
-        for (int col = 0; col < cols; ++col)
+        for ( int col = 0; col < cols; ++col )
         {
             data[sortedRow][col] = wxGrid::GetCellValue(row, col);
         }
@@ -448,7 +460,7 @@ void MyGrid::OnSortColumn(wxGridEvent& a_event)
 
     //  now sort it;
     const SORT_DIRECTION next[] = {SORT_UP, SORT_DOWN, SORT_NONE};
-    if (sortCol == m_sortedCol)
+    if ( sortCol == m_sortedCol )
     {
         m_sortType = next[m_sortType];
     }
@@ -464,7 +476,7 @@ void MyGrid::OnSortColumn(wxGridEvent& a_event)
     // So be sure that we are the LAST person processing...
     CallAfter([this]
                 {
-                    switch (m_sortType)
+                    switch ( m_sortType )
                     {   // update the sort icon
                         case SORT_UP:
                             SetSortingColumn (m_sortedCol, true);
@@ -488,7 +500,8 @@ void MyGrid::OnSortColumn(wxGridEvent& a_event)
         std::ranges::sort(m_sortedRows,
                     [&data, sortCol, bUp, method] ( int row1, int row2 ) -> bool
                     {
-                        if (!bUp) std::swap(row1, row2);
+                        if ( !bUp )
+                            std::swap(row1, row2);
                         wxString s1 = data[row1][sortCol];
                         wxString s2 = data[row2][sortCol];
                         return MyCompare(s1, s2, method, bUp);
@@ -498,10 +511,10 @@ void MyGrid::OnSortColumn(wxGridEvent& a_event)
 
     BeginBatch();
     // now putback the data in the sorted rows
-    for (int row = 0; row < rows; ++row)
+    for ( int row = 0; row < rows; ++row )
     {
         int newRow = m_sortedRows[row];
-        for (int col = 0; col < cols; ++col)
+        for ( int col = 0; col < cols; ++col )
         {
             wxGrid::SetCellValue(row, col, data[newRow][col]);
         }

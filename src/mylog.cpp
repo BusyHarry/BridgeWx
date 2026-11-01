@@ -12,16 +12,16 @@
 
 class MyLogFrame;
 
-static bool             sbLogger        {false};
-static MyLogFrame*      spLogFrame      {0};
-static wxWindowID       sFrameId        {0};
-static wxTextCtrl*      spTextCtrl      {0};
-static MyLog::Level     sLastRequested  {MyLog::Level::LOG_MIN};
-static MyLog::Level     sLevel          {MyLog::Level::LOG_Message};
-static bool             sbPositioned    {false};
-static bool             sbAppDebug      {false};
-static bool             sbScriptTesting {false};
-static const wxWindow*  spMainframe     {nullptr};  //ptr to mainframe to position logging window alongside
+static bool             s_bLogger               {false};
+static MyLogFrame*      s_pLogFrame             {0};
+static wxWindowID       s_frameId               {0};
+static wxTextCtrl*      s_pTextCtrl             {0};
+static MyLog::Level     s_levelLastRequested    {MyLog::Level::LOG_MIN};
+static MyLog::Level     s_levelCurrent          {MyLog::Level::LOG_Message};
+static bool             s_bPositioned           {false};
+static bool             s_bAppDebug             {false};
+static bool             s_bScriptTesting        {false};
+static const wxWindow*  s_pMainframe            {nullptr};  //ptr to mainframe to position logging window alongside
 
 extern const wxString ES;       // an Empty String
 
@@ -32,7 +32,7 @@ struct frameInfo
     frameInfo()                                 : pLogFrame(nullptr), frameId(wxID_ANY){;}
     frameInfo(MyLogFrame* pFrame, wxWindowID id): pLogFrame(pFrame) , frameId(id)      {;}
 };
-static std::map < const MyLog*, frameInfo> sm_pLogFrames; // backup of active logframes: on dynamic language switch, we need 'previous' frameptr
+static std::map < const MyLog*, frameInfo> s_mpLogFrames;   // backup of active logframes: on dynamic language switch, we need 'previous' frameptr
 
 static wxSize const DEFAULT_SIZE = {300,-1};
 
@@ -40,7 +40,7 @@ class MyLogFrame : public wxFrame
 {   // need this 'inbetween' frame to receive events
 public:
     MyLogFrame() : wxFrame(   nullptr
-                            , sFrameId
+                            , s_frameId
                             , _("MyLog window")
                             , {600,50}              //position
                             , DEFAULT_SIZE          //size
@@ -60,34 +60,34 @@ public:
 
 MyLog::MyLog()
 {
-    sFrameId = wxID_ANY;
+    s_frameId = wxID_ANY;
     Create();
 }
 
 MyLog::MyLog(wxWindowID a_frameId, bool a_bCreateNow)
 {
-    sFrameId = a_frameId;
-    if (a_bCreateNow)
+    s_frameId = a_frameId;
+    if ( a_bCreateNow )
         Create();
 }   // MyLog()
 
 MyLog::MyLog(bool a_bCreateNow, wxWindowID a_frameId)
 {
-    sFrameId = a_frameId;
-    if (a_bCreateNow)
+    s_frameId = a_frameId;
+    if ( a_bCreateNow )
         Create();
 }   // MyLog()
 
 MyLog::~MyLog()
 {   // only dtor correct frame!
-    auto it = sm_pLogFrames.find(this);
-    if (it != sm_pLogFrames.end())
+    auto it = s_mpLogFrames.find(this);
+    if ( it != s_mpLogFrames.end() )
     {
         auto pLogFrame  = it->second.pLogFrame;
         auto frameId    = it->second.frameId;
-        if (pLogFrame->FindWindowById(frameId))
+        if ( pLogFrame->FindWindowById(frameId) )
             delete pLogFrame;
-        sm_pLogFrames.erase(it);
+        s_mpLogFrames.erase(it);
     }
 }   // ~MyLog()
 
@@ -99,7 +99,7 @@ void MyLog::Create( ) const
         , ID_MENU_MYLOG_CLEAR
         , ID_MENU_MYLOG_HIDE
     };
-    spLogFrame = new MyLogFrame();
+    s_pLogFrame = new MyLogFrame();
     auto pMenu = new wxMenu;
     pMenu->Append(ID_MENU_MYLOG_SAVE , _("save &As..."), _("Save in logfile"           ));
     pMenu->Append(ID_MENU_MYLOG_CLEAR, _("&Clear")     , _("Clear logwindow"           ));
@@ -108,113 +108,116 @@ void MyLog::Create( ) const
 
     auto pMenuBar = new wxMenuBar;
     pMenuBar->Append(pMenu, _("&File"));
-    spLogFrame->SetMenuBar(pMenuBar);
+    s_pLogFrame->SetMenuBar(pMenuBar);
 
-    spLogFrame->Bind(wxEVT_MENU         , &MyLogFrame::OnSave , spLogFrame, ID_MENU_MYLOG_SAVE );
-    spLogFrame->Bind(wxEVT_MENU         , &MyLogFrame::OnClear, spLogFrame, ID_MENU_MYLOG_CLEAR);
-    spLogFrame->Bind(wxEVT_MENU         , &MyLogFrame::OnHide,  spLogFrame, ID_MENU_MYLOG_HIDE );
-    spLogFrame->Bind(wxEVT_CLOSE_WINDOW , &MyLogFrame::OnClose, spLogFrame  /* NB NO id here*/ );
+    s_pLogFrame->Bind(wxEVT_MENU         , &MyLogFrame::OnSave , s_pLogFrame, ID_MENU_MYLOG_SAVE );
+    s_pLogFrame->Bind(wxEVT_MENU         , &MyLogFrame::OnClear, s_pLogFrame, ID_MENU_MYLOG_CLEAR);
+    s_pLogFrame->Bind(wxEVT_MENU         , &MyLogFrame::OnHide,  s_pLogFrame, ID_MENU_MYLOG_HIDE );
+    s_pLogFrame->Bind(wxEVT_CLOSE_WINDOW , &MyLogFrame::OnClose, s_pLogFrame  /* NB NO id here*/ );
 
-    spLogFrame->SetStatusBar(new wxStatusBar(spLogFrame));
+    s_pLogFrame->SetStatusBar(new wxStatusBar(s_pLogFrame));
 
-    spTextCtrl = new wxTextCtrl(spLogFrame, wxID_ANY, wxEmptyString,
+    s_pTextCtrl = new wxTextCtrl(s_pLogFrame, wxID_ANY, wxEmptyString,
         wxDefaultPosition, DEFAULT_SIZE, wxTE_MULTILINE|wxTE_READONLY|wxHSCROLL);
 
-    int size = spTextCtrl->GetFont().GetPointSize();
+    int size = s_pTextCtrl->GetFont().GetPointSize();
     wxFont  celFont (size, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
-    spTextCtrl->SetFont(celFont);               // fixed sized font, so tables look nice
+    s_pTextCtrl->SetFont(celFont);              // fixed sized font, so tables look nice
 
-    spLogFrame->Show(false);                    // start invisable
+    s_pLogFrame->Show(false);                   // start invisable
 
-    sFrameId    = spLogFrame->GetId();          // in case it was wxID_ANY
-    sbLogger    = true;                         // we have a logger
-    sLevel      = MyLog::Level::LOG_Message;    // default loglevel
-    sm_pLogFrames[this] = frameInfo(spLogFrame, sFrameId);  // dtor info
-    sbPositioned= false;                        // first time position is next to app-window
+    s_frameId    = s_pLogFrame->GetId();        // in case it was wxID_ANY
+    s_bLogger    = true;                        // we have a logger
+    s_levelCurrent      = MyLog::Level::LOG_Message;            // default loglevel
+    s_mpLogFrames[this] = frameInfo(s_pLogFrame, s_frameId);    // dtor info
+    s_bPositioned= false;                       // first time position is next to app-window
 }   // Create()
 
 bool MyLog::IsShown()
 {
-    return spLogFrame->IsShown();
+    return s_pLogFrame->IsShown();
 }   // IsShown()
 
 void MyLog::SetCallbackOnHide(pCallBack ptr)
 {
-    spLogFrame->pCallbackOnHide = ptr;
+    s_pLogFrame->pCallbackOnHide = ptr;
 }   // SetCallbackOnHide()
 
 void MyLogFrame::OnHide (const wxCommandEvent& )
 {
-    if (pCallbackOnHide) pCallbackOnHide();
-    spLogFrame->Show(false);
+    if ( pCallbackOnHide )
+        pCallbackOnHide();
+    s_pLogFrame->Show(false);
 }   // OnHide()
 
 void MyLogFrame::OnSave  (const wxCommandEvent& )
 {
-    wxString filename = wxSaveFileSelector("log", "txt", "log.txt", spLogFrame);
-    if (!filename.IsEmpty())
-        spTextCtrl->SaveFile(filename);
+    wxString filename = wxSaveFileSelector("log", "txt", "log.txt", s_pLogFrame);
+    if ( !filename.IsEmpty() )
+        s_pTextCtrl->SaveFile(filename);
     MyLogMessage(_("Log saved to file '%s'."), filename);
 }   // OnSave()
 
 void MyLogFrame::OnClear (const wxCommandEvent& )
 {
-    spTextCtrl->Clear();
+    s_pTextCtrl->Clear();
 }   // OnClear()
 
 void MyLogFrame::OnClose(wxCloseEvent& a_event)
 {
-    if (pCallbackOnHide) pCallbackOnHide();
-    spLogFrame->Show(false);
+    if ( pCallbackOnHide )
+        pCallbackOnHide();
+    s_pLogFrame->Show(false);
     a_event.Veto();
 }   // OnClose()
 
 wxWindowID MyLog::GetId()
 {
-    return sFrameId;
+    return s_frameId;
 }   // GetId()
 
 void MyLog::SetLevel(MyLog::Level a_level)
 {
-    if (a_level >= MyLog::Level::LOG_MIN && a_level <= MyLog::Level::LOG_Max)
-        sLevel = a_level;
+    if ( a_level >= MyLog::Level::LOG_MIN && a_level <= MyLog::Level::LOG_Max )
+        s_levelCurrent = a_level;
     else
-        sLevel = MyLog::Level::LOG_Message;
+        s_levelCurrent = MyLog::Level::LOG_Message;
 }   // SetLevel()
 
 void MyLog::FontScale(float a_scale)
 {
-    if (sbLogger && spLogFrame && spLogFrame->FindWindowById(sFrameId))
+    if ( s_bLogger && s_pLogFrame && s_pLogFrame->FindWindowById(s_frameId) )
     {
-        auto font = spTextCtrl->GetFont();
-        spTextCtrl->SetFont(font.Scale(a_scale));
+        auto font = s_pTextCtrl->GetFont();
+        s_pTextCtrl->SetFont(font.Scale(a_scale));
     }
 }   // FontScale()
 
 void MyLog::Show(bool a_bShow)
 {   // just check if window still exists....
-    if (sbLogger && spLogFrame && spLogFrame->FindWindowById(sFrameId))
+    if ( s_bLogger && s_pLogFrame && s_pLogFrame->FindWindowById(s_frameId) )
     {
-        if (!sbPositioned)
+        if ( !s_bPositioned )
         {
-            sbPositioned = true;
+            s_bPositioned = true;
             int x = wxSystemSettings::GetMetric(wxSYS_SCREEN_X);
             wxPoint pos = {0,50};
 
-            if (spMainframe)
+            if ( s_pMainframe )
             {
-                pos.x = spMainframe->GetPosition().x + spMainframe->GetSize().GetX();
-                if (pos.x > x-100) pos.x = x-100;
+                pos.x = s_pMainframe->GetPosition().x + s_pMainframe->GetSize().GetX();
+                if ( pos.x > x-100 )
+                    pos.x = x-100;
             }
             else
                 pos.x = (x*1600)/2000;
-            spLogFrame->SetPosition(pos);
+            s_pLogFrame->SetPosition(pos);
         }
-        spLogFrame->Show(a_bShow);
+        s_pLogFrame->Show(a_bShow);
     }
 }   // Show()
 
-static const wxString theType[]=
+static const wxString s_asTheType[]=
 {
       " ERR: "
     , " WRN: "
@@ -223,49 +226,55 @@ static const wxString theType[]=
     , " DBG: "
 };
 
-static const unsigned int nrOfTypes = sizeof(theType)/sizeof(theType[0]);
+static constexpr unsigned int NR_OF_TYPES = sizeof(s_asTheType)/sizeof(s_asTheType[0]);
 
 bool MyLog::IsEnabled(MyLog::Level a_level)
 {
-    if (!sbLogger || sLevel < a_level || a_level < MyLog::Level::LOG_MIN ) return false;
-    if ( (unsigned int)a_level >= nrOfTypes ) return false;
+    if ( !s_bLogger || s_levelCurrent < a_level || a_level < MyLog::Level::LOG_MIN )
+        return false;
+    if ( (unsigned int)a_level >= NR_OF_TYPES )
+        return false;
 #ifndef _DEBUG
-    if (a_level == MyLog::Level::LOG_Debug) return false;
+    if ( a_level == MyLog::Level::LOG_Debug )
+        return false;
 #endif
-    sLastRequested = a_level;   // (was) needed for displaying the log-level
+    s_levelLastRequested = a_level;     // (was) needed for displaying the log-level
     return true;
 }   // IsEnabled()
 
 void MyLog::DoLog(MyLog::Level a_level, const wxString& a_msg)
 {
-    if (!sbLogger || sLevel < a_level ) return;
-    if ( (unsigned int)a_level >= nrOfTypes ) return;
+    if ( !s_bLogger || s_levelCurrent < a_level )
+        return;
+    if ( (unsigned int)a_level >= NR_OF_TYPES )
+        return;
 
 #ifndef _DEBUG  // in releasemode only show errors. If debug set, also show debug msg
-    if (a_level != MyLog::Level::LOG_Error)
+    if ( a_level != MyLog::Level::LOG_Error )
     {
-        if (a_level != MyLog::Level::LOG_Debug && !sbAppDebug) return;
+        if ( a_level != MyLog::Level::LOG_Debug && !s_bAppDebug )
+            return;
     }
 #endif
-    wxString result = sbScriptTesting
-    ? wxDateTime::UNow().Format("%H:%M:%S:%l") + theType[(int)a_level] + a_msg
-    : wxDateTime:: Now().Format("%H:%M:%S")    + theType[(int)a_level] + a_msg;
+    wxString result = s_bScriptTesting
+    ? wxDateTime::UNow().Format("%H:%M:%S:%l") + s_asTheType[(int)a_level] + a_msg
+    : wxDateTime:: Now().Format("%H:%M:%S")    + s_asTheType[(int)a_level] + a_msg;
 
     result.Replace("\n", "\\n", true);
-    spTextCtrl->AppendText(result + '\n');
+    s_pTextCtrl->AppendText(result + '\n');
 }   // DoLog()
 
 void MyLog::SetScriptTesting()
 {
-    sbScriptTesting = true;
+    s_bScriptTesting = true;
 }   // SetScriptTesting()
 
 void MyLog::SetAppDebugging()
 {
-    sbAppDebug = true;
+    s_bAppDebug = true;
 }   // SetAppDebugging()
 
 void MyLog::SetMainFrame(const wxWindow* pMainframe)
 {
-    spMainframe = pMainframe;
+    s_pMainframe = pMainframe;
 }   // SetMainFrame()

@@ -12,13 +12,16 @@
 
 static bool GetNonEmptyLine(std::ifstream& a_file, std::string& a_line)
 {   // return true if we have a none empty line, false if eof
-    for(;;)
+    for ( ;; )
     {
-        if (a_file.eof()) return false;
+        if ( a_file.eof() )
+            return false;
         std::getline(a_file, a_line);
         a_line.erase(0, a_line.find_first_not_of(" \t\n")); // ltrim()
-        if (a_line.empty()) continue;
-        if (a_line[0] == ';') continue;
+        if ( a_line.empty() )
+            continue;
+        if ( a_line[0] == ';' )
+            continue;
         break;
     }
     return true;
@@ -30,7 +33,7 @@ static constexpr auto MAX_TABLES   = 20;
 static constexpr auto MAX_SETS     = 10;
 static constexpr auto MAX_ROUNDS   = 10;
 
-#define CHECK_VALUE(value,max) if ((value) < 1 || (value) > (max)) return false
+#define CHECK_VALUE(value,max) if ( (value) < 1 || (value) > (max) ) return false
 
 namespace importExportSchema
 {
@@ -57,20 +60,23 @@ namespace importExportSchema
         a_schemaData.name.clear();
         a_line.clear();
         std::ifstream file(a_file);
-        if (!file.is_open()) return false;
-        if (!GetNonEmptyLine(file, a_line)) return false;
+        if ( !file.is_open() )
+            return false;
+        if ( !GetNonEmptyLine(file, a_line) )
+            return false;
         std::stringstream definition(a_line);
         definition >> a_schemaData.pairs >> a_schemaData.tables >> a_schemaData.rounds >> a_schemaData.sets >> a_schemaData.schemaType;
         CHECK_VALUE(a_schemaData.pairs , MAX_PAIRS );
         CHECK_VALUE(a_schemaData.tables, MAX_TABLES);
         CHECK_VALUE(a_schemaData.sets  , MAX_SETS  );
         CHECK_VALUE(a_schemaData.rounds, MAX_ROUNDS);
-        if (a_schemaData.schemaType != 0)
+        if ( a_schemaData.schemaType != 0 )
             return false;       // we can only use pair-schemas
         a_schemaData.tableData.resize(1);    // dummy round 0
         for (int round = 1; round <= a_schemaData.rounds; ++round)
         {
-            if (!GetNonEmptyLine(file, a_line)) return false;
+            if ( !GetNonEmptyLine(file, a_line) )
+                return false;
             std::stringstream      ss(a_line);
             std::vector<NewTableInfo> roundData;
             roundData.resize(1);    // dummy table 0
@@ -80,15 +86,15 @@ namespace importExportSchema
                 char        dash;   // for the inbetween char '-'
                 std::string set;    // for the set as char or as integer
                 ss >> tableData.pairNS >> dash >> tableData.pairEW >> set;
-                if (set.length())
+                if ( set.length() )
                 {   // should always be true!
                     auto firstChar = static_cast<unsigned char>(*set.begin());
-                    if (std::isdigit(firstChar))
+                    if ( std::isdigit(firstChar) )
                         tableData.set = static_cast<NewSchemaDataType>(std::stoi(set));
                     else
                         tableData.set = static_cast<NewSchemaDataType>(std::toupper(firstChar) - 'A' + 1);
                 }
-                if (tableData.pairNS == 0 && tableData.pairEW == 0 && tableData.set == 0)
+                if ( tableData.pairNS == 0 && tableData.pairEW == 0 && tableData.set == 0 )
                 {
                     ;   // no play at this table in this round, so don't check.....
                 }
@@ -103,17 +109,18 @@ namespace importExportSchema
             a_schemaData.tableData.push_back(roundData);
         }
         // all rounds/tables handled, now get the schema-name
-        while (GetNonEmptyLine(file, a_line))
+        while ( GetNonEmptyLine(file, a_line) )
         {
             // line could contain: #<name>Short Howell 8</name>    ; descriptive name for this schema
             std::string     startName = "#<name>";
             const size_t    startLen  = startName.size();
             size_t          start     = a_line.find(startName);
-            if (std::string::npos != start)
+            if ( std::string::npos != start )
             {
                 start += startLen;
                 size_t end = a_line.find("</name>", start);
-                if (std::string::npos == end) return false; // partially correct tag!
+                if ( std::string::npos == end )
+                    return false;   // partially correct tag!
                 a_schemaData.name = a_line.substr(start, end - start);
                 return true;
             }
@@ -126,20 +133,21 @@ namespace importExportSchema
     }   // ImportSchemaNBB()
 
 
-    static const auto nl('\n');
+    static const auto s_nl('\n');
     bool ExportSchemaNBB(const std::string& a_file, const NEW_SCHEMA& schema)
     {
         std::ofstream out(a_file);
 
-        if (!out.is_open()) return false;
-        out << schema.pairs << ' ' << schema.tables << ' ' << schema.rounds << ' ' << schema.sets << ' ' << schema.schemaType << nl;
+        if ( !out.is_open() )
+            return false;
+        out << schema.pairs << ' ' << schema.tables << ' ' << schema.rounds << ' ' << schema.sets << ' ' << schema.schemaType << s_nl;
         for (int round = 1; round <= schema.rounds; ++round)
         {
             for (int table = 1; table <= schema.tables; ++table)
             {
                 out << std::format("{:2}-{:<2} {:2} ", schema.tableData[round][table].pairNS, schema.tableData[round][table].pairEW, schema.tableData[round][table].set);
             }
-            out << nl;
+            out << s_nl;
         }
         out << "#<name>" << schema.name << "</name>" << std::endl;
         return true;
@@ -153,7 +161,7 @@ int main()
     NEW_SCHEMA schema;
     std::string errorLine;
     bool bResult = importExportSchema::ImportSchemaNBB("schema.txt", schema, errorLine);
-    if (!bResult)
+    if ( !bResult )
         std::cout << "error in line: '" << errorLine << "'\n";
     // Print the results
     std::cout << "\npairs: " << schema.pairs << ", tables: " << schema.tables << ", rounds: " << schema.rounds << ", sets: " << schema.sets << ", schemaType: " << schema.schemaType << '\n';

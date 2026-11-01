@@ -191,12 +191,13 @@ void SetupSchema::BackupData()
     // NB 1/2 MUST be updated before 3 (or we must change the update to include ALL of the data at once...)
 
 
-    if (m_groupData.size() > 1)
+    if ( m_groupData.size() > 1 )
     {   // if more then one group, groupchars should not be empty
         wxChar grp = 'A';
-        for (auto& it : m_groupData)
+        for ( auto& it : m_groupData )
         {
-            if (it.groupChars == ES) it.groupChars = grp;
+            if ( it.groupChars == ES )
+                it.groupChars = grp;
             ++grp;
         }
     }
@@ -206,18 +207,18 @@ void SetupSchema::BackupData()
     // now check if we already have scores and/or assignments. If so, try to adjust the data to be consistent
     score::ReadScoresFromDisk();
     names::InitializePairNames();
-    if (score::ExistGameData() || names::ExistAssignments())
+    if ( score::ExistGameData() || names::ExistAssignments() )
     {   // check if number of players has changed in any group, if so, update data
         bool        bDataChanged = false;
         const auto& oldGroupData = cfg::GetSessionInfo()->groupData;
         UINT        oldSize      = oldGroupData.size();
         UINT        newSize      = m_groupData.size();
 
-        for (UINT index = newSize; index < oldSize; ++index)
+        for ( UINT index = newSize; index < oldSize; ++index )
         {   // group(s) removed, so remove all scores/assignments for the pairs in these groups
             auto oldOffset = oldGroupData[index].groupOffset;
             auto oldPairs  = oldGroupData[index].pairs;
-            for (UINT pair = 1; pair <= oldPairs; ++pair)
+            for ( UINT pair = 1; pair <= oldPairs; ++pair )
             {
                 bDataChanged |= score::DeleteScoresFromPair    (pair + oldOffset);
                 bDataChanged |= names::DeleteAssignmentFromPair(pair + oldOffset);
@@ -225,29 +226,29 @@ void SetupSchema::BackupData()
         }
 
         UINT minSize = std::min(newSize, oldSize);
-        for (UINT index = 0; index < minSize; ++index)
+        for ( UINT index = 0; index < minSize; ++index )
         {   // only need to check as many groups as the smallest item contains
             auto    oldPairs    = oldGroupData[index].pairs;
             auto    newOffset   = m_groupData[index].groupOffset;
             auto    newPairs    = m_groupData[index].pairs;
             int     deltaPairs  = newPairs - oldPairs;
 
-            if (deltaPairs < 0)
+            if ( deltaPairs < 0 )
             {   // less pairs in new group: remove scores/assignments of the removed pairs
-                for (UINT pair = oldPairs; pair > newPairs; --pair)
+                for ( UINT pair = oldPairs; pair > newPairs; --pair )
                 {
                     bDataChanged |= score::DeleteScoresFromPair    (pair + newOffset);
                     bDataChanged |= names::DeleteAssignmentFromPair(pair + newOffset);
                 }
             }
-            if (deltaPairs)
+            if ( deltaPairs )
             {   // more/less pairs in group: adjust pairnrs in scores/assignments for next group(s)
                 UINT pair = newOffset + oldPairs + 1;   // first pairnr to change
                 bDataChanged |= score::AdjustPairNrs    (pair, deltaPairs);
                 bDataChanged |= names::AdjustAssignments(pair, deltaPairs);
             }
         }
-        if (bDataChanged)
+        if ( bDataChanged )
         {
             wxString msg = _("scores/assignments adapted as result of changes in schema");
             MyLogDebug("%s", msg);
@@ -257,9 +258,9 @@ void SetupSchema::BackupData()
         }
     }   // changed scores/assignments
 
-    for (const auto& group : m_groupData)
+    for ( const auto& group : m_groupData )
     {
-        if (group.schemaId == schema::ID_NONE)
+        if ( group.schemaId == schema::ID_NONE )
         {
             wxString msg = _("not all groups have a valid schema");
             MyLogDebug("SetupSchema: %s", msg);
@@ -296,7 +297,7 @@ void SetupSchema::PrintPage()
                       )
                   );
     //m_groupData
-    for (UINT group = 0; group < m_groupData.size(); ++group)
+    for ( UINT group = 0; group < m_groupData.size(); ++group )
     {
         wxString info;
         info = FMT("%2u    %-12s %-3u   %-15s %-u\n",
@@ -330,7 +331,8 @@ void SetupSchema::OnNextGroup(const wxCommandEvent&)
 {
     AUTOTEST_BUSY("nextGroup");
     UINT count  = m_pChoiceBoxGroup->GetCount();
-    if (count == 1) return; // nothing to do
+    if ( count == 1 )
+        return; // nothing to do
     UINT as     = m_pChoiceBoxGroup->GetSelection();    //ActiveSelection
     as          = (as+1) % count;
     RefreshInfoGroup(as);
@@ -344,7 +346,9 @@ void SetupSchema::RefreshInfoGroup(int a_index)
     wxArrayString   schemas;
     INT_VECTOR      nameIds;
     UINT            rounds  = wxAtoi(m_pTxtCtrlNrOfRounds->GetValue());
-    schema::FindSchema(rounds, m_groupData[a_index].pairs, nameIds, &schemas); if (nameIds.size()){;}
+    schema::FindSchema(rounds, m_groupData[a_index].pairs, nameIds, &schemas);
+    if ( nameIds.size() )
+    {;}
 
     m_pChoiceBoxSchemas ->Init(schemas, m_groupData[a_index].schema);   // (try to) set original name as preset
     m_pTxtCtrlGroupChars->SetValue( m_groupData[a_index].groupChars);
@@ -356,7 +360,8 @@ void SetupSchema::RefreshInfoGroup(int a_index)
 void SetupSchema::OnLostFocusGroupChars(wxFocusEvent& a_event )
 {
     a_event.Skip();
-    if (m_bIsScriptTesting) return;
+    if ( m_bIsScriptTesting )
+        return;
     LogMessage("SetupSchema::OnLostFocusGroupChars()");
     HandleGroupChars();
 }   // OnLostFocusGroupChars()
@@ -370,7 +375,8 @@ void SetupSchema::OnEnterGroupChars(const wxCommandEvent&)
 void SetupSchema::OnLostFocusNrOfPairs(wxFocusEvent& a_event)
 {
     a_event.Skip();
-    if (m_bIsScriptTesting) return;
+    if ( m_bIsScriptTesting )
+        return;
     LogMessage("SetupSchema::OnLostFocusNrOfPairs()");
     HandlePairs();
 }   // OnLostFocusNrOfPairs()
@@ -378,7 +384,8 @@ void SetupSchema::OnLostFocusNrOfPairs(wxFocusEvent& a_event)
 void SetupSchema::OnLostFocusAbsent(wxFocusEvent& a_event)
 {
     a_event.Skip();
-    if (m_bIsScriptTesting) return;     // if testing, {ENTER} will have handled it
+    if ( m_bIsScriptTesting )
+        return; // if testing, {ENTER} will have handled it
     LogMessage("SetupSchema::OnLostFocusAbsent()");
     HandleAbsent();
 }   // OnLostFocusAbsent()
@@ -386,7 +393,8 @@ void SetupSchema::OnLostFocusAbsent(wxFocusEvent& a_event)
 void SetupSchema::OnLostFocusGames(wxFocusEvent& a_event) const
 {
     a_event.Skip();
-    if (m_bIsScriptTesting) return;     // if testing, {ENTER} will have handled it
+    if ( m_bIsScriptTesting )
+        return; // if testing, {ENTER} will have handled it
     LogMessage("SetupSchema::OnLostFocusGames()");
 }   // OnLostFocusGames()
 
@@ -400,7 +408,8 @@ void SetupSchema::OnEnterRoundsSetSize(const wxCommandEvent& )
 void SetupSchema::OnLostFocusRoundsSetSize(wxFocusEvent& a_event)
 {
     a_event.Skip();
-    if (m_bIsScriptTesting) return;     // if testing, {ENTER} will have handled it
+    if ( m_bIsScriptTesting )
+        return; // if testing, {ENTER} will have handled it
     LogMessage("SetupSchema::OnLostFocusRoundsSetSize()");
     UpdateNrOfGames();
 }   // OnLostFocusRoundsSetSize()
@@ -408,7 +417,8 @@ void SetupSchema::OnLostFocusRoundsSetSize(wxFocusEvent& a_event)
 void SetupSchema::OnLostFocusNrOfGroups(wxFocusEvent& a_event)
 {
     a_event.Skip();
-    if (m_bIsScriptTesting) return;     // if testing, {ENTER} will have handled it
+    if ( m_bIsScriptTesting )
+        return; // if testing, {ENTER} will have handled it
     LogMessage("SetupSchema::OnLostFocusNrOfGroups()");
     HandleNrOfGroups();
 }   // OnLostFocusNrOfGroups()
@@ -421,7 +431,7 @@ void SetupSchema::UpdateNrOfGames()
     UINT firstGame  = wxAtoi(m_pTxtCtrlFirstGame ->GetValue());
     UINT games      = rounds * setSize;
 
-    if ( games + firstGame - 1 > cfg::MAX_GAMES)
+    if ( games + firstGame - 1 > cfg::MAX_GAMES )
     {
         m_pTxtCtrlNrOfGames->SetForegroundColour(*wxRED);
         RingBell();
@@ -460,9 +470,9 @@ void SetupSchema::HandlePairs()
     AUTOTEST_BUSY("Pairs");
     int grp    = m_pChoiceBoxGroup->GetSelection();            // this group is changing
     UINT pairs = wxAtoi(m_pTxtCtrlPairs->GetValue());
-    if (pairs != m_groupData[grp].pairs)
+    if ( pairs != m_groupData[grp].pairs )
     {
-        if (pairs < m_groupData[grp].absent)
+        if ( pairs < m_groupData[grp].absent )
         {
             m_groupData[grp].absent = 0;
         }
@@ -470,7 +480,7 @@ void SetupSchema::HandlePairs()
         m_groupData[grp].schema = ES;
         m_groupData[grp].schemaId = schema::ID_NONE;
         RefreshInfoGroup(grp);
-        for ( ; static_cast<size_t>(grp) < m_groupData.size()-1; ++grp)
+        for ( ; static_cast<size_t>(grp) < m_groupData.size()-1; ++grp )
         {   // update groupoffset for higher numbered groups
             UINT nextGroupOffset = m_groupData[grp].groupOffset + m_groupData[grp].pairs;
             m_groupData[grp+1LL].groupOffset = nextGroupOffset;
@@ -485,15 +495,17 @@ void SetupSchema::HandleNrOfGroups()
     int newCount        = wxAtoi(m_pTxtCtrlNrOfGroups->GetValue());
     int oldSelection    = m_pChoiceBoxGroup->GetSelection();
 
-    if (newCount == oldCount) return;   // no changes
-    if (newCount == 0) newCount = 1;    // should not happen
-    while (newCount < oldCount)
+    if ( newCount == oldCount )
+        return;         // no changes
+    if ( newCount == 0 )
+        newCount = 1;   // should not happen
+    while ( newCount < oldCount )
     {   // remove groups
         m_groupData.pop_back();
         --oldCount;
     }
 
-    while (newCount > oldCount)
+    while ( newCount > oldCount )
     {   // add groups
         cfg::GROUP_DATA grp;
         grp.groupChars   = FMT("%c%c", 'A'+oldCount,'A'+oldCount);
@@ -502,7 +514,7 @@ void SetupSchema::HandleNrOfGroups()
         ++oldCount;
     }
 
-    if (oldSelection >= newCount)
+    if ( oldSelection >= newCount )
         oldSelection = 0;
     RefreshInfoGroup(oldSelection);
 }   // HandleNrOfGroups()
@@ -512,7 +524,7 @@ void SetupSchema::HandleAbsent()
     AUTOTEST_BUSY("Absent");
     int grp     = m_pChoiceBoxGroup->GetSelection();            // this group is changing
     UINT absent = wxAtoi(m_pTxtCtrlAbsent->GetValue());
-    if (absent <=  m_groupData[grp].pairs)
+    if ( absent <=  m_groupData[grp].pairs )
     {
         m_groupData[grp].absent = absent;
     }
@@ -529,10 +541,11 @@ void SetupSchema::HandleGroupChars()
     AUTOTEST_BUSY("GroupChars");
     UINT        grp      = m_pChoiceBoxGroup   ->GetSelection();       // this group is changing
     wxString    grpChars = m_pTxtCtrlGroupChars->GetValue().Upper();
-    for (UINT ii = 0; ii < m_groupData.size(); ++ii)
+    for ( UINT ii = 0; ii < m_groupData.size(); ++ii )
     {
-        if (ii == grp) continue;
-        if (m_groupData[ii].groupChars == grpChars)
+        if ( ii == grp )
+            continue;
+        if ( m_groupData[ii].groupChars == grpChars )
         {
             MyLogError(_("Equal groupcharacters for group %u and %u"), ii+1, grp+1);
             RingBell();

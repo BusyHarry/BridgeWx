@@ -82,7 +82,7 @@ void SlipServer::OnSocketEvent(const wxSocketEvent& event)
     wxSocketBase *pSock = event.GetSocket();
 
     // First, print a message
-    switch(event.GetSocketEvent())
+    switch ( event.GetSocketEvent() )
     {
         case wxSOCKET_INPUT : msg.Append("wxSOCKET_INPUT"); break;
         case wxSOCKET_LOST  : msg.Append("wxSOCKET_LOST"); break;
@@ -92,7 +92,7 @@ void SlipServer::OnSocketEvent(const wxSocketEvent& event)
     Add2Log(msg, true);
 
     // Now we process the event
-    switch(event.GetSocketEvent())
+    switch ( event.GetSocketEvent() )
     {
         case wxSOCKET_INPUT:
         {
@@ -102,7 +102,7 @@ void SlipServer::OnSocketEvent(const wxSocketEvent& event)
             unsigned char chr = 0;
             pSock->Read(&chr, 1);
             auto lastCount = pSock->LastReadCount(); MY_UNUSED(lastCount);
-            switch (chr)
+            switch ( chr )
             {
                 case SERVER_MSG_ID: SocketGetInput(pSock); break;
                 default:
@@ -141,7 +141,7 @@ void SlipServer::OnServerEvent(const wxSocketEvent& event)
     wxString msg = "OnServerEvent: ";
     wxSocketBase *sock;
 
-    switch(event.GetSocketEvent())
+    switch ( event.GetSocketEvent() )
     {
         case wxSOCKET_CONNECTION : msg.Append("wxSOCKET_CONNECTION"); break;
         default                  : msg.Append(_("Unexpected event!")); break;
@@ -156,7 +156,7 @@ void SlipServer::OnServerEvent(const wxSocketEvent& event)
 
     sock = m_pSocketServer->Accept(false);
 
-    if (sock)
+    if ( sock )
     {
         IPaddress addr;
         if ( !sock->GetPeer(addr) )
@@ -234,7 +234,7 @@ void TestIp()
     auto lst    = hbn->h_addr_list;
     wxArrayString ipList;
 
-    for (struct in_addr** pIp = (struct in_addr**)lst ; *pIp != 0 ; ++pIp) 
+    for ( struct in_addr** pIp = (struct in_addr**)lst ; *pIp != 0 ; ++pIp ) 
     {
         char *address = inet_ntoa(**pIp);
         // add the IP address to the list

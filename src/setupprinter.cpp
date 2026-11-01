@@ -117,7 +117,7 @@ void SetupPrinter::AutotestRequestMousePositions(MyTextFile* a_pFile)
 
 void SetupPrinter::PrintPage()
 {
-    bool bResult = prn::BeginPrint(_("Printersettings page:\n")); MY_UNUSED(bResult);
+    bool bResult = prn::BeginPrint(_("Printersettings page:\n")); wxUnusedVar(bResult);
     prn::PrintLine(FMT("%-16s: %s\n", _("Printer"       ), m_choiceBoxPrn               ->GetStringSelection()));
     prn::PrintLine(FMT("%-16s: %s\n", _("Lines/page"    ), m_pTxtCtrlLinesPP            ->GetValue()));
     prn::PrintLine(FMT("%-16s: %s\n", _("Formfeed"      ), BoolToString(m_pChkBoxFF     ->GetValue())));

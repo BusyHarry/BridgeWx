@@ -1,13 +1,23 @@
 # Releasenotes
 #V10.12.0 ......
- - updated autohotkey to V2.0.26 (https://github.com/AutoHotkey/AutoHotkey/releases/tag/v2.0.26)
- - updated wxWidgets to V3.3.3 (no changes compared to V3.3.2)
- - updated SQLite to V3.53.3 (https://sqlite.org)
+ - updated autohotkey to V2.0.29 (https://github.com/AutoHotkey/AutoHotkey/releases/tag/v2.0.29)
+ - updated wxWidgets to V3.3.4 (no changes compared to V3.3.2/V3.3.3)
+ - updated SQLite to V3.54.1 (https://sqlite.org)
  - updated POEDIT to V3.9.1 (local install only)
+ - updated cppcheck to V2.22.0 (https://github.com/cppcheck-opensource/cppcheck/releases/download/2.22.0/cppcheck-2.22.0-x64-Setup.msi)
  - after updating to POEDIT version 3.9.1, xgettext does not support wildcards anymore for input, so we need to provide a file with all the names in it
  - remove remark(s) from the vs2026 compiler
  - added in the about-dialog the version of SQLite and MSVC compiler
- - changes from V3.2.9 to V3.2.11 forces the include of 'wx/wx.h' i.s.o 'wx/wxcrtvararg.h' because undifined 'WXDLLIMPEXP_BASE'
+ - changes from wxWidgets V3.2.9 to V3.2.11 forces the include of 'wx/wx.h' i.s.o 'wx/wxcrtvararg.h' because undifined 'WXDLLIMPEXP_BASE'
+ - new cppcheck remarks
+ - non-code changes:
+    - all static variables now start with s_
+    - expression in if-statement now always surrounded by space: 'if (xxx)' -> 'if ( xxx )'
+    - action for if-statement now always on next line: 'if ( xxx ) yyy;' -> 'if ( xxx ) \n yyy;'
+    - expression in while-statement now always surrounded by space: 'while (xxx)' -> 'while ( xxx )'
+    - expression in for-statement now always surrounded by space: 'for (xxx)' -> 'for ( xxx )'
+    - expression in switch-statement now always surrounded by space: 'switch (xxx)' -> 'switch ( xxx )'
+ - replaced 'wxArrayString' with 'std::vector<wxString>' where possible (wxChoice still uses it)
 
 #V10.11.0 Sunday April 26 2026
  - autohotkey V2.0.21 (https://github.com/AutoHotkey/AutoHotkey/releases/tag/v2.0.21)

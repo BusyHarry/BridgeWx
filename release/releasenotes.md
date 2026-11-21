@@ -3,7 +3,7 @@
  - updated autohotkey to V2.0.29 (https://github.com/AutoHotkey/AutoHotkey/releases/tag/v2.0.29)
  - updated wxWidgets to V3.3.4 (no changes compared to V3.3.2/V3.3.3)
  - updated SQLite to V3.54.1 (https://sqlite.org)
- - updated POEDIT to V3.9.1 (local install only)
+ - updated POEDIT to V3.10 (local install only: https://download.poedit.com/Poedit-3.10-setup.exe)
  - updated cppcheck to V2.22.0 (https://github.com/cppcheck-opensource/cppcheck/releases/download/2.22.0/cppcheck-2.22.0-x64-Setup.msi)
  - after updating to POEDIT version 3.9.1, xgettext does not support wildcards anymore for input, so we need to provide a file with all the names in it
  - remove remark(s) from the vs2026 compiler
